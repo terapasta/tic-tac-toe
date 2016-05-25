@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= singular_table_name.titleize %></h4>
+  </div>
+
+  <div class="panel-body">
+    <%%= render 'form' %>
+  </div>
+</div>
+
+<%%= link_to t('helpers.link.back'), <%= index_helper %>_path, class: "btn btn-default" %>

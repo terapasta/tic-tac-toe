@@ -1,6 +1,7 @@
 <div class="container">
   <%= form_tag tops_path, method: :post do %>
     <% @answer_ids.each_with_index do |answer_id, index| %>
+      <% next if answer_id == 0 %>
       <div>
         <%= image_tag 'listen.jpg', class: 'listen' %><%= simple_format Answer.find(answer_id).text %>
         <%= hidden_field_tag 'answer_ids[]', answer_id %>

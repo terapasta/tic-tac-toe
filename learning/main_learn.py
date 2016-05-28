@@ -4,9 +4,7 @@
 # import sys
 from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
-# from sklearn.feature_extraction.text import CountVectorizer
-# from sklearn.externals import joblib
-# from sklearn import cross_validation
+from sklearn.externals import joblib
 from dataset import Dataset
 from feature_builder import FeatureBuilder
 # from predicter import Predicter
@@ -36,7 +34,7 @@ svm_model = gscv.best_estimator_
 
 print svm_model  # 高パフォーマンスの学習モデル
 print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの値)
-#
-# # 学習済みモデルをdumpする
-# joblib.dump(svm_model, "models/answer_svm_model")
-# joblib.dump(vocabulary, 'vocabulary/answer_vocabulary.pkl')
+
+# 学習済みモデルをdumpする
+joblib.dump(svm_model, "models/svm_model")
+joblib.dump(feature_builder.vocabulary, 'vocabulary/vocabulary.pkl')

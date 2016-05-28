@@ -9,32 +9,32 @@ class Dataset:
     def __init__(self, db_path=None):
         if db_path is None:
           return
-        self.question_id1s = []
-        self.question_ids = []
-        self.texts = []
+        self.answer_id1s = []
+        self.answer_id2s = []
         self.answer_ids = []
+        self.texts = []
         self.load_from_tinydb(db_path)
 
     def load_from_tinydb(self, db_path):
-        question_id1s = []
-        question_ids = []
+        answer_id1s = []
+        answer_id2s = []
+        answer_ids = []
         texts = []
         splited_texts = []
-        answer_ids = []
 
         db = TinyDB(db_path)
         results = db.all()
         for record in results:
             #self.lines.append(record)
-            question_id1s.append(record['question_id1'])
-            question_ids.append(record['question_id'])
+            answer_id1s.append(record['answer_id1'])
+            answer_id2s.append(record['answer_id2'])
             texts.append(record['text'])
             splited_texts.append(self.split(record['text']))
             answer_ids.append(record['answer_id'])
 
         # HACK 最初からnp.arrayを使えばいい
-        self.question_id1s = np.array(question_id1s).T
-        self.question_ids = np.array(question_ids).T
+        self.answer_id1s = np.array(answer_id1s).T
+        self.answer_id2s = np.array(answer_id2s).T
         self.texts = np.array(texts).T
         self.splited_texts = np.array(splited_texts).T
         self.answer_ids = np.array(answer_ids).T

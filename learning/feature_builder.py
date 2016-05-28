@@ -17,8 +17,8 @@ class FeatureBuilder:
         self.vocabulary = count_vectorizer.get_feature_names()
 
         features_array = feature_vectors.toarray()
-        features = np.c_[self.dataset.question_id1s, features_array]
-        features = np.c_[self.dataset.question_ids, features]
+        features = np.c_[self.dataset.answer_id1s, features_array]
+        features = np.c_[self.dataset.answer_id2s, features]
         #pdb.set_trace()
         return features
 

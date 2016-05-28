@@ -7,7 +7,8 @@ gem 'rails', '4.2.4'
 # select DB for local server
 #gem 'mysql2'
 # gem 'sqlite3', :group => :development
-gem 'pg'
+gem 'mysql2', '~> 0.3.20'
+
 
 # Use SCSS for stylesheets
 gem 'sass'
@@ -61,6 +62,7 @@ gem 'enum_help'
 
 # Seed Data Management
 gem 'seed-fu', '~> 2.3'
+gem 'active_hash'
 
 group :development, :test do
 
@@ -107,5 +109,5 @@ group :production, :staging do
   # Heroku用DB
   #gem 'pg'
   # ログ保存先変更、静的アセット Heroku 向けに調整
-  gem 'rails_12factor'
+  #gem 'rails_12factor'
 end

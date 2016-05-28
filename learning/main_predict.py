@@ -23,3 +23,4 @@ predicter = Predicter(svm_model, vocabulary)
 result = predicter.predict(X)
 
 print result
+print result[0]

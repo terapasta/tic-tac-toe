@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -
-# import numpy as np
-# import pandas as pd
-# import sys
+import pdb
 from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
 from sklearn.externals import joblib
@@ -29,6 +27,7 @@ gscv = GridSearchCV(
     verbose = 3
 )
 
+#pdb.set_trace()
 gscv.fit(features, dataset.answer_ids)
 svm_model = gscv.best_estimator_
 

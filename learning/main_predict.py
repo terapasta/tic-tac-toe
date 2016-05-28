@@ -11,8 +11,9 @@ X = [
         [9, 11, '無料なの？'],  # => 3
         [9, 11, '無料でいける？'],  # => 3
         [9, 11, '有料かな？'],  # => 3
-        [9, 12, 'どんな機能？'],  # => 4
-        [9, 12, 'メリットは？'],  # => 4
+        [9, 11, '他のサービス'],  # => 4
+        [9, 12, 'どんな機能？'],  # => 5
+        [9, 12, 'メリットは？'],  # => 5
     ]
 
 svm_model = joblib.load("models/svm_model")
@@ -21,5 +22,4 @@ vocabulary = joblib.load("vocabulary/vocabulary.pkl")
 predicter = Predicter(svm_model, vocabulary)
 result = predicter.predict(X)
 
-# TODO 回答文言に変換する
 print result

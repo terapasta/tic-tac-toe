@@ -16,10 +16,10 @@ class FeatureBuilder:
         feature_vectors = count_vectorizer.fit_transform(self.dataset.splited_texts)  # TODO
         self.vocabulary = count_vectorizer.get_feature_names()
 
-        features_array = feature_vectors.toarray()
-        features = np.c_[self.dataset.answer_id1s, features_array]
-        features = np.c_[self.dataset.answer_id2s, features]
         #pdb.set_trace()
+        features_array = feature_vectors.toarray()
+        features = np.c_[self.dataset.answer_id2s, features_array]
+        features = np.c_[self.dataset.answer_id1s, features]
         return features
 
     # def __init__(self, db=None):

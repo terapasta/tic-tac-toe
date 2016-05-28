@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -
+import pdb
 import numpy as np
 import pandas as pd
 import MeCab
@@ -30,8 +31,8 @@ class Predicter:
         features_array = feature_vectors.toarray()
         answer_id1s = np.array(X)[:, 0].T
         answer_id2s = np.array(X)[:, 1].T
-        features_array = np.c_[answer_id1s, features_array]
         features_array = np.c_[answer_id2s, features_array]
+        features_array = np.c_[answer_id1s, features_array]
         return self.estimator.predict(features_array)
 
     # TODO dataset.pyと重複しているメソッド

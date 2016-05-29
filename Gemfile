@@ -55,7 +55,7 @@ gem 'rails_admin'
 gem 'enum_help'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

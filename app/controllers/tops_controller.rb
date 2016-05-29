@@ -9,10 +9,10 @@ class TopsController < ApplicationController
     @answer_ids = params[:answer_ids]
     @texts = params[:texts] || []
 
-    answer_ids = @answer_ids
+    answer_ids = @answer_ids.dup
     while answer_ids.count < 2
       answer_ids.unshift(0)
-      @texts.unshift('')
+      #@texts.unshift('')
     end
     @texts << params[:text]
 
@@ -21,8 +21,8 @@ class TopsController < ApplicationController
     Rails.logger.debug(text)
 
     # 後ろから二番目が回答済みのanswerの場合
-    if Answer.find(@answer_ids.last(2).first).answerd
-      feature_answer_ids = [0, 0]
+    if Answer.find(answer_ids.last(2).first).answerd
+      feature_answer_ids = [0, 9]
     else
       feature_answer_ids = answer_ids[-2..-1]
     end

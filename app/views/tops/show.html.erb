@@ -17,18 +17,26 @@
         <br />
 
         <% if @texts[index].present? %>
-          <div class="row">
-            <div class="col-sm-8 col-sm-offset-2 balloon-1-right">
-              <%= simple_format  @texts[index] %>
+          <% if @texts[index] == 'MAGIC_WORD' %>
+            <div class="row">
               <%= hidden_field_tag 'texts[]', @texts[index] %>
             </div>
-            <div class="col-sm-2 text-center">
-              あなた<br />
-              <%= image_tag 'silhouette.png', class: 'listen' %>
+            <br />
+          <% else %>
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2 balloon-1-right">
+                <%= simple_format  @texts[index] %>
+                <%= hidden_field_tag 'texts[]', @texts[index] %>
+              </div>
+              <div class="col-sm-2 text-center">
+                あなた<br />
+                <%= image_tag 'silhouette.png', class: 'listen' %>
+              </div>
             </div>
-          </div>
-          <br />
+            <br />
+          <% end %>
         <% end %>
+
       <% end %>
 
       <br />

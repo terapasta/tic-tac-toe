@@ -1,3 +1,4 @@
+#require 'msgpack/rpc'
 class ChatsController < ApplicationController
   before_action :set_chat
 

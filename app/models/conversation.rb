@@ -2,8 +2,8 @@ class Conversation
   def self.reply(message)
     client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
     context = [0, 9]
-    result = client.call(:reply, context, message.body)
-    Rails.logger.debug("result: #{result}")
+    answer_id = client.call(:reply, context, message.body)
+    Rails.logger.debug("answer_id: #{answer_id}")
 
     # # @answer_ids = params[:answer_ids]
     # # @texts = params[:texts] || []
@@ -32,7 +32,7 @@ class Conversation
     # Rails.logger.debug("output: #{output}")
     # answer_id = output.split("\n").last
     #
-    # Answer.find(answer_id)
+    Answer.find(answer_id).first
   end
   #
   # answer_id = output.split("\n").last

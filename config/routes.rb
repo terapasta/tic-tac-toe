@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  resources :messages
   devise_for :admin_users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
   #resource :tops, only: [:show, :create]
-  resource :chats, only: [:show, :create]
+  resource :threads, only: [:show, :create]
   root 'tops#show'
 
   # The priority is based upon order of creation: first created -> highest priority.

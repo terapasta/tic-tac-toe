@@ -8,7 +8,9 @@ class ChatsController < ApplicationController
     guest_message = @chat.messages.build(message_params)
     guest_message.speaker = 'guest'
 
-    @chat.messages.build(speaker: 'bot', body: 'へいへいへーい')
+    answer = Conversation.reply(guest_message)
+
+    @chat.messages.build(speaker: 'bot', body: answer.text)
     @chat.save
 
     redirect_to chats_path
@@ -51,6 +53,11 @@ class ChatsController < ApplicationController
     # end
     #
     # render :show
+  end
+
+  def destroy
+    Chat.last.messages.destroy_all
+    redirect_to chats_path
   end
 
   private

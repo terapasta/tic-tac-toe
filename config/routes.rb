@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   #resource :tops, only: [:show, :create]
   resource :chats, only: [:show, :create]
-  root 'tops#show'
+  root 'chats#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

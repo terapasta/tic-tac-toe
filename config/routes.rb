@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   devise_for :admin_users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
-  resource :tops, only: [:show, :create]
+  #resource :tops, only: [:show, :create]
+  resource :chats, only: [:show, :create]
   root 'tops#show'
 
   # The priority is based upon order of creation: first created -> highest priority.

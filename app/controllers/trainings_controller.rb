@@ -1,33 +1,18 @@
 class TrainingsController < ApplicationController
-  before_action :set_training, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin_user!
+  before_action :set_training, only: [:show, :create]
 
-  # GET /trainings
-  def index
-    @trainings = Training.all
-  end
-
-  # GET /trainings/1
   def show
   end
 
-  # GET /trainings/new
-  def new
-    @training = Training.new
-  end
-
-  # GET /trainings/1/edit
   def edit
   end
 
-  # POST /trainings
   def create
-    @training = Training.new(training_params)
-
-    if @training.save
-      redirect_to trainings_path, notice: 'Trainingが作成されました'
-    else
-      render :new
-    end
+    training_message = @training.training_messages.build(training_message_params)
+    training_message.speaker = 'guest'
+    training_message.save!
+    render :show
   end
 
   # PATCH/PUT /trainings/1
@@ -46,13 +31,12 @@ class TrainingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_training
-      @training = Training.find(params[:id])
+      @training = Training.last || Training.create
     end
 
     # Only allow a trusted parameter "white list" through.
-    def training_params
-      params[:training]
+    def training_message_params
+      params.require(:training_message).permit(:body)
     end
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource :dashboards, only: [:show]
   resource :trainings
   namespace :trainings do
+    post :complete
     resources :answers, only: [:update] do
       post :replace, on: :member
     end

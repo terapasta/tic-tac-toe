@@ -19,26 +19,22 @@ class TrainingsController < ApplicationController
     render :show
   end
 
-  # def update
-  #   if @training.update(training_params)
-  #     flash[:notice] = '回答を更新しました'
-  #   else
-  #     flash[:notice] = '回答の更新に失敗しました'
-  #   end
-  #   redirect_to trainings_path
-  # end
-
   def destroy
     @training.destroy
     render :show
   end
 
+  def complete
+    # TODO ゴミデータが出来てしまう
+    @training = Training.create!
+    render :show
+  end
+
   private
     def set_training
-      @training = Training.last || Training.create
+      @training = Training.last || Training.create!
     end
 
-    # Only allow a trusted parameter "white list" through.
     def training_message_params
       params.require(:training_message).permit(:body)
     end

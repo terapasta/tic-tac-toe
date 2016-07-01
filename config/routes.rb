@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :trainings
   devise_for :admin_users
   #resources :messages
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

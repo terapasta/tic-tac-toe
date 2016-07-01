@@ -1,0 +1,25 @@
+<h1>Trainings</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trainings.each do |training| %>
+      <tr>
+        <td>
+          <%= link_to t('helpers.link.show'), training, class: "btn btn-default" %>
+          <%= link_to t('helpers.link.edit'), edit_training_path(training), class: "btn btn-default" %>
+          <%= link_to t('helpers.link.destroy'), training, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to t('helpers.link.new'), new_training_path, class: "btn btn-default" %>

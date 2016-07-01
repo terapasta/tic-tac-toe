@@ -1,0 +1,7 @@
+<%= bootstrap_form_for(@training) do |f| %>
+  <%= render "shared/errors", object: @training %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

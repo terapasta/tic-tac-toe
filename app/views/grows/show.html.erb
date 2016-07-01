@@ -1,3 +1,43 @@
 <div class="container">
-  育成画面です
+  <div class="container">
+    <div class="col-sm-8 col-sm-offset-2">
+      <% @chat.messages.each do |message| %>
+        <% if message.bot? %>
+          <div class="row">
+            <div class="col-sm-2 text-center">
+              どんうさぎ<br />
+              <%= image_tag 'usao001.png', class: 'listen' %>
+            </div>
+            <div class="col-sm-8 balloon-1-left">
+              <%= message.body %><br />
+              <%#= simple_format Answer.find(answer_id).text %>
+              <%#= hidden_field_tag 'answer_ids[]', answer_id %>
+            </div>
+            <div class="col-sm-2"></div>
+          </div>
+        <% elsif message.guest? %>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 balloon-1-right">
+              <%= message.body %>
+              <%#= simple_format  @texts[index] %>
+              <%#= hidden_field_tag 'texts[]', @texts[index] %>
+            </div>
+            <div class="col-sm-2 text-center">
+              あなた<br />
+              <%= image_tag 'silhouette.png', class: 'listen' %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= bootstrap_form_for @chat.messages.build, url: chats_path do |f| %>
+      <div class="col-sm-8 col-sm-offset-2 text-center comment-area">
+        <%= f.text_field :body, placeholder: '質問を入れてください', hide_label: true %>
+        <%= f.submit '質問する', class: 'btn btn-default' %>
+        <%= link_to 'クリアする', chats_path, method: :delete, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
 </div>

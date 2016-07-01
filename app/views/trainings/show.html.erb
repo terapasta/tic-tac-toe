@@ -9,14 +9,18 @@
             <%= image_tag 'usao001.png', class: 'listen' %>
           </div>
           <div class="col-sm-8 balloon-1-left">
-            <%= bootstrap_form_for [:trainings, training_message.answer] do |f| %>
-              <%= f.text_area :body, hide_label: true %>
-              <%= f.submit '更新する', class: 'btn btn-primary' %>
-            <% end %>
-            <br />
-            <%= bootstrap_form_for Answer.new, url: replace_trainings_answer_path(training_message) do |f| %>
-              <%= f.text_area :body, hide_label: true %>
-              <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
+            <% if @training.training_messages.last == training_message %>
+              <%= bootstrap_form_for [:trainings, training_message.answer] do |f| %>
+                <%= f.text_area :body, hide_label: true %>
+                <%= f.submit '更新する', class: 'btn btn-primary' %>
+              <% end %>
+              <br />
+              <%= bootstrap_form_for Answer.new, url: replace_trainings_answer_path(training_message) do |f| %>
+                <%= f.text_area :body, hide_label: true %>
+                <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
+              <% end %>
+            <% else %>
+              <%= simple_format(training_message.body) %>
             <% end %>
           </div>
           <div class="col-sm-2"></div>

@@ -6,7 +6,7 @@ class Trainings::AnswersController < ApplicationController
     answer = Answer.create!(answer_params.merge(context_id: 1))  # TODO ダミーのcontext_id
     training_message = TrainingMessage.find(params[:id])
     training_message.update!(answer_id: answer.id, body: answer.body)
-    redirect_to trainings_path
+    redirect_to trainings_path, notice: '回答を差し替えました'
   end
 
   def update

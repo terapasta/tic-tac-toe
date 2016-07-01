@@ -1,6 +1,6 @@
 class TrainingsController < ApplicationController
   before_action :authenticate_admin_user!
-  before_action :set_training, only: [:show, :create]
+  before_action :set_training, only: [:show, :create, :destroy]
 
   def show
   end
@@ -11,23 +11,26 @@ class TrainingsController < ApplicationController
   def create
     training_message = @training.training_messages.build(training_message_params)
     training_message.speaker = 'guest'
-    training_message.save!
+
+    answer = Conversation.reply(training_message)
+    @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    @training.save!
+
     render :show
   end
 
-  # PATCH/PUT /trainings/1
-  def update
-    if @training.update(training_params)
-      redirect_to trainings_path, notice: 'Trainingが更新されました'
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   if @training.update(training_params)
+  #     flash[:notice] = '回答を更新しました'
+  #   else
+  #     flash[:notice] = '回答の更新に失敗しました'
+  #   end
+  #   redirect_to trainings_path
+  # end
 
-  # DELETE /trainings/1
   def destroy
     @training.destroy
-    redirect_to trainings_url, notice: 'Trainingが削除されました'
+    render :show
   end
 
   private

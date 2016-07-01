@@ -11,7 +11,7 @@ class ChatsController < ApplicationController
 
     answer = Conversation.reply(guest_message)
 
-    @chat.messages.build(speaker: 'bot', body: answer.text)
+    @chat.messages.build(speaker: 'bot', body: answer.body)
     @chat.save
 
     redirect_to chats_path

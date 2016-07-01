@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160701030316) do
 
   create_table "training_messages", force: :cascade do |t|
     t.integer  "training_id", limit: 4,   null: false
+    t.integer  "answer_id",   limit: 4
     t.string   "speaker",     limit: 255, null: false
     t.string   "body",        limit: 255
     t.datetime "created_at",              null: false

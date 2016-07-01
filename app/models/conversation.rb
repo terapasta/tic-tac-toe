@@ -1,9 +1,12 @@
 class Conversation
   def self.reply(message)
-    client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
-    context = [0, 9]
-    answer_id = client.call(:reply, context, message.body)
-    Rails.logger.debug("answer_id: #{answer_id}")
+    # TODO 一旦コメントアウトして固定メッセージを返す
+    # client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
+    # context = [0, 9]
+    # answer_id = client.call(:reply, context, message.body)
+    # Rails.logger.debug("answer_id: #{answer_id}")
+    # Answer.find(answer_id).first
+    Answer.find(1)
 
     # # @answer_ids = params[:answer_ids]
     # # @texts = params[:texts] || []
@@ -32,7 +35,6 @@ class Conversation
     # Rails.logger.debug("output: #{output}")
     # answer_id = output.split("\n").last
     #
-    Answer.find(answer_id).first
   end
   #
   # answer_id = output.split("\n").last

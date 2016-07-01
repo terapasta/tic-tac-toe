@@ -3,7 +3,7 @@ import MeCab
 import numpy as np
 from tinydb import TinyDB, Query
 
-class Dataset:
+class DatasetOrg:
     UNIDIC_PATH = '/usr/local/lib/mecab/dic/unidic/'
 
     def __init__(self, db_path=None):

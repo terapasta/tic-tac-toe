@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   devise_for :users
   resource :chats, only: [:show, :create, :destroy]
   resource :dashboards, only: [:show]
+  resource :grows
   root 'chats#show'
 end

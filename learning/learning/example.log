@@ -1,0 +1,238 @@
+DEBUG:root:This message should go to the log file
+DEBUG:root:1
+DEBUG:root:0
+DEBUG:root:(0, 9)
+DEBUG:root:1
+DEBUG:root:0
+DEBUG:root:(0, 9)
+DEBUG:root:SUMAOUとは？
+DEBUG:root:(0, 9)
+DEBUG:root:1
+DEBUG:root:0
+DEBUG:root:[0, 9]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:(0, 9)
+DEBUG:root:1
+DEBUG:root:0
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:1
+DEBUG:root:0
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:1
+DEBUG:root:0            0
+1            9
+2    SUMAOUとは？
+dtype: object
+DEBUG:root:0
+DEBUG:root:[[0, 9, u'SUMAOU\u3068\u306f\uff1f']]
+DEBUG:root:1
+DEBUG:root:0    [0, 9, SUMAOUとは？]
+dtype: object
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:0    [0, 9, SUMAOUとは？]
+dtype: object
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[0, 9, u'SUMAOU']
+DEBUG:root:[0, 9, u'SUMAOU']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:hoge
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:hoge
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:hoge
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:hoge
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:hoge
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'\uff48\u3052']
+DEBUG:root:[u'\u3052']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[19]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'SUMAOU\u3068\u306f\uff1f']
+DEBUG:root:[u'SUMAOU']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[10]
+DEBUG:root:[0, 9, u'test']
+DEBUG:root:[u'test']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[19]
+DEBUG:root:[0, 9, u'\u3078\u30fc\u3044']
+DEBUG:root:[u'\u3078\u30fc \u3044\u308b']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[19]
+DEBUG:root:[0, 9, u'test']
+DEBUG:root:[u'test']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[19]
+DEBUG:root:[0, 9, u'\u30d0\u30ab\u306a\u306e']
+DEBUG:root:[u'\u30d0\u30ab \u3060']
+DEBUG:root:1
+DEBUG:root:2
+DEBUG:root:3
+DEBUG:root:4
+DEBUG:root:5
+DEBUG:root:[20]

@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   namespace :trainings do
     post :complete
     resources :answers, only: [:update] do
-      post :replace, on: :member
+      member do
+        post :replace
+        patch :replace_exists 
+      end
     end
   end
   root 'chats#show'

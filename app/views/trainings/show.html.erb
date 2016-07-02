@@ -15,6 +15,11 @@
                 <%= f.submit '更新する', class: 'btn btn-primary' %>
               <% end %>
               <br />
+              <%= bootstrap_form_for training_message, url: replace_exists_trainings_answer_path(training_message) do |f| %>
+                <%= f.collection_select :answer_id, Answer.all, :id, :body %>
+                <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
+              <% end %>
+              <br />
               <%= bootstrap_form_for Answer.new, url: replace_trainings_answer_path(training_message) do |f| %>
                 <%= f.text_area :body, hide_label: true %>
                 <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>

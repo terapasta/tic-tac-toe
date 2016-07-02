@@ -1,12 +1,13 @@
 class Conversation
   def self.reply(message)
     # TODO 一旦コメントアウトして固定メッセージを返す
-    # client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
-    # context = [0, 9]
-    # answer_id = client.call(:reply, context, message.body)
-    # Rails.logger.debug("answer_id: #{answer_id}")
-    # Answer.find(answer_id).first
-    Answer.find(1)
+    client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
+    context = [0, 0, 0, 1]
+    answer_id = client.call(:reply, context, message.body)
+    Rails.logger.debug("answer_id: #{answer_id}")
+    Answer.find(answer_id)
+
+    #Answer.find(1)
 
     # # @answer_ids = params[:answer_ids]
     # # @texts = params[:texts] || []

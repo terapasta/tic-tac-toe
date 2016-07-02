@@ -5,7 +5,15 @@ class TrainingsController < ApplicationController
   def show
   end
 
-  def edit
+  def new
+    @training = Training.new
+    @training.training_messages << TrainingMessage.start_message
+    if @training.save
+      flash[:notice] = '新しいスレッドが開始されました'
+    else
+      flash[:notice] = '新しいスレッドの開始に失敗しました'
+    end
+    render :show
   end
 
   def create
@@ -24,15 +32,9 @@ class TrainingsController < ApplicationController
     render :show
   end
 
-  def complete
-    # TODO ゴミデータが出来てしまう
-    @training = Training.create!
-    render :show
-  end
-
   private
     def set_training
-      @training = Training.last || Training.create!
+      @training = Training.last
     end
 
     def training_message_params

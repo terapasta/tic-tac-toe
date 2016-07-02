@@ -9,7 +9,7 @@
             <%= image_tag 'usao001.png', class: 'listen' %>
           </div>
           <div class="col-sm-8 balloon-1-left">
-            <% if @training.training_messages.last == training_message %>
+            <% if @training.training_messages.last == training_message # && !training_message.id == Answer::START_MESSAGE_ID %>
               <%= bootstrap_form_for [:trainings, training_message.answer] do |f| %>
                 <%= f.text_area :body, hide_label: true %>
                 <%= f.submit '更新する', class: 'btn btn-primary' %>
@@ -49,7 +49,7 @@
     <div class="col-sm-8 col-sm-offset-2 text-center comment-area">
       <%= f.text_field :body, placeholder: '質問を入れてください', hide_label: true %>
       <%= f.submit '質問する', class: 'btn btn-default' %>
-      <%= link_to 'このスレッドを完了する', trainings_complete_path, method: :post, class: 'btn btn-primary' %>
+      <%= link_to 'このスレッドを完了する', new_trainings_path, class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>

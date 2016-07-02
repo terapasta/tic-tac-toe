@@ -35,6 +35,7 @@ class Nlang:
     @classmethod
     def texts2vec(self, splited_texts, vocabulary_path):
         count_vectorizer = CountVectorizer()
+        print splited_texts
         feature_vectors = count_vectorizer.fit_transform(splited_texts)
         vocabulary = count_vectorizer.get_feature_names()
         #joblib.dump(vocabulary, 'learning/vocabulary/vocabulary.pkl')

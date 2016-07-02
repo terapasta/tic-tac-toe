@@ -51,16 +51,21 @@ class TrainingMessage:
                     elif len(training_set) == self.NUMBER_OF_CONTEXT:
                         training_set.append(training_message['body'])
                     elif len(training_set) == self.NUMBER_OF_CONTEXT + 1:
-                        training_set.append(training_message['answer_id'])
+                        print training_message['body']
+                        print training_message['answer_id']
+                        if training_message['answer_id'] is None:
+                            training_set.append(2) # TODO answer_idがNoneになってしまうケースがあるのでひとまず適当な値を入れる。必ずなおすこと。
+                        else:
+                            training_set.append(training_message['answer_id'])
+
+
 
                 if len(training_set) >= self.NUMBER_OF_CONTEXT + 2:
                     training_sets.append(training_set)
 
-        print training_sets
-
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
-        bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/vocabulary.pkl')
+        bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/vocabulary.pkl')  # TODO 定数化したい
         feature = self.__combine(training_sets, bodies_vec)
         return feature
 
@@ -71,12 +76,16 @@ class TrainingMessage:
         pre_training_id = None
 
         for training_message in self.training_messages:
-            if pre_training_id == training_message['training_id']:
+            if pre_training_id == training_message['training_id'] or pre_training_id is None:
                 tmp_training_messages.append(training_message)
             else:
                 trainings.append(tmp_training_messages)
                 tmp_training_messages = []
                 pre_training_id = training_message['training_id']
+
+        if tmp_training_messages:
+            trainings.append(tmp_training_messages)
+
         return trainings
 
     def __pad_none_data(self, training_messages):

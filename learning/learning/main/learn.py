@@ -6,30 +6,27 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
 from ..core.feature.training_message import TrainingMessage
+from ..core.plotter import Plotter
 
-#
-# from dataset import Dataset
-# from feature_builder import FeatureBuilder
-# # from predicter import Predicter
-#
 db = dataset.connect('mysql://root@localhost/donusagi_bot')
 training_set = TrainingMessage(db).build()
-
-
 
 # 学習する
 svm_tuned_parameters = [
     {
-        'kernel': ['rbf', 'linear'],
-        'gamma': [2**n for n in range(-15, 3)],
-        'C': [2**n for n in range(-5, 15)]
+        'kernel': ['rbf'],
+        'gamma': [2**n for n in range(-5, 3)],  # TODO 開発中はgridsearchの試行数を減らす
+        'C': [2**n for n in range(-5, 8)]
+        # 'kernel': ['rbf', 'linear'],
+        # 'gamma': [2**n for n in range(-15, 3)],
+        # 'C': [2**n for n in range(-5, 15)]
     }
 ]
 gscv = GridSearchCV(
     SVC(),
     svm_tuned_parameters,
-    #cv=2
-    cv=KFold(n=3),
+    cv=2,
+    #cv=KFold(n=3),
     n_jobs = 1,
     verbose = 3
 )
@@ -44,6 +41,8 @@ print training_set
 print(str(len(training_set)) + "件のトレーニングセットを学習しました")
 print svm_model  # 高パフォーマンスの学習モデル
 print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの値)
+
+Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())
 
 # 学習済みモデルをdumpする
 joblib.dump(svm_model, "learning/models/svm_model")

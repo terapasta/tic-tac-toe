@@ -11,12 +11,12 @@ class MyopeServer(RPCServer):
     #   context: [0, 1, 3, 1]
     #   body: 'こんにちは'
     def reply(self, context, body):
-        logging.basicConfig(filename="example.log",level=logging.DEBUG)
-        logging.debug('hogehoge')
+        # logging.basicConfig(filename="example.log",level=logging.DEBUG)
+        # logging.debug('hogehoge')
         X = list(context)
         X.append(body)
         result = Reply().predict([X])  # TODO 引数
-        logging.debug(result)
+        # logging.debug(result)
         return result[0]
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())

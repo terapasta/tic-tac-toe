@@ -26,7 +26,7 @@ class Nlang:
 
     @classmethod
     def batch_split(self, texts):
-        logging.debug('hogehoge')
+        #logging.debug('hogehoge')
         splited_texts = []
         for text in texts:
             splited_texts.append(self.split(text))

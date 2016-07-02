@@ -42,8 +42,8 @@ print(str(len(training_set)) + "件のトレーニングセットを学習しま
 print svm_model  # 高パフォーマンスの学習モデル
 print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの値)
 
-# TODO データが少ないすぎると落ちるので一旦コメントアウト
-#Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())
+# TODO データが少なすぎると落ちるので一旦コメントアウト
+Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())
 
 # 学習済みモデルをdumpする
 joblib.dump(svm_model, "learning/models/svm_model")

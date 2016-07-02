@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -
+import logging
 import MeCab
 
 class Nlang:
@@ -25,10 +26,11 @@ class Nlang:
     #
     @classmethod
     def split(self, text):
+        logging.debug('hogehoge7')
         #print text
         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
-        #text = text.encode("utf-8")
+        text = text.encode("utf-8")  # TODO コマンド実行だとエラーになる
         node = tagger.parseToNode(text)
         word_list = []
         while node:
@@ -43,6 +45,7 @@ class Nlang:
 
     @classmethod
     def batch_split(self, texts):
+        logging.debug('hogehoge6')
         splited_texts = []
         for text in texts:
             splited_texts.append(self.split(text))

@@ -1,6 +1,6 @@
 # DO NOT MODIFY THIS FILE, it was auto-generated.
 #
-# Date: 2016/07/02 19:25:19
+# Date: 2016/07/02 19:47:42
 # Seeding TrainingMessage
 # Written with the command:
 #
@@ -100,6 +100,53 @@ TrainingMessage.seed(:id,
   {"id"=>199, "training_id"=>20, "answer_id"=>18, "speaker"=>"bot", "body"=>"得意なのは、機械学習による人工知能開発とRuby on RailsによるWEBアプリケーション開発だよ"},
   {"id"=>200, "training_id"=>20, "answer_id"=>nil, "speaker"=>"guest", "body"=>"ミッションは何？"},
   {"id"=>201, "training_id"=>20, "answer_id"=>19, "speaker"=>"bot", "body"=>"会社のミッションは「作って人をしあわせにする」だよ"},
-  {"id"=>202, "training_id"=>21, "answer_id"=>1, "speaker"=>"bot", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"}
+  {"id"=>202, "training_id"=>21, "answer_id"=>1, "speaker"=>"bot", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"},
+  {"id"=>203, "training_id"=>22, "answer_id"=>1, "speaker"=>"bot", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"},
+  {"id"=>204, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"社長は？"},
+  {"id"=>205, "training_id"=>22, "answer_id"=>13, "speaker"=>"bot", "body"=>"原田敦だよ。FB: https://www.facebook.com/harada.at.sea4"},
+  {"id"=>206, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"オフィスはどこ？"},
+  {"id"=>207, "training_id"=>22, "answer_id"=>10, "speaker"=>"bot", "body"=>"渋谷だよ。住所は「東京都渋谷区南平台町13-15 LUMBER ONE 南平台ビル ANNEX 1F」"},
+  {"id"=>208, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"駅からどれくらい？"}
+)
+# BREAK EVAL
+TrainingMessage.seed(:id,
+  {"id"=>209, "training_id"=>22, "answer_id"=>11, "speaker"=>"bot", "body"=>"徒歩8分って書いてあるけど、実際には13分くらいかかる気がする"},
+  {"id"=>210, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"リモートOK?"},
+  {"id"=>211, "training_id"=>22, "answer_id"=>20, "speaker"=>"bot", "body"=>"リモートワークもOKだね"},
+  {"id"=>212, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"採用してる？"},
+  {"id"=>213, "training_id"=>22, "answer_id"=>21, "speaker"=>"bot", "body"=>"採用もやってるよ。応募よろ http://www.recruit.mof-mof.co.jp/"},
+  {"id"=>214, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"きみはだれ？"},
+  {"id"=>215, "training_id"=>22, "answer_id"=>33, "speaker"=>"bot", "body"=>"ぼくはどんうさぎって言うんだよ。おぼえておきな。"},
+  {"id"=>216, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"会話にならんね"},
+  {"id"=>217, "training_id"=>22, "answer_id"=>31, "speaker"=>"bot", "body"=>"今一生懸命勉強してるとこ"},
+  {"id"=>218, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"好きなことは？"},
+  {"id"=>219, "training_id"=>22, "answer_id"=>34, "speaker"=>"bot", "body"=>"ぼくはお酒を飲むのが好きだね"},
+  {"id"=>220, "training_id"=>22, "answer_id"=>nil, "speaker"=>"guest", "body"=>"どんなことやってる会社？"},
+  {"id"=>221, "training_id"=>22, "answer_id"=>18, "speaker"=>"bot", "body"=>"得意なのは、機械学習による人工知能開発とRuby on RailsによるWEBアプリケーション開発だよ"},
+  {"id"=>222, "training_id"=>23, "answer_id"=>1, "speaker"=>"bot", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"},
+  {"id"=>223, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"こんにちは"},
+  {"id"=>224, "training_id"=>23, "answer_id"=>28, "speaker"=>"bot", "body"=>"こんにちは！"},
+  {"id"=>225, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"アジャイルやってる？"},
+  {"id"=>226, "training_id"=>23, "answer_id"=>25, "speaker"=>"bot", "body"=>"アジャイル開発は得意だね。アジャイル関連コミュニティも主催してるしノウハウはたまってる。詳しく知りたければ代表のはらぱんに聞いてみて。"},
+  {"id"=>227, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"資本金は？"},
+  {"id"=>228, "training_id"=>23, "answer_id"=>16, "speaker"=>"bot", "body"=>"資本金は200万円だよ"},
+  {"id"=>229, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"オフィスはどこ"},
+  {"id"=>230, "training_id"=>23, "answer_id"=>10, "speaker"=>"bot", "body"=>"渋谷だよ。住所は「東京都渋谷区南平台町13-15 LUMBER ONE 南平台ビル ANNEX 1F」"},
+  {"id"=>231, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"ミッションは何？"},
+  {"id"=>232, "training_id"=>23, "answer_id"=>26, "speaker"=>"bot", "body"=>"ミッションは「新しいテクノロジーを使って新しい価値を創造し、より一般的なものにする」ことだよ。代表のはらぱんはけっこう気に入ってるみたいね。"},
+  {"id"=>233, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"ダメだな"},
+  {"id"=>234, "training_id"=>23, "answer_id"=>30, "speaker"=>"bot", "body"=>"ごめんよ。許せ。\r\n"},
+  {"id"=>235, "training_id"=>23, "answer_id"=>nil, "speaker"=>"guest", "body"=>"社長はどなた？"},
+  {"id"=>236, "training_id"=>23, "answer_id"=>13, "speaker"=>"bot", "body"=>"原田敦だよ。FB: https://www.facebook.com/harada.at.sea4"},
+  {"id"=>237, "training_id"=>24, "answer_id"=>1, "speaker"=>"bot", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"},
+  {"id"=>238, "training_id"=>24, "answer_id"=>nil, "speaker"=>"guest", "body"=>"オフィスどこ"},
+  {"id"=>239, "training_id"=>24, "answer_id"=>10, "speaker"=>"bot", "body"=>"渋谷だよ。住所は「東京都渋谷区南平台町13-15 LUMBER ONE 南平台ビル ANNEX 1F」"},
+  {"id"=>240, "training_id"=>24, "answer_id"=>nil, "speaker"=>"guest", "body"=>"徒歩どれくらい？"},
+  {"id"=>241, "training_id"=>24, "answer_id"=>11, "speaker"=>"bot", "body"=>"徒歩8分って書いてあるけど、実際には13分くらいかかる気がする"},
+  {"id"=>242, "training_id"=>24, "answer_id"=>nil, "speaker"=>"guest", "body"=>"社長はだれ"},
+  {"id"=>243, "training_id"=>24, "answer_id"=>13, "speaker"=>"bot", "body"=>"原田敦だよ。FB: https://www.facebook.com/harada.at.sea4"},
+  {"id"=>244, "training_id"=>24, "answer_id"=>nil, "speaker"=>"guest", "body"=>"どんな実績ある？"},
+  {"id"=>245, "training_id"=>24, "answer_id"=>23, "speaker"=>"bot", "body"=>"電子書籍プラットフォームとか、女性向けファッションメディアとか、中小企業向け採用サービスとか作ってたね。全部じゃないけど実績情報もあるから見てね。 http://www.mof-mof.co.jp/voice"},
+  {"id"=>246, "training_id"=>25, "answer_id"=>1, "speaker"=>"bot", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"}
 )
 # End auto-generated file.

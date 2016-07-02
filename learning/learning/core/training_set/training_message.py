@@ -6,6 +6,7 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 
 class TrainingMessage:
+    NUMBER_OF_CONTEXT = 1
 
     def __init__(self, db):
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
@@ -38,25 +39,24 @@ class TrainingMessage:
         training_sets = []
 
         for tmp_training_set in trainings:
-            tmp_training_set.insert(0, dict(answer_id=0, body=''))
-            tmp_training_set.insert(0, dict(answer_id=0, body=''))
-            tmp_training_set.insert(0, dict(answer_id=0, body=''))
-
+            self.__pad_none_data(tmp_training_set)
             answer_id_indexs = self.__lookup_anser_indexs(tmp_training_set)
 
             for answer_id_index in answer_id_indexs:
                 training_set = []
                 for training_message in tmp_training_set[answer_id_index:]:
-                    if len(training_set) < 4:
+                    if len(training_set) < self.NUMBER_OF_CONTEXT:
                         if training_message['answer_id'] is not None:
                             training_set.append(training_message['answer_id'])
-                    elif len(training_set) == 4:
+                    elif len(training_set) == self.NUMBER_OF_CONTEXT:
                         training_set.append(training_message['body'])
-                    elif len(training_set) == 5:
+                    elif len(training_set) == self.NUMBER_OF_CONTEXT + 1:
                         training_set.append(training_message['answer_id'])
 
-                if len(training_set) >= 6:
+                if len(training_set) >= self.NUMBER_OF_CONTEXT + 2:
                     training_sets.append(training_set)
+
+        print training_sets
 
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
@@ -78,6 +78,11 @@ class TrainingMessage:
                 tmp_training_messages = []
                 pre_training_id = training_message['training_id']
         return trainings
+
+    def __pad_none_data(self, training_messages):
+        if self.NUMBER_OF_CONTEXT >= 2:
+            for i in range(0, self.NUMBER_OF_CONTEXT - 1):
+                training_messages.insert(0, dict(answer_id=0, body=''))
 
     def __lookup_anser_indexs(self, training_messages):
         answer_id_indexs = []

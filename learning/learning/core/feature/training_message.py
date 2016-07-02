@@ -1,17 +1,39 @@
 # -*- coding: utf-8 -
-# import MeCab
-# import sqlite3
-# from tinydb import TinyDB, Query
-#
+import MeCab
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.externals import joblib
+
 class TrainingMessage:
 
     def __init__(self, db):
         #self.trainings = db['trainings'].all()
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
 
-    # TODO どういうデータを作成したいのかコメント入れる
     # TODO メソッドに分割する
     # TODO numpyのarrayを使う
+    #
+    # DBのテーブルを検索した結果をfeatureとして使える形式に整形する
+    #
+    # +----+-------------+-----------+---------+--------------------------------------------------+
+    # | id | training_id | answer_id | speaker | body                                             |
+    # +----+-------------+-----------+---------+--------------------------------------------------+
+    # |  1 |           1 |      NULL | guest   | おーい                                           |
+    # |  2 |           1 |         2 | bot     | はーい。なんですか？                             |
+    # |  3 |           1 |      NULL | guest   | 最近調子はどう？                                 |
+    # |  4 |           1 |         3 | bot     | ぼちぼちでんな                                   |
+    # |  5 |           1 |      NULL | guest   | 儲かってるってこと？                             |
+    # |  6 |           1 |         4 | bot     | まあそれもぼちぼちってこっちゃ。                 |
+    # |  7 |           1 |      NULL | guest   | じゃあきっといいもの食べてるね？                 |
+    # |  8 |           1 |         5 | bot     | まあね。カニとか食べるよ                         |
+    # +----+-------------+-----------+---------+--------------------------------------------------+
+    #
+    # => 下記のようなデータに整形する
+    #
+    # [[0, 0, 0, 0, 'おーい', 2],
+    # [0, 0, 0, 2, '最近調子はどう？', 3],
+    # [0, 0, 2, 3, '儲かってるってこと？', 4],
+    # [0, 2, 3, 4, 'じゃあきっといいもの食べてるよね？', 5]]
     def build(self):
         # trainingごとのtraining_messageに分ける
         tmp_training_sets = []
@@ -64,44 +86,60 @@ class TrainingMessage:
                 if len(training_set) >= 6:
                     training_sets.append(training_set)
 
-        print training_sets
-        return training_sets
+        #print training_sets
+        bodies = self.__extract_bodies(training_sets)
+        bodies = self.__split_bodies(bodies)
+        bodies_vec = self.__texts2vec(bodies)
+        feature = self.__combine(training_sets, bodies_vec)
+
+        #print bodies_vec.toarray()
+        #print feature
+        return feature
+
+    def __extract_bodies(self, training_sets):
+        bodies = []
+        for training_set in training_sets:
+            bodies.append(training_set[-2])
+
+        return bodies
+
+    def __split_bodies(self, bodies):
+        splited_bodies = []
+        for body in bodies:
+            splited_bodies.append(self.split(body))
+        return splited_bodies
 
     # TODO 共通化しておく
-    def __texts2vec(self, texts):
+    def __texts2vec(self, splited_texts):
         count_vectorizer = CountVectorizer()
-        feature_vectors = count_vectorizer.fit_transform(self.dataset.splited_texts)  # TODO
-        self.vocabulary = count_vectorizer.get_feature_names()
+        feature_vectors = count_vectorizer.fit_transform(splited_texts)
+        vocabulary = count_vectorizer.get_feature_names()  # TODO vocabularyは保存する必要がある
+        joblib.dump(vocabulary, 'learning/vocabulary/vocabulary.pkl')
+        return feature_vectors
 
-        #pdb.set_trace()
-        features_array = feature_vectors.toarray()
-        features = np.c_[self.dataset.answer_id2s, features_array]
-        features = np.c_[self.dataset.answer_id1s, features]
-        return features
+    def __combine(self, training_sets, bodies_vec):
+        tmp_training_sets = np.array(training_sets)
+        #labels = tmp_training_sets
+        #tmp_bodies_vec = np.array(bodies_vec)
+        #tmp_training_sets = np.delete(tmp_training_sets, -2, 1)
+        #feature = np.c_[tmp_training_sets[:,:-2], tmp_bodies_vec, tmp_training_sets[:,-1:]]
+        feature = np.c_[tmp_training_sets[:,:-2], bodies_vec.toarray(), tmp_training_sets[:,-1:]]
+        return feature
 
-
-            # for training_message in training['training_messages']:
-            #     print training_message.body
-
-#         for record in results:
-#             self.lines.append(record)
-#             self.texts.append(record['text'])
-#             self.category_ids.append(record['category_id'])
-#             self.splited_texts.append(self.split(record['text']))
-#             self.labels.append(record['label'])
-#
-#     def split(self, text):
-#         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
-#         tagger = MeCab.Tagger("-u dict/custom.dic")
-#         text = text.encode("utf-8")
-#         node = tagger.parseToNode(text)
-#         word_list = []
-#         while node:
-#             pos = node.feature.split(",")[0]
-#             if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞"]:
-#                 lemma = node.feature.split(",")[6].decode("utf-8")
-#                 if lemma == u"*":
-#                     lemma = node.surface.decode("utf-8")
-#                 word_list.append(lemma)
-#             node = node.next
-#         return u" ".join(word_list)
+    # TODO 共通化しておく
+    def split(self, text):
+        #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
+        #tagger = MeCab.Tagger("-u dict/custom.dic")
+        tagger = MeCab.Tagger()  # TODO customを使いたい
+        #text = text.encode("utf-8")
+        node = tagger.parseToNode(text)
+        word_list = []
+        while node:
+            pos = node.feature.split(",")[0]
+            if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞"]:
+                lemma = node.feature.split(",")[6].decode("utf-8")
+                if lemma == u"*":
+                    lemma = node.surface.decode("utf-8")
+                word_list.append(lemma)
+            node = node.next
+        return u" ".join(word_list)

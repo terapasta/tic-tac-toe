@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -
+# import MeCab
+import numpy as np
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.externals import joblib
+from ..nlang import Nlang
+
+class Reply:
+
+    def __init__(self):
+        self.estimator = joblib.load("learning/models/svm_model")  # TODO 定数化したい
+        self.vocabulary = joblib.load("learning/vocabulary/vocabulary.pkl")
+
+    def predict(self, X):
+        #logging.basicConfig(filename="example.log",level=logging.DEBUG)
+        #Xtrain = pd.Series(X)
+        Xtrain = np.array(X)
+        Xtrain = self.__replace_text2vec(Xtrain)
+        return self.estimator.predict(Xtrain)
+
+    def __replace_text2vec(self, Xtrain):
+        texts = Xtrain[:,-1:].flatten()
+        splited_texts = Nlang.batch_split(texts)
+
+        count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
+        texts_vec = count_vectorizer.transform(splited_texts)
+        texts_vec = texts_vec.toarray()
+
+        feature = np.c_[Xtrain[:,:-1], texts_vec]
+        return feature

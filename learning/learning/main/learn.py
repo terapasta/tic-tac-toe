@@ -5,7 +5,7 @@ from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
-from ..core.feature.training_message import TrainingMessage
+from ..core.training_set.training_message import TrainingMessage
 from ..core.plotter import Plotter
 
 db = dataset.connect('mysql://root@localhost/donusagi_bot')

@@ -10,7 +10,6 @@ class TrainingMessage:
         #self.trainings = db['trainings'].all()
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
 
-    # TODO メソッドに分割する
     # TODO numpyのarrayを使う
     #
     # DBのテーブルを検索した結果をfeatureとして使える形式に整形する
@@ -35,42 +34,15 @@ class TrainingMessage:
     # [0, 0, 2, 3, '儲かってるってこと？', 4],
     # [0, 2, 3, 4, 'じゃあきっといいもの食べてるよね？', 5]]
     def build(self):
-        # trainingごとのtraining_messageに分ける
-        tmp_training_sets = []
-        tmp_training_set = []
-        pre_training_id = None
-
-        for training_message in self.training_messages:
-            if pre_training_id == training_message['training_id']:
-                tmp_training_set.append(training_message)
-
-            else:
-                tmp_training_sets.append(tmp_training_set)
-                tmp_training_set = []
-                pre_training_id = training_message['training_id']
-
-        #print tmp_training_sets
-
-        # answerのindexの配列を取得する
-        #tmp_training_sets[2].insert(0, dict(answer_id=0, body=''))
-        # answer_id_indexs = []
-        # for index, training_message in enumerate(tmp_training_sets[2]):
-        #     if training_message['answer_id'] is not None:
-        #         answer_id_indexs.append(index)
-        #
-        # print answer_id_indexs
-
+        trainings = self.__partition_each_training(self.training_messages)
         training_sets = []
 
-        for tmp_training_set in tmp_training_sets:
+        for tmp_training_set in trainings:
             tmp_training_set.insert(0, dict(answer_id=0, body=''))
             tmp_training_set.insert(0, dict(answer_id=0, body=''))
             tmp_training_set.insert(0, dict(answer_id=0, body=''))
 
-            answer_id_indexs = []
-            for index, training_message in enumerate(tmp_training_set):
-                if training_message['answer_id'] is not None:
-                    answer_id_indexs.append(index)
+            answer_id_indexs = self.__lookup_anser_indexs(tmp_training_set)
 
             for answer_id_index in answer_id_indexs:
                 training_set = []
@@ -86,15 +58,32 @@ class TrainingMessage:
                 if len(training_set) >= 6:
                     training_sets.append(training_set)
 
-        #print training_sets
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
         bodies_vec = self.__texts2vec(bodies)
         feature = self.__combine(training_sets, bodies_vec)
-
-        #print bodies_vec.toarray()
-        #print feature
         return feature
+
+    # trainingごとのtraining_messageに分ける
+    def __partition_each_training(self, training_messages):
+        trainings = []
+        tmp_training_messages = []
+        pre_training_id = None
+
+        for training_message in self.training_messages:
+            if pre_training_id == training_message['training_id']:
+                tmp_traning_messages.append(training_message)
+            else:
+                trainings.append(tmp_traning_messages)
+                tmp_training_messages = []
+                pre_training_id = training_message['training_id']
+
+    def __lookup_anser_indexs(self, training_messages):
+        answer_id_indexs = []
+        for index, training_message in enumerate(training_messages):
+            if training_message['answer_id'] is not None:
+                answer_id_indexs.append(index)
+        return answer_id_indexs
 
     def __extract_bodies(self, training_sets):
         bodies = []

@@ -11,9 +11,9 @@ Rails.application.routes.draw do
     resources :answers, only: [:update] do
       member do
         post :replace
-        patch :replace_exists 
       end
     end
+    resources :training_messages, only: [:update]
   end
   root 'chats#show'
 end

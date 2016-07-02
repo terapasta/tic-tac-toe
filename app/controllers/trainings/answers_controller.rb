@@ -9,13 +9,6 @@ class Trainings::AnswersController < ApplicationController
     redirect_to trainings_path, notice: '回答を差し替えました'
   end
 
-  def replace_exists
-    #answer = Answer.create!(answer_params.merge(context_id: 1))  # TODO ダミーのcontext_id
-    training_message = TrainingMessage.find(params[:id])
-    training_message.update!(answer_id: training_message_params[:answer_id])
-    redirect_to trainings_path, notice: '回答を差し替えました'
-  end
-
   def update
     if @answer.update(answer_params)
       flash[:notice] = '回答を更新しました'

@@ -14,12 +14,12 @@ training_set = TrainingMessage(db).build()
 # 学習する
 svm_tuned_parameters = [
     {
-        'kernel': ['rbf'],
-        'gamma': [2**n for n in range(-5, 3)],  # TODO 開発中はgridsearchの試行数を減らす
-        'C': [2**n for n in range(-5, 8)]
-        # 'kernel': ['rbf', 'linear'],
-        # 'gamma': [2**n for n in range(-15, 3)],
-        # 'C': [2**n for n in range(-5, 15)]
+        # 'kernel': ['rbf'],
+        # 'gamma': [2**n for n in range(-5, 3)],  # TODO 開発中はgridsearchの試行数を減らす
+        # 'C': [2**n for n in range(-5, 8)]
+        'kernel': ['rbf', 'linear'],
+        'gamma': [2**n for n in range(-15, 3)],
+        'C': [2**n for n in range(-5, 15)]
     }
 ]
 gscv = GridSearchCV(

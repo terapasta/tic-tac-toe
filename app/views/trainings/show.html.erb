@@ -15,7 +15,7 @@
                 <%= f.submit '更新する', class: 'btn btn-primary' %>
               <% end %>
               <br />
-              <%= bootstrap_form_for training_message, url: replace_exists_trainings_answer_path(training_message) do |f| %>
+              <%= bootstrap_form_for [:trainings, training_message] do |f| %>
                 <%= f.collection_select :answer_id, Answer.all, :id, :body %>
                 <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
               <% end %>

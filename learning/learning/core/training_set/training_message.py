@@ -3,11 +3,11 @@ import MeCab
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
+from ..nlang import Nlang
 
 class TrainingMessage:
 
     def __init__(self, db):
-        #self.trainings = db['trainings'].all()
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
 
     # TODO numpyのarrayを使う
@@ -60,7 +60,7 @@ class TrainingMessage:
 
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
-        bodies_vec = self.__texts2vec(bodies)
+        bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/vocabulary.pkl')
         feature = self.__combine(training_sets, bodies_vec)
         return feature
 
@@ -72,11 +72,12 @@ class TrainingMessage:
 
         for training_message in self.training_messages:
             if pre_training_id == training_message['training_id']:
-                tmp_traning_messages.append(training_message)
+                tmp_training_messages.append(training_message)
             else:
-                trainings.append(tmp_traning_messages)
+                trainings.append(tmp_training_messages)
                 tmp_training_messages = []
                 pre_training_id = training_message['training_id']
+        return trainings
 
     def __lookup_anser_indexs(self, training_messages):
         answer_id_indexs = []
@@ -95,16 +96,8 @@ class TrainingMessage:
     def __split_bodies(self, bodies):
         splited_bodies = []
         for body in bodies:
-            splited_bodies.append(self.split(body))
+            splited_bodies.append(Nlang.split(body))
         return splited_bodies
-
-    # TODO 共通化しておく
-    def __texts2vec(self, splited_texts):
-        count_vectorizer = CountVectorizer()
-        feature_vectors = count_vectorizer.fit_transform(splited_texts)
-        vocabulary = count_vectorizer.get_feature_names()  # TODO vocabularyは保存する必要がある
-        joblib.dump(vocabulary, 'learning/vocabulary/vocabulary.pkl')
-        return feature_vectors
 
     def __combine(self, training_sets, bodies_vec):
         tmp_training_sets = np.array(training_sets)
@@ -114,21 +107,3 @@ class TrainingMessage:
         #feature = np.c_[tmp_training_sets[:,:-2], tmp_bodies_vec, tmp_training_sets[:,-1:]]
         feature = np.c_[tmp_training_sets[:,:-2], bodies_vec.toarray(), tmp_training_sets[:,-1:]]
         return feature
-
-    # TODO 共通化しておく
-    def split(self, text):
-        #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
-        #tagger = MeCab.Tagger("-u dict/custom.dic")
-        tagger = MeCab.Tagger()  # TODO customを使いたい
-        #text = text.encode("utf-8")
-        node = tagger.parseToNode(text)
-        word_list = []
-        while node:
-            pos = node.feature.split(",")[0]
-            if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞"]:
-                lemma = node.feature.split(",")[6].decode("utf-8")
-                if lemma == u"*":
-                    lemma = node.surface.decode("utf-8")
-                word_list.append(lemma)
-            node = node.next
-        return u" ".join(word_list)

@@ -1,36 +1,17 @@
 # -*- coding: utf-8 -
-import logging
 import MeCab
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.externals import joblib
 
 class Nlang:
     #UNIDIC_PATH = '/usr/local/lib/mecab/dic/unidic/'
 
-    # def __init__(self, db=None):
-    #     if db is None:
-    #       return
-    #     self.lines = []
-    #     self.texts = []
-    #     self.category_ids = []
-    #     self.splited_texts = []
-    #     self.labels = []
-    #     self.load_from_tinydb(db)
-    #
-    # def load_from_tinydb(self, tinydb):
-    #     results = tinydb.all()
-    #     for record in results:
-    #         self.lines.append(record)
-    #         self.texts.append(record['text'])
-    #         self.category_ids.append(record['category_id'])
-    #         self.splited_texts.append(self.split(record['text']))
-    #         self.labels.append(record['label'])
-    #
     @classmethod
     def split(self, text):
-        logging.debug('hogehoge7')
         #print text
         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
-        text = text.encode("utf-8")  # TODO コマンド実行だとエラーになる
+        #text = text.encode("utf-8")  # TODO コマンド実行だとエラーになる
         node = tagger.parseToNode(text)
         word_list = []
         while node:
@@ -45,8 +26,17 @@ class Nlang:
 
     @classmethod
     def batch_split(self, texts):
-        logging.debug('hogehoge6')
+        logging.debug('hogehoge')
         splited_texts = []
         for text in texts:
             splited_texts.append(self.split(text))
         return splited_texts
+
+    @classmethod
+    def texts2vec(self, splited_texts, vocabulary_path):
+        count_vectorizer = CountVectorizer()
+        feature_vectors = count_vectorizer.fit_transform(splited_texts)
+        vocabulary = count_vectorizer.get_feature_names()
+        #joblib.dump(vocabulary, 'learning/vocabulary/vocabulary.pkl')
+        joblib.dump(vocabulary, vocabulary_path)
+        return feature_vectors

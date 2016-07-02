@@ -12,7 +12,7 @@ class TrainingsController < ApplicationController
     training_message = @training.training_messages.build(training_message_params)
     training_message.speaker = 'guest'
 
-    answer = Conversation.reply(training_message)
+    answer = Conversation.new(training_message).reply
     @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @training.save!
 

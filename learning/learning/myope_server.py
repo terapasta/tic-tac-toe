@@ -14,7 +14,7 @@ class MyopeServer(RPCServer):
         # logging.basicConfig(filename="example.log",level=logging.DEBUG)
         # logging.debug('hogehoge')
         X = list(context)
-        X.append(body)
+        X.append(body.encode('utf-8'))
         result = Reply().predict([X])  # TODO 引数
         # logging.debug(result)
         return result[0]

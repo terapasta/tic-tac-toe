@@ -9,7 +9,7 @@ class ChatsController < ApplicationController
     guest_message = @chat.messages.build(message_params)
     guest_message.speaker = 'guest'
 
-    answer = Conversation.reply(guest_message)
+    answer = Conversation.new(guest_message).reply
 
     @chat.messages.build(speaker: 'bot', body: answer.body)
     @chat.save

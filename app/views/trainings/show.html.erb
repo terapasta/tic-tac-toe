@@ -1,46 +1,10 @@
-<% # TODO chatsとほぼ同じ画面なので共通化したい %>
 <div class="container">
   <div class="col-sm-8 col-sm-offset-2">
     <% @training.training_messages.each do |training_message| %>
       <% if training_message.bot? %>
-        <div class="row">
-          <div class="col-sm-2 text-center">
-            どんうさぎ<br />
-            <%= image_tag 'usao001.png', class: 'listen' %>
-          </div>
-          <div class="col-sm-8 balloon-1-left">
-            <% if @training.training_messages.last == training_message # && !training_message.id == Answer::START_MESSAGE_ID %>
-              <span id="last-message" />
-              <%= bootstrap_form_for [:trainings, training_message.answer] do |f| %>
-                <%= f.text_area :body, hide_label: true %>
-                <%= f.submit '更新する', class: 'btn btn-primary' %>
-              <% end %>
-              <br />
-              <%= bootstrap_form_for [:trainings, training_message] do |f| %>
-                <%= f.collection_select :answer_id, Answer.all, :id, :body %>
-                <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
-              <% end %>
-              <br />
-              <%= bootstrap_form_for Answer.new, url: replace_trainings_answer_path(training_message) do |f| %>
-                <%= f.text_area :body, hide_label: true %>
-                <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
-              <% end %>
-            <% else %>
-              <%= simple_format(training_message.body) %>
-            <% end %>
-          </div>
-          <div class="col-sm-2"></div>
-        </div>
+        <%= render 'chats/bot', messages: @training.training_messages, message: training_message %>
       <% elsif training_message.guest? %>
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2 balloon-1-right">
-            <%= training_message.body %>
-          </div>
-          <div class="col-sm-2 text-center">
-            あなた<br />
-            <%= image_tag 'silhouette.png', class: 'listen' %>
-          </div>
-        </div>
+        <%= render 'chats/guest', message: training_message %>
       <% end %>
       <br />
     <% end %>

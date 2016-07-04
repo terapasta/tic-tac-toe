@@ -31,19 +31,19 @@ gscv = GridSearchCV(
     verbose = 3
 )
 
-# print training_set[:,:-1]
-# print training_set[:,-1:].flatten()
-#
-# gscv.fit(training_set[:,:-1], training_set[:,-1:].flatten())  # HACK training_setをオブジェクトにしたい
-# svm_model = gscv.best_estimator_
-#
-# print training_set
-# print(str(len(training_set)) + "件のトレーニングセットを学習しました")
-# print svm_model  # 高パフォーマンスの学習モデル
-# print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの値)
-#
-# # 学習済みモデルをdumpする
-# joblib.dump(svm_model, "learning/models/svm_model")
-#
-# # TODO データが少なすぎると落ちるので一旦コメントアウト
-# Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())
+print training_set[:,:-1]
+print training_set[:,-1:].flatten()
+
+gscv.fit(training_set[:,:-1], training_set[:,-1:].flatten())  # HACK training_setをオブジェクトにしたい
+svm_model = gscv.best_estimator_
+
+print training_set
+print(str(len(training_set)) + "件のトレーニングセットを学習しました")
+print svm_model  # 高パフォーマンスの学習モデル
+print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの値)
+
+# 学習済みモデルをdumpする
+joblib.dump(svm_model, "learning/models/svm_model")
+
+# TODO データが少なすぎると落ちるので一旦コメントアウト
+#Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -
-#import logging
+import logging
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -22,16 +22,20 @@ class Reply:
         return self.estimator.predict(Xtrain)
 
     def __replace_text2vec(self, Xtrain):
+        logging.basicConfig(filename="example.log",level=logging.DEBUG)
         #logging.debug('hogehoge2')
         #logging.debug(Xtrain)
         texts = Xtrain[:,-1:].flatten()
         splited_texts = Nlang.batch_split(texts)
 
+
         #logging.debug('hogehoge3')
         count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
         texts_vec = count_vectorizer.transform(splited_texts)
         texts_vec = texts_vec.toarray()
-        #logging.debug('hogehoge4')
+
+        logging.debug(splited_texts[0])
+        logging.debug(texts_vec)
 
         feature = np.c_[Xtrain[:,:-1], texts_vec]
         return feature

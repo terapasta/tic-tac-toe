@@ -31,10 +31,11 @@ gscv = GridSearchCV(
     verbose = 3
 )
 
-print training_set[:,:-1]
-print training_set[:,-1:].flatten()
+X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
+y = training_set[:,-1:].flatten()
+print "y: " + str(y)
 
-gscv.fit(training_set[:,:-1], training_set[:,-1:].flatten())  # HACK training_setをオブジェクトにしたい
+gscv.fit(X, y)
 svm_model = gscv.best_estimator_
 
 print training_set

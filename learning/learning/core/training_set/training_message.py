@@ -6,7 +6,7 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 
 class TrainingMessage:
-    NUMBER_OF_CONTEXT = 1
+    NUMBER_OF_CONTEXT = 0
 
     def __init__(self, db):
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
@@ -44,21 +44,17 @@ class TrainingMessage:
 
             for answer_id_index in answer_id_indexs:
                 training_set = []
+
                 for training_message in tmp_training_set[answer_id_index:]:
                     if len(training_set) < self.NUMBER_OF_CONTEXT:
                         if training_message['answer_id'] is not None:
                             training_set.append(training_message['answer_id'])
                     elif len(training_set) == self.NUMBER_OF_CONTEXT:
-                        training_set.append(training_message['body'])
-                    elif len(training_set) == self.NUMBER_OF_CONTEXT + 1:
-                        print training_message['body']
-                        print training_message['answer_id']
                         if training_message['answer_id'] is None:
-                            training_set.append(2) # TODO answer_idがNoneになってしまうケースがあるのでひとまず適当な値を入れる。必ずなおすこと。
-                        else:
+                            training_set.append(training_message['body'])
+                    elif len(training_set) == self.NUMBER_OF_CONTEXT + 1:
+                        if training_message['answer_id'] is not None:
                             training_set.append(training_message['answer_id'])
-
-
 
                 if len(training_set) >= self.NUMBER_OF_CONTEXT + 2:
                     training_sets.append(training_set)

@@ -1,5 +1,5 @@
 class Conversation
-  NUMBER_OF_CONTEXT = 1
+  NUMBER_OF_CONTEXT = 0
 
   def initialize(message)
     @message = message
@@ -18,6 +18,7 @@ class Conversation
 
   private
     def build_context
+      return [] if NUMBER_OF_CONTEXT < 0
       messages = @ModelClass.where('answer_id is not null').order('id desc').limit(NUMBER_OF_CONTEXT)
       answer_ids = messages.pluck(:answer_id)
       Array.new(NUMBER_OF_CONTEXT).fill(0).concat(answer_ids)[-NUMBER_OF_CONTEXT, NUMBER_OF_CONTEXT]

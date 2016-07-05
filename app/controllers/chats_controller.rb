@@ -1,24 +1,30 @@
 class ChatsController < ApplicationController
-  before_action :set_chat, only: :show
+  before_action :set_chat, only: [:show, :destroy]
+  before_action :set_guest_key
 
   def show
+    redirect_to new_chats_path if @chat.nil?
   end
 
   def new
-    @chat = Chat.new(thread_key: 'DUMMY')
+    @chat = Chat.new(guest_key: session[:guest_key])
     @chat.messages << Message.start_message
     @chat.save!
     render :show
   end
 
   def destroy
-    Chat.last.messages.destroy_all
-    redirect_to new_chat_path
+    flash[:notice] = 'クリアしました'
+    redirect_to new_chats_path
   end
 
   private
     def set_chat
-      @chat = Chat.find(params[:id])
+      @chat = Chat.where(guest_key: session[:guest_key]).last
+    end
+
+    def set_guest_key
+      session[:guest_key] ||= SecureRandom.hex(64)
     end
 
     def message_params

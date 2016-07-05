@@ -8,12 +8,12 @@ class Chats::MessagesController < ApplicationController
     answer = Conversation.new(message).reply
     @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @chat.save!
-    redirect_to chat_path(@chat)
+    redirect_to chats_path
   end
 
   private
     def set_chat
-      @chat = Chat.find(params[:chat_id])
+      @chat = Chat.where(guest_key: session[:guest_key]).last
     end
 
     def message_params

@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20160701030316) do
   add_index "answers", ["context_id"], name: "index_answers_on_context_id", using: :btree
 
   create_table "chats", force: :cascade do |t|
-    t.string   "thread_key", limit: 255, null: false
+    t.string   "guest_key",  limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

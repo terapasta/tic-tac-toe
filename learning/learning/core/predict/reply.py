@@ -21,7 +21,7 @@ class Reply:
         max_probability = np.max(probabilities)
         if self.NO_CLASSIFIED_THRESHOLD > max_probability:
             return None
-        return self.estimator.predict(Xtrain)
+        return self.estimator.predict(Xtrain)[0]
 
     def __replace_text2vec(self, Xtrain):
         logging.basicConfig(filename="example.log",level=logging.DEBUG)

@@ -7,6 +7,7 @@ from ..nlang import Nlang
 
 class TrainingMessage:
     NUMBER_OF_CONTEXT = 0
+    NO_CLASSIFIED_MESSAGE_ID = 27
 
     def __init__(self, db):
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
@@ -59,6 +60,7 @@ class TrainingMessage:
                 if len(training_set) >= self.NUMBER_OF_CONTEXT + 2:
                     training_sets.append(training_set)
 
+        training_sets = self.__except_no_classified(training_sets)
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
         bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/vocabulary.pkl')  # TODO 定数化したい
@@ -95,6 +97,9 @@ class TrainingMessage:
             if training_message['answer_id'] is not None:
                 answer_id_indexs.append(index)
         return answer_id_indexs
+
+    def __except_no_classified(self, training_messages):
+        return filter(lambda tm: tm[-1] != self.NO_CLASSIFIED_MESSAGE_ID, training_messages)
 
     def __extract_bodies(self, training_sets):
         bodies = []

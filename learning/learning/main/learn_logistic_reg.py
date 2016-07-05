@@ -15,6 +15,8 @@ training_set = TrainingMessage(db).build()
 X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
 y = training_set[:,-1:].flatten()
 
+print y
+
 logreg = linear_model.LogisticRegression(C=1e5)
 logreg.fit(X, y)
 

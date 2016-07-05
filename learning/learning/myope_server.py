@@ -17,7 +17,7 @@ class MyopeServer(RPCServer):
         X.append(body.encode('utf-8'))
         result = Reply().predict([X])  # TODO 引数
         # logging.debug(result)
-        return result[0]
+        return result
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())
 server.serve_forever()

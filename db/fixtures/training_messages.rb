@@ -71,4 +71,6 @@ TrainingMessage.seed(:id,
   {"id"=>62, "training_id"=>2, "answer_id"=>25, "speaker"=>"bot", "body"=>"ぼくはお酒を飲むのが好きだね"},
   {"id"=>63, "training_id"=>2, "answer_id"=>nil, "speaker"=>"guest", "body"=>"どんなお酒飲むの？"},
   {"id"=>64, "training_id"=>2, "answer_id"=>26, "speaker"=>"bot", "body"=>"ぼくは日本酒とか焼酎が好きだね。今度一緒に飲むかい？"},
+  {"id"=>65, "training_id"=>2, "answer_id"=>nil, "speaker"=>"guest", "body"=>"駅からどれくらい？"},
+  {"id"=>65, "training_id"=>2, "answer_id"=>3, "speaker"=>"bot", "body"=>"徒歩8分って書いてあるけど、実際には13分くらいかかる気がする"},
 )

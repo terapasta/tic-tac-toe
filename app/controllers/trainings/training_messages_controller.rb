@@ -1,6 +1,6 @@
 class Trainings::TrainingMessagesController < ApplicationController
   before_action :authenticate_admin_user!
-  before_action :set_training  #, only: [:update]
+  before_action :set_training
   #
   def create
     training_message = @training.training_messages.build(training_message_params)
@@ -20,7 +20,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     else
       flash[:notice] = '回答の差し替えに失敗しました'
     end
-    redirect_to trainings_path
+    redirect_to training_path(@training)
   end
 
   private

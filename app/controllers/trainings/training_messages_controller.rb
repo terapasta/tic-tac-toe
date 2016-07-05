@@ -9,8 +9,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     answer = Conversation.new(training_message).reply
     @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @training.save!
-
-    render :show
+    redirect_to training_path(@training)
   end
 
   def update
@@ -34,6 +33,6 @@ class Trainings::TrainingMessagesController < ApplicationController
   #   end
   #
     def training_message_params
-      params.require(:training_message).permit(:answer_id)
+      params.require(:training_message).permit(:answer_id, :body)
     end
 end

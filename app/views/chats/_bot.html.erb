@@ -6,10 +6,10 @@
   <div class="col-sm-8 balloon-1-left">
     <% if message.class == TrainingMessage && messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID %>
       <span id="last-message" />
-      <%#= bootstrap_form_for [:trainings, message.answer] do |f| %>
-        <%#= f.text_area :body, hide_label: true %>
-        <%#= f.submit '更新する', class: 'btn btn-primary' %>
-      <%# end %>
+      <%= bootstrap_form_for [message.training, message.answer] do |f| %>
+        <%= f.text_area :body, hide_label: true %>
+        <%= f.submit '更新する', class: 'btn btn-primary' %>
+      <% end %>
       <br />
       <%#= bootstrap_form_for [:trainings, message] do |f| %>
         <%#= f.collection_select :answer_id, Answer.all, :id, :body %>

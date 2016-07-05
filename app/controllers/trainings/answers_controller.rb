@@ -1,13 +1,13 @@
 class Trainings::AnswersController < ApplicationController
   before_action :authenticate_admin_user!
-  # before_action :set_training
+  before_action :set_training
   before_action :set_answer, only: [:update]
 
   def replace
     answer = Answer.create!(answer_params.merge(context_id: Context::DUMMY_ID))  # HACK ダミーのcontext_id
     training_message = TrainingMessage.find(params[:id])
     training_message.update!(answer_id: answer.id, body: answer.body)
-    redirect_to training_path(params[:training_id]), notice: '回答を差し替えました'
+    redirect_to training_path(@training), notice: '回答を差し替えました'
   end
 
   def update
@@ -16,7 +16,7 @@ class Trainings::AnswersController < ApplicationController
     else
       flash[:notice] = '回答の更新に失敗しました'
     end
-    redirect_to trainings_path
+    redirect_to training_path(@training)
   end
 
   private
@@ -24,9 +24,9 @@ class Trainings::AnswersController < ApplicationController
       @answer = Answer.find(params[:id])
     end
 
-    # def set_training
-    #   @training = Training.find(params[:training_id])
-    # end
+    def set_training
+      @training = Training.find(params[:training_id])
+    end
 
     def answer_params
       params.require(:answer).permit(:body)

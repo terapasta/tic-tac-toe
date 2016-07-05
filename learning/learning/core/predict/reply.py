@@ -7,6 +7,7 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 
 class Reply:
+    NO_CLASSIFIED_THRESHOLD = 0.5
 
     def __init__(self):
         self.estimator = joblib.load("learning/models/logistic_reg_model")
@@ -14,11 +15,12 @@ class Reply:
         self.vocabulary = joblib.load("learning/vocabulary/vocabulary.pkl")
 
     def predict(self, X):
-        #logging.basicConfig(filename="example.log",level=logging.DEBUG)
-        #Xtrain = pd.Series(X)
-        #logging.debug('hogehoge1')
         Xtrain = np.array(X)
         Xtrain = self.__replace_text2vec(Xtrain)
+        probabilities = self.estimator.predict_proba(Xtrain)
+        max_probability = np.max(probabilities)
+        if self.NO_CLASSIFIED_THRESHOLD > max_probability:
+            return None
         return self.estimator.predict(Xtrain)
 
     def __replace_text2vec(self, Xtrain):

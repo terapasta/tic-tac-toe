@@ -23,7 +23,7 @@ class TrainingsController < ApplicationController
 
   private
     def set_training
-      @training = Training.last
+      @training = Training.find(params[:id])
     end
 
     def training_message_params

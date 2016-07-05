@@ -2,7 +2,7 @@
   <div class="col-sm-8 col-sm-offset-2">
     <% @training.training_messages.each do |training_message| %>
       <% if training_message.bot? %>
-        <%#= render 'chats/bot', messages: @training.training_messages, message: training_message %>
+        <%= render 'chats/bot', messages: @training.training_messages, message: training_message %>
       <% elsif training_message.guest? %>
         <%= render 'chats/guest', message: training_message %>
       <% end %>

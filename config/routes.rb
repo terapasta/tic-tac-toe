@@ -8,13 +8,10 @@ Rails.application.routes.draw do
   resources :trainings do
     scope module: :trainings do
       resources :training_messages, only: [:create, :update]
-    end
-  end
-
-  namespace :trainings do
-    resources :answers, only: [:update] do
-      member do
-        post :replace
+      resources :answers, only: [:update] do
+        member do
+          post :replace
+        end
       end
     end
   end

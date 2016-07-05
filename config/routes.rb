@@ -5,14 +5,16 @@ Rails.application.routes.draw do
   devise_for :users
   resource :chats, only: [:show, :create, :destroy]
   resource :dashboards, only: [:show]
-  resource :trainings
+  resources :trainings, module: :trainings do
+    resources :training_messages, only: [:create, :update]
+  end
+
   namespace :trainings do
     resources :answers, only: [:update] do
       member do
         post :replace
       end
     end
-    resources :training_messages, only: [:update]
   end
   root 'chats#show'
 end

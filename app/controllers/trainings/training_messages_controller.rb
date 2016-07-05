@@ -1,7 +1,18 @@
 class Trainings::TrainingMessagesController < ApplicationController
   before_action :authenticate_admin_user!
-  # before_action :set_answer, only: [:update]
+  before_action :set_training  #, only: [:update]
   #
+  def create
+    training_message = @training.training_messages.build(training_message_params)
+    training_message.speaker = 'guest'
+
+    answer = Conversation.new(training_message).reply
+    @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    @training.save!
+
+    render :show
+  end
+
   def update
     training_message = TrainingMessage.find(params[:id])
     answer = Answer.find(training_message_params[:answer_id])
@@ -14,9 +25,9 @@ class Trainings::TrainingMessagesController < ApplicationController
   end
 
   private
-  #   def set_answer
-  #     @answer = Answer.find(params[:id])
-  #   end
+    def set_training
+      @training = Training.find(params[:training_id])
+    end
   #
   #   def answer_params
   #     params.require(:answer).permit(:body)

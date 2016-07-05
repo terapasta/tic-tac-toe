@@ -10,11 +10,11 @@
     <% end %>
   </div>
 
-  <%= bootstrap_form_for @chat.messages.build, url: chats_path do |f| %>
+  <%= bootstrap_form_for [@chat, @chat.messages.build] do |f| %>
     <div class="col-sm-8 col-sm-offset-2 text-center comment-area">
       <%= f.text_field :body, placeholder: '質問を入れてください', hide_label: true %>
       <%= f.submit '質問する', class: 'btn btn-default' %>
-      <%= link_to 'クリアする', chats_path, method: :delete, class: 'btn btn-primary' %>
+      <%= link_to 'クリアする', chat_path, method: :delete, class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>

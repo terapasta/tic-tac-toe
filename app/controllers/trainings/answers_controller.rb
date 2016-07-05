@@ -19,11 +19,6 @@ class Trainings::AnswersController < ApplicationController
     redirect_to trainings_path
   end
 
-  def destroy
-    @training.destroy
-    redirect_to trainings_url, notice: 'Trainingが削除されました'
-  end
-
   private
     def set_answer
       @answer = Answer.find(params[:id])

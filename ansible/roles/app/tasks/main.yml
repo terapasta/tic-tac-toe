@@ -1,0 +1,2 @@
+- name: install bundler gem
+  gem: name=bundler user_install=no

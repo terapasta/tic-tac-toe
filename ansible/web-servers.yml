@@ -1,0 +1,11 @@
+- hosts: web-servers
+  sudo: true
+  vars:
+    ruby_version: 2.2.3
+    deploy_user: a.harada
+  roles:
+    - base
+    - rbenv
+    - nginx
+    #- mysql
+    - app

@@ -9,7 +9,7 @@ from sklearn import linear_model
 from ..core.training_set.training_message import TrainingMessage
 from ..core.plotter import Plotter
 
-db = dataset.connect('mysql://root@localhost/donusagi_bot')
+db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
 training_set = TrainingMessage(db).build()
 
 X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい

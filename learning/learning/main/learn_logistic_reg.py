@@ -7,7 +7,7 @@ from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
 from sklearn import linear_model
 from ..core.training_set.training_message import TrainingMessage
-from ..core.plotter import Plotter
+#from ..core.plotter import Plotter
 
 db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
 training_set = TrainingMessage(db).build()

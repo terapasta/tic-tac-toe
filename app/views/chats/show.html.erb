@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="col-sm-8 col-sm-offset-2">
+  <div class="col-sm-8 col-sm-offset-2 chat-area">
     <% @chat.messages.each do |message| %>
       <% if message.bot? %>
         <%= render 'bot', messages: @chat.messages, message: message  %>
@@ -10,12 +10,12 @@
     <% end %>
   </div>
 
-  <%= bootstrap_form_for @chat.messages.build, url: chats_messages_path do |f| %>
+  <%= bootstrap_form_for @chat.messages.build, url: chats_messages_path, remote: true do |f| %>
     <div class="col-sm-8 col-sm-offset-2 col-xs-12 text-center comment-area">
       <div class="input-group">
         <%= f.text_field :body, placeholder: '質問を入れてください', hide_label: true %>
         <span class="input-group-btn">
-          <%= f.submit '質問する', class: 'btn btn-primary' %>
+          <%= f.submit '質問する', class: 'btn btn-primary question' %>
           <%= link_to 'クリアする', chats_path, method: :delete, class: 'btn btn-default' %>
         </span>
       </div>

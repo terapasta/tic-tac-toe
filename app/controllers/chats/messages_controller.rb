@@ -2,13 +2,13 @@ class Chats::MessagesController < ApplicationController
   before_action :set_chat
 
   def create
-    message = @chat.messages.build(message_params)
-    message.speaker = 'guest'
+    @message_guest = @chat.messages.build(message_params)
+    @message_guest.speaker = 'guest'
 
-    answer = Conversation.new(message).reply
-    @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    answer = Conversation.new(@message_guest).reply
+    @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @chat.save!
-    redirect_to chats_path
+    @messages = @chat.messages
   end
 
   private

@@ -46,6 +46,8 @@ config/initializers/secret_token.rb
 *.bowerrc
 bower.json
 
+.tags
+
 *.pyc
 learning/learning/models/*
 learning/learning/vocabulary/*

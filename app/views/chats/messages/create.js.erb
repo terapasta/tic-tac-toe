@@ -1,0 +1,7 @@
+$('#message_body').val('');
+$('.chat-area').append("<%= escape_javascript(render('chats/guest', message: @message_guest)) %><br />");
+
+<%# 会話している風にするため意図的にbotの発言を遅らせる %>
+$('.chat-area').delay(1300).queue(function() {
+  $(this).append("<%= escape_javascript(render('chats/bot', messages: @messages, message: @message_bot)) %><br />").dequeue();
+});

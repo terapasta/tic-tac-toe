@@ -5,31 +5,10 @@ body	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.c
 .col-icon	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.col-icon {$/;"	function	line:25
 .balloon	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon {$/;"	function	line:30
 .comment-area	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.comment-area {$/;"	function	line:34
-.balloon-1-left	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left {$/;"	function	line:44
-.balloon-1-left:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left:before {$/;"	function	line:56
-.balloon-1-left:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left:after {$/;"	function	line:69
-.balloon-1-right	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right {$/;"	function	line:84
-.balloon-1-right:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:before {$/;"	function	line:96
-.balloon-1-right:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:after {$/;"	function	line:109
-body	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^body {$/;"	function	line:5
-.container-main	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.container-main {$/;"	function	line:11
-.container	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.container {$/;"	function	line:15
-.listen	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.listen {$/;"	function	line:20
-.col-icon	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.col-icon {$/;"	function	line:25
-.balloon	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon {$/;"	function	line:30
-.comment-area	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.comment-area {$/;"	function	line:34
-.balloon-1-left	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left {$/;"	function	line:44
-.balloon-1-left:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left:before {$/;"	function	line:56
-.balloon-1-left:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left:after {$/;"	function	line:69
-.balloon-1-right	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right {$/;"	function	line:84
-.balloon-1-right:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:before {$/;"	function	line:96
-.balloon-1-right:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:after {$/;"	function	line:109
-html	/Users/harada/source_code/donusagi-bot/public/embed.html	/^<html>$/;"	function	line:2
-head	/Users/harada/source_code/donusagi-bot/public/embed.html	/^<head>$/;"	function	line:3
-title	/Users/harada/source_code/donusagi-bot/public/embed.html	/^  <title>埋め込みのテスト<\/title>$/;"	function	line:4
-meta	/Users/harada/source_code/donusagi-bot/public/embed.html	/^  <meta name="viewport" content="width=device-width,initial-scale=1">$/;"	function	line:5
-body	/Users/harada/source_code/donusagi-bot/public/embed.html	/^<body>$/;"	function	line:8
-div	/Users/harada/source_code/donusagi-bot/public/embed.html	/^  <div style="width:100%; text-align:center;">$/;"	function	line:10
-iframe	/Users/harada/source_code/donusagi-bot/public/embed.html	/^    <iframe src="http:\/\/160.16.208.157\/chats" name="donusagi" width="600" height="700"><\/iframe>$/;"	function	line:11
-StartDash	/Users/harada/source_code/donusagi-bot/config/application.rb	/^module StartDash$/;"	module	line:9
-Application	/Users/harada/source_code/donusagi-bot/config/application.rb	/^  class Application < Rails::Application$/;"	class	line:10	class:StartDash
+.balloon	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon {$/;"	function	line:46
+.balloon-1-left	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left {$/;"	function	line:53
+.balloon-1-left:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left:before {$/;"	function	line:62
+.balloon-1-left:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-left:after {$/;"	function	line:75
+.balloon-1-right	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right {$/;"	function	line:90
+.balloon-1-right:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:before {$/;"	function	line:102
+.balloon-1-right:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:after {$/;"	function	line:115

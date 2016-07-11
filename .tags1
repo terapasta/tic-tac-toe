@@ -4,5 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-StartDash	/Users/harada/source_code/donusagi-bot/config/application.rb	/^module StartDash$/;"	module	line:9
-Application	/Users/harada/source_code/donusagi-bot/config/application.rb	/^  class Application < Rails::Application$/;"	class	line:10	class:StartDash

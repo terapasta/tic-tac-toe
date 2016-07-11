@@ -3,7 +3,7 @@
     <span class="small">どんうさぎ</span><br />
     <%= image_tag 'usao001.png', class: 'listen' %>
   </div>
-  <div class="col-sm-8 col-xs-9 balloon-1-left">
+  <div class="col-sm-8 col-xs-9 balloon-1-left balloon">
     <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
       <span id="last-message" />
       <% if message.class == TrainingMessage %>

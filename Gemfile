@@ -65,6 +65,7 @@ gem 'seed-fu', '~> 2.3'
 gem 'active_hash'
 gem 'msgpack-rpc', '~> 0.5.4'
 gem 'dotenv-rails'
+gem 'rails_autolink'
 
 group :development, :test do
 

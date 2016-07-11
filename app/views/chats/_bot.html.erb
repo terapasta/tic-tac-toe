@@ -22,10 +22,10 @@
           <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
         <% end %>
       <% else %>
-      <%= simple_format(message.body) %>
+      <%= auto_link(simple_format(message.body)) %>
       <% end %>
     <% else %>
-      <%= simple_format(message.body) %>
+      <%= auto_link(simple_format(message.body)) %>
     <% end %>
   </div>
   <div class="col-sm-2"></div>

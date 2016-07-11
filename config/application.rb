@@ -38,5 +38,8 @@ module StartDash
       #g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'Allow-From http://www.mof-mof.co.jp'
+    }
   end
 end

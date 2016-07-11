@@ -24,3 +24,12 @@ body	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.c
 .balloon-1-right	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right {$/;"	function	line:84
 .balloon-1-right:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:before {$/;"	function	line:96
 .balloon-1-right:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:after {$/;"	function	line:109
+html	/Users/harada/source_code/donusagi-bot/public/embed.html	/^<html>$/;"	function	line:2
+head	/Users/harada/source_code/donusagi-bot/public/embed.html	/^<head>$/;"	function	line:3
+title	/Users/harada/source_code/donusagi-bot/public/embed.html	/^  <title>埋め込みのテスト<\/title>$/;"	function	line:4
+meta	/Users/harada/source_code/donusagi-bot/public/embed.html	/^  <meta name="viewport" content="width=device-width,initial-scale=1">$/;"	function	line:5
+body	/Users/harada/source_code/donusagi-bot/public/embed.html	/^<body>$/;"	function	line:8
+div	/Users/harada/source_code/donusagi-bot/public/embed.html	/^  <div style="width:100%; text-align:center;">$/;"	function	line:10
+iframe	/Users/harada/source_code/donusagi-bot/public/embed.html	/^    <iframe src="http:\/\/160.16.208.157\/chats" name="donusagi" width="600" height="700"><\/iframe>$/;"	function	line:11
+StartDash	/Users/harada/source_code/donusagi-bot/config/application.rb	/^module StartDash$/;"	module	line:9
+Application	/Users/harada/source_code/donusagi-bot/config/application.rb	/^  class Application < Rails::Application$/;"	class	line:10	class:StartDash

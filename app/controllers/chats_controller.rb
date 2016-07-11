@@ -3,6 +3,7 @@ class ChatsController < ApplicationController
   before_action :set_guest_key
 
   def show
+    session[:embed] = params[:embed] if params[:embed]
     redirect_to new_chats_path if @chat.nil?
   end
 

@@ -12,3 +12,10 @@ body	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.c
 .balloon-1-right	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right {$/;"	function	line:90
 .balloon-1-right:before	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:before {$/;"	function	line:102
 .balloon-1-right:after	/Users/harada/source_code/donusagi-bot/app/assets/stylesheets/application.css.scss	/^.balloon-1-right:after {$/;"	function	line:115
+ChatsController	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^class ChatsController < ApplicationController$/;"	class	line:1
+show	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^  def show$/;"	method	line:5	class:ChatsController
+new	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^  def new$/;"	method	line:10	class:ChatsController
+destroy	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^  def destroy$/;"	method	line:17	class:ChatsController
+set_chat	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def set_chat$/;"	method	line:23	class:ChatsController
+set_guest_key	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def set_guest_key$/;"	method	line:27	class:ChatsController
+message_params	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def message_params$/;"	method	line:31	class:ChatsController

@@ -7,7 +7,7 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 
 class Reply:
-    NO_CLASSIFIED_THRESHOLD = 0.5
+    NO_CLASSIFIED_THRESHOLD = 0.3
 
     def __init__(self):
         self.estimator = joblib.load("learning/models/logistic_reg_model")

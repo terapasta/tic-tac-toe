@@ -121,4 +121,4 @@ class TrainingMessage:
         #tmp_training_sets = np.delete(tmp_training_sets, -2, 1)
         #feature = np.c_[tmp_training_sets[:,:-2], tmp_bodies_vec, tmp_training_sets[:,-1:]]
         feature = np.c_[tmp_training_sets[:,:-2], bodies_vec.toarray(), tmp_training_sets[:,-1:]]
-        return feature
+        return feature.astype(np.float64)

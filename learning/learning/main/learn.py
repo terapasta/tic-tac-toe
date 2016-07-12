@@ -8,7 +8,7 @@ from sklearn.externals import joblib
 from ..core.training_set.training_message import TrainingMessage
 from ..core.plotter import Plotter
 
-db = dataset.connect('mysql://root@localhost/donusagi_bot')
+db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
 training_set = TrainingMessage(db).build()
 
 # 学習する
@@ -47,4 +47,4 @@ print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの
 joblib.dump(svm_model, "learning/models/svm_model")
 
 # TODO データが少なすぎると落ちるので一旦コメントアウト
-#Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())
+Plotter().plot(svm_model, training_set[:,:-1], training_set[:,-1:].flatten())

@@ -7,7 +7,7 @@ from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
 from sklearn import linear_model
 from ..core.training_set.training_message import TrainingMessage
-#from ..core.plotter import Plotter
+from ..core.plotter import Plotter
 
 db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
 training_set = TrainingMessage(db).build()
@@ -17,7 +17,9 @@ y = training_set[:,-1:].flatten()
 
 print y
 
-logreg = linear_model.LogisticRegression(C=1e5)
-logreg.fit(X, y)
+estimator = linear_model.LogisticRegression(C=1e5)
+estimator.fit(X, y)
+
+Plotter().plot(estimator, X, y)
 
 joblib.dump(logreg, "learning/models/logistic_reg_model")

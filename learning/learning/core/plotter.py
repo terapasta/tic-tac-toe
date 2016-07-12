@@ -27,6 +27,7 @@ class Plotter:
         test_scores_mean = np.mean(test_scores, axis=1)
         plt.legend(loc="best")
         plt.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation score")
+        plt.savefig( 'graph.png' )
 
         print "test_socres_means: %s " % test_scores_mean[-1]
 

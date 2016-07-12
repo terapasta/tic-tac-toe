@@ -22,4 +22,4 @@ estimator.fit(X, y)
 
 Plotter().plot(estimator, X, y)
 
-joblib.dump(logreg, "learning/models/logistic_reg_model")
+joblib.dump(estimator, "learning/models/logistic_reg_model")

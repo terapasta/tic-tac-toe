@@ -1,5 +1,7 @@
 class Conversation
   NUMBER_OF_CONTEXT = 0
+  POSITIVE_WORD = 'はい'
+  NEGATIVE_WORD = 'いいえ'
 
   def initialize(message)
     @message = message
@@ -8,10 +10,10 @@ class Conversation
 
   def reply
     if @message.contact?
-      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == 'いいえ'
+      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
+      return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
       return Answer.find(Answer::TRANSITION_CONTEXT_CONTACT_ID)
     end
-
 
     client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
     context = build_context

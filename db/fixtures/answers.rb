@@ -35,5 +35,8 @@ Answer.seed(:id,
   {"id"=>27, "context_id"=>1, "body"=>"ごめん、それにはまだ回答できないや＞＜"},
   {"id"=>28, "context_id"=>1, "body"=>"おっけーわかった"},
   {"id"=>29, "context_id"=>1, "body"=>"まずは名前を教えて"},
+  {"id"=>30, "context_id"=>1, "body"=>"メールアドレスは？"},
+  {"id"=>31, "context_id"=>1, "body"=>"用件は？"},
+  {"id"=>32, "context_id"=>1, "body"=>"ありがとう。メール送っといたよ！"},
 )
 # End auto-generated file.

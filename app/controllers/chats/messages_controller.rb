@@ -5,10 +5,11 @@ class Chats::MessagesController < ApplicationController
     @message_guest = @chat.messages.build(message_params)
     @message_guest.speaker = 'guest'
 
-    answer = Conversation.new(@message_guest).reply
+    answer = Conversation::Bot.responder(@message_guest).reply
     @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @chat.context = 'contact' if context_contact?(answer)
     @chat.context = nil if Answer::STOP_CONTEXT_ID == answer.id
+    @chat.context = nil if 32 == answer.id
 
     @chat.save!
     @messages = @chat.messages

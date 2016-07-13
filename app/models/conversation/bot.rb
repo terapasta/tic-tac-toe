@@ -1,7 +1,15 @@
-class Conversation
+class Conversation::Bot
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
+
+  def self.responder(message)
+    if message.contact?
+      Conversation::Contact.new(message)
+    else
+      Conversation::Bot.new(message)
+    end
+  end
 
   def initialize(message)
     @message = message
@@ -9,12 +17,6 @@ class Conversation
   end
 
   def reply
-    if @message.contact?
-      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
-      return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
-      return Answer.find(Answer::TRANSITION_CONTEXT_CONTACT_ID)
-    end
-
     client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")

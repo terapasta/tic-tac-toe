@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(version: 20160713111712) do
 
   create_table "contact_states", force: :cascade do |t|
     t.integer  "chat_id",    limit: 4
-    t.string   "name",       limit: 255,   null: false
-    t.string   "email",      limit: 255,   null: false
-    t.text     "body",       limit: 65535, null: false
+    t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
+    t.text     "body",       limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end

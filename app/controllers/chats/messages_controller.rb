@@ -8,6 +8,7 @@ class Chats::MessagesController < ApplicationController
     answer = Conversation.new(@message_guest).reply
     @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @chat.context = 'contact' if context_contact?(answer)
+    @chat.context = nil if Answer::STOP_CONTEXT_ID == answer.id
 
     @chat.save!
     @messages = @chat.messages

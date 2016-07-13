@@ -7,6 +7,12 @@ class Conversation
   end
 
   def reply
+    if @message.contact?
+      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == 'いいえ'
+      return Answer.find(Answer::TRANSITION_CONTEXT_CONTACT_ID)
+    end
+
+
     client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")

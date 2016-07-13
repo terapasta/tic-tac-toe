@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701030316) do
+ActiveRecord::Schema.define(version: 20160713100602) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160701030316) do
     t.integer  "chat_id",    limit: 4
     t.integer  "answer_id",  limit: 4
     t.string   "speaker",    limit: 255, null: false
+    t.string   "context",    limit: 255
     t.string   "body",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 20160701030316) do
     t.integer  "training_id", limit: 4,   null: false
     t.integer  "answer_id",   limit: 4
     t.string   "speaker",     limit: 255, null: false
+    t.string   "context",     limit: 255
     t.string   "body",        limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false

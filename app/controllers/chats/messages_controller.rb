@@ -7,6 +7,8 @@ class Chats::MessagesController < ApplicationController
 
     answer = Conversation.new(@message_guest).reply
     @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    @message_bot.context = 'contact' if answer.id == Answer::TRANSITION_CONTEXT_CONTACT_ID
+
     @chat.save!
     @messages = @chat.messages
   end
@@ -17,6 +19,6 @@ class Chats::MessagesController < ApplicationController
     end
 
     def message_params
-      params.require(:message).permit(:answer_id, :body)
+      params.require(:message).permit(:answer_id, :body, :context)
     end
 end

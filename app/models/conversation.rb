@@ -10,8 +10,8 @@ class Conversation
 
   def reply
     if @message.contact?
-      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
-      return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
+    #   return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
+    #   return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
       return Answer.find(Answer::TRANSITION_CONTEXT_CONTACT_ID)
     end
 

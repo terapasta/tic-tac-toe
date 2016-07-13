@@ -3,7 +3,7 @@ $('.chat-area').append("<%= escape_javascript(render('chats/guest', message: @me
 
 <%# 会話している風にするため意図的にbotの発言を遅らせる %>
 $('.chat-area').delay(1300).queue(function() {
-  $('.context').html("<%= @message_bot.context %>");
-  $('#message_context').val("<%= @message_bot.context %>");
+  $('.context').html("<%= @chat.context %>");
+  $('#message_context').val("<%= @chat.context %>");
   $(this).append("<%= escape_javascript(render('chats/bot', messages: @messages, message: @message_bot)) %><br />").dequeue();
 });

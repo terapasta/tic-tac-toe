@@ -5,23 +5,24 @@ class Conversation::Contact
 
   def initialize(message)
     @message = message
-    @last_answer_message = Message.bot.last
+    @last_answer = Message.bot.last.answer
     @contact_state = message.chat.contact_state || message.chat.build_contact_state
     @ModelClass = message.class
   end
 
   def reply
-    return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
-    return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
-
-    # %w(name email body).each do |field|
-    #   if @contact_state.
-    # end
-    case @last_answer_message.answer.id
+    case @last_answer.id
+    # mofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)
+    when Answer::TRANSITION_CONTEXT_CONTACT_ID
+      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
+      return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
+    # まずは名前を教えて
     when 29
       @contact_state.name = @message.body
+    # メールアドレスは？
     when 30
       @contact_state.email = @message.body
+    # 用件は？
     when 31
       @contact_state.body = @message.body
     end

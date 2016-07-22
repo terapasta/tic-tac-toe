@@ -1,11 +1,13 @@
 class Conversation::Bot
+  attr_accessor :states
+
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
-  def self.responder(message)
+  def self.responder(message, states = {})
     if message.contact?
-      Conversation::Contact.new(message)
+      Conversation::Contact.new(message, states)
     else
       Conversation::Bot.new(message)
     end

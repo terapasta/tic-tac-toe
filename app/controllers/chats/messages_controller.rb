@@ -9,11 +9,8 @@ class Chats::MessagesController < ApplicationController
     answer = responder.reply
     session[:states] = responder.states
 
+    @chat.context = answer.context
     @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
-    # TODO リファクタリング
-    @chat.context = 'contact' if context_contact?(answer)
-    @chat.context = nil if Answer::STOP_CONTEXT_ID == answer.id
-    @chat.context = nil if 32 == answer.id
 
     @chat.save!
     @messages = @chat.messages

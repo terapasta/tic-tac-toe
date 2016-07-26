@@ -17,26 +17,26 @@ class Conversation::Contact
       return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
       return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
     # まずは名前を教えて
-    when 29
+    when Answer::ASK_GUEST_NAME_ID
       @contact_state.name = @message.body
     # メールアドレスは？
-    when 30
+    when 1002
       @contact_state.email = @message.body
     # 用件は？
-    when 31
+    when 1003
       @contact_state.body = @message.body
     end
 
     @contact_state.save!
 
     if @contact_state.name.blank?
-      Answer.find(29)
+      Answer.find(Answer::ASK_GUEST_NAME_ID)
     elsif @contact_state.email.blank?
-      Answer.find(30)
+      Answer.find(1002)
     elsif @contact_state.body.blank?
-      Answer.find(31)
+      Answer.find(1003)
     else
-      Answer.find(32)
+      Answer.find(1004)
     end
   end
 end

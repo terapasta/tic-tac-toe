@@ -9,7 +9,7 @@ class Chats::MessagesController < ApplicationController
     @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @chat.context = 'contact' if context_contact?(answer)
     @chat.context = nil if Answer::STOP_CONTEXT_ID == answer.id
-    @chat.context = nil if 32 == answer.id
+    @chat.context = nil if Answer::COMPLETE_CONTACT_ID == answer.id
 
     @chat.save!
     @messages = @chat.messages

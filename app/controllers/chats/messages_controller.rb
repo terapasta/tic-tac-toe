@@ -5,7 +5,7 @@ class Chats::MessagesController < ApplicationController
     @message_guest = @chat.messages.build(message_params)
     @message_guest.speaker = 'guest'
 
-    responder = Conversation::Bot.responder(@message_guest, session[:states])
+    responder = Conversation::Switcher.new.responder(@message_guest, session[:states])
     answer = responder.reply
     session[:states] = responder.states
 
@@ -26,9 +26,4 @@ class Chats::MessagesController < ApplicationController
     def message_params
       params.require(:message).permit(:answer_id, :body, :context)
     end
-
-    # def context_contact?(answer)
-    #   # [ Answer::TRANSITION_CONTEXT_CONTACT_ID, Answer::ASK_GUEST_NAME_ID ].include?(answer.id)
-    #   [ Answer::TRANSITION_CONTEXT_CONTACT_ID ].include?(answer.id)
-    # end
 end

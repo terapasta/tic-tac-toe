@@ -7,6 +7,7 @@ class Answer < ActiveRecord::Base
   ASK_EMAIL_ID = 1002
   ASK_BODY_ID = 1003
   ASK_COMPLETE_ID = 1004
+  ASK_ERROR_ID = 1005
 
   # TODO 共通化したい
   enum context: { normal: 'normal', contact: 'contact' }

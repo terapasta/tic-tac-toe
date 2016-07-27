@@ -20,28 +20,37 @@ class Conversation::Contact
     @last_answer = Message.bot.last.answer
     #@contact_state = message.chat.contact_state || message.chat.build_contact_state
     #@ModelClass = message.class
-    @states = states || {}
+    @states = (states || {}).with_indifferent_access
   end
 
   def reply
     MESSAGES.each do |field, answer_id|
       if answer_id == @last_answer.id
-        @states[field.to_s] = @message.body
+        @states[field] = @message.body
+        # TODO 先にYES/NO判定を外側に出す必要がある
+        # contact_state = ContactState.new(@states.except(:yes_no))
+        # contact_state.chat_id = @message.chat.id
+        # unless contact_state.valid?
+        #   @states[field] = nil
+        #   # TODO エラーメッセージを動的にしたい
+        #   return Answer.find(Answer::ASK_ERROR_ID)
+        # end
       end
     end
 
+
+
     MESSAGES.each do |field, answer_id|
-      if @states[field.to_s].blank?
+      if @states[field].blank?
         return Answer.find(answer_id)
       end
     end
 
+
+    # if @message.chat.contact_states.create!(@states.except(:yes_no))
+    # end
+
     # complete
-
-    if @message.chat.create_contact_state!(@states.except('yes_no'))
-    end
-
     Answer.find(Answer::ASK_COMPLETE_ID)
-
   end
 end

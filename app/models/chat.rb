@@ -1,5 +1,5 @@
 class Chat < ActiveRecord::Base
   has_many :messages
-  has_one :contact_state
+  has_many :contact_states
   enum context: { normal: 'normal', contact: 'contact' }
 end

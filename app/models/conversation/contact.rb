@@ -37,6 +37,11 @@ class Conversation::Contact
     end
 
     # complete
+
+    if @message.chat.create_contact_state!(@states.except('yes_no'))
+    end
+
     Answer.find(Answer::ASK_COMPLETE_ID)
+
   end
 end

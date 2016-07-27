@@ -39,7 +39,7 @@ Answer.seed(:id,
   {"id"=>1001, "context"=>"contact", "body"=>"まずは名前を教えて"},
   {"id"=>1002, "context"=>"contact", "body"=>"メールアドレスは？"},
   {"id"=>1003, "context"=>"contact", "body"=>"用件は？"},
-  {"id"=>1004, "context"=>"contact", "body"=>"ありがとう。メール送っといたよ！"},
+  {"id"=>1004, "context"=>"normal", "body"=>"ありがとう。メール送っといたよ！"},
 
   # 以降のIDを通常メッセージとするためのdummy
   {"id"=>2000, "context"=>"normal", "body"=>"dummy"},

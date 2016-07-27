@@ -2,7 +2,7 @@ class Message < ActiveRecord::Base
   belongs_to :chat
   belongs_to :answer
   enum speaker: { bot: 'bot', guest: 'guest' }
-  enum context: { contact: 'contact' }
+  enum context: { normal: 'normal', contact: 'contact' }
 
   def self.start_message
     answer = Answer.find(Answer::START_MESSAGE_ID)

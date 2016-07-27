@@ -4,7 +4,7 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_answer, only: [:update]
 
   def replace
-    answer = Answer.create!(answer_params.merge(context_id: Context::DUMMY_ID))  # HACK ダミーのcontext_id
+    answer = Answer.create!(answer_params.merge(context: 'normal'))
     training_message = TrainingMessage.find(params[:id])
     training_message.update!(answer_id: answer.id, body: answer.body)
     redirect_to training_path(@training), notice: '回答を差し替えました'

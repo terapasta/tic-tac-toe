@@ -6,7 +6,11 @@ class Trainings::TrainingMessagesController < ApplicationController
     training_message = @training.training_messages.build(training_message_params)
     training_message.speaker = 'guest'
 
-    answer = Conversation.new(training_message).reply
+    responder = Conversation::Bot.responder(training_message, session[:states])
+    answer = responder.reply
+    session[:states] = responder.states
+
+    @training.context = answer.context
     @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     @training.save!
     redirect_to training_path(@training)

@@ -1,42 +1,54 @@
 class Conversation::Contact
+  attr_accessor :states
+
+  MESSAGES = {
+    # mofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)
+    yes_no: Answer::TRANSITION_CONTEXT_CONTACT_ID,
+    # まずは名前を教えて
+    name: Answer::ASK_GUEST_NAME_ID,
+    # メールアドレスは？
+    email: Answer::ASK_EMAIL_ID,
+    # 用件は？
+    body: Answer::ASK_BODY_ID,
+  }
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
-  def initialize(message)
+  def initialize(message, states = {})
     @message = message
     @last_answer = Message.bot.last.answer
-    @contact_state = message.chat.contact_state || message.chat.build_contact_state
-    @ModelClass = message.class
+    #@contact_state = message.chat.contact_state || message.chat.build_contact_state
+    #@ModelClass = message.class
+    @states = (states || {}).with_indifferent_access
   end
 
   def reply
-    case @last_answer.id
-    # mofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)
-    # when Answer::TRANSITION_CONTEXT_CONTACT_ID
-    #   return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
-    #   return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
-    # まずは名前を教えて
-    when Answer::ASK_GUEST_NAME_ID
-      @contact_state.name = @message.body
-    # メールアドレスは？
-    when 1002
-      @contact_state.email = @message.body
-    # 用件は？
-    when 1003
-      @contact_state.body = @message.body
+    MESSAGES.each do |field, answer_id|
+      if answer_id == @last_answer.id
+        @states[field] = @message.body
+        # TODO 先にYES/NO判定を外側に出す必要がある
+        # contact_state = ContactState.new(@states.except(:yes_no))
+        # contact_state.chat_id = @message.chat.id
+        # unless contact_state.valid?
+        #   @states[field] = nil
+        #   # TODO エラーメッセージを動的にしたい
+        #   return Answer.find(Answer::ASK_ERROR_ID)
+        # end
+      end
     end
 
-    @contact_state.save!
-
-    if @contact_state.name.blank?
-      Answer.find(Answer::ASK_GUEST_NAME_ID)
-    elsif @contact_state.email.blank?
-      Answer.find(1002)
-    elsif @contact_state.body.blank?
-      Answer.find(1003)
-    else
-      Answer.find(1004)
+    MESSAGES.each do |field, answer_id|
+      if @states[field].blank?
+        return Answer.find(answer_id)
+      end
     end
+
+
+    # if @message.chat.contact_states.create!(@states.except(:yes_no))
+    # end
+
+    # complete
+    Answer.find(Answer::ASK_COMPLETE_ID)
   end
 end

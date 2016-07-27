@@ -31,7 +31,7 @@ class Conversation::Contact
         unless contact_state.valid?
           @states[field] = nil
           # TODO エラーメッセージを動的にしたい
-          return [Answer.find(Answer::ASK_ERROR_ID)]
+          return [Answer.find(Answer::ASK_ERROR_ID), Answer.find(MESSAGES[field])]
         end
       end
     end

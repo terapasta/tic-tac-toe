@@ -8,6 +8,8 @@ from ..nlang import Nlang
 class TrainingMessage:
     NUMBER_OF_CONTEXT = 0
     NO_CLASSIFIED_MESSAGE_ID = 27
+    PRE_DEFINED_ANSWER_ID_FROM = 1000
+    PRE_DEFINED_ANSWER_ID_TO = 1999
 
     def __init__(self, db):
         self.training_messages = db['training_messages'].find(order_by='training_id, id')
@@ -99,7 +101,8 @@ class TrainingMessage:
         return answer_id_indexs
 
     def __except_no_classified(self, training_messages):
-        return filter(lambda tm: tm[-1] != self.NO_CLASSIFIED_MESSAGE_ID, training_messages)
+        training_messages = filter(lambda tm: tm[-1] != self.NO_CLASSIFIED_MESSAGE_ID, training_messages)
+        return filter(lambda tm: not (tm[-1] >= self.PRE_DEFINED_ANSWER_ID_FROM and tm[-1] <= self.PRE_DEFINED_ANSWER_ID_TO), training_messages)
 
     def __extract_bodies(self, training_sets):
         bodies = []

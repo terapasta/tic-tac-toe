@@ -33,11 +33,15 @@ Answer.seed(:id,
   {"id"=>25, "context" => "normal", "body"=>"ぼくはお酒を飲むのが好きだね"},
   {"id"=>26, "context" => "normal", "body"=>"ぼくは日本酒とか焼酎が好きだね。今度一緒に飲むかい？"},
   {"id"=>27, "context" => "normal", "body"=>"ごめん、それにはまだ回答できないや＞＜"},
-  # TODO 追加したもの。本番環境でバッティングするので注意
-  {"id"=>28, "context" => "contact", "body"=>"おっけーわかった"},
-  {"id"=>29, "context" => "contact", "body"=>"まずは名前を教えて"},
-  {"id"=>30, "context" => "contact", "body"=>"メールアドレスは？"},
-  {"id"=>31, "context" => "contact", "body"=>"用件は？"},
-  {"id"=>32, "context" => "normal", "body"=>"ありがとう。メール送っといたよ！"},
+
+  # TODO 事前定義の回答(別テーブルに移行したい)
+  {"id"=>1000, "context"=>"contact", "body"=>"おっけーわかった"},
+  {"id"=>1001, "context"=>"contact", "body"=>"まずは名前を教えて"},
+  {"id"=>1002, "context"=>"contact", "body"=>"メールアドレスは？"},
+  {"id"=>1003, "context"=>"contact", "body"=>"用件は？"},
+  {"id"=>1004, "context"=>"contact", "body"=>"ありがとう。メール送っといたよ！"},
+
+  # 以降のIDを通常メッセージとするためのdummy
+  {"id"=>2000, "context"=>"normal", "body"=>"dummy"},
 )
 # End auto-generated file.

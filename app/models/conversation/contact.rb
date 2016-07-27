@@ -25,7 +25,6 @@ class Conversation::Contact
     MESSAGES.each do |field, answer_id|
       if answer_id == @last_answer.id
         @states[field] = @message.body
-        # TODO 先にYES/NO判定を外側に出す必要がある
         contact_state = ContactState.new(@states)
         contact_state.chat_id = @message.chat.id
         unless contact_state.valid?
@@ -47,6 +46,8 @@ class Conversation::Contact
     # end
 
     # complete
+    contact_state = ContactState.new(@states)
+    ContactMailer.create(contact_state).deliver_now
     [Answer.find(Answer::ASK_COMPLETE_ID)]
   end
 end

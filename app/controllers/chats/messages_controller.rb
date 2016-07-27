@@ -6,11 +6,13 @@ class Chats::MessagesController < ApplicationController
     @message_guest.speaker = 'guest'
 
     responder = Conversation::Switcher.new.responder(@message_guest, session[:states])
-    answer = responder.reply
+    answers = responder.reply
     session[:states] = responder.states
 
-    @chat.context = answer.context
-    @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    @bot_messages = answers.map do |answer|
+      @chat.context = answer.context
+      @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    end
 
     @chat.save!
     @messages = @chat.messages

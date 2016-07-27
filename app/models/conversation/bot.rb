@@ -19,7 +19,7 @@ class Conversation::Bot
     answer_id =  Answer::NO_CLASSIFIED_MESSAGE_ID if answer_id.nil?
 
     Rails.logger.debug("answer_id: #{answer_id}")
-    Answer.find(answer_id)
+    [Answer.find(answer_id)]
   end
 
   private

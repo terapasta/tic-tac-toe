@@ -2,8 +2,6 @@ class Conversation::Contact
   attr_accessor :states
 
   MESSAGES = {
-    # mofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)
-    yes_no: Answer::TRANSITION_CONTEXT_CONTACT_ID,
     # まずは名前を教えて
     name: Answer::ASK_GUEST_NAME_ID,
     # メールアドレスは？
@@ -20,7 +18,7 @@ class Conversation::Contact
     @last_answer = Message.bot.last.answer
     #@contact_state = message.chat.contact_state || message.chat.build_contact_state
     #@ModelClass = message.class
-    @states = (states || {}).with_indifferent_access
+    @states = (states || {}).with_indifferent_access  # HACK fieldにした方がいいかも
   end
 
   def reply
@@ -28,19 +26,19 @@ class Conversation::Contact
       if answer_id == @last_answer.id
         @states[field] = @message.body
         # TODO 先にYES/NO判定を外側に出す必要がある
-        # contact_state = ContactState.new(@states.except(:yes_no))
-        # contact_state.chat_id = @message.chat.id
-        # unless contact_state.valid?
-        #   @states[field] = nil
-        #   # TODO エラーメッセージを動的にしたい
-        #   return Answer.find(Answer::ASK_ERROR_ID)
-        # end
+        contact_state = ContactState.new(@states)
+        contact_state.chat_id = @message.chat.id
+        unless contact_state.valid?
+          @states[field] = nil
+          # TODO エラーメッセージを動的にしたい
+          return [Answer.find(Answer::ASK_ERROR_ID)]
+        end
       end
     end
 
     MESSAGES.each do |field, answer_id|
       if @states[field].blank?
-        return Answer.find(answer_id)
+        return [Answer.find(answer_id)]
       end
     end
 
@@ -49,6 +47,6 @@ class Conversation::Contact
     # end
 
     # complete
-    Answer.find(Answer::ASK_COMPLETE_ID)
+    [Answer.find(Answer::ASK_COMPLETE_ID)]
   end
 end

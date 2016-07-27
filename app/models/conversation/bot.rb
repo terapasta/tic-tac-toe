@@ -4,11 +4,17 @@ class Conversation::Bot
   NEGATIVE_WORD = 'いいえ'
 
   def self.responder(message)
-    if message.contact?
+    if message.contact? || transision_to_contact?(message)
       Conversation::Contact.new(message)
     else
       Conversation::Bot.new(message)
     end
+  end
+
+  # TODO 別クラスにする？
+  def self.transision_to_contact?(message)
+    last_answer = Message.bot.last.answer
+    last_answer.transition_to == 'contact' && message.body == Conversation::Bot::POSITIVE_WORD
   end
 
   def initialize(message)

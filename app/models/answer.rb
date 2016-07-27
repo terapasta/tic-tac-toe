@@ -5,4 +5,6 @@ class Answer < ActiveRecord::Base
   STOP_CONTEXT_ID = 1000
   ASK_GUEST_NAME_ID = 1001
   COMPLETE_CONTACT_ID = 1004
+
+  enum translate_to: { contact: 'contact' }
 end

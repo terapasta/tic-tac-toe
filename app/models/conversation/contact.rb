@@ -13,9 +13,9 @@ class Conversation::Contact
   def reply
     case @last_answer.id
     # mofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)
-    when Answer::TRANSITION_CONTEXT_CONTACT_ID
-      return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
-      return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
+    # when Answer::TRANSITION_CONTEXT_CONTACT_ID
+    #   return Answer.find(Answer::STOP_CONTEXT_ID) if @message.body == NEGATIVE_WORD
+    #   return Answer.find(Answer::ASK_GUEST_NAME_ID) if @message.body == POSITIVE_WORD
     # まずは名前を教えて
     when Answer::ASK_GUEST_NAME_ID
       @contact_state.name = @message.body

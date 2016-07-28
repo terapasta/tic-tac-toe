@@ -20,6 +20,8 @@ print y
 estimator = linear_model.LogisticRegression(C=1e5)
 estimator.fit(X, y)
 
-Plotter().plot(estimator, X, y)
+# print "estimator.score: %s " % estimator.score  # accuracy
 
 joblib.dump(estimator, "learning/models/logistic_reg_model")
+
+Plotter().plot(estimator, X, y)

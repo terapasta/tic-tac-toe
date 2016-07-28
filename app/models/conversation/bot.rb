@@ -5,14 +5,6 @@ class Conversation::Bot
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
-  def self.responder(message, states = {})
-    if message.contact?
-      Conversation::Contact.new(message, states)
-    else
-      Conversation::Bot.new(message)
-    end
-  end
-
   def initialize(message)
     @message = message
     @ModelClass = message.class
@@ -27,7 +19,7 @@ class Conversation::Bot
     answer_id =  Answer::NO_CLASSIFIED_MESSAGE_ID if answer_id.nil?
 
     Rails.logger.debug("answer_id: #{answer_id}")
-    Answer.find(answer_id)
+    [Answer.find(answer_id)]
   end
 
   private

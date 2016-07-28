@@ -11,4 +11,5 @@ class Answer < ActiveRecord::Base
 
   # TODO 共通化したい
   enum context: { normal: 'normal', contact: 'contact' }
+  #enum transition_to: { contact: 'contact' }
 end

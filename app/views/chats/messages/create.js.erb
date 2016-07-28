@@ -1,9 +1,11 @@
 $('#message_body').val('');
 $('.chat-area').append("<%= escape_javascript(render('chats/guest', message: @message_guest)) %><br />");
 
+<% @bot_messages.each do |bot_message| %>
 <%# 会話している風にするため意図的にbotの発言を遅らせる %>
 $('.chat-area').delay(1300).queue(function() {
   $('.context').html("<%= @chat.context %>");
   $('#message_context').val("<%= @chat.context %>");
-  $(this).append("<%= escape_javascript(render('chats/bot', messages: @messages, message: @message_bot)) %><br />").dequeue();
+  $(this).append("<%= escape_javascript(render('chats/bot', messages: @messages, message: bot_message)) %><br />").dequeue();
 });
+<% end %>

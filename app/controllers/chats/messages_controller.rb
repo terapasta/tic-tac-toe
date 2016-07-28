@@ -5,12 +5,14 @@ class Chats::MessagesController < ApplicationController
     @message_guest = @chat.messages.build(message_params)
     @message_guest.speaker = 'guest'
 
-    responder = Conversation::Bot.responder(@message_guest, session[:states])
-    answer = responder.reply
+    responder = Conversation::Switcher.new.responder(@message_guest, session[:states])
+    answers = responder.reply
     session[:states] = responder.states
 
-    @chat.context = answer.context
-    @message_bot = @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    @bot_messages = answers.map do |answer|
+      @chat.context = answer.context
+      @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+    end
 
     @chat.save!
     @messages = @chat.messages
@@ -25,10 +27,5 @@ class Chats::MessagesController < ApplicationController
 
     def message_params
       params.require(:message).permit(:answer_id, :body, :context)
-    end
-
-    def context_contact?(answer)
-      # [ Answer::TRANSITION_CONTEXT_CONTACT_ID, Answer::ASK_GUEST_NAME_ID ].include?(answer.id)
-      [ Answer::TRANSITION_CONTEXT_CONTACT_ID ].include?(answer.id)
     end
 end

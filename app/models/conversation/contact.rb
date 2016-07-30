@@ -46,14 +46,14 @@ class Conversation::Contact
       if @message.body == POSITIVE_WORD
         # complete
         ContactMailer.create(contact_state).deliver_now
-        [Answer.find(Answer::ASK_COMPLETE_ID)]
+        return [Answer.find(Answer::ASK_COMPLETE_ID)]
       elsif @message.body == NEGATIVE_WORD
-        [Answer.find(Answer::ASK_GUEST_NAME_ID)]
+        return [Answer.find(Answer::ASK_GUEST_NAME_ID)]
       end
-    else
-      answer = Answer.find(Answer::ASK_CONFIRM_ID)
-      answer.body = answer.body % { values: "お名前: #{contact_state.name}\nメールアドレス: #{contact_state.email}\nご用件: #{contact_state.body}"}
-      [answer]
     end
+
+    answer = Answer.find(Answer::ASK_CONFIRM_ID)
+    answer.body = answer.body % { values: "お名前: #{contact_state.name}\nメールアドレス: #{contact_state.email}\nご用件: #{contact_state.body}"}
+    [answer]
   end
 end

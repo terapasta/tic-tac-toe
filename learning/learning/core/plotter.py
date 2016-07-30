@@ -31,7 +31,8 @@ class Plotter:
 
         print "test_socres_means: %s " % test_scores_mean[-1]
 
-        plt.pause(10)
+        # plt.pause(6)
+        return test_scores_mean[-1]
 
 
         # train_sizes = np.arange(40, int(len(y) * 0.6), 10)  # 等間隔数値の配列

@@ -11,7 +11,7 @@ class Conversation::Bot
   end
 
   def reply
-    client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
+    client = MessagePack::RPC::Client.new('127.0.0.1', 6000)  # TODO 共通化する
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 

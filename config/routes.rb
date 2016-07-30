@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :learning, only: [:update]
+
   resource :dashboards, only: [:show]
   resources :trainings do
     scope module: :trainings do

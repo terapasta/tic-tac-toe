@@ -4,6 +4,7 @@ from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
 from core.predict.reply import Reply
+from core.learn.bot import Bot
 
 class MyopeServer(RPCServer):
 
@@ -19,6 +20,10 @@ class MyopeServer(RPCServer):
         result = Reply().predict([X])  # TODO 引数
         # logging.debug(result)
         return result
+
+    def learn(self):
+        test_scores_mean = Bot().learn()
+        return test_scores_mean
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())
 server.serve_forever()

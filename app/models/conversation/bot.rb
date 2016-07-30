@@ -22,7 +22,7 @@ class Conversation::Bot
     answers = [Answer.find(answer_id)]
 
     # TODO botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
-    if answer_id == Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID && Service.contact.last.try(:enabled?)
+    if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
       answers << Answer.find(Answer::TRANSITION_CONTEXT_CONTACT_ID)
     end
     answers

@@ -33,6 +33,7 @@ Answer.seed(:id,
   {"id"=>25, "context" => "normal", "body"=>"ぼくはお酒を飲むのが好きだね"},
   {"id"=>26, "context" => "normal", "body"=>"ぼくは日本酒とか焼酎が好きだね。今度一緒に飲むかい？"},
   {"id"=>27, "context" => "normal", "body"=>"ごめん、それにはまだ回答できないや＞＜"},
+  {"id"=>49, "context" => "normal", "body"=>"アポとか開発相談はここからどぞ http://www.mof-mof.co.jp/contact"},
 
   # TODO 事前定義の回答(別テーブルに移行したい)
   {"id"=>1000, "context"=>"contact", "body"=>"おっけーわかった"},

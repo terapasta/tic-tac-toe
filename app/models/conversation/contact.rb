@@ -12,6 +12,7 @@ class Conversation::Contact
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
+  STOP_CONTACT_WORD = 'やめる'
 
   def initialize(message, states = {})
     @message = message
@@ -22,6 +23,10 @@ class Conversation::Contact
   end
 
   def reply
+    if @message.body == STOP_CONTACT_WORD
+      return [Answer.find(Answer::STOP_CONTEXT_ID), Answer.find(Answer::START_MESSAGE_ID)]
+    end
+
     MESSAGES.each do |field, answer_id|
       if answer_id == @last_answer.id
         @states[field] = @message.body

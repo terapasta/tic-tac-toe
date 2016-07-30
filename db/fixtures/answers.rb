@@ -36,7 +36,7 @@ Answer.seed(:id,
 
   # TODO 事前定義の回答(別テーブルに移行したい)
   {"id"=>1000, "context"=>"contact", "body"=>"おっけーわかった"},
-  {"id"=>1001, "context"=>"contact", "body"=>"まずは名前を教えて"},
+  {"id"=>1001, "context"=>"contact", "body"=>"まずは名前を教えて\n※問い合わせを中断したい場合は「やめる」と送信してね"},
   {"id"=>1002, "context"=>"contact", "body"=>"メールアドレスは？"},
   {"id"=>1003, "context"=>"contact", "body"=>"用件は？"},
   {"id"=>1004, "context"=>"normal", "body"=>"ありがとう。メール送っといたよ！"},

@@ -3,7 +3,7 @@ class Conversation::Switcher
   NEGATIVE_WORD = 'いいえ'
 
   def responder(message, states = {})
-    if message.contact? || transision_to_contact?(message)
+    if Service.contact.last.try(:enabled?) && (message.contact? || transision_to_contact?(message))
       Conversation::Contact.new(message, states)
     else
       Conversation::Bot.new(message)

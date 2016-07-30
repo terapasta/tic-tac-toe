@@ -19,7 +19,13 @@ class Conversation::Bot
     answer_id =  Answer::NO_CLASSIFIED_MESSAGE_ID if answer_id.nil?
 
     Rails.logger.debug("answer_id: #{answer_id}")
-    [Answer.find(answer_id)]
+    answers = [Answer.find(answer_id)]
+
+    # TODO botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
+    if answer_id == Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID && Service.contact.last.try(:enabled?)
+      answers << Answer.find(Answer::TRANSITION_CONTEXT_CONTACT_ID)
+    end
+    answers
   end
 
   private

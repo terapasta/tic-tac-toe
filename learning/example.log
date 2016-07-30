@@ -163,3 +163,14 @@ DEBUG:root:[[0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0
 DEBUG:root:採用 やる てる
 DEBUG:root:[[0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
   1 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+DEBUG:dataset.persistence.database:Loading table: chats on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: schema_migrations on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: admin_users on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: trainings on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: users on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: contexts on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: messages on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: answers on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: training_messages on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: contact_states on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>
+DEBUG:dataset.persistence.database:Loading table: services on <Database(mysql://root@localhost/donusagi_bot?charset=utf8)>

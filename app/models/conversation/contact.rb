@@ -41,13 +41,19 @@ class Conversation::Contact
       end
     end
 
-
-    # if @message.chat.contact_states.create!(@states.except(:yes_no))
-    # end
-
-    # complete
     contact_state = ContactState.new(@states)
-    ContactMailer.create(contact_state).deliver_now
-    [Answer.find(Answer::ASK_COMPLETE_ID)]
+    if @last_answer.id == Answer::ASK_CONFIRM_ID
+      if @message.body == POSITIVE_WORD
+        # complete
+        ContactMailer.create(contact_state).deliver_now
+        [Answer.find(Answer::ASK_COMPLETE_ID)]
+      elsif @message.body == NEGATIVE_WORD
+        [Answer.find(Answer::ASK_GUEST_NAME_ID)]
+      end
+    else
+      answer = Answer.find(Answer::ASK_CONFIRM_ID)
+      answer.body = answer.body % { values: "お名前: #{contact_state.name}\nメールアドレス: #{contact_state.email}\nご用件: #{contact_state.body}"}
+      [answer]
+    end
   end
 end

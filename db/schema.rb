@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730031750) do
+ActiveRecord::Schema.define(version: 20160731230858) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -99,6 +99,13 @@ ActiveRecord::Schema.define(version: 20160730031750) do
     t.string   "context",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "twitter_replies", force: :cascade do |t|
+    t.integer  "tweet_id",    limit: 8,   null: false
+    t.string   "screen_name", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|

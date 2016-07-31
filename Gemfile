@@ -66,6 +66,8 @@ gem 'active_hash'
 gem 'msgpack-rpc', '~> 0.5.4'
 gem 'dotenv-rails'
 gem 'rails_autolink'
+gem 'twitter'
+gem 'http'
 
 group :development, :test do
 

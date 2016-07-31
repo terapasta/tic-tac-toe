@@ -68,6 +68,7 @@ gem 'dotenv-rails'
 gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
+gem 'whenever', :require => false
 
 group :development, :test do
 

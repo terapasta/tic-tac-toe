@@ -70,6 +70,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
+    chronic (0.10.2)
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -373,6 +374,8 @@ GEM
     warden (1.2.6)
       rack (>= 1.0)
     websocket (1.2.3)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.8.7.6)
@@ -432,6 +435,7 @@ DEPENDENCIES
   twitter
   uglifier (>= 1.3.0)
   unicorn
+  whenever
 
 RUBY VERSION
    ruby 2.2.3p173

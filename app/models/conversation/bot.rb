@@ -11,11 +11,10 @@ class Conversation::Bot
   end
 
   def reply
-    client = MessagePack::RPC::Client.new('127.0.0.1', 6000)  # TODO 共通化する
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 
-    answer_id = client.call(:reply, context, @message.body)
+    answer_id = Ml::Engine.new.reply(context, @message.body)
     answer_id =  Answer::NO_CLASSIFIED_MESSAGE_ID if answer_id.nil?
 
     Rails.logger.debug("answer_id: #{answer_id}")

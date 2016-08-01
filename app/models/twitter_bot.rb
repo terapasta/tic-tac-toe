@@ -14,8 +14,9 @@ class TwitterBot
     tweet_id = TwitterReply.try(:last).try(:tweet_id) || 0
     @client.mentions_timeline.select{|m| m.id > tweet_id}.each do |mention|
       puts mention.text
-
       screen_name = mention.user.screen_name
+      TwitterReply.create!(tweet_id: mention.id, screen_name: screen_name)
+
       endpoint = api_v1_messages_url
       puts "endpoint: #{endpoint}"
 
@@ -29,7 +30,6 @@ class TwitterBot
         @client.update("@#{screen_name} #{body}", in_reply_to_status_id: mention.id)
       end
 
-      TwitterReply.create!(tweet_id: mention.id, screen_name: screen_name)
     end
   end
 

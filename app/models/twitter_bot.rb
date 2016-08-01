@@ -1,6 +1,8 @@
 class TwitterBot
   include Rails.application.routes.url_helpers
 
+  SEARCH_WORDS = %w(どんうさぎ はらぱんさん もふもふ はらぱんさん My-ope)
+
   def initialize
     @client = Twitter::REST::Client.new(
       consumer_key:        ENV['TWITTER_CONSUMER_KEY'],
@@ -34,12 +36,24 @@ class TwitterBot
   end
 
   def favorite
-    str = "どんうさぎ -RT"
-    tweets = @client.search(str)
-      .select{|t| t.user.screen_name != 'donusagi_bot' && !t.favorited?}
-      .select{|t| t.text.include?('どんうさぎ')}
+    #str = "どんうさぎ -RT"
+    str = "#{SEARCH_WORDS.join(' OR ')} -RT"
+    puts str
 
-    tweets.each do |tweet|
+    tweets = @client.search(str)
+      .select{|t| t.user.screen_name != 'donusagi_bot'}
+      .select do |t|
+        SEARCH_WORDS.each do |search_word|
+          return true if t.text.include?(search_word)}
+          # t.text.include?('どんうさぎ')}
+        end
+        return false
+      end
+
+    tweets.each_with_index do |tweet, index|
+      next if !tweet.favorited?
+      break if index > 3  # 最新の3件のみを処理する(favoriteし過ぎないようにするため)
+
       puts tweet.text
       @client.favorite(tweet.id)
     end

@@ -24,5 +24,5 @@ every 1.minutes do
 end
 
 every :day, at: '18:52' do
-  rake 'twitter:reply'
+  rake 'twitter:favorite'
 end

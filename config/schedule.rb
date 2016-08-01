@@ -22,3 +22,7 @@
 every 1.minutes do
   rake 'twitter:reply'
 end
+
+every :day, at: '18:52' do
+  rake 'twitter:reply'
+end

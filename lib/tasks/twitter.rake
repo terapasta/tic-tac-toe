@@ -4,6 +4,6 @@ namespace :twitter do
   end
 
   task favorite: :environment do
-    TwitterBot.new.favorite
+    TwitterBot.new.favorite_all
   end
 end

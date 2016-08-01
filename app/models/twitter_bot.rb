@@ -35,24 +35,21 @@ class TwitterBot
     end
   end
 
-  def favorite
-    #str = "どんうさぎ -RT"
-    str = "#{SEARCH_WORDS.join(' OR ')} -RT"
+  def favorite_all
+    SEARCH_WORDS.each { |search_word| favorite(search_word) }
+  end
+
+  def favorite(search_word)
+    str = "#{search_word} -RT"
     puts str
 
     tweets = @client.search(str)
       .select{|t| t.user.screen_name != 'donusagi_bot'}
-      .select do |t|
-        SEARCH_WORDS.each do |search_word|
-          return true if t.text.include?(search_word)}
-          # t.text.include?('どんうさぎ')}
-        end
-        return false
-      end
+      .select{|t| t.text.include?(search_word)}
 
     tweets.each_with_index do |tweet, index|
       next if !tweet.favorited?
-      break if index > 3  # 最新の3件のみを処理する(favoriteし過ぎないようにするため)
+      break if index > 1 # 最新の1件のみを処理する(favoriteし過ぎないようにするため)
 
       puts tweet.text
       @client.favorite(tweet.id)

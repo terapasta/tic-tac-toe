@@ -22,6 +22,7 @@ class MyopeServer(RPCServer):
         return result
 
     def learn(self):
+        print 'MyopeServer.learn start'
         test_scores_mean = Bot().learn()
         return test_scores_mean
 

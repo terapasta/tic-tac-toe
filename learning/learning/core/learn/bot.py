@@ -11,6 +11,7 @@ from ..plotter import Plotter
 
 class Bot:
     def learn(self):
+        print 'Bot.learn start'
         db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
         training_set = TrainingMessage(db).build()
 
@@ -19,6 +20,7 @@ class Bot:
 
         print y
 
+        print 'Bot.learn fit start'
         estimator = linear_model.LogisticRegression(C=1e5)
         estimator.fit(X, y)
 
@@ -26,4 +28,5 @@ class Bot:
 
         joblib.dump(estimator, "learning/models/logistic_reg_model")
         test_scores_mean = Plotter().plot(estimator, X, y)
+        print 'Bot.learn end'
         return test_scores_mean

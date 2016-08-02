@@ -35,6 +35,28 @@ class TwitterBot
     end
   end
 
+  def auto_reply
+    str = "どんうさぎ -RT"
+    endpoint = api_v1_messages_url
+    tweets = @client.search(str)
+      .select{|t| t.user.screen_name != 'donusagi_bot'}
+      .select{|t| t.user.screen_name == 'harada4atsushi'}
+      .select{|t| t.text.include?('どんうさぎ')}
+    tweet = tweets.first
+    screen_name = tweet.user.screen_name
+
+    # TODO 共通化したい
+    response = HTTP.headers('Content-Type' => "application/json")
+     .post(endpoint, json: { message: tweet.text })
+
+    messages = response.parse.with_indifferent_access[:messages]
+    messages.each do |message|
+      body = "#{message[:body]} #{Time.now}"
+      puts "body: #{body}"
+      @client.update("@#{screen_name} #{body}", in_reply_to_status_id: tweet.id)
+    end
+  end
+
   def favorite_all
     SEARCH_WORDS.each { |search_word| favorite(search_word) }
   end

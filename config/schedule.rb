@@ -23,6 +23,10 @@ every 1.minutes do
   rake 'twitter:reply'
 end
 
+every 1.day at: '18:52' do
+  rake 'twitter:auto_reply'
+end
+
 every 1.hours, at: '8:52' do
   rake 'twitter:favorite'
 end

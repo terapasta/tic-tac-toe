@@ -49,7 +49,7 @@ class TwitterBot
 
     tweets.each_with_index do |tweet, index|
       next if tweet.favorited?
-      break if index > 1 # 最新の1件のみを処理する(favoriteし過ぎないようにするため)
+      break if index > 0 # 最新の1件のみを処理する(favoriteし過ぎないようにするため)
 
       puts tweet.text
       @client.favorite(tweet.id)

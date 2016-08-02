@@ -49,7 +49,7 @@ class TwitterBot
 
     tweets.each_with_index do |tweet, index|
       puts tweet.text
-      next if !tweet.favorited?
+      next if tweet.favorited?
       break if index > 1 # 最新の1件のみを処理する(favoriteし過ぎないようにするため)
 
       puts "----------------------"

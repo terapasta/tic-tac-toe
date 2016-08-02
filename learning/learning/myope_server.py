@@ -22,7 +22,8 @@ class MyopeServer(RPCServer):
         return result
 
     def learn(self):
-        print 'MyopeServer.learn start'
+        logging.basicConfig(filename="example.log",level=logging.DEBUG)
+        logging.debug('MyopeServer.learn start')
         test_scores_mean = Bot().learn()
         return test_scores_mean
 

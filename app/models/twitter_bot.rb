@@ -2,6 +2,7 @@ class TwitterBot
   include Rails.application.routes.url_helpers
 
   SEARCH_WORDS = %w(どんうさぎ はらぱんさん もふもふ はらぱんさん My-ope)
+  BOT_SCREEN_NAME = 'donusagi_bot'
 
   def initialize
     @client = Twitter::REST::Client.new(
@@ -15,6 +16,7 @@ class TwitterBot
   def reply
     tweet_id = TwitterReply.try(:last).try(:tweet_id) || 0
     @client.mentions_timeline.select{|m| m.id > tweet_id}.each do |mention|
+      next if mention.user.screen_name == BOT_SCREEN_NAME
       puts mention.text
       screen_name = mention.user.screen_name
       TwitterReply.create!(tweet_id: mention.id, screen_name: screen_name)
@@ -39,7 +41,7 @@ class TwitterBot
     str = "どんうさぎ -RT"
     endpoint = api_v1_messages_url
     tweets = @client.search(str)
-      .select{|t| t.user.screen_name != 'donusagi_bot'}
+      .select{|t| t.user.screen_name != BOT_SCREEN_NAME}
       .select{|t| t.user.screen_name == 'harada4atsushi'}
       .select{|t| t.text.include?('どんうさぎ')}
     tweet = tweets.first
@@ -66,7 +68,7 @@ class TwitterBot
     puts str
 
     tweets = @client.search(str)
-      .select{|t| t.user.screen_name != 'donusagi_bot'}
+      .select{|t| t.user.screen_name != BOT_SCREEN_NAME}
       .select{|t| t.text.include?(search_word)}
 
     tweets.each_with_index do |tweet, index|

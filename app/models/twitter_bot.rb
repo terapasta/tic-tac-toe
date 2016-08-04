@@ -40,11 +40,15 @@ class TwitterBot
   def auto_reply
     str = "どんうさぎ -RT"
     endpoint = api_v1_messages_url
+    follower_screen_names = @client.followers.map(&:screen_name)
+
     tweets = @client.search(str)
       .select{|t| t.user.screen_name != BOT_SCREEN_NAME}
-      .select{|t| t.user.screen_name == 'harada4atsushi'}
+      .select{|t| follower_screen_names.include?(t.user.screen_name)}
+      .select{|t| t.created_at.today?}  # リプライを重複させないためひとまず当日のツイートのみに反応させる。理想はリプライしたTweetを記憶しておくこと
       .select{|t| t.text.include?('どんうさぎ')}
     tweet = tweets.first
+    return if tweet.blank?
     screen_name = tweet.user.screen_name
 
     # TODO 共通化したい

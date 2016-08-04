@@ -1,7 +1,6 @@
 class TwitterBot
   include Rails.application.routes.url_helpers
 
-  SEARCH_WORDS = %w(どんうさぎ はらぱんさん もふもふ はらぱんさん My-ope)
   BOT_SCREEN_NAME = 'donusagi_bot'
 
   def initialize
@@ -64,7 +63,7 @@ class TwitterBot
   end
 
   def favorite_all
-    SEARCH_WORDS.each { |search_word| favorite(search_word) }
+    FavoriteWord.all.each { |favorite_word| favorite(favorite_word.word) }
   end
 
   def favorite(search_word)
@@ -73,7 +72,7 @@ class TwitterBot
 
     tweets = @client.search(str)
       .select{|t| t.user.screen_name != BOT_SCREEN_NAME}
-      .select{|t| t.text.include?(search_word)}
+      .select{|t| t.text.downcase.include?(search_word.downcase)}
 
     tweets.each_with_index do |tweet, index|
       next if tweet.favorited?

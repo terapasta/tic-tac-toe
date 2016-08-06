@@ -20,7 +20,7 @@ class Bot:
         X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
         y = training_set[:,-1:].flatten()
 
-        print y
+        print(y)
 
         logging.debug('Bot.learn fit start')
         estimator = linear_model.LogisticRegression(C=1e5)

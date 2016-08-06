@@ -7,7 +7,7 @@ class TestBot(unittest.TestCase):
 
     def test_learn(self):
         result = Bot().learn()
-        print result
+        print(result)
         self.assertIsInstance(result, float)
 
 if __name__ == '__main__':

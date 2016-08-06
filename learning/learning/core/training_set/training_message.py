@@ -99,7 +99,7 @@ class TrainingMessage:
         return answer_id_indexs
 
     def __except_no_classified(self, training_messages):
-        return filter(lambda tm: tm[-1] != self.NO_CLASSIFIED_MESSAGE_ID, training_messages)
+        return [tm for tm in training_messages if tm[-1] != self.NO_CLASSIFIED_MESSAGE_ID]
 
     def __extract_bodies(self, training_sets):
         bodies = []

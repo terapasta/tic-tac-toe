@@ -9,7 +9,7 @@ X = [
     ['ミッション'],  # => 11
     ['代表は誰？'],  # => 5
 ]
-print Reply().predict(X)
+print(Reply().predict(X))
 
 #
 # sys.argv.pop(0)

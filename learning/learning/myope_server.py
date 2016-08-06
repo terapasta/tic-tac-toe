@@ -3,8 +3,8 @@ import logging
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
-from core.predict.reply import Reply
-from core.learn.bot import Bot
+from .core.predict.reply import Reply
+from .core.learn.bot import Bot
 
 class MyopeServer(RPCServer):
 

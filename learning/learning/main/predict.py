@@ -18,7 +18,7 @@ X = [
 # #         [9, 12, 'メリットは？'],  # => 5
 ]
 
-print Reply().predict(X)
+print(Reply().predict(X))
 
 #
 # sys.argv.pop(0)

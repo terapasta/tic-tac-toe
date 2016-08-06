@@ -10,18 +10,20 @@ class Nlang:
     def split(self, text):
         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
-        text = text.encode('utf-8')
+        # text = text.encode('utf-8')
+        tagger.parse('')  # node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         node = tagger.parseToNode(text)
         word_list = []
         while node:
             pos = node.feature.split(",")[0]
             if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞"]:
-                lemma = node.feature.split(",")[6].decode("utf-8")
-                if lemma == u"*":
-                    lemma = node.surface.decode("utf-8")
+                lemma = node.feature.split(",")[6]  #.decode("utf-8")
+                if lemma == "*":
+                    lemma = node.surface  #.decode("utf-8")
                 word_list.append(lemma)
+            print(node)
             node = node.next
-        return u" ".join(word_list)
+        return " ".join(word_list)
 
     @classmethod
     def batch_split(self, texts):
@@ -34,7 +36,7 @@ class Nlang:
     @classmethod
     def texts2vec(self, splited_texts, vocabulary_path):
         count_vectorizer = CountVectorizer()
-        print splited_texts
+        print(splited_texts)
         feature_vectors = count_vectorizer.fit_transform(splited_texts)
         vocabulary = count_vectorizer.get_feature_names()
         #joblib.dump(vocabulary, 'learning/vocabulary/vocabulary.pkl')

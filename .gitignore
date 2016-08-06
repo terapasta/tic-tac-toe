@@ -49,6 +49,7 @@ bower.json
 .tags
 
 *.pyc
+*.bak
 learning/learning/models/*
 learning/learning/vocabulary/*
 learning/learning/example.log

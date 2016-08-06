@@ -33,15 +33,15 @@ gscv = GridSearchCV(
 
 X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
 y = training_set[:,-1:].flatten()
-print "y: " + str(y)
+print("y: " + str(y))
 
 gscv.fit(X, y)
 svm_model = gscv.best_estimator_
 
-print training_set
-print(str(len(training_set)) + "件のトレーニングセットを学習しました")
-print svm_model  # 高パフォーマンスの学習モデル
-print gscv.best_params_  # 高パフォーマンスのパラメータ(gamma,Cの値)
+print(training_set)
+print((str(len(training_set)) + "件のトレーニングセットを学習しました"))
+print(svm_model)  # 高パフォーマンスの学習モデル
+print(gscv.best_params_)  # 高パフォーマンスのパラメータ(gamma,Cの値)
 
 # 学習済みモデルをdumpする
 joblib.dump(svm_model, "learning/models/svm_model")

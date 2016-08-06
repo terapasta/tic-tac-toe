@@ -3,11 +3,11 @@ class Conversation::Contact
 
   MESSAGES = {
     # まずは名前を教えて
-    name: Answer::ASK_GUEST_NAME_ID,
+    name: ContactAnswer::ASK_GUEST_NAME_ID,
     # メールアドレスは？
-    email: Answer::ASK_EMAIL_ID,
+    email: ContactAnswer::ASK_EMAIL_ID,
     # 用件は？
-    body: Answer::ASK_BODY_ID,
+    body: ContactAnswer::ASK_BODY_ID,
   }
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
@@ -24,7 +24,7 @@ class Conversation::Contact
 
   def reply
     if @message.body == STOP_CONTACT_WORD
-      return [Answer.find(Answer::STOP_CONTEXT_ID), Answer.find(Answer::START_MESSAGE_ID)]
+      return [ContactAnswer.find(ContactAnswer::STOP_CONTEXT_ID), Answer.find(Answer::START_MESSAGE_ID)]
     end
 
     MESSAGES.each do |field, answer_id|
@@ -35,29 +35,29 @@ class Conversation::Contact
         unless contact_state.valid?
           @states[field] = nil
           # TODO エラーメッセージを動的にしたい
-          return [Answer.find(Answer::ASK_ERROR_ID), Answer.find(MESSAGES[field])]
+          return [ContactAnswer.find(ContactAnswer::ASK_ERROR_ID), ContactAnswer.find(MESSAGES[field])]
         end
       end
     end
 
     MESSAGES.each do |field, answer_id|
       if @states[field].blank?
-        return [Answer.find(answer_id)]
+        return [ContactAnswer.find(answer_id)]
       end
     end
 
     contact_state = ContactState.new(@states)
-    if @last_answer.id == Answer::ASK_CONFIRM_ID
+    if @last_answer.id == ContactAnswer::ASK_CONFIRM_ID
       if @message.body == POSITIVE_WORD
         # complete
         ContactMailer.create(contact_state).deliver_now
-        return [Answer.find(Answer::ASK_COMPLETE_ID)]
+        return [ContactAnswer.find(ContactAnswer::ASK_COMPLETE_ID), Answer.find(Answer::START_MESSAGE_ID)]
       elsif @message.body == NEGATIVE_WORD
-        return [Answer.find(Answer::ASK_GUEST_NAME_ID)]
+        return [ContactAnswer.find(ContactAnswer::ASK_GUEST_NAME_ID)]
       end
     end
 
-    answer = Answer.find(Answer::ASK_CONFIRM_ID)
+    answer = ContactAnswer.find(ContactAnswer::ASK_CONFIRM_ID)
     answer.body = answer.body % { values: "お名前: #{contact_state.name}\nメールアドレス: #{contact_state.email}\nご用件: #{contact_state.body}"}
     [answer]
   end

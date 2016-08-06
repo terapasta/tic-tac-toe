@@ -34,18 +34,17 @@ Answer.seed(:id,
   {"id"=>26, "context" => "normal", "body"=>"ぼくは日本酒とか焼酎が好きだね。今度一緒に飲むかい？"},
   {"id"=>27, "context" => "normal", "body"=>"ごめん、それにはまだ回答できないや＞＜"},
   {"id"=>49, "context" => "normal", "body"=>"アポとか開発相談はここからどぞ http://www.mof-mof.co.jp/contact"},
-
-  # TODO 事前定義の回答(別テーブルに移行したい)
-  {"id"=>1000, "context"=>"contact", "body"=>"おっけーわかった"},
-  {"id"=>1001, "context"=>"contact", "body"=>"まずは名前を教えて\n※問い合わせを中断したい場合は「やめる」と送信してね"},
-  {"id"=>1002, "context"=>"contact", "body"=>"メールアドレスは？"},
-  {"id"=>1003, "context"=>"contact", "body"=>"用件は？"},
-  {"id"=>1004, "context"=>"normal", "body"=>"ありがとう。メール送っといたよ！"},
-  {"id"=>1005, "context"=>"contact", "body"=>"値が不正です"},
-  {"id"=>1006, "context"=>"contact", "body"=>"この内容で送信しても良い？(はい/いいえ)\n%{values}"},
-  {"id"=>1007, "context" => "normal", transition_to: 'contact', "body"=>"ぼくからもmofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)"},
-
-  # 以降のIDを通常メッセージとするためのdummy
-  {"id"=>2000, "context"=>"normal", "body"=>"dummy"},
+  #
+  # {"id"=>1000, "context"=>"contact", "body"=>"おっけーわかった"},
+  # {"id"=>1001, "context"=>"contact", "body"=>"まずは名前を教えて\n※問い合わせを中断したい場合は「やめる」と送信してね"},
+  # {"id"=>1002, "context"=>"contact", "body"=>"メールアドレスは？"},
+  # {"id"=>1003, "context"=>"contact", "body"=>"用件は？"},
+  # {"id"=>1004, "context"=>"normal", "body"=>"ありがとう。メール送っといたよ！"},
+  # {"id"=>1005, "context"=>"contact", "body"=>"値が不正です"},
+  # {"id"=>1006, "context"=>"contact", "body"=>"この内容で送信しても良い？(はい/いいえ)\n%{values}"},
+  # {"id"=>1007, "context" => "normal", transition_to: 'contact', "body"=>"ぼくからもmofmof inc.に問い合わせ出来るよ。ぼくから送っておこうか？(はい/いいえ)"},
+  #
+  # # 以降のIDを通常メッセージとするためのdummy
+  # {"id"=>2000, "context"=>"normal", "body"=>"dummy"},
 )
 # End auto-generated file.

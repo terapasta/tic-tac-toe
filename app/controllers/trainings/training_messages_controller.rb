@@ -11,6 +11,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     session[:states] = responder.states
 
     @messages = answers.map do |answer|
+      answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
       @training.context = answer.context
       @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     end

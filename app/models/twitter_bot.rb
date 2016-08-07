@@ -13,7 +13,7 @@ class TwitterBot
   end
 
   def reply
-    @client.mentions_timeline.each do |mention|
+    @client.mentions_timeline.reverse_each do |mention|
       tweet_id = TwitterReply.maximum(:tweet_id) || 0
       next if mention.id <= tweet_id
       next if mention.user.screen_name == BOT_SCREEN_NAME

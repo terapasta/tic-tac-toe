@@ -8,6 +8,7 @@
 #
 Answer.seed(:id,
   {"id"=>1, "context" => "normal", "body"=>"こんにちは！mofmof inc.のどんうさぎだよ。mofmof inc.について知りたいことあったら聞いてね。"},
+  # {"id"=>1, "context" => "normal", "body"=>"こんにちは、社内ヘルプデスクのどんうさぎです！社内のことでわからないことがあれば聞いてみてくださいね。"},
   {"id"=>2, "context" => "normal", "body"=>"渋谷だよ。住所は「東京都渋谷区南平台町13-15 LUMBER ONE 南平台ビル ANNEX 1F」"},
   {"id"=>3, "context" => "normal", "body"=>"徒歩8分って書いてあるけど、実際には13分くらいかかる気がする"},
   {"id"=>4, "context" => "normal", "body"=>"株式会社mofmofだよ。代表の原田は「mofmof inc.」って表記が好きみたい"},

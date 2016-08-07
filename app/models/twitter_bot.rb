@@ -13,15 +13,16 @@ class TwitterBot
   end
 
   def reply
-    tweet_id = TwitterReply.try(:last).try(:tweet_id) || 0
-    @client.mentions_timeline.select{|m| m.id > tweet_id}.each do |mention|
+    @client.mentions_timeline.each do |mention|
+      tweet_id = TwitterReply.maximum(:tweet_id) || 0
+      next if mention.id <= tweet_id
       next if mention.user.screen_name == BOT_SCREEN_NAME
+
       puts mention.text
       screen_name = mention.user.screen_name
       TwitterReply.create!(tweet_id: mention.id, screen_name: screen_name)
 
       endpoint = api_v1_messages_url
-      puts "endpoint: #{endpoint}"
 
       response = HTTP.headers('Content-Type' => "application/json")
        .post(endpoint, json: { message: mention.text })

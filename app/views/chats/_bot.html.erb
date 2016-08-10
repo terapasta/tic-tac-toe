@@ -7,17 +7,17 @@
     <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
       <span id="last-message" />
       <% if message.class == TrainingMessage %>
-        <%= bootstrap_form_for [message.training, message.answer] do |f| %>
+        <%= bootstrap_form_for [bot, message.training, message.answer] do |f| %>
           <%= f.text_area :body, hide_label: true %>
           <%= f.submit '更新する', class: 'btn btn-primary' %>
         <% end %>
         <br />
-        <%= bootstrap_form_for [message.training, message] do |f| %>
+        <%= bootstrap_form_for [bot, message.training, message] do |f| %>
           <%= f.collection_select :answer_id, Answer.all, :id, :body %>
           <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
         <% end %>
         <br />
-        <%= bootstrap_form_for Answer.new, url: replace_training_answer_path(message.training, message) do |f| %>
+        <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message) do |f| %>
           <%= f.text_area :body, hide_label: true %>
           <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
         <% end %>

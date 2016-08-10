@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(version: 20160810071600) do
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
 
   create_table "bots", force: :cascade do |t|
-    t.integer  "user_id_id", limit: 4
+    t.integer  "user_id",    limit: 4
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
-  add_index "bots", ["user_id_id"], name: "index_bots_on_user_id_id", using: :btree
+  add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
 
   create_table "chats", force: :cascade do |t|
     t.string   "context",    limit: 255

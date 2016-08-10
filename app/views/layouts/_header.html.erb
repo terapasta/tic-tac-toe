@@ -18,8 +18,9 @@
           <li><a href="#contact">Contact</a></li>
         -->
         </ul>
-        <% if admin_user_signed_in? %>
+        <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Bot管理", bots_path %></li>
             <li><%= link_to "Botを育てる", new_training_path %></li>
             <li><%= link_to "学習を実行する", learning_path, method: :patch %></li>
             <li class="dropdown">

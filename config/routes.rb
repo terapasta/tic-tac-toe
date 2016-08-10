@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
 
+  resources :bots
+
   resource :chats, only: [:show, :new, :destroy] do
     scope module: :chats do
       resources :messages, only: [:create]
@@ -30,5 +32,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'chats#show'
+  # root 'chats#show'
+  root 'dashboards#show'
 end

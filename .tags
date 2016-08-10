@@ -1,0 +1,9 @@
+ApplicationController	/Users/harada/source_code/donusagi-bot/app/controllers/application_controller.rb	/^class ApplicationController < ActionController::Base$/;"	class	line:1
+DashboardsController	/Users/harada/source_code/donusagi-bot/app/controllers/dashboards_controller.rb	/^class DashboardsController < ApplicationController$/;"	class	line:1
+show	/Users/harada/source_code/donusagi-bot/app/controllers/dashboards_controller.rb	/^  def show$/;"	method	line:2	class:DashboardsController
+BotsController	/Users/harada/source_code/donusagi-bot/app/controllers/bots_controller.rb	/^class BotsController < ApplicationController$/;"	class	line:1
+index	/Users/harada/source_code/donusagi-bot/app/controllers/bots_controller.rb	/^  def index$/;"	method	line:5	class:BotsController
+User	/Users/harada/source_code/donusagi-bot/app/models/user.rb	/^class User < ActiveRecord::Base$/;"	class	line:1
+CreateBots	/Users/harada/source_code/donusagi-bot/db/migrate/20160810071600_create_bots.rb	/^class CreateBots < ActiveRecord::Migration$/;"	class	line:1
+change	/Users/harada/source_code/donusagi-bot/db/migrate/20160810071600_create_bots.rb	/^  def change$/;"	method	line:2	class:CreateBots
+Bot	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^class Bot < ActiveRecord::Base$/;"	class	line:1

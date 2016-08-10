@@ -1,0 +1,27 @@
+<h1>Bot管理</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bots.each do |bot| %>
+      <tr>
+        <td><%= bot.name %></td>
+        <td>
+          <%#= link_to t('helpers.link.show'), message, class: "btn btn-default" %>
+          <%#=  link_to t('helpers.link.edit'), edit_message_path(message), class: "btn btn-default" %>
+          <%#= link_to t('helpers.link.destroy'), message, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to t('helpers.link.new'), new_message_path, class: "btn btn-default" %>

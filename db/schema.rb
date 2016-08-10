@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806011152) do
+ActiveRecord::Schema.define(version: 20160810071600) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -32,20 +32,31 @@ ActiveRecord::Schema.define(version: 20160806011152) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "answers", force: :cascade do |t|
-    t.string   "context",       limit: 255,   default: "0", null: false
+    t.string   "context",       limit: 255,   default: "normal", null: false
     t.text     "body",          limit: 65535
     t.string   "transition_to", limit: 255
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "bot_id",        limit: 4,                        null: false
   end
 
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
+
+  create_table "bots", force: :cascade do |t|
+    t.integer  "user_id_id", limit: 4
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "bots", ["user_id_id"], name: "index_bots_on_user_id_id", using: :btree
 
   create_table "chats", force: :cascade do |t|
     t.string   "context",    limit: 255
     t.string   "guest_key",  limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "bot_id",     limit: 4,   null: false
   end
 
   create_table "contact_answers", force: :cascade do |t|
@@ -53,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160806011152) do
     t.string   "transition_to", limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "bot_id",        limit: 4,     null: false
   end
 
   create_table "contact_states", force: :cascade do |t|
@@ -76,6 +88,7 @@ ActiveRecord::Schema.define(version: 20160806011152) do
     t.string   "word",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "bot_id",     limit: 4,   null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -95,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160806011152) do
     t.boolean  "enabled",              null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "bot_id",     limit: 4, null: false
   end
 
   create_table "training_messages", force: :cascade do |t|
@@ -112,6 +126,7 @@ ActiveRecord::Schema.define(version: 20160806011152) do
     t.string   "context",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "bot_id",     limit: 4,   null: false
   end
 
   create_table "twitter_replies", force: :cascade do |t|
@@ -119,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160806011152) do
     t.string   "screen_name", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "bot_id",      limit: 4,   null: false
   end
 
   create_table "users", force: :cascade do |t|

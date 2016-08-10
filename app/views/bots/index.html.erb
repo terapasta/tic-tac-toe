@@ -13,7 +13,7 @@
       <tr>
         <td><%= bot.name %></td>
         <td>
-          <%#= link_to t('helpers.link.show'), message, class: "btn btn-default" %>
+          <%= link_to 'チャットする', new_bot_chats_path(bot), class: "btn btn-default" %>
           <%#=  link_to t('helpers.link.edit'), edit_message_path(message), class: "btn btn-default" %>
           <%#= link_to t('helpers.link.destroy'), message, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
         </td>

@@ -4,4 +4,11 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Bot	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^class Bot < ActiveRecord::Base$/;"	class	line:1
+ChatsController	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^class ChatsController < ApplicationController$/;"	class	line:1
+show	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^  def show$/;"	method	line:6	class:ChatsController
+new	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^  def new$/;"	method	line:12	class:ChatsController
+destroy	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^  def destroy$/;"	method	line:19	class:ChatsController
+set_bot	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def set_bot$/;"	method	line:25	class:ChatsController
+set_chat	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def set_chat$/;"	method	line:29	class:ChatsController
+set_guest_key	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def set_guest_key$/;"	method	line:33	class:ChatsController
+message_params	/Users/harada/source_code/donusagi-bot/app/controllers/chats_controller.rb	/^    def message_params$/;"	method	line:37	class:ChatsController

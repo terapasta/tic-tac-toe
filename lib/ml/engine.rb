@@ -5,7 +5,9 @@ class Ml::Engine
   end
 
   def reply(context, body)
-    return @client.call(:reply, context, body)
+    # TODO リファクタリング中につき一旦固定値を返す
+    #return @client.call(:reply, context, body)
+    return 2
   end
 
   def learn

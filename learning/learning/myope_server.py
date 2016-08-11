@@ -21,10 +21,10 @@ class MyopeServer(RPCServer):
         # logging.debug(result)
         return result
 
-    def learn(self):
+    def learn(self, bot_id):
         logging.basicConfig(filename="example.log",level=logging.DEBUG)
         logging.debug('MyopeServer.learn start')
-        test_scores_mean = Bot().learn()
+        test_scores_mean = Bot(bot_id).learn()
         return test_scores_mean
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())

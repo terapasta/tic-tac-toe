@@ -14,7 +14,7 @@ class Conversation::Bot
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 
-    answer_id = Ml::Engine.new.reply(context, @message.body)
+    answer_id = Ml::Engine.new(bot_id).reply(context, @message.body)
     answer_id =  Answer::NO_CLASSIFIED_MESSAGE_ID if answer_id.nil?
 
     Rails.logger.debug("answer_id: #{answer_id}")

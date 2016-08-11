@@ -21,9 +21,9 @@ Rails.application.routes.draw do
         end
       end
     end
+    resource :learning, only: [:update]
   end
 
-  resource :learning, only: [:update]
 
   resource :dashboards, only: [:show]
 

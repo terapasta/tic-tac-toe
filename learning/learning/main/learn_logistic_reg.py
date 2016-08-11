@@ -9,8 +9,10 @@ from sklearn import linear_model
 from ..core.training_set.training_message import TrainingMessage
 from ..core.plotter import Plotter
 
+bot_id = 1
+
 db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
-training_set = TrainingMessage(db).build()
+training_set = TrainingMessage(db, bot_id).build()
 
 X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
 y = training_set[:,-1:].flatten()

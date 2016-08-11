@@ -9,8 +9,9 @@ class TrainingMessage:
     NUMBER_OF_CONTEXT = 0
     NO_CLASSIFIED_MESSAGE_ID = 27
 
-    def __init__(self, db):
-        self.training_messages = db['training_messages'].find(order_by='training_id, id')
+    def __init__(self, db, bot_id):
+        #self.training_messages = db['training_messages'].find(bot_id=bot_id, order_by='training_id, id')
+        self.training_messages = db.query('select * from training_messages where training_id in (select id from trainings where bot_id = 1) order by training_id, id;')
 
     # TODO numpyのarrayを使う
     #

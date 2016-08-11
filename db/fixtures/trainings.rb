@@ -7,7 +7,7 @@
 #   bin/rails
 #
 Training.seed(:id,
-  {"id"=>1},
-  {"id"=>2},
+  {"id"=>1, bot_id: 1},
+  {"id"=>2, bot_id: 1},
 )
 # End auto-generated file.

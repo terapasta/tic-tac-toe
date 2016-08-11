@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(version: 20160810071600) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "answers", force: :cascade do |t|
-    t.string   "context",       limit: 255,   default: "normal", null: false
+    t.string   "context",       limit: 255,   default: "0", null: false
     t.text     "body",          limit: 65535
     t.string   "transition_to", limit: 255
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.integer  "bot_id",        limit: 4,                        null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.integer  "bot_id",        limit: 4,                   null: false
   end
 
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree

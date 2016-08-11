@@ -1,4 +1,5 @@
 class ChatsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_bot, only: [:new, :destroy]
   before_action :set_chat, only: [:show, :destroy]
   before_action :set_guest_key

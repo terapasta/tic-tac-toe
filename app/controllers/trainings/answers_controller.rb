@@ -1,4 +1,5 @@
 class Trainings::AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_training
   before_action :set_answer, only: [:update]
 

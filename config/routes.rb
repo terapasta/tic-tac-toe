@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :admin_users
   #resources :messages
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users
+  devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
 
   resources :bots do
     resource :chats, only: [:show, :new, :destroy] do
@@ -33,6 +33,11 @@ Rails.application.routes.draw do
     end
   end
 
-  # root 'chats#show'
+  # authenticated :admin_user do
+  #   #rails_admin.dashboard_path
+  # end
+  # authenticated :user do
+  #   root 'dashboards#show', as: :user_root
+  # end
   root 'dashboards#show'
 end

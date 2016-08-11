@@ -1,4 +1,5 @@
 class TopsController < ApplicationController
+  before_action :authenticate_user!
   def show
     @answer_ids = [9]
     @texts = []

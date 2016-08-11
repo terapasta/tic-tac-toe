@@ -13,7 +13,7 @@ class TwitterBot
   end
 
   def reply
-    bot_id = 1  # TODO bot_id 固定値を修正する(識別トークンとか？)
+    bot_id = 1  # HACK Twitter機能ONのbotのみ動作させる(一旦固定値)
     @client.mentions_timeline.reverse_each do |mention|
       tweet_id = TwitterReply.maximum(:tweet_id) || 0
       next if mention.id <= tweet_id

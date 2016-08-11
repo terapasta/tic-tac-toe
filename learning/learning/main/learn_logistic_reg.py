@@ -8,10 +8,11 @@ from sklearn.externals import joblib
 from sklearn import linear_model
 from ..core.training_set.training_message import TrainingMessage
 from ..core.plotter import Plotter
+from ..config.config import Config
 
 bot_id = 1
 
-db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
+db = dataset.connect(Config().get('database')['endpoint'])
 training_set = TrainingMessage(db, bot_id).build()
 
 X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい

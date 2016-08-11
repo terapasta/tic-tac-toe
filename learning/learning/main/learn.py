@@ -7,8 +7,9 @@ from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
 from ..core.training_set.training_message import TrainingMessage
 from ..core.plotter import Plotter
+from ..config.config import Config
 
-db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')
+db = dataset.connect(Config().get('database')['endpoint'])
 training_set = TrainingMessage(db).build()
 
 # 学習する

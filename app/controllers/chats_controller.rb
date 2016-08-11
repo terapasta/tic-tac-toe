@@ -1,4 +1,5 @@
 class ChatsController < ApplicationController
+  # TODO 外部表示する際はログインチェックの解除が必要
   before_action :authenticate_user!
   before_action :set_bot, only: [:new, :destroy]
   before_action :set_chat, only: [:show, :destroy]
@@ -9,7 +10,6 @@ class ChatsController < ApplicationController
     redirect_to new_chats_path if @chat.nil?
   end
 
-  # TODO 外部表示する際はログインチェックの解除が必要
   def new
     @chat = @bot.chats.new(guest_key: session[:guest_key])
     @chat.messages << Message.start_message

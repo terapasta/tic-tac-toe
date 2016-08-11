@@ -9,6 +9,7 @@ from sklearn.externals import joblib
 from sklearn import linear_model
 from ..training_set.training_message import TrainingMessage
 from ..plotter import Plotter
+from config.config import Config
 
 class Bot:
     def __init__(self, bot_id):
@@ -17,7 +18,8 @@ class Bot:
     def learn(self):
         logging.basicConfig(filename="example.log",level=logging.DEBUG)
         logging.debug('Bot.learn start')
-        db = dataset.connect('mysql://root@localhost/donusagi_bot?charset=utf8')  # TODO 定数にしたい
+
+        db = dataset.connect(Config().get('database')['endpoint'])
         training_set = TrainingMessage(db, self.bot_id).build()
 
         X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい

@@ -7,12 +7,12 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 
 class Reply:
-    NO_CLASSIFIED_THRESHOLD = 0.3
+    NO_CLASSIFIED_THRESHOLD = 0.2
 
-    def __init__(self):
-        self.estimator = joblib.load("learning/models/logistic_reg_model")
+    def __init__(self, bot_id):
+        self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
         #self.estimator = joblib.load("learning/models/svm_model")  # TODO 定数化したい
-        self.vocabulary = joblib.load("learning/vocabulary/vocabulary.pkl")
+        self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id)
 
     def predict(self, X):
         Xtrain = np.array(X)

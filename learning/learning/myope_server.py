@@ -11,13 +11,13 @@ class MyopeServer(RPCServer):
     # f.g.
     #   context: [0, 1, 3, 1]
     #   body: 'こんにちは'
-    def reply(self, context, body):
+    def reply(self, bot_id, context, body):
         # logging.basicConfig(filename="example.log",level=logging.DEBUG)
         # logging.debug('hogehoge')
         X = list(context)
         #X.append(body.encode('utf-8'))
         X.append(body)
-        result = Reply().predict([X])  # TODO 引数
+        result = Reply(bot_id).predict([X])  # TODO 引数
         # logging.debug(result)
         return result
 

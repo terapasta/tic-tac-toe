@@ -24,6 +24,6 @@ estimator.fit(X, y)
 
 # print "estimator.score: %s " % estimator.score  # accuracy
 
-joblib.dump(estimator, "learning/models/logistic_reg_model")
+joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % bot_id)
 
 Plotter().plot(estimator, X, y)

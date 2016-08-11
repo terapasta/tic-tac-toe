@@ -10,8 +10,8 @@ class TrainingMessage:
     NO_CLASSIFIED_MESSAGE_ID = 27
 
     def __init__(self, db, bot_id):
-        #self.training_messages = db['training_messages'].find(bot_id=bot_id, order_by='training_id, id')
         self.training_messages = db.query('select * from training_messages where training_id in (select id from trainings where bot_id = 1) order by training_id, id;')
+        self.bot_id = bot_id
 
     # TODO numpyのarrayを使う
     #
@@ -64,7 +64,7 @@ class TrainingMessage:
         training_sets = self.__except_no_classified(training_sets)
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
-        bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/vocabulary.pkl')  # TODO 定数化したい
+        bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/%s_vocabulary.pkl' % self.bot_id)  # TODO 定数化したい
         feature = self.__combine(training_sets, bodies_vec)
         return feature
 

@@ -1,7 +1,8 @@
 class Trainings::TrainingMessagesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_bot
   before_action :set_training
-  #
+
   def create
     training_message = @training.training_messages.build(training_message_params)
     training_message.speaker = 'guest'
@@ -17,7 +18,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     end
 
     @training.save!
-    redirect_to training_path(@training)
+    redirect_to bot_training_path(@bot, @training)
   end
 
   def update
@@ -32,14 +33,14 @@ class Trainings::TrainingMessagesController < ApplicationController
   end
 
   private
+    def set_bot
+      @bot = current_user.bots.find(params[:bot_id])
+    end
+
     def set_training
       @training = Training.find(params[:training_id])
     end
-  #
-  #   def answer_params
-  #     params.require(:answer).permit(:body)
-  #   end
-  #
+
     def training_message_params
       params.require(:training_message).permit(:answer_id, :body)
     end

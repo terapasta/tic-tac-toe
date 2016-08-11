@@ -4,7 +4,7 @@
       <% if training_message.bot? %>
         <%= render 'chats/bot', bot: @bot, messages: @training.training_messages, message: training_message %>
       <% elsif training_message.guest? %>
-        <%#= render 'chats/guest', message: training_message %>
+        <%= render 'chats/guest', message: training_message %>
       <% end %>
       <br />
     <% end %>

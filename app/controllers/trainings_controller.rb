@@ -1,6 +1,6 @@
 class TrainingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_bot, only: [:new]
+  before_action :set_bot, only: [:show, :new]
   before_action :set_training, only: [:show, :create, :destroy]
 
   def show

@@ -29,7 +29,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     else
       flash[:notice] = '回答の差し替えに失敗しました'
     end
-    redirect_to training_path(@training)
+    redirect_to bot_training_path(@bot, @training)
   end
 
   private

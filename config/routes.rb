@@ -39,5 +39,5 @@ Rails.application.routes.draw do
   # authenticated :user do
   #   root 'dashboards#show', as: :user_root
   # end
-  root 'dashboards#show'
+  root 'bots#index'
 end

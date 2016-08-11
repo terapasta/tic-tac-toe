@@ -13,6 +13,7 @@ class TwitterBot
   end
 
   def reply
+    bot_id = 1  # TODO bot_id 固定値を修正する(識別トークンとか？)
     @client.mentions_timeline.reverse_each do |mention|
       tweet_id = TwitterReply.maximum(:tweet_id) || 0
       next if mention.id <= tweet_id
@@ -20,12 +21,12 @@ class TwitterBot
 
       puts mention.text
       screen_name = mention.user.screen_name
-      TwitterReply.create!(tweet_id: mention.id, screen_name: screen_name)
+      TwitterReply.create!(bot_id: bot_id, tweet_id: mention.id, screen_name: screen_name)
 
       endpoint = api_v1_messages_url
 
       response = HTTP.headers('Content-Type' => "application/json")
-       .post(endpoint, json: { message: mention.text })
+       .post(endpoint, json: { message: mention.text, bot_id: bot_id })
 
       messages = response.parse.with_indifferent_access[:messages]
       messages.each do |message|

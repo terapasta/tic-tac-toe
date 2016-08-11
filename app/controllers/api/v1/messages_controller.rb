@@ -19,11 +19,11 @@ class Api::V1::MessagesController < ApplicationController
 
   private
     def set_chat
-      @chat = Chat.find_by(guest_key: message_params[:guest_key])
-      @chat ||= Chat.create(guest_key: SecureRandom.hex(64))
+      @chat = Chat.find_by(bot_id: message_params[:bot_id], guest_key: message_params[:guest_key])
+      @chat ||= Chat.create(bot_id: message_params[:bot_id], guest_key: SecureRandom.hex(64))
     end
 
     def message_params
-      params.permit(:guest_key, :message)
+      params.permit(:bot_id, :guest_key, :message)
     end
 end

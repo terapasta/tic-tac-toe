@@ -1,10 +1,29 @@
-TrainingsController	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^class TrainingsController < ApplicationController$/;"	class	line:1
-show	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^  def show$/;"	method	line:7	class:TrainingsController
-new	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^  def new$/;"	method	line:10	class:TrainingsController
-set_bot	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^    def set_bot$/;"	method	line:22	class:TrainingsController
-set_training	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^    def set_training$/;"	method	line:26	class:TrainingsController
-check_have_start_message	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^    def check_have_start_message$/;"	method	line:30	class:TrainingsController
-training_message_params	/Users/harada/source_code/donusagi-bot/app/controllers/trainings_controller.rb	/^    def training_message_params$/;"	method	line:37	class:TrainingsController
-ActiveRecord	/Users/harada/source_code/donusagi-bot/config/initializers/active_record_enum_with_rails_admin.rb	/^module ActiveRecord$/;"	module	line:1
-RailsAdminEnum	/Users/harada/source_code/donusagi-bot/config/initializers/active_record_enum_with_rails_admin.rb	/^  module RailsAdminEnum$/;"	module	line:2	class:ActiveRecord
-enum	/Users/harada/source_code/donusagi-bot/config/initializers/active_record_enum_with_rails_admin.rb	/^    def enum(definitions)$/;"	method	line:3	class:ActiveRecord.RailsAdminEnum
+logging	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^import logging$/;"	namespace	line:2
+StreamServer	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^from gevent.server import StreamServer$/;"	namespace	line:3
+RPCServer	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^from mprpc import RPCServer$/;"	namespace	line:4
+joblib	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^from sklearn.externals import joblib$/;"	namespace	line:5
+Reply	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^from core.predict.reply import Reply$/;"	namespace	line:6
+ModelNotExists	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^from core.predict.model_not_exists import ModelNotExists$/;"	namespace	line:7
+Bot	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^from core.learn.bot import Bot$/;"	namespace	line:8
+MyopeServer	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^class MyopeServer(RPCServer):$/;"	class	line:10
+STATUS_CODE_SUCCESS	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^    STATUS_CODE_SUCCESS = 1$/;"	variable	line:11	class:MyopeServer
+STATUS_CODE_MODEL_NOT_EXISTS	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^    STATUS_CODE_MODEL_NOT_EXISTS = 101$/;"	variable	line:12	class:MyopeServer
+reply	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^    def reply(self, bot_id, context, body):$/;"	member	line:17	class:MyopeServer
+learn	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^    def learn(self, bot_id):$/;"	member	line:33	class:MyopeServer
+server	/Users/harada/source_code/donusagi-bot/learning/learning/myope_server.py	/^server = StreamServer(('127.0.0.1', 6000), MyopeServer())$/;"	variable	line:39
+logging	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^import logging$/;"	namespace	line:2
+np	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^import numpy as np$/;"	namespace	line:3
+pd	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^import pandas as pd$/;"	namespace	line:4
+CountVectorizer	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^from sklearn.feature_extraction.text import CountVectorizer$/;"	namespace	line:5
+joblib	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^from sklearn.externals import joblib$/;"	namespace	line:6
+Nlang	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^from ..nlang import Nlang$/;"	namespace	line:7
+ModelNotExists	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^from .model_not_exists import ModelNotExists$/;"	namespace	line:8
+Reply	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^class Reply:$/;"	class	line:10
+NO_CLASSIFIED_THRESHOLD	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^    NO_CLASSIFIED_THRESHOLD = 0.2$/;"	variable	line:11	class:Reply
+__init__	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^    def __init__(self, bot_id):$/;"	member	line:13	class:Reply
+predict	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^    def predict(self, X):$/;"	member	line:20	class:Reply
+__replace_text2vec	/Users/harada/source_code/donusagi-bot/learning/learning/core/predict/reply.py	/^    def __replace_text2vec(self, Xtrain):$/;"	member	line:29	class:Reply	file:
+Conversation	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^class Conversation::Bot$/;"	class	line:1
+initialize	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^  def initialize(bot_id, message)$/;"	method	line:8	class:Conversation
+reply	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^  def reply$/;"	method	line:14	class:Conversation
+build_context	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^    def build_context$/;"	method	line:33	class:Conversation

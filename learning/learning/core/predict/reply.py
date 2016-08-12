@@ -5,13 +5,17 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
+from .model_not_exists import ModelNotExists
 
 class Reply:
     NO_CLASSIFIED_THRESHOLD = 0.2
 
     def __init__(self, bot_id):
-        self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
-        self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id) # TODO 定数化したい
+        try:
+            self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
+            self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id) # TODO 定数化したい
+        except IOError:
+            raise ModelNotExists()
 
     def predict(self, X):
         Xtrain = np.array(X)

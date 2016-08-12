@@ -4,9 +4,12 @@ from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
 from core.predict.reply import Reply
+from core.predict.model_not_exists import ModelNotExists
 from core.learn.bot import Bot
 
 class MyopeServer(RPCServer):
+    STATUS_CODE_SUCCESS = 1
+    STATUS_CODE_MODEL_NOT_EXISTS = 101
 
     # f.g.
     #   context: [0, 1, 3, 1]
@@ -17,9 +20,15 @@ class MyopeServer(RPCServer):
         X = list(context)
         #X.append(body.encode('utf-8'))
         X.append(body)
-        result = Reply(bot_id).predict([X])  # TODO 引数
-        # logging.debug(result)
-        return result
+        answer_id = None
+        status_code = self.STATUS_CODE_SUCCESS
+
+        try:
+            answer_id = Reply(bot_id).predict([X])  # TODO 引数
+        except ModelNotExists:
+            status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
+
+        return { 'status_code': status_code, 'answer_id': answer_id }
 
     def learn(self, bot_id):
         logging.basicConfig(filename="example.log",level=logging.DEBUG)

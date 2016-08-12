@@ -10,7 +10,7 @@ class ChatsController < ApplicationController
 
   def new
     @chat = @bot.chats.new(guest_key: session[:guest_key])
-    @chat.messages << Message.start_message
+    @chat.messages << @chat.build_start_message
     @chat.save!
     render :show
   end

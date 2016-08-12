@@ -1,0 +1,6 @@
+Message	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^class Message < ActiveRecord::Base$/;"	class	line:1
+parent	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^  def parent$/;"	method	line:7	class:Message
+Message	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^class Message < ActiveRecord::Base$/;"	class	line:1
+parent	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^  def parent$/;"	method	line:7	class:Message
+TrainingMessage	/Users/harada/source_code/donusagi-bot/app/models/training_message.rb	/^class TrainingMessage < ActiveRecord::Base$/;"	class	line:1
+parent	/Users/harada/source_code/donusagi-bot/app/models/training_message.rb	/^  def parent$/;"	method	line:7	class:TrainingMessage

@@ -4,3 +4,5 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+TrainingMessage	/Users/harada/source_code/donusagi-bot/app/models/training_message.rb	/^class TrainingMessage < ActiveRecord::Base$/;"	class	line:1
+parent	/Users/harada/source_code/donusagi-bot/app/models/training_message.rb	/^  def parent$/;"	method	line:7	class:TrainingMessage

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810071600) do
+ActiveRecord::Schema.define(version: 20160812091214) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -43,10 +43,11 @@ ActiveRecord::Schema.define(version: 20160810071600) do
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
 
   create_table "bots", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "user_id",         limit: 4
+    t.string   "name",            limit: 255
+    t.integer  "start_answer_id", limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree

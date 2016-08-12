@@ -8,7 +8,7 @@ class TrainingsController < ApplicationController
 
   def new
     @training = @bot.trainings.new
-    @training.training_messages << TrainingMessage.start_message
+    @training.training_messages << @training.build_start_message
     if @training.save
       flash[:notice] = '新しいスレッドが開始されました'
     else

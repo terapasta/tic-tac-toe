@@ -1,6 +1,8 @@
-Message	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^class Message < ActiveRecord::Base$/;"	class	line:1
-parent	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^  def parent$/;"	method	line:7	class:Message
-Message	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^class Message < ActiveRecord::Base$/;"	class	line:1
-parent	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^  def parent$/;"	method	line:7	class:Message
 TrainingMessage	/Users/harada/source_code/donusagi-bot/app/models/training_message.rb	/^class TrainingMessage < ActiveRecord::Base$/;"	class	line:1
 parent	/Users/harada/source_code/donusagi-bot/app/models/training_message.rb	/^  def parent$/;"	method	line:7	class:TrainingMessage
+Answer	/Users/harada/source_code/donusagi-bot/app/models/answer.rb	/^class Answer < ActiveRecord::Base$/;"	class	line:1
+Conversation	/Users/harada/source_code/donusagi-bot/app/models/conversation/contact.rb	/^class Conversation::Contact$/;"	class	line:2
+initialize	/Users/harada/source_code/donusagi-bot/app/models/conversation/contact.rb	/^  def initialize(message, states = {})$/;"	method	line:18	class:Conversation
+reply	/Users/harada/source_code/donusagi-bot/app/models/conversation/contact.rb	/^  def reply$/;"	method	line:26	class:Conversation
+Message	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^class Message < ActiveRecord::Base$/;"	class	line:1
+parent	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^  def parent$/;"	method	line:7	class:Message

@@ -1,3 +1,4 @@
+# HACK 問い合わせ機能は優先度が低いため。他修正の影響による修正を行っていないため正しく動作しない可能性があります。
 class Conversation::Contact
   attr_accessor :states
 

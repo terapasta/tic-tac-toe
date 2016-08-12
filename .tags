@@ -31,3 +31,4 @@ CreateDecisionBranches	/Users/harada/source_code/donusagi-bot/db/migrate/2016081
 change	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103347_create_decision_branches.rb	/^  def change$/;"	method	line:2	class:CreateDecisionBranches
 CreateHelpAnswers	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103331_create_help_answers.rb	/^class CreateHelpAnswers < ActiveRecord::Migration$/;"	class	line:1
 change	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103331_create_help_answers.rb	/^  def change$/;"	method	line:2	class:CreateHelpAnswers
+Service	/Users/harada/source_code/donusagi-bot/app/models/service.rb	/^class Service < ActiveRecord::Base$/;"	class	line:1

@@ -10,7 +10,7 @@ class TrainingMessage:
     NO_CLASSIFIED_MESSAGE_ID = 27
 
     def __init__(self, db, bot_id):
-        self.training_messages = db.query('select * from training_messages where training_id in (select id from trainings where bot_id = 1) order by training_id, id;')
+        self.training_messages = db.query("select * from training_messages where training_id in (select id from trainings where bot_id = %s) order by training_id, id;" % bot_id)
         self.bot_id = bot_id
 
     # TODO numpyのarrayを使う
@@ -40,6 +40,7 @@ class TrainingMessage:
         trainings = self.__partition_each_training(self.training_messages)
         training_sets = []
 
+        print('hoge')
         for tmp_training_set in trainings:
             self.__pad_none_data(tmp_training_set)
             answer_id_indexs = self.__lookup_anser_indexs(tmp_training_set)
@@ -48,6 +49,7 @@ class TrainingMessage:
                 training_set = []
 
                 for training_message in tmp_training_set[answer_id_index:]:
+                    print(training_message['body'])
                     if len(training_set) < self.NUMBER_OF_CONTEXT:
                         if training_message['answer_id'] is not None:
                             training_set.append(training_message['answer_id'])
@@ -61,6 +63,7 @@ class TrainingMessage:
                 if len(training_set) >= self.NUMBER_OF_CONTEXT + 2:
                     training_sets.append(training_set)
 
+        print(training_sets)
         training_sets = self.__except_no_classified(training_sets)
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)

@@ -27,3 +27,7 @@ Conversation	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.
 initialize	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^  def initialize(bot_id, message)$/;"	method	line:8	class:Conversation
 reply	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^  def reply$/;"	method	line:14	class:Conversation
 build_context	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^    def build_context$/;"	method	line:33	class:Conversation
+CreateDecisionBranches	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103347_create_decision_branches.rb	/^class CreateDecisionBranches < ActiveRecord::Migration$/;"	class	line:1
+change	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103347_create_decision_branches.rb	/^  def change$/;"	method	line:2	class:CreateDecisionBranches
+CreateHelpAnswers	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103331_create_help_answers.rb	/^class CreateHelpAnswers < ActiveRecord::Migration$/;"	class	line:1
+change	/Users/harada/source_code/donusagi-bot/db/migrate/20160812103331_create_help_answers.rb	/^  def change$/;"	method	line:2	class:CreateHelpAnswers

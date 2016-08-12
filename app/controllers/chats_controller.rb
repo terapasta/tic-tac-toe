@@ -1,8 +1,6 @@
 class ChatsController < ApplicationController
-  # TODO 外部表示する際はログインチェックの解除が必要
-  before_action :authenticate_user!
-  before_action :set_bot, only: [:new, :destroy]
   before_action :set_chat, only: [:show, :destroy]
+  before_action :set_bot, only: [:new, :destroy]
   before_action :set_guest_key
 
   def show
@@ -24,7 +22,8 @@ class ChatsController < ApplicationController
 
   private
     def set_bot
-      @bot = current_user.bots.find(params[:bot_id])
+      # HACK URL内のIDを変更すれば、他社のbotも表示出来てしまうため、いずれはトークンなどによるbot識別をする必要がある
+      @bot = Bot.find(params[:bot_id])
     end
 
     def set_chat

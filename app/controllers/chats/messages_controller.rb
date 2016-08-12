@@ -1,5 +1,4 @@
 class Chats::MessagesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_chat
 
   # TODO apiの方の実装に統合したい

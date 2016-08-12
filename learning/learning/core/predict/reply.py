@@ -11,8 +11,7 @@ class Reply:
 
     def __init__(self, bot_id):
         self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
-        #self.estimator = joblib.load("learning/models/svm_model")  # TODO 定数化したい
-        self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id)
+        self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id) # TODO 定数化したい
 
     def predict(self, X):
         Xtrain = np.array(X)

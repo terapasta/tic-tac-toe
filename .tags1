@@ -4,5 +4,6 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Message	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^class Message < ActiveRecord::Base$/;"	class	line:1
-parent	/Users/harada/source_code/donusagi-bot/app/models/message.rb	/^  def parent$/;"	method	line:7	class:Message
+ActiveRecord	/Users/harada/source_code/donusagi-bot/config/initializers/active_record_enum_with_rails_admin.rb	/^module ActiveRecord$/;"	module	line:1
+RailsAdminEnum	/Users/harada/source_code/donusagi-bot/config/initializers/active_record_enum_with_rails_admin.rb	/^  module RailsAdminEnum$/;"	module	line:2	class:ActiveRecord
+enum	/Users/harada/source_code/donusagi-bot/config/initializers/active_record_enum_with_rails_admin.rb	/^    def enum(definitions)$/;"	method	line:3	class:ActiveRecord.RailsAdminEnum

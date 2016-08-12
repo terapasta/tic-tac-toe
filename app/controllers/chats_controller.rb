@@ -2,6 +2,7 @@ class ChatsController < ApplicationController
   before_action :set_chat, only: [:show, :destroy]
   before_action :set_bot, only: [:new, :destroy]
   before_action :set_guest_key
+  before_action :check_have_start_message, only: :new
 
   def show
     session[:embed] = params[:embed] if params[:embed]
@@ -32,6 +33,13 @@ class ChatsController < ApplicationController
 
     def set_guest_key
       session[:guest_key] ||= SecureRandom.hex(64)
+    end
+
+    def check_have_start_message
+      if @bot.start_answer.blank?
+        flash[:error] =  'Bot編集画面で開始メッセージを指定してください'
+        redirect_to :back
+      end
     end
 
     def message_params

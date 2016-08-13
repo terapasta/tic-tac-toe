@@ -13,18 +13,15 @@ from ..config.config import Config
 bot_id = 1
 
 db = dataset.connect(Config().get('database')['endpoint'])
-training_set = TrainingMessage(db, bot_id).build()
-
-X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
-y = training_set[:,-1:].flatten()
-
-print(y)
+training_set = TrainingMessage(db, bot_id)
+training_set.build()
 
 estimator = linear_model.LogisticRegression(C=1e5)
-estimator.fit(X, y)
+estimator.fit(training_set.x, training_set.y)
 
+print(training_set.y)
 # print "estimator.score: %s " % estimator.score  # accuracy
 
 joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % bot_id)
 
-Plotter().plot(estimator, X, y)
+#Plotter().plot(estimator, training_set.x, training_set.y)  # TODO データが少ないと落ちる

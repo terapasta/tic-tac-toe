@@ -13,15 +13,17 @@ from ..config.config import Config
 bot_id = 2
 
 db = dataset.connect(Config().get('database')['endpoint'])
-training_set = TrainingHelpMessage(db, bot_id).build()
+training_set = TrainingHelpMessage(db, bot_id)
+training_set.build()
 
-X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
-y = training_set[:,-1:].flatten()
+# X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
+# y = training_set[:,-1:].flatten()
 
-print(y)
+print(training_set.x)
+print(training_set.y)
 
 estimator = linear_model.LogisticRegression(C=1e5)
-estimator.fit(X, y)
+estimator.fit(training_set.x, training_set.y)
 
 # print "estimator.score: %s " % estimator.score  # accuracy
 

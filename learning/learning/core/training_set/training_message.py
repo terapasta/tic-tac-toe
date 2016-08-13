@@ -4,8 +4,9 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
+from .base import Base
 
-class TrainingMessage:
+class TrainingMessage(Base):
     NUMBER_OF_CONTEXT = 0
     NO_CLASSIFIED_MESSAGE_ID = 27
 
@@ -68,8 +69,11 @@ class TrainingMessage:
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)
         bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/%s_vocabulary.pkl' % self.bot_id)  # TODO 定数化したい
-        feature = self.__combine(training_sets, bodies_vec)
-        return feature
+
+        tmp_training_sets = np.array(training_sets)
+
+        self._x = np.c_[tmp_training_sets[:,:-2], bodies_vec.toarray()].astype(np.int64)
+        self._y = np.c_[tmp_training_sets[:,-1:]].astype(np.int64).flatten()
 
     # trainingごとのtraining_messageに分ける
     def __partition_each_training(self, training_messages):
@@ -117,12 +121,3 @@ class TrainingMessage:
         for body in bodies:
             splited_bodies.append(Nlang.split(body))
         return splited_bodies
-
-    def __combine(self, training_sets, bodies_vec):
-        tmp_training_sets = np.array(training_sets)
-        #labels = tmp_training_sets
-        #tmp_bodies_vec = np.array(bodies_vec)
-        #tmp_training_sets = np.delete(tmp_training_sets, -2, 1)
-        #feature = np.c_[tmp_training_sets[:,:-2], tmp_bodies_vec, tmp_training_sets[:,-1:]]
-        feature = np.c_[tmp_training_sets[:,:-2], bodies_vec.toarray(), tmp_training_sets[:,-1:]]
-        return feature.astype(np.float64)

@@ -50,7 +50,7 @@ bower.json
 
 *.pyc
 *.bak
-example.log
+learning/example.log
 learning/learning/models/*
 learning/learning/vocabulary/*
 learning/learning/example.log

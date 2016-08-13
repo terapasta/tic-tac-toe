@@ -1,0 +1,10 @@
+TrainingHelpMessage.seed(:id,
+  { id: 1, body: '入室カード失くした', help_answer_id: 1 },
+  { id: 2, body: '入室カードなくしたんだけど', help_answer_id: 1 },
+  { id: 3, body: '入室キーなくしたんだけど', help_answer_id: 1 },
+  { id: 4, body: '入社キーなくした', help_answer_id: 1 },
+  { id: 5, body: '出張費の申請の仕方を教えて', help_answer_id: 5 },
+  { id: 6, body: '出張費の費用の申請', help_answer_id: 5 },
+  { id: 7, body: '出張費どうしたらいい？', help_answer_id: 5 },
+  { id: 8, body: '出張の費用の申請', help_answer_id: 5 },
+)

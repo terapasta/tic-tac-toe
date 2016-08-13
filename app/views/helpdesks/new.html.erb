@@ -1,1 +1,16 @@
-ほげ
+<%# HACK chatsやtrainingsとビューが重複する。いずれ共通化したい。  %>
+<div class="container">
+  <div class="col-sm-4 col-sm-offset-3 col-xs-12 text-center context alert-success"></div>
+  <div class="col-sm-8 col-sm-offset-2 chat-area">
+    <div class="row">
+      <div class="col-sm-2 col-xs-3 text-center col-icon">
+        <span class="small">どんうさぎ</span><br />
+        <%= image_tag 'usao001.png', class: 'listen' %>
+      </div>
+      <div class="col-sm-8 col-xs-9 balloon-1-left balloon">
+        <%= auto_link(simple_format(@bot.start_answer.body), html: { target: '_blank' }) %>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
+</div>

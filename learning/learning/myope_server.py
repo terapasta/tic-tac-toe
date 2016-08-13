@@ -25,11 +25,11 @@ class MyopeServer(RPCServer):
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
-            answer_id = Reply(bot_id).predict([X])  # TODO 引数
+            answer_id = float(Reply(bot_id).predict([X]))  # TODO 引数
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
-        return { 'status_code': status_code, 'answer_id': float(answer_id) }
+        return { 'status_code': status_code, 'answer_id': answer_id }
 
     def helpdesk_reply(self, bot_id, body):
         print('hogehoge')
@@ -39,12 +39,12 @@ class MyopeServer(RPCServer):
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
-            help_answer_id = HelpdeskClassify(bot_id).predict([X])  # TODO 引数を配列ではなく文字列単体にしたい
+            help_answer_id = float(HelpdeskClassify(bot_id).predict([X]))  # TODO 引数を配列ではなく文字列単体にしたい
             print(help_answer_id)
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
-        return { 'status_code': status_code, 'help_answer_id': float(help_answer_id) }
+        return { 'status_code': status_code, 'help_answer_id': help_answer_id }
 
 
     def learn(self, bot_id):

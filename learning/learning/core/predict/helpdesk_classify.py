@@ -7,13 +7,13 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
 
-class Reply:
+class HelpdeskClassify:
     NO_CLASSIFIED_THRESHOLD = 0.2
 
     def __init__(self, bot_id):
         try:
-            self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
-            self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id) # TODO 定数化したい
+            self.estimator = joblib.load("learning/models/%s_help_logistic_reg_model" % bot_id)
+            self.vocabulary = joblib.load("learning/vocabulary/%s_helpdesk_vocabulary.pkl" % bot_id) # TODO 定数化したい
         except IOError:
             raise ModelNotExistsError()
 

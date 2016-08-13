@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813014511) do
+ActiveRecord::Schema.define(version: 20160813041745) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 20160813014511) do
   end
 
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
+
+  create_table "auto_tweets", force: :cascade do |t|
+    t.string   "body",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",         limit: 4

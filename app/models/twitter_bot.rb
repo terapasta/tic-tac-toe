@@ -84,4 +84,9 @@ class TwitterBot
       @client.favorite(tweet.id)
     end
   end
+
+  def auto_tweet
+    auto_tweet = AutoTweet.all.sample
+    @client.update(auto_tweet.body)
+  end
 end

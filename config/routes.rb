@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       end
     end
     resource :learning, only: [:update]
+
+    resource :helpdesks, only: :new
   end
 
 

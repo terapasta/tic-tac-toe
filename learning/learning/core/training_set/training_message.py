@@ -50,7 +50,6 @@ class TrainingMessage(Base):
                 training_set = []
 
                 for training_message in tmp_training_set[answer_id_index:]:
-                    print(training_message['body'])
                     if len(training_set) < self.NUMBER_OF_CONTEXT:
                         if training_message['answer_id'] is not None:
                             training_set.append(training_message['answer_id'])
@@ -64,7 +63,6 @@ class TrainingMessage(Base):
                 if len(training_set) >= self.NUMBER_OF_CONTEXT + 2:
                     training_sets.append(training_set)
 
-        print(training_sets)
         training_sets = self.__except_no_classified(training_sets)
         bodies = self.__extract_bodies(training_sets)
         bodies = self.__split_bodies(bodies)

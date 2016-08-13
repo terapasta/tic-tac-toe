@@ -20,21 +20,19 @@ class Bot:
         logging.debug('Bot.learn start')
 
         db = dataset.connect(Config().get('database')['endpoint'])
-        training_set = TrainingMessage(db, self.bot_id).build()
+        training_set = TrainingMessage(db, self.bot_id)
+        training_set.build()
 
-        X = training_set[:,:-1] # HACK training_setをオブジェクトにしたい
-        y = training_set[:,-1:].flatten()
-
-        print(y)
+        print(training_set.y)
 
         logging.debug('Bot.learn fit start')
         estimator = linear_model.LogisticRegression(C=1e5)
-        estimator.fit(X, y)
+        estimator.fit(training_set.x, training_set.y)
 
         # print "estimator.score: %s " % estimator.score  # accuracy
 
         logging.debug('Bot.learn dump start')
         joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % self.bot_id)
-        test_scores_mean = Plotter().plot(estimator, X, y)
+        test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
         logging.debug('Bot.learn end')
         return test_scores_mean

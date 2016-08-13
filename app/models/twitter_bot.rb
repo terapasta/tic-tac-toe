@@ -89,4 +89,10 @@ class TwitterBot
     auto_tweet = AutoTweet.all.sample
     @client.update(auto_tweet.body)
   end
+
+  def clone_tweets
+    @client.user_timeline('harada4atsushi', exclude_replies: true).each do |tweet|
+      AutoTweet.find_or_create_by!(body: tweet.text)
+    end
+  end
 end

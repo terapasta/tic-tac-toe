@@ -14,4 +14,8 @@ namespace :twitter do
   task auto_tweet: :environment do
     TwitterBot.new.auto_tweet
   end
+
+  task clone_tweets: :environment do
+    TwitterBot.new.clone_tweets
+  end
 end

@@ -34,3 +34,7 @@ end
 every 1.day, at: ['12:38', '18:58'] do
   rake 'twitter:auto_tweet'
 end
+
+every 1.day, at: '23:58' do
+  rake 'twitter:clone_tweets'
+end

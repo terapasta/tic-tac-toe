@@ -29,7 +29,7 @@ class MyopeServer(RPCServer):
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
-        return { 'status_code': status_code, 'answer_id': answer_id }
+        return { 'status_code': status_code, 'answer_id': float(answer_id) }
 
     def helpdesk_reply(self, bot_id, body):
         print('hogehoge')

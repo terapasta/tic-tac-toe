@@ -133,12 +133,14 @@ ActiveRecord::Schema.define(version: 20160813014511) do
   end
 
   create_table "training_help_messages", force: :cascade do |t|
+    t.integer  "bot_id",         limit: 4
     t.text     "body",           limit: 65535, null: false
     t.integer  "help_answer_id", limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
 
+  add_index "training_help_messages", ["bot_id"], name: "index_training_help_messages_on_bot_id", using: :btree
   add_index "training_help_messages", ["help_answer_id"], name: "index_training_help_messages_on_help_answer_id", using: :btree
 
   create_table "training_messages", force: :cascade do |t|

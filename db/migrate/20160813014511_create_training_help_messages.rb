@@ -1,6 +1,7 @@
 class CreateTrainingHelpMessages < ActiveRecord::Migration
   def change
     create_table :training_help_messages do |t|
+      t.references :bot, index: true
       t.text :body, null: false
       t.references :help_answer, index: true
 

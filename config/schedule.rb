@@ -30,3 +30,7 @@ end
 every 1.hours, at: '8:52' do
   rake 'twitter:favorite'
 end
+
+every 1.day, at: ['12:38', '18:58'] do
+  rake 'twitter:auto_tweet'
+end

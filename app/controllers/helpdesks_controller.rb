@@ -1,7 +1,7 @@
 class HelpdesksController < ApplicationController
   before_action :authenticate_user!
   # before_action :set_chat, only: [:show, :destroy]
-  before_action :set_bot, only: [:new, :destroy]
+  before_action :set_bot, only: [:new, :create, :destroy]
   # before_action :set_guest_key
   before_action :check_have_start_message, only: :new
   #
@@ -16,6 +16,12 @@ class HelpdesksController < ApplicationController
     # @chat.save!
     # render :show
   end
+
+  def create
+    result = Ml::Engine.new(@bot.id).helpdesk_reply(params[:body])
+    @help_answer = HelpAnswer.find(result['help_answer_id'])
+  end
+
   #
   # def destroy
   #   flash[:notice] = 'クリアしました'

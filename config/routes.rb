@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
     resource :learning, only: [:update]
 
-    resource :helpdesks, only: :new
+    resource :helpdesks, only: [:new, :create]
   end
 
 

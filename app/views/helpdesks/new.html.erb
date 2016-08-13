@@ -1,6 +1,5 @@
 <%# HACK chatsやtrainingsとビューが重複する。いずれ共通化したい。  %>
 <div class="container">
-  <div class="col-sm-4 col-sm-offset-3 col-xs-12 text-center context alert-success"></div>
   <div class="col-sm-8 col-sm-offset-2 chat-area">
     <div class="row">
       <div class="col-sm-2 col-xs-3 text-center col-icon">
@@ -13,4 +12,16 @@
       <div class="col-sm-2"></div>
     </div>
   </div>
+
+  <%= bootstrap_form_tag url: bot_helpdesks_path(@bot), remote: true do |f| %>
+    <div class="col-sm-8 col-sm-offset-2 col-xs-12 text-center comment-area">
+      <div class="input-group">
+        <%= f.text_field :body, placeholder: '質問を入れてください', hide_label: true %>
+        <span class="input-group-btn">
+          <%= f.submit '質問する', class: 'btn btn-primary question' %>
+          <%#= link_to 'クリアする', bot_chats_path, method: :delete, class: 'btn btn-default' %>
+        </span>
+      </div>
+    </div>
+  <% end %>
 </div>

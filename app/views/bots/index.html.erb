@@ -3,6 +3,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>アイコン</th>
       <th>名前</th>
       <th></th>
     </tr>
@@ -11,12 +12,14 @@
   <tbody>
     <% @bots.each do |bot| %>
       <tr>
+        <td><%= image_tag bot.image_url(:thumb) %></td>
         <td><%= bot.name %></td>
         <td>
           <%= link_to 'チャットする', new_bot_chats_path(bot), class: "btn btn-default" %>
           <%= link_to 'チャットする(ヘルプデスク)', new_bot_helpdesks_path(bot), class: 'btn btn-default' %>
           <%= link_to "Botを育てる", new_bot_training_path(bot), class: 'btn btn-primary' %>
           <%= link_to "学習を実行する", bot_learning_path(bot), method: :patch, class: 'btn btn-danger' %>
+          <%= link_to "編集する", edit_bot_path(bot), class: 'btn btn-default' %>
         </td>
       </tr>
     <% end %>

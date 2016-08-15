@@ -1,0 +1,13 @@
+<%= bootstrap_form_for(@bot) do |f| %>
+  <%= render "shared/errors", object: @bot %>
+
+  <%= f.text_field :name %>
+  <%= f.file_field :image %>
+  <% if @bot.image %>
+    <%= image_tag @bot.image_url(:thumb) %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -69,6 +69,8 @@ gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
 gem 'whenever', :require => false
+gem 'carrierwave'
+gem 'rmagick', require: 'RMagick'
 
 group :development, :test do
 

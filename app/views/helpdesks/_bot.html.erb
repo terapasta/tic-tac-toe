@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-2 col-xs-3 text-center col-icon">
-    <span class="small">どんうさぎ</span><br />
-    <%= image_tag 'usao001.png', class: 'listen' %>
+    <span class="small"><%= bot.name %></span><br />
+    <%= image_tag bot.image_url, class: 'listen' %>
   </div>
   <div class="row col-sm-8 col-xs-9">
     <div class="col-sm-12 balloon-1-left balloon">
@@ -12,7 +12,7 @@
         <br />
         <% help_answer.decision_branches.each do |decision_branch| %>
           <div class="col-sm-12">
-            <%= bootstrap_form_tag url: bot_helpdesks_path(@bot), remote: true do %>
+            <%= bootstrap_form_tag url: bot_helpdesks_path(bot), remote: true do %>
               <%= submit_tag decision_branch.body, class: 'btn btn-default col-sm-6' %>
               <%= hidden_field_tag :decision_branch_id, decision_branch.id %>
               <%= hidden_field_tag :body, decision_branch.body %>

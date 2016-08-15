@@ -20,10 +20,13 @@ class HelpdesksController < ApplicationController
   def create
     if params[:decision_branch_id].present?
       decision_branch = DecisionBranch.find(params[:decision_branch_id])
-      @help_answer = decision_branch.next_help_answer || @bot.start_answer
+      help_answer = decision_branch.next_help_answer || @bot.start_answer
+      @help_answers = [help_answer]
+      @help_answers << HelpAnswer.find(14) if help_answer.try(:decision_branches).try(:blank?)  # TODO 固定値を修正したい
     else
       result = Ml::Engine.new(@bot.id).helpdesk_reply(params[:body])
-      @help_answer = HelpAnswer.find(result['help_answer_id'])
+      help_answer = HelpAnswer.find(result['help_answer_id'])
+      @help_answers = [help_answer]
     end
   end
 

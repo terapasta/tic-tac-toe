@@ -3,9 +3,9 @@ $('.chat-area').append("<%= escape_javascript(render('guest', body: params[:body
 
 
 
-<%# @bot_messages.each do |bot_message| %>
+<% @help_answers.each do |help_answer| %>
 <%# 会話している風にするため意図的にbotの発言を遅らせる %>
 $('.chat-area').delay(1300).queue(function() {
-   $(this).append("<%= escape_javascript(render('bot', help_answer: @help_answer)) %><br />").dequeue();
+   $(this).append("<%= escape_javascript(render('bot', help_answer: help_answer)) %><br />").dequeue();
 });
-<%# end %>
+<% end %>

@@ -1,4 +1,6 @@
 class Answer < ActiveRecord::Base
+  include ContextHoldable
+
   NO_CLASSIFIED_MESSAGE_ID = 27
   PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
   # TRANSITION_CONTEXT_CONTACT_ID = 1007
@@ -10,7 +12,6 @@ class Answer < ActiveRecord::Base
   # ASK_ERROR_ID = 1005
   # ASK_CONFIRM_ID = 1006
 
-  # TODO 共通化したい
-  enum context: { normal: 'normal', contact: 'contact' }
+  enum context: ContextHoldable::CONTEXTS
   #enum transition_to: { contact: 'contact' }
 end

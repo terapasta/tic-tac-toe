@@ -1,6 +1,6 @@
 class Training < ActiveRecord::Base
   has_many :training_messages
-  has_one :bot
+  belongs_to :bot
 
   def build_start_message
     answer = bot.start_answer

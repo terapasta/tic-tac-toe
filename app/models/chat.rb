@@ -1,7 +1,7 @@
 class Chat < ActiveRecord::Base
   has_many :messages
   has_many :contact_states
-  has_one :bot
+  belongs_to :bot
   enum context: { normal: 'normal', contact: 'contact' }
 
   def build_start_message

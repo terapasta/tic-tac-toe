@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-2 col-xs-3 text-center col-icon">
     <span class="small"><%= bot.name %></span><br />
-    <%= image_tag bot.image_url, class: 'listen' %>
+    <%= image_tag bot.image_url || 'operator', class: 'listen' %>
   </div>
   <div class="row col-sm-8 col-xs-9">
     <div class="col-sm-12 balloon-1-left balloon">

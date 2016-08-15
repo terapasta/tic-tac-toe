@@ -1,24 +1,11 @@
 class Chats::MessagesController < ApplicationController
+  include Replyable
+
   before_action :set_chat
 
-  # TODO apiの方の実装に統合したい
   def create
-    @message_guest = @chat.messages.build(message_params)
-    @message_guest.speaker = 'guest'
-
-    responder = Conversation::Switcher.new.responder(@message_guest, session[:states])
-    answers = responder.reply
-    session[:states] = responder.states
-
-    @bot_messages = answers.map do |answer|
-      @chat.context = answer.context
-      @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
-    end
-
-    @chat.save!
-    @messages = @chat.messages
-
-    Rails.logger.debug(session[:states])
+    @message = @chat.messages.build(message_params) { |m| m.speaker = 'guest' }
+    @bot_messages = receive_and_reply!(@chat, @message)
   end
 
   private

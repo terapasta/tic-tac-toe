@@ -1,3 +1,4 @@
+# TODO クラスが大きくなってきたので分割したい
 class TwitterBot
   include Rails.application.routes.url_helpers
 
@@ -91,7 +92,7 @@ class TwitterBot
   end
 
   def clone_tweets
-    @client.user_timeline('harada4atsushi', exclude_replies: true).each do |tweet|
+    @client.user_timeline('harada4atsushi', exclude_replies: true, include_rts: false).each do |tweet|
       AutoTweet.find_or_create_by!(body: tweet.text)
     end
   end

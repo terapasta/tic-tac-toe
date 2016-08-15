@@ -18,8 +18,13 @@ class HelpdesksController < ApplicationController
   end
 
   def create
-    result = Ml::Engine.new(@bot.id).helpdesk_reply(params[:body])
-    @help_answer = HelpAnswer.find(result['help_answer_id'])
+    if params[:decision_branch_id].present?
+      decision_branch = DecisionBranch.find(params[:decision_branch_id])
+      @help_answer = decision_branch.next_help_answer || @bot.start_answer
+    else
+      result = Ml::Engine.new(@bot.id).helpdesk_reply(params[:body])
+      @help_answer = HelpAnswer.find(result['help_answer_id'])
+    end
   end
 
   #

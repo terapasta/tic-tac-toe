@@ -26,6 +26,8 @@ class MyopeServer(RPCServer):
 
         try:
             answer_id = Reply(bot_id).predict([X])  # TODO 引数
+            if answer_id is not None:
+                answer_id = float(answer_id)
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
@@ -40,7 +42,8 @@ class MyopeServer(RPCServer):
 
         try:
             help_answer_id = HelpdeskClassify(bot_id).predict([X])  # TODO 引数を配列ではなく文字列単体にしたい
-            print(help_answer_id)
+            if help_answer_id is not None:
+                help_answer_id = float(help_answer_id)
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 

@@ -8,7 +8,7 @@ from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
 
 class Reply:
-    NO_CLASSIFIED_THRESHOLD = 0.5
+    NO_CLASSIFIED_THRESHOLD = 0.2
 
     def __init__(self, bot_id):
         try:

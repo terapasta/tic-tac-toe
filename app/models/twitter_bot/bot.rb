@@ -1,5 +1,5 @@
 # TODO クラスが大きくなってきたので分割したい
-class TwitterBot
+class TwitterBot::Bot
   include Rails.application.routes.url_helpers
 
   BOT_SCREEN_NAME = 'donusagi_bot'

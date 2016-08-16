@@ -19,6 +19,15 @@ module Replyable
     end
 
     chat.save!
+
+    # 分類出来なかった場合、Docomoの雑談APIを使って返す
+    reply_messages.each do |message|
+      if message.answer_id == Answer::NO_CLASSIFIED_MESSAGE_ID
+        body = DocomoClient.new.reply(chat.bot, message.body)
+        message.body = body
+      end
+    end
+
     reply_messages
   end
 end

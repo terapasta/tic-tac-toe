@@ -1,6 +1,7 @@
 class Answer < ActiveRecord::Base
   include ContextHoldable
 
+  # TODO DB化したい
   NO_CLASSIFIED_MESSAGE_ID = 27
   PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
   # TRANSITION_CONTEXT_CONTACT_ID = 1007

@@ -27,7 +27,7 @@ class TwitterBot::Bot
       endpoint = api_v1_messages_url
 
       response = HTTP.headers('Content-Type' => "application/json")
-       .post(endpoint, json: { message: mention.text, bot_id: bot_id })
+       .post(endpoint, json: { message: mention.text, bot_id: bot_id, guest_key: mention.user.id })
 
       messages = response.parse.with_indifferent_access[:messages]
       messages.each do |message|

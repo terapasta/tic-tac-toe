@@ -10,7 +10,10 @@ class HelpdesksController < ApplicationController
       decision_branch = DecisionBranch.find(params[:decision_branch_id])
       help_answer = decision_branch.next_help_answer || @bot.start_answer
       @help_answers = [help_answer]
-      @help_answers << HelpAnswer.find(14) if help_answer.try(:decision_branches).try(:blank?)  # TODO 固定値を修正したい
+      # @help_answers << HelpAnswer.find(14) if help_answer.try(:decision_branches).try(:blank?)  # TODO 固定値を修正したい
+      if help_answer.id == 8  # デモ用のハードコーディング
+        @help_answers.concat(HelpAnswer.where(id: [10,11,12]))
+      end
     else
       result = Ml::Engine.new(@bot.id).helpdesk_reply(params[:body])
       help_answer = HelpAnswer.find(result['help_answer_id'])

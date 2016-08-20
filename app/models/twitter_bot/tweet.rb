@@ -23,7 +23,7 @@ class TwitterBot::Tweet
     TwitterReply.create!(bot_id: @bot.id, tweet_id: @tweet.id, screen_name: screen_name)
 
     response = HTTP.headers('Content-Type' => "application/json")
-     .post(api_v1_messages_url, json: { message: @tweet.text, bot_id: @bot.id, guest_key: @tweet.user.id })
+     .post(api_v1_messages_url, json: { message: trimmed_tweet_body, bot_id: @bot.id, guest_key: @tweet.user.id })
 
     messages = response.parse.with_indifferent_access[:messages]
     messages.each do |message|
@@ -31,5 +31,9 @@ class TwitterBot::Tweet
       puts "body: #{body}"
       @client.update("@#{screen_name} #{body}", in_reply_to_status_id: @tweet.id)
     end
+  end
+
+  def trimmed_tweet_body
+    @tweet.text.delete("@#{BOT_SCREEN_NAME} ")
   end
 end

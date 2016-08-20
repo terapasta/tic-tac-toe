@@ -7,7 +7,7 @@ class Conversation::Switcher
     # if Service.contact.last.try(:enabled?) && (message.contact? || transision_to_contact?(message))
     #   Conversation::Contact.new(message, states)
     # else
-    Conversation::Bot.new(message.parent.bot_id, message)
+    Conversation::Bot.new(message.parent.bot, message)
     # end
   end
   #

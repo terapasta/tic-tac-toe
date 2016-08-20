@@ -5,8 +5,8 @@ class Conversation::Bot
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
-  def initialize(bot_id, message)
-    @bot_id = bot_id
+  def initialize(bot, message)
+    @bot = bot
     @message = message
     @ModelClass = message.class
   end
@@ -15,17 +15,21 @@ class Conversation::Bot
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 
-    result = Ml::Engine.new(@bot_id).reply(context, @message.body)
-    answer_id = result['answer_id']
-    answer_id =  Answer::NO_CLASSIFIED_MESSAGE_ID if answer_id.nil?
+    result = Ml::Engine.new(@bot.id).reply(context, @message.body)
+    Rails.logger.debug("answer_id: #{result['answer_id']}")
 
-    Rails.logger.debug("answer_id: #{answer_id}")
-    answers = [Answer.find(answer_id)]
+    answers =
+      if result['answer_id'].present?
+        [Answer.find(answer_id)]
+      else
+        [@bot.no_classified_answer]
+      end
 
     # TODO botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
-    if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
-      answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
-    end
+    # TODO 開発をしやすくするためにcontact機能は一旦コメントアウト
+    # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
+    #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
+    # end
     answers
   end
 

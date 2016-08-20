@@ -14,6 +14,7 @@ module Replyable
     session[:states] = responder.states
 
     reply_messages = answers.map do |answer|
+      answer = ::NullAnswer.new if answer.nil?
       chat.context = answer.context
       chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     end

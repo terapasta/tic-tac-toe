@@ -1,8 +1,9 @@
 class Answer < ActiveRecord::Base
   include ContextHoldable
 
+  belongs_to :bot
+
   # TODO DB化したい
-  NO_CLASSIFIED_MESSAGE_ID = 27
   PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
   # TRANSITION_CONTEXT_CONTACT_ID = 1007
   # STOP_CONTEXT_ID = 1000
@@ -15,4 +16,9 @@ class Answer < ActiveRecord::Base
 
   enum context: ContextHoldable::CONTEXTS
   #enum transition_to: { contact: 'contact' }
+
+  def no_classified?
+    return false if bot.nil?
+    self == bot.no_classified_answer
+  end
 end

@@ -14,21 +14,19 @@ module Replyable
     session[:states] = responder.states
 
     reply_messages = answers.map do |answer|
-      answer = ::NullAnswer.new if answer.nil?
+      answer = NullAnswer.new if answer.nil?
       chat.context = answer.context
-      chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+
+      body = answer.body
+      if answer.no_classified?
+        # 分類出来なかった場合、Docomoの雑談APIを使って返す
+        body = DocomoClient.new.reply(chat, chat.bot, message.body)
+      end
+
+      chat.messages.build(speaker: 'bot', answer_id: answer.id, body: body)
     end
 
     chat.save!
-
-    # 分類出来なかった場合、Docomoの雑談APIを使って返す
-    reply_messages.each do |reply_message|
-      if reply_message.answer_id == Answer::NO_CLASSIFIED_MESSAGE_ID
-        body = DocomoClient.new.reply(chat, chat.bot, message.body)
-        reply_message.body = body
-      end
-    end
-
     reply_messages
   end
 end

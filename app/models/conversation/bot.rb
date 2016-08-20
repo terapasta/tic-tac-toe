@@ -20,7 +20,7 @@ class Conversation::Bot
 
     answers =
       if result['answer_id'].present?
-        [Answer.find(answer_id)]
+        [Answer.find(result['answer_id'])]
       else
         [@bot.no_classified_answer]
       end

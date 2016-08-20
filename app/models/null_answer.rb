@@ -10,4 +10,8 @@ class NullAnswer
   def body
     '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
   end
+
+  def no_classified?
+    true
+  end
 end

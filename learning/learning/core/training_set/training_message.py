@@ -8,11 +8,14 @@ from .base import Base
 
 class TrainingMessage(Base):
     NUMBER_OF_CONTEXT = 0
-    NO_CLASSIFIED_MESSAGE_ID = 27
 
     def __init__(self, db, bot_id):
         self.training_messages = db.query("select * from training_messages where training_id in (select id from trainings where bot_id = %s) order by training_id, id;" % bot_id)
         self.bot_id = bot_id
+
+        bots_table = db['bots']
+        self.no_classified_answer_id = bots_table.find_one(id=bot_id)['no_classified_answer_id']
+        print("TrainingMessage self.no_classified_answer_id: %s" % self.no_classified_answer_id)
 
     # TODO numpyのarrayを使う
     #
@@ -105,7 +108,7 @@ class TrainingMessage(Base):
         return answer_id_indexs
 
     def __except_no_classified(self, training_messages):
-        return [tm for tm in training_messages if tm[-1] != self.NO_CLASSIFIED_MESSAGE_ID]
+        return [tm for tm in training_messages if tm[-1] != self.no_classified_answer_id]
 
     def __extract_bodies(self, training_sets):
         bodies = []

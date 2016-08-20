@@ -73,4 +73,6 @@ TrainingMessage.seed(:id,
   {"id"=>64, "training_id"=>2, "answer_id"=>26, "speaker"=>"bot", "body"=>"ぼくは日本酒とか焼酎が好きだね。今度一緒に飲むかい？"},
   {"id"=>65, "training_id"=>2, "answer_id"=>nil, "speaker"=>"guest", "body"=>"駅からどれくらい？"},
   {"id"=>66, "training_id"=>2, "answer_id"=>3, "speaker"=>"bot", "body"=>"徒歩8分って書いてあるけど、実際には13分くらいかかる気がする"},
+  {"id"=>67, "training_id"=>2, "answer_id"=>nil, "speaker"=>"guest", "body"=>"hoge"},
+  {"id"=>68, "training_id"=>2, "answer_id"=>nil, "speaker"=>"bot", "body"=>"回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。"},
 )

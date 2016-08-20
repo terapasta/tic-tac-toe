@@ -34,6 +34,6 @@ class TwitterBot::Tweet
   end
 
   def trimmed_tweet_body
-    @tweet.text.delete("@#{BOT_SCREEN_NAME} ")
+    @tweet.text.delete("@#{BOT_SCREEN_NAME} ")  # TODO 複数宛メンションに対応するためには@から半角スペースまでを除去する必要がある
   end
 end

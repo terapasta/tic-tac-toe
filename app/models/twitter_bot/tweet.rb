@@ -27,7 +27,7 @@ class TwitterBot::Tweet
 
     messages = response.parse.with_indifferent_access[:messages]
     messages.each do |message|
-      body = "#{message[:body]} #{Time.now}"
+      body = "#{message[:body]}#{'　' * rand(8)}" # 同一ツイート対策のため全角スペースを0〜7個追加する
       puts "body: #{body}"
       @client.update("@#{screen_name} #{body}", in_reply_to_status_id: @tweet.id)
     end

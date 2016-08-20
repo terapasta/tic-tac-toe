@@ -2,6 +2,7 @@
 class TwitterBot::Bot
   include Rails.application.routes.url_helpers
 
+  # TODO DRYにしたい
   BOT_SCREEN_NAME = 'donusagi_bot'
 
   def initialize
@@ -14,30 +15,41 @@ class TwitterBot::Bot
   end
 
   def reply
-    bot_id = 1  # HACK Twitter機能ONのbotのみ動作させる(一旦固定値)
+    bot = ::Bot.find(1)  # HACK Twitter機能ONのbotのみ動作させる(一旦固定値)
     @client.mentions_timeline.reverse_each do |mention|
-      tweet_id = TwitterReply.maximum(:tweet_id) || 0
-      next if mention.id <= tweet_id
-      next if mention.user.screen_name == BOT_SCREEN_NAME
+      tweet = TwitterBot::Tweet.new(@client, mention, bot)
+      next if tweet.replied?
+      next if tweet.self_tweet?
 
-      puts mention.text
-      screen_name = mention.user.screen_name
-      TwitterReply.create!(bot_id: bot_id, tweet_id: mention.id, screen_name: screen_name)
-
-      endpoint = api_v1_messages_url
-
-      response = HTTP.headers('Content-Type' => "application/json")
-       .post(endpoint, json: { message: mention.text, bot_id: bot_id, guest_key: mention.user.id })
-
-      messages = response.parse.with_indifferent_access[:messages]
-      messages.each do |message|
-        body = "#{message[:body]} #{Time.now}"
-        puts "body: #{body}"
-        @client.update("@#{screen_name} #{body}", in_reply_to_status_id: mention.id)
-      end
-
+      tweet.reply
     end
   end
+
+  # def reply
+  #   bot_id = 1  # HACK Twitter機能ONのbotのみ動作させる(一旦固定値)
+  #   @client.mentions_timeline.reverse_each do |mention|
+  #     tweet_id = TwitterReply.maximum(:tweet_id) || 0
+  #     next if mention.id <= tweet_id
+  #     next if mention.user.screen_name == BOT_SCREEN_NAME
+  #
+  #     puts mention.text
+  #     screen_name = mention.user.screen_name
+  #     TwitterReply.create!(bot_id: bot_id, tweet_id: mention.id, screen_name: screen_name)
+  #
+  #     endpoint = api_v1_messages_url
+  #
+  #     response = HTTP.headers('Content-Type' => "application/json")
+  #      .post(endpoint, json: { message: mention.text, bot_id: bot_id, guest_key: mention.user.id })
+  #
+  #     messages = response.parse.with_indifferent_access[:messages]
+  #     messages.each do |message|
+  #       body = "#{message[:body]} #{Time.now}"
+  #       puts "body: #{body}"
+  #       @client.update("@#{screen_name} #{body}", in_reply_to_status_id: mention.id)
+  #     end
+  #
+  #   end
+  # end
 
   def auto_reply
     str = "どんうさぎ -RT"

@@ -29,7 +29,24 @@ class Trainings::TrainingMessagesController < ApplicationController
     else
       flash[:notice] = '回答の差し替えに失敗しました'
     end
-    redirect_to bot_training_path(@bot, @training)
+
+    if auto?
+      training_messages = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
+
+      # TODO #createと共通化してDRYにしたい
+      responder = Conversation::Switcher.new.responder(training_message, session[:states])
+      answers = responder.reply
+      session[:states] = responder.states
+
+      answers.each do |answer|
+        answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
+        @training.context = answer.context
+        @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+      end
+      @training.save!
+    end
+
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   private
@@ -43,5 +60,9 @@ class Trainings::TrainingMessagesController < ApplicationController
 
     def training_message_params
       params.require(:training_message).permit(:answer_id, :body)
+    end
+
+    def auto?
+      params[:auto] == '1'
     end
 end

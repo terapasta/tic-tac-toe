@@ -1,4 +1,7 @@
+
 <div class="container">
+  <%= link_to 'Autoモード', '#', class: "btn btn-default #{params[:auto] == '1' ? 'active' : ''}", 'data-toggle' => 'button', id: 'btn-auto-mode' %>
+
   <div class="col-sm-8 col-sm-offset-2">
     <% @training.training_messages.each do |training_message| %>
       <% if training_message.bot? %>

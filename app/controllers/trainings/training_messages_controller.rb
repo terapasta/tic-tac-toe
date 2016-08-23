@@ -40,8 +40,8 @@ class Trainings::TrainingMessagesController < ApplicationController
 
       answers.each do |answer|
         answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
-        @training.context = answer.context
-        @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
+        @training.context = answer.try(:context)
+        @training.training_messages.build(speaker: 'bot', answer_id: answer.try(:id), body: answer.try(:body))
       end
       @training.save!
     end

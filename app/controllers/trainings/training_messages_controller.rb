@@ -48,7 +48,7 @@ class Trainings::TrainingMessagesController < ApplicationController
       @training.save!
     end
 
-    redirect_to bot_training_path(@bot, @training, auto: params[:autos])
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   private

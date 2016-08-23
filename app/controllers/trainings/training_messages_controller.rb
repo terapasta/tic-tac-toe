@@ -13,6 +13,7 @@ class Trainings::TrainingMessagesController < ApplicationController
 
     @messages = answers.map do |answer|
       answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
+      answer = answer || Answer.all.sample  # TODO 応急処置
       @training.context = answer.context
       @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
     end
@@ -40,13 +41,14 @@ class Trainings::TrainingMessagesController < ApplicationController
 
       answers.each do |answer|
         answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
-        @training.context = answer.try(:context)
-        @training.training_messages.build(speaker: 'bot', answer_id: answer.try(:id), body: answer.try(:body))
+        answer = answer || Answer.all.sample    # TODO 応急処置
+        @training.context = answer.context
+        @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
       end
       @training.save!
     end
 
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
+    redirect_to bot_training_path(@bot, @training, auto: params[:autos])
   end
 
   private

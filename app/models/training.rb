@@ -8,4 +8,9 @@ class Training < ActiveRecord::Base
     answer = bot.start_answer
     TrainingMessage.new(speaker: 'bot', answer_id: answer.id, body: answer.body)
   end
+
+  # Chatモデルとインターフェースを揃えるため
+  def guest_key
+    nil
+  end
 end

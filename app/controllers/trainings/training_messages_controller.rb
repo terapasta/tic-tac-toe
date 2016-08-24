@@ -1,4 +1,6 @@
 class Trainings::TrainingMessagesController < ApplicationController
+  include Replyable
+
   before_action :authenticate_user!
   before_action :set_bot
   before_action :set_training
@@ -7,6 +9,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     training_message = @training.training_messages.build(training_message_params)
     training_message.speaker = 'guest'
 
+    # TODO DRYにしたい
     responder = Conversation::Switcher.new.responder(training_message, session[:states])
     answers = responder.reply
     session[:states] = responder.states
@@ -31,21 +34,9 @@ class Trainings::TrainingMessagesController < ApplicationController
       flash[:notice] = '回答の差し替えに失敗しました'
     end
 
-    if auto?
-      training_messages = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
-
-      # TODO #createと共通化してDRYにしたい
-      responder = Conversation::Switcher.new.responder(training_message, session[:states])
-      answers = responder.reply
-      session[:states] = responder.states
-
-      answers.each do |answer|
-        answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
-        answer = answer || Answer.all.sample    # TODO 応急処置
-        @training.context = answer.context
-        @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
-      end
-      @training.save!
+    if auto_mode?
+      auto_training_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
+      receive_and_reply!(@training, auto_training_message)
     end
 
     redirect_to bot_training_path(@bot, @training, auto: params[:auto])
@@ -62,9 +53,5 @@ class Trainings::TrainingMessagesController < ApplicationController
 
     def training_message_params
       params.require(:training_message).permit(:answer_id, :body)
-    end
-
-    def auto?
-      params[:auto] == '1'
     end
 end

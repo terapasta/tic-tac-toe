@@ -11,8 +11,8 @@ module Replyable
       parent.context = answer.context
 
       body = answer.body
-      if answer.no_classified?
-        # 分類出来なかった場合、Docomoの雑談APIを使って返す
+      if answer.no_classified? && parent.is_a?(Chat)
+        # 分類出来なかった場合かつ親モデルがChatの場合、Docomoの雑談APIを使って返す
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 

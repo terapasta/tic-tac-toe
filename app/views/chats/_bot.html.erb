@@ -7,10 +7,14 @@
     <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
       <span id="last-message" />
       <% if message.class == TrainingMessage %>
-        <%= bootstrap_form_for [bot, message.training, message.answer] do |f| %>
-          <%= f.text_area :body, hide_label: true %>
-          <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
-          <%= f.submit '更新する', class: 'btn btn-primary' %>
+        <% if message.answer.present? %>
+          <%= bootstrap_form_for [bot, message.training, message.answer] do |f| %>
+            <%= f.text_area :body, hide_label: true %>
+            <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
+            <%= f.submit '更新する', class: 'btn btn-primary' %>
+          <% end %>
+        <% else %>
+          <%= text_area_tag :body, message.body, class: 'form-control', readonly: true %>
         <% end %>
         <br />
         <%= bootstrap_form_for [bot, message.training, message] do |f| %>

@@ -9,6 +9,7 @@
       <% if message.class == TrainingMessage %>
         <%= bootstrap_form_for [bot, message.training, message.answer] do |f| %>
           <%= f.text_area :body, hide_label: true %>
+          <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
           <%= f.submit '更新する', class: 'btn btn-primary' %>
         <% end %>
         <br />
@@ -20,6 +21,7 @@
         <br />
         <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message) do |f| %>
           <%= f.text_area :body, hide_label: true %>
+          <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
           <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
         <% end %>
       <% else %>

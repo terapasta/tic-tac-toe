@@ -32,6 +32,16 @@
         <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
       <% end %>
     </div>
+
+    <div class="col-sm-12">
+      <p>
+        ここに選択肢が入る
+      </p>
+      <%= link_to new_bot_training_answer_decision_branch_path(@bot, @training, message.answer), remote: true do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
+    </div>
+
+
+    <!--
     <% if message.answer.try(:decision_branches).try(:present?) %>
       <div class="col-sm-12">
         <br />
@@ -39,13 +49,13 @@
         <div class="col-sm-12">
           <%= bootstrap_form_for decision_branch, url: bot_chats_choices_path(message.parent.bot, decision_branch), method: :post,remote: true do |f| %>
             <%= submit_tag decision_branch.body, class: 'btn btn-default col-sm-6' %>
-            <%= f.hidden_field :id  %>
-            <%#= hidden_field_tag :body, decision_branch.body %>
+            <%= f.hidden_field :id %>
           <% end %>
         </div>
         <% end %>
       </div>
     <% end %>
+  -->
   </div>
   <div class="col-sm-2"></div>
 </div>

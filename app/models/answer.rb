@@ -2,6 +2,7 @@ class Answer < ActiveRecord::Base
   include ContextHoldable
 
   belongs_to :bot
+  has_many :decision_branches
 
   # TODO DB化したい
   PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]

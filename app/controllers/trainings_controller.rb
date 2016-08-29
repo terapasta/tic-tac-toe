@@ -1,6 +1,6 @@
 class TrainingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_bot, only: [:show, :new]
+  before_action :set_bot
   before_action :set_training, only: [:show, :create, :destroy]
   before_action :check_have_start_message, only: :new
 
@@ -18,6 +18,13 @@ class TrainingsController < ApplicationController
       flash[:notice] = '新しいスレッドの開始に失敗しました'
     end
     render :show
+  end
+
+  def autocomplete_answer_body
+    term = params[:term]
+    render json: @bot.answers.where('body like ?', "%#{term}%").map { |answer|
+      { id: answer.id, label: answer.body, value: answer.body }
+    }
   end
 
   private

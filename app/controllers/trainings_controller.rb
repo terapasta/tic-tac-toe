@@ -4,6 +4,8 @@ class TrainingsController < ApplicationController
   before_action :set_training, only: [:show, :create, :destroy]
   before_action :check_have_start_message, only: :new
 
+  autocomplete :answer, :body, full: true
+
   def show
   end
 

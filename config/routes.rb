@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
 
     resources :trainings do
+      get :autocomplete_answer_body, on: :collection
       scope module: :trainings do
         resources :training_messages, only: [:create, :update]
         resources :answers, only: [:update] do

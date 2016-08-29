@@ -24,7 +24,10 @@
         <% end %>
         <br />
         <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message) do |f| %>
-          <%= f.text_area :body, hide_label: true %>
+          <%#= f.text_area :body, hide_label: true %>
+          <div class="form-group">
+            <%= f.autocomplete_field :body, autocomplete_answer_body_bot_trainings_path, class: 'form-control' %>
+          </div>
           <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
           <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
         <% end %>

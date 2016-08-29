@@ -254,6 +254,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    rails4-autocomplete (1.1.1)
+      rails (>= 3.0)
     rails_admin (0.8.1)
       builder (~> 3.1)
       coffee-rails (~> 4.0)
@@ -427,6 +429,7 @@ DEPENDENCIES
   pry-stack_explorer
   quiet_assets
   rails (= 4.2.4)
+  rails4-autocomplete
   rails_admin
   rails_autolink
   rmagick
@@ -444,6 +447,9 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   whenever
+
+RUBY VERSION
+   ruby 2.2.3p173
 
 BUNDLED WITH
    1.12.5

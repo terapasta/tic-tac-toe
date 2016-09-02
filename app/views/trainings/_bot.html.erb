@@ -37,6 +37,7 @@
           <div class="links">
             <%= link_to_add_association f, :decision_branches do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
           </div>
+          <%= f.submit '更新する', class: 'btn btn-primary' %>
         <% end %>
 
         <%# message.answer.decision_branches.each do |decision_branch| %>

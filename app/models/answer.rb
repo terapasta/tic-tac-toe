@@ -4,6 +4,8 @@ class Answer < ActiveRecord::Base
   belongs_to :bot
   has_many :decision_branches
 
+  accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
+
   # TODO DB化したい
   PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
   # TRANSITION_CONTEXT_CONTACT_ID = 1007

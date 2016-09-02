@@ -76,6 +76,7 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
+    cocoon (1.2.9)
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -402,6 +403,7 @@ DEPENDENCIES
   byebug
   capybara
   carrierwave
+  cocoon
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise

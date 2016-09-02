@@ -72,6 +72,7 @@ gem 'whenever', :require => false
 gem 'carrierwave'
 gem 'rmagick', require: 'RMagick'
 gem 'rails4-autocomplete'
+gem 'cocoon'
 
 group :development, :test do
 

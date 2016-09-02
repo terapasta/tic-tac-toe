@@ -49,7 +49,7 @@ class Trainings::AnswersController < ApplicationController
     end
 
     def answer_params
-      params.require(:answer).permit(:body)
+      params.require(:answer).permit(:body, decision_branches_attributes: [:id, :body, :_destroy])
     end
 
     def training_message_params

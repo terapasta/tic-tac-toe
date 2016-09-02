@@ -23,16 +23,13 @@ class Trainings::AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      flash[:notice] = '回答を更新しました'
-
       if auto_mode?
         auto_training_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
         receive_and_reply!(@training, auto_training_message)
       end
     else
-      flash[:notice] = '回答の更新に失敗しました'
+      flash[:error] = '回答の更新に失敗しました'
     end
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   private

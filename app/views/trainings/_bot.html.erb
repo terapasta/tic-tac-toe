@@ -8,7 +8,7 @@
       <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
         <span id="last-message" />
         <% if message.answer.present? %>
-          <%= bootstrap_form_for [bot, message.training, message.answer] do |f| %>
+          <%= bootstrap_form_for [bot, message.training, message.answer], remote: true do |f| %>
             <%= f.text_area :body, hide_label: true %>
             <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
             <%= f.submit '更新する', class: 'btn btn-primary' %>
@@ -30,13 +30,13 @@
     </div>
     <% if message.answer.present? %>
       <div class="col-sm-12">
-        <%= bootstrap_form_for [bot, message.training, message.answer] do |f| %>
+        <%= bootstrap_form_for [bot, message.training, message.answer], remote: true do |f| %>
           <%= f.fields_for :decision_branches do |fd| %>
             <%= render 'decision_branch_fields', f: fd %>
-            <div class="links">
-            </div>
           <% end %>
-          <%= link_to_add_association f, :decision_branches do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
+          <div class="links">
+            <%= link_to_add_association f, :decision_branches do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
+          </div>
         <% end %>
 
         <%# message.answer.decision_branches.each do |decision_branch| %>

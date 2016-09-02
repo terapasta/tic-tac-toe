@@ -448,8 +448,5 @@ DEPENDENCIES
   unicorn
   whenever
 
-RUBY VERSION
-   ruby 2.2.3p173
-
 BUNDLED WITH
    1.12.5

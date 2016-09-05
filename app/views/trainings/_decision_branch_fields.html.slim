@@ -1,6 +1,8 @@
 .nested-fields
-  .input-group
-    = f.text_field :body, hide_label: true
-    .input-group-btn
-      = link_to_remove_association f, class: 'btn btn-default' do 
-        span.glyphicon.glyphicon-remove aria-hidden="true"
+  .decision-branch-value= f.object.body
+  .decision-branch-field
+    .input-group
+      = f.text_field :body, hide_label: true
+      .input-group-btn
+        = link_to_remove_association f, class: 'btn btn-default' do 
+          span.glyphicon.glyphicon-remove aria-hidden="true"

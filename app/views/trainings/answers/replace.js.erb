@@ -2,6 +2,8 @@
   alert("<%= flash[:notice] %>");
 <% end %>
 
+$('.decision-branches-update-form').last().attr('action', "<%= bot_training_answer_path(@bot, @training, @answer) %>")
+
 <% if @guest_message.present? %>
   $('.chat-area').append("<%= escape_javascript(render('trainings/guest', message: @guest_message)) %><br />");
 <% end %>

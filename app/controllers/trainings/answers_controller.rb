@@ -7,11 +7,11 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_answer, only: [:update]
 
   def replace
-    answer = @bot.answers.find_or_create_by!(body: answer_params[:body]) do |a|
+    @answer = @bot.answers.find_or_create_by!(body: answer_params[:body]) do |a|
       a.context = 'normal'
     end
     training_message = TrainingMessage.find(params[:id])
-    training_message.update!(answer_id: answer.id, body: answer.body)
+    training_message.update!(answer_id: @answer.id, body: @answer.body)
 
     if auto_mode?
       @guest_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)

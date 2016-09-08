@@ -9,13 +9,12 @@ $ ->
   $('.decision-branch-field').hide()
   $('.decision-branch-value').on 'click', ->
     $(@).hide()
-    $(@).next('.decision-branch-field').show().val($(@).text()).focus()
+    $(@).next('.decision-branch-field').show().find('input').val($(@).text()).focus()
 
-  # $('.decision-branch-field').on 'blur', ->
-  #   alert('hoge')
-  #   $(@).hide()
-  #   $(@).prev('.decision-branch-value').show()
-  #
-  # $('.decision-branch-field').keypress (e) ->
-  #   if e.which == 13
-  #     e.target.blur()
+  $('.decision-branch-field input').on 'blur', ->
+    $(@).parents('.decision-branch-field').hide()
+    $(@).parents('.decision-branch-field').prev('.decision-branch-value').show().text($(@).val())
+
+  $('.decision-branch-field input').keypress (e) ->
+    if e.which == 13
+      e.target.blur()

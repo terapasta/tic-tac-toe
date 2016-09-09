@@ -1,9 +1,9 @@
 li.nested-fields.list-group-item
-  .decision-branch-value
+  .decision-branch-value onClick='swtich_to_text_field(this);'
     = f.object.body
   .decision-branch-field
     .input-group
-      = f.text_field :body, hide_label: true
+      = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);', onkeypress: 'enter_blur(event)'
       .input-group-btn
         = link_to_remove_association f, class: 'btn btn-default' do 
           span.glyphicon.glyphicon-remove aria-hidden="true"

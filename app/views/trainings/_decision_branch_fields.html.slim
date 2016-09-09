@@ -8,5 +8,5 @@ li.nested-fields.list-group-item
         = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);', onkeypress: 'enter_blur(event)'
         / = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);'
         .input-group-btn
-          = link_to_remove_association f, class: 'btn btn-default' do 
+          = link_to 'javascript:void(0)', class: 'btn btn-default', onclick: "destroy_decision_branch_field(this);" do 
             span.glyphicon.glyphicon-remove aria-hidden="true"

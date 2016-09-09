@@ -12,6 +12,12 @@
     e.target.blur()
     e.preventDefault()
 
+@destroy_decision_branch_field = (obj) ->
+  alert('hoge')
+  $(obj).parents('li').remove()
+
+
+
 $ ->
   $('#btn-auto-mode').on 'click', ->
     if $(this).hasClass('active')

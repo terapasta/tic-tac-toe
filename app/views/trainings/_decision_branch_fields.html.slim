@@ -2,9 +2,11 @@ li.nested-fields.list-group-item
   = bootstrap_form_for [bot, training, answer, decision_branch], remote: true do |f|
     .decision-branch-value onClick='swtich_to_text_field(this);'
       = decision_branch.body
-    .decision-branch-field
+    - style = decision_branch.body.present? ? 'display:none;' : ''
+    .decision-branch-field style=style
       .input-group
         = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);', onkeypress: 'enter_blur(event)'
+        / = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);'
         .input-group-btn
           = link_to_remove_association f, class: 'btn btn-default' do 
             span.glyphicon.glyphicon-remove aria-hidden="true"

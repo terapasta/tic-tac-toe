@@ -10,6 +10,7 @@
 @enter_blur = (e) ->
   if e.which == 13
     e.target.blur()
+    e.preventDefault()
 
 $ ->
   $('#btn-auto-mode').on 'click', ->

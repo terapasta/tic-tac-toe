@@ -1,6 +1,6 @@
 class Trainings::DecisionBranchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_models, only: [:new, :update]
+  before_action :set_models
   before_action :set_decision_branch, only: :update
 
   def new
@@ -8,6 +8,7 @@ class Trainings::DecisionBranchesController < ApplicationController
   end
 
   def create
+    @decision_branch = @answer.decision_branches.create(decision_branch_params)
   end
 
   def update

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
           member do
             post :replace
           end
-          resources :decision_branches, only: [:new]
+          resources :decision_branches, only: [:update]
         end
       end
     end

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
           member do
             post :replace
           end
-          resources :decision_branches, only: [:update]
+          resources :decision_branches, except: :index
         end
       end
     end

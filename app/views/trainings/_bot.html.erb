@@ -40,10 +40,11 @@
             <%#= f.fields_for :decision_branches do |fd| %>
               <%#= render 'trainings/decision_branch_fields', f: fd %>
             <%# end %>
-            <div class="links">
-              <%#= link_to_add_association f, :decision_branches, partial: 'trainings/decision_branch_fields', class: 'add-fields-link' do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<%# end %>
-            </div>
           </ul>
+          <div class="links">
+            <%#= link_to_add_association f, :decision_branches, partial: 'trainings/decision_branch_fields', class: 'add-fields-link' do %><!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する --><%# end %>
+            <%= link_to new_bot_training_answer_decision_branch_path(message.parent.bot, message.training, message.answer), remote: true, class: 'add-fields-link' do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
+          </div>
           <%#= f.submit '更新する', class: 'btn btn-primary' %>
         <%# end %>
 

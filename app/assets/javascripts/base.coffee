@@ -13,7 +13,6 @@
     e.preventDefault()
 
 @destroy_decision_branch_field = (obj) ->
-  alert('hoge')
   $(obj).parents('li').remove()
 
 

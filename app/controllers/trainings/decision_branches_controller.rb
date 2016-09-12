@@ -1,7 +1,7 @@
 class Trainings::DecisionBranchesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_models
-  before_action :set_decision_branch, only: :update
+  before_action :set_decision_branch, only: [:update, :destroy]
 
   def new
     @decision_branch = @answer.decision_branches.build
@@ -13,6 +13,11 @@ class Trainings::DecisionBranchesController < ApplicationController
 
   def update
     @decision_branch.update(decision_branch_params)
+  end
+
+  def destroy
+    @decision_branch.destroy
+    render nothing: true
   end
 
   private

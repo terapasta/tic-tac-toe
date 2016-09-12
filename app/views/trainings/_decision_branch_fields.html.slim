@@ -4,9 +4,7 @@ li.nested-fields.list-group-item
       = decision_branch.body
     - style = decision_branch.body.present? ? 'display:none;' : ''
     .decision-branch-field style=style
-      .input-group
-        = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);', onkeypress: 'enter_blur(event)'
-        / = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);'
-        .input-group-btn
-          = link_to 'javascript:void(0)', class: 'btn btn-default', onclick: "destroy_decision_branch_field(this);" do 
-            span.glyphicon.glyphicon-remove aria-hidden="true"
+      = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);', onkeypress: 'enter_blur(event)'
+  - path = decision_branch.persisted? ? bot_training_answer_decision_branch_path(bot, training, answer, decision_branch) : 'javascript:void(0)'
+  = link_to path, remote: true, method: :delete, class: 'btn btn-default', onclick: "destroy_decision_branch_field(this);" do 
+    span.glyphicon.glyphicon-remove aria-hidden="true"

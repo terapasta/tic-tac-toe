@@ -19,15 +19,16 @@ class Trainings::AnswersController < ApplicationController
     end
 
     flash[:notice] = '回答を差し替えました'
-    #redirect_to bot_training_path(@bot, @training, auto: params[:auto]), notice: '回答を差し替えました'
+    render :update
   end
 
   def update
     if @answer.update(answer_params)
       if auto_mode?
-        auto_training_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
-        receive_and_reply!(@training, auto_training_message)
+        @guest_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
+        @bot_messages = receive_and_reply!(@training, @guest_message)
       end
+      flash[:notice] = '回答を更新しました'
     else
       flash[:error] = '回答の更新に失敗しました'
     end

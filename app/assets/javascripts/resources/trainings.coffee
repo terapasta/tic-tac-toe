@@ -15,6 +15,9 @@
 @destroy_decision_branch_field = (obj) ->
   $(obj).parents('li').remove()
 
+# @disabled_answers = ->
+
+
 $ ->
   $('#btn-auto-mode').on 'click', ->
     if $(this).hasClass('active')
@@ -23,3 +26,7 @@ $ ->
       $('.auto-mode').val('1')
 
   $('.decision-branch-field').hide()
+
+  $('.btn-disabled-answers').on 'click', ->
+    $('.balloon').each (idx, elem) ->
+      console.log($(elem).children('#answer_body').val())

@@ -2,11 +2,12 @@
 <html>
 <head>
   <title>どんうさぎbot - mofmof inc.</title>
+  <% assets = Rails.application.assets || ::Sprockets::Railtie.build_environment(Rails.application) %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag "#{resources/params[:controller]}/#{params[:action]}", media: 'all' if Rails.application.assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.css") %>
+  <%= stylesheet_link_tag "#{resources/params[:controller]}/#{params[:action]}", media: 'all' if assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.css") %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag "resources/#{params[:controller]}" if Rails.application.assets.find_asset("resources/#{params[:controller]}.js") %>
-  <%= javascript_include_tag "#{resources/params[:controller]}/#{params[:action]}" if Rails.application.assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.js") %>
+  <%= javascript_include_tag "resources/#{params[:controller]}" if assets.find_asset("resources/#{params[:controller]}.js") %>
+  <%= javascript_include_tag "#{resources/params[:controller]}/#{params[:action]}" if assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.js") %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

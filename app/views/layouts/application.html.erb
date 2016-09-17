@@ -2,9 +2,9 @@
 <html>
 <head>
   <title>どんうさぎbot - mofmof inc.</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= stylesheet_link_tag "#{resources/params[:controller]}/#{params[:action]}", media: 'all' if assets_manifest.assets["resources/#{params[:controller]}/#{params[:action]}.css"] %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag "resources/#{params[:controller]}" if assets_manifest.assets["resources/#{params[:controller]}.js"] %>
   <%= javascript_include_tag "#{resources/params[:controller]}/#{params[:action]}" if assets_manifest.assets["resources/#{params[:controller]}/#{params[:action]}.js"] %>
   <%= csrf_meta_tags %>

@@ -9,6 +9,7 @@ $('.decision-branches-update-form').last().attr('action', "<%= bot_training_answ
 <% end %>
 
 <% if @bot_messages.present? %>
+  disable_answer_bodies();
   <% @bot_messages.each do |bot_message| %>
   <%# 会話している風にするため意図的にbotの発言を遅らせる %>
     $('.chat-area').delay(1300).queue(function() {

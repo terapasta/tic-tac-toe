@@ -15,8 +15,11 @@
 @destroy_decision_branch_field = (obj) ->
   $(obj).parents('li').remove()
 
-# @disabled_answers = ->
-
+@disable_answer_bodies = ->
+  $('.balloon').each (idx, elem) ->
+    answer_body = $(elem).find('#answer_body').val()
+    unless answer_body == undefined
+      $(elem).html(answer_body)
 
 $ ->
   $('#btn-auto-mode').on 'click', ->
@@ -26,7 +29,3 @@ $ ->
       $('.auto-mode').val('1')
 
   $('.decision-branch-field').hide()
-
-  $('.btn-disabled-answers').on 'click', ->
-    $('.balloon').each (idx, elem) ->
-      console.log($(elem).children('#answer_body').val())

@@ -22,6 +22,7 @@ capybara-*.html
 /log
 /tmp
 /public/system
+/public/updloads
 /coverage/
 /spec/tmp
 **.orig

@@ -1,0 +1,18 @@
+<% if flash[:notice].present? && @guest_message.blank? && @bot_messages.blank? %>
+  alert("<%= flash[:notice] %>");
+<% end %>
+
+$('.decision-branches-update-form').last().attr('action', "<%= bot_training_answer_path(@bot, @training, @answer) %>")
+
+<% if @guest_message.present? %>
+  $('.chat-area').append("<%= escape_javascript(render('trainings/guest', message: @guest_message)) %><br />");
+<% end %>
+
+<% if @bot_messages.present? %>
+  <% @bot_messages.each do |bot_message| %>
+  <%# 会話している風にするため意図的にbotの発言を遅らせる %>
+    $('.chat-area').delay(1300).queue(function() {
+      $(this).append("<%= escape_javascript(render('trainings/bot', bot: @bot, messages: @bot_messages, message: bot_message)) %><br />").dequeue();
+    });
+  <% end %>
+<% end %>

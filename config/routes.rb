@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resource :chats, only: [:show, :new, :destroy] do
       scope module: :chats do
         resources :messages, only: [:create]
+        resources :choices, only: [:create]
       end
     end
 
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
           member do
             post :replace
           end
+          resources :decision_branches, except: :index
         end
       end
     end

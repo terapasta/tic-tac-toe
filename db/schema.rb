@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160820052742) do
+ActiveRecord::Schema.define(version: 20160826072015) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -95,10 +95,13 @@ ActiveRecord::Schema.define(version: 20160820052742) do
 
   create_table "decision_branches", force: :cascade do |t|
     t.integer  "help_answer_id",      limit: 4
+    t.integer  "answer_id",           limit: 4
     t.string   "body",                limit: 255, null: false
     t.integer  "next_help_answer_id", limit: 4
+    t.integer  "next_answer_id",      limit: 4
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "bot_id",              limit: 4
   end
 
   add_index "decision_branches", ["help_answer_id"], name: "index_decision_branches_on_help_answer_id", using: :btree

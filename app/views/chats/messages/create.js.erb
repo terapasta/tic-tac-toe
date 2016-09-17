@@ -6,6 +6,6 @@ $('.chat-area').append("<%= escape_javascript(render('chats/guest', message: @me
 $('.chat-area').delay(1300).queue(function() {
   $('.context').html("<%= @chat.context %>");
   $('#message_context').val("<%= @chat.context %>");
-  $(this).append("<%= escape_javascript(render('chats/bot', messages: @bot_messages, message: bot_message)) %><br />").dequeue();
+  $(this).append("<%= escape_javascript(render('chats/bot', message: bot_message)) %><br />").dequeue();
 });
 <% end %>

@@ -7,32 +7,31 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_answer, only: [:update]
 
   def replace
-    answer = @bot.answers.find_or_create_by!(body: answer_params[:body]) do |a|
+    @answer = @bot.answers.find_or_create_by!(body: answer_params[:body]) do |a|
       a.context = 'normal'
     end
     training_message = TrainingMessage.find(params[:id])
-    training_message.update!(answer_id: answer.id, body: answer.body)
+    training_message.update!(answer_id: @answer.id, body: @answer.body)
 
     if auto_mode?
-      auto_training_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
-      receive_and_reply!(@training, auto_training_message)
+      @guest_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
+      @bot_messages = receive_and_reply!(@training, @guest_message)
     end
 
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto]), notice: '回答を差し替えました'
+    flash[:notice] = '回答を差し替えました'
+    render :update
   end
 
   def update
     if @answer.update(answer_params)
-      flash[:notice] = '回答を更新しました'
-
       if auto_mode?
-        auto_training_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
-        receive_and_reply!(@training, auto_training_message)
+        @guest_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
+        @bot_messages = receive_and_reply!(@training, @guest_message)
       end
+      flash[:notice] = '回答を更新しました'
     else
-      flash[:notice] = '回答の更新に失敗しました'
+      flash[:error] = '回答の更新に失敗しました'
     end
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   private
@@ -49,7 +48,7 @@ class Trainings::AnswersController < ApplicationController
     end
 
     def answer_params
-      params.require(:answer).permit(:body)
+      params.require(:answer).permit(:body, decision_branches_attributes: [:id, :body, :_destroy])
     end
 
     def training_message_params

@@ -1,0 +1,2 @@
+$('.list-group').last().children().last().remove()
+$('.list-group').last().append("<%= escape_javascript(render 'trainings/decision_branch_fields', bot: @bot, training: @training, answer: @answer, decision_branch: @decision_branch) %>")

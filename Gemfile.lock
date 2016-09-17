@@ -339,6 +339,13 @@ GEM
       websocket (~> 1.0)
     shellany (0.0.1)
     simple_oauth (0.3.1)
+    slim (3.0.7)
+      temple (~> 0.7.6)
+      tilt (>= 1.3.3, < 2.1)
+    slim-rails (3.1.1)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (~> 3.0)
     slop (3.6.0)
     spring (1.7.1)
     sprockets (3.6.0)
@@ -348,6 +355,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    temple (0.7.7)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -440,6 +448,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   seed-fu (~> 2.3)
   selenium-webdriver
+  slim-rails
   spring
   therubyracer
   turbolinks
@@ -447,9 +456,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   whenever
-
-RUBY VERSION
-   ruby 2.2.3p173
 
 BUNDLED WITH
    1.12.5

@@ -1,13 +1,12 @@
-
 <div class="container">
   <%= link_to 'Autoモード', '#', class: "btn btn-default #{params[:auto] == '1' ? 'active' : ''}", 'data-toggle' => 'button', id: 'btn-auto-mode' %>
 
-  <div class="col-sm-8 col-sm-offset-2">
+  <div class="col-sm-8 col-sm-offset-2 chat-area">
     <% @training.training_messages.each do |training_message| %>
       <% if training_message.bot? %>
-        <%= render 'chats/bot', bot: @bot, messages: @training.training_messages, message: training_message %>
+        <%= render 'bot', bot: @bot, messages: @training.training_messages, message: training_message %>
       <% elsif training_message.guest? %>
-        <%= render 'chats/guest', message: training_message %>
+        <%= render 'guest', message: training_message %>
       <% end %>
       <br />
     <% end %>

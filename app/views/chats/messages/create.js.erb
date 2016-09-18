@@ -7,5 +7,11 @@ $('.chat-area').delay(1300).queue(function() {
   $('.context').html("<%= @chat.context %>");
   $('#message_context').val("<%= @chat.context %>");
   $(this).append("<%= escape_javascript(render('chats/bot', message: bot_message)) %><br />").dequeue();
+
+  <% if bot_message.answer.decision_branches.present? %>
+    disable_question_field();
+  <% else %>
+    enable_question_field();
+  <% end %>
 });
 <% end %>

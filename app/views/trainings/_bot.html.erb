@@ -35,9 +35,6 @@
           <% message.answer.decision_branches.each do |decision_branch| %>
             <%= render 'trainings/decision_branch_fields', bot: message.parent.bot, training: message.training, answer: message.answer, decision_branch: decision_branch %>
           <% end %>
-          <%#= f.fields_for :decision_branches do |fd| %>
-            <%#= render 'trainings/decision_branch_fields', f: fd %>
-          <%# end %>
         </ul>
         <div class="links">
           <%#= link_to_add_association f, :decision_branches, partial: 'trainings/decision_branch_fields', class: 'add-fields-link' do %><!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する --><%# end %>

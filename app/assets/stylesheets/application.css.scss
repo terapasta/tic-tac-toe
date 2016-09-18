@@ -66,17 +66,14 @@ body {
   z-index: 100;
 }
 
-// .decision-branch-field {
-//   display:none;
-// }
-
 .list-group-item {
   position: relative;
-  .btn {
-    position: absolute;
-    right: 3px;
-    top: 3px;
-  }
+}
+
+.decision-branch-buttons {
+  position: absolute;
+  right: 3px;
+  top: 3px;
 }
 
 .balloon {

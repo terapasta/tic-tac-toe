@@ -1,10 +1,13 @@
 @swtich_to_text_field = (obj) ->
-  $(obj).hide()
-  $(obj).next('.decision-branch-field').show().find('input').val($(obj).text()).focus()
+  $decision_branch_value = $(obj).parents('.decision-branch-value')
+  $decision_branch_value.hide()
+  body = $decision_branch_value.text()
+  $decision_branch_value.next('.decision-branch-field').show().find('input').val(body).focus()
 
 @switch_to_label = (obj) ->
   $(obj).parents('.decision-branch-field').hide()
-  $(obj).parents('.decision-branch-field').prev('.decision-branch-value').show().text($(obj).val())
+  $(obj).parents('.decision-branch-field').prev('.decision-branch-value').show()
+    .children('.body').text($(obj).val())
   $(obj).parents('form').submit()
 
 @enter_blur = (e) ->

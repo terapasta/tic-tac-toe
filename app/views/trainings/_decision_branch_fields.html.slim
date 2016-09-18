@@ -1,10 +1,13 @@
 li.nested-fields.list-group-item
   = bootstrap_form_for [bot, training, answer, decision_branch], remote: true do |f|
-    .decision-branch-value onClick='swtich_to_text_field(this);'
-      = decision_branch.body
+    .decision-branch-value
+      span.body = decision_branch.body
+      .decision-branch-buttons
+        - path = decision_branch.persisted? ? bot_training_answer_decision_branch_path(bot, training, answer, decision_branch) : 'javascript:void(0)'
+        = link_to 'javascript:void(0)', class: 'btn btn-default', onclick: "swtich_to_text_field(this);" do 
+          span.glyphicon.glyphicon-pencil aria-hidden="true"
+        = link_to path, remote: true, method: :delete, class: 'btn btn-default', onclick: "destroy_decision_branch_field(this);" do 
+          span.glyphicon.glyphicon-remove aria-hidden="true"
     - style = decision_branch.body.present? ? 'display:none;' : ''
     .decision-branch-field style=style
       = f.text_field :body, hide_label: true, onblur: 'switch_to_label(this);', onkeypress: 'enter_blur(event)'
-  - path = decision_branch.persisted? ? bot_training_answer_decision_branch_path(bot, training, answer, decision_branch) : 'javascript:void(0)'
-  = link_to path, remote: true, method: :delete, class: 'btn btn-default', onclick: "destroy_decision_branch_field(this);" do 
-    span.glyphicon.glyphicon-remove aria-hidden="true"

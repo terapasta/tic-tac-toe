@@ -1,3 +1,4 @@
+<%# TODO 見通しが悪くなってきたのでリファクタリングしたい %>
 <div class="row">
   <div class="col-sm-2 col-xs-3 text-center col-icon">
     <span class="small"><%= message.parent.bot.name %></span><br />
@@ -7,28 +8,26 @@
     <div class="col-sm-12 balloon-1-left balloon">
       <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
         <span id="last-message" />
-        <% if message.answer.present? %>
-          <%= bootstrap_form_for [bot, message.training, message.answer], remote: true do |f| %>
-            <%= f.text_area :body, hide_label: true %>
-            <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
-            <%= f.submit '更新する', class: 'btn btn-primary' %>
-          <% end %>
-        <% else %>
-          <%= text_area_tag :body, message.body, class: 'form-control', readonly: true %>
+        <%= bootstrap_form_for [bot, message.training, message.answer || Answer.new], remote: true do |f| %>
+          <%= f.text_area :body, hide_label: true %>
+          <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
+          <%= f.submit class: 'btn btn-primary' %>
         <% end %>
         <br />
-        <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message), remote: true do |f| %>
-          <div class="form-group">
-            <%= f.autocomplete_field :body, autocomplete_answer_body_bot_trainings_path, class: 'form-control' %>
-          </div>
-          <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
-          <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
+        <% if message.persisted? %>
+          <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message), remote: true do |f| %>
+            <div class="form-group">
+              <%= f.autocomplete_field :body, autocomplete_answer_body_bot_trainings_path, class: 'form-control' %>
+            </div>
+            <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
+            <%= f.submit 'この回答に差し替える', class: 'btn btn-danger' %>
+          <% end %>
         <% end %>
       <% else %>
         <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
       <% end %>
     </div>
-    <% if message.answer.present? && messages.last == message %>
+    <% if message.answer_id.present? && messages.last == message %>
       <div class="col-sm-12">
         <br />
         <ul class="list-group">

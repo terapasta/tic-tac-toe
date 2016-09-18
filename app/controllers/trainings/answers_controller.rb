@@ -6,6 +6,20 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_training
   before_action :set_answer, only: [:update]
 
+  def new
+    @message = @training.training_messages.build
+    @message.build_answer
+  end
+
+  def create
+    @message = @training.training_messages.build(speaker: :bot)
+    answer = @message.build_answer(answer_params)
+    answer.bot_id = @bot.id
+    @message.body = answer.body
+    @message.save!
+    flash[:notice] = '回答を登録しました'
+  end
+
   def replace
     @answer = @bot.answers.find_or_create_by!(body: answer_params[:body]) do |a|
       a.context = 'normal'
@@ -51,7 +65,7 @@ class Trainings::AnswersController < ApplicationController
       params.require(:answer).permit(:body, decision_branches_attributes: [:id, :body, :_destroy])
     end
 
-    def training_message_params
-      params.require(:training_message).permit(:answer_id)
+    def answer_params
+      params.require(:answer).permit(:body)
     end
 end

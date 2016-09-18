@@ -32,3 +32,9 @@ $ ->
       $('.auto-mode').val('1')
 
   $('.decision-branch-field').hide()
+
+  # TODO 新しく追加された選択肢でも動くようにする
+  $('.list-group-item').on 'click', ->
+    $('.list-group-item').removeClass('active')
+    $(@).addClass('active')
+    $(@).children('form').first().submit()

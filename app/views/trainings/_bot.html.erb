@@ -10,6 +10,7 @@
         <span id="last-message" />
         <%= bootstrap_form_for [bot, message.training, message.answer || Answer.new], remote: true do |f| %>
           <%= f.text_area :body, hide_label: true %>
+          <%= hidden_field_tag :parent_decision_branch_id, message.answer.parent_decision_branch.try(:id) %>
           <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
           <%= f.submit class: 'btn btn-primary' %>
         <% end %>

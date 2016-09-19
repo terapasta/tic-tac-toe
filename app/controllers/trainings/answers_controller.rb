@@ -7,14 +7,29 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_answer, only: [:update]
 
   def new
+    decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
+    if decision_branch.next_answer.present?
+      redirect_to edit_bot_training_answer_path(@bot, @training, decision_branch.next_answer)
+    end
     @message = @training.training_messages.build
-    @message.build_answer
+    @message.build_answer(parent_decision_branch: decision_branch)
+  end
+
+  def edit
+    # binding.pry
+    # decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
+    @message = @training.training_messages.build(answer_id: params[:id])
+    @message.speaker = 'bot'
+    @message.save!
+    render :new
   end
 
   def create
+    parent_decision_branch = @bot.decision_branches.find(params[:parent_decision_branch_id])
     @message = @training.training_messages.build(speaker: :bot)
     answer = @message.build_answer(answer_params)
     answer.bot_id = @bot.id
+    answer.parent_decision_branch = parent_decision_branch
     @message.body = answer.body
     @message.save!
     flash[:notice] = '回答を登録しました'
@@ -63,9 +78,5 @@ class Trainings::AnswersController < ApplicationController
 
     def answer_params
       params.require(:answer).permit(:body, decision_branches_attributes: [:id, :body, :_destroy])
-    end
-
-    def answer_params
-      params.require(:answer).permit(:body)
     end
 end

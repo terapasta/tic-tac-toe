@@ -24,6 +24,18 @@
     unless answer_body == undefined
       $(elem).html(answer_body)
 
+@add_event_click_decision_branch = ->
+  $('.list-group-item').on 'click', ->
+    $('.list-group-item').removeClass('active')
+    decision_branch_id = $(@).data('decision-branch-id')
+    $(@).addClass('active')
+    $(@).children('form').find('#decision_branch_id').val(decision_branch_id)
+    $(@).children('form').first().submit()
+
+@add_events = ->
+  # TODO 選択肢以外も新しく追加された選択肢でも動くようにする
+  add_event_click_decision_branch()
+
 $ ->
   $('#btn-auto-mode').on 'click', ->
     if $(this).hasClass('active')
@@ -33,8 +45,4 @@ $ ->
 
   $('.decision-branch-field').hide()
 
-  # TODO 新しく追加された選択肢でも動くようにする
-  $('.list-group-item').on 'click', ->
-    $('.list-group-item').removeClass('active')
-    $(@).addClass('active')
-    $(@).children('form').first().submit()
+  add_events()

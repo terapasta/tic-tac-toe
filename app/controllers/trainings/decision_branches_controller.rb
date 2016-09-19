@@ -8,7 +8,9 @@ class Trainings::DecisionBranchesController < ApplicationController
   end
 
   def create
-    @decision_branch = @answer.decision_branches.create(decision_branch_params)
+    @decision_branch = @answer.decision_branches.build(decision_branch_params)
+    @decision_branch.bot_id = @bot.id
+    @decision_branch.save
   end
 
   def update

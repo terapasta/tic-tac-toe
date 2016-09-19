@@ -3,8 +3,10 @@ class Answer < ActiveRecord::Base
 
   belongs_to :bot
   has_many :decision_branches
+  has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
 
   accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
+  # accepts_nested_attributes_for :parent_decision_branch, reject_if: :all_blank, allow_destroy: true
 
   # TODO DB化したい
   PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]

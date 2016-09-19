@@ -1,8 +1,7 @@
-# TODO クラスが大きくなってきたので分割したい
-class TwitterBot::Bot < TwitterBot::Base
+class TwitterBot::Reply < TwitterBot::Base
   include Rails.application.routes.url_helpers
 
-  def reply
+  def all
     bot = ::Bot.find(1)  # HACK Twitter機能ONのbotのみ動作させる(一旦固定値)
     @client.mentions_timeline.reverse_each do |mention|
       tweet = TwitterBot::Tweet.new(@client, mention, bot)
@@ -13,7 +12,7 @@ class TwitterBot::Bot < TwitterBot::Base
     end
   end
 
-  def auto_reply
+  def auto
     str = "どんうさぎ -RT"
     endpoint = api_v1_messages_url
     follower_screen_names = @client.followers.map(&:screen_name)
@@ -36,17 +35,6 @@ class TwitterBot::Bot < TwitterBot::Base
       body = "#{message[:body]} #{Time.now}"
       puts "body: #{body}"
       @client.update("@#{screen_name} #{body}", in_reply_to_status_id: tweet.id)
-    end
-  end
-
-  def auto_tweet
-    auto_tweet = AutoTweet.all.sample
-    @client.update(auto_tweet.body)
-  end
-
-  def clone_tweets
-    @client.user_timeline('harada4atsushi', exclude_replies: true, include_rts: false).each do |tweet|
-      AutoTweet.find_or_create_by!(body: tweet.text)
     end
   end
 end

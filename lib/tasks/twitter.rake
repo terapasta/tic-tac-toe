@@ -1,10 +1,10 @@
 namespace :twitter do
   task reply: :environment do
-    TwitterBot::Bot.new.reply
+    TwitterBot::Reply.new.all
   end
 
   task auto_reply: :environment do
-    TwitterBot::Bot.new.auto_reply
+    TwitterBot::Reply.new.auto
   end
 
   task favorite: :environment do
@@ -12,10 +12,10 @@ namespace :twitter do
   end
 
   task auto_tweet: :environment do
-    TwitterBot::Bot.new.auto_tweet
+    TwitterBot::AutoTweet.new.auto
   end
 
   task clone_tweets: :environment do
-    TwitterBot::Bot.new.clone_tweets
+    TwitterBot::AutoTweet.new.clone
   end
 end

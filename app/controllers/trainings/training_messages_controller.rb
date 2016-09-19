@@ -8,20 +8,7 @@ class Trainings::TrainingMessagesController < ApplicationController
   def create
     training_message = @training.training_messages.build(training_message_params)
     training_message.speaker = 'guest'
-
-    # TODO DRYにしたい
-    responder = Conversation::Switcher.new.responder(training_message, session[:states])
-    answers = responder.reply
-    session[:states] = responder.states
-
-    @messages = answers.map do |answer|
-      answer_id = answer.is_a?(Answer) ? answer.id : nil  # Answerモデルの場合のみ学習させたいので、他のモデルの場合はanswer_idをnilにしておく
-      answer = answer || Answer.all.sample  # TODO 応急処置
-      @training.context = answer.context
-      @training.training_messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body)
-    end
-
-    @training.save!
+    receive_and_reply!(@training, training_message)
     redirect_to bot_training_path(@bot, @training)
   end
 

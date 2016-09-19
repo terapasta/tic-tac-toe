@@ -16,8 +16,6 @@ class Trainings::AnswersController < ApplicationController
   end
 
   def edit
-    # binding.pry
-    # decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
     @message = @training.training_messages.build(answer_id: params[:id])
     @message.speaker = 'bot'
     @message.save!

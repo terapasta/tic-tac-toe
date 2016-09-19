@@ -73,6 +73,8 @@ gem 'carrierwave'
 gem 'rmagick', require: 'RMagick'
 gem 'rails4-autocomplete'
 gem 'slim-rails'
+gem 'twitter-bootswatch-rails', '~> 3.1.1'
+gem 'twitter-bootswatch-rails-helpers'
 
 group :development, :test do
 

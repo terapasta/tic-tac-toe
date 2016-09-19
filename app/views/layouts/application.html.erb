@@ -4,6 +4,7 @@
   <title>どんうさぎbot - mofmof inc.</title>
   <% assets = Rails.application.assets || ::Sprockets::Railtie.build_environment(Rails.application) %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag    'lumen', media: 'all' %>
   <%= stylesheet_link_tag "#{resources/params[:controller]}/#{params[:action]}", media: 'all' if assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.css") %>
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag "resources/#{params[:controller]}" if assets.find_asset("resources/#{params[:controller]}.js") %>
@@ -19,5 +20,6 @@
   <div class="container container-main">
     <%= yield %>
   </div>
+  <%= javascript_include_tag 'lumen' %>
 </body>
 </html>

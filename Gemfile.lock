@@ -84,6 +84,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    commonjs (0.2.7)
     concurrent-ruby (1.0.2)
     cool.io (1.4.4)
     database_cleaner (1.5.3)
@@ -166,6 +167,13 @@ GEM
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    less (2.6.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.7.1)
+      actionpack (>= 4.0)
+      less (~> 2.6.0)
+      sprockets (> 2, < 4)
+      tilt
     letter_opener (1.4.1)
       launchy (~> 2.2)
     libv8 (3.16.14.15)
@@ -375,6 +383,12 @@ GEM
       memoizable (~> 0.4.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
+    twitter-bootswatch-rails (3.1.1.1)
+      execjs (>= 1.4.0)
+      less-rails (>= 2.3)
+      railties (>= 3.1)
+    twitter-bootswatch-rails-helpers (3.1.0.0)
+      twitter-bootswatch-rails (~> 3.1.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -453,9 +467,14 @@ DEPENDENCIES
   therubyracer
   turbolinks
   twitter
+  twitter-bootswatch-rails (~> 3.1.1)
+  twitter-bootswatch-rails-helpers
   uglifier (>= 1.3.0)
   unicorn
   whenever
+
+RUBY VERSION
+   ruby 2.2.3p173
 
 BUNDLED WITH
    1.12.5

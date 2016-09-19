@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826072015) do
+ActiveRecord::Schema.define(version: 20160919063503) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -94,18 +94,13 @@ ActiveRecord::Schema.define(version: 20160826072015) do
   end
 
   create_table "decision_branches", force: :cascade do |t|
-    t.integer  "help_answer_id",      limit: 4
-    t.integer  "answer_id",           limit: 4
-    t.string   "body",                limit: 255, null: false
-    t.integer  "next_help_answer_id", limit: 4
-    t.integer  "next_answer_id",      limit: 4
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "bot_id",              limit: 4
+    t.integer  "answer_id",      limit: 4
+    t.string   "body",           limit: 255, null: false
+    t.integer  "next_answer_id", limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "bot_id",         limit: 4
   end
-
-  add_index "decision_branches", ["help_answer_id"], name: "index_decision_branches_on_help_answer_id", using: :btree
-  add_index "decision_branches", ["next_help_answer_id"], name: "index_decision_branches_on_next_help_answer_id", using: :btree
 
   create_table "favorite_words", force: :cascade do |t|
     t.string   "word",       limit: 255
@@ -113,15 +108,6 @@ ActiveRecord::Schema.define(version: 20160826072015) do
     t.datetime "updated_at",             null: false
     t.integer  "bot_id",     limit: 4,   null: false
   end
-
-  create_table "help_answers", force: :cascade do |t|
-    t.integer  "bot_id",     limit: 4
-    t.text     "body",       limit: 65535, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "help_answers", ["bot_id"], name: "index_help_answers_on_bot_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "chat_id",    limit: 4
@@ -142,17 +128,6 @@ ActiveRecord::Schema.define(version: 20160826072015) do
     t.datetime "updated_at",           null: false
     t.integer  "bot_id",     limit: 4, null: false
   end
-
-  create_table "training_help_messages", force: :cascade do |t|
-    t.integer  "bot_id",         limit: 4
-    t.text     "body",           limit: 65535, null: false
-    t.integer  "help_answer_id", limit: 4
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "training_help_messages", ["bot_id"], name: "index_training_help_messages_on_bot_id", using: :btree
-  add_index "training_help_messages", ["help_answer_id"], name: "index_training_help_messages_on_help_answer_id", using: :btree
 
   create_table "training_messages", force: :cascade do |t|
     t.integer  "training_id", limit: 4,   null: false

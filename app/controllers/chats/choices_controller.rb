@@ -8,10 +8,6 @@ class Chats::ChoicesController < ApplicationController
     @bot_messages = [ @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body) ]
     @chat.save!
     render 'chats/messages/create'
-    # TODO 社員証紛失時のオペレーションのデモ用
-    # if help_answer.id == 8  # デモ用のハードコーディング
-    #   @help_answers.concat(HelpAnswer.where(id: [10,11,12]))
-    # end
   end
 
   private

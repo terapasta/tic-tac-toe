@@ -9,10 +9,6 @@ class Ml::Engine
     return @client.call(:reply, @bot_id, context, body)
   end
 
-  def helpdesk_reply(body)
-    return @client.call(:helpdesk_reply, @bot_id, body)
-  end
-
   def learn
     test_scores_mean = @client.call(:learn, @bot_id)
     return test_scores_mean

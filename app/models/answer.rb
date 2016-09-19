@@ -8,8 +8,7 @@ class Answer < ActiveRecord::Base
   accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
   # accepts_nested_attributes_for :parent_decision_branch, reject_if: :all_blank, allow_destroy: true
 
-  # TODO DB化したい
-  PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
+  # PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
   # TRANSITION_CONTEXT_CONTACT_ID = 1007
   # STOP_CONTEXT_ID = 1000
   # ASK_GUEST_NAME_ID = 1001

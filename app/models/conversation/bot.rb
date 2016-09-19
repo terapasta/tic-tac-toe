@@ -25,8 +25,8 @@ class Conversation::Bot
         [@bot.no_classified_answer]
       end
 
-    # TODO botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
-    # TODO 開発をしやすくするためにcontact機能は一旦コメントアウト
+    # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
+    # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
     # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end

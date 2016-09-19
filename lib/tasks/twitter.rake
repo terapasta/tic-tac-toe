@@ -8,7 +8,7 @@ namespace :twitter do
   end
 
   task favorite: :environment do
-    TwitterBot::Bot.new.favorite_all
+    TwitterBot::Favorite.new.all
   end
 
   task auto_tweet: :environment do

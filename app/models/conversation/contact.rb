@@ -35,7 +35,7 @@ class Conversation::Contact
         contact_state.chat_id = @message.chat.id
         unless contact_state.valid?
           @states[field] = nil
-          # TODO エラーメッセージを動的にしたい
+          # HACK エラーメッセージを動的にしたい
           return [ContactAnswer.find(ContactAnswer::ASK_ERROR_ID), ContactAnswer.find(MESSAGES[field])]
         end
       end

@@ -33,7 +33,6 @@
     $(@).children('form').first().submit()
 
 @add_events = ->
-  # TODO 選択肢以外も新しく追加された選択肢でも動くようにする
   add_event_click_decision_branch()
 
 $ ->

@@ -11,9 +11,9 @@ class Api::V1::MessagesController < ApplicationController
 
   private
     def set_chat
-      # TODO find_or_create_byにする
-      @chat = Chat.find_by(bot_id: message_params[:bot_id], guest_key: message_params[:guest_key])
-      @chat ||= Chat.create(bot_id: message_params[:bot_id], guest_key: message_params[:guest_key] || SecureRandom.hex(64))
+      @chat = Chat.find_or_create_by(bot_id: message_params[:bot_id], guest_key: message_params[:guest_key]) do |chat|
+        chat.guest_key = message_params[:guest_key] || SecureRandom.hex(64)
+      end
     end
 
     def message_params

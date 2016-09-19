@@ -2,6 +2,7 @@ class ChatsController < ApplicationController
   before_action :set_chat, only: [:show, :destroy]
   before_action :set_bot, only: [:new, :destroy]
   before_action :set_guest_key
+  before_action :set_warning_message
   before_action :check_have_start_message, only: :new
 
   def show
@@ -33,6 +34,10 @@ class ChatsController < ApplicationController
 
     def set_guest_key
       session[:guest_key] ||= SecureRandom.hex(64)
+    end
+
+    def set_warning_message
+      flash[:warning] = "本デモでは以下のオペレーションに対して回答することが出来ます。\n・カードキーなくした\n・パソコンが壊れた、ログインができない\n・今週の予定どうなってますか？\n・総務の山田さんに連絡をとりたい"
     end
 
     def check_have_start_message

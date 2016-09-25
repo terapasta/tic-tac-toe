@@ -6,11 +6,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
+from config.config import Config
 
 class Reply:
-    NO_CLASSIFIED_THRESHOLD = 0.2
-
     def __init__(self, bot_id):
+        self.no_classified_threshold = Config().get('default_no_classified_threshold')
+
         try:
             self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
             self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id) # TODO 定数化したい
@@ -22,7 +23,7 @@ class Reply:
         Xtrain = self.__replace_text2vec(Xtrain)
         probabilities = self.estimator.predict_proba(Xtrain)
         max_probability = np.max(probabilities)
-        if self.NO_CLASSIFIED_THRESHOLD > max_probability:
+        if self.no_classified_threshold > max_probability:
             return None
         return float(self.estimator.predict(Xtrain)[0])
 

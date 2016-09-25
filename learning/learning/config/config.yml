@@ -1,5 +1,6 @@
 database:
   endpoint: mysql://root@localhost/donusagi_bot?charset=utf8
+default_no_classified_threshold: 0.9
 # mysql:
 #     host: localhost
 #     user: root

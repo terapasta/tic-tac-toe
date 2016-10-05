@@ -1,3 +1,4 @@
+# FIXME メンテ工数を減らすために一旦使わない
 class ImportsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot

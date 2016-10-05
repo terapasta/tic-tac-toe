@@ -1,3 +1,4 @@
+# FIXME メンテ工数を減らすために一旦使わない
 require 'kconv'
 
 class DataImporter

@@ -8,6 +8,10 @@
   <% end %>
 
   <%= f.form_group nil, label: { text: '埋め込みコード' } do %>
+    <div class="form-group form-inline">
+      高さ: <%= text_field_tag :width, 500, class: 'form-control' %>&nbsp;&nbsp;
+      幅: <%= text_field_tag :height, 500, class: 'form-control' %>
+    </div>
     <%= text_field_tag :embed, bot_embed_code(@bot), class: 'form-control', readonly: true %>
   <% end %>
 

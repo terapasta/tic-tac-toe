@@ -38,8 +38,8 @@ body {
 }
 
 .comment-area {
-  position: fixed;
-  bottom: 3px;
+  position: fixed !important;
+  bottom: 0;
   left: 0;
   background-color: #fa522d;
   opacity: 0.8;

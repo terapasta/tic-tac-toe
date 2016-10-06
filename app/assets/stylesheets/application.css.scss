@@ -10,7 +10,7 @@
 
 body {
   //min-height: 2000px;
-  padding-top: 51px;
+  // padding-top: 51px;
   padding-bottom: 250px;
 }
 
@@ -157,4 +157,7 @@ body {
 	border-width: 10px 1px 10px 10px;
 	border-color: transparent transparent transparent #19283C;
 	z-index: -1;
+}
+.after-header {
+   height:51px;
 }

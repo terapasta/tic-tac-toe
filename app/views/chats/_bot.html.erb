@@ -12,7 +12,7 @@
         <br />
         <% message.answer.decision_branches.each do |decision_branch| %>
         <div class="col-sm-12">
-          <%= bootstrap_form_for decision_branch, url: bot_chats_choices_path(message.parent.bot, decision_branch), method: :post,remote: true do |f| %>
+          <%= bootstrap_form_for decision_branch, url: chats_choices_path(message.parent.bot.token, decision_branch), method: :post,remote: true do |f| %>
             <%= submit_tag decision_branch.body, class: 'btn btn-default col-sm-6' %>
             <%= f.hidden_field :id %>
           <% end %>

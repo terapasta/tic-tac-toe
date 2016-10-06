@@ -7,6 +7,10 @@
     <%= image_tag @bot.image_url(:thumb) %>
   <% end %>
 
+  <%= f.form_group nil, label: { text: '埋め込みコード' } do %>
+    <%= text_field_tag :embed, @bot.embed_code, class: 'form-control', readonly: true %>
+  <% end %>
+
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>

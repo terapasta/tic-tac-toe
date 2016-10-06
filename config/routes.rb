@@ -5,14 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
 
   resources :bots, only: [:index, :edit, :update] do
-    resource :chats, only: [:show, :new, :destroy] do
-      scope module: :chats do
-        resources :messages, only: [:create]
-        resources :choices, only: [:create]
-      end
-    end
-
-    resource :imports, only: [:new, :create] 
+    resource :imports, only: [:new, :create]
 
     resources :trainings do
       get :autocomplete_answer_body, on: :collection
@@ -29,7 +22,16 @@ Rails.application.routes.draw do
     resource :learning, only: [:update]
   end
 
+  scope 'embed/:token' do
+    resource :chats, only: [:show, :new, :destroy] do
+      scope module: :chats do
+        resources :messages, only: [:create]
+        resources :choices, only: [:create]
+      end
+    end
+  end
 
+  # get 'embed/:token', to: 'embed#show'
   resource :dashboards, only: [:show]
 
   namespace :api, { format: 'json' } do

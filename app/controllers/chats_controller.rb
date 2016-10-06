@@ -24,8 +24,7 @@ class ChatsController < ApplicationController
 
   private
     def set_bot
-      # HACK URL内のIDを変更すれば、他社のbotも表示出来てしまうため、いずれはトークンなどによるbot識別をする必要がある
-      @bot = Bot.find(params[:bot_id])
+      @bot = Bot.find_by!(token: params[:token])
     end
 
     def set_chat

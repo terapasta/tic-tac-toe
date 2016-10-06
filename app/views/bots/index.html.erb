@@ -19,6 +19,7 @@
           <%= link_to "Botを育てる", new_bot_training_path(bot), class: 'btn btn-primary' %>
           <%= link_to "学習を実行する", bot_learning_path(bot), method: :patch, class: 'btn btn-danger' %>
           <%= link_to "編集する", edit_bot_path(bot), class: 'btn btn-default' %>
+          <%#= link_to "データインポート", new_bot_imports_path(bot), class: 'btn btn-default' %>
         </td>
       </tr>
     <% end %>

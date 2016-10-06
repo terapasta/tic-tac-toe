@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_action :set_chat, only: [:show, :destroy]
-  before_action :set_bot, only: [:new, :destroy]
+  before_action :set_bot, only: [:show, :new, :destroy]
   before_action :set_guest_key
   before_action :set_warning_message
   before_action :check_have_start_message, only: :new

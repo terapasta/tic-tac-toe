@@ -86,5 +86,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  Rails.application.routes.default_url_options[:host] = '160.16.208.157'
+  Rails.application.routes.default_url_options[:host] = 'app.my-ope.net'
 end

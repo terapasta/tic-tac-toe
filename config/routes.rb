@@ -31,7 +31,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # get 'embed/:token', to: 'embed#show'
   resource :dashboards, only: [:show]
 
   namespace :api, { format: 'json' } do

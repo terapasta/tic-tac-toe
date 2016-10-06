@@ -8,7 +8,7 @@
   <% end %>
 
   <%= f.form_group nil, label: { text: '埋め込みコード' } do %>
-    <%= text_field_tag :embed, @bot.embed_code, class: 'form-control', readonly: true %>
+    <%= text_field_tag :embed, bot_embed_code(@bot), class: 'form-control', readonly: true %>
   <% end %>
 
   <div class="actions">

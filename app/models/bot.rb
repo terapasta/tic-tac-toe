@@ -13,8 +13,4 @@ class Bot < ActiveRecord::Base
   def has_feature?(feature)
     services.where(feature: Service.features[feature], enabled: true).present?
   end
-
-  def embed_code
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{token}\" frameborder=\"0\" allowfullscreen></iframe>"
-  end
 end

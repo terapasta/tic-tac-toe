@@ -24,7 +24,7 @@
         </td>
         <td><%= messages.last.created_at if messages.present? %></td>
         <td>
-          <%= link_to t('helpers.link.show'), '#', class: "btn btn-default" %>
+          <%= link_to t('helpers.link.show'), bot_thread_messages_path(@bot, chat), class: "btn btn-default" %>
         </td>
       </tr>
     <% end %>

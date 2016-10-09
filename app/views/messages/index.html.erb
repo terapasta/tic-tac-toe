@@ -1,31 +1,32 @@
-<h1>Messages</h1>
+<h1>対話履歴</h1>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th>Chat</th>
-      <th>Speaker</th>
-      <th>Body</th>
-      <th></th>
+      <th>ID</th>
+      <th>発言者</th>
+      <th>本文</th>
+      <th>発言日時</th>
+      <th>UA</th>
     </tr>
   </thead>
 
   <tbody>
     <% @messages.each do |message| %>
       <tr>
-        <td><%= message.chat %></td>
-        <td><%= message.speaker %></td>
-        <td><%= message.body %></td>
-        <td>
-          <%#= link_to t('helpers.link.show'), message, class: "btn btn-default" %>
-          <%#= link_to t('helpers.link.edit'), edit_message_path(message), class: "btn btn-default" %>
-          <%#= link_to t('helpers.link.destroy'), message, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+        <td><%= message.id %></td>
+        <td nowrap="nowrap">
+          <%= image_tag message.speaker_image_url, class: 'img-tiny' %>
+          <%= message.speaker_i18n %>
         </td>
+        <td><%= message.body %></td>
+        <td><%= message.created_at %></td>
+        <td><%= message.user_agent %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+<%= paginate @messages %>
 
-<%#= link_to t('helpers.link.new'), new_message_path, class: "btn btn-default" %>
+<br>

@@ -1,5 +1,6 @@
 class Message < ActiveRecord::Base
   include ContextHoldable
+  paginates_per 50
 
   belongs_to :chat
   belongs_to :answer

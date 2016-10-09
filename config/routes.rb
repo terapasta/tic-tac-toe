@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
 
-  resources :messages, only: :index
 
   resources :bots, only: [:index, :edit, :update] do
-    resources :threads, only: :index
+    resources :threads, only: :index do
+      resources :messages, only: :index
+    end
     resource :imports, only: [:new, :create]
 
     resources :trainings do

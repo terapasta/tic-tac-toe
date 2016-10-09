@@ -44,7 +44,6 @@ class TrainingMessage(Base):
         trainings = self.__partition_each_training(self.training_messages)
         training_sets = []
 
-        print('hoge')
         for tmp_training_set in trainings:
             self.__pad_none_data(tmp_training_set)
             answer_id_indexs = self.__lookup_anser_indexs(tmp_training_set)

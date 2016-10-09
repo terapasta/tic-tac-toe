@@ -1,0 +1,2 @@
+class DefinedAnswer < Answer
+end

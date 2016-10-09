@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006065340) do
+ActiveRecord::Schema.define(version: 20161009051751) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -113,11 +113,12 @@ ActiveRecord::Schema.define(version: 20161006065340) do
   create_table "messages", force: :cascade do |t|
     t.integer  "chat_id",    limit: 4
     t.integer  "answer_id",  limit: 4
-    t.string   "speaker",    limit: 255, null: false
+    t.string   "speaker",    limit: 255,  null: false
     t.string   "context",    limit: 255
     t.string   "body",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "user_agent", limit: 1024
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree

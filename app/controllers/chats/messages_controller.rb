@@ -4,7 +4,10 @@ class Chats::MessagesController < ApplicationController
   before_action :set_chat
 
   def create
-    @message = @chat.messages.build(message_params) { |m| m.speaker = 'guest' }
+    @message = @chat.messages.build(message_params) {|m|
+      m.speaker = 'guest'
+      m.user_agent = request.env['HTTP_USER_AGENT']
+    }
     @bot_messages = receive_and_reply!(@chat, @message)
   end
 

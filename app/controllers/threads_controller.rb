@@ -7,7 +7,7 @@ class ThreadsController < ApplicationController
   # before_action :check_have_start_message, only: :new
 
   def index
-    @chats = @bot.chats.order('id desc')
+    @chats = @bot.chats.order('id desc').page(params[:page])
 end
 
   # def show

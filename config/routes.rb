@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
 
   resources :bots, only: [:index, :edit, :update] do
+    resources :training_messages, only: :index
     resources :threads, only: :index do
       resources :messages, only: :index
     end

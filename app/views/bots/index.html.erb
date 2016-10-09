@@ -17,6 +17,7 @@
         <td>
           <%= link_to 'チャットする', new_chats_path(bot.token), class: "btn btn-default" %>
           <%= link_to "Botを育てる", new_bot_training_path(bot), class: 'btn btn-primary' %>
+          <%= link_to "学習データをエクスポート", bot_training_messages_path(bot, format: :csv), class: 'btn btn-default' %>
           <%= link_to "学習を実行する", bot_learning_path(bot), method: :patch, class: 'btn btn-danger' %>
           <%= link_to "編集する", edit_bot_path(bot), class: 'btn btn-default' %>
           <%= link_to "対話履歴", bot_threads_path(bot), class: 'btn btn-default' %>

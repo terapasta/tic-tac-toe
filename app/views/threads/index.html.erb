@@ -1,0 +1,36 @@
+<h1>対話履歴</h1>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>本文</th>
+      <th nowrap="nowrap">最終発言日時</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chats.each do |chat| %>
+      <tr>
+        <td><%= chat.id %></td>
+        <td>
+          <% messages = chat.messages.order('id desc') %>
+          <%= '...<br />'.html_safe if messages.count > 3 %>
+          <% messages.limit(3).reverse.each do |message| %>
+            <%= image_tag message.speaker_image_url, class: 'img-tiny' %>
+            <%= message.body %></br />
+          <% end %>
+        </td>
+        <td><%= messages.last.created_at if messages.present? %></td>
+        <td>
+          <%= link_to t('helpers.link.show'), '#', class: "btn btn-default" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to t('helpers.link.new'), new_message_path, class: "btn btn-default" %>

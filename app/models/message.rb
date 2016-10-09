@@ -17,4 +17,14 @@ class Message < ActiveRecord::Base
       body: body,
     }
   end
+
+  def speaker_image_url
+    if bot?
+      parent.bot.image_url
+    elsif guest?
+      'silhouette.png'
+    else
+      'operator'
+    end
+  end
 end

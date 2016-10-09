@@ -17,9 +17,9 @@
         <td><%= message.speaker %></td>
         <td><%= message.body %></td>
         <td>
-          <%= link_to t('helpers.link.show'), message, class: "btn btn-default" %>
-          <%= link_to t('helpers.link.edit'), edit_message_path(message), class: "btn btn-default" %>
-          <%= link_to t('helpers.link.destroy'), message, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+          <%#= link_to t('helpers.link.show'), message, class: "btn btn-default" %>
+          <%#= link_to t('helpers.link.edit'), edit_message_path(message), class: "btn btn-default" %>
+          <%#= link_to t('helpers.link.destroy'), message, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
         </td>
       </tr>
     <% end %>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to t('helpers.link.new'), new_message_path, class: "btn btn-default" %>
+<%#= link_to t('helpers.link.new'), new_message_path, class: "btn btn-default" %>

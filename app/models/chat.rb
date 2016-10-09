@@ -8,7 +8,7 @@ class Chat < ActiveRecord::Base
   enum context: ContextHoldable::CONTEXTS
 
   def build_start_message
-    answer = bot.start_answer
+    answer = bot.start_answer || DefinedAnswer.start_answer_unsetting
     Message.new(speaker: 'bot', answer_id: answer.id, body: answer.body)
   end
 end

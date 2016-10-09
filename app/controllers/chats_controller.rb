@@ -3,7 +3,6 @@ class ChatsController < ApplicationController
   before_action :set_bot, only: [:show, :new, :destroy]
   before_action :set_guest_key
   before_action :set_warning_message
-  before_action :check_have_start_message, only: :new
 
   def show
     session[:embed] = params[:embed] if params[:embed]
@@ -38,13 +37,6 @@ class ChatsController < ApplicationController
     def set_warning_message
       return false unless @bot.id == 2  # botがハナコさんのときのみデモ情報を表示する
       flash[:warning] = "本デモでは以下のオペレーションに対して回答することが出来ます。\n・カードキーなくした\n・パソコンが壊れた、ログインができない\n・今週の予定どうなってますか？\n・総務の山田さんに連絡をとりたい"
-    end
-
-    def check_have_start_message
-      if @bot.start_answer.blank?
-        flash[:error] =  'Bot編集画面で開始メッセージを指定してください'
-        redirect_to :back
-      end
     end
 
     def message_params

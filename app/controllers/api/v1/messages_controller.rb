@@ -16,6 +16,12 @@ class Api::V1::MessagesController < ApplicationController
       end
     end
 
+    # f.g.
+    # {
+    #   "bot_id": 1,
+    #   "guest_key": "19b4ba370a48152f77bc5e48cf2036fa604aed932a39be4b679b",
+    #   "message": "こんにちは。元気ですか？"
+    # }
     def message_params
       params.permit(:bot_id, :guest_key, :message)
     end

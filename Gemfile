@@ -75,6 +75,7 @@ gem 'rails4-autocomplete'
 gem 'slim-rails'
 gem 'twitter-bootswatch-rails', '~> 3.1.1'
 gem 'twitter-bootswatch-rails-helpers'
+gem 'slack-api'
 
 group :development, :test do
 

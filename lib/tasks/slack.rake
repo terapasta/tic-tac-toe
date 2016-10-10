@@ -16,7 +16,7 @@ namespace :slack do
     end
 
     client.on :message do |data|
-      if data['subtype'] != 'bot_message' && data['text'].include?("@#{user_id}")
+      if data['subtype'] != 'bot_message' && data['text'].include?("@#{user_id}") && data['user'] != user_id
         text = data['text'].delete("<@#{user_id}> ")
 
         endpoint = Rails.application.routes.url_helpers.api_v1_messages_url

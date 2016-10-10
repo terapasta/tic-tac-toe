@@ -13,6 +13,7 @@ class TrainingMessageConverter
         elsif training_message.bot?
           if guest_body.present? && training_message_hold?(training_message)
             qa[guest_body] = { answer_id: training_message.answer_id, body: training_message.body }
+            guest_body = ''
           end
         end
       end

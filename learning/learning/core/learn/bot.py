@@ -2,6 +2,8 @@
 import logging
 import dataset
 import numpy as np
+import pandas as pd
+import MySQLdb
 from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import KFold
@@ -19,8 +21,10 @@ class Bot:
         logging.basicConfig(filename="example.log",level=logging.DEBUG)
         logging.debug('Bot.learn start')
 
-        db = dataset.connect(Config().get('database')['endpoint'])
-        training_set = TrainingMessage(db, self.bot_id)
+        dbconfig = Config().get('database')
+        db = dataset.connect(dbconfig['endpoint'])
+        mysqldb = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd='')
+        training_set = TrainingMessage(db, mysqldb, self.bot_id)
         training_set.build()
 
         print(training_set.y)

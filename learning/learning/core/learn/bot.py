@@ -23,7 +23,7 @@ class Bot:
 
         dbconfig = Config().get('database')
         db = dataset.connect(dbconfig['endpoint'])
-        mysqldb = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd='')
+        mysqldb = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd='', charset='utf8')
         training_set = TrainingMessage(db, mysqldb, self.bot_id)
         training_set.build()
 

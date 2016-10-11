@@ -3,7 +3,7 @@ class ExportsController < ApplicationController
   before_action :set_bot
 
   def show
-    Learning::TrainingMessageConverter.new(@bot).convert
+    Learning::Summarizer.new(@bot).summary
     send_data LearningTrainingMessage.to_csv(@bot), filename: 'learning_training_messages.csv', type: :csv
   end
 

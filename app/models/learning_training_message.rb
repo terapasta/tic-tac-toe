@@ -10,7 +10,7 @@ class LearningTrainingMessage < ActiveRecord::Base
         ]
         recursive_put(csv, base, learning_training_message.answer)
       end
-    end.encode(Encoding::SJIS)
+    end.encode(Encoding::SJIS, replace: '') # FIXME 〜などが変換時に情報落ちしてしまう
   end
 
   def self.recursive_put(csv, base, answer)

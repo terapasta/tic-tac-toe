@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20161011062816) do
   end
 
   create_table "imported_training_messages", force: :cascade do |t|
+    t.integer  "bot_id",     limit: 4
     t.string   "question",   limit: 255
     t.integer  "answer_id",  limit: 4
     t.text     "underlayer", limit: 65535
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 20161011062816) do
   end
 
   add_index "imported_training_messages", ["answer_id"], name: "index_imported_training_messages_on_answer_id", using: :btree
+  add_index "imported_training_messages", ["bot_id"], name: "index_imported_training_messages_on_bot_id", using: :btree
 
   create_table "learning_training_messages", force: :cascade do |t|
     t.integer  "bot_id",      limit: 4

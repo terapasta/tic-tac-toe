@@ -3,6 +3,7 @@ class Bot < ActiveRecord::Base
   has_many :chats
   has_many :trainings
   has_many :learning_training_messages
+  has_many :imported_training_messages
   has_many :answers
   has_many :decision_branches
   has_many :services

@@ -4,9 +4,15 @@ class ImportedTrainingMessage < ActiveRecord::Base
   def self.import_csv(file, bot)
     imported_training_messages = []
     CSV.foreach(file.path, encoding: 'Shift_JIS:UTF-8', skip_blanks: true) do |row|
-      answer = bot.answers.find_or_create_by(body: row[1]) {|answer| answer.bot = bot }
-      imported_training_messages << new(question: row[0], answer: answer)
+      answer = bot.answers.find_or_initialize_by(body: row[1]) {|answer| answer.bot = bot }
+      imported_training_message = bot.imported_training_messages.find_or_initialize_by(question: row[0])
+      imported_training_message.answer = answer
+      imported_training_message.save!
     end
-    import(imported_training_messages)
+    true
+  rescue => e
+    Rails.logger.debug(e)
+    Rails.logger.debug(e.backtrace.join("\n"))
+    false
   end
 end

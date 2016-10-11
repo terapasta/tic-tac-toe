@@ -1,4 +1,4 @@
-class TrainingMessageConverter
+class Learning::TrainingMessageConverter
   def initialize(bot)
     @bot = bot
   end
@@ -19,16 +19,15 @@ class TrainingMessageConverter
       end
     end
     puts qa
-    delete_insert(qa)
+    bulk_insert(qa)
   end
 
   private
-    def delete_insert(qa_hash)
-      LearningTrainingMessage.delete_all(bot: @bot)
+    def bulk_insert(qa_hash)
       learning_training_messages = qa_hash.map do |key, value|
         LearningTrainingMessage.new(bot: @bot, question: key, answer_body: value[:body], answer_id: value[:answer_id])
       end
-      LearningTrainingMessage.import(learning_training_messages)
+      LearningTrainingMessage.import!(learning_training_messages)
     end
 
     def training_message_hold?(training_message)

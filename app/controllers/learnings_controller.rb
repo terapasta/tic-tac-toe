@@ -3,7 +3,7 @@ class LearningsController < ApplicationController
   before_action :set_bot
 
   def update
-    if TrainingMessageConverter.new(@bot).convert
+    if Learning::Summarizer.new(@bot).summary
       test_scores_mean = Ml::Engine.new(@bot.id).learn
       flash[:notice] = "学習を実行しました。スコア: #{test_scores_mean}"
     end

@@ -6,8 +6,11 @@ class ImportsController < ApplicationController
   end
 
   def create
-    DataImporter.import(params[:file], @bot)
-    flash[:notice] = '登録しました'
+    if ImportedTrainingMessage.import_csv(params[:file], @bot)
+      flash[:notice] = 'インポートしました'
+    else
+      flash[:error] = 'インポートに失敗しました'
+    end
     render :new
   end
 

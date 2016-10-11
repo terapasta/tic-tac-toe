@@ -18,7 +18,7 @@ class ChatsController < ApplicationController
 
   def destroy
     flash[:notice] = 'クリアしました'
-    redirect_to new_bot_chats_path(@bot)
+    redirect_to new_chats_path(@bot.token)
   end
 
   private

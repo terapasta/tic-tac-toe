@@ -1,9 +1,9 @@
 <%= bootstrap_form_tag url: bot_imports_path(@bot), method: :post do |f| %>
   <%#= render "shared/errors", object: @bot %>
 
-  <%= f.file_field :file, label: 'ファイル' %>
+  <%= f.file_field :file %>
 
   <div class="actions">
-    <%= f.submit class: 'btn btn-success' %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

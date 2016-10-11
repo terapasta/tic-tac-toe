@@ -5,11 +5,12 @@ Rails.application.routes.draw do
 
 
   resources :bots, only: [:index, :edit, :update] do
+    resource :imports, only: [:new, :create]
     resource :exports, only: :show
     resources :threads, only: :index do
       resources :messages, only: :index
     end
-    resource :imports, only: [:new, :create]
+    # resource :imports, only: [:new, :create]
 
     resources :trainings do
       get :autocomplete_answer_body, on: :collection

@@ -1,5 +1,6 @@
 class ImportedTrainingMessage < ActiveRecord::Base
   belongs_to :answer
+  serialize :underlayer
 
   def self.import_csv(file, bot)
     bot.imported_training_messages.destroy_all

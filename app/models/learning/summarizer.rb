@@ -7,6 +7,7 @@ class Learning::Summarizer
     LearningTrainingMessage.destroy_all(bot: @bot)
     Learning::TrainingMessageConverter.new(@bot).convert
     convert_imported_training_messages
+    convert_decision_branches
   end
 
   def convert_imported_training_messages
@@ -20,5 +21,21 @@ class Learning::Summarizer
       learning_training_messages << learning_training_message
     end
     LearningTrainingMessage.import(learning_training_messages)
+  end
+
+  def convert_decision_branches
+    @bot.imported_training_messages.find_each do |imported_training_message|
+      if imported_training_message.underlayer.present?
+        current_answer = imported_training_message.answer
+        imported_training_message.underlayer.each_slice(2) do |decision_branch_body, answer_body|
+          decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: @bot.id)
+          if answer_body.present?
+            current_answer = @bot.answers.find_or_initialize_by(body: answer_body, bot_id: @bot.id)
+            decision_branch.next_answer = current_answer
+          end
+          decision_branch.save!
+        end
+      end
+    end
   end
 end

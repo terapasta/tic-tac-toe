@@ -8,11 +8,13 @@ class Trainings::AnswersController < ApplicationController
 
   def new
     decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
-    if decision_branch.next_answer.present?
-      redirect_to edit_bot_training_answer_path(@bot, @training, decision_branch.next_answer)
-    end
-    @message = @training.training_messages.build
-    @message.build_answer(parent_decision_branch: decision_branch)
+    @training.training_messages.build(speaker: :guest, body: decision_branch.body)
+    # if decision_branch.next_answer.present?
+    #   redirect_to edit_bot_training_answer_path(@bot, @training, decision_branch.next_answer)
+    # end
+    message = @training.training_messages.build(speaker: :bot)
+    message.build_answer(parent_decision_branch: decision_branch)
+    render 'trainings/show'
   end
 
   def edit
@@ -24,13 +26,14 @@ class Trainings::AnswersController < ApplicationController
 
   def create
     parent_decision_branch = @bot.decision_branches.find(params[:parent_decision_branch_id])
-    @message = @training.training_messages.build(speaker: :bot)
-    answer = @message.build_answer(answer_params)
+    message = @training.training_messages.build(speaker: :bot)
+    answer = message.build_answer(answer_params)
     answer.bot_id = @bot.id
     answer.parent_decision_branch = parent_decision_branch
-    @message.body = answer.body
-    @message.save!
-    flash[:notice] = '回答を登録しました'
+    message.body = answer.body
+    message.save!
+    flash[:notice] = '回答を差し替えました'
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   def replace
@@ -68,7 +71,7 @@ class Trainings::AnswersController < ApplicationController
     end
 
     def set_answer
-      @answer = Answer.find(params[:id])
+      @answer = @bot.answers.find(params[:id])
     end
 
     def set_training

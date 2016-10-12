@@ -44,4 +44,6 @@ $ ->
 
   $('.decision-branch-field').hide()
 
+  window.location.hash = '#last-message'
+
   add_events()

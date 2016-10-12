@@ -17,9 +17,7 @@ Rails.application.routes.draw do
       scope module: :trainings do
         resources :training_messages, only: [:create, :update]
         resources :answers, except: :index do
-          member do
-            post :replace
-          end
+          post :replace, on: :member
           resources :decision_branches, except: :index
         end
       end

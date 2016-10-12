@@ -30,7 +30,8 @@ class Trainings::TrainingMessagesController < ApplicationController
   end
 
   def destroy
-    if @training_message.destroy
+    training_messages = @training.training_messages.where('id >= ?', @training_message.id)
+    if training_messages.destroy_all
       training_message = @training.training_messages.build(speaker: 'guest')
       flash[:notice] = '回答を削除しました'
     else

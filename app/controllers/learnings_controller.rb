@@ -6,6 +6,8 @@ class LearningsController < ApplicationController
     if Learning::Summarizer.new(@bot).summary
       test_scores_mean = Ml::Engine.new(@bot.id).learn
       flash[:notice] = "学習を実行しました。スコア: #{test_scores_mean}"
+    else
+      flash[:error] = '学習の実行に失敗しました。'
     end
     redirect_to :back
   end

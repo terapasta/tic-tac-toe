@@ -3,7 +3,7 @@ class Learning::TrainingMessageConverter
     @bot = bot
   end
 
-  def convert
+  def convert!
     qa = {}
     @bot.trainings.find_each do |training|
       guest_body, bot_body = ''

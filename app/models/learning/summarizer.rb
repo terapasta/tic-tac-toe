@@ -4,13 +4,18 @@ class Learning::Summarizer
   end
 
   def summary
-    LearningTrainingMessage.destroy_all(bot: @bot)
-    Learning::TrainingMessageConverter.new(@bot).convert
-    convert_imported_training_messages
-    convert_decision_branches
+    LearningTrainingMessage.where(bot: @bot).destroy_all
+    Learning::TrainingMessageConverter.new(@bot).convert!
+    convert_imported_training_messages!
+    convert_decision_branches!
+    true
+  rescue => e
+    Rails.logger.debug(e)
+    Rails.logger.debug(e.backtrace.join("\n"))
+    false
   end
 
-  def convert_imported_training_messages
+  def convert_imported_training_messages!
     learning_training_messages = []
     @bot.imported_training_messages.find_each do |imported_training_message|
       learning_training_message = @bot.learning_training_messages.find_or_initialize_by(
@@ -20,10 +25,10 @@ class Learning::Summarizer
       learning_training_message.answer_body = imported_training_message.answer.body
       learning_training_messages << learning_training_message
     end
-    LearningTrainingMessage.import(learning_training_messages)
+    LearningTrainingMessage.import!(learning_training_messages)
   end
 
-  def convert_decision_branches
+  def convert_decision_branches!
     @bot.imported_training_messages.find_each do |imported_training_message|
       if imported_training_message.underlayer.present?
         current_answer = imported_training_message.answer

@@ -173,3 +173,10 @@ body {
   right: -10px;
   top: -9px;
 }
+.list-group {
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover { text-decoration: none;}
+}

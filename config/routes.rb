@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     resource :chats, only: [:show, :new, :destroy] do
       scope module: :chats do
         resources :messages, only: [:create]
-        resources :choices, only: [:create]
+        post 'choices/:id', to: 'choices#create', as: :choices
       end
     end
   end

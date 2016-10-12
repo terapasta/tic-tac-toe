@@ -10,14 +10,14 @@
     <% if message.answer.try(:decision_branches).try(:present?) %>
       <div class="col-sm-12">
         <br />
-        <% message.answer.decision_branches.each do |decision_branch| %>
-        <div class="col-sm-12">
-          <%= bootstrap_form_for decision_branch, url: chats_choices_path(message.parent.bot.token, decision_branch), method: :post,remote: true do |f| %>
-            <%= submit_tag decision_branch.body, class: 'btn btn-default col-sm-6' %>
-            <%= f.hidden_field :id %>
+
+        <ul class="list-group">
+          <% message.answer.decision_branches.each do |decision_branch| %>
+            <%= link_to choices_chats_path(message.parent.bot.token, decision_branch), method: :post,remote: true do %>
+              <li class="nested-fields list-group-item"><%= decision_branch.body %></li>
+            <% end %>
           <% end %>
-        </div>
-        <% end %>
+        </ul>
       </div>
     <% end %>
   </div>

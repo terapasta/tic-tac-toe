@@ -16,10 +16,6 @@ class Chats::ChoicesController < ApplicationController
     end
 
     def set_decision_branch
-      @decision_branch = @chat.bot.decision_branches.find(decision_branch_params[:id])
-    end
-
-    def decision_branch_params
-      params.require(:decision_branch).permit(:id)
+      @decision_branch = @chat.bot.decision_branches.find(params[:id])
     end
 end

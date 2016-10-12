@@ -19,22 +19,23 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 2.minutes do
-  rake 'twitter:reply'
-end
-
-every 1.day, at: '18:52' do
-  rake 'twitter:auto_reply'
-end
-
-every 1.hours, at: '8:52' do
-  rake 'twitter:favorite'
-end
-
-every 1.day, at: ['12:38', '18:58'] do
-  rake 'twitter:auto_tweet'
-end
-
-every 1.day, at: '23:58' do
-  rake 'twitter:clone_tweets'
-end
+# FIXME bot_id: 1をslack用botにしたので、一旦Twitterでは動作しないようにする
+# every 2.minutes do
+#   rake 'twitter:reply'
+# end
+#
+# every 1.day, at: '18:52' do
+#   rake 'twitter:auto_reply'
+# end
+#
+# every 1.hours, at: '8:52' do
+#   rake 'twitter:favorite'
+# end
+#
+# every 1.day, at: ['12:38', '18:58'] do
+#   rake 'twitter:auto_tweet'
+# end
+#
+# every 1.day, at: '23:58' do
+#   rake 'twitter:clone_tweets'
+# end

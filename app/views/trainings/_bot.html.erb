@@ -19,7 +19,7 @@
                 bot_training_answers_path(bot, message.training)
               end
        %>
-      <%= bootstrap_form_for message.answer, url: url, method: :post do |f| %>
+      <%= bootstrap_form_for message.answer || Answer.new, url: url, method: :post do |f| %>
         <div class="message-body-wrapper">
           <%= auto_link(simple_format(message.body, class: 'message-body'), html: { target: '_blank' }) %>
           <a href="javascript:void(0);"><i class="glyphicon glyphicon-pencil"></i></a>

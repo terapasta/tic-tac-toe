@@ -18,7 +18,9 @@ Rails.application.routes.draw do
         resources :training_messages, only: [:create, :update, :destroy]
         resources :answers, except: [:index, :update] do
           post :replace, on: :member
-          resources :decision_branches, except: :index
+          resources :decision_branches, except: :index do
+            post :select, on: :member
+          end
         end
       end
     end

@@ -9,6 +9,7 @@ class Trainings::AnswersController < ApplicationController
   def new
     decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
     @training.training_messages.build(speaker: :guest, body: decision_branch.body)
+    # @training.save!
     # if decision_branch.next_answer.present?
     #   redirect_to edit_bot_training_answer_path(@bot, @training, decision_branch.next_answer)
     # end

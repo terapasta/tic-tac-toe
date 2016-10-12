@@ -44,10 +44,6 @@ $ ->
 
   $('.decision-branch-field').hide()
 
-  $('.message-body-wrapper').on 'click', ->
-    $(@).hide()
-    $(@).next('.message-body-edit').removeClass('hidden').find('input').val(body).focus()
-
   window.location.hash = '#last-message'
 
   add_events()

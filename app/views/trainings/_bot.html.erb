@@ -6,7 +6,9 @@
   </div>
   <div class="col-sm-8 col-xs-9">
     <div class="col-sm-12 balloon-1-left balloon">
-      <%= link_to bot_training_training_message_path(bot, message.training, message), method: :delete, class: "btn-message-remove btn btn-default btn-xs", data: { confirm: '以降のメッセージや、配下のメッセージも削除されますが、よろしいですか。' } do %><i class="glyphicon glyphicon-remove"></i><% end %>
+      <% if message.persisted? %>
+        <%= link_to bot_training_training_message_path(bot, message.training, message), method: :delete, class: "btn-message-remove btn btn-default btn-xs", data: { confirm: '以降のメッセージや、配下のメッセージも削除されますが、よろしいですか。' } do %><i class="glyphicon glyphicon-remove"></i><% end %>
+      <% end %>
       <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
         <span id="last-message" />
       <% end %>

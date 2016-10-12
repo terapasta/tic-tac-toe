@@ -4,6 +4,7 @@ class Trainings::TrainingMessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
   before_action :set_training
+  before_action :set_training_message, only: [:update, :destroy]
 
   def create
     training_message = @training.training_messages.build(training_message_params)
@@ -13,12 +14,11 @@ class Trainings::TrainingMessagesController < ApplicationController
   end
 
   def update
-    training_message = TrainingMessage.find(params[:id])
     answer = Answer.find(training_message_params[:answer_id])
     if training_message.update(answer_id: training_message_params[:answer_id], body: answer.body)
       flash[:notice] = '回答を差し替えました'
     else
-      flash[:notice] = '回答の差し替えに失敗しました'
+      flash[:error] = '回答の差し替えに失敗しました'
     end
 
     if auto_mode?
@@ -29,13 +29,27 @@ class Trainings::TrainingMessagesController < ApplicationController
     redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
+  def destroy
+    if @training_message.destroy
+      training_message = @training.training_messages.build(speaker: 'guest')
+      flash[:notice] = '回答を削除しました'
+    else
+      flash[:error] = '回答の削除に失敗しました'
+    end
+    redirect_to bot_training_path(@bot, @training)
+  end
+
   private
     def set_bot
       @bot = current_user.bots.find(params[:bot_id])
     end
 
     def set_training
-      @training = Training.find(params[:training_id])
+      @training = @bot.trainings.find(params[:training_id])
+    end
+
+    def set_training_message
+      @training_message = @training.training_messages.find(params[:id])
     end
 
     def training_message_params

@@ -46,7 +46,7 @@ class Trainings::AnswersController < ApplicationController
     end
 
     flash[:notice] = '回答を差し替えました'
-    render :update
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   def update

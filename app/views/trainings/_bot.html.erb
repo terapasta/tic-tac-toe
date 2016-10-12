@@ -16,7 +16,7 @@
         <% end %>
         <br />
         <% if message.persisted? %>
-          <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message), remote: true do |f| %>
+          <%= bootstrap_form_for Answer.new, url: replace_bot_training_answer_path(bot, message.training, message) do |f| %>
             <div class="form-group">
               <%= f.autocomplete_field :body, autocomplete_answer_body_bot_trainings_path, class: 'form-control' %>
             </div>

@@ -59,6 +59,7 @@ class Trainings::AnswersController < ApplicationController
     else
       flash[:error] = '回答の更新に失敗しました'
     end
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   private

@@ -22,7 +22,7 @@ capybara-*.html
 /log
 /tmp
 /public/system
-/public/updloads/*
+/public/uploads/*
 /coverage/
 /spec/tmp
 **.orig

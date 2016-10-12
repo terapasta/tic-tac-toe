@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       get :autocomplete_answer_body, on: :collection
       scope module: :trainings do
         resources :training_messages, only: [:create, :update]
-        resources :answers, except: :index do
+        resources :answers, except: [:index, :update] do
           post :replace, on: :member
           resources :decision_branches, except: :index
         end

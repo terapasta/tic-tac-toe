@@ -3,7 +3,7 @@ import dataset
 import numpy as np
 import pandas as pd
 import MySQLdb
-from ... import log
+from log import logger
 from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import KFold
@@ -38,5 +38,5 @@ class Bot:
         logger.debug('Bot.learn dump start')
         joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % self.bot_id)
         test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
-        logging.debug('Bot.learn end')
+        logger.debug('Bot.learn end')
         return test_scores_mean

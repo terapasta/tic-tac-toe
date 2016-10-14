@@ -9,12 +9,21 @@ class Trainings::AnswersController < ApplicationController
   def new
     decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
     @training.training_messages.build(speaker: :guest, body: decision_branch.body)
+    @training.save!
+
     # @training.save!
     # if decision_branch.next_answer.present?
     #   redirect_to edit_bot_training_answer_path(@bot, @training, decision_branch.next_answer)
     # end
+
     message = @training.training_messages.build(speaker: :bot)
-    message.build_answer(parent_decision_branch: decision_branch)
+    if decision_branch.next_answer.present?
+      message.answer = decision_branch.next_answer
+      message.body = message.answer.body
+      @training.save!
+    else
+      message.build_answer(parent_decision_branch: decision_branch)
+    end
     render 'trainings/show'
   end
 

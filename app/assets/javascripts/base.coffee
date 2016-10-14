@@ -17,7 +17,6 @@
     e.preventDefault()
 
 @destroy_decision_branch_field = (obj) ->
-  console.log(obj)
   $(obj).parents('li').remove()
 
 @disable_answer_bodies = ->
@@ -26,19 +25,22 @@
     unless answer_body == undefined
       $(elem).html(answer_body)
 
-@add_event_click_decision_branch = ->
-  $('.list-group-item').on 'click', ->
-    $('.list-group-item').removeClass('active')
-    decision_branch_id = $(@).data('decision-branch-id')
-    $(@).addClass('active')
-    $(@).children('form').find('#decision_branch_id').val(decision_branch_id)
-    $(@).children('form').first().submit()
+@click_decision_branch = (obj) ->
+  $('.list-group-item').removeClass('active')
+  decision_branch_id = $(obj).data('decision-branch-id')
+  return unless decision_branch_id
+  $(obj).addClass('active')
+  $(obj).children('form').find('#decision_branch_id').val(decision_branch_id)
+  $(obj).children('form').first().submit()
 
-@add_events = ->
-  add_event_click_decision_branch()
+# @add_events = ->
+  # add_event_click_decision_branch()
 
 $ ->
   # FIXME trainings.coffeeに記述したいが、answers_controllerを経由した際に読み込まれないため一旦baseに記述する
   $('.message-body-wrapper').on 'click', ->
     $(@).hide()
     $(@).next('.message-body-edit').removeClass('hidden').find('input').val(body).focus()
+
+  # add_events()
+  window.location.hash = '#last-message'

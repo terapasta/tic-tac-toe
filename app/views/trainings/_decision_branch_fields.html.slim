@@ -1,4 +1,4 @@
-li.nested-fields.list-group-item data-decision-branch-id=decision_branch.id
+li.nested-fields.list-group-item data-decision-branch-id=decision_branch.id onclick='click_decision_branch(this);'
   = form_tag new_bot_training_answer_path(bot, training), method: :get do |f|
     = hidden_field_tag :decision_branch_id
   = bootstrap_form_for [bot, training, answer, decision_branch], remote: true do |f|

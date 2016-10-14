@@ -16,8 +16,9 @@
     e.target.blur()
     e.preventDefault()
 
-@destroy_decision_branch_field = (obj) ->
-  $(obj).parents('li').remove()
+@destroy_decision_branch_field = (e) ->
+  e.preventDefault()
+  $(e.srcElement).parents('li').remove()
 
 @disable_answer_bodies = ->
   $('.balloon').each (idx, elem) ->
@@ -26,12 +27,12 @@
       $(elem).html(answer_body)
 
 @click_decision_branch = (obj) ->
-  $('.list-group-item').removeClass('active')
-  decision_branch_id = $(obj).data('decision-branch-id')
-  return unless decision_branch_id
-  $(obj).addClass('active')
-  $(obj).children('form').find('#decision_branch_id').val(decision_branch_id)
-  $(obj).children('form').first().submit()
+  # $('.list-group-item').removeClass('active')
+  # decision_branch_id = $(obj).data('decision-branch-id')
+  # return unless decision_branch_id
+  # $(obj).addClass('active')
+  # $(obj).children('form').find('#decision_branch_id').val(decision_branch_id)
+  # $(obj).children('form').first().submit()
 
 # @add_events = ->
   # add_event_click_decision_branch()
@@ -42,5 +43,6 @@ $ ->
     $(@).hide()
     $(@).next('.message-body-edit').removeClass('hidden').find('input').val(body).focus()
 
-  # add_events()
+  $('textarea[data-autocomplete]').railsAutocomplete()
+
   window.location.hash = '#last-message'

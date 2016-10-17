@@ -3,7 +3,7 @@ import dataset
 import numpy as np
 import pandas as pd
 import MySQLdb
-from log import logger
+from learning.log import logger
 from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import KFold

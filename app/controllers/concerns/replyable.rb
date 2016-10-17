@@ -7,7 +7,7 @@ module Replyable
     session[:states] = responder.states
 
     reply_messages = answers.map do |answer|
-      answer = NullAnswer.new if answer.nil?
+      answer = NullAnswer.new(parent.bot) if answer.nil?
       parent.context = answer.context
 
       body = answer.body

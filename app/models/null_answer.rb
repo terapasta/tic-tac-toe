@@ -1,4 +1,8 @@
 class NullAnswer
+  def initialize(bot)
+    @bot = bot
+  end
+
   def id
     nil
   end
@@ -8,7 +12,7 @@ class NullAnswer
   end
 
   def body
-    '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    DefinedAnswer.classify_failed.body
   end
 
   def no_classified?

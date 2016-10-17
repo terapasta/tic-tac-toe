@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
-from config.config import Config
+from learning.config.config import Config
 
 class Reply:
     def __init__(self, bot_id):

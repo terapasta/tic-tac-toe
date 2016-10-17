@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -
-import logging
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
-from core.predict.reply import Reply
-from core.predict.model_not_exists_error import ModelNotExistsError
-from core.learn.bot import Bot
+from learning.log import logger
+from learning.core.predict.reply import Reply
+from learning.core.predict.model_not_exists_error import ModelNotExistsError
+from learning.core.learn.bot import Bot
 
 class MyopeServer(RPCServer):
     STATUS_CODE_SUCCESS = 1
@@ -15,8 +14,6 @@ class MyopeServer(RPCServer):
     #   context: [0, 1, 3, 1]
     #   body: 'こんにちは'
     def reply(self, bot_id, context, body):
-        # logging.basicConfig(filename="example.log",level=logging.DEBUG)
-        # logging.debug('hogehoge')
         X = list(context)
         #X.append(body.encode('utf-8'))
         X.append(body)
@@ -33,10 +30,13 @@ class MyopeServer(RPCServer):
         return { 'status_code': status_code, 'answer_id': answer_id }
 
     def learn(self, bot_id):
-        logging.basicConfig(filename="example.log",level=logging.DEBUG)
-        logging.debug('MyopeServer.learn start')
-        test_scores_mean = Bot(bot_id).learn()
-        return test_scores_mean
+        evaluator = Bot(bot_id).learn()
+        return {
+            'accuracy': evaluator.accuracy,
+            'precision': evaluator.precision,
+            'recall': evaluator.recall,
+            'f1': evaluator.f1,
+        }
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())
 server.serve_forever()

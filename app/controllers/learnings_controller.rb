@@ -4,8 +4,8 @@ class LearningsController < ApplicationController
 
   def update
     if Learning::Summarizer.new(@bot).summary
-      test_scores_mean = Ml::Engine.new(@bot.id).learn
-      flash[:notice] = "学習を実行しました。スコア: #{test_scores_mean}"
+      scores = Ml::Engine.new(@bot.id).learn
+      flash[:notice] = "学習を実行しました。スコア: #{score}"
     else
       flash[:error] = '学習の実行に失敗しました。'
     end

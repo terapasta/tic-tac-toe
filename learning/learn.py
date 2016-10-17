@@ -26,4 +26,4 @@ bot_id = 1
 #
 # #Plotter().plot(estimator, training_set.x, training_set.y)  # TODO データが少ないと落ちる
 
-test_scores_mean = Bot(bot_id).learn()
+evaluator = Bot(bot_id).learn()

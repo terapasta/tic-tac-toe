@@ -10,7 +10,6 @@ class Ml::Engine
   end
 
   def learn
-    test_scores_mean = @client.call(:learn, @bot_id)
-    return test_scores_mean
+    @client.call(:learn, @bot_id)
   end
 end

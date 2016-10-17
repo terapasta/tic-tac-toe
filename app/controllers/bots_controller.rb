@@ -23,6 +23,6 @@ class BotsController < ApplicationController
     end
 
     def bot_params
-      params.require(:bot).permit(:name, :image)
+      params.require(:bot).permit(:name, :image, :classify_failed_message)
     end
 end

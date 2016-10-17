@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017080037) do
+ActiveRecord::Schema.define(version: 20161017082959) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20161017080037) do
     t.integer  "start_answer_id",         limit: 4
     t.integer  "no_classified_answer_id", limit: 4
     t.string   "token",                   limit: 64,  null: false
+    t.string   "classify_failed_message", limit: 255
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "image",                   limit: 255

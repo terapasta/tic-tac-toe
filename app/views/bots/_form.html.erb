@@ -5,7 +5,12 @@
   <%= f.file_field :image %>
   <% if @bot.image %>
     <%= image_tag @bot.image_url(:thumb) %>
+    <br />
+    <br />
   <% end %>
+  <%= f.text_area :classify_failed_message, rows: 3 %>
+
+  <hr />
 
   <%= f.form_group nil, label: { text: '埋め込みコード' } do %>
     <div class="form-group form-inline">

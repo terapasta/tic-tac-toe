@@ -210,3 +210,4 @@ ja:
       bot:
         name: 名前
         image: 画像
+        classify_failed_message: 回答出来なかった場合のメッセージ

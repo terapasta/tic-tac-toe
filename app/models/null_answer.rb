@@ -1,6 +1,9 @@
 class NullAnswer
+  attr_accessor :body
+
   def initialize(bot)
     @bot = bot
+    @body = bot.classify_failed_message || DefinedAnswer.classify_failed.body
   end
 
   def id
@@ -9,10 +12,6 @@ class NullAnswer
 
   def context
     nil
-  end
-
-  def body
-    DefinedAnswer.classify_failed.body
   end
 
   def no_classified?

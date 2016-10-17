@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011090006) do
+ActiveRecord::Schema.define(version: 20161017080037) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -152,6 +152,18 @@ ActiveRecord::Schema.define(version: 20161011090006) do
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
+
+  create_table "scores", force: :cascade do |t|
+    t.integer  "bot_id",     limit: 4,  null: false
+    t.float    "accuracy",   limit: 24
+    t.float    "precision",  limit: 24
+    t.float    "recall",     limit: 24
+    t.float    "f1",         limit: 24
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "scores", ["bot_id"], name: "index_scores_on_bot_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.integer  "feature",    limit: 4, null: false

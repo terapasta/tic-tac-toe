@@ -31,6 +31,7 @@ namespace :deploy do
         execute "mkdir -p #{shared_path}/config"
       end
       upload!('.env.example', "#{shared_path}/.env")
+      upload!('supervisord.conf', "#{shared_path}/config/supervisord.conf")
     end
   end
 

@@ -1,7 +1,7 @@
 worker_processes 2
 
-listen  '/tmp/unicorn-donusagi.sock'
-pid     '/tmp/unicorn-donusagi.pid'
+listen  '/tmp/unicorn.sock'
+pid     '/tmp/unicorn.pid'
 
 stderr_path File.expand_path('log/unicorn.stderr.log', ENV['RAILS_ROOT'])
 stdout_path File.expand_path('log/unicorn.stdout.log', ENV['RAILS_ROOT'])

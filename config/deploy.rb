@@ -51,9 +51,9 @@ namespace :deploy do
     on roles(:app) do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
-      #execute :cp, '-a', release_path.join('learning'), '/var/www/donusagi-bot'
-      #execute :cp, shared_path.join('.python-version'), '/var/www/donusagi-bot/learning/.python-version'
-      #execute :cp, shared_path.join('config.yml'), '/var/www/donusagi-bot/learning/learning/config/config.yml'
+      # 現在は、デプロイ後に`sudo service supervisord restart`が必要
+      # デプロイユーザーにsudo権限があればsupervisordの更新もできる
+      #execute :sudo, :service, :supervisord, :restart
     end
   end
 

@@ -26,6 +26,7 @@ test:
 
 production:
   <<: *default
+  host: ENV['DB_HOST']
   database: myope
   username: myope
   password: ENV['DB_PASSWORD']

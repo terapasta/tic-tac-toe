@@ -35,6 +35,8 @@
     - libxml2-devel
     - libxslt
     - libxslt-devel
+    - ImageMagick
+    - ImageMagick-devel
 
 - name: install Development Tool
   sudo: true

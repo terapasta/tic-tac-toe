@@ -60,4 +60,4 @@ learning/learning/vocabulary/*
 learning/learning/example.log
 learning/graph.png
 learning/logs/*
-!learning/logs/.keep
+!*.keep

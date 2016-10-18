@@ -15,7 +15,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 set :migration_role, 'web'
 
-set :linked_files, %w{.env}
+set :linked_files, %w{.env .python-version config.yml}
 set :linked_dirs, %w{bin log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
 set :bundle_jobs, 4
@@ -36,10 +36,27 @@ namespace :deploy do
     end
   end
 
-  after :finishing, :restart_supervisor do
+  desc 'python用ファイルアップロード(必要な場合のみ実行しましょう)'
+  task :python_upload do
     on roles(:app) do
-      run "kill -9 `cat /tmp/supervisord.pid`"
-      run "supervisord -c supervisord.conf"
+      upload!('./.python-version.example', shared_path.join('.python-version'))
+      # config.ymlは本番設定のものが必要
+      upload!('./config.yml', shared_path.join('config.yml'))
+      upload!('./supervisord.conf', '/var/www/donusagi-bot/supervisord.conf')
     end
   end
+
+  desc 'python engineを移動'
+  task :move_engine do
+    on roles(:app) do
+      execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
+      execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
+      #execute :cp, '-a', release_path.join('learning'), '/var/www/donusagi-bot'
+      #execute :cp, shared_path.join('.python-version'), '/var/www/donusagi-bot/learning/.python-version'
+      #execute :cp, shared_path.join('config.yml'), '/var/www/donusagi-bot/learning/learning/config/config.yml'
+    end
+  end
+
+  after :finished, 'deploy:move_engine'
 end
+

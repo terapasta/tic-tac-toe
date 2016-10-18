@@ -23,18 +23,6 @@ set :unicorn_pid, "/tmp/unicorn.pid"
 set :unicorn_config_path, 'config/unicorn.rb'
 
 namespace :deploy do
-
-  desc 'Upload config files'
-  task :upload do
-    on roles(:app) do |host|
-      if test "[ ! -d #{shared_path}/config ]"
-        execute "mkdir -p #{shared_path}/config"
-      end
-      upload!('.env.example', "#{shared_path}/.env")
-      upload!('supervisord.conf', "#{shared_path}/config/supervisord.conf")
-    end
-  end
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -43,9 +31,15 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
+    end
+  end
+
+  after :finishing, :restart_supervisor do
+    on roles(:app) do
+      run "kill -9 `cat /tmp/supervisord.pid`"
+      run "supervisord -c supervisord.conf"
     end
   end
 end

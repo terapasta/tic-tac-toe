@@ -26,4 +26,6 @@ test:
 
 production:
   <<: *default
-  database: donusagi_bot
+  database: myope
+  username: myope
+  password: ENV['DB_PASSWORD']

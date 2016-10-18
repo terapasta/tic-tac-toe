@@ -9,5 +9,5 @@
 - name: deploy nginx config file
   template: >
     src=donusagi-bot.conf
-    dest=/etc/nginx/conf.d/donusagi-bot.conf
+    dest=/etc/nginx/conf.d/my-ope.conf
   notify: restart nginx

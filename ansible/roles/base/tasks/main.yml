@@ -3,8 +3,8 @@
   shell: creates=/etc/yum.repos.d/epel.repo rpm -Uvh --replacepkgs http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 # pythonがバージョンアップされているため、yumで使用するpythonを明示する
-- name: set ansible_python_interpreter
-  set_fact: ansible_python_interpreter="/usr/bin/python2.6"
+# - name: set ansible_python_interpreter
+#   set_fact: ansible_python_interpreter="/usr/bin/python2.6"
 
 # リリース後は手動でupdateしていくためコメントアウト
 - name: yum update
@@ -36,18 +36,6 @@
     - libxslt
     - libxslt-devel
 
-- name: check kernel-devel installed
-  shell: yum list installed | grep kernel-devel
-  always_run: yes
-  failed_when: no
-  register: result
-  changed_when: no
-
-- name: install kernel-devel
-  sudo: true
-  shell: yum -y install http://vault.centos.org/6.4/cr/x86_64/Packages/kernel-devel-2.6.32-431.el6.x86_64.rpm
-  when: result.rc == 1
-
 - name: install Development Tool
   sudo: true
   shell: yum -y groupinstall "Development Tools"
@@ -61,15 +49,3 @@
   hostname: name={{ hostname }}
 - name: set /etc/hosts
   lineinfile: dest=/etc/hosts regexp=^127\.0\.0\.1 line='127.0.0.1 {{ hostname }} localhost localhost.localdomain'
-
-- name: check resolv.conf written
-  shell: grep -e 'options single-request-reopen' /etc/resolv.conf
-  always_run: yes
-  failed_when: no
-  register: resolve_conf_written
-  changed_when: no
-
-# centos6.xでbundle installが遅い場合の対処
-- name: update resolv.conf
-  shell: chmod a+w /etc/resolv.conf && echo 'options single-request-reopen' >> /etc/resolv.conf
-  when: resolve_conf_written.rc == 1

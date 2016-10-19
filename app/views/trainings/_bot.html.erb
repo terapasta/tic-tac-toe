@@ -27,7 +27,7 @@
 
         <div class="message-body-edit hidden">
           <div class="form-group">
-            <%= f.autocomplete_text_area :body, autocomplete_answer_body_bot_trainings_path, placeholder: "Menu Item Name", class: 'form-control', rows: 4 %>
+            <%= f.autocomplete_text_area :body, autocomplete_answer_body_bot_trainings_path, placeholder: "回答を入力", class: 'form-control', rows: 4 %>
           </div>
           <%= hidden_field_tag :parent_decision_branch_id, message.try(:answer).try(:parent_decision_branch).try(:id) %>
           <%= hidden_field_tag :auto, params[:auto] || 0, class: 'auto-mode' %>
@@ -39,20 +39,20 @@
         </div>
       <% end %>
     </div>
-    <% if message.answer_id.present? && messages.last == message %>
-      <div class="col-sm-12">
-        <br />
-        <ul class="list-group">
-          <% message.answer.decision_branches.each do |decision_branch| %>
-            <%= render 'trainings/decision_branch_fields', bot: message.parent.bot, training: message.training, answer: message.answer, decision_branch: decision_branch %>
-          <% end %>
-        </ul>
+
+    <div class="col-sm-12">
+      <br />
+      <ul class="list-group">
+        <% message.answer.decision_branches.each do |decision_branch| %>
+          <%= render 'trainings/decision_branch_fields', bot: message.parent.bot, training: message.training, answer: message.answer, decision_branch: decision_branch %>
+        <% end %>
+      </ul>
+      <% if message.answer.persisted? %>
         <div class="links">
-          <%#= link_to_add_association f, :decision_branches, partial: 'trainings/decision_branch_fields', class: 'add-fields-link' do %><!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する --><%# end %>
           <%= link_to new_bot_training_answer_decision_branch_path(message.parent.bot, message.training, message.answer), remote: true, class: 'add-fields-link' do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
   <div class="col-sm-2"></div>
 </div>

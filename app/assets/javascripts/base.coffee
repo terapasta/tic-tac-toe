@@ -26,8 +26,7 @@
     unless answer_body == undefined
       $(elem).html(answer_body)
 
-@click_decision_branch = (e) ->
-  obj = e.srcElement
+@click_decision_branch = (obj) ->
   $('.list-group-item').removeClass('active')
   decision_branch_id = $(obj).data('decision-branch-id')
   return unless decision_branch_id

@@ -7,7 +7,6 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_answer, only: [:update]
 
   def new
-    # binding.pry
     decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
     @training.training_messages.build(speaker: :guest, body: decision_branch.body)
     @training.save!

@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -
-import logging
+from learning.log import logger
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -22,19 +21,19 @@ class Reply:
         Xtrain = np.array(X)
         Xtrain = self.__replace_text2vec(Xtrain)
         probabilities = self.estimator.predict_proba(Xtrain)
+        logger.debug(probabilities)
         max_probability = np.max(probabilities)
+        logger.debug(max_probability)
+        logger.debug(self.no_classified_threshold)
         if self.no_classified_threshold > max_probability:
+            logger.debug('return None')
             return None
         return float(self.estimator.predict(Xtrain)[0])
 
     def __replace_text2vec(self, Xtrain):
-        logging.basicConfig(filename="example.log",level=logging.DEBUG)
-        #logging.debug('hogehoge2')
-        #logging.debug(Xtrain)
         texts = Xtrain[:,-1:].flatten()
         splited_texts = Nlang.batch_split(texts)
 
-        #logging.debug('hogehoge3')
         count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
         texts_vec = count_vectorizer.transform(splited_texts)
         texts_vec = texts_vec.toarray()

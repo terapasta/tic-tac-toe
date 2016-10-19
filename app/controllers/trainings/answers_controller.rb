@@ -11,11 +11,6 @@ class Trainings::AnswersController < ApplicationController
     @training.training_messages.build(speaker: :guest, body: decision_branch.body)
     @training.save!
 
-    # @training.save!
-    # if decision_branch.next_answer.present?
-    #   redirect_to edit_bot_training_answer_path(@bot, @training, decision_branch.next_answer)
-    # end
-
     message = @training.training_messages.build(speaker: :bot)
     if decision_branch.next_answer.present?
       message.answer = decision_branch.next_answer

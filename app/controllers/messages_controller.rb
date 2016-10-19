@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_bot
   before_action :set_chat
 
   def index
@@ -7,7 +8,11 @@ class MessagesController < ApplicationController
   end
 
   private
+    def set_bot
+      @bot = current_user.bots.find(params[:bot_id])
+    end
+
     def set_chat
-      @chat = current_user.bots.find(params[:bot_id]).chats.find(params[:thread_id])
+      @chat = @bot.chats.find(params[:thread_id])
     end
 end

@@ -26,13 +26,14 @@
     unless answer_body == undefined
       $(elem).html(answer_body)
 
-@click_decision_branch = (obj) ->
-  # $('.list-group-item').removeClass('active')
-  # decision_branch_id = $(obj).data('decision-branch-id')
-  # return unless decision_branch_id
-  # $(obj).addClass('active')
-  # $(obj).children('form').find('#decision_branch_id').val(decision_branch_id)
-  # $(obj).children('form').first().submit()
+@click_decision_branch = (e) ->
+  obj = e.srcElement
+  $('.list-group-item').removeClass('active')
+  decision_branch_id = $(obj).data('decision-branch-id')
+  return unless decision_branch_id
+  $(obj).addClass('active')
+  $(obj).children('form').find('#decision_branch_id').val(decision_branch_id)
+  $(obj).children('form').first().submit()
 
 # @add_events = ->
   # add_event_click_decision_branch()

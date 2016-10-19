@@ -190,4 +190,8 @@ body {
     .bot-profile {
       padding: 20px 0;
     }
+    // スマートフォンのみ
+    @media (max-width: 767px) {
+      position: inherit;
+    }
 }

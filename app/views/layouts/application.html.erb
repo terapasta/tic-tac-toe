@@ -16,7 +16,7 @@
   <% unless params[:token].present? %>
     <%= render 'layouts/header' %>
   <% end %>
-  <div id="sidebar-wrapper" class="col-sm-2">
+  <div id="sidebar-wrapper" class="col-sm-2 col-xs-12">
     <ul class="sidebar-nav list-group">
       <li class="bot-profile list-group-item text-center">
         <%= link_to edit_bot_path(@bot) do %>
@@ -44,7 +44,7 @@
     </ul>
     <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, class: 'btn btn-danger btn-block' %>
   </div>
-  <div class="container container-main col-sm-10 col-sm-offset-2">
+  <div class="container container-main col-sm-10 col-sm-offset-2 col-xs-12">
     <%= render "shared/flash" %>
     <%= yield %>
   </div>

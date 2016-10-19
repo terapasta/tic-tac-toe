@@ -15,6 +15,7 @@ body {
 }
 
 .container-main {
+  position: relative;
   margin-top: 20px;
 }
 
@@ -194,4 +195,7 @@ body {
     @media (max-width: 767px) {
       position: inherit;
     }
+}
+.chat-area {
+  padding-bottom: 150px;
 }

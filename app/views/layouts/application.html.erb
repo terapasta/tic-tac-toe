@@ -13,7 +13,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <% unless params[:token].present? %>
+  <% if params[:token].present? %>
+    <%= render 'layouts/header_bot', bot: @bot %>
+  <% else %>
     <%= render 'layouts/header' %>
   <% end %>
 
@@ -37,7 +39,7 @@
     <% container_main_class = 'col-sm-10 col-sm-offset-2 ' %>
   <% end %>
 
-  <div class="container container-main col-xs-12 <%= container_main_class %>">
+  <div class="container container-main <%= container_main_class %>">
     <%= render "shared/flash" %>
     <%= yield %>
   </div>

@@ -1,25 +1,32 @@
 <div class="row">
   <div class="col-sm-2 col-xs-3 text-center col-icon">
-    <span class="small"><%= message.parent.bot.name %></span><br />
+    <!-- <span class="small"><%#= message.parent.bot.name %></span><br /> -->
     <%= image_tag message.parent.bot.image_url || 'operator', class: 'listen' %>
   </div>
   <div class="col-sm-8 col-xs-9">
     <div class="col-sm-12 balloon-1-left balloon">
       <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
     </div>
-    <% if message.answer.try(:decision_branches).try(:present?) %>
-      <div class="col-sm-12">
-        <br />
-
-        <ul class="list-group">
-          <% message.answer.decision_branches.each do |decision_branch| %>
-            <%= link_to choices_chats_path(message.parent.bot.token, decision_branch), method: :post,remote: true do %>
-              <li class="nested-fields list-group-item"><%= decision_branch.body %></li>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-  </div>
   <div class="col-sm-2"></div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<% if message.answer.try(:decision_branches).try(:present?) %>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+
+      <div class="list-group">
+        <% message.answer.decision_branches.each do |decision_branch| %>
+          <%= link_to choices_chats_path(message.parent.bot.token, decision_branch), method: :post,remote: true, class: 'nested-fields list-group-item' do %>
+            <%= decision_branch.body %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
 </div>

@@ -17,6 +17,7 @@ body {
 .container-main {
   position: relative;
   margin-top: 20px;
+  width: 100%;
 }
 
 .container {
@@ -201,4 +202,26 @@ body {
 }
 .bot-box {
   border: solid 1px;
+}
+// .navbar-bot-name {
+//   float: none;
+// }
+
+/* スマホ横画面用 */
+@media screen and (max-width: 480px) {
+  .container{
+    padding-left: 3px !important;
+    padding-right: 0px !important;
+  }
+  // div[class^="col-"] {padding: 5px;}
+  .row {margin:0;}
+  .col-icon {
+    padding-left: 5px !important;
+    padding-right: 0px !important;
+  }
+  .navbar-header {
+    h4 {
+      margin-top: 15px;
+    }
+  }
 }

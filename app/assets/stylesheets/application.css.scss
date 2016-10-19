@@ -180,3 +180,14 @@ body {
   }
   a:hover { text-decoration: none;}
 }
+#sidebar-wrapper {
+    position: fixed;
+    height: 100%;
+    padding: 0;
+    overflow-y: auto;
+    background: #F4F4F4;
+
+    .bot-profile {
+      padding: 20px 0;
+    }
+}

@@ -16,35 +16,28 @@
   <% unless params[:token].present? %>
     <%= render 'layouts/header' %>
   <% end %>
-  <div id="sidebar-wrapper" class="col-sm-2 col-xs-12">
-    <ul class="sidebar-nav list-group">
-      <li class="bot-profile list-group-item text-center">
-        <%= link_to edit_bot_path(@bot) do %>
+
+  <% if @bot.present? && !chat_page? %>
+    <div id="sidebar-wrapper" class="col-sm-2 col-xs-12">
+      <div class="sidebar-nav list-group">
+        <%= link_to edit_bot_path(@bot), class: 'bot-profile list-group-item text-center' do %>
           <p><%= @bot.name %></p>
           <% if @bot.image %>
             <%= image_tag @bot.image_url(:thumb) %>
           <% end %>
         <% end %>
-      </l>
-      <li class="list-group-item">
-        <%= link_to 'チャットする', new_chats_path(@bot.token) %>
-      </li>
-      <li class="list-group-item">
-        <%= link_to "育てる", new_bot_training_path(@bot) %>
-      </li>
-      <li class="list-group-item">
-        <%= link_to "学習データをエクスポート", bot_exports_path(@bot) %>
-      </li>
-      <li class="list-group-item">
-          <%= link_to "学習データをインポート", new_bot_imports_path(@bot) %>
-      </li>
-      <li class="list-group-item">
-        <%= link_to "対話履歴", bot_threads_path(@bot) %>
-      </li>
-    </ul>
-    <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, class: 'btn btn-danger btn-block' %>
-  </div>
-  <div class="container container-main col-sm-10 col-sm-offset-2 col-xs-12">
+        <%= link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item' %>
+        <%= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item' %>
+        <%= link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item' %>
+        <%= link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item' %>
+        <%= link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item' %>
+      </div>
+      <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, class: 'btn btn-danger btn-block' %>
+    </div>
+    <% container_main_class = 'col-sm-10 col-sm-offset-2 ' %>
+  <% end %>
+
+  <div class="container container-main col-xs-12 <%= container_main_class %>">
     <%= render "shared/flash" %>
     <%= yield %>
   </div>

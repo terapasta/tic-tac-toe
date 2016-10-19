@@ -117,6 +117,13 @@ group :development, :test do
 
   gem 'database_cleaner'
   gem 'letter_opener'
+
+  # Capistrano
+  gem 'capistrano', '~> 3.6', '>= 3.6.1'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn'
 end
 
 group :production, :staging do

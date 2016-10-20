@@ -13,10 +13,6 @@ class TrainingMessage(Base):
         self.learning_training_messages = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, mysqldb)
         self.bot_id = bot_id
 
-        bots_table = db['bots']
-        self.no_classified_answer_id = bots_table.find_one(id=bot_id)['no_classified_answer_id']
-        print("TrainingMessage self.no_classified_answer_id: %s" % self.no_classified_answer_id)
-
     def build(self):
         bodies = self.__split_bodies(self.learning_training_messages['question'])
         bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/%s_vocabulary.pkl' % self.bot_id)  # TODO 定数化したい

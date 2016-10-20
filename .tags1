@@ -4,5 +4,14 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Bot	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^class Bot < ActiveRecord::Base$/;"	class	line:1
-has_feature?	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^  def has_feature?(feature)$/;"	method	line:15	class:Bot
+MeCab	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^import MeCab$/;"	namespace	line:2
+np	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^import numpy as np$/;"	namespace	line:3
+pd	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^import pandas as pd$/;"	namespace	line:4
+CountVectorizer	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from sklearn.feature_extraction.text import CountVectorizer$/;"	namespace	line:5
+joblib	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from sklearn.externals import joblib$/;"	namespace	line:6
+Nlang	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from ..nlang import Nlang$/;"	namespace	line:7
+Base	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from .base import Base$/;"	namespace	line:8
+TrainingMessage	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^class TrainingMessage(Base):$/;"	class	line:10
+__init__	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^    def __init__(self, db, mysqldb, bot_id):$/;"	member	line:12	class:TrainingMessage
+build	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^    def build(self):$/;"	member	line:16	class:TrainingMessage
+__split_bodies	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^    def __split_bodies(self, bodies):$/;"	member	line:22	class:TrainingMessage	file:

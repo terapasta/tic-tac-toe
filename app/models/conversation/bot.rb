@@ -22,7 +22,7 @@ class Conversation::Bot
       if result['answer_id'].present?
         [Answer.find(result['answer_id'])]
       else
-        [@bot.no_classified_answer]
+        [NullAnswer.new(@bot)]
       end
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい

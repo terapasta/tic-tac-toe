@@ -1,4 +1,23 @@
 Chat	/Users/harada/source_code/donusagi-bot/app/models/chat.rb	/^class Chat < ActiveRecord::Base$/;"	class	line:1
 build_start_message	/Users/harada/source_code/donusagi-bot/app/models/chat.rb	/^  def build_start_message$/;"	method	line:10	class:Chat
+AddStartMessageToBots	/Users/harada/source_code/donusagi-bot/db/migrate/20161020064844_add_start_message_to_bots.rb	/^class AddStartMessageToBots < ActiveRecord::Migration$/;"	class	line:1
+change	/Users/harada/source_code/donusagi-bot/db/migrate/20161020064844_add_start_message_to_bots.rb	/^  def change$/;"	method	line:2	class:AddStartMessageToBots
+Answer	/Users/harada/source_code/donusagi-bot/app/models/answer.rb	/^class Answer < ActiveRecord::Base$/;"	class	line:1
+no_classified?	/Users/harada/source_code/donusagi-bot/app/models/answer.rb	/^  def no_classified?$/;"	method	line:24	class:Answer
 Bot	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^class Bot < ActiveRecord::Base$/;"	class	line:1
-has_feature?	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^  def has_feature?(feature)$/;"	method	line:15	class:Bot
+has_feature?	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^  def has_feature?(feature)$/;"	method	line:14	class:Bot
+Conversation	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^class Conversation::Bot$/;"	class	line:1
+initialize	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^  def initialize(bot, message)$/;"	method	line:8	class:Conversation
+reply	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^  def reply$/;"	method	line:14	class:Conversation
+build_context	/Users/harada/source_code/donusagi-bot/app/models/conversation/bot.rb	/^    def build_context$/;"	method	line:37	class:Conversation
+MeCab	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^import MeCab$/;"	namespace	line:2
+np	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^import numpy as np$/;"	namespace	line:3
+pd	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^import pandas as pd$/;"	namespace	line:4
+CountVectorizer	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from sklearn.feature_extraction.text import CountVectorizer$/;"	namespace	line:5
+joblib	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from sklearn.externals import joblib$/;"	namespace	line:6
+Nlang	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from ..nlang import Nlang$/;"	namespace	line:7
+Base	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^from .base import Base$/;"	namespace	line:8
+TrainingMessage	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^class TrainingMessage(Base):$/;"	class	line:10
+__init__	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^    def __init__(self, db, mysqldb, bot_id):$/;"	member	line:12	class:TrainingMessage
+build	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^    def build(self):$/;"	member	line:16	class:TrainingMessage
+__split_bodies	/Users/harada/source_code/donusagi-bot/learning/learning/core/training_set/training_message.py	/^    def __split_bodies(self, bodies):$/;"	member	line:22	class:TrainingMessage	file:

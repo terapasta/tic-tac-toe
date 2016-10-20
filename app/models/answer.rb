@@ -23,6 +23,6 @@ class Answer < ActiveRecord::Base
 
   def no_classified?
     return false if bot.nil?
-    self == bot.no_classified_answer
+    true
   end
 end

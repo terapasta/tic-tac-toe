@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20161020064844) do
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",                 limit: 4
     t.string   "name",                    limit: 255
-    t.integer  "no_classified_answer_id", limit: 4
     t.string   "token",                   limit: 64,  null: false
     t.string   "classify_failed_message", limit: 255
     t.string   "start_message",           limit: 255

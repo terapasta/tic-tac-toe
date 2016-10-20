@@ -8,7 +8,6 @@ class Bot < ActiveRecord::Base
   has_many :decision_branches
   has_many :services
   has_one :score
-  belongs_to :no_classified_answer, class_name: 'Answer', foreign_key: :no_classified_answer_id
 
   mount_uploader :image, ImageUploader
 

@@ -4,5 +4,5 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Chat	/Users/harada/source_code/donusagi-bot/app/models/chat.rb	/^class Chat < ActiveRecord::Base$/;"	class	line:1
-build_start_message	/Users/harada/source_code/donusagi-bot/app/models/chat.rb	/^  def build_start_message$/;"	method	line:10	class:Chat
+Bot	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^class Bot < ActiveRecord::Base$/;"	class	line:1
+has_feature?	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^  def has_feature?(feature)$/;"	method	line:15	class:Bot

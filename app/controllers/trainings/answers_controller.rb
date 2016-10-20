@@ -49,7 +49,7 @@ class Trainings::AnswersController < ApplicationController
     training_message.update!(answer_id: @answer.id, body: @answer.body)
 
     if auto_mode?
-      @guest_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
+      @guest_message = @training.training_messages.build(@bot.messages.guest.sample.to_training_message_attributes)
       @bot_messages = receive_and_reply!(@training, @guest_message)
     end
 

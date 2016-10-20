@@ -2,6 +2,7 @@ class Bot < ActiveRecord::Base
   belongs_to :user
   has_many :chats
   has_many :trainings
+  has_many :messages, through: :chats
   has_many :learning_training_messages
   has_many :imported_training_messages
   has_many :answers

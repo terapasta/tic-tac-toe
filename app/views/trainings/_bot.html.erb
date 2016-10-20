@@ -43,11 +43,11 @@
     <div class="col-sm-12">
       <br />
       <ul class="list-group">
-        <% message.answer.decision_branches.each do |decision_branch| %>
+        <% message.answer.try(:decision_branches).try(:each) do |decision_branch| %>
           <%= render 'trainings/decision_branch_fields', bot: message.parent.bot, training: message.training, answer: message.answer, decision_branch: decision_branch %>
         <% end %>
       </ul>
-      <% if message.answer.persisted? %>
+      <% if message.try(:answer).try(:persisted?) %>
         <div class="links">
           <%= link_to new_bot_training_answer_decision_branch_path(message.parent.bot, message.training, message.answer), remote: true, class: 'add-fields-link' do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 選択肢を追加する<% end %>
         </div>

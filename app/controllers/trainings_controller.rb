@@ -2,7 +2,6 @@ class TrainingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
   before_action :set_training, only: [:show, :create, :destroy]
-  before_action :check_have_start_message, only: :new
 
   autocomplete :answer, :body, full: true
 
@@ -34,13 +33,6 @@ class TrainingsController < ApplicationController
 
     def set_training
       @training = Training.find(params[:id])
-    end
-
-    def check_have_start_message
-      if @bot.start_answer.blank?
-        flash[:error] =  'Bot編集画面で開始メッセージを指定してください'
-        redirect_to :back
-      end
     end
 
     def training_message_params

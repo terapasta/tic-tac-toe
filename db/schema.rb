@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017082959) do
+ActiveRecord::Schema.define(version: 20161020064844) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -33,13 +33,13 @@ ActiveRecord::Schema.define(version: 20161017082959) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "defined_answer_id", limit: 4
-    t.string   "context",           limit: 255,   default: "0", null: false
+    t.string   "context",           limit: 255,   default: "normal", null: false
     t.text     "body",              limit: 65535
     t.string   "transition_to",     limit: 255
     t.string   "type",              limit: 255
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.integer  "bot_id",            limit: 4,                   null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.integer  "bot_id",            limit: 4,                        null: false
   end
 
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
@@ -54,10 +54,10 @@ ActiveRecord::Schema.define(version: 20161017082959) do
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",                 limit: 4
     t.string   "name",                    limit: 255
-    t.integer  "start_answer_id",         limit: 4
     t.integer  "no_classified_answer_id", limit: 4
     t.string   "token",                   limit: 64,  null: false
     t.string   "classify_failed_message", limit: 255
+    t.string   "start_message",           limit: 255
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "image",                   limit: 255

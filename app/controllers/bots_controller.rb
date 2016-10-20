@@ -11,10 +11,11 @@ class BotsController < ApplicationController
 
   def update
     if @bot.update(bot_params)
-      redirect_to bots_path, notice: 'Botが更新されました'
+      flash[:notice] = '更新しました'
     else
-      render :edit
+      flash[:notice] = '更新に失敗しました'
     end
+    render :edit
   end
 
   private
@@ -23,6 +24,6 @@ class BotsController < ApplicationController
     end
 
     def bot_params
-      params.require(:bot).permit(:name, :image, :classify_failed_message)
+      params.require(:bot).permit(:name, :image, :classify_failed_message, :start_message)
     end
 end

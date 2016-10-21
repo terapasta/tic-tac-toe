@@ -174,12 +174,13 @@ ActiveRecord::Schema.define(version: 20161021051120) do
   end
 
   create_table "training_messages", force: :cascade do |t|
-    t.integer  "training_id", limit: 4,   null: false
-    t.integer  "answer_id",   limit: 4
-    t.string   "speaker",     limit: 255, null: false
-    t.string   "body",        limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "training_id",   limit: 4,                   null: false
+    t.integer  "answer_id",     limit: 4
+    t.string   "speaker",       limit: 255,                 null: false
+    t.string   "body",          limit: 255
+    t.boolean  "answer_failed",             default: false, null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree

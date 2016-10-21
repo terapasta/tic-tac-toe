@@ -27,6 +27,7 @@
       $(elem).html(answer_body)
 
 @click_decision_branch = (obj) ->
+  alert(obj)
   $('.list-group-item').removeClass('active')
   decision_branch_id = $(obj).data('decision-branch-id')
   return unless decision_branch_id

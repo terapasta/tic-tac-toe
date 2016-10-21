@@ -1,11 +1,9 @@
 class Message < ActiveRecord::Base
-  include ContextHoldable
   paginates_per 50
 
   belongs_to :chat
   belongs_to :answer
   enum speaker: { bot: 'bot', guest: 'guest' }
-  enum context: ContextHoldable::CONTEXTS
 
   def parent
     chat

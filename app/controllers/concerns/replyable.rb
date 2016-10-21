@@ -16,7 +16,7 @@ module Replyable
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 
-      parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body)
+      parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer.is_a?(NullAnswer))
     end
 
     parent.save!

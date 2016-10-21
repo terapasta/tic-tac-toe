@@ -11,4 +11,8 @@ class Chat < ActiveRecord::Base
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)
   end
+
+  def has_answer_failed_message?
+    messages.any? { |m| m.answer_failed? }
+  end
 end

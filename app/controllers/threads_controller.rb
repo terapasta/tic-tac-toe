@@ -3,7 +3,7 @@ class ThreadsController < ApplicationController
   before_action :set_bot
 
   def index
-    @chats = @bot.chats.order('id desc').page(params[:page])
+    @chats = @bot.chats.includes(:messages).order('id desc').page(params[:page])
   end
 
   private

@@ -12,7 +12,14 @@ class Bot < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
+  before_validation :generate_token
+
   def has_feature?(feature)
     services.where(feature: Service.features[feature], enabled: true).present?
   end
+
+  private
+    def generate_token
+      self.token = SecureRandom.hex(32) if token.blank?
+    end
 end

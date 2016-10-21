@@ -1,5 +1,13 @@
 <h1>対話履歴</h1>
 
+<div>
+  <ul class="nav nav-pills">
+    <li role="presentation" class="<%= 'active' if params[:filter].blank? %>"><%= link_to '全て', bot_threads_path(@bot) %></li>
+    <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, filter: 1) %></li>
+  </ul>
+</div>
+<br />
+
 <table class="table table-striped table-bordered">
   <thead>
     <tr>

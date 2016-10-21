@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th></th>
       <th>発言者</th>
       <th>本文</th>
       <th>発言日時</th>
@@ -15,6 +16,11 @@
     <% @messages.each do |message| %>
       <tr>
         <td><%= message.id %></td>
+        <td>
+          <% if message.answer_failed? %>
+            <i class="glyphicon glyphicon-warning-sign text-warning"></i>
+          <% end %>
+        </td>
         <td nowrap="nowrap">
           <%= image_tag message.speaker_image_url, class: 'img-tiny' %>
           <%= message.speaker_i18n %>

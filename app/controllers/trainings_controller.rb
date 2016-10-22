@@ -11,13 +11,13 @@ class TrainingsController < ApplicationController
 
   def new
     @training = @bot.trainings.new
-    @guest_training_message = @training.training_messages.build
     @training.training_messages << @training.build_start_message
     if @training.save
       flash[:notice] = '新しいスレッドが開始されました'
     else
       flash[:notice] = '新しいスレッドの開始に失敗しました'
     end
+    @guest_training_message = @training.training_messages.build
     render :show
   end
 

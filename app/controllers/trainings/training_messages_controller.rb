@@ -6,6 +6,29 @@ class Trainings::TrainingMessagesController < ApplicationController
   before_action :set_training
   before_action :set_training_message, only: [:update, :destroy]
 
+  def create
+    binding.pry
+    answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
+      a.context = 'normal'
+    end
+
+    training_message = @training.training_messages.build(training_message_params)
+    training_message.answer = answer
+
+    if training_message.save
+      flash[:notice] = '回答を差し替えました'
+    else
+      flash[:error] = '回答の差し替えに失敗しました'
+    end
+
+    if auto_mode?
+      guest_message = @training.training_messages.build(@bot.messages.guest.sample.to_training_message_attributes)
+      receive_and_reply!(@training, guest_message)
+    end
+
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
+  end
+
   def update
     answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
       a.context = 'normal'

@@ -6,21 +6,21 @@ class Trainings::AnswersController < ApplicationController
   before_action :set_training
   before_action :set_answer, only: [:update]
 
-  def new
-    decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
-    @training.training_messages.build(speaker: :guest, body: decision_branch.body)
-    @training.save!
-
-    message = @training.training_messages.build(speaker: :bot)
-    if decision_branch.next_answer.present?
-      message.answer = decision_branch.next_answer
-      message.body = message.answer.body
-      @training.save!
-    else
-      message.build_answer(parent_decision_branch: decision_branch)
-    end
-    render 'trainings/show'
-  end
+  # def new
+  #   decision_branch = @bot.decision_branches.find(params[:decision_branch_id])
+  #   @training.training_messages.build(speaker: :guest, body: decision_branch.body)
+  #   @training.save!
+  #
+  #   message = @training.training_messages.build(speaker: :bot)
+  #   if decision_branch.next_answer.present?
+  #     message.answer = decision_branch.next_answer
+  #     message.body = message.answer.body
+  #     @training.save!
+  #   else
+  #     message.build_answer(parent_decision_branch: decision_branch)
+  #   end
+  #   render 'trainings/show'
+  # end
 
   def edit
     @message = @training.training_messages.build(answer_id: params[:id])

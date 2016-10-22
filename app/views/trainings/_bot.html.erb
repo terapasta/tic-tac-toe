@@ -12,7 +12,6 @@
       <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
         <span id="last-message" />
       <% end %>
-      <%#= bootstrap_form_for message.answer || Answer.new, url: bot_trainings_path(bot, message.training), method: :post do |f| %>
       <%= bootstrap_form_for [bot, message.training, message] do |f| %>
         <div class="message-body-wrapper">
           <%= auto_link(simple_format(message.body, class: 'message-body'), html: { target: '_blank' }) %>

@@ -1,7 +1,7 @@
 class Trainings::DecisionBranchesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_models
-  before_action :set_decision_branch, only: [:update, :destroy]
+  before_action :set_decision_branch, only: [:update, :destroy, :choice]
 
   def new
     @decision_branch = @answer.decision_branches.build
@@ -20,6 +20,21 @@ class Trainings::DecisionBranchesController < ApplicationController
   def destroy
     @decision_branch.destroy
     render nothing: true
+  end
+
+  def choice
+    @training.training_messages.build(speaker: :guest, body: @decision_branch.body)
+    @training.save!
+
+    message = @training.training_messages.build(speaker: :bot)
+    if @decision_branch.next_answer.present?
+      message.answer = @decision_branch.next_answer
+      message.body = message.answer.body
+      @training.save!
+    else
+      message.build_answer(parent_decision_branch: @decision_branch)
+    end
+    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
   private

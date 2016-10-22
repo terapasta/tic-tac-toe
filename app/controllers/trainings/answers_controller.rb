@@ -41,22 +41,6 @@ class Trainings::AnswersController < ApplicationController
     redirect_to bot_training_path(@bot, @training, auto: params[:auto])
   end
 
-  def replace
-    @answer = @bot.answers.find_or_create_by!(body: answer_params[:body]) do |a|
-      a.context = 'normal'
-    end
-    training_message = TrainingMessage.find(params[:id])
-    training_message.update!(answer_id: @answer.id, body: @answer.body)
-
-    if auto_mode?
-      @guest_message = @training.training_messages.build(@bot.messages.guest.sample.to_training_message_attributes)
-      @bot_messages = receive_and_reply!(@training, @guest_message)
-    end
-
-    flash[:notice] = '回答を差し替えました'
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
-  end
-
   private
     def set_bot
       @bot = current_user.bots.find(params[:bot_id])

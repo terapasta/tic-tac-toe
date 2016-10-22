@@ -6,24 +6,20 @@ class Trainings::TrainingMessagesController < ApplicationController
   before_action :set_training
   before_action :set_training_message, only: [:update, :destroy]
 
-  def create
-    training_message = @training.training_messages.build(training_message_params)
-    training_message.speaker = 'guest'
-    receive_and_reply!(@training, training_message)
-    redirect_to bot_training_path(@bot, @training)
-  end
-
   def update
-    answer = Answer.find(training_message_params[:answer_id])
-    if training_message.update(answer_id: training_message_params[:answer_id], body: answer.body)
+    answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
+      a.context = 'normal'
+    end
+
+    if @training_message.update(answer: answer, body: answer.body)
       flash[:notice] = '回答を差し替えました'
     else
       flash[:error] = '回答の差し替えに失敗しました'
     end
 
     if auto_mode?
-      auto_training_message = @training.training_messages.build(Message.guest.sample.to_training_message_attributes)
-      receive_and_reply!(@training, auto_training_message)
+      @training.training_messages.build(@bot.messages.guest.sample.to_training_message_attributes)
+      receive_and_reply!(@training, @guest_message)
     end
 
     redirect_to bot_training_path(@bot, @training, auto: params[:auto])

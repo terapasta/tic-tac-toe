@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
 
   def index
-    @answers = @bot.answers
+    @answers = @bot.answers.page(params[:page])
   end
 
   def update

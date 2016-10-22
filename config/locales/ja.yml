@@ -138,7 +138,7 @@ ja:
     link:
       show: 詳細
       new: 登録
-      edit: 更新
+      edit: 編集
       destroy: 削除
       back: 戻る
   number:
@@ -212,3 +212,5 @@ ja:
         image: 画像
         classify_failed_message: 回答出来なかった場合のメッセージ
         start_message: チャット開始時のメッセージ
+      answer:
+        body: 内容

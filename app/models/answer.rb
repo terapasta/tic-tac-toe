@@ -21,6 +21,8 @@ class Answer < ActiveRecord::Base
   enum context: ContextHoldable::CONTEXTS
   #enum transition_to: { contact: 'contact' }
 
+  validates :body, presence: true, length: { maximum: 65535 }
+
   def no_classified?
     return false if bot.nil?
     true

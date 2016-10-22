@@ -1,2 +1,10 @@
-h1 Answers#edit
-p Find me in app/views/answers/edit.html.slim
+.panel.panel-default
+  .panel-heading
+    h4 回答
+
+  .panel-body
+    = bootstrap_form_for @answer, url: bot_answer_path(@bot, @answer), method: :patch do |f|
+      = f.text_area :body
+      = f.submit
+
+= link_to t('helpers.link.back'), bot_answers_path(@bot), class: "btn btn-default"

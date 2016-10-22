@@ -6,10 +6,12 @@ class TrainingsController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def show
+    @guest_training_message = @training.training_messages.build
   end
 
   def new
     @training = @bot.trainings.new
+    @guest_training_message = @training.training_messages.build
     @training.training_messages << @training.build_start_message
     if @training.save
       flash[:notice] = '新しいスレッドが開始されました'

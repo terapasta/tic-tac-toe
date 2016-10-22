@@ -4,6 +4,8 @@ class Answer < ActiveRecord::Base
   belongs_to :bot
   has_many :decision_branches
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
+  has_many :training_messages, dependent: :destroy
+  has_many :imported_training_messages, dependent: :destroy
 
   accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
   # accepts_nested_attributes_for :parent_decision_branch, reject_if: :all_blank, allow_destroy: true

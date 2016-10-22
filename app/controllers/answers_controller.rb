@@ -16,6 +16,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer.destroy!
+
+    redirect_to bot_answers_path(@bot), notice: '回答を削除しました。'
+  end
+
   private
 
     def set_bot

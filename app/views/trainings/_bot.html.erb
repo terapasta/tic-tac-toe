@@ -35,7 +35,9 @@
         </div>
 
         <div class="pull-right">
-          <i class="glyphicon glyphicon-list-alt"></i>
+          <%= link_to [message.parent.bot, :answers] do %>
+            <i class="glyphicon glyphicon-list-alt"></i>
+          <% end %>
         </div>
       <% end %>
     </div>

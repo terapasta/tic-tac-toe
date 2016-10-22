@@ -68,9 +68,9 @@ gem 'dotenv-rails'
 gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
-gem 'whenever', :require => false
+gem 'whenever', require: false
 gem 'carrierwave'
-gem 'rmagick', require: 'RMagick'
+gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
 gem 'twitter-bootswatch-rails', '~> 3.1.1'

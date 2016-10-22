@@ -2,13 +2,9 @@
 <html>
 <head>
   <title>My-ope office - 社内問い合わせ専用AIチャットボット</title>
-  <% assets = Rails.application.assets || ::Sprockets::Railtie.build_environment(Rails.application) %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= stylesheet_link_tag    'lumen', media: 'all' %>
-  <%= stylesheet_link_tag "#{resources/params[:controller]}/#{params[:action]}", media: 'all' if assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.css") %>
   <%= javascript_include_tag 'application' %>
-  <%= javascript_include_tag "resources/#{params[:controller]}" if assets.find_asset("resources/#{params[:controller]}.js") %>
-  <%= javascript_include_tag "#{resources/params[:controller]}/#{params[:action]}" if assets.find_asset("resources/#{params[:controller]}/#{params[:action]}.js") %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

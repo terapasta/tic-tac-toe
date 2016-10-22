@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
+
   before_action :set_bot
   before_action :set_answer, only: [:edit, :update, :destroy]
 

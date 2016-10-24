@@ -34,6 +34,7 @@ class Reply:
         answers_table = self.db['answers']
         answer = answers_table.find_one(id=answer_id)
         logger.debug('予測された回答: %s' % answer['body'])
+        logger.debug('予測確率: %s' % max_probability)
 
         return float(answer_id)
 

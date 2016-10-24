@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -
 import MeCab
+import jaconv
+from pykakasi import kakasi
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 
@@ -8,6 +9,10 @@ class Nlang:
 
     @classmethod
     def split(self, text):
+        vkakasi = kakasi()
+        vkakasi.setMode("J","H")
+        conv = vkakasi.getConverter()
+
         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
         # text = text.encode('utf-8')
@@ -20,7 +25,9 @@ class Nlang:
                 lemma = node.feature.split(",")[6]  #.decode("utf-8")
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")
-                word_list.append(lemma)
+                word_list.append(conv.do(jaconv.kata2hira(lemma)))
+                # word_list.append(jaconv.kata2hira(lemma))
+                # word_list.append(lemma)
             node = node.next
         return " ".join(word_list)
 

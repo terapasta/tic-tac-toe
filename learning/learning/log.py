@@ -9,9 +9,9 @@ logger = getLogger(__name__)
 logger.setLevel(DEBUG)
 
 # stream handler
-handler = StreamHandler()
-handler.setLevel(DEBUG)
-logger.addHandler(handler)
+# handler = StreamHandler()
+# handler.setLevel(DEBUG)
+# logger.addHandler(handler)
 
 # file handler
 fhandler = TimedRotatingFileHandler("./logs/application.log", when='D', backupCount=30)

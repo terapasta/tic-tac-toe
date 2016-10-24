@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       end
     end
     resource :learning, only: [:update]
+    resources :answers, except: [:new, :create]
   end
 
   scope 'embed/:token' do

@@ -68,6 +68,10 @@ body {
 //   z-index: 100;
 // }
 
+.alert.alert-dismissible .close {
+  right: 0px;
+}
+
 .list-group-item {
   position: relative;
   // cursor:pointer;

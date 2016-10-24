@@ -1,5 +1,6 @@
 import MeCab
 import jaconv
+from learning.log import logger
 from pykakasi import kakasi
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
@@ -21,10 +22,11 @@ class Nlang:
         word_list = []
         while node:
             pos = node.feature.split(",")[0]
-            if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞"]:
+            if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
                 lemma = node.feature.split(",")[6]  #.decode("utf-8")
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")
+
                 word_list.append(conv.do(jaconv.kata2hira(lemma)))
                 # word_list.append(jaconv.kata2hira(lemma))
                 # word_list.append(lemma)

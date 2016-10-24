@@ -1,6 +1,8 @@
-from learning.log import logger
 import numpy as np
 import pandas as pd
+import dataset
+# import MySQLdb
+from learning.log import logger
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
@@ -9,6 +11,8 @@ from learning.config.config import Config
 
 class Reply:
     def __init__(self, bot_id):
+        dbconfig = Config().get('database')
+        self.db = dataset.connect(dbconfig['endpoint'])
         self.no_classified_threshold = Config().get('default_no_classified_threshold')
 
         try:
@@ -21,18 +25,23 @@ class Reply:
         Xtrain = np.array(X)
         Xtrain = self.__replace_text2vec(Xtrain)
         probabilities = self.estimator.predict_proba(Xtrain)
-        logger.debug(probabilities)
         max_probability = np.max(probabilities)
-        logger.debug(max_probability)
-        logger.debug(self.no_classified_threshold)
         if self.no_classified_threshold > max_probability:
             logger.debug('return None')
             return None
-        return float(self.estimator.predict(Xtrain)[0])
+
+        answer_id = self.estimator.predict(Xtrain)[0]
+        answers_table = self.db['answers']
+        answer = answers_table.find_one(id=answer_id)
+        logger.debug('予測された回答: %s' % answer['body'])
+
+        return float(answer_id)
+
 
     def __replace_text2vec(self, Xtrain):
         texts = Xtrain[:,-1:].flatten()
         splited_texts = Nlang.batch_split(texts)
+        logger.debug('分割後の文字列: %s' % splited_texts)
 
         count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
         texts_vec = count_vectorizer.transform(splited_texts)

@@ -5,6 +5,8 @@
   .panel-body
     = bootstrap_form_for @answer, url: bot_answer_path(@bot, @answer), method: :patch do |f|
       = f.text_area :body
-      = f.submit
+      = f.submit class: 'btn btn-success'
+      | &nbsp;
+      = link_to '削除する', [@bot, @answer], method: :delete, class: 'btn btn-danger', data: { confirm: '回答データを削除します。よろしいですか？' }
 
 = link_to t('helpers.link.back'), bot_answers_path(@bot), class: "btn btn-default"

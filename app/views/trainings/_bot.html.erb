@@ -27,11 +27,14 @@
           <%= f.submit 'この回答に差し替える', class: 'btn btn-success' %>
         </div>
 
-        <div class="pull-right">
-          <%= link_to [message.parent.bot, :answers] do %>
-            <i class="glyphicon glyphicon-list-alt"></i>
-          <% end %>
-        </div>
+        <% if message.try(:answer).try(:persisted?) %>
+          <div class="pull-right">
+            <%= link_to edit_bot_answer_path(message.parent.bot, message.answer) do %>
+              <i class="glyphicon glyphicon-list-alt"></i>
+            <% end %>
+          </div>
+        <% end %>
+
       <% end %>
     </div>
 

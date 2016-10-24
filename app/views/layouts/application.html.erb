@@ -29,6 +29,7 @@
         <%= link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item' %>
         <%= link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item' %>
         <%= link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item' %>
+        <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item' %>
       </div>
       <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, class: 'btn btn-danger btn-block' %>
     </div>

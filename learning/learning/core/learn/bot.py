@@ -35,29 +35,13 @@ class Bot:
         estimator.fit(training_set.x, training_set.y)
         logger.debug(estimator.score(training_set.x, training_set.y))
 
-        # print "estimator.score: %s " % estimator.score  # accuracy
-
         joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()
-        evaluator.evaluate(estimator, training_set.x, training_set.y)
+        # evaluator.evaluate(estimator, training_set.x, training_set.y)
+        # クロスバリデーションではなく既存データに対して評価する
+        evaluator.evaluate_using_exist_data(estimator, training_set.x, training_set.y)
         logger.debug('Bot.learn end')
-
-        # recall_score=cross_validation.cross_val_score(estimator, training_set.x, training_set.y, cv=10, scoring ='recall')
-        # print(recall_score)
-
-        # print(scores)
-
-        # X, y = make_classification(n_samples=100, n_informative=10, n_classes=3)
-        # clf = SVC(kernel='linear', C= 1)
-        # sss = StratifiedShuffleSplit(y, n_iter=1, test_size=0.5, random_state=0)
-        # for train_idx, test_idx in sss:
-        #     X_train, X_test, y_train, y_test = X[train_idx], X[test_idx], y[train_idx], y[test_idx]
-        #     clf.fit(X_train, y_train)
-        #     y_pred = clf.predict(X_test)
-        #     print(f1_score(y_test, y_pred, average="macro"))
-        #     print(precision_score(y_test, y_pred, average="macro"))
-        #     print(recall_score(y_test, y_pred, average="macro"))
 
         return evaluator

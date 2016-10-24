@@ -3,6 +3,7 @@ database:
   host: localhost
   name: donusagi_bot
   user: root
+  password: ""
 default_no_classified_threshold: 0.2
 # mysql:
 #     host: localhost

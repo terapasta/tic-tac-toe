@@ -24,7 +24,6 @@ class Reply:
     def predict(self, X):
         Xtrain = np.array(X)
         Xtrain = self.__replace_text2vec(Xtrain)
-        logger.debug('Xtrain: %s' % Xtrain)
         probabilities = self.estimator.predict_proba(Xtrain)
         max_probability = np.max(probabilities)
 
@@ -39,21 +38,6 @@ class Reply:
         answer = answers_table.find_one(id=answer_id)
         logger.debug('予測された回答: %s' % answer['body'])
         logger.debug('予測確率: %s' % max_probability)
-
-        learning_training_message = self.db['learning_training_messages'].find_one(answer_id=answer_id)
-        question = np.array([[learning_training_message['question']]])
-        logger.debug('question: %s' % question)
-        question_vec = self.__replace_text2vec(question)
-        logger.debug('question_vec: %s' % question_vec)
-
-        result = np.logical_and(Xtrain[0], question_vec[0])
-        # logger.debug('result: %s' % result)
-        # result2 = filter((lambda x: x == True), result)
-        # logger.debug('result2: %s' % result2)
-        logger.debug(result.sum())
-        if result.sum() < 3:
-            logger.debug('質問のベクトル一致数が3未満の場合はNoneを返す')
-            return None;
 
         return float(answer_id)
 

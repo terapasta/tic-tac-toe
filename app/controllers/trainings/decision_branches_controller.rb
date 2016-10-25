@@ -4,7 +4,7 @@ class Trainings::DecisionBranchesController < ApplicationController
   before_action :set_decision_branch, only: [:update, :destroy, :choice]
 
   def new
-    @decision_branch = @answer.decision_branches.build
+    @decision_branch = @answer.decision_branches.create!(bot_id: @bot.id)
   end
 
   def create

@@ -5,9 +5,11 @@
   $decision_branch_value.next('.decision-branch-field').show().find('input').val(body).focus()
 
 @switch_to_label = (obj) ->
+  # $(obj).parents('form').children('.decision-branch-field')
   $(obj).parents('.decision-branch-field').hide()
+  # $(obj).parents('form').children('.decision-branch-field').children('.body').text($(obj).val())
+  $(obj).parents('form').children('.decision-branch-value').children('a').text($(obj).val())
   $(obj).parents('.decision-branch-field').prev('.decision-branch-value').show()
-    .children('.body').text($(obj).val())
   $(obj).parents('form').submit()
 
 @enter_blur = (e) ->

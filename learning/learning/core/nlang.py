@@ -30,6 +30,10 @@ class Nlang:
                     node = node.next
                     continue
                 lemma = node.feature.split(",")[6]  #.decode("utf-8")
+                if lemma == 'ある':
+                    node = node.next
+                    continue
+
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")
 

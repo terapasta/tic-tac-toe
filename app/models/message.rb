@@ -5,6 +5,8 @@ class Message < ActiveRecord::Base
   belongs_to :answer
   enum speaker: { bot: 'bot', guest: 'guest' }
 
+  validates :body, length: { maximum: 10000 }
+
   def parent
     chat
   end

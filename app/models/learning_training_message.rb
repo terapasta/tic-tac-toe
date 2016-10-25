@@ -2,6 +2,8 @@ class LearningTrainingMessage < ActiveRecord::Base
   belongs_to :bot
   belongs_to :answer
 
+  validates :answer_body, length: { maximum: 10000 }
+
   def self.to_csv(bot)
     CSV.generate do |csv|
       bot.learning_training_messages.find_each do |learning_training_message|

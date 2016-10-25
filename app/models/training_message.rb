@@ -7,6 +7,8 @@ class TrainingMessage < ActiveRecord::Base
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
 
+  validates :body, length: { maximum: 10000 }
+
   def parent
     training
   end

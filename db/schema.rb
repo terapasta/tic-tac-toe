@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021051120) do
+ActiveRecord::Schema.define(version: 20161025043743) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -131,10 +131,10 @@ ActiveRecord::Schema.define(version: 20161021051120) do
   create_table "learning_training_messages", force: :cascade do |t|
     t.integer  "bot_id",      limit: 4
     t.string   "question",    limit: 255
-    t.string   "answer_body", limit: 255
+    t.text     "answer_body", limit: 65535
     t.integer  "answer_id",   limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "learning_training_messages", ["answer_id"], name: "index_learning_training_messages_on_answer_id", using: :btree
@@ -143,12 +143,12 @@ ActiveRecord::Schema.define(version: 20161021051120) do
   create_table "messages", force: :cascade do |t|
     t.integer  "chat_id",       limit: 4
     t.integer  "answer_id",     limit: 4
-    t.string   "speaker",       limit: 255,                  null: false
-    t.string   "body",          limit: 255
+    t.string   "speaker",       limit: 255,                   null: false
+    t.text     "body",          limit: 65535
     t.string   "user_agent",    limit: 1024
-    t.boolean  "answer_failed",              default: false, null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.boolean  "answer_failed",               default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
@@ -174,13 +174,13 @@ ActiveRecord::Schema.define(version: 20161021051120) do
   end
 
   create_table "training_messages", force: :cascade do |t|
-    t.integer  "training_id",   limit: 4,                   null: false
+    t.integer  "training_id",   limit: 4,                     null: false
     t.integer  "answer_id",     limit: 4
-    t.string   "speaker",       limit: 255,                 null: false
-    t.string   "body",          limit: 255
-    t.boolean  "answer_failed",             default: false, null: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.string   "speaker",       limit: 255,                   null: false
+    t.text     "body",          limit: 65535
+    t.boolean  "answer_failed",               default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree

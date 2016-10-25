@@ -34,7 +34,10 @@ class Bot:
 
         # SVMのグリッドサーチに時間がかかるので、一旦ロジスティック回帰のみにする
         # estimator = self.__get_best_estimator(training_set)
-        estimator = self.__logistic_regression(training_set).best_estimator_
+        # estimator = self.__logistic_regression(training_set).best_estimator_
+        # シンプルなロジスティック回帰
+        estimator = LogisticRegression(C=1e5)
+        estimator.fit(training_set.x, training_set.y)
         joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 

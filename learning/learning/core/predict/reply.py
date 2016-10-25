@@ -26,6 +26,9 @@ class Reply:
         Xtrain = self.__replace_text2vec(Xtrain)
         probabilities = self.estimator.predict_proba(Xtrain)
         max_probability = np.max(probabilities)
+
+        logger.debug('no_classified_threshold: %s' % self.no_classified_threshold)
+        logger.debug('max_probability: %s' % max_probability)
         if self.no_classified_threshold > max_probability:
             logger.debug('return None')
             return None

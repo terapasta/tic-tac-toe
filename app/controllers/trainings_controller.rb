@@ -6,7 +6,7 @@ class TrainingsController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def show
-    @guest_training_message = @training.training_messages.build
+    @guest_training_message = TrainingMessage.new(training: @training)
   end
 
   def new

@@ -7,7 +7,6 @@ class Trainings::TrainingMessagesController < ApplicationController
   before_action :set_training_message, only: [:update, :destroy]
 
   def create
-    binding.pry
     answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
       a.context = 'normal'
     end

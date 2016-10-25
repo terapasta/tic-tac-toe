@@ -21,8 +21,14 @@ class Nlang:
         node = tagger.parseToNode(text)
         word_list = []
         while node:
-            pos = node.feature.split(",")[0]
-            if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
+            # logger.debug(node.feature)
+            features = node.feature.split(",")
+            pos = features[0]
+            # if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
+            if pos in ["名詞", "動詞", "形容詞", "感動詞", "副詞"]:
+                if pos == '名詞' and features[1] == '非自立':
+                    node = node.next
+                    continue
                 lemma = node.feature.split(",")[6]  #.decode("utf-8")
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")

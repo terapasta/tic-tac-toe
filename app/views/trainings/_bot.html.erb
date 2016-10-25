@@ -14,7 +14,7 @@
       <% end %>
       <%= bootstrap_form_for [bot, message.training, message] do |f| %>
         <div class="message-body-wrapper">
-          <%= auto_link(simple_format(message.body, class: 'message-body'), html: { target: '_blank' }) %>
+          <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
           <a href="javascript:void(0);"><i class="glyphicon glyphicon-pencil"></i></a>
         </div>
 

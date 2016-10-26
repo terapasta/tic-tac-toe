@@ -1,10 +1,10 @@
 database:
   endpoint: mysql://myope:yGM7fj2jQQZCui@app-myope.ccfwhx3hbmfs.ap-northeast-1.rds.amazonaws.com/myope?charset=utf8
-  host: app-myope.ccfwhx3hbmfs.ap-northeast-1.rds.amazonaws.com 
-  name: myope 
-  user: myope 
+  host: app-myope.ccfwhx3hbmfs.ap-northeast-1.rds.amazonaws.com
+  name: myope
+  user: myope
   password: yGM7fj2jQQZCui
-default_no_classified_threshold: 0.2
+default_no_classified_threshold: 0.3
 # mysql:
 #     host: localhost
 #     user: root

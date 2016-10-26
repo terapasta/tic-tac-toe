@@ -29,14 +29,10 @@ class Trainings::TrainingMessagesController < ApplicationController
   end
 
   def update
-    answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
-      a.context = 'normal'
-    end
-
-    if @training_message.update(answer: answer, body: answer.body)
-      flash[:notice] = '回答を差し替えました'
-    else
-      flash[:error] = '回答の差し替えに失敗しました'
+    if params[:btn_replace]
+      message_replace
+    elsif params[:btn_update]
+      message_update
     end
 
     if auto_mode?
@@ -60,6 +56,27 @@ class Trainings::TrainingMessagesController < ApplicationController
   end
 
   private
+    def message_replace
+      answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
+        a.context = 'normal'
+      end
+
+      if @training_message.update(answer: answer, body: answer.body)
+        flash[:notice] = '回答を差し替えました'
+      else
+        flash[:error] = '回答の差し替えに失敗しました'
+      end
+    end
+
+    def message_update
+      @training_message.answer.body = training_message_params[:body]
+      if @training_message.update(body: training_message_params[:body])
+        flash[:notice] = '回答を更新しました'
+      else
+        flash[:error] = '回答の更新に失敗しました'
+      end
+    end
+
     def set_bot
       @bot = current_user.bots.find(params[:bot_id])
     end

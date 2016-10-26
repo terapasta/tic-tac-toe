@@ -77,6 +77,8 @@ gem 'twitter-bootswatch-rails', '~> 3.1.1'
 gem 'twitter-bootswatch-rails-helpers'
 gem 'slack-api'
 gem 'activerecord-import'
+gem 'exception_notification'
+gem 'slack-notifier'
 
 group :development, :test do
 

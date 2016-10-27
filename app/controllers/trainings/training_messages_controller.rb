@@ -59,6 +59,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     def message_replace
       answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
         a.context = 'normal'
+        a.headline = training_message_params[:answer_attributes][:headline]
       end
 
       if @training_message.update(answer: answer, body: answer.body)
@@ -69,8 +70,8 @@ class Trainings::TrainingMessagesController < ApplicationController
     end
 
     def message_update
+      @training_message.attributes = training_message_params
       @training_message.answer.body = training_message_params[:body]
-      @training_message.body = training_message_params[:body]
       if @training_message.save && @training_message.answer.save  # TODO なぜか同時に更新できない
         flash[:notice] = '回答を更新しました'
       else
@@ -91,6 +92,6 @@ class Trainings::TrainingMessagesController < ApplicationController
     end
 
     def training_message_params
-      params.require(:training_message).permit(:answer_id, :body)
+      params.require(:training_message).permit(:answer_id, :body, answer_attributes: [:id, :headline])
     end
 end

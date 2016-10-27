@@ -24,6 +24,7 @@ class Answer < ActiveRecord::Base
   #enum transition_to: { contact: 'contact' }
 
   validates :body, presence: true, length: { maximum: 65535 }
+  validates :headline, length: { maximum: 100 }
 
   def no_classified?
     return false if bot.nil?

@@ -4,6 +4,9 @@ class TrainingMessage < ActiveRecord::Base
   belongs_to :training
   belongs_to :answer
   has_one :parent_decision_branch, through: :answer, dependent: :nullify
+
+  accepts_nested_attributes_for :answer, reject_if: :all_blank, allow_destroy: true
+
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
 

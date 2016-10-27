@@ -5,6 +5,7 @@
   </div>
   <div class="col-sm-8 col-xs-9">
     <div class="col-sm-12 balloon-1-left balloon">
+      <%= simple_format(message.try(:answer).try(:headline)) %>
       <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
     </div>
   <div class="col-sm-2"></div>

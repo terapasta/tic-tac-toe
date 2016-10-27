@@ -34,10 +34,7 @@ class Reply:
             return None
 
         answer_id = self.estimator.predict(Xtrain)[0]
-        answers_table = self.db['answers']
-        answer = answers_table.find_one(id=answer_id)
-        logger.debug('予測された回答: %s' % answer['body'])
-        logger.debug('予測確率: %s' % max_probability)
+        self.__out_log(answer_id)
 
         return float(answer_id)
 
@@ -54,3 +51,9 @@ class Reply:
         feature = np.c_[Xtrain[:,:-1], texts_vec]
         feature = feature.astype('float64')
         return feature
+
+    def __out_log(self, answer_id):
+        answers_table = self.db['answers']
+        answer = answers_table.find_one(id=answer_id)
+        if answer is not None:
+            logger.debug('予測された回答: %s' % answer['body'])

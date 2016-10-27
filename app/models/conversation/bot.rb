@@ -18,19 +18,18 @@ class Conversation::Bot
     result = Ml::Engine.new(@bot.id).reply(context, @message.body)
     Rails.logger.debug("answer_id: #{result['answer_id']}")
 
-    answers =
-      if result['answer_id'].present?
-        [Answer.find(result['answer_id'])]
-      else
-        [NullAnswer.new(@bot)]
-      end
+    answer = nil
+    if result['answer_id'].present?
+      answer = Answer.find_by(id: result['answer_id'])
+    end
+    answer = NullAnswer.new(@bot) if answer.nil?
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
     # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
-    answers
+    [answer]
   end
 
   private

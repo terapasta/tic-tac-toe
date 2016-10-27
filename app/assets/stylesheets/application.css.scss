@@ -8,10 +8,15 @@
 // @import 'jquery-ui/theme.css';
 // @import 'jquery-ui/autocomplete.css';
 
+html {
+  min-height: 100%;
+}
+
 body {
   //min-height: 2000px;
   // padding-top: 51px;
   padding-bottom: 250px;
+  min-height: 100%;
 }
 
 .container-main {
@@ -225,4 +230,10 @@ body {
       margin-top: 15px;
     }
   }
+}
+
+.error-info {
+  padding-top: 100px;
+  height: 100%;
+  text-align: center;
 }

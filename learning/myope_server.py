@@ -15,24 +15,25 @@ class MyopeServer(RPCServer):
     #   body: 'こんにちは'
     def reply(self, bot_id, context, body):
         X = list(context)
-        #X.append(body.encode('utf-8'))
         X.append(body)
-        answer_id = None
+        predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
-            answer_id = Reply(bot_id).predict([X])  # TODO 引数
-            if answer_id is not None:
-                answer_id = float(answer_id)
+            predict_results = Reply(bot_id).predict([X])  # TODO 引数
+            logger.debug(predict_results)
+            # if answer_id is not None:
+            #     answer_id = float(answer_id)
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
-        # result = {
-        #     'status_code': status_code,
-        #     'answer_ids': [1,2,3]
-        # }
-        # return result
-        return { 'status_code': status_code, 'answer_id': answer_id }
+        result = {
+            'status_code': status_code,
+            # 'results': [ { 'hoge': 1, 'moge': 2 } ],
+            'results': predict_results,
+        }
+        return result
+        # return { 'status_code': status_code, 'answer_id': answer_id }
 
     def learn(self, bot_id):
         evaluator = Bot(bot_id).learn()

@@ -27,6 +27,11 @@ class MyopeServer(RPCServer):
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
+        # result = {
+        #     'status_code': status_code,
+        #     'answer_ids': [1,2,3]
+        # }
+        # return result
         return { 'status_code': status_code, 'answer_id': answer_id }
 
     def learn(self, bot_id):

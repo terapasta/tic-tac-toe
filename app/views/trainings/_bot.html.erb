@@ -14,7 +14,6 @@
       <% end %>
       <%= bootstrap_form_for [bot, message.training, message] do |f| %>
         <div class="message-body-wrapper">
-          <p><%= message.try(:answer).try(:headline) %></p>
           <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
           <a href="javascript:void(0);"><i class="glyphicon glyphicon-pencil"></i></a>
         </div>
@@ -44,6 +43,21 @@
             <% end %>
           </div>
         <% end %>
+      <% end %>
+
+      <% if message.other_answers.present? %>
+        <div class="small">
+          <p>その他の回答</p>
+          <ul>
+            <% message.other_answers.each do |other_answer| %>
+              <% if other_answer.headline.present? %>
+              <li>
+                <%= link_to other_answer.headline, bot_training_questions_path(bot, message.training, training_message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post %>
+              </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
     </div>
 

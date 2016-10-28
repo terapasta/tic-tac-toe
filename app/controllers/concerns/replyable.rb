@@ -4,10 +4,9 @@ module Replyable
   def receive_and_reply!(parent, message)
     responder = Conversation::Switcher.new.responder(message, session[:states])
     answers = responder.reply
-    session[:states] = responder.states
+    # session[:states] = responder.states
 
     reply_messages = answers.map do |answer|
-      answer = NullAnswer.new(parent.bot) if answer.nil?
       parent.context = answer.context
 
       body = answer.body
@@ -16,7 +15,7 @@ module Replyable
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 
-      parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer.is_a?(NullAnswer))
+      parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer.is_a?(NullAnswer), other_answers: responder.other_answers)
     end
 
     parent.save!

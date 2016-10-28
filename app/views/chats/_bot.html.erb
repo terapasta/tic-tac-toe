@@ -5,8 +5,17 @@
   </div>
   <div class="col-sm-8 col-xs-9">
     <div class="col-sm-12 balloon-1-left balloon">
-      <%= simple_format(message.try(:answer).try(:headline)) %>
+      <%#= simple_format(message.try(:answer).try(:headline)) %>
       <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>
+      <ul>
+        <% message.try(:other_answers).try(:each) do |other_answer| %>
+          <%# if other_answer.headline.present? %>
+          <li>
+            <%= link_to other_answer.body, chats_messages_path(message.parent.bot.token, message: { body: other_answer.body }), method: :post, remote: true %>
+          </li>
+          <%# end %>
+        <% end %>
+      </ul>
     </div>
   <div class="col-sm-2"></div>
 </div>

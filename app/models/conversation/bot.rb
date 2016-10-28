@@ -1,5 +1,5 @@
 class Conversation::Bot
-  attr_accessor :states
+  attr_accessor :states, :results
 
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
@@ -16,11 +16,11 @@ class Conversation::Bot
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 
     result = Ml::Engine.new(@bot.id).reply(context, @message.body)
-    Rails.logger.debug("answer_id: #{result['answer_id']}")
+    @results = result['results']
 
-    answer = nil
-    if result['answer_id'].present?
-      answer = Answer.find_by(id: result['answer_id'])
+    answer_id = @results.dig(0, 'answer_id')
+    if answer_id.present?
+      answer = Answer.find_by(id: answer_id)
     end
     answer = NullAnswer.new(@bot) if answer.nil?
 
@@ -30,6 +30,12 @@ class Conversation::Bot
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
     [answer]
+  end
+
+  def other_answers
+    reply if @results.blank?
+    @results.select {|data| data['probability'] > 0.1 }[0..4]
+      .map { |data| @bot.answers.find_by(id: data['answer_id']) }
   end
 
   private

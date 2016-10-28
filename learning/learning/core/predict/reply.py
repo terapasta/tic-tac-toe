@@ -28,7 +28,7 @@ class Reply:
         max_probability = np.max(probabilities)
 
         results_ordered_by_probability = list(map(lambda x: {
-            'answer_id': x[0], 'probability': x[1]
+            'answer_id': float(x[0]), 'probability': x[1]
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
 
         logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)

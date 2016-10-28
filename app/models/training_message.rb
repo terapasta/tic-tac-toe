@@ -1,6 +1,8 @@
 class TrainingMessage < ActiveRecord::Base
   include ContextHoldable
 
+  attr_accessor :other_answers
+
   belongs_to :training
   belongs_to :answer
   has_one :parent_decision_branch, through: :answer, dependent: :nullify

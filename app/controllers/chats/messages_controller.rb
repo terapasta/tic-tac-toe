@@ -8,7 +8,7 @@ class Chats::MessagesController < ApplicationController
       m.speaker = 'guest'
       m.user_agent = request.env['HTTP_USER_AGENT']
     }
-    @bot_messages = receive_and_reply!(@chat, @message)
+    @bot_messages = receive_and_reply!(@chat, @message, params[:message][:other_answer_id])
   end
 
   private

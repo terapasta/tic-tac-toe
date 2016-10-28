@@ -32,7 +32,6 @@ class Reply:
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
 
         logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
-        logger.debug('probabilities: %s' % probabilities)
         logger.debug('no_classified_threshold: %s' % self.no_classified_threshold)
         logger.debug('max_probability: %s' % max_probability)
         if self.no_classified_threshold > max_probability:
@@ -42,7 +41,7 @@ class Reply:
         # answer_id = self.estimator.predict(Xtrain)[0]
         # self.__out_log(answer_id)
 
-        return results_ordered_by_probability
+        return results_ordered_by_probability[0:10]
         # return float(answer_id)
 
 

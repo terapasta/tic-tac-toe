@@ -12,11 +12,11 @@
           <p>その他の回答</p>
           <ul>
             <% message.other_answers.each do |other_answer| %>
-              <%# if other_answer.headline.present? %>
+              <% if other_answer.headline.present? %>
               <li>
-                <%= link_to other_answer.body, chats_messages_path(message.parent.bot.token, message: { body: other_answer.body, other_answer_id: other_answer.id }), method: :post, remote: true %>
+                <%= link_to other_answer.headline, chats_messages_path(message.parent.bot.token, message: { body: other_answer.body, other_answer_id: other_answer.id }), method: :post, remote: true %>
               </li>
-              <%# end %>
+              <% end %>
             <% end %>
           </ul>
         </div>

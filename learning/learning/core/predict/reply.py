@@ -34,9 +34,9 @@ class Reply:
         logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
         logger.debug('no_classified_threshold: %s' % self.no_classified_threshold)
         logger.debug('max_probability: %s' % max_probability)
-        if self.no_classified_threshold > max_probability:
-            logger.debug('return []')
-            return []
+        # if self.no_classified_threshold > max_probability:
+        #     logger.debug('return []')
+        #     return []
 
         # answer_id = self.estimator.predict(Xtrain)[0]
         # self.__out_log(answer_id)

@@ -1,5 +1,5 @@
 class Conversation::Bot
-  attr_accessor :states, :results
+  attr_accessor :states
 
   NUMBER_OF_CONTEXT = 0
   POSITIVE_WORD = 'はい'
@@ -20,22 +20,24 @@ class Conversation::Bot
 
     answer_id = @results.dig(0, 'answer_id')
     if answer_id.present?
-      answer = Answer.find_by(id: answer_id)
+      @answer = Answer.find_by(id: answer_id)
     end
-    answer = NullAnswer.new(@bot) if answer.nil?
+    @answer = NullAnswer.new(@bot) if @answer.nil?
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
     # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
-    [answer]
+    [@answer]
   end
 
   def other_answers
     reply if @results.blank?
-    @results.select {|data| data['probability'] > 0.1 }[0..4]
+    @results
+      .select {|data| data['probability'] > 0.1 }
       .map { |data| @bot.answers.find_by(id: data['answer_id']) }
+      .select { |answer| answer.headline.present? && @answer.id != answer.id }[0..4]
   end
 
   private

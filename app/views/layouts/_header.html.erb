@@ -21,6 +21,7 @@
         <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to "Bot一覧", bots_path %></li>
+            <li><%= link_to 'パスワード変更', edit_user_registration_path %></li>
             <li><%#= link_to "管理者画面", rails_admin_path %></li>
             <!--<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">マスタ&nbsp;<span class="caret"></span></a>

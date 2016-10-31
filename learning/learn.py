@@ -1,4 +1,4 @@
-from learning.core.learn.bot import Bot
+ from learning.core.learn.bot import Bot
 # import dataset
 # import numpy as np
 # from sklearn.svm import SVC

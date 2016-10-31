@@ -1,30 +1,18 @@
-default: &default
-  database:
-    endpoint: mysql://root@localhost/donusagi_bot?charset=utf8
-    host: localhost
-    name: donusagi_bot
-    user: root
-    password: ""
-  default_no_classified_threshold: 0.2
-
-development:
-  <<: *default
-
-test:
-  <<: *default
-  database:
-    endpoint: mysql://root@localhost/donusagi_bot_test?charset=utf8
-    host: localhost
-    name: donusagi_bot_test
-    user: root
-    password: ""
-
-production:
-  <<: *default
-  database:
-    endpoint: mysql://myope:yGM7fj2jQQZCui@app-myope.ccfwhx3hbmfs.ap-northeast-1.rds.amazonaws.com/myope?charset=utf8
-    host: app-myope.ccfwhx3hbmfs.ap-northeast-1.rds.amazonaws.com
-    name: myope
-    user: myope
-    password: yGM7fj2jQQZCui
-  default_no_classified_threshold: 0.3
+database:
+  endpoint: mysql://root@localhost/donusagi_bot?charset=utf8
+  host: localhost
+  name: donusagi_bot
+  user: root
+  password: ""
+default_no_classified_threshold: 0.2
+# mysql:
+#     host: localhost
+#     user: root
+#     passwd: my secret password
+#     db: write-math
+# other:
+#     preprocessing_queue:
+#         - preprocessing.scale_and_center
+#         - preprocessing.dot_reduction
+#         - preprocessing.connect_lines
+#     use_anonymous: yes

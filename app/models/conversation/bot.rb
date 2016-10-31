@@ -38,9 +38,9 @@ class Conversation::Bot
   def other_answers
     reply if @results.blank?
     @results
-      .select {|data| data['probability'] > 0.1 }
-      .map { |data| @bot.answers.find_by(id: data['answer_id']) }
-      .select { |answer| answer.headline.present? && @answer.id != answer.id }[0..4]
+      .select {|data| data['probability'] > 0.001 }
+      .map { |data| @bot.answers.find_by(id: data['answer_id']) || DefinedAnswer.find_by(id: data['answer_id']) }
+      .select { |answer| answer.try(:headline).try(:present?) && @answer.id != answer.id }[0..4]
   end
 
   private

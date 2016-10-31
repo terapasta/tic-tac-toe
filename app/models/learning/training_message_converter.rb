@@ -31,9 +31,6 @@ class Learning::TrainingMessageConverter
     end
 
     def training_message_hold?(training_message)
-      if training_message.answer_id == 2466
-        # binding.pry
-      end
       # training_message.answer.present? && training_message.answer.type.nil?
       training_message.answer.present?
     end

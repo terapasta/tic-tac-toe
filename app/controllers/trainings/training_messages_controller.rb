@@ -82,7 +82,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     end
 
     def message_update_answer_failed
-      defined_answer = DefinedAnswer.find_by(defined_answer_id: 6, bot_id: @bot.id)  # TODO
+      defined_answer = DefinedAnswer.classify_failed
       @training_message.answer = defined_answer
       @training_message.body = defined_answer.body
       if @training_message.save

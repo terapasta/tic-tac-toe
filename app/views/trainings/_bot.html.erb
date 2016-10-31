@@ -34,6 +34,7 @@
           <% if message.try(:answer).try(:persisted?) %>
             <%= f.submit '回答を更新する', name: 'btn_update', class: 'btn btn-success' %>
           <% end %>
+          <%= f.submit '回答失敗にする', name: 'btn_update_answer_failed', class: 'btn btn-success' %>
         </div>
 
         <% if message.try(:answer).try(:persisted?) %>

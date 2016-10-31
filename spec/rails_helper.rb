@@ -45,11 +45,13 @@ RSpec.configure do |config|
 
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    # DatabaseCleaner.strategy = :truncation
+    fixture_paths = "#{Rails.root}/db/fixtures/test"
+    SeedFu.seed(fixture_paths)
   end
 
   config.before(:each) do
-    DatabaseCleaner.start
+    # DatabaseCleaner.start
 
     if Bullet.enable?
       Bullet.start_request
@@ -57,7 +59,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    DatabaseCleaner.clean
+    # DatabaseCleaner.clean
 
     if Bullet.enable?
       Bullet.perform_out_of_channel_notifications if Bullet.notification?

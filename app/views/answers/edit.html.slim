@@ -4,6 +4,7 @@
 
   .panel-body
     = bootstrap_form_for @answer, url: bot_answer_path(@bot, @answer), method: :patch do |f|
+      = f.text_field :headline
       = f.text_area :body
       = f.submit class: 'btn btn-success'
       | &nbsp;

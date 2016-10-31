@@ -1,6 +1,8 @@
 class Message < ActiveRecord::Base
   paginates_per 50
 
+  attr_accessor :other_answers
+
   belongs_to :chat
   belongs_to :answer
   enum speaker: { bot: 'bot', guest: 'guest' }

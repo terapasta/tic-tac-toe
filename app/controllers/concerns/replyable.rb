@@ -1,13 +1,17 @@
 module Replyable
   extend ActiveSupport::Concern
 
-  def receive_and_reply!(parent, message)
-    responder = Conversation::Switcher.new.responder(message, session[:states])
-    answers = responder.reply
-    session[:states] = responder.states
+  def receive_and_reply!(parent, message, other_answer_id = nil)
+    if other_answer_id.present?
+      answer = parent.bot.answers.find(other_answer_id)
+      answers = [answer]
+    else
+      responder = Conversation::Switcher.new.responder(message, session[:states])
+      answers = responder.reply
+    end
+    # session[:states] = responder.states
 
     reply_messages = answers.map do |answer|
-      answer = NullAnswer.new(parent.bot) if answer.nil?
       parent.context = answer.context
 
       body = answer.body
@@ -16,7 +20,9 @@ module Replyable
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 
-      parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer.is_a?(NullAnswer))
+      message = parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer.is_a?(NullAnswer))
+      message.other_answers = responder.other_answers if responder.present?
+      message
     end
 
     parent.save!

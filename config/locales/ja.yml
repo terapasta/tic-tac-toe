@@ -213,4 +213,5 @@ ja:
         classify_failed_message: 回答出来なかった場合のメッセージ
         start_message: チャット開始時のメッセージ
       answer:
+        headline: 見出し
         body: 内容

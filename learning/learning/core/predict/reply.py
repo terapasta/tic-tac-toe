@@ -27,17 +27,22 @@ class Reply:
         probabilities = self.estimator.predict_proba(Xtrain)
         max_probability = np.max(probabilities)
 
-        logger.debug('probabilities: %s' % probabilities)
+        results_ordered_by_probability = list(map(lambda x: {
+            'answer_id': float(x[0]), 'probability': x[1]
+        }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
+
+        logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
         logger.debug('no_classified_threshold: %s' % self.no_classified_threshold)
         logger.debug('max_probability: %s' % max_probability)
-        if self.no_classified_threshold > max_probability:
-            logger.debug('return None')
-            return None
+        # if self.no_classified_threshold > max_probability:
+        #     logger.debug('return []')
+        #     return []
 
-        answer_id = self.estimator.predict(Xtrain)[0]
-        self.__out_log(answer_id)
+        # answer_id = self.estimator.predict(Xtrain)[0]
+        # self.__out_log(answer_id)
 
-        return float(answer_id)
+        return results_ordered_by_probability[0:10]
+        # return float(answer_id)
 
 
     def __replace_text2vec(self, Xtrain):
@@ -56,5 +61,6 @@ class Reply:
     def __out_log(self, answer_id):
         answers_table = self.db['answers']
         answer = answers_table.find_one(id=answer_id)
+        logger.debug('予測された回答ID: %s' % answer_id)
         if answer is not None:
             logger.debug('予測された回答: %s' % answer['body'])

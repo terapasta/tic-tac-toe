@@ -33,6 +33,8 @@ class Trainings::TrainingMessagesController < ApplicationController
       message_replace
     elsif params[:btn_update]
       message_update
+    elsif params[:btn_update_answer_failed]
+      message_update_answer_failed
     end
 
     if auto_mode?
@@ -73,6 +75,17 @@ class Trainings::TrainingMessagesController < ApplicationController
       @training_message.attributes = training_message_params
       @training_message.answer.body = training_message_params[:body]
       if @training_message.save && @training_message.answer.save  # TODO なぜか同時に更新できない
+        flash[:notice] = '回答を更新しました'
+      else
+        flash[:error] = '回答の更新に失敗しました'
+      end
+    end
+
+    def message_update_answer_failed
+      defined_answer = DefinedAnswer.find_by(defined_answer_id: 6, bot_id: @bot.id)  # TODO
+      @training_message.answer = defined_answer
+      @training_message.body = defined_answer.body
+      if @training_message.save
         flash[:notice] = '回答を更新しました'
       else
         flash[:error] = '回答の更新に失敗しました'

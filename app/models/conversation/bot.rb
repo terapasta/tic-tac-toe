@@ -16,20 +16,31 @@ class Conversation::Bot
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 
     result = Ml::Engine.new(@bot.id).reply(context, @message.body)
-    Rails.logger.debug("answer_id: #{result['answer_id']}")
+    @results = result['results']
 
-    answer = nil
-    if result['answer_id'].present?
-      answer = Answer.find_by(id: result['answer_id'])
+    answer_id = @results.dig(0, 'answer_id')
+    probability = @results.dig(0, 'probability')
+    Rails.logger.debug(probability)
+
+    if answer_id.present? && probability > 0.7  # TODO 設定ファイルに切り出すs
+      @answer = Answer.find_by(id: answer_id)
     end
-    answer = NullAnswer.new(@bot) if answer.nil?
+    @answer = NullAnswer.new(@bot) if @answer.nil?
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
     # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
-    [answer]
+    [@answer]
+  end
+
+  def other_answers
+    reply if @results.blank?
+    @results
+      .select {|data| data['probability'] > 0.1 }
+      .map { |data| @bot.answers.find_by(id: data['answer_id']) }
+      .select { |answer| answer.headline.present? && @answer.id != answer.id }[0..4]
   end
 
   private

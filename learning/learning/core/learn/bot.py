@@ -38,6 +38,8 @@ class Bot:
         # シンプルなロジスティック回帰
         estimator = LogisticRegression(C=1e5)
         estimator.fit(training_set.x, training_set.y)
+        # SVMを使用する
+        # estimator = self.__svm(training_set).best_estimator_
         joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 

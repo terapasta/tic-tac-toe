@@ -4,15 +4,21 @@ FOR_TEST_BOT_ID = 4
 
 feature '意図した通りにBotとの対話が出来る' do
   let(:bot) { Bot.find(FOR_TEST_BOT_ID) }
+  let(:chat) { bot.chats.create!(guest_key: 'random-hogehoge-moge') }
 
   before do
-    Learning::Summarizer.new(bot).summary
-    binding.pry
-    engine = Ml::Engine.new(bot.id)
-    engine.learn
+    # 事前に画面から学習させておくためコメントアウト
+    # Learning::Summarizer.new(bot).summary
+    # # binding.pry
+    # engine = Ml::Engine.new(bot.id)
+    # engine.learn
   end
 
-  scenario '情報を参照できる' do
-    expect(true).to be_truthy
+  context '「地区予選は何地区まで申込みできますか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '地区予選は何地区まで申込みできますか？') }
+    scenario do
+      conversation_bot = Conversation::Bot.new(bot, message)
+      expect(conversation_bot.reply[0].body).to be_include('地区予選の参加可能な地区数について、参加区分「コンペティション」としての')
+    end
   end
 end

@@ -6,6 +6,7 @@ class Ml::Engine
   end
 
   def reply(context, body)
+    # binding.pry
     return @client.call(:reply, @bot_id, context, body)
   end
 

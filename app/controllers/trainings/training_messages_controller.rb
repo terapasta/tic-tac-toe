@@ -11,8 +11,14 @@ class Trainings::TrainingMessagesController < ApplicationController
       a.context = 'normal'
     end
 
+    if params[:parent_decision_branch_id].present?
+      decision_branch = @bot.decision_branches.find_by(id: params[:parent_decision_branch_id])
+      answer.parent_decision_branch = decision_branch
+    end
+
     training_message = @training.training_messages.build(training_message_params)
     training_message.answer = answer
+    training_message.speaker = 'bot'
 
     if training_message.save
       flash[:notice] = '回答を差し替えました'

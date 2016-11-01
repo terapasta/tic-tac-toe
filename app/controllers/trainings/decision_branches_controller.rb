@@ -23,7 +23,7 @@ class Trainings::DecisionBranchesController < ApplicationController
   end
 
   def choice
-    @training.training_messages.build(speaker: :guest, body: @decision_branch.body)
+    @guest_training_message = @training.training_messages.build(speaker: :guest, body: @decision_branch.body)
     @training.save!
 
     message = @training.training_messages.build(speaker: :bot)
@@ -33,8 +33,11 @@ class Trainings::DecisionBranchesController < ApplicationController
       @training.save!
     else
       message.build_answer(parent_decision_branch: @decision_branch)
+      # message.body = ''
     end
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
+    # binding.pry
+    # redirect_to bot_training_path(@bot, @training, auto: params[:auto])
+    render 'trainings/show'
   end
 
   private

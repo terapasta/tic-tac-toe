@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
 
+  get 'static_pages/help'
 
   resources :bots, only: [:index, :edit, :update] do
     resource :imports, only: [:new, :create]
@@ -36,8 +37,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  resource :dashboards, only: [:show]
 
   namespace :api, { format: 'json' } do
     namespace :v1 do

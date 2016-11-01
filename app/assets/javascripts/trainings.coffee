@@ -47,8 +47,15 @@ $ ->
 
   $('.message-body-wrapper').on 'click', ->
     $(@).hide()
-    $(@).next('.message-body-edit').removeClass('hidden').find('input').val(body).focus()
+    $textarea = $(@).next('.message-body-edit').removeClass('hidden').find('textarea[data-autocomplete]')
+    $textarea.focus()
+    # $textarea.val(body).focus()
 
   $('textarea[data-autocomplete]').railsAutocomplete()
+  $('textarea[data-autocomplete]').on 'railsAutocomplete.select', (e, data) ->
+    $headline = $(@).parents('.message-body-edit').find('#training_message_answer_attributes_headline')
+    $headline.val(data.item.headline)
+  $('textarea[data-autocomplete]').on 'focus', (e) ->
+    $(@).select()
 
   window.location.hash = '#last-message'

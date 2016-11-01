@@ -3,8 +3,6 @@ class TrainingsController < ApplicationController
   before_action :set_bot
   before_action :set_training, only: [:show, :create, :destroy]
 
-  autocomplete :answer, :body, full: true
-
   def show
     @guest_training_message = TrainingMessage.new(training: @training)
   end
@@ -24,7 +22,7 @@ class TrainingsController < ApplicationController
   def autocomplete_answer_body
     term = params[:term]
     render json: @bot.answers.where('body like ?', "%#{term}%").map { |answer|
-      { id: answer.id, label: answer.body, value: answer.body }
+      { id: answer.id, label: answer.body, value: answer.body, headline: answer.headline }
     }
   end
 

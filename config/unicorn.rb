@@ -1,4 +1,5 @@
 worker_processes 2
+timeout 150
 
 listen  '/tmp/unicorn.sock'
 pid     '/tmp/unicorn.pid'

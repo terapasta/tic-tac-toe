@@ -3,8 +3,8 @@ class ThreadsController < ApplicationController
   before_action :set_bot
 
   def index
-    @chats = @bot.chats.joins(:messages).order('id desc').page(params[:page])
-    @chats = @chats.where('messages.answer_failed', true) if params[:filter].present?
+    @chats = @bot.chats.includes(:messages).order('chats.id desc').page(params[:page])
+    @chats = @chats.where('messages.answer_failed', true).references(:messages) if params[:filter].present?
   end
 
   private

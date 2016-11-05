@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
 from .base import Base
+from learning.config.config import Config
 
 class TrainingMessage(Base):
     # TODO dbとmysqldbを統一したい
@@ -14,8 +15,9 @@ class TrainingMessage(Base):
         self.bot_id = bot_id
 
     def build(self):
+        config = Config()
         bodies = self.__split_bodies(self.learning_training_messages['question'])
-        bodies_vec = Nlang.texts2vec(bodies, 'learning/vocabulary/%s_vocabulary.pkl' % self.bot_id)  # TODO 定数化したい
+        bodies_vec = Nlang.texts2vec(bodies, "learning/models/%s/%s_vocabulary.pkl" % (config.env, self.bot_id))  # TODO 定数化したい
         self._x = bodies_vec
         self._y = self.learning_training_messages['answer_id']
 

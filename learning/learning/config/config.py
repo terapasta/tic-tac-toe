@@ -14,6 +14,10 @@ class Config:
 
     def __set_env(self):
         args = sys.argv
-        self.env = 'development'
+        self._env = 'development'
         if len(args) > 1:
-            self.env = args[1]
+            self._env = args[1]
+
+    @property
+    def env(self):
+        return self._env

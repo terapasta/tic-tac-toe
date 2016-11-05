@@ -11,13 +11,14 @@ from learning.config.config import Config
 
 class Reply:
     def __init__(self, bot_id):
-        dbconfig = Config().get('database')
+        config = Config()
+        dbconfig = config.get('database')
         self.db = dataset.connect(dbconfig['endpoint'])
-        self.no_classified_threshold = Config().get('default_no_classified_threshold')
+        self.no_classified_threshold = config.get('default_no_classified_threshold')
 
         try:
-            self.estimator = joblib.load("learning/models/%s_logistic_reg_model" % bot_id)
-            self.vocabulary = joblib.load("learning/vocabulary/%s_vocabulary.pkl" % bot_id) # TODO 定数化したい
+            self.estimator = joblib.load("learning/models/%s/%s_logistic_reg_model" % (config.env, bot_id))
+            self.vocabulary = joblib.load("learning/models/%s/%s_vocabulary.pkl" % (config.env, bot_id)) # TODO 定数化したい
         except IOError:
             raise ModelNotExistsError()
 

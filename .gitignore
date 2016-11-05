@@ -55,9 +55,11 @@ bower.json
 *.bak
 __pycache__
 learning/example.log
-learning/learning/models/*
-learning/learning/vocabulary/*
 learning/learning/example.log
 learning/graph.png
+learning/learning/models/**
+!learning/learning/models/production/.keep
+!learning/learning/models/test/.keep
+!learning/learning/models/development/.keep
 learning/logs/*
 !*.keep

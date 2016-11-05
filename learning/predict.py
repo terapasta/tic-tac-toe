@@ -1,6 +1,6 @@
 from learning.core.predict.reply import Reply
 
-bot_id = 4
+bot_id = 1
 X = [
     ['地区予選は何地区まで申込みできますか？']
     # ['人生楽しいことがありますね、トマト食べたい']  # => ぼちぼちでんな

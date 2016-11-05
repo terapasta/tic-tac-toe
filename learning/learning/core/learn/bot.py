@@ -25,8 +25,8 @@ class Bot:
 
     def learn(self):
         logger.debug('Bot.learn start')
-
-        dbconfig = Config().get('database')
+        config = Config()
+        dbconfig = config.get('database')
         db = dataset.connect(dbconfig['endpoint'])
         mysqldb = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
         training_set = TrainingMessage(db, mysqldb, self.bot_id)
@@ -40,7 +40,7 @@ class Bot:
         estimator.fit(training_set.x, training_set.y)
         # SVMを使用する
         # estimator = self.__svm(training_set).best_estimator_
-        joblib.dump(estimator, "learning/models/%s_logistic_reg_model" % self.bot_id)
+        joblib.dump(estimator, "learning/models/%s/%s_logistic_reg_model" % (config.env, self.bot_id))
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()

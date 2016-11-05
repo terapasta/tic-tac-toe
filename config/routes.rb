@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   devise_for :admin_users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
+    put 'users' => 'devise/registrations#update', as: 'user_registration'
+  end
 
   get 'static_pages/help'
 

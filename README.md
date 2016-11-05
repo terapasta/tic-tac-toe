@@ -10,10 +10,10 @@ $ python learn.py
 
 ## テストの実行について(Guard)
 
+python側エンジンと連携してテストする必要があるため、specを実行する前にtestモードでRPCサーバを起動する。
+
 ```
 $ cd learning
-$ python myope_server.py
+$ python myope_server.py test
 $ guard
 ```
-
-※ python側は開発環境・テスト環境の切り替えの実装をする時間がなかったので、開発環境とテスト環境は独立していないので注意。

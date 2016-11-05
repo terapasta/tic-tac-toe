@@ -10,7 +10,7 @@ from learning.core.learn.bot import Bot
 # from ..core.plotter import Plotter
 # from ..config.config import Config
 #
-bot_id = 1
+bot_id = 4
 #
 # db = dataset.connect(Config().get('database')['endpoint'])
 # training_set = TrainingMessage(db, bot_id)

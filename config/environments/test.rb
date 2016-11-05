@@ -45,6 +45,6 @@ Rails.application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
-    Bullet.raise  = true # N+1問題が発見された時にErrorを発生させる
+    Bullet.raise  = false
   end
 end

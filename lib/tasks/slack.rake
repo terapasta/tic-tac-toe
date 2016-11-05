@@ -13,6 +13,7 @@ namespace :slack do
 
     client.on :hello do
       puts 'Successfully connected.'
+      puts Rails.application.routes.url_helpers.api_v1_messages_url
     end
 
     client.on :message do |data|
@@ -20,6 +21,7 @@ namespace :slack do
         text = data['text'].delete("<@#{user_id}> ")
 
         endpoint = Rails.application.routes.url_helpers.api_v1_messages_url
+        # endpoint = 'https://app.my-ope.net/api/v1/messages'
         response = HTTP.headers('Content-Type' => "application/json")
          .post(endpoint, json: { message: text, bot_id: 1 })  # TODO bot_idを指定できるようにする
 

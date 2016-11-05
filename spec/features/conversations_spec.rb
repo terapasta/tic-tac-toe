@@ -7,7 +7,6 @@ feature '意図した通りにBotとの対話が出来る' do
   let(:chat) { bot.chats.create!(guest_key: 'random-hogehoge-moge') }
 
   before do
-    # 事前に画面から学習させておくためコメントアウト
     Learning::Summarizer.new(bot).summary
     engine = Ml::Engine.new(bot.id)
     engine.learn
@@ -15,12 +14,12 @@ feature '意図した通りにBotとの対話が出来る' do
 
   context '「こんにちは」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'こんにちは') }
-    scenario do
+    scenario '「こんにちは！」と返すこと' do
       conversation_bot = Conversation::Bot.new(bot, message)
       expect(conversation_bot.reply[0].body).to be_include('こんにちは！')
     end
   end
-  
+
   #
   # context '「ピティナってなに」とポストされた場合' do
   #   let(:message) { chat.messages.build(speaker: 'guest', body: 'ピティナってなに') }

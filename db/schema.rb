@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161031151526) do
+ActiveRecord::Schema.define(version: 20161107233716) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -223,6 +223,13 @@ ActiveRecord::Schema.define(version: 20161031151526) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "word_mappings", force: :cascade do |t|
+    t.string   "word",       limit: 20, null: false
+    t.string   "synonym",    limit: 20, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   add_foreign_key "learning_training_messages", "bots"
 end

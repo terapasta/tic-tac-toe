@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 20161108224806) do
     t.string   "speaker",       limit: 255,                   null: false
     t.text     "body",          limit: 65535
     t.string   "user_agent",    limit: 1024
+    t.boolean  "learn_enabled",               default: true,  null: false
     t.boolean  "answer_failed",               default: false, null: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false

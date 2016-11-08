@@ -18,16 +18,25 @@ class Learning::TrainingMessageConverter
         end
       end
     end
-    puts qa
     bulk_insert(qa)
   end
 
   private
     def bulk_insert(qa_hash)
-      learning_training_messages = qa_hash.map do |key, value|
+      learning_training_messages = amp(qa_hash).map do |key, value|
         LearningTrainingMessage.new(bot: @bot, question: key, answer_body: value[:body], answer_id: value[:answer_id])
       end
       LearningTrainingMessage.import!(learning_training_messages)
+    end
+
+    def amp(qa_hash)
+      hash = qa_hash.dup
+      qa_hash.each do |key, value|
+        WordMapping.variations_of(key).each do |sentence|
+          hash[sentence] = value
+        end
+      end
+      return hash
     end
 
     def training_message_hold?(training_message)

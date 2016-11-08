@@ -4,6 +4,7 @@ class LearningsController < ApplicationController
 
   def update
     if Learning::Summarizer.new(@bot).summary
+      LearningTrainingMessage.amp!(@bot)
       scores = Ml::Engine.new(@bot.id).learn
       @bot.score ||= @bot.build_score
       @bot.score.update(scores)

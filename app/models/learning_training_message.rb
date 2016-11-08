@@ -4,7 +4,6 @@ class LearningTrainingMessage < ActiveRecord::Base
 
   validates :answer_body, length: { maximum: 10000 }
 
-  # TODO クラス・メソッドをselfではなく囲う形にする
   class << self
     def to_csv(bot)
       CSV.generate do |csv|

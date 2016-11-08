@@ -1,9 +1,3 @@
-# WordMapping.seed(:id,
-#   { id: 1, word: '社長', synonym: '代表取締役' },
-#   { id: 1, word: '社長', synonym: 'CEO' },
-#   { id: 1, word: '社長', synonym: '代表' },
-# )
-
 Bot.seed(:id,
   { id: 4, user_id: 1, name: 'Rspec用Bot(ピティナ)', token: SecureRandom.hex(32) },
 )
@@ -14,6 +8,12 @@ Answer.seed(:id,
   { id: 3, context: 'normal', body: 'ありがとう！', headline: nil, bot_id: 4 },
   { id: 4, context: 'normal', body: 'すみません><', headline: nil, bot_id: 4 },
   { id: 5, context: 'normal', body: 'おやすなさい！', headline: nil, bot_id: 4 },
+  { id: 5, context: 'normal', body: 'おやすなさい！', headline: nil, bot_id: 4 },
+)
+
+WordMapping.seed(:id,
+  { id: 1, word: 'こんにちは', synonym: 'こんにちわ' },
+  # { id: 1, word: 'こんにちは', synonym: 'こんちゃ' },
 )
 
 Training.seed(:id,

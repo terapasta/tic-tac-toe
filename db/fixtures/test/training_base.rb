@@ -1,3 +1,9 @@
+# WordMapping.seed(:id,
+#   { id: 1, word: '社長', synonym: '代表取締役' },
+#   { id: 1, word: '社長', synonym: 'CEO' },
+#   { id: 1, word: '社長', synonym: '代表' },
+# )
+
 Bot.seed(:id,
   { id: 4, user_id: 1, name: 'Rspec用Bot(ピティナ)', token: SecureRandom.hex(32) },
 )

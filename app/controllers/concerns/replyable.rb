@@ -20,7 +20,8 @@ module Replyable
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 
-      message = parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer.is_a?(NullAnswer))
+      answer_failed = answer.is_a?(NullAnswer)
+      message = parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer_failed, learn_enabled: !answer_failed)
       message.other_answers = responder.other_answers if responder.present?
       message
     end

@@ -44,11 +44,8 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
-    fixture_paths = "#{Rails.root}/db/fixtures/test"
-    SeedFu.seed(fixture_paths)
   end
 
   config.before(:each) do
@@ -57,6 +54,11 @@ RSpec.configure do |config|
     if Bullet.enable?
       Bullet.start_request
     end
+  end
+
+  config.before(:each, type: :feature) do
+    fixture_paths = "#{Rails.root}/db/fixtures/test"
+    SeedFu.seed(fixture_paths)
   end
 
   config.after(:each) do

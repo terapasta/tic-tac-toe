@@ -8,6 +8,11 @@ Answer.seed(:id,
   { id: 3, context: 'normal', body: 'ありがとう！', headline: nil, bot_id: 4 },
   { id: 4, context: 'normal', body: 'すみません><', headline: nil, bot_id: 4 },
   { id: 5, context: 'normal', body: 'おやすなさい！', headline: nil, bot_id: 4 },
+  { id: 6, context: 'normal', body: 'どういたしまして！', headline: nil, bot_id: 4 },
+)
+
+WordMapping.seed(:id,
+  { id: 1, word: 'ありがとう', synonym: 'サンキュー' },
 )
 
 Training.seed(:id,
@@ -25,4 +30,6 @@ TrainingMessage.seed(:id,
   { id: 8, training_id: 1, answer_id: 4, speaker: 'bot', body: 'すみません><' },
   { id: 9, training_id: 1, answer_id: nil, speaker: 'guest', body: 'おやすみー' },
   { id: 10, training_id: 1, answer_id: 5, speaker: 'bot', body: 'おやすみなさい' },
+  { id: 11, training_id: 1, answer_id: nil, speaker: 'guest', body: 'ありがとう' },
+  { id: 12, training_id: 1, answer_id: 6, speaker: 'bot', body: 'どういたしまして！' },
 )

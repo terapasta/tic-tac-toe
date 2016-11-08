@@ -18,7 +18,6 @@ class Learning::TrainingMessageConverter
         end
       end
     end
-    puts qa
     bulk_insert(qa)
   end
 

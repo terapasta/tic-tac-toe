@@ -4,6 +4,8 @@ class LearningTrainingMessage < ActiveRecord::Base
 
   validates :answer_body, length: { maximum: 10000 }
 
+  # TODO クラス・メソッドをselfではなく囲う形にする
+
   def self.to_csv(bot)
     CSV.generate do |csv|
       bot.learning_training_messages.find_each do |learning_training_message|
@@ -29,5 +31,17 @@ class LearningTrainingMessage < ActiveRecord::Base
        end
     end
     csv << (row2 || row)
+  end
+
+  def self.amp!(bot)
+    arr = []
+    bot.learning_training_messages.each do |learning_training_message|
+      WordMapping.variations_of(learning_training_message.question).each do |sentence|
+        copy_model = learning_training_message.dup
+        copy_model.question = sentence
+        arr << copy_model
+      end
+    end
+    LearningTrainingMessage.import!(arr)
   end
 end

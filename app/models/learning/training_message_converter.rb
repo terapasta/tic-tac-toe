@@ -29,15 +29,15 @@ class Learning::TrainingMessageConverter
       LearningTrainingMessage.import!(learning_training_messages)
     end
 
-    def amp(qa_hash)
-      hash = qa_hash.dup
-      qa_hash.each do |key, value|
-        WordMapping.variations_of(key).each do |sentence|
-          hash[sentence] = value
-        end
-      end
-      return hash
-    end
+    # def amp(qa_hash)
+    #   hash = qa_hash.dup
+    #   qa_hash.each do |key, value|
+    #     WordMapping.variations_of(key).each do |sentence|
+    #       hash[sentence] = value
+    #     end
+    #   end
+    #   return hash
+    # end
 
     def training_message_hold?(training_message)
       # training_message.answer.present? && training_message.answer.type.nil?

@@ -23,10 +23,10 @@ feature '意図した通りにBotとの対話が出来る' do
     end
   end
 
-  context '「こんちゃ」とポストされた場合' do
-    let(:message) { chat.messages.build(speaker: 'guest', body: 'こんちゃ') }
-    scenario '「こんにちは！」と返すこと' do
-      expect(subject[0].body).to be_include('こんにちは！')
+  context '「サンキュー」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'サンキュー') }
+    scenario '「どういたしまして！」と返すこと' do
+      expect(subject[0].body).to be_include('どういたしまして！')
     end
   end
 end

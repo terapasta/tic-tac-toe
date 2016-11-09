@@ -49,6 +49,7 @@ config/initializers/secret_token.rb
 bower.json
 
 .tags
+.tags*
 .idea
 
 *.pyc

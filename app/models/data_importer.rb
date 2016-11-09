@@ -16,7 +16,7 @@ class DataImporter
         question = "#{name} #{header}"
         answer_body = "#{name}の#{header}は#{row[in_index]}です。"
 
-        # TODO トランザクションを1回にしたい
+        # FIXME トランザクションを1回にしたい
         answer = bot.answers.create!(body: answer_body)
         training = bot.trainings.create!
         training.training_messages.create!(body: question, speaker: 'guest')

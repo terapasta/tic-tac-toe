@@ -1,5 +1,5 @@
 class TwitterBot::Base
-  # TODO DRYにしたい
+  # FIXME DRYにしたい
   BOT_SCREEN_NAME = 'donusagi_bot'
 
   attr_reader :client

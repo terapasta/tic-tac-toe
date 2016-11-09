@@ -80,7 +80,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     def message_update
       @training_message.attributes = training_message_params
       @training_message.answer.body = training_message_params[:body]
-      if @training_message.save && @training_message.answer.save  # TODO なぜか同時に更新できない
+      if @training_message.save
         flash[:notice] = '回答を更新しました'
       else
         flash[:error] = '回答の更新に失敗しました'

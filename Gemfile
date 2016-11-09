@@ -81,6 +81,7 @@ gem 'exception_notification'
 gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'daemons'
 
 group :development, :test do
 

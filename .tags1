@@ -4,5 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Bot	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^class Bot < ActiveRecord::Base$/;"	class	line:1
-has_feature?	/Users/harada/source_code/donusagi-bot/app/models/bot.rb	/^  def has_feature?(feature)$/;"	method	line:15	class:Bot
+Ml	/Users/harada/source_code/donusagi-bot/lib/ml/engine.rb	/^class Ml::Engine$/;"	class	line:1
+initialize	/Users/harada/source_code/donusagi-bot/lib/ml/engine.rb	/^  def initialize(bot_id)$/;"	method	line:3	class:Ml
+reply	/Users/harada/source_code/donusagi-bot/lib/ml/engine.rb	/^  def reply(context, body)$/;"	method	line:8	class:Ml
+learn	/Users/harada/source_code/donusagi-bot/lib/ml/engine.rb	/^  def learn$/;"	method	line:13	class:Ml

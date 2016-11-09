@@ -27,9 +27,8 @@ class Bot:
         logger.debug('Bot.learn start')
         config = Config()
         dbconfig = config.get('database')
-        db = dataset.connect(dbconfig['endpoint'])
-        mysqldb = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
-        training_set = TrainingMessage(db, mysqldb, self.bot_id)
+        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
+        training_set = TrainingMessage(db, self.bot_id)
         training_set.build()
 
         # SVMのグリッドサーチに時間がかかるので、一旦ロジスティック回帰のみにする

@@ -9,9 +9,8 @@ from learning.config.config import Config
 from learning.core.training_set.text_array import TextArray
 
 class TrainingMessage(Base):
-    # TODO dbとmysqldbを統一したい
-    def __init__(self, db, mysqldb, bot_id):
-        self.learning_training_messages = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, mysqldb)
+    def __init__(self, db, bot_id):
+        self.learning_training_messages = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, db)
         self.bot_id = bot_id
 
     def build(self):

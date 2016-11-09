@@ -23,4 +23,8 @@ class TrainingMessage < ActiveRecord::Base
     parent_decision_branch.next_answer_id = nil
     save!
   end
+
+  def previous
+    training.training_messages.where('id < ?', self.id).order("id desc").first
+  end
 end

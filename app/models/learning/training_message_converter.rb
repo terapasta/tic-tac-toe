@@ -7,7 +7,7 @@ class Learning::TrainingMessageConverter
     qa = {}
     @bot.trainings.find_each do |training|
       guest_body, bot_body = ''
-      training.training_messages.each do |training_message|
+      training.training_messages.where(learn_enabled: true).each do |training_message|
         if training_message.guest?
           guest_body = training_message.body
         elsif training_message.bot?

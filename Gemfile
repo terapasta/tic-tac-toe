@@ -79,6 +79,8 @@ gem 'slack-api'
 gem 'activerecord-import'
 gem 'exception_notification'
 gem 'slack-notifier'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 group :development, :test do
 

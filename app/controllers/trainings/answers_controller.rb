@@ -13,19 +13,6 @@ class Trainings::AnswersController < ApplicationController
     render :new
   end
 
-  def create
-    # binding.pry
-    parent_decision_branch = @bot.decision_branches.find(params[:parent_decision_branch_id])
-    message = @training.training_messages.build(speaker: :bot, learn_enabled: false)
-    answer = message.build_answer(answer_params)
-    answer.bot_id = @bot.id
-    answer.parent_decision_branch = parent_decision_branch
-    message.body = answer.body
-    message.save!
-    flash[:notice] = '回答を差し替えました'
-    redirect_to bot_training_path(@bot, @training, auto: params[:auto])
-  end
-
   private
     def set_bot
       @bot = current_user.bots.find(params[:bot_id])

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -
-import dataset
 import numpy as np
 import pandas as pd
 import MySQLdb

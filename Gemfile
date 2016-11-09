@@ -128,6 +128,7 @@ group :development, :test do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
+  gem 'capistrano3-delayed-job', '~> 1.0'
 end
 
 group :production, :staging do

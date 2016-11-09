@@ -14,6 +14,8 @@ class TrainingMessage < ActiveRecord::Base
 
   validates :body, length: { maximum: 10000 }
 
+  before_validation :change_answer_failed
+
   def parent
     training
   end
@@ -23,4 +25,16 @@ class TrainingMessage < ActiveRecord::Base
     parent_decision_branch.next_answer_id = nil
     save!
   end
+
+  def previous
+    training.training_messages.where('id < ?', self.id).order("id desc").first
+  end
+
+  private
+    def change_answer_failed
+      if answer_id.present?
+        self.answer_failed = false
+      end
+      true
+    end
 end

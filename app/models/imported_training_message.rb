@@ -3,8 +3,6 @@ class ImportedTrainingMessage < ActiveRecord::Base
   serialize :underlayer
 
   def self.import_csv(file, bot)
-    bot.imported_training_messages.destroy_all
-
     imported_training_messages = []
     CSV.foreach(file.path, encoding: 'Shift_JIS:UTF-8', skip_blanks: true) do |row|
       next if row[0].blank?

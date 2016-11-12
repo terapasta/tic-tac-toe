@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :answer do
-    context nil
+    bot
+    context 'normal'
     body "MyText"
   end
 end

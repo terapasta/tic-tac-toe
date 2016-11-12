@@ -18,18 +18,20 @@ class LearningTrainingMessage < ActiveRecord::Base
 
     def recursive_put(csv, base, answer)
       row = base.dup
-      row2 = nil
       row << answer.body
       if answer.decision_branches.present?
-         answer.decision_branches.each do |decision_branch|
-           row2 = row.dup
-           row2 << decision_branch.body
-           if decision_branch.next_answer.present?
-             recursive_put(csv, row2, decision_branch.next_answer)
-           end
-         end
+        answer.decision_branches.each do |decision_branch|
+          row2 = row.dup
+          row2 << decision_branch.body
+          if decision_branch.next_answer.present?
+            recursive_put(csv, row2, decision_branch.next_answer)
+          else
+            csv << row2
+          end
+        end
+      else
+        csv << row
       end
-      csv << (row2 || row)
     end
 
     def amp!(bot)

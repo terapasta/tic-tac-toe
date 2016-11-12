@@ -49,12 +49,3 @@ class Nlang:
         for text in texts:
             splited_texts.append(self.split(text))
         return splited_texts
-
-
-    # def texts2vec(self, splited_texts, vocabulary_path):
-    #     count_vectorizer = CountVectorizer()
-    #     print(splited_texts)
-    #     feature_vectors = count_vectorizer.fit_transform(splited_texts)
-    #     vocabulary = count_vectorizer.get_feature_names()
-    #     joblib.dump(vocabulary, vocabulary_path)  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
-    #     return feature_vectors

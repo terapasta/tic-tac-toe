@@ -9,9 +9,8 @@
       <% if message.persisted? %>
         <%= link_to bot_training_training_message_path(bot, message.training, message), method: :delete, class: "btn-message-remove btn btn-default btn-xs", data: { confirm: '以降のメッセージや、配下のメッセージも削除されますが、よろしいですか。' } do %><i class="glyphicon glyphicon-remove"></i><% end %>
       <% end %>
-      <% if messages.last == message # && !training_message.id == Answer::START_MESSAGE_ID%>
-        <span id="last-message" />
-      <% end %>
+      <%= training_last_message_anchor(messages, message, id: 'last-message') %>
+
       <%= bootstrap_form_for [bot, message.training, message] do |f| %>
         <div class="message-body-wrapper">
           <%= auto_link(simple_format(message.body), html: { target: '_blank' }) %>

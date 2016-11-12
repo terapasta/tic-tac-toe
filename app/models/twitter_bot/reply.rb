@@ -26,7 +26,7 @@ class TwitterBot::Reply < TwitterBot::Base
     return if tweet.blank?
     screen_name = tweet.user.screen_name
 
-    # TODO 共通化したい
+    # FIXME 共通化したい
     response = HTTP.headers('Content-Type' => "application/json")
      .post(endpoint, json: { message: tweet.text })
 

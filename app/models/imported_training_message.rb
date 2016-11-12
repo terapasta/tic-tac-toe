@@ -7,6 +7,7 @@ class ImportedTrainingMessage < ActiveRecord::Base
 
     imported_training_messages = []
     CSV.foreach(file.path, encoding: 'Shift_JIS:UTF-8', skip_blanks: true) do |row|
+      next if row[0].blank?
       answer = bot.answers.find_or_initialize_by(body: row[1]) {|answer| answer.bot = bot }
       imported_training_message = bot.imported_training_messages.build(question: row[0], answer: answer)
       imported_training_message.underlayer = row[2..-1].compact if row.compact.count > 2

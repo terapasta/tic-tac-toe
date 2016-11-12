@@ -40,6 +40,7 @@ class Bot:
         estimator.fit(training_set.x, training_set.y)
         # SVMを使用する
         # estimator = self.__svm(training_set).best_estimator_
+        joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/%s_vocabulary.pkl" % (config.env, self.bot_id))  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
         joblib.dump(estimator, "learning/models/%s/%s_logistic_reg_model" % (config.env, self.bot_id))
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 

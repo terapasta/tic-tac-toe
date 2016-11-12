@@ -2,7 +2,6 @@ import MeCab
 import jaconv
 from learning.log import logger
 from pykakasi import kakasi
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 
 class Nlang:
@@ -51,11 +50,11 @@ class Nlang:
             splited_texts.append(self.split(text))
         return splited_texts
 
-    @classmethod
-    def texts2vec(self, splited_texts, vocabulary_path):
-        count_vectorizer = CountVectorizer()
-        print(splited_texts)
-        feature_vectors = count_vectorizer.fit_transform(splited_texts)
-        vocabulary = count_vectorizer.get_feature_names()
-        joblib.dump(vocabulary, vocabulary_path)  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
-        return feature_vectors
+
+    # def texts2vec(self, splited_texts, vocabulary_path):
+    #     count_vectorizer = CountVectorizer()
+    #     print(splited_texts)
+    #     feature_vectors = count_vectorizer.fit_transform(splited_texts)
+    #     vocabulary = count_vectorizer.get_feature_names()
+    #     joblib.dump(vocabulary, vocabulary_path)  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
+    #     return feature_vectors

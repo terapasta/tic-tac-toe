@@ -22,9 +22,11 @@ class Learning::Summarizer
         question: imported_training_message.question,
         answer_id: imported_training_message.answer_id
       )
-      learning_training_message.answer_body = imported_training_message.answer.body
-      # TODO 同義語からtraining_meessagesをかさ増しする
-      learning_training_messages << learning_training_message
+      unless learning_training_messages.any? {|m| m.question == imported_training_message.question}
+        learning_training_message.answer_body = imported_training_message.answer.body
+        # TODO 同義語からtraining_meessagesをかさ増しする
+        learning_training_messages << learning_training_message
+      end
     end
     LearningTrainingMessage.import!(learning_training_messages)
   end

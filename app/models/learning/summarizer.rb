@@ -3,6 +3,13 @@ class Learning::Summarizer
     @bot = bot
   end
 
+  def self.summary_all
+    Bot.all.each do |bot|
+      summarizer = self.new(bot)
+      summarizer.summary()
+    end
+  end
+
   def summary
     LearningTrainingMessage.where(bot: @bot).destroy_all
     Learning::TrainingMessageConverter.new(@bot).convert!

@@ -8,7 +8,7 @@ feature '意図した通りにBotとの対話が出来る' do
   let(:conversation_bot) { Conversation::Bot.new(bot, message) }
 
   before do
-    Learning::Summarizer.new(bot).summary
+    Learning::Summarizer.summary_all
     LearningTrainingMessage.amp!(bot)
     engine = Ml::Engine.new(bot)
     engine.learn

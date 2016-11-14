@@ -1,5 +1,10 @@
 Bot.seed(:id,
+  { id: 3, user_id: 1, name: 'ヘヤ子さん', token: SecureRandom.hex(32) },
   { id: 4, user_id: 1, name: 'Rspec用Bot(ピティナ)', token: SecureRandom.hex(32) },
+)
+
+LearningParameter.seed(:id,
+  { id: 1, bot_id: 4, include_failed_data: true }
 )
 
 Answer.seed(:id,
@@ -9,6 +14,10 @@ Answer.seed(:id,
   { id: 4, context: 'normal', body: 'すみません><', headline: nil, bot_id: 4 },
   { id: 5, context: 'normal', body: 'おやすなさい！', headline: nil, bot_id: 4 },
   { id: 6, context: 'normal', body: 'どういたしまして！', headline: nil, bot_id: 4 },
+)
+
+Answer.seed(:id,
+  { id: 1001, context: 'normal', body: 'こんにちは！', headline: nil, bot_id: 3 },
 )
 
 DefinedAnswer.seed(:defined_answer_id,
@@ -22,6 +31,7 @@ WordMapping.seed(:id,
 
 Training.seed(:id,
   { id: 1, bot_id: 4},
+  { id: 1001, bot_id: 3},
 )
 
 TrainingMessage.seed(:id,
@@ -37,4 +47,9 @@ TrainingMessage.seed(:id,
   { id: 10, training_id: 1, answer_id: 5, speaker: 'bot', body: 'おやすみなさい' },
   { id: 11, training_id: 1, answer_id: nil, speaker: 'guest', body: 'ありがとう' },
   { id: 12, training_id: 1, answer_id: 6, speaker: 'bot', body: 'どういたしまして！' },
+)
+
+TrainingMessage.seed(:id,
+  { id: 1001, training_id: 1001, answer_id: nil, speaker: 'guest', body: 'こんにちは' },
+  { id: 1002, training_id: 1001, answer_id: 1001, speaker: 'bot', body: 'こんにちは！' },
 )

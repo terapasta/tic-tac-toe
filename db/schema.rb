@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109080222) do
+ActiveRecord::Schema.define(version: 20161114053156) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -145,6 +145,15 @@ ActiveRecord::Schema.define(version: 20161109080222) do
   add_index "imported_training_messages", ["answer_id"], name: "index_imported_training_messages_on_answer_id", using: :btree
   add_index "imported_training_messages", ["bot_id"], name: "index_imported_training_messages_on_bot_id", using: :btree
 
+  create_table "learning_parameters", force: :cascade do |t|
+    t.integer  "bot_id",              limit: 4
+    t.boolean  "include_failed_data"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
+
   create_table "learning_training_messages", force: :cascade do |t|
     t.integer  "bot_id",      limit: 4
     t.string   "question",    limit: 255
@@ -249,5 +258,6 @@ ActiveRecord::Schema.define(version: 20161109080222) do
     t.datetime "updated_at",            null: false
   end
 
+  add_foreign_key "learning_parameters", "bots"
   add_foreign_key "learning_training_messages", "bots"
 end

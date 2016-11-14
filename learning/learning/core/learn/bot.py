@@ -18,15 +18,17 @@ from learning.core.training_set.training_message import TrainingMessage
 
 
 class Bot:
-    def __init__(self, bot_id):
+    def __init__(self, bot_id, learning_parameter):
         self.bot_id = bot_id
+        self.learning_parameter = learning_parameter
+        logger.debug("self.learning_parameter: % s" % self.learning_parameter)
 
     def learn(self):
         logger.debug('Bot.learn start')
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
-        training_set = TrainingMessage(db, self.bot_id)
+        training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
         training_set.build()
 
         # SVMのグリッドサーチに時間がかかるので、一旦ロジスティック回帰のみにする

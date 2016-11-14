@@ -36,8 +36,8 @@ class MyopeServer(RPCServer):
         return result
         # return { 'status_code': status_code, 'answer_id': answer_id }
 
-    def learn(self, bot_id):
-        evaluator = Bot(bot_id).learn()
+    def learn(self, bot_id, learning_parameter):
+        evaluator = Bot(bot_id, learning_parameter).learn()
         return {
             'accuracy': evaluator.accuracy,
             'precision': evaluator.precision,

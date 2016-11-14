@@ -10,6 +10,6 @@ class Ml::Engine
   end
 
   def learn
-    @client.call(:learn, @bot_id)
+    @client.call(:learn, @bot_id, {include_failed_data: true})
   end
 end

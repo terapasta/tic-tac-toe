@@ -46,9 +46,8 @@ class Bot:
         # クロスバリデーションではなく既存データに対して評価する
         # evaluator.evaluate_using_exist_data(estimator, training_set.x, training_set.y)
 
-        logger.debug('分類に失敗したデータのインデックス(bot.learning_training_messages[index]で参照出来る): %s' % evaluator.indexes_of_failed(estimator, training_set.x, training_set.y))
+        # logger.debug('分類に失敗したデータのインデックス(bot.learning_training_messages[index]で参照出来る): %s' % evaluator.indexes_of_failed(estimator, training_set.x, training_set.y))
         logger.debug('Bot.learn end')
-
 
         return evaluator
 

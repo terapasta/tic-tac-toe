@@ -1,7 +1,7 @@
 class Ml::Engine
 
   def initialize(bot)
-    @client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
+    @client = MessagePack::RPC::Client.new('127.0.0.1', 12000)
     @bot = bot
   end
 

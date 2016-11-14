@@ -19,6 +19,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include ActionDispatch::TestProcess
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -45,7 +46,11 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:suite) do
+    DatabaseCleaner.clean_with :truncation, { except: %w(defined_answers) }
     DatabaseCleaner.strategy = :truncation
+    fixture_paths = "#{Rails.root}/db/fixtures"
+    filter = /defined_answers/
+    SeedFu.seed(fixture_paths, filter)
   end
 
   config.before(:each) do
@@ -56,10 +61,10 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:each, type: :feature) do
-    fixture_paths = "#{Rails.root}/db/fixtures/test"
-    SeedFu.seed(fixture_paths)
-  end
+  # config.before(:each, type: :feature) do
+  #   fixture_paths = "#{Rails.root}/db/fixtures/test"
+  #   SeedFu.seed(fixture_paths)
+  # end
 
   config.after(:each) do
     DatabaseCleaner.clean

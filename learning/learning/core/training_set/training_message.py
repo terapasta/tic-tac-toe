@@ -34,7 +34,7 @@ class TrainingMessage(Base):
         data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
         if self.learning_parameter['include_failed_data']:
             data_count = data['id'].count()
-            other_data = pd.read_sql("select * from learning_training_messages where bot_id <> %s order by rand() limit %s;" % (self.bot_id, data_count), self.db)
+            other_data = pd.read_sql("select * from learning_training_messages where bot_id <> %s and char_length(question) > 10 order by rand() limit %s;" % (self.bot_id, data_count), self.db)
             other_data['answer_id'] = self.classfy_failed_answer_id
             data = pd.concat([data, other_data])
         logger.debug("data['id'].count(): %s" % data['id'].count())

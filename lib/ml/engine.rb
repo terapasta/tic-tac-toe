@@ -1,15 +1,16 @@
 class Ml::Engine
 
-  def initialize(bot_id)
+  def initialize(bot)
     @client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
-    @bot_id = bot_id
+    @bot = bot
   end
 
   def reply(context, body)
-    return @client.call(:reply, @bot_id, context, body)
+    return @client.call(:reply, @bot.id, context, body)
   end
 
   def learn
-    @client.call(:learn, @bot_id, {include_failed_data: true})
+    param = @bot.learning_parameter_attributes.slice(:include_failed_data)  # TODO キーを選択する処理はmodelに寄せたい
+    @client.call(:learn, @bot.id, param)
   end
 end

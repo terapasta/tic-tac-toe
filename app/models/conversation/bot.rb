@@ -15,7 +15,7 @@ class Conversation::Bot
     context = build_context
     Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
 
-    result = Ml::Engine.new(@bot.id).reply(context, @message.body)
+    result = Ml::Engine.new(@bot).reply(context, @message.body)
     @results = result['results']
 
     answer_id = @results.dig(0, 'answer_id')

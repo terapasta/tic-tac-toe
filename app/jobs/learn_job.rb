@@ -5,7 +5,7 @@ class LearnJob < ActiveJob::Base
     bot = Bot.find(bot_id)
     if Learning::Summarizer.new(bot).summary
       LearningTrainingMessage.amp!(bot)
-      scores = Ml::Engine.new(bot.id).learn
+      scores = Ml::Engine.new(bot).learn
       bot.score ||= bot.build_score
       bot.score.update!(scores)
     else

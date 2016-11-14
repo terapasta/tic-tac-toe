@@ -10,7 +10,7 @@ feature '意図した通りにBotとの対話が出来る' do
   before do
     Learning::Summarizer.new(bot).summary
     LearningTrainingMessage.amp!(bot)
-    engine = Ml::Engine.new(bot.id)
+    engine = Ml::Engine.new(bot)
     engine.learn
   end
 

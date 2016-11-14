@@ -147,9 +147,9 @@ ActiveRecord::Schema.define(version: 20161114053156) do
 
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",              limit: 4
-    t.boolean  "include_failed_data"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.boolean  "include_failed_data",           default: true, null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -258,6 +258,5 @@ ActiveRecord::Schema.define(version: 20161114053156) do
     t.datetime "updated_at",            null: false
   end
 
-  add_foreign_key "learning_parameters", "bots"
   add_foreign_key "learning_training_messages", "bots"
 end

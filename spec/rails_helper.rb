@@ -20,6 +20,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include ActionDispatch::TestProcess
+  config.include MlHelper, type: :feature
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -67,11 +68,16 @@ RSpec.configure do |config|
   # end
 
   config.after(:each) do
+    puts('after')
     DatabaseCleaner.clean
 
     if Bullet.enable?
       Bullet.perform_out_of_channel_notifications if Bullet.notification?
       Bullet.end_request
     end
+  end
+
+  config.after(:each, type: :feature) do
+    puts('after type: :feature')
   end
 end

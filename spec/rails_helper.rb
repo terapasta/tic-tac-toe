@@ -19,6 +19,8 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include ActionDispatch::TestProcess
+  config.include MlHelper, type: :feature
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -46,6 +48,9 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
+    fixture_paths = "#{Rails.root}/db/fixtures"
+    filter = /defined_answers/
+    SeedFu.seed(fixture_paths, filter)
   end
 
   config.before(:each) do
@@ -56,17 +61,23 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:each, type: :feature) do
-    fixture_paths = "#{Rails.root}/db/fixtures/test"
-    SeedFu.seed(fixture_paths)
-  end
+  # config.before(:each, type: :feature) do
+  #   fixture_paths = "#{Rails.root}/db/fixtures/test"
+  #   SeedFu.seed(fixture_paths)
+  # end
 
-  config.after(:each) do
+  # feature testでは一連のテスト単位でDBをクリアしたいため、configを分けた
+  # 必要になったらtypeを追加してください
+  config.after(:each, type: :model) do
     DatabaseCleaner.clean
 
     if Bullet.enable?
       Bullet.perform_out_of_channel_notifications if Bullet.notification?
       Bullet.end_request
     end
+  end
+
+  config.after(:suite, type: :feature) do
+    DatabaseCleaner.clean
   end
 end

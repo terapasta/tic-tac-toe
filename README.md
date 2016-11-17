@@ -78,3 +78,5 @@ $ python myope_server.py test
 $ cd ..
 $ guard
 ```
+
+※ テスト実行中にPython側でエラーが発生するとrspecがストップしてしまう問題があります。その際はPython側RPCサーバを停止するとrspecが流れます。

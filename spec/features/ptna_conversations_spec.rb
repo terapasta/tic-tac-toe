@@ -18,17 +18,10 @@ feature 'PTNAのデータで意図した通りにBotとの対話が出来る' do
     end
   end
 
-  context '「こんにちは」とポストされた場合' do
-    let(:message) { chat.messages.build(speaker: 'guest', body: 'こんにちは') }
-    scenario '「こんにちは」と返すこと' do
-      expect(subject[0].body).to eq 'こんにちは'
+  context '「おいしいラーメンが食べたいです」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'おいしいラーメンが食べたいです') }
+    scenario '回答失敗を返すこと' do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
     end
   end
-
-  # context '「おいしいラーメンが食べたいです」とポストされた場合' do
-  #   let(:message) { chat.messages.build(speaker: 'guest', body: 'おいしいラーメンが食べたいです') }
-  #   scenario '回答失敗を返すこと' do
-  #     expect(subject[0].body).to be_include('回答できませんでした。質問文面を変えて再度ご入力ください。')
-  #   end
-  # end
 end

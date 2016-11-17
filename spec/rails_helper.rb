@@ -47,7 +47,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with :truncation, { except: %w(defined_answers) }
     DatabaseCleaner.strategy = :truncation
     fixture_paths = "#{Rails.root}/db/fixtures"
     filter = /defined_answers/
@@ -67,8 +66,9 @@ RSpec.configure do |config|
   #   SeedFu.seed(fixture_paths)
   # end
 
-  config.after(:each) do
-    puts('after')
+  # feature testでは一連のテスト単位でDBをクリアしたいため、configを分けた
+  # 必要になったらtypeを追加してください
+  config.after(:each, type: :model) do
     DatabaseCleaner.clean
 
     if Bullet.enable?
@@ -77,7 +77,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.after(:each, type: :feature) do
-    puts('after type: :feature')
+  config.after(:suite, type: :feature) do
+    DatabaseCleaner.clean
   end
 end

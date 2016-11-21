@@ -17,6 +17,7 @@
 //= require lumen/loader
 //= require lumen/bootswatch
 //= require bootstrap-sprockets
+//= require bootstrap-tagsinput
 // require turbolinks
 //= require base
 // require_tree .

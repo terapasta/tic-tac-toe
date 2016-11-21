@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121095352) do
+ActiveRecord::Schema.define(version: 20161121095553) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -232,6 +232,12 @@ ActiveRecord::Schema.define(version: 20161121095352) do
   end
 
   add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree
+
+  create_table "training_texts", force: :cascade do |t|
+    t.text     "body",       limit: 65535, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "trainings", force: :cascade do |t|
     t.string   "context",    limit: 255

@@ -8,7 +8,7 @@ from learning.core.nlang import Nlang
 from learning.config.config import Config
 # from sklearn.grid_search import GridSearchCV
 # from sklearn.cross_validation import KFold
-# from sklearn.externals import joblib
+from sklearn.externals import joblib
 # from sklearn.linear_model import LogisticRegression
 # from sklearn.grid_search import GridSearchCV
 # from sklearn.metrics import classification_report
@@ -44,24 +44,7 @@ class Tag:
         logger.debug("binarized_y: %s" % binarized_y)
         estimator = c.fit(training_set.x, binarized_y)
 
-        # predict
-        count_vectorizer = CountVectorizer(vocabulary=training_set.body_array.vocabulary)
-        splited_data = [
-            Nlang.split('こんにちは'),
-            Nlang.split('パソコンが壊れました。どうすればいいですか？'),
-        ]
-        feature_vectors = count_vectorizer.fit_transform(splited_data)
+        joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/tag_vocabulary.pkl" % config.env)
+        joblib.dump(estimator, "learning/models/%s/tag_model" % config.env)
 
-        # logger.debug("feature_vectors.torray(): %s" % feature_vectors.toarray())
-        # result = estimator.predict(feature_vectors)
-        # logger.debug("result: %s" % result)
-        # # print(binarizer.inverse_transform(result))
-        # # hoge = MultiLabelBinarizer().inverse_transform(result)
-        # # print(hoge)
-
-
-        result = estimator.predict_proba(feature_vectors)
-        logger.debug(result)
-
-        result = estimator.predict(feature_vectors)
-        logger.debug(binarizer.inverse_transform(result))
+        return None

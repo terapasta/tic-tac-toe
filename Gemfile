@@ -82,6 +82,7 @@ gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 group :development, :test do
 

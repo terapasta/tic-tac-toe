@@ -9,5 +9,4 @@
       = f.text_field :tag_list, value: @training_text.tag_list.join(','), data: { role: :tagsinput }
       = f.submit class: 'btn btn-success'
       | &nbsp;
-      = link_to 'スキップする', '#', class: 'btn btn-default'
-/       = link_to '削除する', [@bot, @answer], method: :delete, class: 'btn btn-danger', data: { confirm: '回答データを削除します。よろしいですか？' }
+      = link_to 'スキップする', new_admin_training_text_path, class: 'btn btn-default'

@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :training_texts, only: [:edit, :update]
+    resources :training_texts, only: [:new, :create]
   end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 

@@ -1,0 +1,13 @@
+.panel.panel-default
+  .panel-heading
+    h4 テキストタグ付け
+
+  .panel-body
+    = bootstrap_form_for [:admin, @training_text] do |f|
+      = f.static_control :body
+      = f.hidden_field :body
+      = f.text_field :tag_list, value: @training_text.tag_list.join(','), data: { role: :tagsinput }
+      = f.submit class: 'btn btn-success'
+      | &nbsp;
+      = link_to 'スキップする', '#', class: 'btn btn-default'
+/       = link_to '削除する', [@bot, @answer], method: :delete, class: 'btn btn-danger', data: { confirm: '回答データを削除します。よろしいですか？' }

@@ -1,0 +1,11 @@
+Tag.seed(:id,
+  { id: 1, name: "あいさつ", taggings_count: 1 },
+  { id: 2, name: "パソコン", taggings_count: 2 },
+  { id: 3, name: "壊れた", taggings_count: 1 },
+  { id: 4, name: "質問", taggings_count: 2 },
+  { id: 5, name: "買う", taggings_count: 1 },
+  { id: 6, name: "パスワード", taggings_count: 1 },
+  { id: 7, name: "紛失", taggings_count: 0 },
+  { id: 8, name: "キー", taggings_count: 1 },
+  { id: 9, name: "忘れた", taggings_count: 2 },
+)

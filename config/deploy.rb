@@ -21,6 +21,8 @@ set :linked_dirs, %w{bin log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bu
 set :bundle_jobs, 4
 set :unicorn_pid, "/tmp/unicorn.pid"
 set :unicorn_config_path, 'config/unicorn.rb'
+set :whenever_identifier, ->{"#{fetch(:application)}_#{fetch(:stage)}}"}
+set :whenever_roles, ->{ :batch }
 
 namespace :deploy do
   desc 'Restart application'

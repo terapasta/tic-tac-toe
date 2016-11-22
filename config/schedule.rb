@@ -39,3 +39,7 @@
 # every 1.day, at: '23:58' do
 #   rake 'twitter:clone_tweets'
 # end
+
+every 1.day, at: '2:58' do
+  rake 'learn:tag'
+end

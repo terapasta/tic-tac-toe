@@ -4,9 +4,13 @@
 
   .panel-body
     = bootstrap_form_for [:admin, @training_text] do |f|
-      = f.static_control :body
-      = f.hidden_field :body
+      / = f.static_control :body
+      / = f.hidden_field :body
+      = f.text_field :body
       = f.text_field :tag_list, value: @training_text.tag_list.join(','), data: { role: :tagsinput }
       = f.submit class: 'btn btn-success'
       | &nbsp;
       = link_to 'スキップする', new_admin_training_text_path, class: 'btn btn-default'
+      br
+      h4 登録済みのタグ
+      = Tag.pluck(:name).join(', ')

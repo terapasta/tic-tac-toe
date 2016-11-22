@@ -1,5 +1,4 @@
 import numpy as np
-import MySQLdb
 from learning.log import logger
 from learning.core.training_set.text_array import TextArray
 from learning.core.training_set.training_text import TrainingText
@@ -11,17 +10,15 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.feature_extraction.text import CountVectorizer
 from learning.core.evaluator import Evaluator
+from learning.core.database import Database
 
 class Tag:
     def __init__(self):
         logger.debug('Tag.__init__()')
 
     def learn(self):
-        # TODO DB生成をDryにしたい
         config = Config()
-        dbconfig = config.get('database')
-        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
-
+        db = Database().connection
         c = OneVsRestClassifier(SVC(kernel='linear', probability=True))
         training_set = TrainingText(db)
         training_set.build()

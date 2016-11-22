@@ -17,6 +17,7 @@ count_vectorizer = CountVectorizer(vocabulary=vocabulary)
 splited_data = [
     Nlang.split('こんにちは'),
     Nlang.split('パソコンが壊れました。どうすればいいですか？'),
+    Nlang.split('パソコンが壊れちゃった。'),
 ]
 feature_vectors = count_vectorizer.fit_transform(splited_data)
 

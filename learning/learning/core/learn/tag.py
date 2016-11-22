@@ -10,6 +10,7 @@ from sklearn.svm import SVC
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.feature_extraction.text import CountVectorizer
+from learning.core.evaluator import Evaluator
 
 class Tag:
     def __init__(self):
@@ -38,6 +39,9 @@ class Tag:
         joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/tag_vocabulary.pkl" % config.env)
         joblib.dump(estimator, "learning/models/%s/tag_model" % config.env)
         joblib.dump(binarizer, "learning/models/%s/tag_model_labels.pkl" % config.env)
+
+        evaluator = Evaluator()
+        evaluator.evaluate(estimator, training_set.x, binarized_y)
 
         # predict
         # config = Config()

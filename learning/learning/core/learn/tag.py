@@ -1,22 +1,11 @@
 import numpy as np
-# import pandas as pd
 import MySQLdb
 from learning.log import logger
 from learning.core.training_set.text_array import TextArray
 from learning.core.training_set.training_text import TrainingText
 from learning.core.nlang import Nlang
 from learning.config.config import Config
-# from sklearn.grid_search import GridSearchCV
-# from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.grid_search import GridSearchCV
-# from sklearn.metrics import classification_report
-# from sklearn.metrics import precision_recall_fscore_support
-# from sklearn import cross_validation
-# from learning.core.evaluator import Evaluator
-# from learning.core.training_set.training_message import TrainingMessage
-# # from ..plotter import Plotter
 from sklearn.svm import SVC
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
@@ -27,12 +16,12 @@ class Tag:
         logger.debug('Tag.__init__()')
 
     def learn(self):
-        # TODO Dryにする
+        # TODO DB生成をDryにしたい
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
 
-        c = OneVsRestClassifier(SVC(probability=True))
+        c = OneVsRestClassifier(SVC(kernel='linear', probability=True))
         training_set = TrainingText(db)
         training_set.build()
 
@@ -42,9 +31,27 @@ class Tag:
         binarizer = MultiLabelBinarizer().fit(training_set.y)
         binarized_y = binarizer.transform(training_set.y)
         logger.debug("binarized_y: %s" % binarized_y)
+        logger.debug("binarizer.classes_: %s" % binarizer.classes_)
         estimator = c.fit(training_set.x, binarized_y)
 
+        # TODO pickleでバイナリにしてDBに保存したい(出来ればRails側で)
         joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/tag_vocabulary.pkl" % config.env)
         joblib.dump(estimator, "learning/models/%s/tag_model" % config.env)
+        joblib.dump(binarizer, "learning/models/%s/tag_model_labels.pkl" % config.env)
 
-        return None
+        # predict
+        # config = Config()
+        # count_vectorizer = CountVectorizer(vocabulary=training_set.body_array.vocabulary)
+        # splited_data = [
+        #     Nlang.split('こんにちは'),
+        #     Nlang.split('パソコンが壊れました。どうすればいいですか？'),
+        #     Nlang.split('カードキーを自宅においてきてしまいました'),
+        # ]
+        # feature_vectors = count_vectorizer.fit_transform(splited_data)
+        # result_proba = estimator.predict_proba(feature_vectors)
+        # logger.debug("result_proba: %s" % result_proba)
+        # result = estimator.predict(feature_vectors)
+        # logger.debug("result: %s" % result)
+        # logger.debug(binarizer.inverse_transform(result))
+
+        # return None

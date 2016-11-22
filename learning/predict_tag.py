@@ -5,9 +5,13 @@ from learning.core.nlang import Nlang
 from learning.config.config import Config
 from learning.log import logger
 
+import MySQLdb
+from learning.core.training_set.training_text import TrainingText
+
 config = Config()
 estimator = joblib.load("learning/models/%s/tag_model" % config.env)
 vocabulary = joblib.load("learning/models/%s/tag_vocabulary.pkl" % config.env)
+binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)
 
 count_vectorizer = CountVectorizer(vocabulary=vocabulary)
 splited_data = [
@@ -20,6 +24,4 @@ result = estimator.predict_proba(feature_vectors)
 logger.debug(result)
 
 result = estimator.predict(feature_vectors)
-binarizer = MultiLabelBinarizer()
-binarizer.fit([(1,2),(3,4,5,6,7,8,9)])
 logger.debug(binarizer.inverse_transform(result))

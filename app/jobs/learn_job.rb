@@ -8,8 +8,10 @@ class LearnJob < ActiveJob::Base
       scores = Ml::Engine.new(bot).learn
       bot.score ||= bot.build_score
       bot.score.update!(scores)
+      bot.update learning_status: :successed, learning_status_changed_at: Time.current
     else
       Rails.logger.debug('LearnJob: 学習の実行に失敗しました。')
+      bot.update learning_status: :failed, learning_status_changed_at: Time.current
     end
   rescue => e
     Rails.logger.error e.message

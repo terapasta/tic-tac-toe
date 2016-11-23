@@ -1,0 +1,16 @@
+---
+- name: Deploy configuration file
+  template: >
+    src=newrelic-infra.yml
+    dest=/etc/newrelic-infra.yml
+
+- name: Add repository
+  template: >
+    src=newrelic-infra.repo
+    dest=/etc/yum.repos.d/newrelic-infra.repo
+
+- name: Update yum cache
+  shell: yum -q makecache -y --disablerepo='*' --enablerepo='newrelic-infra'
+
+- name: Install nerelic
+  yum: name=newrelic-infra state=installed

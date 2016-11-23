@@ -85,6 +85,8 @@ gem 'daemons'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'bootstrap-tagsinput-rails'
 
+gem 'newrelic_rpm'
+
 group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -139,5 +141,4 @@ group :production, :staging do
   #gem 'pg'
   # ログ保存先変更、静的アセット Heroku 向けに調整
   #gem 'rails_12factor'
-  gem 'newrelic_rpm'
 end

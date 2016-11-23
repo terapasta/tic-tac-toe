@@ -139,4 +139,5 @@ group :production, :staging do
   #gem 'pg'
   # ログ保存先変更、静的アセット Heroku 向けに調整
   #gem 'rails_12factor'
+  gem 'newrelic_rpm'
 end

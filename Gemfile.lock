@@ -254,6 +254,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
+    newrelic_rpm (3.17.1.326)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.1.0)
@@ -516,6 +517,7 @@ DEPENDENCIES
   meta_request
   msgpack-rpc (~> 0.5.4)
   mysql2 (~> 0.3.20)
+  newrelic_rpm
   pry-byebug
   pry-doc
   pry-rails

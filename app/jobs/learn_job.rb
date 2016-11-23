@@ -16,5 +16,7 @@ class LearnJob < ActiveJob::Base
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
+
+    bot.update learning_status: :failed, learning_status_changed_at: Time.current
   end
 end

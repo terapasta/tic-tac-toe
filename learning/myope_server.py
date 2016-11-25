@@ -1,3 +1,4 @@
+import numpy as np
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
@@ -5,7 +6,8 @@ from learning.log import logger
 from learning.core.predict.reply import Reply
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
-from learning.core.learn.tag import Tag
+from learning.core.learn.tag import Tag as LearnTag
+from learning.core.predict.tag import Tag as PredictTag
 from learning.core.learn.learning_parameter import LearningParameter
 
 class MyopeServer(RPCServer):
@@ -49,8 +51,18 @@ class MyopeServer(RPCServer):
         }
 
     def learn_tag_model(self):
-        Tag().learn()
+        LearnTag().learn()
         return { 'status_code': self.STATUS_CODE_SUCCESS }
+
+    def predict_tags(self, bodies):
+        result = PredictTag().predict(bodies)
+        logger.debug("result.__class__.__name__: %s" % result.__class__.__name__)
+        return {
+            'status_code': self.STATUS_CODE_SUCCESS,
+            # 'tags': result.tolist()
+            'tags': result
+        }
+
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())
 server.serve_forever()

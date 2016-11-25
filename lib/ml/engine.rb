@@ -14,6 +14,10 @@ class Ml::Engine
     @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
   end
 
+  def predict_tags(bodies)
+    @client.call(:predict_tags, bodies)
+  end
+
   def learn_tag_model
     @client.call(:learn_tag_model)
   end

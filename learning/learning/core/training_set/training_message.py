@@ -21,7 +21,11 @@ class TrainingMessage(Base):
     def build(self):
         config = Config()
         learning_training_messages = self.__build_learning_training_messages()
-        tags = Tag().predict(learning_training_messages['question'])
+        # tags = Tag().predict(learning_training_messages['question'])
+        tag_ids = learning_training_messages['tag_ids']
+        logger.debug("tag_ids: %s" % tag_ids)
+        tags = Tag().binarize(tag_ids)
+        logger.debug("tags: %s" % tags)
         self._body_array = TextArray(learning_training_messages['question'])
         body_vec = self._body_array.to_vec(type='array')
         self._x = np.c_[tags, body_vec]

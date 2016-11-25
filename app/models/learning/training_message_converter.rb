@@ -38,7 +38,20 @@ class Learning::TrainingMessageConverter
           tag_ids: value[:tag_ids]
         )
       end
+      merge_tag_ids!(learning_training_messages)
       LearningTrainingMessage.import!(learning_training_messages)
+    end
+
+    # TODO python側でデシリアライズ出来ないので、mergeはpython側で行う
+    def merge_tag_ids!(learning_training_messages)
+      questions = learning_training_messages.map(&:question)
+      engine = Ml::Engine.new(nil)
+      result = engine.predict_tags(questions)
+      learning_training_messages.zip(result['tags']).each do |learning_training_message, tag|
+        if learning_training_message.tag_ids.blank?
+          learning_training_message.tag_ids = tag
+        end
+      end
     end
 
     def training_message_hold?(training_message)

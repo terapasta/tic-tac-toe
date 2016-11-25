@@ -12,6 +12,8 @@ class Bot < ActiveRecord::Base
   has_one :score
   has_one :learning_parameter
 
+  enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
+
   mount_uploader :image, ImageUploader
 
   before_validation :generate_token

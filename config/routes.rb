@@ -46,6 +46,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :training_texts, only: [:new, :create]
+    resources :bots, only: [:index] do
+      resources :training_messages, only: [:edit, :update]
+      get 'next', to: 'training_messages#next'
+    end
   end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 

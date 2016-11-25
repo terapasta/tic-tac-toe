@@ -21,6 +21,6 @@ class Tag:
     def predict(self, X):
         body_array = TextArray(X, vocabulary=self.vocabulary)
         result = self.estimator.predict(body_array.to_vec())
-        result = self.binarizer.inverse_transform(result)
+        # result = self.binarizer.inverse_transform(result)
         logger.debug("result: %s" % result)
         return result

@@ -7,9 +7,11 @@ class TextArray:
         self.data = data
         self._vocabulary = vocabulary
 
-    def to_vec(self):
+    def to_vec(self, type=None):
         count_vectorizer = self.__build_count_vectorizer()
         feature_vectors = count_vectorizer.transform(self.__splited_data())
+        if type == 'array':
+            feature_vectors = feature_vectors.toarray()
         return feature_vectors
 
     def __build_count_vectorizer(self):

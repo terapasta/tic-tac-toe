@@ -14,7 +14,7 @@ from sklearn import cross_validation
 from learning.core.evaluator import Evaluator
 from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
-from learning.core.database import Database
+# from ..plotter import Plotter
 
 
 class Bot:
@@ -26,7 +26,8 @@ class Bot:
     def learn(self):
         logger.debug('Bot.learn start')
         config = Config()
-        db = Database().connection
+        dbconfig = config.get('database')
+        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
         training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
         training_set.build()
 

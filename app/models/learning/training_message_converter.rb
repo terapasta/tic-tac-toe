@@ -11,7 +11,7 @@ class Learning::TrainingMessageConverter
       training.training_messages.where(learn_enabled: true).each do |training_message|
         if training_message.guest?
           guest_body = training_message.body
-          tag_ids = training_message.tags.pluck(:id)
+          tag_ids = training_message.tags.pluck(:id).join(',')
         elsif training_message.bot?
           if guest_body.present? && training_message_hold?(training_message)
             qa[guest_body] = {
@@ -49,7 +49,7 @@ class Learning::TrainingMessageConverter
       result = engine.predict_tags(questions)
       learning_training_messages.zip(result['tags']).each do |learning_training_message, tag|
         if learning_training_message.tag_ids.blank?
-          learning_training_message.tag_ids = tag
+          learning_training_message.tag_ids = tag.reject{|val| val == ','}.join(',')
         end
       end
     end

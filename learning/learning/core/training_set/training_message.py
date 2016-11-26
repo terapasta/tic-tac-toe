@@ -21,7 +21,6 @@ class TrainingMessage(Base):
     def build(self):
         config = Config()
         learning_training_messages = self.__build_learning_training_messages()
-        # tags = Tag().predict(learning_training_messages['question'])
         tag_ids = learning_training_messages['tag_ids']
         logger.debug("tag_ids: %s" % tag_ids)
         tags = Tag().binarize(tag_ids)
@@ -50,6 +49,9 @@ class TrainingMessage(Base):
             data = pd.concat([data, other_data])
             logger.debug("data['id'].count(): %s" % data['id'].count())
             return data
+
+    def __merge_tag_vector(self, learning_training_messages):
+        tags = Tag().predict(learning_training_messages['question'])
 
 
     def __find_classfy_failed_answer_id(self):

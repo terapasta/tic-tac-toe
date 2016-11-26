@@ -1,6 +1,4 @@
 class LearningTrainingMessage < ActiveRecord::Base
-  serialize :tag_ids
-
   belongs_to :bot
   belongs_to :answer
 

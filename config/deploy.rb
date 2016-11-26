@@ -15,7 +15,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 set :migration_role, 'web'
 
-set :linked_files, %w{.env config/database.yml .python-version}
+set :linked_files, %w{.env .python-version}
 set :linked_dirs, %w{bin log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads learning/learning/models learning/logs}
 
 set :bundle_jobs, 4

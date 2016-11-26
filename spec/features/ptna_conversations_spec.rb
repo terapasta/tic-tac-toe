@@ -25,10 +25,18 @@ feature 'PTNAのデータで意図した通りにBotとの対話が出来る' do
     end
   end
 
+  context '「入会したいのですが」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '入会したいのですが') }
+    scenario do
+      expect(subject[0].body).to be_include "オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html"
+    end
+  end
+
   pending context '「当日の予定を知りたい」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '当日の予定を知りたい') }
     scenario do
       expect(subject[0].body).to be_include '当日の時間割の発表は、全ての地区で公平を保つため一律で参加票の発送、'
     end
   end
+
 end

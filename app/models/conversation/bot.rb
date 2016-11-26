@@ -22,7 +22,7 @@ class Conversation::Bot
     probability = @results.dig(0, 'probability')
     Rails.logger.debug(probability)
 
-    if answer_id.present? && probability > 0.6  # TODO 設定ファイルに切り出す
+    if answer_id.present? && probability > 0.5  # TODO 設定ファイルに切り出す
       @answer = Answer.find_by(id: answer_id, type: nil)
     end
     @answer = NullAnswer.new(@bot) if @answer.nil?

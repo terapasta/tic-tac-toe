@@ -3,6 +3,7 @@
   vars:
     ruby_version: 2.3.1
     deploy_user: a.harada
+    newrelic_api_key: 11c470b346004a036af703c766f93be841385bcd
   roles:
     - base
     - rbenv

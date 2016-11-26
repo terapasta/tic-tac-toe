@@ -1,16 +1,20 @@
 ---
-- name: Deploy configuration file
-  template: >
-    src=newrelic-infra.yml
-    dest=/etc/newrelic-infra.yml
+- name: check repo
+  shell: |
+    yum list installed | grep newrelic-repo.noarch
+  register: repo_exists
 
-- name: Add repository
-  template: >
-    src=newrelic-infra.repo
-    dest=/etc/yum.repos.d/newrelic-infra.repo
+- name: get repo
+  yum:
+    name: http://download.newrelic.com/pub/newrelic/el5/x86_64/newrelic-repo-5-3.noarch.rpm
+    state: present
+  when: repo_exists|failed
 
-- name: Update yum cache
-  shell: yum -q makecache -y --disablerepo='*' --enablerepo='newrelic-infra'
+- name: yum install
+  yum: state=installed pkg=newrelic-sysmond
 
-- name: Install nerelic
-  yum: name=newrelic-infra state=installed
+- name: set license key
+  shell: /usr/sbin/nrsysmond-config --set license_key={{newrelic_api_key}}
+
+- name: service start
+  service: name=newrelic-sysmond state=started enabled=yes

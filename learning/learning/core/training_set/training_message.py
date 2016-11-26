@@ -21,19 +21,18 @@ class TrainingMessage(Base):
     def build(self):
         config = Config()
         learning_training_messages = self.__build_learning_training_messages()
-        tag_ids = learning_training_messages['tag_ids']
-        logger.debug("tag_ids: %s" % tag_ids)
-        tags = Tag().binarize(tag_ids)
-        logger.debug("tags: %s" % tags)
-        self._body_array = TextArray(learning_training_messages['question'])
+        body_array = TextArray(learning_training_messages['question'])
+        tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
         body_vec = self._body_array.to_vec(type='array')
-        self._x = np.c_[tags, body_vec]
+
+        self._body_array = body_array
+        self._x = np.c_[tag_vec, body_vec]
         self._y = learning_training_messages['answer_id']
 
-        logger.debug('shapeの次元数')
-        logger.debug(tags.shape)
-        logger.debug(body_vec.shape)
-        logger.debug(self._x.shape)
+        # logger.debug('shapeの次元数')
+        # logger.debug(tags.shape)
+        # logger.debug(body_vec.shape)
+        logger.debug(self._x)
 
     @property
     def body_array(self):
@@ -50,9 +49,20 @@ class TrainingMessage(Base):
             logger.debug("data['id'].count(): %s" % data['id'].count())
             return data
 
-    def __merge_tag_vector(self, learning_training_messages):
-        tags = Tag().predict(learning_training_messages['question'])
+    # HACK learning_training_messagesをクラスにするとリファクタリングできそう
+    def __extract_binarized_tag_vector(self, learning_training_messages):
+        tag_ids = learning_training_messages['tag_ids']
+        tag_ids[tag_ids.isnull()] = ','
+        tag_ids = tag_ids.str.split(':')
+        logger.debug("tag_ids: %s" % list(tag_ids))
 
+        # TODO
+        # from sklearn.preprocessing import MultiLabelBinarizer
+        # binarizer = MultiLabelBinarizer().fit([[',']['0','1','2','3','4','5','6','7','8','9','10','11']])
+
+        tag_vector = binarizer.transform(tag_ids)
+        logger.debug("tag_vector: %s" % tag_vector)
+        return tag_vector
 
     def __find_classfy_failed_answer_id(self):
         cursor = self.db.cursor()

@@ -1,7 +1,7 @@
 .row
   .col-md-6.col-xs-12
     = bootstrap_form_for @word_mapping do |f|
-      = f.error_summary
+      = render "shared/errors", object: @word_mapping
       
       = f.text_field :word
       = f.text_field :synonym

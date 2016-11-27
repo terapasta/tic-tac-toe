@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require autocomplete-rails
+// = require autocomplete
 //= require lumen/loader
 //= require lumen/bootswatch
 //= require bootstrap-sprockets

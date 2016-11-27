@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resources :answers, except: [:new, :create]
   end
 
+  resources :word_mappings
+
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
       scope module: :chats do

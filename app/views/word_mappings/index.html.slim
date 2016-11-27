@@ -1,19 +1,17 @@
-h1 Listing word_mappings
+h1 同義語一覧
 
-table
+table.table.table-striped
   thead
     tr
-      th
-      th
+      th = WordMapping.human_attribute_name(:word)
+      th = WordMapping.human_attribute_name(:synonym)
       th
 
   tbody
-    - @word_mappings.each do |word_mapping|
-      tr
-        td = link_to 'Show', word_mapping
-        td = link_to 'Edit', edit_word_mapping_path(word_mapping)
-        td = link_to 'Destroy', word_mapping, data: { confirm: 'Are you sure?' }, method: :delete
+    = render @word_mappings
+  
+  = paginate @word_mappings
 
 br
 
-= link_to 'New Word mapping', new_word_mapping_path
+= link_to '新規', new_word_mapping_path, class: 'btn btn-primary'

@@ -23,7 +23,7 @@ class TrainingMessage(Base):
         learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
         tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
-        body_vec = self._body_array.to_vec(type='array')
+        body_vec = body_array.to_vec(type='array')
 
         self._body_array = body_array
         self._x = np.c_[tag_vec, body_vec]
@@ -57,8 +57,8 @@ class TrainingMessage(Base):
         logger.debug("tag_ids: %s" % list(tag_ids))
 
         # TODO
-        # from sklearn.preprocessing import MultiLabelBinarizer
-        # binarizer = MultiLabelBinarizer().fit([[',']['0','1','2','3','4','5','6','7','8','9','10','11']])
+        from sklearn.preprocessing import MultiLabelBinarizer
+        binarizer = MultiLabelBinarizer().fit([('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14',',')])
 
         tag_vector = binarizer.transform(tag_ids)
         logger.debug("tag_vector: %s" % tag_vector)

@@ -46,6 +46,7 @@ class Tag:
         result = pd.read_sql('select id from tags', self.db)
         ids = np.array(result['id'])
         ids = ids.astype(str)
+        ids = np.append(ids, '0')
         ids = np.append(ids, ',')
         logger.debug("ids: %s" % ids)
-        return ids
+        return [ids]

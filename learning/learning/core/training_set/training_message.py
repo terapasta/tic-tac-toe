@@ -58,6 +58,7 @@ class TrainingMessage(Base):
         logger.debug("tag_ids: %s" % list(tag_ids))
 
         try:
+            logger.debug("self.binarizer.classes_: %s" % self.binarizer.classes_)
             tag_vector = self.binarizer.transform(tag_ids)
         except KeyError as e:
             logger.error('タグ学習時に存在していなかったタグが含まれている可能性があります。python learn_tag.pyを実行してください。')

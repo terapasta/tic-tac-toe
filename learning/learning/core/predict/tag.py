@@ -19,6 +19,8 @@ class Tag:
             raise ModelNotExistsError()
 #
     def predict(self, X):
+        if len(X) == 0:
+            return []
         body_array = TextArray(X, vocabulary=self.vocabulary)
         result = self.estimator.predict(body_array.to_vec())
         result = self.binarizer.inverse_transform(result)

@@ -48,7 +48,7 @@ class TrainingMessage(Base):
             other_data['answer_id'] = self.classfy_failed_answer_id
             data = pd.concat([data, other_data])
             logger.debug("data['id'].count(): %s" % data['id'].count())
-            return data
+        return data
 
     # HACK learning_training_messagesをクラスにするとリファクタリングできそう
     def __extract_binarized_tag_vector(self, learning_training_messages):

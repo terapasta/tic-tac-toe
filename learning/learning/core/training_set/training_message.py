@@ -13,13 +13,14 @@ class TrainingMessage(Base):
     CLASSIFY_FAILED_ID = 2  # TODO Ruby側と重複管理
 
     def __init__(self, db, bot_id, learning_parameter):
+        config = Config()
         self.db = db
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
+        self.binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)  # TODO 共通化したい
 
     def build(self):
-        config = Config()
         learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
         tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
@@ -56,11 +57,12 @@ class TrainingMessage(Base):
         tag_ids = tag_ids.str.split(':')
         logger.debug("tag_ids: %s" % list(tag_ids))
 
-        # TODO
-        from sklearn.preprocessing import MultiLabelBinarizer
-        binarizer = MultiLabelBinarizer().fit([('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14',',')])
-
-        tag_vector = binarizer.transform(tag_ids)
+        try:
+            tag_vector = self.binarizer.transform(tag_ids)
+        except KeyError as e:
+            logger.error('タグ学習時に存在していなかったタグが含まれている可能性があります。python learn_tag.pyを実行してください。')
+            raise e
+#
         logger.debug("tag_vector: %s" % tag_vector)
         return tag_vector
 

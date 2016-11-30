@@ -25,6 +25,13 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
+  context '「どんな会社が使ってる？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな会社が使ってる？') }
+    scenario do
+      expect(subject[0].body).to be_include 'ユーザー企業は追々公開していきますが、とある社団法人さんや上場企業さんなど、'
+    end
+  end
+
   context '「何歳ですか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
     scenario '回答失敗を返すこと' do

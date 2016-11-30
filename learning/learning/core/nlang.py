@@ -23,9 +23,13 @@ class Nlang:
             # logger.debug(node.feature)
             features = node.feature.split(",")
             pos = features[0]
+            # logger.debug("node.feature: %s" % node.feature)
             # if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
             if pos in ["名詞", "動詞", "形容詞", "感動詞", "副詞"]:
                 if pos == '名詞' and features[1] == '非自立':
+                    node = node.next
+                    continue
+                if pos == '動詞' and features[1] == '非自立':
                     node = node.next
                     continue
                 lemma = node.feature.split(",")[6]  #.decode("utf-8")

@@ -1,10 +1,10 @@
 from learning.core.predict.reply import Reply
 
-bot_id = 6
+bot_id = 4
 X = [
-    ['セキュリティーはどうなっている？'],
-    ['セキュリティーはどう？'],
-    # ['アイスいる？'],
+    # ['セキュリティーはどうなっている？'],
+    # ['セキュリティーはどう？'],
+    ['こんにちは'],
 ]
 
 Reply(bot_id).predict(X)

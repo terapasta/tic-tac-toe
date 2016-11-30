@@ -32,6 +32,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
+  # TODO ナイーブベイズにすると正しく分類できるが他Botに影響が出てしまう
   context '「何歳ですか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
     scenario '回答失敗を返すこと' do

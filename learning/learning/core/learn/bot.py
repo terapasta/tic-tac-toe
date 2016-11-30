@@ -7,6 +7,7 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.metrics import precision_recall_fscore_support
@@ -35,12 +36,15 @@ class Bot:
         # estimator = self.__get_best_estimator(training_set)
         # estimator = self.__logistic_regression(training_set).best_estimator_
         # シンプルなロジスティック回帰
-        estimator = LogisticRegression(C=1e5)
-        estimator.fit(training_set.x, training_set.y)
+        # estimator = LogisticRegression(C=1e5)
+        # estimator.fit(training_set.x, training_set.y)
         # SVMを使用する
         # estimator = self.__svm(training_set).best_estimator_
+        # ナイーブベイズを使用する
+        estimator = MultinomialNB()
+        estimator.fit(training_set.x, training_set.y)
         joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/%s_vocabulary.pkl" % (config.env, self.bot_id))  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
-        joblib.dump(estimator, "learning/models/%s/%s_logistic_reg_model" % (config.env, self.bot_id))
+        joblib.dump(estimator, "learning/models/%s/%s_logistic_reg_model" % (config.env, self.bot_id))  # TODO ロジスティック回帰を使うとは限らないので修正したい
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()

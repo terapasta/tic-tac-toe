@@ -11,6 +11,13 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
 
   subject { conversation_bot.reply }
 
+  context '「セキュリティはどう？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'セキュリティはどう？') }
+    scenario do
+      expect(subject[0].body).to be_include 'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。'
+    end
+  end
+
   context '「セキュリティーはどうなっている？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'セキュリティーはどうなっている？') }
     scenario do

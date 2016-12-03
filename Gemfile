@@ -82,6 +82,8 @@ gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'compass'
+gem 'autoprefixer-rails'
 
 group :development, :test do
 

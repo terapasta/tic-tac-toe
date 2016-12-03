@@ -18,7 +18,6 @@
   &__body {
     @include pie-clearfix;
     position: relative;
-    min-height: 500px;
   }
 
   &__master {

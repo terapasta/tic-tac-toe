@@ -1,14 +1,12 @@
-h1 回答一覧
-
-
-table.table.table-striped
+/h1 回答一覧
+/table.table.table-striped
   thead
     tr
       th 見出し
       th 本文
       th
   tbody
-    
+
     - @answers.each do |answer|
       tr
         td = answer.headline
@@ -16,5 +14,16 @@ table.table.table-striped
         td
           = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default"
           = link_to t('helpers.link.destroy'), bot_answer_path(@bot, answer), method: :delete, data: { confirm: '回答を削除します。宜しいですか。' }, class: "btn btn-danger"
+/= paginate @answers
 
-= paginate @answers
+.master-detail-panel
+  .master-detail-panel__header
+    h1.master-detail-panel__title 回答一覧
+  .master-detail-panel__body
+    .master-detail-panel__master
+      ol.tree
+        - @answers.each do |answer|
+          = render 'answers/tree_node', answer: answer
+        = render 'answers/tree_node_add'
+
+    .master-detail-panel__detail

@@ -8,7 +8,10 @@
 // @import 'jquery-ui/theme.css';
 // @import 'jquery-ui/autocomplete.css';
 
+@import "compass/utilities/general/clearfix";
 @import "common/variables";
+@import "modules/*";
+
 html {
   min-height: 100%;
 }

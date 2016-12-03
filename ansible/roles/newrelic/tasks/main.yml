@@ -1,0 +1,20 @@
+---
+- name: check repo
+  shell: |
+    yum list installed | grep newrelic-repo.noarch
+  register: repo_exists
+
+- name: get repo
+  yum:
+    name: http://download.newrelic.com/pub/newrelic/el5/x86_64/newrelic-repo-5-3.noarch.rpm
+    state: present
+  when: repo_exists|failed
+
+- name: yum install
+  yum: state=installed pkg=newrelic-sysmond
+
+- name: set license key
+  shell: /usr/sbin/nrsysmond-config --set license_key={{newrelic_api_key}}
+
+- name: service start
+  service: name=newrelic-sysmond state=started enabled=yes

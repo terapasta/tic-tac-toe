@@ -1,5 +1,6 @@
 /*
  *= require jquery-ui
+ *= require bootstrap-tagsinput
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -216,6 +217,9 @@ body {
 // .navbar-bot-name {
 //   float: none;
 // }
+.bootstrap-tagsinput {
+  width: 100%;
+}
 
 /* スマホ横画面用 */
 @media screen and (max-width: 480px) {

@@ -5,6 +5,7 @@ from learning.log import logger
 from learning.core.predict.reply import Reply
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
+from learning.core.learn.tag import Tag
 
 class MyopeServer(RPCServer):
     STATUS_CODE_SUCCESS = 1
@@ -44,6 +45,10 @@ class MyopeServer(RPCServer):
             'recall': evaluator.recall,
             'f1': evaluator.f1,
         }
+
+    def learn_tag_model(self):
+        Tag().learn()
+        return { 'status_code': self.STATUS_CODE_SUCCESS }
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())
 server.serve_forever()

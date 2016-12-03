@@ -40,6 +40,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     addressable (2.4.0)
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
@@ -57,6 +59,8 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap-tagsinput-rails (0.4.2.1)
+      railties (>= 3.1)
     bootstrap_form (2.3.0)
     buftok (0.2.0)
     builder (3.2.2)
@@ -263,6 +267,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
+    newrelic_rpm (3.17.1.326)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.1.0)
@@ -484,10 +489,12 @@ DEPENDENCIES
   active_hash
   activerecord-import
   autoprefixer-rails
+  acts-as-taggable-on (~> 3.4)
   bcrypt (~> 3.1.7)
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap-tagsinput-rails
   bootstrap_form
   bullet
   byebug
@@ -525,6 +532,7 @@ DEPENDENCIES
   meta_request
   msgpack-rpc (~> 0.5.4)
   mysql2 (~> 0.3.20)
+  newrelic_rpm
   pry-byebug
   pry-doc
   pry-rails

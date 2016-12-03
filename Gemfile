@@ -84,6 +84,10 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'compass'
 gem 'autoprefixer-rails'
+gem 'acts-as-taggable-on', '~> 3.4'
+gem 'bootstrap-tagsinput-rails'
+
+gem 'newrelic_rpm'
 
 group :development, :test do
 

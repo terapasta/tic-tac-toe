@@ -215,3 +215,9 @@ ja:
       answer:
         headline: 見出し
         body: 内容
+  enums:
+    bot:
+      learning_status:
+        processing: 学習中
+        failed: 学習失敗
+        successed: 学習済

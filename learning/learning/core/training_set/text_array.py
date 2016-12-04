@@ -1,4 +1,5 @@
 from learning.core.nlang import Nlang
+from learning.log import logger
 from sklearn.feature_extraction.text import CountVectorizer
 
 class TextArray:
@@ -15,6 +16,7 @@ class TextArray:
         splited_data = []
         for datum in self.data:
             splited_data.append(Nlang.split(datum))
+        # logger.debug("splited_data: %s" % splited_data)
         return splited_data
 
     @property

@@ -1,0 +1,22 @@
+from learning.log import logger
+
+class LearningParameter:
+    ALGORITHM_LOGISTIC_REGRESSION = 0
+    ALGORITHM_NAIVE_BAYES = 1
+
+    def __init__(self, attributes):
+        self._include_failed_data = attributes['include_failed_data']
+        self._algorithm = attributes.get('algorithm', self.ALGORITHM_LOGISTIC_REGRESSION)
+        self._params_for_algorithm = attributes.get('_params_for_algorithm', { 'C': 1e5 })
+
+    @property
+    def include_failed_data(self):
+        return self._include_failed_data
+
+    @property
+    def algorithm(self):
+        return self._algorithm
+
+    @property
+    def params_for_algorithm(self):
+        return self._params_for_algorithm

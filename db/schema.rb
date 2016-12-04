@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123064754) do
+ActiveRecord::Schema.define(version: 20161204042056) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -148,10 +148,12 @@ ActiveRecord::Schema.define(version: 20161123064754) do
   add_index "imported_training_messages", ["bot_id"], name: "index_imported_training_messages_on_bot_id", using: :btree
 
   create_table "learning_parameters", force: :cascade do |t|
-    t.integer  "bot_id",              limit: 4
-    t.boolean  "include_failed_data",           default: true, null: false
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.integer  "bot_id",               limit: 4
+    t.integer  "algorithm",            limit: 4,     default: 0,    null: false
+    t.text     "params_for_algorithm", limit: 65535
+    t.boolean  "include_failed_data",                default: true, null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -161,6 +163,7 @@ ActiveRecord::Schema.define(version: 20161123064754) do
     t.string   "question",    limit: 255
     t.text     "answer_body", limit: 65535
     t.integer  "answer_id",   limit: 4
+    t.text     "tag_ids",     limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end

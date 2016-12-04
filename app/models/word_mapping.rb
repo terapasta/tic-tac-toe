@@ -6,7 +6,7 @@ class WordMapping < ActiveRecord::Base
 
   validate :unique_pair
 
-  scope :for_user, -> (user) { where "user_id IS NULL OR user_id = :user_id", user_id: user.id }
+  scope :for_user, -> (user) { where "user_id IS NULL OR user_id = :user_id", user_id: user&.id }
 
   def self.variations_of(sentence, user)
     for_user(user).map do |word_mapping|

@@ -15,8 +15,6 @@ from sklearn import cross_validation
 from learning.core.evaluator import Evaluator
 from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
-# from ..plotter import Plotter
-
 
 class Bot:
     def __init__(self, bot_id, learning_parameter):
@@ -36,7 +34,7 @@ class Bot:
         # estimator = self.__get_best_estimator(training_set)
         # estimator = self.__logistic_regression(training_set).best_estimator_
         # シンプルなロジスティック回帰
-        estimator = LogisticRegression(C=1e5)
+        estimator = LogisticRegression(C=self.learning_parameter.params_for_algorithm['C'])
         estimator.fit(training_set.x, training_set.y)
         # SVMを使用する
         # estimator = self.__svm(training_set).best_estimator_

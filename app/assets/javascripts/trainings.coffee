@@ -58,4 +58,9 @@ $ ->
   $('textarea[data-autocomplete]').on 'focus', (e) ->
     $(@).select()
 
+  $('textarea[data-autocomplete]').on 'keydown', (e) ->
+    keyCode = $.ui.keyCode
+    if e.keyCode == keyCode.DOWN || e.keyCode == keyCode.UP
+      e.stopImmediatePropagation()
+
   window.location.hash = '#last-message'

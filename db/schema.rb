@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204042056) do
+ActiveRecord::Schema.define(version: 20161204062210) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 20161204042056) do
     t.integer  "algorithm",            limit: 4,     default: 0,    null: false
     t.text     "params_for_algorithm", limit: 65535
     t.boolean  "include_failed_data",                default: true, null: false
+    t.float    "classify_threshold",   limit: 24,    default: 0.5,  null: false
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end

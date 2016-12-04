@@ -5,7 +5,8 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   let(:conversation_bot) { Conversation::Bot.new(@bot, message) }
 
   before(:all) do
-    @bot = create(:bot)
+    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.5)
+    @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
   end
 
@@ -32,10 +33,9 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  # TODO ナイーブベイズにすると正しく分類できるが他Botに影響が出てしまう
   context '「何歳ですか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
-    pending scenario '回答失敗を返すこと' do
+    scenario '回答失敗を返すこと' do
       expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
     end
   end

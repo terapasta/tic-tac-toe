@@ -22,7 +22,7 @@ class Conversation::Bot
     probability = @results.dig(0, 'probability')
     Rails.logger.debug(probability)
 
-    if answer_id.present? && probability > 0.5  # TODO 設定ファイルに切り出す
+    if answer_id.present? && probability > classify_threshold
       @answer = Answer.find_by(id: answer_id, type: nil)
     end
     @answer = NullAnswer.new(@bot) if @answer.nil?
@@ -51,4 +51,8 @@ class Conversation::Bot
       Array.new(NUMBER_OF_CONTEXT).fill(0).concat(answer_ids)[-NUMBER_OF_CONTEXT, NUMBER_OF_CONTEXT]
     end
 
+    def classify_threshold
+      learning_parameter = @bot.learning_parameter || LearningParameter.build_with_default
+      learning_parameter.classify_threshold
+    end
 end

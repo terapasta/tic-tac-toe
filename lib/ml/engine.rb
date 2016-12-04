@@ -11,8 +11,7 @@ class Ml::Engine
   end
 
   def learn
-    param = @bot.learning_parameter_attributes.slice(:include_failed_data)  # TODO キーを選択する処理はmodelに寄せたい
-    @client.call(:learn, @bot.id, param)
+    @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
   end
 
   def learn_tag_model

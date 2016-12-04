@@ -26,7 +26,7 @@ class Bot < ActiveRecord::Base
     if learning_parameter.present?
       learning_parameter.attributes.with_indifferent_access
     else
-      { include_failed_data: false }
+      LearningParameter.default_attributes
     end
   end
 

@@ -91,5 +91,5 @@ $ cap production deploy
 ### Ansible
 
 ```
-$ ansible-playbook -i ansible/production ansible/web-servers.yml -u <sudo_user> --ask-sudo-pass
+$ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
 ```

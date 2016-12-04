@@ -3,6 +3,7 @@
   shell: |
     yum list installed | grep newrelic-repo.noarch
   register: repo_exists
+  ignore_errors: True
 
 - name: get repo
   yum:

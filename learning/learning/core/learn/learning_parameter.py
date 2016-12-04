@@ -2,6 +2,7 @@ from learning.log import logger
 
 class LearningParameter:
     ALGORITHM_LOGISTIC_REGRESSION = 0
+    ALGORITHM_NAIVE_BAYES = 1
 
     def __init__(self, attributes):
         self._include_failed_data = attributes['include_failed_data']

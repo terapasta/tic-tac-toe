@@ -99,10 +99,6 @@
                     // prevent value inserted on focus
                     return false;
                 },
-                search: function(event, ui) {
-                  // 左右の矢印キーの場合、補完メニューを出さないようにする
-                  if (event.keyCode == 37 || event.keyCode == 39) { return false; };
-                },
                 select: function(event, ui) {
                     var terms = split(this.value);
                     // remove the current input

@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe LearningTrainingMessage, type: :model do
-  describe '.to_csv' do
-    pending
-  end
-
   describe '.recursive_put' do
     let(:base) { ['ほげほげ'] }
     let(:answer) { create(:answer, body: 'ほげほげの回答') }

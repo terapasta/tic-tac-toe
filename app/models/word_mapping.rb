@@ -1,17 +1,23 @@
 class WordMapping < ActiveRecord::Base
+  belongs_to :user
+
   validates :word, presence: true, length: { maximum: 20 }
   validates :synonym, presence: true, length: { maximum: 20 }
 
   validate :unique_pair
 
-  def self.variations_of(sentence)
-    arr1 = all.map do |word_mapping|
+  scope :for_user, -> (user) { where "user_id IS NULL OR user_id = :user_id", user_id: user.id }
+
+  def self.variations_of(sentence, user)
+    word_mappings = for_user(user)
+
+    arr1 = word_mappings.map do |word_mapping|
       if sentence.include?(word_mapping.word)
         sentence.gsub(/#{word_mapping.word}/, word_mapping.synonym)
       end
     end.compact
 
-    arr2 = all.map do |word_mapping|
+    arr2 = word_mappings.map do |word_mapping|
       if sentence.include?(word_mapping.synonym)
         sentence.gsub(/#{word_mapping.synonym}/, word_mapping.word)
       end

@@ -49,7 +49,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     fixture_paths = "#{Rails.root}/db/fixtures"
-    filter = /defined_answers/
+    filter = /defined_answers|word_mappings/
     SeedFu.seed(fixture_paths, filter)
   end
 

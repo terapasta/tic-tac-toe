@@ -23,4 +23,5 @@ WordMapping.seed(:id,
   { id: 22, word: 'フリーズ', synonym: '固まる' },
   { id: 23, word: '書類', synonym: '資料' },
   { id: 24, word: '必要', synonym: '必須' },
+  { id: 25, word: 'セキュリティ', synonym: 'セキュリティー' },
 )

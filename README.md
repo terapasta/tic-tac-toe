@@ -80,3 +80,16 @@ $ guard
 ```
 
 ※ テスト実行中にPython側でエラーが発生するとrspecがストップしてしまう問題があります。その際はPython側RPCサーバを停止するとrspecが流れます。
+
+## デプロイ
+### Capistrano
+
+```
+$ cap production deploy
+```
+
+### Ansible
+
+```
+$ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
+```

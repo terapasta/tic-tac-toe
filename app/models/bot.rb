@@ -24,10 +24,11 @@ class Bot < ActiveRecord::Base
 
   def learning_parameter_attributes
     if learning_parameter.present?
-      learning_parameter.attributes.with_indifferent_access
+      attrs = learning_parameter.attributes.with_indifferent_access
     else
-      { include_failed_data: false }
+      attrs = LearningParameter.default_attributes
     end
+    attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :classify_threshold)
   end
 
   private

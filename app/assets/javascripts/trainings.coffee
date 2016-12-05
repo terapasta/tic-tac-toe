@@ -37,6 +37,8 @@
 #   $li.children('form').first().submit()
 
 $ ->
+  autocompleteSelector = 'textarea[data-autocomplete]'
+
   $('#btn-auto-mode').on 'click', ->
     if $(this).hasClass('active')
       $('.auto-mode').val('0')
@@ -47,15 +49,20 @@ $ ->
 
   $('.message-body-wrapper').on 'click', ->
     $(@).hide()
-    $textarea = $(@).next('.message-body-edit').removeClass('hidden').find('textarea[data-autocomplete]')
+    $textarea = $(@).next('.message-body-edit').removeClass('hidden').find(autocompleteSelector)
     $textarea.focus()
     # $textarea.val(body).focus()
 
-  $('textarea[data-autocomplete]').railsAutocomplete()
-  $('textarea[data-autocomplete]').on 'railsAutocomplete.select', (e, data) ->
+  $(autocompleteSelector).railsAutocomplete()
+  $(autocompleteSelector).on 'railsAutocomplete.select', (e, data) ->
     $headline = $(@).parents('.message-body-edit').find('#training_message_answer_attributes_headline')
     $headline.val(data.item.headline)
-  $('textarea[data-autocomplete]').on 'focus', (e) ->
+  $(autocompleteSelector).on 'focus', (e) ->
     $(@).select()
+
+  $(autocompleteSelector).on 'keydown', (e) ->
+    keyCode = $.ui.keyCode
+    if e.keyCode == keyCode.DOWN || e.keyCode == keyCode.UP
+      e.stopImmediatePropagation()
 
   window.location.hash = '#last-message'

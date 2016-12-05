@@ -23,16 +23,16 @@ class TrainingMessage(Base):
     def build(self):
         learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
-        tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
         body_vec = body_array.to_vec(type='array')
 
-        self._body_array = body_array
-        self._x = np.c_[tag_vec, body_vec]
-        self._y = learning_training_messages['answer_id']
+        x = body_vec
+        if self.learning_parameter.include_tag_vector:
+            tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
+            x = np.c_[tag_vec, body_vec]
 
-        # logger.debug('shapeの次元数')
-        # logger.debug(tags.shape)
-        # logger.debug(body_vec.shape)
+        self._body_array = body_array
+        self._x = x
+        self._y = learning_training_messages['answer_id']
         logger.debug(self._x)
 
     @property

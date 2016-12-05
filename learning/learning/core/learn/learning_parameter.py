@@ -6,8 +6,9 @@ class LearningParameter:
 
     def __init__(self, attributes):
         self._include_failed_data = attributes['include_failed_data']
+        self._include_tag_vector = attributes.get('include_tag_vector', False)
         self._algorithm = attributes.get('algorithm', self.ALGORITHM_LOGISTIC_REGRESSION)
-        self._params_for_algorithm = attributes.get('_params_for_algorithm', { 'C': 1e5 })
+        self._params_for_algorithm = attributes.get('params_for_algorithm', { 'C': 1e5 })
 
     @property
     def include_failed_data(self):
@@ -20,3 +21,7 @@ class LearningParameter:
     @property
     def params_for_algorithm(self):
         return self._params_for_algorithm
+
+    @property
+    def include_tag_vector(self):
+        return self._include_tag_vector

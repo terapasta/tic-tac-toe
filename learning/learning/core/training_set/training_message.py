@@ -54,6 +54,7 @@ class TrainingMessage(Base):
     def __extract_binarized_tag_vector(self, learning_training_messages):
         tag_ids = learning_training_messages['tag_ids']
         tag_ids[tag_ids.isnull()] = ','
+        tag_ids[tag_ids == ''] = ','
         tag_ids = tag_ids.str.split(':')
         logger.debug("tag_ids: %s" % list(tag_ids))
 

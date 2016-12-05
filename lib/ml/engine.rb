@@ -7,7 +7,7 @@ class Ml::Engine
   end
 
   def reply(context, body)
-    return @client.call(:reply, @bot.id, context, body)
+    return @client.call(:reply, @bot.id, context, body, @bot.learning_parameter_attributes)
   end
 
   def learn

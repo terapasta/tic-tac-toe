@@ -15,13 +15,13 @@ class LearningParameter:
         return self._include_failed_data
 
     @property
+    def include_tag_vector(self):
+        return self._include_tag_vector
+
+    @property
     def algorithm(self):
         return self._algorithm
 
     @property
     def params_for_algorithm(self):
         return self._params_for_algorithm
-
-    @property
-    def include_tag_vector(self):
-        return self._include_tag_vector

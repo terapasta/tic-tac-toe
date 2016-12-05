@@ -11,11 +11,12 @@ from learning.config.config import Config
 from learning.core.predict.tag import Tag
 
 class Reply:
-    def __init__(self, bot_id):
+    def __init__(self, bot_id, learning_parameter):
         config = Config()
         dbconfig = config.get('database')
         self.db = dataset.connect(dbconfig['endpoint'])
         self.no_classified_threshold = config.get('default_no_classified_threshold')
+        self.learning_parameter = learning_parameter
 
         try:
             self.estimator = joblib.load("learning/models/%s/%s_logistic_reg_model" % (config.env, bot_id))
@@ -30,11 +31,13 @@ class Reply:
         Xtrain_vec = self.__replace_text2vec(Xtrain)
         logger.debug(Xtrain)
 
-        tag = Tag()
-        tag_vec = tag.predict(Xtrain, return_type='binarized')
-        features = np.c_[tag_vec, Xtrain_vec]
-        logger.debug("features: %s" % features)
+        features = Xtrain_vec
+        if self.learning_parameter.include_tag_vector:
+            tag = Tag()
+            tag_vec = tag.predict(Xtrain, return_type='binarized')
+            features = np.c_[tag_vec, Xtrain_vec]
 
+        logger.debug("features: %s" % features)
         probabilities = self.estimator.predict_proba(features)
         max_probability = np.max(probabilities)
 

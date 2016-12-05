@@ -5,9 +5,10 @@ class LearningParameter < ActiveRecord::Base
 
   def self.default_attributes
       {
-        algorithm: algorithms[:logistic_regression],
+        algorithm: algorithms[:logistic_regression],  # TODO naive_bayesに変更する
         params_for_algorithm: {},
         include_failed_data: false,
+        include_tag_vector: false,
         classify_threshold: 0.5,
       }
   end

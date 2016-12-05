@@ -18,12 +18,15 @@ class Tag:
         except IOError:
             raise ModelNotExistsError()
 #
-    def predict(self, X):
+    def predict(self, X, return_type='id'):
         if len(X) == 0:
             return []
         body_array = TextArray(X, vocabulary=self.vocabulary)
         result = self.estimator.predict(body_array.to_vec())
-        result = self.binarizer.inverse_transform(result)
+
+        if return_type == 'id':
+            result = self.binarizer.inverse_transform(result)
+
         logger.debug("result: %s" % result)
         return result
 

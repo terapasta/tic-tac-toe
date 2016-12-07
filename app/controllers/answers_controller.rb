@@ -8,10 +8,6 @@ class AnswersController < ApplicationController
     @answers = @bot.answers.order('id desc').page(params[:page])
   end
 
-  def console
-    @answers = @bot.answers.order('id desc').decorate
-  end
-
   def update
     if @answer.update answer_params
       redirect_to bot_answers_path(@bot), notice: '回答を更新しました。'

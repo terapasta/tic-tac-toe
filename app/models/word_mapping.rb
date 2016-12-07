@@ -10,12 +10,11 @@ class WordMapping < ActiveRecord::Base
 
   def self.variations_of(sentence, user)
     for_user(user).map do |word_mapping|
-      if sentence.include?(word_mapping.word)
-        sentence.gsub(/#{word_mapping.word}/, word_mapping.synonym)
-      elsif sentence.include?(word_mapping.synonym)
-        sentence.gsub(/#{word_mapping.synonym}/, word_mapping.word)
-      end
-    end.compact
+      [
+         sentence.include?(word_mapping.word) ? sentence.gsub(/#{word_mapping.word}/, word_mapping.synonym) : nil,
+         sentence.include?(word_mapping.synonym) ? sentence.gsub(/#{word_mapping.synonym}/, word_mapping.word) : nil
+      ]
+    end.flatten.compact
   end
 
   private

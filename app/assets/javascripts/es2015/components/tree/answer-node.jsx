@@ -60,9 +60,9 @@ export default class AnswerNode extends Component {
       <li className="tree__node">
         <div className={itemClassName} id={`answer-${id}`}
           onClick={() => onClickAnswer(id)}>
-          <div className="tree__item-headline">
-            {isEmpty(headline) ? "No headline" : headline}
-          </div>
+          {!isEmpty(headline) && (
+            <div className="tree__item-headline">{headline}</div>
+          )}
           <div className="tree__item-body">
             {body}
           </div>

@@ -1,4 +1,6 @@
 class Learning::TrainingMessageConverter
+  include Learning::TagSummarizable
+
   def initialize(bot)
     @bot = bot
   end
@@ -40,18 +42,6 @@ class Learning::TrainingMessageConverter
       end
       merge_tag_ids!(learning_training_messages)
       LearningTrainingMessage.import!(learning_training_messages)
-    end
-
-    def merge_tag_ids!(learning_training_messages)
-      questions = learning_training_messages.map(&:question)
-      engine = Ml::Engine.new(nil)
-      result = engine.predict_tags(questions)
-      Rails.logger.debug(result['tags'])
-      learning_training_messages.zip(result['tags']).each do |learning_training_message, tag|
-        if learning_training_message.tag_ids.blank?
-          learning_training_message.tag_ids = tag.join(':')
-        end
-      end
     end
 
     def training_message_hold?(training_message)

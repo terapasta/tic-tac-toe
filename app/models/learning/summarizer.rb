@@ -1,4 +1,6 @@
 class Learning::Summarizer
+  include Learning::TagSummarizable
+
   def initialize(bot)
     @bot = bot
   end
@@ -34,7 +36,7 @@ class Learning::Summarizer
         learning_training_messages << learning_training_message
       end
     end
-    # merge_tag_ids!(learning_training_messages)
+    merge_tag_ids!(learning_training_messages)
     LearningTrainingMessage.import!(learning_training_messages)
   end
 

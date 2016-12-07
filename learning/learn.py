@@ -1,7 +1,7 @@
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 
-bot_id = 4
+bot_id = 1
 attr = {
     'include_failed_data': False,
     'include_tag_vector': True,

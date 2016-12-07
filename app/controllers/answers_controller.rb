@@ -5,6 +5,10 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
 
   def index
+    @answers = @bot.answers.order('id desc').page(params[:page])
+  end
+
+  def console
     @answers = @bot.answers.order('id desc').decorate
   end
 

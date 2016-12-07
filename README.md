@@ -11,6 +11,29 @@ $ rake db:migrate
 $ rake db:seed_fu
 ```
 
+### React開発環境構築
+
+一部の画面でReactを使用しています。  
+ソースコードは `app/assets/javacripts/es2015` 以下にあります。  
+ビルド後のソースは `app/assets/javascripts/bundled-2015.js` です。
+
+__jsライブラリのインストール__
+
+```
+$ npm install -g yarn
+$ yarn install
+$ yarn add ライブラリ名 # 新しいライブラリを追加する場合
+```
+
+__jsのビルド__
+
+```
+$ npm run watch # 開発時
+$ npm run build # 本番公開前に
+```
+
+---
+
 TODO mecabなどのインストール
 
 参考: http://tech.mof-mof.co.jp/blog/scikit-learn.html

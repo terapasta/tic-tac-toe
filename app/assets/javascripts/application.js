@@ -21,3 +21,4 @@
 // require turbolinks
 //= require base
 // require_tree .
+//= require bundled-es2015

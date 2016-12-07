@@ -82,8 +82,11 @@ gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'compass'
+gem 'autoprefixer-rails'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'bootstrap-tagsinput-rails'
+gem 'draper'
 
 gem 'newrelic_rpm'
 

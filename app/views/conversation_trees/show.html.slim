@@ -9,3 +9,31 @@
       )
 
     .master-detail-panel__detail
+      form
+        .form-group
+          label 現在の選択肢
+          input.form-control type="text" disabled=true value="こんにちは！"
+
+        .form-group
+          label 回答
+          textarea.form-control rows=3
+
+        .form-group
+          ul.list-group.margin-bottom-8
+            li.list-group-item.clearfix
+              span どんなあじなの？
+              span.btn.btn-link= fa_icon 'pencil'
+            li.list-group-item.clearfix
+              span どのあたりにある店なの？
+              span.btn.btn-link= fa_icon 'pencil 1'
+            li.list-group-item.clearfix
+              .input-group
+                input.form-control type="text" value="ほげほげ"
+                span.input-group-btn
+                  button.btn.btn-default 保存
+          .nav.nav-pills.nav-stacked
+            li.hover-gray= link_to '＋選択肢を追加する', '#'
+          input.form-control placeholder="新しい選択肢を入力"
+          .clearfix.padding-top-8
+            .pull-left: a.btn.btn-link href="#" キャンセル
+            .pull-right: a.btn.btn-primary hef="#" 追加

@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 20161204062210) do
     t.string   "question",    limit: 255
     t.text     "answer_body", limit: 65535
     t.integer  "answer_id",   limit: 4
+    t.text     "tag_ids",     limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end

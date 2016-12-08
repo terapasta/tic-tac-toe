@@ -44,7 +44,31 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   pending context 'サーバーはどこ使ってるの' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'サーバーはどこ使ってるの') }
     scenario do
-      expect(subject[0].body).to eq 'インフラlackは実績も多くセキュリティ評価も高いAmazon Web Services(AWS)のサーバを使っております。高可用性で安定しているので安心です♪'
+      expect(subject[0].body).to eq 'インフラは実績も多くセキュリティ評価も高いAmazon Web Services(AWS)のサーバを使っております。高可用性で安定しているので安心です♪'
+    end
+  end
+
+  # TODO
+  pending context '「ECサイトでも使えますか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'ECサイトでも使えますか？') }
+    scenario do
+      expect(subject[0].body).to be_include '個別の商品に関する質問にお答えすることは難しいですが'
+    end
+  end
+
+  # TODO
+  pending context '「どんな質問ならいける？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな質問ならいける？') }
+    scenario do
+      expect(subject[0].body).to be_include '学習用に投入したデータによりますが、WEBサイトなどによく掲載されている'
+    end
+  end
+
+  # TODO
+  pending context '「クラウドサービスですか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'クラウドサービスですか？') }
+    scenario do
+      expect(subject[0].body).to be_include 'はい、My-ope officeはクラウドサービスです。'
     end
   end
 end

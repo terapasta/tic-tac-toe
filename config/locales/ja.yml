@@ -221,3 +221,6 @@ ja:
         processing: 学習中
         failed: 学習失敗
         successed: 学習済
+      word_mapping:
+        word: 単語
+        synonym: 同義語

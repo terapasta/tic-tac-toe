@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resource :conversation_tree, only: [:show]
   end
 
+  resources :word_mappings
+
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
       scope module: :chats do

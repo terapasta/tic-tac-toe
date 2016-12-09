@@ -5,7 +5,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   let(:conversation_bot) { Conversation::Bot.new(@bot, message) }
 
   before(:all) do
-    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.5)
+    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.37)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
     learn(@bot)
@@ -50,7 +50,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   end
 
   # TODO
-  pending context '「ECサイトでも使えますか？」とポストされた場合' do
+  context '「ECサイトでも使えますか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'ECサイトでも使えますか？') }
     scenario do
       expect(subject[0].body).to be_include '個別の商品に関する質問にお答えすることは難しいですが'
@@ -58,7 +58,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   end
 
   # TODO
-  pending context '「どんな質問ならいける？」とポストされた場合' do
+  context '「どんな質問ならいける？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな質問ならいける？') }
     scenario do
       expect(subject[0].body).to be_include '学習用に投入したデータによりますが、WEBサイトなどによく掲載されている'
@@ -66,7 +66,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   end
 
   # TODO
-  pending context '「クラウドサービスですか？」とポストされた場合' do
+  context '「クラウドサービスですか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'クラウドサービスですか？') }
     scenario do
       expect(subject[0].body).to be_include 'はい、My-ope officeはクラウドサービスです。'

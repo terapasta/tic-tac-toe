@@ -1,11 +1,13 @@
 from learning.core.predict.reply import Reply
 from learning.core.learn.learning_parameter import LearningParameter
 
-bot_id = 4
+bot_id = 6
 X = [
-    # ['セキュリティーはどうなっている？'],
-    # ['セキュリティーはどう？'],
-    ['こんにちは'],
+    # ['どんな会社が使ってる？'],
+    # ['何歳ですか？'],
+    # ['セキュリティはどう？'],
+    # ['セキュリティはどうなっている？'],
+    ['セキュリティーはどうなっている？'],
 ]
 
 attr = {

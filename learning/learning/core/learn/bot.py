@@ -33,9 +33,9 @@ class Bot:
 
         estimator = self.__get_estimator(training_set)
 
-        # joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/%s_vocabulary.pkl" % (config.env, self.bot_id))
         Persistance.dump_vocabulary(training_set.body_array.vocabulary, self.bot_id)
         Persistance.dump_model(estimator, self.bot_id)
+        joblib.dump(training_set.body_array.vectorizer, "learning/models/%s/%s_vectorizer.pkl" % (config.env, self.bot_id))  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()

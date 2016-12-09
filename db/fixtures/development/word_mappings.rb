@@ -26,4 +26,5 @@ WordMapping.seed(:id,
   { id: 25, word: '問い合わせ', synonym: 'コンタクト' },
   { id: 26, word: '会話', synonym: '対話' },
   { id: 27, word: '教えて', synonym: '聞かせて' },
+  { id: 28, word: 'セキュリティ', synonym: 'セキュリティー' },
 )

@@ -4,6 +4,7 @@ import dataset
 # import MySQLdb
 from learning.log import logger
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
@@ -22,6 +23,7 @@ class Reply:
         try:
             self.estimator = Persistance.load_model(bot_id)
             self.vocabulary = Persistance.load_vocabulary(bot_id)
+            self.vectorizer = joblib.load("learning/models/%s/%s_vectorizer.pkl" % (config.env, bot_id))
         except IOError:
             raise ModelNotExistsError()
 
@@ -46,6 +48,22 @@ class Reply:
         logger.debug('max_probability: %s' % max_probability)
 
         return results_ordered_by_probability[0:10]
+<<<<<<< 8d0f0eabfdd81a4e9b0b7797130830b5b064960a
+=======
+        # return float(answer_id)
+
+
+    def __replace_text2vec(self, Xtrain):
+        texts = Xtrain[:,-1:].flatten()
+        splited_texts = Nlang.batch_split(texts)
+        logger.debug('分割後の文字列: %s' % splited_texts)
+
+        # TODO TextArrayクラスで共通化したい
+        # vectorizer = TfidfVectorizer(vocabulary=self.vocabulary)
+        texts_vec = self.vectorizer.transform(splited_texts)
+        texts_vec = texts_vec.toarray()
+        logger.debug("texts_vec: %s" % texts_vec)
+>>>>>>> TfidfVectorizer¿¿¿¿¿¿¿¿
 
 
     def __out_log(self, answer_id):

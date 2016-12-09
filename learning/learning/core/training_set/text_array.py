@@ -15,6 +15,8 @@ class TextArray:
     #         feature_vectors = feature_vectors.toarray()
 
     def to_vec(self):
+        # vectorizer = TfidfVectorizer(norm='l2', max_df=0.1, min_df=1)
+        # vectorizer = TfidfVectorizer(min_df=1, max_df=50)
         vectorizer = TfidfVectorizer()
         feature_vectors = vectorizer.fit_transform(self.__splited_data())
         logger.debug("feature_vectors: %s" % feature_vectors)

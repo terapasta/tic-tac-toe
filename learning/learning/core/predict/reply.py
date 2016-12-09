@@ -48,9 +48,6 @@ class Reply:
         logger.debug('max_probability: %s' % max_probability)
 
         return results_ordered_by_probability[0:10]
-<<<<<<< 8d0f0eabfdd81a4e9b0b7797130830b5b064960a
-=======
-        # return float(answer_id)
 
 
     def __replace_text2vec(self, Xtrain):
@@ -59,11 +56,16 @@ class Reply:
         logger.debug('分割後の文字列: %s' % splited_texts)
 
         # TODO TextArrayクラスで共通化したい
-        # vectorizer = TfidfVectorizer(vocabulary=self.vocabulary)
         texts_vec = self.vectorizer.transform(splited_texts)
         texts_vec = texts_vec.toarray()
         logger.debug("texts_vec: %s" % texts_vec)
->>>>>>> TfidfVectorizer¿¿¿¿¿¿¿¿
+        # logger.debug("texts_vec: %s" % texts_vec)
+
+        for text in splited_texts[0].split(' '):
+            voc = self.vectorizer.get_feature_names()
+            if text in voc:
+                wid = voc.index(text)
+                logger.debug("%s のTF-IDF値: %s" % (text, texts_vec[0][wid]))
 
 
     def __out_log(self, answer_id):

@@ -5,7 +5,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   let(:conversation_bot) { Conversation::Bot.new(@bot, message) }
 
   before(:all) do
-    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.37)
+    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.36)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
     learn(@bot)
@@ -20,7 +20,6 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  # TODO
   pending context '「セキュリティーはどうなっている？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'セキュリティーはどうなっている？') }
     scenario do
@@ -28,7 +27,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  context '「どんな会社が使ってる？」とポストqされた場合' do
+  context '「どんな会社が使ってる？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな会社が使ってる？') }
     scenario do
       expect(subject[0].body).to be_include 'ユーザー企業は追々公開していきますが、とある社団法人さんや上場企業さんなど、'

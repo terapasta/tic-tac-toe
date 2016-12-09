@@ -20,14 +20,15 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  context '「セキュリティーはどうなっている？」とポストされた場合' do
+  # TODO
+  pending context '「セキュリティーはどうなっている？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'セキュリティーはどうなっている？') }
     scenario do
       expect(subject[0].body).to be_include 'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。'
     end
   end
 
-  context '「どんな会社が使ってる？」とポストされた場合' do
+  context '「どんな会社が使ってる？」とポストqされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな会社が使ってる？') }
     scenario do
       expect(subject[0].body).to be_include 'ユーザー企業は追々公開していきますが、とある社団法人さんや上場企業さんなど、'
@@ -50,15 +51,14 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   end
 
   # TODO
-  context '「ECサイトでも使えますか？」とポストされた場合' do
+  pending context '「ECサイトでも使えますか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'ECサイトでも使えますか？') }
     scenario do
       expect(subject[0].body).to be_include '個別の商品に関する質問にお答えすることは難しいですが'
     end
   end
 
-  # TODO
-  context '「どんな質問ならいける？」とポストされた場合' do
+  pending context '「どんな質問ならいける？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな質問ならいける？') }
     scenario do
       expect(subject[0].body).to be_include '学習用に投入したデータによりますが、WEBサイトなどによく掲載されている'
@@ -66,7 +66,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   end
 
   # TODO
-  context '「クラウドサービスですか？」とポストされた場合' do
+  pending context '「クラウドサービスですか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'クラウドサービスですか？') }
     scenario do
       expect(subject[0].body).to be_include 'はい、My-ope officeはクラウドサービスです。'

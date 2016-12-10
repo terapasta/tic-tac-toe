@@ -5,7 +5,6 @@ default: &default
     name: donusagi_bot
     user: root
     password: ""
-  default_no_classified_threshold: 0.2
 
 development:
   <<: *default
@@ -27,4 +26,3 @@ production:
     name: myope
     user: myope
     password: yGM7fj2jQQZCui
-  default_no_classified_threshold: 0.3

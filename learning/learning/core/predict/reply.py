@@ -17,7 +17,6 @@ class Reply:
         config = Config()
         dbconfig = config.get('database')
         self.db = dataset.connect(dbconfig['endpoint'])
-        self.no_classified_threshold = config.get('default_no_classified_threshold')  # TODO 使用していないので削除したい
         self.learning_parameter = learning_parameter
 
         try:

@@ -8,6 +8,7 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
 from learning.config.config import Config
+from learning.core.training_set.text_array import TextArray
 from learning.core.predict.tag import Tag
 from learning.core.persistance import Persistance
 
@@ -16,7 +17,7 @@ class Reply:
         config = Config()
         dbconfig = config.get('database')
         self.db = dataset.connect(dbconfig['endpoint'])
-        self.no_classified_threshold = config.get('default_no_classified_threshold')
+        self.no_classified_threshold = config.get('default_no_classified_threshold')  # TODO 使用していないので削除したい
         self.learning_parameter = learning_parameter
 
         try:
@@ -26,13 +27,9 @@ class Reply:
             raise ModelNotExistsError()
 
     def predict(self, X):
-        # TODO TextArrayを使いたい
-        Xtrain = np.array(X)
-        Xtrain = Xtrain[:,-1:].flatten()
-        Xtrain_vec = self.__replace_text2vec(Xtrain)
-        logger.debug(Xtrain)
+        text_array = TextArray(X[0], vocabulary=self.vocabulary)
 
-        features = Xtrain_vec
+        features = text_array.to_vec()
         if self.learning_parameter.include_tag_vector:
             tag = Tag()
             tag_vec = tag.predict(Xtrain, return_type='binarized')
@@ -47,31 +44,10 @@ class Reply:
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
 
         logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
-        logger.debug('no_classified_threshold: %s' % self.no_classified_threshold)
         logger.debug('max_probability: %s' % max_probability)
-        # if self.no_classified_threshold > max_probability:
-        #     logger.debug('return []')
-        #     return []
-
-        # answer_id = self.estimator.predict(Xtrain)[0]
-        # self.__out_log(answer_id)
 
         return results_ordered_by_probability[0:10]
-        # return float(answer_id)
 
-
-    def __replace_text2vec(self, Xtrain):
-        # texts = Xtrain[:,-1:].flatten()
-        splited_texts = Nlang.batch_split(Xtrain)
-        logger.debug('分割後の文字列: %s' % splited_texts)
-
-        count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
-        texts_vec = count_vectorizer.transform(splited_texts)
-        texts_vec = texts_vec.toarray()
-
-        # feature = np.c_[Xtrain[:,:-1], texts_vec]
-        feature = texts_vec.astype('float64')
-        return feature
 
     def __out_log(self, answer_id):
         answers_table = self.db['answers']

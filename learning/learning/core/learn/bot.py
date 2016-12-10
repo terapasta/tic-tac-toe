@@ -16,6 +16,7 @@ from learning.core.evaluator import Evaluator
 from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
 from learning.core.learn.learning_parameter import LearningParameter
+from learning.core.persistance import Persistance
 
 class Bot:
     def __init__(self, bot_id, learning_parameter):
@@ -32,8 +33,8 @@ class Bot:
 
         estimator = self.__get_estimator(training_set)
 
-        joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/%s_vocabulary.pkl" % (config.env, self.bot_id))  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
-        joblib.dump(estimator, "learning/models/%s/%s_logistic_reg_model" % (config.env, self.bot_id))  # TODO ロジスティック回帰を使うとは限らないので修正したい
+        joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/%s_vocabulary.pkl" % (config.env, self.bot_id))
+        Persistance.dump_model(estimator, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()

@@ -9,6 +9,7 @@ from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
 from learning.config.config import Config
 from learning.core.predict.tag import Tag
+from learning.core.persistance import Persistance
 
 class Reply:
     def __init__(self, bot_id, learning_parameter):
@@ -19,7 +20,7 @@ class Reply:
         self.learning_parameter = learning_parameter
 
         try:
-            self.estimator = joblib.load("learning/models/%s/%s_logistic_reg_model" % (config.env, bot_id))
+            self.estimator = Persistance.load_model(bot_id)
             self.vocabulary = joblib.load("learning/models/%s/%s_vocabulary.pkl" % (config.env, bot_id)) # TODO 定数化したい
         except IOError:
             raise ModelNotExistsError()

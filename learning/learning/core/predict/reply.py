@@ -21,7 +21,7 @@ class Reply:
 
         try:
             self.estimator = Persistance.load_model(bot_id)
-            self.vocabulary = joblib.load("learning/models/%s/%s_vocabulary.pkl" % (config.env, bot_id)) # TODO 定数化したい
+            self.vocabulary = Persistance.load_vocabulary(bot_id)
         except IOError:
             raise ModelNotExistsError()
 

@@ -4,7 +4,20 @@ module MlHelper
     raise 'file import failed' unless ImportedTrainingMessage.import_csv(file, bot)
     Learning::Summarizer.summary_all
     LearningTrainingMessage.amp!(bot)
+  end
+
+  def learn(bot)
     engine = Ml::Engine.new(bot)
     engine.learn
+  end
+
+  def learn_tag_model
+    engine = Ml::Engine.new(nil)
+    engine.learn_tag_model
+  end
+
+  def add_tag_to_imported_training_message(bot, body, tags)
+    imported_training_message = bot.imported_training_messages.find_by!(question: body)
+    imported_training_message.update(tag_list: tags)
   end
 end

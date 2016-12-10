@@ -28,7 +28,7 @@ class Bot < ActiveRecord::Base
     else
       attrs = LearningParameter.default_attributes
     end
-    attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :classify_threshold)
+    attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :include_tag_vector, :classify_threshold)
   end
 
   private

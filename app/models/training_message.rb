@@ -1,6 +1,9 @@
 class TrainingMessage < ActiveRecord::Base
   include ContextHoldable
 
+  # acts_as_taggable_on :labels
+  acts_as_taggable
+
   attr_accessor :other_answers
 
   belongs_to :training

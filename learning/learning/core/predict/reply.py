@@ -8,13 +8,15 @@ from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
 from learning.config.config import Config
+from learning.core.predict.tag import Tag
 
 class Reply:
-    def __init__(self, bot_id):
+    def __init__(self, bot_id, learning_parameter):
         config = Config()
         dbconfig = config.get('database')
         self.db = dataset.connect(dbconfig['endpoint'])
         self.no_classified_threshold = config.get('default_no_classified_threshold')
+        self.learning_parameter = learning_parameter
 
         try:
             self.estimator = joblib.load("learning/models/%s/%s_logistic_reg_model" % (config.env, bot_id))
@@ -23,9 +25,20 @@ class Reply:
             raise ModelNotExistsError()
 
     def predict(self, X):
+        # TODO TextArrayを使いたい
         Xtrain = np.array(X)
-        Xtrain = self.__replace_text2vec(Xtrain)
-        probabilities = self.estimator.predict_proba(Xtrain)
+        Xtrain = Xtrain[:,-1:].flatten()
+        Xtrain_vec = self.__replace_text2vec(Xtrain)
+        logger.debug(Xtrain)
+
+        features = Xtrain_vec
+        if self.learning_parameter.include_tag_vector:
+            tag = Tag()
+            tag_vec = tag.predict(Xtrain, return_type='binarized')
+            features = np.c_[tag_vec, Xtrain_vec]
+
+        logger.debug("features: %s" % features)
+        probabilities = self.estimator.predict_proba(features)
         max_probability = np.max(probabilities)
 
         results_ordered_by_probability = list(map(lambda x: {
@@ -47,16 +60,16 @@ class Reply:
 
 
     def __replace_text2vec(self, Xtrain):
-        texts = Xtrain[:,-1:].flatten()
-        splited_texts = Nlang.batch_split(texts)
+        # texts = Xtrain[:,-1:].flatten()
+        splited_texts = Nlang.batch_split(Xtrain)
         logger.debug('分割後の文字列: %s' % splited_texts)
 
         count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
         texts_vec = count_vectorizer.transform(splited_texts)
         texts_vec = texts_vec.toarray()
 
-        feature = np.c_[Xtrain[:,:-1], texts_vec]
-        feature = feature.astype('float64')
+        # feature = np.c_[Xtrain[:,:-1], texts_vec]
+        feature = texts_vec.astype('float64')
         return feature
 
     def __out_log(self, answer_id):

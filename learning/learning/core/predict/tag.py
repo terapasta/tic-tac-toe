@@ -23,11 +23,12 @@ class Tag:
             return []
         body_array = TextArray(X, vocabulary=self.vocabulary)
         result = self.estimator.predict(body_array.to_vec())
+        logger.debug("predicted_tag_ids: %s" % result)
+        logger.debug("inversed_predicted_tag_ids: %s" % self.binarizer.inverse_transform(result))
 
         if return_type == 'id':
             result = self.binarizer.inverse_transform(result)
 
-        logger.debug("result: %s" % result)
         return result
 
     def binarize(self, tag_ids):

@@ -8,6 +8,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.5)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
+    learn(@bot)
   end
 
   subject { conversation_bot.reply }

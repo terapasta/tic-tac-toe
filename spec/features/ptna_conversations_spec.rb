@@ -7,6 +7,7 @@ feature 'PTNAのデータで意図した通りにBotとの対話が出来る' do
   before(:all) do
     @bot = create(:bot)
     file_import(@bot, 'ptna.csv')
+    learn(@bot)
   end
 
   subject { conversation_bot.reply }

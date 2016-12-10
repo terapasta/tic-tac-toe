@@ -16,13 +16,14 @@ class MyopeServer(RPCServer):
 
     def reply(self, bot_id, context, body, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)
-        X = list(context)
-        X.append(body)
+        # X = list(context)
+        # X.append(body)
+        X = np.array([body])
         predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
-            predict_results = Reply(bot_id, learning_parameter).predict([X])  # TODO 引数
+            predict_results = Reply(bot_id, learning_parameter).predict(X)
             logger.debug(predict_results)
             # if answer_id is not None:
             #     answer_id = float(answer_id)

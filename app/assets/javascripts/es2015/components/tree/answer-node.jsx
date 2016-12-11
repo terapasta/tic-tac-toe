@@ -10,12 +10,9 @@ export default class AnswerNode extends Component {
 
   static get propTypes() {
     return {
-      answer: PropTypes.shape({
-        id:               PropTypes.number,
-        headline:         PropTypes.string,
-        body:             PropTypes.string,
-        decisionBranches: PropTypes.array,
-      }).isRequired,
+      answerNode:              PropTypes.object.isRequired,
+      answersRepo:             PropTypes.object.isRequired,
+      decisionBranchesRepo:    PropTypes.object.isRequired,
       openedAnswerIDs:         PropTypes.array.isRequired,
       openedDecisionBranchIDs: PropTypes.array.isRequired,
       activeItem:              PropTypes.shape({
@@ -35,31 +32,34 @@ export default class AnswerNode extends Component {
 
   render() {
     const {
+      answerNode,
+      answersRepo,
       openedAnswerIDs,
       activeItem,
       onClickAnswer,
     } = this.props;
 
+    const answer = answersRepo[answerNode.id];
+    const decisionBrancheNodes = answerNode.decisionBranches;
+
     const {
-      id,
       headline,
       body,
-      decisionBranches,
-    } = this.props.answer;
+    } = answer;
 
-    const hasDecisionBranches = !isEmpty(decisionBranches);
-    const isOpened = includes(openedAnswerIDs, id);
+    const hasDecisionBranches = !isEmpty(decisionBrancheNodes);
+    const isOpened = includes(openedAnswerIDs, answerNode.id);
     const itemClassName = classNames({
       "tree__item": hasDecisionBranches,
       "tree__item--no-children": !hasDecisionBranches,
       "tree__item--opened": isOpened,
-      "active": activeItem.type === "answer" && activeItem.id === id,
+      "active": activeItem.type === "answer" && activeItem.id === answerNode.id,
     });
 
     return (
       <li className="tree__node">
-        <div className={itemClassName} id={`answer-${id}`}
-          onClick={() => onClickAnswer(id)}>
+        <div className={itemClassName} id={`answer-${answerNode.id}`}
+          onClick={() => onClickAnswer(answerNode.id)}>
           {!isEmpty(headline) && (
             <div className="tree__item-headline">{headline}</div>
           )}
@@ -67,29 +67,35 @@ export default class AnswerNode extends Component {
             {body}
           </div>
         </div>
-        {this.renderDecisionBranches(decisionBranches)}
+        {this.renderDecisionBranches(decisionBrancheNodes)}
       </li>
     );
   }
 
-  renderDecisionBranches(decisionBranches) {
-    if (isEmpty(decisionBranches)) { return null; }
+  renderDecisionBranches(decisionBrancheNodes) {
+    if (isEmpty(decisionBrancheNodes)) { return null; }
     const {
+      answerNode,
+      answersRepo,
+      decisionBranchesRepo,
       openedAnswerIDs,
       openedDecisionBranchIDs,
       activeItem,
       onClickAnswer,
       onClickDecisionBranch,
     } = this.props;
-    const isOpenedAnswer = includes(openedAnswerIDs, this.props.answer.id);
+    const isOpenedAnswer = includes(openedAnswerIDs, answerNode.id);
     const style = { display: isOpenedAnswer ? "block" : null };
 
     return (
       <ol className="tree" style={style}>
-        {decisionBranches.map((db, index) => {
-          const { id, body, answer } = db;
+        {decisionBrancheNodes.map((decisionBranchNode, index) => {
+          const { id } = decisionBranchNode;
+          const answerNode = decisionBranchNode.answer;
+          const db = decisionBranchesRepo[id];
+          const { body } = db;
           const isOpened = includes(openedDecisionBranchIDs, id);
-          const hasAnswer = answer != null;
+          const hasAnswer = answerNode != null;
           const itemClassName = classNames({
             "tree__item": hasAnswer,
             "tree__item--no-children": !hasAnswer,
@@ -100,18 +106,21 @@ export default class AnswerNode extends Component {
 
           return (
             <li className="tree__node" key={index}>
-              <div className={itemClassName} id={`decision-brandh-${id}`}
+              <div className={itemClassName} id={`decision-branch-${id}`}
                 onClick={() => onClickDecisionBranch(id)}>
                 <div className="tree__item-body">{body}</div>
               </div>
               {hasAnswer && (
                 <ol className="tree" style={style}>
-                  <AnswerNode answer={answer}
-                    onClickAnswer={onClickAnswer}
-                    onClickDecisionBranch={onClickDecisionBranch}
+                  <AnswerNode
+                    answerNode={answerNode}
+                    answersRepo={answersRepo}
+                    decisionBranchesRepo={decisionBranchesRepo}
                     openedAnswerIDs={openedAnswerIDs}
                     openedDecisionBranchIDs={openedDecisionBranchIDs}
                     activeItem={activeItem}
+                    onClickAnswer={onClickAnswer}
+                    onClickDecisionBranch={onClickDecisionBranch}
                   />
                 </ol>
               )}

@@ -5,16 +5,16 @@ class DecisionBranchesController < ApplicationController
 
   def show
     respond_to do |format|
-      format.json { render json: @decision_branch }
+      format.json { render json: @decision_branch.decorate.as_json }
     end
   end
 
   def update
     respond_to do |format|
       if @decision_branch.update(decision_branch_params)
-        format.json { render json: @decision_branch }
+        format.json { render json: @decision_branch.decorate.as_json }
       else
-        format.json { render json: @decision_branch, status: :unprocessable_entity }
+        format.json { render json: @decision_branch.decorate.errors_as_json, status: :unprocessable_entity }
       end
     end
   end

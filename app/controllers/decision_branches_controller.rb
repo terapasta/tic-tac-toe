@@ -27,6 +27,8 @@ class DecisionBranchesController < ApplicationController
     end
   end
 
+  private
+
     def set_bot
       @bot = Bot.find params[:bot_id]
     end

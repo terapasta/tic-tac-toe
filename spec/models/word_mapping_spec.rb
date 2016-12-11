@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe WordMapping, type: :model do
+  let!(:user) { create :user }
+
   describe '.variations_of' do
     before do
-      create(:word_mapping, word: '社長', synonym: '代表取締役')
+      create(:word_mapping, word: '社長', synonym: '代表取締役', user: user)
       create(:word_mapping, word: '社長', synonym: 'CEO')
     end
 
-    subject { WordMapping.variations_of(sentence) }
+    subject { WordMapping.variations_of(sentence, user) }
 
     context '「社長！一杯どうですか？」という文章が渡された場合' do
       let(:sentence) { '社長！一杯どうですか？' }

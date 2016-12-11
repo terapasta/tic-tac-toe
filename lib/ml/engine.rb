@@ -7,11 +7,15 @@ class Ml::Engine
   end
 
   def reply(context, body)
-    return @client.call(:reply, @bot.id, context, body)
+    return @client.call(:reply, @bot.id, context, body, @bot.learning_parameter_attributes)
   end
 
   def learn
     @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
+  end
+
+  def predict_tags(bodies)
+    @client.call(:predict_tags, bodies)
   end
 
   def learn_tag_model

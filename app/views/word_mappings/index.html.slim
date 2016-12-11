@@ -1,0 +1,18 @@
+h1 同義語一覧
+
+table.table.table-striped
+  thead
+    tr
+      th = WordMapping.human_attribute_name(:word)
+      th = WordMapping.human_attribute_name(:synonym)
+      th
+
+  tbody
+    = render @word_mappings
+  
+
+= paginate @word_mappings
+
+br
+
+= link_to '新規', new_word_mapping_path, class: 'btn btn-primary'

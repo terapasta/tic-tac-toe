@@ -1,3 +1,4 @@
+import numpy as np
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
@@ -5,24 +6,24 @@ from learning.log import logger
 from learning.core.predict.reply import Reply
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
-from learning.core.learn.tag import Tag
+from learning.core.learn.tag import Tag as LearnTag
+from learning.core.predict.tag import Tag as PredictTag
 from learning.core.learn.learning_parameter import LearningParameter
 
 class MyopeServer(RPCServer):
     STATUS_CODE_SUCCESS = 1
     STATUS_CODE_MODEL_NOT_EXISTS = 101
 
-    # f.g.
-    #   context: [0, 1, 3, 1]
-    #   body: 'こんにちは'
-    def reply(self, bot_id, context, body):
-        X = list(context)
-        X.append(body)
+    def reply(self, bot_id, context, body, learning_parameter_attributes):
+        learning_parameter = LearningParameter(learning_parameter_attributes)
+        # X = list(context)
+        # X.append(body)
+        X = np.array([body])
         predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
-            predict_results = Reply(bot_id).predict([X])  # TODO 引数
+            predict_results = Reply(bot_id, learning_parameter).predict(X)
             logger.debug(predict_results)
             # if answer_id is not None:
             #     answer_id = float(answer_id)
@@ -49,8 +50,18 @@ class MyopeServer(RPCServer):
         }
 
     def learn_tag_model(self):
-        Tag().learn()
+        LearnTag().learn()
         return { 'status_code': self.STATUS_CODE_SUCCESS }
+
+    def predict_tags(self, bodies):
+        result = PredictTag().predict(bodies)
+        logger.debug("result.__class__.__name__: %s" % result.__class__.__name__)
+        return {
+            'status_code': self.STATUS_CODE_SUCCESS,
+            # 'tags': result.tolist()
+            'tags': result
+        }
+
 
 server = StreamServer(('127.0.0.1', 6000), MyopeServer())
 server.serve_forever()

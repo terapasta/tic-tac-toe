@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204062210) do
+ActiveRecord::Schema.define(version: 20161205230227) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -149,12 +149,13 @@ ActiveRecord::Schema.define(version: 20161204062210) do
 
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",               limit: 4
-    t.integer  "algorithm",            limit: 4,     default: 0,    null: false
+    t.integer  "algorithm",            limit: 4,     default: 0,     null: false
     t.text     "params_for_algorithm", limit: 65535
-    t.boolean  "include_failed_data",                default: true, null: false
-    t.float    "classify_threshold",   limit: 24,    default: 0.5,  null: false
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.boolean  "include_failed_data",                default: true,  null: false
+    t.boolean  "include_tag_vector",                 default: false, null: false
+    t.float    "classify_threshold",   limit: 24,    default: 0.5,   null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -288,7 +289,11 @@ ActiveRecord::Schema.define(version: 20161204062210) do
     t.string   "synonym",    limit: 20, null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "user_id",    limit: 4
   end
 
+  add_index "word_mappings", ["user_id"], name: "index_word_mappings_on_user_id", using: :btree
+
   add_foreign_key "learning_training_messages", "bots"
+  add_foreign_key "word_mappings", "users"
 end

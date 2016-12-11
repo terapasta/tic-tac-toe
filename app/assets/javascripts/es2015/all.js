@@ -1,9 +1,9 @@
-import Tree from "./components/tree";
+import ConversationTree from "./components/conversation-tree";
 
 import mountComponent from "./modules/mount-component";
 
 function init() {
-  mountComponent(Tree);
+  mountComponent(ConversationTree);
 }
 
 if (document.readyState === "complete") {

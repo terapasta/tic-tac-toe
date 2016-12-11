@@ -9,9 +9,9 @@ import NewDecisionBranch from "./conversation-item-form/new-decision-branch";
 import Answer from "../models/answer";
 import DecisionBranch from "../models/decision-branch";
 
-export default class TreeItemForm extends Component {
+export default class ConversationItemForm extends Component {
   static get componentName() {
-    return "TreeItemForm";
+    return "ConversationItemForm";
   }
 
   static get propTypes() {

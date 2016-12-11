@@ -1,3 +1,3 @@
-class AnswerDecorator < Draper::Decorator
+class AnswerDecorator < ApplicationDecorator
   delegate_all
 end

@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
 
   def show
     respond_to do |format|
-      format.json { render json: @answer }
+      format.json { render json: @answer.decorate.as_json }
     end
   end
 
@@ -18,13 +18,13 @@ class AnswersController < ApplicationController
     respond_to do |format|
       if @answer.update answer_params
         format.html { redirect_to bot_answers_path(@bot), notice: '回答を更新しました。' }
-        format.json { render json: @answer, status: :ok }
+        format.json { render json: @answer.decorate.as_json, status: :ok }
       else
         format.html do
           flash.now.alert = '回答を更新できませんでした。'
           render :edit
         end
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
+        format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
       end
     end
   end

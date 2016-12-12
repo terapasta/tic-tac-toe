@@ -14,24 +14,27 @@ class TextArray:
     #     if type == 'array':
     #         feature_vectors = feature_vectors.toarray()
 
-    def to_vec(self):
+    def to_vec(self, type=None):
         # vectorizer = TfidfVectorizer(norm='l2', max_df=0.1, min_df=1)
         # vectorizer = TfidfVectorizer(min_df=1, max_df=100)
-        vectorizer = TfidfVectorizer()
+        vectorizer = self.__build_vectorizer()
         feature_vectors = vectorizer.fit_transform(self.__splited_data())
         logger.debug("feature_vectors: %s" % feature_vectors)
         self._vectorizer = vectorizer
         self._vocabulary = vectorizer.get_feature_names()
+        if type == 'array':
+            feature_vectors = feature_vectors.toarray()
         return feature_vectors
 
-    def __build_count_vectorizer(self):
+    def __build_vectorizer(self):
         if self._vocabulary is None:
-            count_vectorizer = CountVectorizer()
-            count_vectorizer.fit(self.__splited_data())
-            self._vocabulary = count_vectorizer.get_feature_names()
+            vectorizer = TfidfVectorizer()
+            # count_vectorizer = CountVectorizer()
+            vectorizer.fit(self.__splited_data())
+            self._vocabulary = vectorizer.get_feature_names()
         else:
-            count_vectorizer = CountVectorizer(vocabulary=self.vocabulary)
-        return count_vectorizer
+            vectorizer = TfidfVectorizer(vocabulary=self.vocabulary)
+        return vectorizer
 
     def __splited_data(self):
         splited_data = []

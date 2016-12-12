@@ -8,6 +8,7 @@ from sklearn.cross_validation import KFold
 from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.naive_bayes import BernoulliNB
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.metrics import precision_recall_fscore_support
@@ -58,6 +59,7 @@ class Bot:
         if self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NAIVE_BAYES:
             logger.debug('use algorithm: naive bayes')
             estimator = MultinomialNB()
+            # estimator = BernoulliNB()
         else:
             logger.debug('use algorithm: logistic regression')
             estimator = LogisticRegression(C=self.learning_parameter.params_for_algorithm['C'])

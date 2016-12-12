@@ -5,7 +5,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   let(:conversation_bot) { Conversation::Bot.new(@bot, message) }
 
   before(:all) do
-    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.36)
+    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.3)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
     learn(@bot)
@@ -16,6 +16,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   context '「セキュリティはどう？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'セキュリティはどう？') }
     scenario do
+      # binding.pry
       expect(subject[0].body).to be_include 'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。'
     end
   end

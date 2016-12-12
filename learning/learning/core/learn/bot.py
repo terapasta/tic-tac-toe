@@ -59,6 +59,7 @@ class Bot:
         if self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NAIVE_BAYES:
             logger.debug('use algorithm: naive bayes')
             estimator = MultinomialNB()
+            # estimator = MultinomialNB(fit_prior=False)
             # estimator = BernoulliNB()
         else:
             logger.debug('use algorithm: logistic regression')

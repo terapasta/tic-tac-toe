@@ -43,7 +43,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   end
 
   # TODO 「使ってる」に反応してしまう誤答。TFIDFなどで正しく分類されるようにしたい
-  pending context 'サーバーはどこ使ってるの' do
+  context 'サーバーはどこ使ってるの' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'サーバーはどこ使ってるの') }
     scenario do
       expect(subject[0].body).to eq 'インフラは実績も多くセキュリティ評価も高いAmazon Web Services(AWS)のサーバを使っております。高可用性で安定しているので安心です♪'

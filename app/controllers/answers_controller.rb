@@ -38,7 +38,7 @@ class AnswersController < ApplicationController
   private
 
     def set_bot
-      @bot = Bot.find params[:bot_id]
+      @bot = current_user.bots.find params[:bot_id]
     end
 
     def set_answer

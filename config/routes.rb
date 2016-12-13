@@ -30,7 +30,6 @@ Rails.application.routes.draw do
     end
     resource :learning, only: [:update]
     resources :answers, except: [:new, :create]
-    resource :conversation_tree, only: [:show]
   end
 
   resources :word_mappings

@@ -1,4 +1,6 @@
 h1 回答一覧
+
+
 table.table.table-striped
   thead
     tr
@@ -6,7 +8,7 @@ table.table.table-striped
       th 本文
       th
   tbody
-
+    
     - @answers.each do |answer|
       tr
         td = answer.headline
@@ -14,4 +16,5 @@ table.table.table-striped
         td
           = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default"
           = link_to t('helpers.link.destroy'), bot_answer_path(@bot, answer), method: :delete, data: { confirm: '回答を削除します。宜しいですか。' }, class: "btn btn-danger"
+
 = paginate @answers

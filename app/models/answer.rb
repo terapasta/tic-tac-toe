@@ -26,10 +26,6 @@ class Answer < ActiveRecord::Base
   validates :body, presence: true, length: { maximum: 65535 }
   validates :headline, length: { maximum: 100 }
 
-  scope :top_level, -> (bot_id) {
-    where.not(id: DecisionBranch.select(:next_answer_id).where(bot_id: bot_id))
-  }
-
   def no_classified?
     return false if bot.nil?
     true

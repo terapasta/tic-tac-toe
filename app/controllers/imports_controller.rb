@@ -8,10 +8,11 @@ class ImportsController < ApplicationController
   def create
     if ImportedTrainingMessage.import_csv(params[:file], @bot)
       flash[:notice] = 'インポートしました'
+      redirect_to action: :new
     else
       flash[:error] = 'インポートに失敗しました'
+      render :new
     end
-    render :new
   end
 
   private

@@ -1,6 +1,6 @@
 from learning.core.nlang import Nlang
 from learning.log import logger
-# from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class TextArray:
@@ -28,12 +28,13 @@ class TextArray:
 
     def __build_vectorizer(self):
         if self._vocabulary is None:
-            vectorizer = TfidfVectorizer()
-            # count_vectorizer = CountVectorizer()
+            # vectorizer = TfidfVectorizer()
+            vectorizer = CountVectorizer()
             vectorizer.fit(self.__splited_data())
             self._vocabulary = vectorizer.get_feature_names()
         else:
-            vectorizer = TfidfVectorizer(vocabulary=self.vocabulary)
+            vectorizer = CountVectorizer(vocabulary=self.vocabulary)
+            # vectorizer = TfidfVectorizer(vocabulary=self.vocabulary)
         return vectorizer
 
     def __splited_data(self):

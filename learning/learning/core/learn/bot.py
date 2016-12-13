@@ -63,7 +63,8 @@ class Bot:
             # estimator = BernoulliNB()
         else:
             logger.debug('use algorithm: logistic regression')
-            estimator = LogisticRegression(C=self.learning_parameter.params_for_algorithm['C'])
+            # estimator = LogisticRegression(C=self.learning_parameter.params_for_algorithm['C'])
+            estimator = LogisticRegression(C=1e5)  # TODO self.learning_parameter.params_for_algorithmがNoneになってしまう
 
         estimator.fit(training_set.x, training_set.y)
         return estimator

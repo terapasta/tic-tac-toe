@@ -70,15 +70,14 @@ def learn_bernonulli_nb(data, vectorizer):
     clf.fit(vec, answers)
     return clf
 
-def build_count_vectorizer(data):
-    questions = splited_data(data['question'])
-    vectorizer = CountVectorizer()
-    vectorizer.fit(questions)
-    return vectorizer
+# def build_count_vectorizer(data):
+#     questions = splited_data(data['question'])
+#     vectorizer = CountVectorizer()
+#     vectorizer.fit(questions)
+#     return vectorizer
 
-def build_tfidf_vectorizer(data):
+def fit_vectorizer(data, vectorizer):
     questions = splited_data(data['question'])
-    vectorizer = TfidfVectorizer()
     vectorizer.fit(questions)
     return vectorizer
 
@@ -104,26 +103,55 @@ X = [
     split('セキュリティはどうなってる？'),
     split('セキュリティ対策はどうなってる？'),
     split('データ投入はどうやるの？'),
+    split('サーバーはどこを使ってるの？'),
+    split('試しに使うことはできますか？'),
+    split('あなたは誰ですか？何なんですか？'),
     split('ほげほげ'),
 ]
 
 
 print('########## CountVectorizer + MultinomialNB ##############')
-count_vectorizer = build_count_vectorizer(data)
-clf = learn_multinomial_nb(data, count_vectorizer)
-predict(clf, X, count_vectorizer, 'CountVectorizer + MultinomialNB')
+vectorizer = CountVectorizer()
+vectorizer = fit_vectorizer(data, vectorizer)
+clf = learn_multinomial_nb(data, vectorizer)
+predict(clf, X, vectorizer, 'CountVectorizer + MultinomialNB')
 
 print('########## TfidfVectorizer + MultinomialNB ##############')
-tfidf_vectorizer = build_tfidf_vectorizer(data)
-clf = learn_multinomial_nb(data, tfidf_vectorizer)
-predict(clf, X, tfidf_vectorizer, 'TfidfVectorizer + MultinomialNB')
+vectorizer = TfidfVectorizer()
+vectorizer = fit_vectorizer(data, vectorizer)
+clf = learn_multinomial_nb(data, vectorizer)
+predict(clf, X, vectorizer, 'TfidfVectorizer + MultinomialNB')
 
-print('########## CountVectorizer + BernoulliNB ##############')
-count_vectorizer = build_count_vectorizer(data)
-clf = learn_bernonulli_nb(data, count_vectorizer)
-predict(clf, X, count_vectorizer, 'CountVectorizer + BernoulliNB')
+print('########## TfidfVectorizer(use_idf=False) + MultinomialNB ##############')
+vectorizer = TfidfVectorizer(use_idf=False)
+vectorizer = fit_vectorizer(data, vectorizer)
+clf = learn_multinomial_nb(data, vectorizer)
+predict(clf, X, vectorizer, 'TfidfVectorizer + MultinomialNB')
 
-print('########## TfidfVectorizer + BernoulliNB ##############')
-tfidf_vectorizer = build_tfidf_vectorizer(data)
-clf = learn_bernonulli_nb(data, tfidf_vectorizer)
-predict(clf, X, tfidf_vectorizer, 'TfidfVectorizer + BernoulliNB')
+print('########## TfidfVectorizer(smooth_idf=False) + MultinomialNB ##############')
+vectorizer = TfidfVectorizer(smooth_idf=False)
+vectorizer = fit_vectorizer(data, vectorizer)
+clf = learn_multinomial_nb(data, vectorizer)
+predict(clf, X, vectorizer, 'TfidfVectorizer + MultinomialNB')
+
+print('########## TfidfVectorizer(sublinear_tf=True) + MultinomialNB ##############')
+vectorizer = TfidfVectorizer(sublinear_tf=True)
+vectorizer = fit_vectorizer(data, vectorizer)
+clf = learn_multinomial_nb(data, vectorizer)
+predict(clf, X, vectorizer, 'TfidfVectorizer + MultinomialNB')
+
+print('########## TfidfVectorizer(norm=None) + MultinomialNB ##############')
+vectorizer = TfidfVectorizer(norm=None)
+vectorizer = fit_vectorizer(data, vectorizer)
+clf = learn_multinomial_nb(data, vectorizer)
+predict(clf, X, vectorizer, 'TfidfVectorizer + MultinomialNB')
+
+# print('########## CountVectorizer + BernoulliNB ##############')
+# count_vectorizer = build_count_vectorizer(data)
+# clf = learn_bernonulli_nb(data, count_vectorizer)
+# predict(clf, X, count_vectorizer, 'CountVectorizer + BernoulliNB')
+#
+# print('########## TfidfVectorizer + BernoulliNB ##############')
+# tfidf_vectorizer = build_tfidf_vectorizer(data)
+# clf = learn_bernonulli_nb(data, tfidf_vectorizer)
+# predict(clf, X, tfidf_vectorizer, 'TfidfVectorizer + BernoulliNB')

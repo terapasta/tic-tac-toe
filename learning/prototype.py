@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import MeCab
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -72,7 +73,7 @@ def build_tfidf_vectorizer(data):
     vectorizer.fit(questions)
     return vectorizer
 
-def predict(clf, X, vectorizer):
+def predict(clf, X, vectorizer, algorithm_label):
     features = vectorizer.transform(X)
     answers = clf.predict(features)
     proba = clf.predict_proba(features)
@@ -82,6 +83,12 @@ def predict(clf, X, vectorizer):
         print('answer: %s' % answer)
         print('proba: %s \n' % max(probabilities))
 
+        # df = pd.DataFrame(
+        #     [[algorithm_label, question, answer, max(probabilities)]],
+        #     columns=['algorithm', 'question', 'answer', 'probability']
+        # )
+        # print(df)
+
 
 data = pd.read_csv('prototype.csv', encoding='SHIFT-JIS')
 X = [
@@ -90,12 +97,13 @@ X = [
     split('ほげほげ'),
 ]
 
+
 print('########## CountVectorizer + MultinomialNB ##############')
 count_vectorizer = build_count_vectorizer(data)
 clf = learn_multinomial_nb(data, count_vectorizer)
-predict(clf, X, count_vectorizer)
+predict(clf, X, count_vectorizer, 'CountVectorizer + MultinomialNB')
 
 print('########## TfidfVectorizer + MultinomialNB ##############')
 tfidf_vectorizer = build_tfidf_vectorizer(data)
 clf = learn_multinomial_nb(data, tfidf_vectorizer)
-predict(clf, X, tfidf_vectorizer)
+predict(clf, X, tfidf_vectorizer, 'TfidfVectorizer + MultinomialNB')

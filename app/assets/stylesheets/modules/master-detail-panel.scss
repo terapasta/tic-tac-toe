@@ -1,0 +1,35 @@
+.master-detail-panel {
+  $-header-height: 60px;
+  border: 1px solid $gray-lighter;
+
+  &__header {
+    padding: 0 16px;
+    height: $-header-height;
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: $-header-height;
+  }
+
+  &__body {
+    @include pie-clearfix;
+    position: relative;
+  }
+
+  &__master {
+    overflow: auto;
+    float: left;
+    width: 30%;
+    padding: 16px 0;
+    background-color: lighten($gray-lighter, 5%);
+  }
+
+  &__detail {
+    float: right;
+    width: 70%;
+  }
+}

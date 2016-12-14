@@ -44,5 +44,7 @@ module StartDash
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'Allow-From http://www.mof-mof.co.jp'
     }
+
+    config.assets.paths << Compass::Core.base_directory + '/stylesheets'
   end
 end

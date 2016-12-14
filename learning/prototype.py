@@ -61,6 +61,15 @@ def learn_multinomial_nb(data, vectorizer):
     clf.fit(vec, answers)
     return clf
 
+def learn_bernonulli_nb(data, vectorizer):
+    questions = splited_data(data['question'])
+    answers = data['answer']
+
+    vec = vectorizer.transform(questions)
+    clf = BernoulliNB()
+    clf.fit(vec, answers)
+    return clf
+
 def build_count_vectorizer(data):
     questions = splited_data(data['question'])
     vectorizer = CountVectorizer()
@@ -93,6 +102,7 @@ def predict(clf, X, vectorizer, algorithm_label):
 data = pd.read_csv('prototype.csv', encoding='SHIFT-JIS')
 X = [
     split('セキュリティはどうなってる？'),
+    split('セキュリティ対策はどうなってる？'),
     split('データ投入はどうやるの？'),
     split('ほげほげ'),
 ]
@@ -107,3 +117,13 @@ print('########## TfidfVectorizer + MultinomialNB ##############')
 tfidf_vectorizer = build_tfidf_vectorizer(data)
 clf = learn_multinomial_nb(data, tfidf_vectorizer)
 predict(clf, X, tfidf_vectorizer, 'TfidfVectorizer + MultinomialNB')
+
+print('########## CountVectorizer + BernoulliNB ##############')
+count_vectorizer = build_count_vectorizer(data)
+clf = learn_bernonulli_nb(data, count_vectorizer)
+predict(clf, X, count_vectorizer, 'CountVectorizer + BernoulliNB')
+
+print('########## TfidfVectorizer + BernoulliNB ##############')
+tfidf_vectorizer = build_tfidf_vectorizer(data)
+clf = learn_bernonulli_nb(data, tfidf_vectorizer)
+predict(clf, X, tfidf_vectorizer, 'TfidfVectorizer + BernoulliNB')

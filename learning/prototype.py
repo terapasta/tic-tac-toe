@@ -45,7 +45,7 @@ def split(text):
     return " ".join(word_list)
 
 
-data = pd.read_csv('tfidf.csv', encoding='SHIFT-JIS')
+data = pd.read_csv('prototype.csv', encoding='SHIFT-JIS')
 questions = splited_data(data['question'])
 answers = data['answer']
 

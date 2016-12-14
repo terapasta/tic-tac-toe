@@ -1,7 +1,7 @@
 import pandas as pd
 import MeCab
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import BernoulliNB
@@ -44,29 +44,58 @@ def split(text):
         node = node.next
     return " ".join(word_list)
 
+def learn_multinomial_nb(data, vectorizer):
+    questions = splited_data(data['question'])
+    answers = data['answer']
+
+    vec = vectorizer.transform(questions)
+    # print(vectorizer.get_feature_names())
+    # print(vec.toarray())
+
+    # transformer = TfidfTransformer()
+    # tfidf = transformer.fit_transform(vec)
+    # print(tfidf.toarray())
+
+    clf = MultinomialNB()
+    clf.fit(vec, answers)
+    return clf
+
+def build_count_vectorizer(data):
+    questions = splited_data(data['question'])
+    vectorizer = CountVectorizer()
+    vectorizer.fit(questions)
+    return vectorizer
+
+def build_tfidf_vectorizer(data):
+    questions = splited_data(data['question'])
+    vectorizer = TfidfVectorizer()
+    vectorizer.fit(questions)
+    return vectorizer
+
+def predict(clf, X, vectorizer):
+    features = vectorizer.transform(X)
+    answers = clf.predict(features)
+    proba = clf.predict_proba(features)
+
+    for (question, answer, probabilities) in zip(X, answers, proba):
+        print('question: %s' % question)
+        print('answer: %s' % answer)
+        print('proba: %s \n' % max(probabilities))
+
 
 data = pd.read_csv('prototype.csv', encoding='SHIFT-JIS')
-questions = splited_data(data['question'])
-answers = data['answer']
+X = [
+    split('セキュリティはどうなってる？'),
+    split('データ投入はどうやるの？'),
+    split('ほげほげ'),
+]
 
-vectorizer = CountVectorizer()
-vec = vectorizer.fit_transform(questions)
+print('########## CountVectorizer + MultinomialNB ##############')
+count_vectorizer = build_count_vectorizer(data)
+clf = learn_multinomial_nb(data, count_vectorizer)
+predict(clf, X, count_vectorizer)
 
-print(vectorizer.get_feature_names())
-print(vec.toarray())
-
-transformer = TfidfTransformer()
-tfidf = transformer.fit_transform(vec)
-print(tfidf.toarray())
-
-clf = MultinomialNB()
-clf.fit(tfidf, answers)
-
-########## pridict ##############
-# X = split('My-opeってなんですか？')
-X = split('セキュリティはどうなってる？')
-X = vectorizer.transform([X])
-X = transformer.transform(X)
-print(X.toarray())
-result = clf.predict_proba(X)
-print(result)
+print('########## TfidfVectorizer + MultinomialNB ##############')
+tfidf_vectorizer = build_tfidf_vectorizer(data)
+clf = learn_multinomial_nb(data, tfidf_vectorizer)
+predict(clf, X, tfidf_vectorizer)

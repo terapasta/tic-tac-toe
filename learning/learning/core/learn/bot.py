@@ -18,6 +18,7 @@ from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.persistance import Persistance
+# from learning.core.nlang import Nlang
 
 class Bot:
     def __init__(self, bot_id, learning_parameter):

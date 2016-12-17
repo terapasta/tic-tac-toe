@@ -19,7 +19,7 @@ class MyopeServer(RPCServer):
         # X = list(context)
         # X.append(body)
         # HACK かっこを二重にしないとなぜかprobabilityが下がる(要調査)
-        X = np.array([[body]])
+        X = np.array([body])
         predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS
 

@@ -21,7 +21,6 @@ class Reply:
         self.learning_parameter = learning_parameter
 
         try:
-            self.bot_id = bot_id
             self.estimator = Persistance.load_model(bot_id)
             self.vocabulary = Persistance.load_vocabulary(bot_id)
             self.vectorizer = joblib.load("learning/models/%s/%s_vectorizer.pkl" % (config.env, bot_id))
@@ -29,40 +28,15 @@ class Reply:
             raise ModelNotExistsError()
 
     def predict(self, X):
-        # X = [
-        #     Nlang.split('セキュリティはどう？'),
-        #     Nlang.split('セキュリティはどうなってる？'),
-        #     Nlang.split('どんな会社が使ってる？'),
-        #     Nlang.split('何歳ですか？'),
-        #     Nlang.split('サーバーはどこ使ってるの？'),
-        #     Nlang.split('ECサイトでも使えますか？'),
-        #     Nlang.split('どんな質問ならいける？'),
-        #     Nlang.split('クラウドサービスですか？'),
-        # ]
-        # X = [
-        #     'セキュリティはどう？',
-        #     'セキュリティはどうなってる？',
-        #     'どんな会社が使ってる？',
-        #     '何歳ですか？',
-        #     'サーバーはどこ使ってるの？',
-        #     'ECサイトでも使えますか？',
-        #     'どんな質問ならいける？',
-        #     'クラウドサービスですか？',
-        # ]
-
         text_array = TextArray(X, vocabulary=self.vocabulary, vectorizer=self.vectorizer)
         features = text_array.to_vec()
 
+        # タグベクトルを追加する処理
         # if self.learning_parameter.include_tag_vector:
         #     tag = Tag()
         #     tag_vec = tag.predict(Xtrain, return_type='binarized')
         #     features = np.c_[tag_vec, Xtrain_vec]
-        #
 
-        # features = text_array.to_vec()
-        # vectorizer = training_set.body_array.vectorizer
-        # X = text_array.splited_data()
-        # features = self.vectorizer.transform(X)
         answers = self.estimator.predict(features)
         probabilities = self.estimator.predict_proba(features)
         max_probability = np.max(probabilities)

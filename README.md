@@ -25,6 +25,7 @@ Pythonのライブラリをインストール。pyenv,virtualenvを使ってい�
 
 ```
 $ cd learning
+$ pyenv virtualenv 3.5.2 donusagi-bot3
 $ pip install -r requirements.txt
 ```
 

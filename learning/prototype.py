@@ -98,6 +98,7 @@ def predict(clf, X, vectorizer, algorithm_label):
         # print(df)
 
 
+# data = pd.read_csv('prototype_id.csv', encoding='SHIFT-JIS')
 data = pd.read_csv('prototype.csv', encoding='SHIFT-JIS')
 X = [
     split('セキュリティはどう？'),

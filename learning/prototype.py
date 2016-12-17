@@ -100,13 +100,14 @@ def predict(clf, X, vectorizer, algorithm_label):
 
 data = pd.read_csv('prototype.csv', encoding='SHIFT-JIS')
 X = [
+    split('セキュリティはどう？'),
     split('セキュリティはどうなってる？'),
-    split('セキュリティ対策はどうなってる？'),
-    split('データ投入はどうやるの？'),
-    split('サーバーはどこを使ってるの？'),
-    split('試しに使うことはできますか？'),
-    split('あなたは誰ですか？何なんですか？'),
-    split('ほげほげ'),
+    split('どんな会社が使ってる？'),
+    split('何歳ですか？'),
+    split('サーバーはどこ使ってるの？'),
+    split('ECサイトでも使えますか？'),
+    split('どんな質問ならいける？'),
+    split('クラウドサービスですか？'),
 ]
 
 

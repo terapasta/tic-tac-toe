@@ -33,9 +33,11 @@ class Bot < ActiveRecord::Base
 
   def reset_training_data!
     transaction do
-      trainings.destroy_all
-      imported_training_messages.destroy_all
-      learning_training_messages.destroy_all
+      training_messages.delete_all
+      trainings.delete_all
+
+      imported_training_messages.delete_all
+      learning_training_messages.delete_all
     end
   end
 

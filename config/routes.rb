@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'static_pages/help'
 
   resources :bots, only: [:index, :edit, :update] do
+    post :reset, on: :member
+
     resource :imports, only: [:new, :create]
     resource :exports, only: :show
     resources :threads, only: :index do

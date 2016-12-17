@@ -31,6 +31,14 @@ class Bot < ActiveRecord::Base
     attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :include_tag_vector, :classify_threshold)
   end
 
+  def reset_training_data!
+    transaction do
+      trainings.destroy_all
+      imported_training_messages.destroy_all
+      learning_training_messages.destroy_all
+    end
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?

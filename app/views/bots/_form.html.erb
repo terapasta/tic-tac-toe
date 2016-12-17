@@ -23,6 +23,9 @@
 
   <div class="actions">
     <%= f.submit class: 'btn btn-success' %>
+    <div class="pull-right">
+      <%= link_to '学習データリセット', [:reset, @bot], class: 'btn btn-danger', method: :post, data: { confirm: '学習データが全て削除されます。本当にリセットしてもよろしいですか？' }  %>
+    </div>
   </div>
   <%= javascript_include_tag 'bots/form' %>
 <% end %>

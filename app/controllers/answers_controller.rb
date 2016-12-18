@@ -14,6 +14,17 @@ class AnswersController < ApplicationController
     end
   end
 
+  def create
+    @answer = @bot.answers.build(answer_params)
+    respond_to do |format|
+      if @answer.save
+        format.json { render json: @answer.decorate.as_json, status: :created }
+      else
+        format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def update
     respond_to do |format|
       if @answer.update answer_params

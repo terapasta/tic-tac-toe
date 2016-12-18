@@ -2,15 +2,20 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   before_action :set_bot
-  before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  before_action :set_answer, only: [:edit, :update, :destroy]
 
   def index
     @answers = @bot.answers.order('id desc').page(params[:page])
   end
 
   def show
+    @answer = @bot.answers.find_by(id: params[:id])
     respond_to do |format|
-      format.json { render json: @answer.decorate.as_json }
+      if @answer.present?
+        format.json { render json: @answer.decorate.as_json }
+      else
+        format.json { render json: {}, status: :not_found }
+      end
     end
   end
 

@@ -17,6 +17,7 @@ export default class Tree extends Component {
       decisionBranchesRepo: PropTypes.object.isRequired,
       onSelectItem: PropTypes.func.isRequired,
       onCreatingAnswer: PropTypes.func.isRequired,
+      activeItem: PropTypes.object.isRequired,
     };
   }
 
@@ -25,7 +26,6 @@ export default class Tree extends Component {
     this.state = {
       openedAnswerIDs: [],
       openedDecisionBranchIDs: [],
-      activeItem: { type: null, id: null },
       isAdding: false,
     };
   }
@@ -35,12 +35,12 @@ export default class Tree extends Component {
       answersTree,
       answersRepo,
       decisionBranchesRepo,
+      activeItem,
     } = this.props;
 
     const {
       openedAnswerIDs,
       openedDecisionBranchIDs,
-      activeItem,
       isAdding,
     } = this.state;
 
@@ -73,7 +73,6 @@ export default class Tree extends Component {
     const activeItem = { type: "answer", id: answerID };
 
     this.setState({
-      activeItem,
       isAdding: false,
       openedAnswerIDs: toggleID(openedAnswerIDs, answerID),
     });
@@ -89,7 +88,6 @@ export default class Tree extends Component {
     const activeItem = { type: "decisionBranch", id: decisionBrancheID };
 
     this.setState({
-      activeItem,
       isAdding: false,
       openedDecisionBranchIDs: toggleID(openedDecisionBranchIDs, decisionBrancheID),
     });
@@ -102,7 +100,6 @@ export default class Tree extends Component {
   onClickAdd() {
     const { onCreatingAnswer } = this.props;
     this.setState({
-      activeItem: { type: null, id: null },
       isAdding: true,
     });
 

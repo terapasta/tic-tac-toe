@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
-import isArray from "lodash/isArray";
+import flatten from "lodash/flatten";
+import compact from "lodash/compact";
 
 import Tree from "./tree";
 import MasterDetailPanel, { Master, Detail } from "./master-detail-panel";
@@ -26,7 +27,7 @@ export default class ConversationTree extends Component {
       answersTree,
       answersRepo,
       decisionBranchesRepo,
-      activeItem: null,
+      activeItem: { type: null, id: null },
       isCreatingAnswer: false,
     };
   }
@@ -47,6 +48,7 @@ export default class ConversationTree extends Component {
           <Tree
             answersTree={answersTree}
             answersRepo={answersRepo}
+            activeItem={activeItem}
             decisionBranchesRepo={decisionBranchesRepo}
             onSelectItem={this.onSelectItem.bind(this)}
             onCreatingAnswer={this.onCreatingAnswer.bind(this)}
@@ -72,7 +74,7 @@ export default class ConversationTree extends Component {
   }
 
   onCreatingAnswer() {
-    this.setState({ isCreatingAnswer: true });
+    this.setState({ isCreatingAnswer: true, activeItem: { type: null, id: null } });
   }
 
   onUpdateDecisionBranch(decisionBranchModel) {
@@ -87,13 +89,19 @@ export default class ConversationTree extends Component {
     this.setState({ answersRepo });
   }
 
-  onCreateAnswer(answerModel) {
+  onCreateAnswer(answerModel, decisionBranchId) {
     const { answersRepo, answersTree } = this.state;
     answersRepo[answerModel.id] = answerModel.attrs;
-    answersTree.unshift({
-      id: answerModel.id,
-      decisionBranches: [],
-    });
+    if (decisionBranchId == null) {
+      answersTree.unshift({
+        id: answerModel.id,
+        decisionBranches: [],
+      });
+    } else {
+      findDecisionBranchFromTree(answersTree, decisionBranchId, (decisionBranchNode) => {
+        decisionBranchNode.answer = { id: answerModel.id, decisionBranches: [] };
+      });
+    }
     const activeItem = { type: "answer", id: answerModel.id };
     this.setState({ answersRepo, answersTree, activeItem });
   }
@@ -107,7 +115,8 @@ export default class ConversationTree extends Component {
         answer: null,
       });
     });
-    this.setState({ decisionBranchesRepo, answersTree });
+    const activeItem = { type: "decisionBranch", id: decisionBranchModel.id };
+    this.setState({ decisionBranchesRepo, answersTree, activeItem });
   }
 }
 
@@ -116,8 +125,22 @@ function findAnswerFromTree(answersTree, answerId, foundCallback) {
     if (answerNode.id === answerId) {
       foundCallback(answerNode);
     } else {
-      const answers = answerNode.decisionBranches.map((db) => db.answer);
-      findAnswerFromTree(answers, answerId);
+      const answers = compact(answerNode.decisionBranches.map((db) => db.answer));
+      findAnswerFromTree(answers, answerId, foundCallback);
     }
   });
+}
+
+function findDecisionBranchFromTree(answersTree, decisionBranchId, foundCallback) {
+  const handler = (decisionBranchNodes) => {
+    decisionBranchNodes.forEach((decisionBranchNode) => {
+      if (decisionBranchNode.id === decisionBranchId) {
+        foundCallback(decisionBranchNode);
+      } else if (decisionBranchNode.answer != null) {
+        handler(decisionBranchNode.answer.decisionBranches);
+      }
+    });
+  };
+  const decisionBranchNodes = flatten(answersTree.map((a) => a.decisionBranches));
+  handler(decisionBranchNodes);
 }

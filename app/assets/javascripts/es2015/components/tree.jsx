@@ -15,7 +15,8 @@ export default class Tree extends Component {
       answersTree: PropTypes.array.isRequired,
       answersRepo: PropTypes.object.isRequired,
       decisionBranchesRepo: PropTypes.object.isRequired,
-      onSelectItem: PropTypes.func,
+      onSelectItem: PropTypes.func.isRequired,
+      onCreatingAnswer: PropTypes.func.isRequired,
     };
   }
 
@@ -99,10 +100,15 @@ export default class Tree extends Component {
   }
 
   onClickAdd() {
+    const { onCreatingAnswer } = this.props;
     this.setState({
       activeItem: { type: null, id: null },
       isAdding: true,
     });
+
+    if (isFunction(onCreatingAnswer)) {
+      onCreatingAnswer();
+    }
   }
 }
 

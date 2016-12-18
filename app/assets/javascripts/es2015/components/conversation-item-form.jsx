@@ -23,6 +23,7 @@ export default class ConversationItemForm extends Component {
       }),
       onUpdateDecisionBranch: PropTypes.func.isRequired,
       onUpdateAnswer: PropTypes.func.isRequired,
+      isCreatingAnswer: PropTypes.bool.isRequired,
     };
   }
 
@@ -66,6 +67,7 @@ export default class ConversationItemForm extends Component {
   render() {
     const {
       activeItem,
+      isCreatingAnswer,
     } = this.props;
 
     const {
@@ -89,10 +91,10 @@ export default class ConversationItemForm extends Component {
             <input className="form-control" disabled={true} type="text" value={decisionBranchModel.body} />
           </div>
         )}
-        {answerModel != null && (
+        {(answerModel != null || isCreatingAnswer) && (
           <div className="form-group">
             <label>回答</label>
-            <TextArea className="form-control" rows={3} value={answerBody} onChange={this.onChangeAnswerBody.bind(this)} />
+            <TextArea className="form-control" rows={3} value={answerBody || ""} onChange={this.onChangeAnswerBody.bind(this)} />
             <div className="help-block clearfix">
               <div className="pull-right">
                 <a className="btn btn-primary" href="#" onClick={this.onClickSaveAnswerButton.bind(this)}>保存</a>
@@ -120,12 +122,19 @@ export default class ConversationItemForm extends Component {
 
   onClickSaveAnswerButton(e) {
     e.preventDefault();
-    const { onUpdateAnswer } = this.props;
+    const { onUpdateAnswer, onCreateAnswer, botId } = this.props;
     const { answerModel, answerBody } = this.state;
-    answerModel.update({ body: answerBody }).then((newAnswerModel) => {
-      this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
-      onUpdateAnswer(newAnswerModel);
-    });
+    if (answerModel == null) {
+      Answer.create(botId, { body: answerBody }).then((newAnswerModel) => {
+        this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
+        onCreateAnswer(newAnswerModel);
+      }).catch(console.error);
+    } else {
+      answerModel.update({ body: answerBody }).then((newAnswerModel) => {
+        this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
+        onUpdateAnswer(newAnswerModel);
+      }).catch(console.error);
+    }
   }
 
   onUpdateDecisionBranch(decisionBranchModel, index) {

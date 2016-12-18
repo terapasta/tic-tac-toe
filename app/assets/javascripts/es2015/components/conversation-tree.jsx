@@ -26,6 +26,7 @@ export default class ConversationTree extends Component {
       answersRepo,
       decisionBranchesRepo,
       activeItem: null,
+      isCreatingAnswer: false,
     };
   }
 
@@ -36,6 +37,7 @@ export default class ConversationTree extends Component {
       answersRepo,
       decisionBranchesRepo,
       activeItem,
+      isCreatingAnswer,
     } = this.state;
 
     return (
@@ -46,6 +48,7 @@ export default class ConversationTree extends Component {
             answersRepo={answersRepo}
             decisionBranchesRepo={decisionBranchesRepo}
             onSelectItem={this.onSelectItem.bind(this)}
+            onCreatingAnswer={this.onCreatingAnswer.bind(this)}
           />
         </Master>
         <Detail>
@@ -54,6 +57,8 @@ export default class ConversationTree extends Component {
             activeItem={activeItem}
             onUpdateDecisionBranch={this.onUpdateDecisionBranch.bind(this)}
             onUpdateAnswer={this.onUpdateAnswer.bind(this)}
+            isCreatingAnswer={isCreatingAnswer}
+            onCreateAnswer={this.onCreateAnswer.bind(this)}
           />
         </Detail>
       </MasterDetailPanel>
@@ -62,6 +67,10 @@ export default class ConversationTree extends Component {
 
   onSelectItem(activeItem) {
     this.setState({ activeItem });
+  }
+
+  onCreatingAnswer() {
+    this.setState({ isCreatingAnswer: true });
   }
 
   onUpdateDecisionBranch(decisionBranchModel) {
@@ -74,5 +83,16 @@ export default class ConversationTree extends Component {
     const { answersRepo } = this.state;
     answersRepo[answerModel.id] = answerModel.attrs;
     this.setState({ answersRepo });
+  }
+
+  onCreateAnswer(answerModel) {
+    const { answersRepo, answersTree } = this.state;
+    answersRepo[answerModel.id] = answerModel.attrs;
+    answersTree.unshift({
+      id: answerModel.id,
+      decisionBranches: [],
+    });
+    const activeItem = { type: "answer", id: answerModel.id };
+    this.setState({ answersRepo, answersTree, activeItem });
   }
 }

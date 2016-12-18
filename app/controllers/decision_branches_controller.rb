@@ -17,6 +17,17 @@ class DecisionBranchesController < ApplicationController
     end
   end
 
+  def create
+    @decision_branch = @bot.decision_branches.build(decision_branch_params)
+    respond_to do |format|
+      if @decision_branch.save
+        format.json { render json: @decision_branch.decorate.as_json, status: :created }
+      else
+        format.json { render json: @decision_branch.decorate.errors_as_json, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def update
     respond_to do |format|
       if @decision_branch.update(decision_branch_params)

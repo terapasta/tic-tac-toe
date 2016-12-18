@@ -14,6 +14,15 @@ export default class DecisionBranch {
       });
   }
 
+  static create(botId, attrs) {
+    return axios.post(`/bots/${botId}/decision_branches.json`, {
+      decision_branch: attrs,
+      authenticity_token: authenticityToken(),
+    }).then((res) => {
+      return new DecisionBranch(res.data);
+    });
+  }
+
   constructor(attrs) {
     this.attrs = attrs;
   }

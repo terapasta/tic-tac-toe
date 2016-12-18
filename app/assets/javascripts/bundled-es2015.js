@@ -89,7 +89,9 @@ var ConversationItemForm = function (_Component) {
         }),
         onUpdateDecisionBranch: _react.PropTypes.func.isRequired,
         onUpdateAnswer: _react.PropTypes.func.isRequired,
-        isCreatingAnswer: _react.PropTypes.bool.isRequired
+        isCreatingAnswer: _react.PropTypes.bool.isRequired,
+        onCreateAnswer: _react.PropTypes.func.isRequired,
+        onCreateDecisionBranch: _react.PropTypes.func.isRequired
       };
     }
   }]);
@@ -205,7 +207,9 @@ var ConversationItemForm = function (_Component) {
             decisionBranchModels: decisionBranchModels,
             onUpdate: this.onUpdateDecisionBranch.bind(this)
           }),
-          isAppearNewDecisionBranch && _react2.default.createElement(_newDecisionBranch2.default, null)
+          isAppearNewDecisionBranch && _react2.default.createElement(_newDecisionBranch2.default, {
+            onSave: this.onSaveDecisionBranch.bind(this)
+          })
         )
       );
     }
@@ -249,6 +253,29 @@ var ConversationItemForm = function (_Component) {
       decisionBranchModels[index] = decisionBranchModel;
       this.setState({ decisionBranchModels: decisionBranchModels });
       onUpdateDecisionBranch(decisionBranchModel);
+    }
+  }, {
+    key: "onSaveDecisionBranch",
+    value: function onSaveDecisionBranch(body) {
+      var _this4 = this;
+
+      var _props3 = this.props,
+          onCreateDecisionBranch = _props3.onCreateDecisionBranch,
+          botId = _props3.botId;
+      var _state3 = this.state,
+          decisionBranchModels = _state3.decisionBranchModels,
+          answerModel = _state3.answerModel;
+
+      _decisionBranch2.default.create(botId, {
+        answer_id: answerModel.id,
+        body: body
+      }).then(function (newDecisionBranchModel) {
+        decisionBranchModels.push(newDecisionBranchModel);
+        _this4.setState({
+          decisionBranchModels: decisionBranchModels
+        });
+        onCreateDecisionBranch(answerModel.id, newDecisionBranchModel);
+      }).catch(console.error);
     }
   }]);
 
@@ -530,7 +557,9 @@ var NewDecisionBranch = function (_Component) {
   }, {
     key: "propTypes",
     get: function get() {
-      return {};
+      return {
+        onSave: _react.PropTypes.func.isRequired
+      };
     }
   }]);
 
@@ -593,7 +622,7 @@ var NewDecisionBranch = function (_Component) {
               { className: "pull-right" },
               _react2.default.createElement(
                 "a",
-                { className: "btn btn-primary", href: "#", disabled: isProcessing },
+                { className: "btn btn-primary", href: "#", disabled: isProcessing, onClick: this.onClickSaveButton.bind(this) },
                 "\u8FFD\u52A0"
               )
             )
@@ -620,6 +649,13 @@ var NewDecisionBranch = function (_Component) {
 
       this.setState({ value: value });
     }
+  }, {
+    key: "onClickSaveButton",
+    value: function onClickSaveButton(e) {
+      e.preventDefault();
+      this.props.onSave(this.state.value);
+      this.setState({ value: "", isAdding: false });
+    }
   }]);
 
   return NewDecisionBranch;
@@ -639,6 +675,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _isArray = require("lodash/isArray");
+
+var _isArray2 = _interopRequireDefault(_isArray);
 
 var _tree = require("./tree");
 
@@ -734,7 +774,8 @@ var ConversationTree = function (_Component) {
             onUpdateDecisionBranch: this.onUpdateDecisionBranch.bind(this),
             onUpdateAnswer: this.onUpdateAnswer.bind(this),
             isCreatingAnswer: isCreatingAnswer,
-            onCreateAnswer: this.onCreateAnswer.bind(this)
+            onCreateAnswer: this.onCreateAnswer.bind(this),
+            onCreateDecisionBranch: this.onCreateDecisionBranch.bind(this)
           })
         )
       );
@@ -780,6 +821,22 @@ var ConversationTree = function (_Component) {
       var activeItem = { type: "answer", id: answerModel.id };
       this.setState({ answersRepo: answersRepo, answersTree: answersTree, activeItem: activeItem });
     }
+  }, {
+    key: "onCreateDecisionBranch",
+    value: function onCreateDecisionBranch(answerId, decisionBranchModel) {
+      var _state3 = this.state,
+          decisionBranchesRepo = _state3.decisionBranchesRepo,
+          answersTree = _state3.answersTree;
+
+      decisionBranchesRepo[decisionBranchModel.id] = decisionBranchModel.attrs;
+      findAnswerFromTree(answersTree, answerId, function (answerNode) {
+        answerNode.decisionBranches.push({
+          id: decisionBranchModel.id,
+          answer: null
+        });
+      });
+      this.setState({ decisionBranchesRepo: decisionBranchesRepo, answersTree: answersTree });
+    }
   }]);
 
   return ConversationTree;
@@ -787,7 +844,21 @@ var ConversationTree = function (_Component) {
 
 exports.default = ConversationTree;
 
-},{"./conversation-item-form":2,"./master-detail-panel":8,"./tree":9,"react":384}],8:[function(require,module,exports){
+
+function findAnswerFromTree(answersTree, answerId, foundCallback) {
+  answersTree.forEach(function (answerNode) {
+    if (answerNode.id === answerId) {
+      foundCallback(answerNode);
+    } else {
+      var answers = answerNode.decisionBranches.map(function (db) {
+        return db.answer;
+      });
+      findAnswerFromTree(answers, answerId);
+    }
+  });
+}
+
+},{"./conversation-item-form":2,"./master-detail-panel":8,"./tree":9,"lodash/isArray":205,"react":384}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1456,6 +1527,16 @@ var DecisionBranch = function () {
     value: function fetch(botId, id) {
       return _axios2.default.get("/bots/" + botId + "/decision_branches/" + id + ".json").then(function (res) {
         return new DecisionBranch((0, _assign2.default)({ botId: botId }, res.data));
+      });
+    }
+  }, {
+    key: "create",
+    value: function create(botId, attrs) {
+      return _axios2.default.post("/bots/" + botId + "/decision_branches.json", {
+        decision_branch: attrs,
+        authenticity_token: (0, _authenticityToken2.default)()
+      }).then(function (res) {
+        return new DecisionBranch(res.data);
       });
     }
   }]);

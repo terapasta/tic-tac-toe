@@ -24,6 +24,8 @@ export default class ConversationItemForm extends Component {
       onUpdateDecisionBranch: PropTypes.func.isRequired,
       onUpdateAnswer: PropTypes.func.isRequired,
       isCreatingAnswer: PropTypes.bool.isRequired,
+      onCreateAnswer: PropTypes.func.isRequired,
+      onCreateDecisionBranch: PropTypes.func.isRequired,
     };
   }
 
@@ -109,6 +111,7 @@ export default class ConversationItemForm extends Component {
           />
           {isAppearNewDecisionBranch && (
             <NewDecisionBranch
+              onSave={this.onSaveDecisionBranch.bind(this)}
             />
           )}
         </div>
@@ -143,5 +146,20 @@ export default class ConversationItemForm extends Component {
     decisionBranchModels[index] = decisionBranchModel;
     this.setState({ decisionBranchModels });
     onUpdateDecisionBranch(decisionBranchModel);
+  }
+
+  onSaveDecisionBranch(body) {
+    const { onCreateDecisionBranch, botId } = this.props;
+    const { decisionBranchModels, answerModel } = this.state;
+    DecisionBranch.create(botId, {
+      answer_id: answerModel.id,
+      body,
+    }).then((newDecisionBranchModel) => {
+      decisionBranchModels.push(newDecisionBranchModel);
+      this.setState({
+        decisionBranchModels,
+      });
+      onCreateDecisionBranch(answerModel.id, newDecisionBranchModel);
+    }).catch(console.error);
   }
 }

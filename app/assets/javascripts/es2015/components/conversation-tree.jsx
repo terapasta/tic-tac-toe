@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import isArray from "lodash/isArray";
 
 import Tree from "./tree";
 import MasterDetailPanel, { Master, Detail } from "./master-detail-panel";
@@ -59,6 +60,7 @@ export default class ConversationTree extends Component {
             onUpdateAnswer={this.onUpdateAnswer.bind(this)}
             isCreatingAnswer={isCreatingAnswer}
             onCreateAnswer={this.onCreateAnswer.bind(this)}
+            onCreateDecisionBranch={this.onCreateDecisionBranch.bind(this)}
           />
         </Detail>
       </MasterDetailPanel>
@@ -95,4 +97,27 @@ export default class ConversationTree extends Component {
     const activeItem = { type: "answer", id: answerModel.id };
     this.setState({ answersRepo, answersTree, activeItem });
   }
+
+  onCreateDecisionBranch(answerId, decisionBranchModel) {
+    const { decisionBranchesRepo, answersTree } = this.state;
+    decisionBranchesRepo[decisionBranchModel.id] = decisionBranchModel.attrs;
+    findAnswerFromTree(answersTree, answerId, (answerNode) => {
+      answerNode.decisionBranches.push({
+        id: decisionBranchModel.id,
+        answer: null,
+      });
+    });
+    this.setState({ decisionBranchesRepo, answersTree });
+  }
+}
+
+function findAnswerFromTree(answersTree, answerId, foundCallback) {
+  answersTree.forEach((answerNode) => {
+    if (answerNode.id === answerId) {
+      foundCallback(answerNode);
+    } else {
+      const answers = answerNode.decisionBranches.map((db) => db.answer);
+      findAnswerFromTree(answers, answerId);
+    }
+  });
 }

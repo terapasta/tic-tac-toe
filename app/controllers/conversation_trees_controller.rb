@@ -8,6 +8,7 @@ class ConversationTreesController < ApplicationController
       .top_level(@bot.id)
       .order('id desc')
       .decorate
+    @all_answers = @bot.answers.order('id desc').decorate
     @decision_branches = @bot.decision_branches.decorate
   end
 end

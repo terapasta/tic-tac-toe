@@ -6,7 +6,7 @@ class LearningTrainingMessage < ActiveRecord::Base
 
   class << self
     def to_csv(bot)
-      CSV.generate(force_quotes: true) do |csv|
+      CSV.generate(force_quotes: true, row_sep: "\r\n") do |csv|
         bot.learning_training_messages.find_each do |learning_training_message|
           base = [
             learning_training_message.question,

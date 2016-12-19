@@ -28,28 +28,33 @@ class Reply:
             raise ModelNotExistsError()
 
     def predict(self, X):
-        text_array = TextArray(X[0], vocabulary=self.vocabulary)
-
+        text_array = TextArray(X, vocabulary=self.vocabulary, vectorizer=self.vectorizer)
         features = text_array.to_vec()
-        if self.learning_parameter.include_tag_vector:
-            tag = Tag()
-            tag_vec = tag.predict(Xtrain, return_type='binarized')
-            features = np.c_[tag_vec, Xtrain_vec]
 
-        logger.debug("features: %s" % features)
+        # タグベクトルを追加する処理
+        # if self.learning_parameter.include_tag_vector:
+        #     tag = Tag()
+        #     tag_vec = tag.predict(Xtrain, return_type='binarized')
+        #     features = np.c_[tag_vec, Xtrain_vec]
+
+        answers = self.estimator.predict(features)
         probabilities = self.estimator.predict_proba(features)
         max_probability = np.max(probabilities)
+
+        for (question, answer, probabilities2) in zip(X, answers, probabilities):
+            print('question: %s' % question)
+            print('answer: %s' % answer)
+            print('proba: %s \n' % max(probabilities2))
 
         results_ordered_by_probability = list(map(lambda x: {
             'answer_id': float(x[0]), 'probability': x[1]
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
-
-        logger.debug('X: %s' % X)
+        #
+        # logger.debug('X: %s' % X)
         logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
-        logger.debug('max_probability: %s' % max_probability)
+        # logger.debug('max_probability: %s' % max_probability)
 
         return results_ordered_by_probability[0:10]
-
 
     def __replace_text2vec(self, Xtrain):
         texts = Xtrain[:,-1:].flatten()

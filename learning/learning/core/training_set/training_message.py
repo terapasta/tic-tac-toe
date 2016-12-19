@@ -18,7 +18,7 @@ class TrainingMessage(Base):
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
-        self.binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)  # TODO 共通化したい
+        # self.binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)  # TODO 共通化したい
 
     def build(self):
         learning_training_messages = self.__build_learning_training_messages()
@@ -47,7 +47,7 @@ class TrainingMessage(Base):
             other_data = pd.read_sql("select * from learning_training_messages where bot_id <> %s and char_length(question) > 10 order by rand() limit %s;" % (self.bot_id, data_count), self.db)
             other_data['answer_id'] = self.classfy_failed_answer_id
             data = pd.concat([data, other_data])
-            logger.debug("data['id'].count(): %s" % data['id'].count())
+        logger.debug("data['id'].count(): %s" % data['id'].count())
         return data
 
     # HACK learning_training_messagesをクラスにするとリファクタリングできそう

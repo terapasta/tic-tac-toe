@@ -4,6 +4,7 @@ import dataset
 # import MySQLdb
 from learning.log import logger
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.externals import joblib
 from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
@@ -22,6 +23,7 @@ class Reply:
         try:
             self.estimator = Persistance.load_model(bot_id)
             self.vocabulary = Persistance.load_vocabulary(bot_id)
+            self.vectorizer = joblib.load("learning/models/%s/%s_vectorizer.pkl" % (config.env, bot_id))
         except IOError:
             raise ModelNotExistsError()
 
@@ -42,10 +44,29 @@ class Reply:
             'answer_id': float(x[0]), 'probability': x[1]
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
 
+        logger.debug('X: %s' % X)
         logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
         logger.debug('max_probability: %s' % max_probability)
 
         return results_ordered_by_probability[0:10]
+
+
+    def __replace_text2vec(self, Xtrain):
+        texts = Xtrain[:,-1:].flatten()
+        splited_texts = Nlang.batch_split(texts)
+        logger.debug('分割後の文字列: %s' % splited_texts)
+
+        # TODO TextArrayクラスで共通化したい
+        texts_vec = self.vectorizer.transform(splited_texts)
+        texts_vec = texts_vec.toarray()
+        logger.debug("texts_vec: %s" % texts_vec)
+        # logger.debug("texts_vec: %s" % texts_vec)
+
+        for text in splited_texts[0].split(' '):
+            voc = self.vectorizer.get_feature_names()
+            if text in voc:
+                wid = voc.index(text)
+                logger.debug("%s のTF-IDF値: %s" % (text, texts_vec[0][wid]))
 
 
     def __out_log(self, answer_id):

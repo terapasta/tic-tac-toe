@@ -14,7 +14,7 @@ class Tag:
         try:
             self.estimator = joblib.load("learning/models/%s/tag_model" % config.env)
             self.vocabulary = joblib.load("learning/models/%s/tag_vocabulary.pkl" % config.env)
-            self.binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)
+            # self.binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)
         except IOError:
             raise ModelNotExistsError()
 #

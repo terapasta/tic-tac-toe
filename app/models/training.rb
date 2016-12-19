@@ -1,5 +1,5 @@
 class Training < ActiveRecord::Base
-  has_many :training_messages
+  has_many :training_messages, dependent: :destroy
   belongs_to :bot
 
   alias_method :messages, :training_messages  # chatとtrainingで同じように振る舞えるようにするために別名をつける

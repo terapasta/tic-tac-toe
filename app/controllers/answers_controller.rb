@@ -2,19 +2,30 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   before_action :set_bot
-  before_action :set_answer, only: [:edit, :update, :destroy]
+  before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
   def index
     @answers = @bot.answers.order('id desc').page(params[:page])
   end
 
-  def update
-    if @answer.update answer_params
-      redirect_to bot_answers_path(@bot), notice: '回答を更新しました。'
-    else
-      flash[:alert] = '回答を更新できませんでした。'
+  def show
+    respond_to do |format|
+      format.json { render json: @answer.decorate.as_json }
+    end
+  end
 
-      render :edit
+  def update
+    respond_to do |format|
+      if @answer.update answer_params
+        format.html { redirect_to bot_answers_path(@bot), notice: '回答を更新しました。' }
+        format.json { render json: @answer.decorate.as_json, status: :ok }
+      else
+        format.html do
+          flash.now.alert = '回答を更新できませんでした。'
+          render :edit
+        end
+        format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -27,7 +38,7 @@ class AnswersController < ApplicationController
   private
 
     def set_bot
-      @bot = Bot.find params[:bot_id]
+      @bot = current_user.bots.find params[:bot_id]
     end
 
     def set_answer

@@ -1,0 +1,44 @@
+import axios from "axios";
+import assign from "lodash/assign";
+
+import DecisionBranch from "./decision-branch";
+
+import authenticityToken from "../modules/authenticity-token";
+import snakeCaseKeys from "../modules/snake-case-keys";
+
+export default class Answer {
+  static fetch(botId, id) {
+    return axios.get(`/bots/${botId}/answers/${id}.json`)
+      .then((res) => {
+        return new Answer(assign({ botId }, res.data));
+      });
+  }
+
+  constructor(attrs) {
+    this.attrs = attrs;
+  }
+
+  get id() { return this.attrs.id; }
+  get body() { return this.attrs.body; }
+
+  fetchDecisionBranches() {
+    const { id, botId } = this.attrs;
+    return axios.get(`/bots/${botId}/answers/${id}/decision_branches.json`)
+      .then((res) => {
+        this.decisionBranchModels = res.data.map((d) => {
+          return new DecisionBranch(d);
+        });
+      });
+  }
+
+  update(attrs) {
+    const newAttrs = snakeCaseKeys(assign({}, this.attrs, attrs));
+    const { botId, id } = this.attrs;
+    return axios.put(`/bots/${botId}/answers/${id}.json`, {
+      answer: newAttrs,
+      authenticity_token: authenticityToken(),
+    }).then((res) => {
+      return new Answer(res.data);
+    });
+  }
+}

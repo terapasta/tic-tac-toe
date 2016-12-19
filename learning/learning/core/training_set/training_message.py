@@ -48,6 +48,8 @@ class TrainingMessage(Base):
             other_data['answer_id'] = self.classfy_failed_answer_id
             data = pd.concat([data, other_data])
         logger.debug("data['id'].count(): %s" % data['id'].count())
+        # data = pd.read_csv('prototype_id.csv', encoding='SHIFT-JIS')
+        # logger.debug("data['question'].count(): %s" % data['question'].count())
         return data
 
     # HACK learning_training_messagesをクラスにするとリファクタリングできそう

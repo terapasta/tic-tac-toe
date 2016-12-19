@@ -22,7 +22,7 @@ class BotsController < ApplicationController
     @bot.reset_training_data!
     flash[:notice] = '学習データをリセットしました'
 
-    render :edit
+    redirect_to [:edit, @bot]
   end
 
   private

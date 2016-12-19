@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import flatten from "lodash/flatten";
 import compact from "lodash/compact";
+import includes from "lodash/includes";
 
 import Tree from "./tree";
 import MasterDetailPanel, { Master, Detail } from "./master-detail-panel";
@@ -29,6 +30,8 @@ export default class ConversationTree extends Component {
       decisionBranchesRepo,
       activeItem: { type: null, id: null },
       isCreatingAnswer: false,
+      openedAnswerIDs: [],
+      openedDecisionBranchIDs: [],
     };
   }
 
@@ -40,6 +43,8 @@ export default class ConversationTree extends Component {
       decisionBranchesRepo,
       activeItem,
       isCreatingAnswer,
+      openedAnswerIDs,
+      openedDecisionBranchIDs,
     } = this.state;
 
     return (
@@ -52,6 +57,8 @@ export default class ConversationTree extends Component {
             decisionBranchesRepo={decisionBranchesRepo}
             onSelectItem={this.onSelectItem.bind(this)}
             onCreatingAnswer={this.onCreatingAnswer.bind(this)}
+            openedAnswerIDs={openedAnswerIDs}
+            openedDecisionBranchIDs={openedDecisionBranchIDs}
           />
         </Master>
         <Detail>
@@ -70,7 +77,16 @@ export default class ConversationTree extends Component {
   }
 
   onSelectItem(activeItem) {
-    this.setState({ activeItem });
+    let { openedAnswerIDs, openedDecisionBranchIDs } = this.state;
+    switch (activeItem.type) {
+      case "answer":
+        openedAnswerIDs = toggleID(openedAnswerIDs, activeItem.id);
+        break;
+      case "decisionBranch":
+        openedDecisionBranchIDs = toggleID(openedDecisionBranchIDs, activeItem.id);
+        break;
+    }
+    this.setState({ activeItem, openedAnswerIDs, openedDecisionBranchIDs });
   }
 
   onCreatingAnswer() {
@@ -143,4 +159,14 @@ function findDecisionBranchFromTree(answersTree, decisionBranchId, foundCallback
   };
   const decisionBranchNodes = flatten(answersTree.map((a) => a.decisionBranches));
   handler(decisionBranchNodes);
+}
+
+function toggleID(IDs, targetID) {
+  let newIDs;
+  if (includes(IDs, targetID)) {
+    newIDs = IDs.filter((id) => id != targetID);
+  } else {
+    newIDs = IDs.concat([targetID]);
+  }
+  return newIDs;
 }

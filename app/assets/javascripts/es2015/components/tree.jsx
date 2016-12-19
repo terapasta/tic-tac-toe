@@ -18,14 +18,14 @@ export default class Tree extends Component {
       onSelectItem: PropTypes.func.isRequired,
       onCreatingAnswer: PropTypes.func.isRequired,
       activeItem: PropTypes.object.isRequired,
+      openedAnswerIDs: PropTypes.array.isRequired,
+      openedDecisionBranchIDs: PropTypes.array.isRequired,
     };
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      openedAnswerIDs: [],
-      openedDecisionBranchIDs: [],
       isAdding: false,
     };
   }
@@ -36,11 +36,11 @@ export default class Tree extends Component {
       answersRepo,
       decisionBranchesRepo,
       activeItem,
+      openedAnswerIDs,
+      openedDecisionBranchIDs,
     } = this.props;
 
     const {
-      openedAnswerIDs,
-      openedDecisionBranchIDs,
       isAdding,
     } = this.state;
 
@@ -69,12 +69,10 @@ export default class Tree extends Component {
 
   onClickItem(answerID) {
     const { onSelectItem } = this.props;
-    const { openedAnswerIDs } = this.state;
     const activeItem = { type: "answer", id: answerID };
 
     this.setState({
       isAdding: false,
-      openedAnswerIDs: toggleID(openedAnswerIDs, answerID),
     });
 
     if (isFunction(onSelectItem)) {
@@ -84,12 +82,10 @@ export default class Tree extends Component {
 
   onClickDecisionBranch(decisionBrancheID) {
     const { onSelectItem } = this.props;
-    const { openedDecisionBranchIDs } = this.state;
     const activeItem = { type: "decisionBranch", id: decisionBrancheID };
 
     this.setState({
       isAdding: false,
-      openedDecisionBranchIDs: toggleID(openedDecisionBranchIDs, decisionBrancheID),
     });
 
     if (isFunction(onSelectItem)) {
@@ -107,14 +103,4 @@ export default class Tree extends Component {
       onCreatingAnswer();
     }
   }
-}
-
-function toggleID(IDs, targetID) {
-  let newIDs;
-  if (includes(IDs, targetID)) {
-    newIDs = IDs.filter((id) => id != targetID);
-  } else {
-    newIDs = IDs.concat([targetID]);
-  }
-  return newIDs;
 }

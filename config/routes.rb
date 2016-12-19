@@ -29,7 +29,10 @@ Rails.application.routes.draw do
       end
     end
     resource :learning, only: [:update]
-    resources :answers, except: [:new, :create]
+    resources :answers, except: [:new, :create] do
+      resources :decision_branches, only: [:index]
+    end
+    resources :decision_branches, only: [:show, :update]
     resource :conversation_tree, only: [:show]
   end
 

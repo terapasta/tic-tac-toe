@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import includes from "lodash/includes";
+import isFunction from "lodash/isFunction";
 
 import AnswerNode from "./tree/answer-node";
 import AddNode from "./tree/add-node";
@@ -11,7 +12,10 @@ export default class Tree extends Component {
 
   static get propTypes() {
     return {
-      answers: PropTypes.array.isRequired,
+      answersTree: PropTypes.array.isRequired,
+      answersRepo: PropTypes.object.isRequired,
+      decisionBranchesRepo: PropTypes.object.isRequired,
+      onSelectItem: PropTypes.func,
     };
   }
 
@@ -26,7 +30,12 @@ export default class Tree extends Component {
   }
 
   render() {
-    const { answers } = this.props;
+    const {
+      answersTree,
+      answersRepo,
+      decisionBranchesRepo,
+    } = this.props;
+
     const {
       openedAnswerIDs,
       openedDecisionBranchIDs,
@@ -36,10 +45,12 @@ export default class Tree extends Component {
 
     return (
       <ol className="tree">
-        {answers.map((answer, index) => {
+        {answersTree.map((answerNode, index) => {
           return <AnswerNode
             key={index}
-            answer={answer}
+            answerNode={answerNode}
+            answersRepo={answersRepo}
+            decisionBranchesRepo={decisionBranchesRepo}
             openedAnswerIDs={openedAnswerIDs}
             openedDecisionBranchIDs={openedDecisionBranchIDs}
             activeItem={activeItem}
@@ -56,21 +67,35 @@ export default class Tree extends Component {
   }
 
   onClickItem(answerID) {
+    const { onSelectItem } = this.props;
     const { openedAnswerIDs } = this.state;
+    const activeItem = { type: "answer", id: answerID };
+
     this.setState({
-      activeItem: { type: "answer", id: answerID },
+      activeItem,
       isAdding: false,
       openedAnswerIDs: toggleID(openedAnswerIDs, answerID),
     });
+
+    if (isFunction(onSelectItem)) {
+      onSelectItem(activeItem);
+    }
   }
 
   onClickDecisionBranch(decisionBrancheID) {
+    const { onSelectItem } = this.props;
     const { openedDecisionBranchIDs } = this.state;
+    const activeItem = { type: "decisionBranch", id: decisionBrancheID };
+
     this.setState({
-      activeItem: { type: "decisionBranch", id: decisionBrancheID },
+      activeItem,
       isAdding: false,
       openedDecisionBranchIDs: toggleID(openedDecisionBranchIDs, decisionBrancheID),
     });
+
+    if (isFunction(onSelectItem)) {
+      onSelectItem(activeItem);
+    }
   }
 
   onClickAdd() {

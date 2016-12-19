@@ -1,6 +1,13 @@
 class AnswersDecorator < Draper::CollectionDecorator
-  def as_json_for_tree_component
+  def as_tree_json
     object.map{ |a| create_answer_json_node(a) }
+  end
+
+  def as_repo_json
+    inject({}){ |result, decorated_answer|
+      result[decorated_answer.id] = decorated_answer.as_json
+      result
+    }
   end
 
   private
@@ -8,8 +15,6 @@ class AnswersDecorator < Draper::CollectionDecorator
       return nil if answer.nil?
       {
         id: answer.id,
-        headline: answer.headline,
-        body: answer.body,
         decisionBranches: answer.decision_branches.map{ |db|
           create_decision_branch_json_node(db)
         }
@@ -19,7 +24,6 @@ class AnswersDecorator < Draper::CollectionDecorator
     def create_decision_branch_json_node(decision_branch)
       {
         id: decision_branch.id,
-        body: decision_branch.body,
         answer: create_answer_json_node(decision_branch.next_answer)
       }
     end

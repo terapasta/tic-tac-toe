@@ -32,7 +32,17 @@ export function addDecisionBranchToAnswersTree(decisionBranchBody, answerId) {
 }
 
 export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
-  return { type: t.DELETE_ANSWERS_TREE, answerModel, decisionBranchId };
+  return (dispatch, getState) => {
+    const { isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    answerModel.delete().then(() => {
+      dispatch({ type: t.DELETE_ANWER_FROM_ANSWERS_TREE, answerModel, decisionBranchId });
+      dispatch(deleteAnswersRepo(answerModel));
+      dispatch(offProcessing());
+    }).catch(console.error);
+  };
 }
 
 export function deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId) {

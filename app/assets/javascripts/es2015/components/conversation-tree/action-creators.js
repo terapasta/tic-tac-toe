@@ -1,6 +1,7 @@
 import * as t from "./action-types";
 
 import Answer from "../../models/answer";
+import DecisionBranch from "../../models/decision-branch";
 
 export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
   return (dispatch, getState) => {
@@ -16,8 +17,18 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
   };
 }
 
-export function addDecisionBranchToAnswersTree(decisionBranchModel, answerId) {
-  return { type: t.ADD_DECISION_BRANCH_TO_ANSWERS_TREE, decisionBranchModel, answerId };
+export function addDecisionBranchToAnswersTree(decisionBranchBody, answerId) {
+  return (dispatch, getState) => {
+    const { botId, isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    DecisionBranch.create(botId, { body: decisionBranchBody }).then((decisionBranchModel) => {
+      dispatch({ type: t.ADD_DECISION_BRANCH_TO_ANSWERS_TREE, decisionBranchModel, answerId });
+      dispatch(addDecisionBranchesRepo(decisionBranchModel));
+      dispatch(offProcessing());
+    }).catch(console.error);
+  };
 }
 
 export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {

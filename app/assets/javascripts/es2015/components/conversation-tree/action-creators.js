@@ -1,15 +1,19 @@
 import * as t from "./action-types";
 
-export function updateAnswersTree(answerModel) {
-  return { type: t.UPDATE_ANSWERS_TREE, answerModel };
+export function addAnswerToAnswersTree(answerModel, decisionBranchId) {
+  return { type: t.ADD_ANSWER_TO_ANSWERS_TREE, answerModel, decisionBranchId };
 }
 
-export function deleteAnswersTree(answerModel) {
-  return { type: t.DELETE_ANSWERS_TREE, answerModel };
+export function addDecisionBranchToAnswersTree(decisionBranchModel, answerId) {
+  return { type: t.ADD_DECISION_BRANCH_TO_ANSWERS_TREE, decisionBranchModel, answerId };
 }
 
-export function addAnswersTree(answerModel) {
-  return { type: t.ADD_ANSWERS_TREE, answerModel };
+export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
+  return { type: t.DELETE_ANSWERS_TREE, answerModel, decisionBranchId };
+}
+
+export function deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId) {
+  return { type: t.DELETE_DECISION_BRANCH_FROM_ANSWERS_TREE, decisionBranchModel, answerId };
 }
 
 export function updateAnswersRepo(answerModel) {

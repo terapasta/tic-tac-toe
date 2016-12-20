@@ -1,7 +1,7 @@
 class DecisionBranchesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
-  before_action :set_decision_branch, only: [:show, :update]
+  before_action :set_decision_branch, only: [:show, :update, :destroy]
 
   def index
     respond_to do |format|
@@ -35,6 +35,13 @@ class DecisionBranchesController < ApplicationController
       else
         format.json { render json: @decision_branch.decorate.errors_as_json, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @decision_branch.destroy
+    respond_to do |format|
+      format.json { render json: {}, status: :no_content }
     end
   end
 

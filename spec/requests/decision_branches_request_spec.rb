@@ -7,8 +7,12 @@ RSpec.describe 'decision_branch resources', type: :request do
     create(:user)
   end
 
+  let!(:bot) do
+    create(:bot, user: user)
+  end
+
   let!(:decision_branch) do
-    create(:decision_branch)
+    create(:decision_branch, bot: bot)
   end
 
   before do
@@ -36,6 +40,15 @@ RSpec.describe 'decision_branch resources', type: :request do
       put "/bots/#{decision_branch.bot.id}/decision_branches/#{decision_branch.id}.json", decision_branch_params
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)["body"]).to eq(decision_branch_params[:decision_branch][:body])
+    end
+  end
+
+  describe 'DELETE /decision_branches/:id.json' do
+    it 'deletes the decision_branch record' do
+      expect {
+        delete "/bots/#{bot.id}/decision_branches/#{decision_branch.id}.json"
+        expect(response.status).to eq(204)
+      }.to change(DecisionBranch, :count).by(-1)
     end
   end
 end

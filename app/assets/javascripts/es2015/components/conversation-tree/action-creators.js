@@ -1,7 +1,19 @@
 import * as t from "./action-types";
 
-export function addAnswerToAnswersTree(answerModel, decisionBranchId) {
-  return { type: t.ADD_ANSWER_TO_ANSWERS_TREE, answerModel, decisionBranchId };
+import Answer from "../../models/answer";
+
+export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
+  return (dispatch, getState) => {
+    const { botId, isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    Answer.create(botId, { body: answerBody }).then((answerModel) => {
+      dispatch({ type: t.ADD_ANSWER_TO_ANSWERS_TREE, answerModel, decisionBranchId });
+      dispatch(addAnswersRepo(answerModel));
+      dispatch(offProcessing());
+    }).catch(console.error);
+  };
 }
 
 export function addDecisionBranchToAnswersTree(decisionBranchModel, answerId) {

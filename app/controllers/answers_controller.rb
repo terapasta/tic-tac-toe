@@ -47,8 +47,10 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy!
-
-    redirect_to bot_answers_path(@bot), notice: '回答を削除しました。'
+    respond_to do |format|
+      format.html { redirect_to bot_answers_path(@bot), notice: '回答を削除しました。' }
+      format.json { render json: {}, status: :no_content }
+    end
   end
 
   private

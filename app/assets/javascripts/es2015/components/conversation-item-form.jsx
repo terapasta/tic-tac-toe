@@ -18,11 +18,14 @@ export default class ConversationItemForm extends Component {
     return {
       botId: PropTypes.number.isRequired,
       activeItem: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        type: PropTypes.oneOf(["answer", "decisionBranch"]).isRequired,
+        id: PropTypes.number,
+        type: PropTypes.oneOf(["answer", "decisionBranch"]),
       }),
       onUpdateDecisionBranch: PropTypes.func.isRequired,
       onUpdateAnswer: PropTypes.func.isRequired,
+      isCreatingAnswer: PropTypes.bool.isRequired,
+      onCreateAnswer: PropTypes.func.isRequired,
+      onCreateDecisionBranch: PropTypes.func.isRequired,
     };
   }
 
@@ -32,6 +35,7 @@ export default class ConversationItemForm extends Component {
       answerModel: null,
       answerBody: null,
       decisionBranchModels: [],
+      isCreatingAnswer: props.isCreatingAnswer,
     };
   }
 
@@ -57,6 +61,8 @@ export default class ConversationItemForm extends Component {
           decisionBranchModel.fetchNextAnswer().then(() => {
             const { nextAnswerModel } = decisionBranchModel;
             this.setState({ answerModel: nextAnswerModel, answerBody: nextAnswerModel.body });
+          }).catch(() => {
+            this.setState({ isCreatingAnswer: true });
           });
         });
         break;
@@ -73,6 +79,7 @@ export default class ConversationItemForm extends Component {
       answerBody,
       decisionBranchModels,
       decisionBranchModel,
+      isCreatingAnswer,
     } = this.state;
 
     const isAppearCurrentDecisionBranch =
@@ -89,10 +96,10 @@ export default class ConversationItemForm extends Component {
             <input className="form-control" disabled={true} type="text" value={decisionBranchModel.body} />
           </div>
         )}
-        {answerModel != null && (
+        {(answerModel != null || isCreatingAnswer) && (
           <div className="form-group">
             <label>回答</label>
-            <TextArea className="form-control" rows={3} value={answerBody} onChange={this.onChangeAnswerBody.bind(this)} />
+            <TextArea className="form-control" rows={3} value={answerBody || ""} onChange={this.onChangeAnswerBody.bind(this)} />
             <div className="help-block clearfix">
               <div className="pull-right">
                 <a className="btn btn-primary" href="#" onClick={this.onClickSaveAnswerButton.bind(this)}>保存</a>
@@ -107,6 +114,7 @@ export default class ConversationItemForm extends Component {
           />
           {isAppearNewDecisionBranch && (
             <NewDecisionBranch
+              onSave={this.onSaveDecisionBranch.bind(this)}
             />
           )}
         </div>
@@ -120,12 +128,22 @@ export default class ConversationItemForm extends Component {
 
   onClickSaveAnswerButton(e) {
     e.preventDefault();
-    const { onUpdateAnswer } = this.props;
-    const { answerModel, answerBody } = this.state;
-    answerModel.update({ body: answerBody }).then((newAnswerModel) => {
-      this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
-      onUpdateAnswer(newAnswerModel);
-    });
+    const { onUpdateAnswer, onCreateAnswer, botId, onUpdateDecisionBranch } = this.props;
+    const { answerModel, answerBody, decisionBranchModel } = this.state;
+    if (answerModel == null) {
+      Answer.create(botId, { body: answerBody }).then((newAnswerModel) => {
+        this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
+        onCreateAnswer(newAnswerModel, decisionBranchModel.id);
+        decisionBranchModel.update({ next_answer_id: newAnswerModel.id }).then((newDecisionBranchModel) => {
+          onUpdateDecisionBranch(newDecisionBranchModel);
+        }).catch(console.error);
+      }).catch(console.error);
+    } else {
+      answerModel.update({ body: answerBody }).then((newAnswerModel) => {
+        this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
+        onUpdateAnswer(newAnswerModel);
+      }).catch(console.error);
+    }
   }
 
   onUpdateDecisionBranch(decisionBranchModel, index) {
@@ -134,5 +152,20 @@ export default class ConversationItemForm extends Component {
     decisionBranchModels[index] = decisionBranchModel;
     this.setState({ decisionBranchModels });
     onUpdateDecisionBranch(decisionBranchModel);
+  }
+
+  onSaveDecisionBranch(body) {
+    const { onCreateDecisionBranch, botId } = this.props;
+    const { decisionBranchModels, answerModel } = this.state;
+    DecisionBranch.create(botId, {
+      answer_id: answerModel.id,
+      body,
+    }).then((newDecisionBranchModel) => {
+      decisionBranchModels.push(newDecisionBranchModel);
+      this.setState({
+        decisionBranchModels,
+      });
+      onCreateDecisionBranch(answerModel.id, newDecisionBranchModel);
+    }).catch(console.error);
   }
 }

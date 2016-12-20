@@ -12,6 +12,10 @@ import activeItem from "./reducers/active-item";
 import editingAnswerModel from "./reducers/editing-answer-model";
 import editingDecisionBranchModels from "./reducers/editing-decision-branch-models";
 
+function through(state = null) {
+  return state;
+}
+
 const app = combineReducers({
   answersTree,
   answersRepo,
@@ -24,6 +28,7 @@ const app = combineReducers({
   activeItem,
   editingAnswerModel,
   editingDecisionBranchModels,
+  botId: through,
 });
 
 export default app;

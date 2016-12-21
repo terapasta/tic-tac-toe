@@ -3,14 +3,21 @@
     h4 同義文登録
 
   .panel-body
-    / = bootstrap_form_for [:admin, @training_text] do |f|
-    /   / = f.static_control :body
-    /   / = f.hidden_field :body
-    /   = f.text_field :body
-    /   = f.text_field :tag_list, value: @training_text.tag_list.join(','), data: { role: :tagsinput }
-    /   = f.submit class: 'btn btn-success'
-    /   | &nbsp;
-    /   = link_to 'スキップする', new_admin_training_text_path, class: 'btn btn-default'
-    /   br
-    /   h4 登録済みのタグ
-    /   = Tag.pluck(:name).join(', ')
+    .pull-right
+      | 累計登録数: --件
+    = bootstrap_form_tag url: bot_sentence_synonyms_path(@bot), method: :post  do |f|
+      label.control-label
+        | 文章
+      p.static-control
+        = @target_training_message.body
+        = f.hidden_field :training_message_id, value: @target_training_message.id
+      - @training_messages.each do |training_message|
+      
+      label.control-label
+        | 同義文
+      - @training_messages.each do |training_message|
+        = f.fields_for 'training_message[]', training_message do |tm|
+          = tm.text_field :body, hide_label: true
+      = f.submit '登録する', class: 'btn btn-success'
+      | &nbsp;
+      = link_to 'スキップする', '#', class: 'btn btn-default'

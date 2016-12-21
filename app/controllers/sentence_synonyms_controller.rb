@@ -1,8 +1,10 @@
 class SentenceSynonymsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_bot
 
   def new
-    @training_message = TrainingMessage.all.sample
+    @target_training_message = @bot.training_messages.sample
+    @training_messages = 3.times.map { TrainingMessage.new }
   end
   #
   # def create
@@ -15,7 +17,10 @@ class SentenceSynonymsController < ApplicationController
   #   end
   # end
   #
-  # private
+  private
+    def set_bot
+      @bot = Bot.find(params[:bot_id])
+    end
   #   def training_text_params
   #     params.require(:training_text).permit(:body, :tag_list)
   #   end

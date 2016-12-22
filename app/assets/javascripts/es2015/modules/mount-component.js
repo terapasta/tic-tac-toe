@@ -1,24 +1,71 @@
 import React, { createElement } from "react";
 import { render } from "react-dom";
+import { Provider, connect } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import createLogger from "redux-logger";
 import camelCase from "lodash/camelCase";
 
 import parseJSON from "./parse-json";
 
+/**
+ * this function expect like below component
+ *
+ * class Sample extends React.Component {
+ *   static get componentName() {
+ *     return "Sample";
+ *   }
+ * }
+ */
 export default function mountComponent(component) {
-  const selector = `[data-component="${component.componentName}"]`;
-  const mountNodes = [].slice.call(document.querySelectorAll(selector));
+  const mountNodes = getMountNodes(component);
 
   mountNodes.forEach((mountNode) => {
-    let props = {};
-
-    [].forEach.call(mountNode.attributes, (attr) => {
-      const { name, value } = attr;
-      if (/^data\-(?!component)/.test(name)) {
-        const propName = camelCase(name.replace(/^data\-/, ""));
-        props[propName] = parseJSON(value);
-      }
-    });
-
+    const props = getProps(mountNode);
     render(createElement(component, props), mountNode);
   });
+}
+
+export function mountComponentWithRedux(component, reducers) {
+  const mountNodes = getMountNodes(component);
+
+  mountNodes.forEach((mountNode) => {
+    const props = getProps(mountNode);
+    const connectedComponent = connect((state) => state)(component);
+    const middlewares = applyMiddleware(...getReduxMiddlewares());
+    const store = createStore(reducers, props, middlewares);
+
+    render (
+      <Provider store={store}>
+        {createElement(connectedComponent)}
+      </Provider>
+    , mountNode);
+  });
+}
+
+function getMountNodes(component) {
+  const selector = `[data-component="${component.componentName}"]`;
+  return [].slice.call(document.querySelectorAll(selector));
+}
+
+function getProps(node) {
+  let props = {};
+
+  [].forEach.call(node.attributes, (attr) => {
+    const { name, value } = attr;
+    if (/^data\-(?!component)/.test(name)) {
+      const propName = camelCase(name.replace(/^data\-/, ""));
+      props[propName] = parseJSON(value);
+    }
+  });
+
+  return props;
+}
+
+function getReduxMiddlewares() {
+  let middlewareList = [thunk];
+  if (process.env.NODE_ENV !== "production") {
+    middlewareList.push(createLogger());
+  }
+  return middlewareList;
 }

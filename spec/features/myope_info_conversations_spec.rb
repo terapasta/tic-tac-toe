@@ -35,13 +35,6 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  context '「何歳ですか？」とポストされた場合' do
-    let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
-    scenario '回答失敗を返すこと' do
-      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
-    end
-  end
-
   context 'サーバーはどこ使ってるの' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'サーバーはどこ使ってるの') }
     scenario do
@@ -67,6 +60,46 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     let(:message) { chat.messages.build(speaker: 'guest', body: 'クラウドサービスですか？') }
     scenario do
       expect(subject[0].body).to be_include 'はい、My-ope officeはクラウドサービスです。'
+    end
+  end
+
+  # 回答失敗のケース
+  context '「何歳ですか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「微分の計算方法知りたい」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '微分の計算方法知りたい') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「管理画面のサンプルがみたいす」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '管理画面のサンプルがみたいす') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「デモサイトはありますか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'デモサイトはありますか？') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「問い合わせが無くて困っています。」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '問い合わせが無くて困っています。') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
     end
   end
 end

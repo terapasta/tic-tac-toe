@@ -21,7 +21,8 @@ class SentenceSynonymsController < ApplicationController
     def set_bot
       @bot = Bot.find(params[:bot_id])
     end
-  #   def training_text_params
-  #     params.require(:training_text).permit(:body, :tag_list)
-  #   end
+
+    # def sentence_synonym_params
+    #   params.require(:training_text).permit(:body, :tag_list)
+    # end
 end

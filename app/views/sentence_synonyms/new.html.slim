@@ -5,19 +5,29 @@
   .panel-body
     .pull-right
       | 累計登録数: --件
-    = bootstrap_form_tag url: bot_sentence_synonyms_path(@bot), method: :post  do |f|
-      label.control-label
-        | 文章
-      p.static-control
-        = @target_training_message.body
-        = f.hidden_field :training_message_id, value: @target_training_message.id
-      - @training_messages.each do |training_message|
+    = bootstrap_form_for @training_message, url: bot_sentence_synonyms_path(@bot), method: :post do |f|
+      = f.hidden_field :id
+      = f.static_control :body
       
       label.control-label
         | 同義文
-      - @training_messages.each do |training_message|
-        = f.fields_for 'training_message[]', training_message do |tm|
-          = tm.text_field :body, hide_label: true
+      = f.fields_for :sentence_synonyms, @training_message.sentence_synonyms do |ss|
+        = ss.text_field :body, hide_label: true
+    
       = f.submit '登録する', class: 'btn btn-success'
       | &nbsp;
       = link_to 'スキップする', '#', class: 'btn btn-default'
+    
+    / = bootstrap_form_tag url: bot_sentence_synonyms_path(@bot), method: :post  do |f|
+    /   label.control-label
+    /     | 文章
+    /   p.static-control
+    /     = @training_message.body
+    /     = f.hidden_field :training_message_id, value: @training_message.id
+    /   
+    /   label.control-label
+    /     | 同義文
+    /   - @sentence_synonyms.each do |sentence_synonym|
+    /     = f.fields_for 'sentence_synonyms[]', sentence_synonym do |tm|
+    /       = tm.text_field :body, hide_label: true
+    

@@ -12,7 +12,8 @@ class TrainingMessage < ActiveRecord::Base
   has_one :parent_decision_branch, through: :answer, dependent: :nullify
 
   accepts_nested_attributes_for :answer, reject_if: :all_blank, allow_destroy: true
-
+  accepts_nested_attributes_for :sentence_synonyms
+  
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
 
@@ -38,8 +39,7 @@ class TrainingMessage < ActiveRecord::Base
     training_messages = bot.training_messages.includes(:sentence_synonyms)
     training_messages
       .select {|tm|
-        # TODO N+1問題が発生している
-        tm.sentence_synonyms.count < 20 &&
+        tm.sentence_synonyms.length < 20 &&
         tm.sentence_synonyms.none? {|ss| ss.created_user == user}
       }.sample
   end

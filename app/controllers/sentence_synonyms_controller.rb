@@ -3,26 +3,28 @@ class SentenceSynonymsController < ApplicationController
   before_action :set_bot
 
   def new
-    @target_training_message = TrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
-    @training_messages = 3.times.map { TrainingMessage.new }
+    @training_message = TrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
+    3.times.map { @training_message.sentence_synonyms.build }
   end
-  #
-  # def create
-  #   @training_text = TrainingText.new(training_text_params)
-  #   if @training_text.save
-  #     redirect_to new_admin_training_text_path, notice: '登録しました。'
-  #   else
-  #     flash[:alert] = '登録に失敗しました。'
-  #     render :new
-  #   end
-  # end
-  #
+
+  def create
+    @training_message = @bot.training_messages.find(training_message_params[:id])
+    @training_message.assign_attributes(training_message_params)
+    @training_message.sentence_synonyms.each { |ss| ss.created_user = current_user }
+    if @training_message.save
+      redirect_to new_bot_sentence_synonyms_path(@bot), notice: '登録しました。'
+    else
+      flash[:alert] = '登録に失敗しました。'
+      render :new
+    end
+  end
+
   private
     def set_bot
       @bot = Bot.find(params[:bot_id])
     end
 
-    # def sentence_synonym_params
-    #   params.require(:training_text).permit(:body, :tag_list)
-    # end
+    def training_message_params
+      params.require(:training_message).permit(:id, sentence_synonyms_attributes: [:body])
+    end
 end

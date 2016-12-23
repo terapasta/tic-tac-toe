@@ -1,0 +1,10 @@
+class CreateSentenceSynonyms < ActiveRecord::Migration
+  def change
+    create_table :sentence_synonyms do |t|
+      t.references :training_message, index: true, null: false
+      t.text :body, null: false
+
+      t.timestamps null: false
+    end
+  end
+end

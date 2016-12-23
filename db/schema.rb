@@ -201,11 +201,13 @@ ActiveRecord::Schema.define(version: 20161223045731) do
 
   create_table "sentence_synonyms", force: :cascade do |t|
     t.integer  "training_message_id", limit: 4,     null: false
+    t.integer  "created_user_id",     limit: 4,     null: false
     t.text     "body",                limit: 65535, null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
 
+  add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
   add_index "sentence_synonyms", ["training_message_id"], name: "index_sentence_synonyms_on_training_message_id", using: :btree
 
   create_table "services", force: :cascade do |t|

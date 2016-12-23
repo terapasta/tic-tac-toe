@@ -38,6 +38,7 @@ class TrainingMessage < ActiveRecord::Base
     training_messages = bot.training_messages.includes(:sentence_synonyms)
     training_messages
       .select {|tm|
+        # TODO N+1問題が発生している
         tm.sentence_synonyms.count < 20 &&
         tm.sentence_synonyms.none? {|ss| ss.created_user == user}
       }.sample

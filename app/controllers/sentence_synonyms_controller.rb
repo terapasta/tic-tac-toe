@@ -3,7 +3,7 @@ class SentenceSynonymsController < ApplicationController
   before_action :set_bot
 
   def new
-    @target_training_message = @bot.training_messages.sample
+    @target_training_message = TrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
     @training_messages = 3.times.map { TrainingMessage.new }
   end
   #

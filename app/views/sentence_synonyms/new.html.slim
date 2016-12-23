@@ -16,18 +16,5 @@
     
       = f.submit '登録する', class: 'btn btn-success'
       | &nbsp;
-      = link_to 'スキップする', '#', class: 'btn btn-default'
-    
-    / = bootstrap_form_tag url: bot_sentence_synonyms_path(@bot), method: :post  do |f|
-    /   label.control-label
-    /     | 文章
-    /   p.static-control
-    /     = @training_message.body
-    /     = f.hidden_field :training_message_id, value: @training_message.id
-    /   
-    /   label.control-label
-    /     | 同義文
-    /   - @sentence_synonyms.each do |sentence_synonym|
-    /     = f.fields_for 'sentence_synonyms[]', sentence_synonym do |tm|
-    /       = tm.text_field :body, hide_label: true
-    
+      = link_to 'スキップする', new_bot_sentence_synonyms_path(@bot), class: 'btn btn-default'
+  

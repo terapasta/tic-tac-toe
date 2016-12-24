@@ -29,6 +29,7 @@ export default class DecisionBranch {
 
   get id() { return this.attrs.id; }
   get body() { return this.attrs.body; }
+  get nextAnswerId() { return this.attrs.nextAnswerId; }
 
   fetchNextAnswer() {
     const { botId, nextAnswerId } = this.attrs;

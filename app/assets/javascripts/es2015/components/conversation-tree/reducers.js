@@ -10,6 +10,7 @@ import isAddingDecisionBranch from "./reducers/is-adding-decision-branch";
 import isProcessing from "./reducers/is-processing";
 import activeItem from "./reducers/active-item";
 import editingAnswerModel from "./reducers/editing-answer-model";
+import editingDecisionBranchModel from "./reducers/editing-decision-branch-model";
 import editingDecisionBranchModels from "./reducers/editing-decision-branch-models";
 
 function through(state = null) {
@@ -27,6 +28,7 @@ const app = combineReducers({
   isProcessing,
   activeItem,
   editingAnswerModel,
+  editingDecisionBranchModel,
   editingDecisionBranchModels,
   botId: through,
 });

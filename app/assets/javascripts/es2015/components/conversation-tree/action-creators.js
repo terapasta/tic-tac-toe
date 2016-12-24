@@ -20,7 +20,10 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
       if (decisionBranchId != null) {
         dispatch(updateDecisionBranchModel(editingDecisionBranchModel, { nextAnswerId: answerModel.id }));
       }
-    }).catch(console.error);
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
   };
 }
 
@@ -36,7 +39,10 @@ export function addDecisionBranchToAnswersTree(decisionBranchBody, answerId) {
       dispatch(addEditingDecisionBranchModels(decisionBranchModel));
       dispatch(offProcessing());
       dispatch(offAddingDecisionBranch());
-    }).catch(console.error);
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
   };
 }
 
@@ -52,7 +58,10 @@ export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
       dispatch(clearEditingAnswerModel());
       dispatch(clearActiveItem());
       dispatch(offProcessing());
-    }).catch(console.error);
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
   };
 }
 
@@ -67,7 +76,10 @@ export function deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerI
       dispatch(deleteDecisionBranchesRepo(decisionBranchModel));
       dispatch(deleteEditingDecisionBranchModels(decisionBranchModel));
       dispatch(offProcessing());
-    }).catch(console.error);
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
   };
 }
 
@@ -221,6 +233,9 @@ export function updateAnswerModel(answerModel, newAttrs) {
       dispatch(setEditingAnswerModel(newAnswerModel));
       dispatch(updateAnswersRepo(newAnswerModel));
       dispatch(offProcessing());
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
     });
   };
 }
@@ -236,6 +251,9 @@ export function updateDecisionBranchModel(decisionBranchModel, newAttrs) {
       dispatch(updateEditingDecisionBranchModels(newDecisionBranchModel));
       dispatch(inactivateEditingDecisionBranchModels());
       dispatch(offProcessing());
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
     });
   };
 }

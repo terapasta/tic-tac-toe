@@ -1,4 +1,5 @@
 import * as t from "./action-types";
+import includes from "lodash/includes";
 
 import Answer from "../../models/answer";
 import DecisionBranch from "../../models/decision-branch";
@@ -77,8 +78,49 @@ export function addOpenedAnswerIds(answerId) {
   return { type: t.ADD_OPENED_ANSWER_IDS, answerId };
 }
 
+export function removeOpenedAnswerIds(answerId) {
+  return { type: t.REMOVE_OPENED_ANSWER_IDS, answerId };
+}
+
 export function addOpenedDecisionBranchIds(decisionBranchId) {
   return { type: t.ADD_OPENED_DECISION_BRANCH_IDS, decisionBranchId };
+}
+
+export function removeOpenedDecisionBranchIds(decisionBranchId) {
+  return { type: t.REMOVE_OPENED_DECISION_BRANCH_IDS, decisionBranchId };
+}
+
+export function toggleOpenedAnswerIds(answerId) {
+  return (dispatch, getState) => {
+    const { openedAnswerIds } = getState();
+    if (includes(openedAnswerIds, answerId)) {
+      dispatch(removeOpenedAnswerIds(answerId));
+    } else {
+      dispatch(addOpenedAnswerIds(answerId));
+    }
+  };
+}
+
+export function toggleOpenedDecisionBranchIds(decisionBranchId) {
+  return (dispatch, getState) => {
+    const { openedDecisionBranchIds } = getState();
+    if (includes(openedDecisionBranchIds, decisionBranchId)) {
+      dispatch(removeOpenedDecisionBranchIds(decisionBranchId));
+    } else {
+      dispatch(addOpenedDecisionBranchIds(decisionBranchId));
+    }
+  };
+}
+
+export function toggleOpenedIds(dataType, id) {
+  return (dispatch) => {
+    switch(dataType) {
+      case "answer":
+        return dispatch(toggleOpenedAnswerIds(id));
+      case "decisionBranch":
+        return dispatch(toggleOpenedDecisionBranchIds(id));
+    }
+  };
 }
 
 export function onAddingAnswer() {

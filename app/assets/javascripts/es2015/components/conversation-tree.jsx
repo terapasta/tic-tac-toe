@@ -72,6 +72,9 @@ export default class ConversationTree extends Component {
                 dispatch(a.updateAnswerModel(answerModel, { body }));
               }
             }}
+            onDeleteAnswer={(answerModel, decisionBranchId) => {
+              dispatch(a.deleteAnswerFromAnswersTree(answerModel, decisionBranchId));
+            }}
             onSaveDecisionBranch={(decisionBranchModel, body) => {
               if (decisionBranchModel.id == null) {
                 dispatch(a.addDecisionBranchToAnswersTree(body));

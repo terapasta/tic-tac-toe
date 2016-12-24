@@ -59,6 +59,7 @@ export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
       dispatch({ type: t.DELETE_ANSWER_FROM_ANSWERS_TREE, answerModel, decisionBranchId });
       dispatch(deleteAnswersRepo(answerModel));
       dispatch(clearEditingAnswerModel());
+      dispatch(clearEditingDecisionBranchModels());
       dispatch(clearActiveItem());
       dispatch(offProcessing());
     }).catch((err) => {

@@ -82,6 +82,7 @@ var ConversationItemForm = function (_Component) {
         editingDecisionBranchModels: _react.PropTypes.array,
         isAddingDecisionBranch: _react.PropTypes.bool.isRequired,
         onSaveAnswer: _react.PropTypes.func.isRequired,
+        onDeleteAnswer: _react.PropTypes.func.isRequired,
         onSaveDecisionBranch: _react.PropTypes.func.isRequired,
         onEditDecisionBranch: _react.PropTypes.func.isRequired,
         onAddingDecisionBranch: _react.PropTypes.func.isRequired,
@@ -122,6 +123,7 @@ var ConversationItemForm = function (_Component) {
           isAddingDecisionBranch = _props.isAddingDecisionBranch,
           onSaveDecisionBranch = _props.onSaveDecisionBranch,
           onEditDecisionBranch = _props.onEditDecisionBranch,
+          onDeleteDecisionBranch = _props.onDeleteDecisionBranch,
           onAddingDecisionBranch = _props.onAddingDecisionBranch,
           onCancelAddingDecisionBranch = _props.onCancelAddingDecisionBranch,
           onSaveNewDecisionBranch = _props.onSaveNewDecisionBranch;
@@ -169,6 +171,11 @@ var ConversationItemForm = function (_Component) {
                   onClick: this.onClickSaveAnswerButton.bind(this),
                   disabled: isProcessing },
                 "\u4FDD\u5B58"
+              ),
+              _react2.default.createElement(
+                "span",
+                { className: "btn btn-link", onClick: this.onClickDeleteAnswerButton.bind(this) },
+                "\u524A\u9664"
               )
             )
           )
@@ -180,7 +187,10 @@ var ConversationItemForm = function (_Component) {
             isProcessing: isProcessing,
             decisionBranchModels: editingDecisionBranchModels,
             onSave: onSaveDecisionBranch,
-            onEdit: onEditDecisionBranch
+            onEdit: onEditDecisionBranch,
+            onDelete: function onDelete(decisionBranchModel) {
+              onDeleteDecisionBranch(decisionBranchModel, editingAnswerModel.id);
+            }
           }),
           isAppearNewDecisionBranch && _react2.default.createElement(_newDecisionBranch2.default, {
             isProcessing: isProcessing,
@@ -208,6 +218,18 @@ var ConversationItemForm = function (_Component) {
       var answerBody = this.state.answerBody;
 
       onSaveAnswer(editingAnswerModel, answerBody, (0, _get2.default)(editingDecisionBranchModel, "id"));
+    }
+  }, {
+    key: "onClickDeleteAnswerButton",
+    value: function onClickDeleteAnswerButton() {
+      var _props3 = this.props,
+          onDeleteAnswer = _props3.onDeleteAnswer,
+          editingAnswerModel = _props3.editingAnswerModel,
+          editingDecisionBranchModel = _props3.editingDecisionBranchModel;
+
+      if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
+        onDeleteAnswer(editingAnswerModel, (0, _get2.default)(editingDecisionBranchModel, "id"));
+      }
     }
   }]);
 
@@ -295,6 +317,7 @@ var DecisionBranches = function (_Component) {
           isProcessing = _props.isProcessing,
           decisionBranchModels = _props.decisionBranchModels,
           onSave = _props.onSave,
+          onDelete = _props.onDelete,
           _onEdit = _props.onEdit;
 
 
@@ -308,6 +331,7 @@ var DecisionBranches = function (_Component) {
               key: index,
               index: index,
               onSave: onSave,
+              onDelete: onDelete,
               isDisabled: isProcessing
             });
           } else {
@@ -334,7 +358,8 @@ var DecisionBranches = function (_Component) {
         isProcessing: _react.PropTypes.bool.isRequired,
         decisionBranchModels: _react.PropTypes.array,
         onSave: _react.PropTypes.func.isRequired,
-        onEdit: _react.PropTypes.func.isRequired
+        onEdit: _react.PropTypes.func.isRequired,
+        onDelete: _react.PropTypes.func.isRequired
       };
     }
   }]);
@@ -403,11 +428,16 @@ var EditingDecisionBranchItem = function (_Component) {
           }),
           _react2.default.createElement(
             "span",
-            { className: "input-group-btn", onClick: this.onSave.bind(this) },
+            { className: "input-group-btn" },
             _react2.default.createElement(
               "button",
-              { className: "btn btn-default" },
+              { className: "btn btn-default", onClick: this.onSave.bind(this) },
               "\u4FDD\u5B58"
+            ),
+            _react2.default.createElement(
+              "button",
+              { className: "btn btn-link", onClick: this.onDelete.bind(this) },
+              "\u524A\u9664"
             )
           )
         )
@@ -426,6 +456,17 @@ var EditingDecisionBranchItem = function (_Component) {
         return;
       }
       onSave(decisionBranchModel, value);
+    }
+  }, {
+    key: "onDelete",
+    value: function onDelete() {
+      var _props2 = this.props,
+          onDelete = _props2.onDelete,
+          decisionBranchModel = _props2.decisionBranchModel;
+
+      if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
+        onDelete(decisionBranchModel);
+      }
     }
   }]);
 
@@ -670,6 +711,9 @@ var ConversationTree = function (_Component) {
                 dispatch(a.updateAnswerModel(answerModel, { body: body }));
               }
             },
+            onDeleteAnswer: function onDeleteAnswer(answerModel, decisionBranchId) {
+              dispatch(a.deleteAnswerFromAnswersTree(answerModel, decisionBranchId));
+            },
             onSaveDecisionBranch: function onSaveDecisionBranch(decisionBranchModel, body) {
               if (decisionBranchModel.id == null) {
                 dispatch(a.addDecisionBranchToAnswersTree(body));
@@ -679,6 +723,9 @@ var ConversationTree = function (_Component) {
             },
             onEditDecisionBranch: function onEditDecisionBranch(index) {
               dispatch(a.activateEditingDecisionBranchModel(index));
+            },
+            onDeleteDecisionBranch: function onDeleteDecisionBranch(decisionBranchModel, answerId) {
+              dispatch(a.deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId));
             },
             onAddingDecisionBranch: function onAddingDecisionBranch() {
               dispatch(a.onAddingDecisionBranch());
@@ -756,6 +803,7 @@ exports.clearEditingDecisionBranchModel = clearEditingDecisionBranchModel;
 exports.setEditingDecisionBranchModels = setEditingDecisionBranchModels;
 exports.addEditingDecisionBranchModels = addEditingDecisionBranchModels;
 exports.updateEditingDecisionBranchModels = updateEditingDecisionBranchModels;
+exports.deleteEditingDecisionBranchModels = deleteEditingDecisionBranchModels;
 exports.clearEditingDecisionBranchModels = clearEditingDecisionBranchModels;
 exports.activateEditingDecisionBranchModel = activateEditingDecisionBranchModel;
 exports.inactivateEditingDecisionBranchModels = inactivateEditingDecisionBranchModels;
@@ -840,15 +888,32 @@ function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
     dispatch(onProcessing());
 
     answerModel.delete().then(function () {
-      dispatch({ type: t.DELETE_ANWER_FROM_ANSWERS_TREE, answerModel: answerModel, decisionBranchId: decisionBranchId });
+      dispatch({ type: t.DELETE_ANSWER_FROM_ANSWERS_TREE, answerModel: answerModel, decisionBranchId: decisionBranchId });
       dispatch(deleteAnswersRepo(answerModel));
+      dispatch(clearEditingAnswerModel());
+      dispatch(clearActiveItem());
       dispatch(offProcessing());
     }).catch(console.error);
   };
 }
 
 function deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId) {
-  return { type: t.DELETE_DECISION_BRANCH_FROM_ANSWERS_TREE, decisionBranchModel: decisionBranchModel, answerId: answerId };
+  return function (dispatch, getState) {
+    var _getState4 = getState(),
+        isProcessing = _getState4.isProcessing;
+
+    if (isProcessing) {
+      return;
+    }
+    dispatch(onProcessing());
+
+    decisionBranchModel.delete().then(function () {
+      dispatch({ type: t.DELETE_DECISION_BRANCH_FROM_ANSWERS_TREE, decisionBranchModel: decisionBranchModel, answerId: answerId });
+      dispatch(deleteDecisionBranchesRepo(decisionBranchModel));
+      dispatch(deleteEditingDecisionBranchModels(decisionBranchModel));
+      dispatch(offProcessing());
+    }).catch(console.error);
+  };
 }
 
 function updateAnswersRepo(answerModel) {
@@ -893,8 +958,8 @@ function removeOpenedDecisionBranchIds(decisionBranchId) {
 
 function toggleOpenedAnswerIds(answerId) {
   return function (dispatch, getState) {
-    var _getState4 = getState(),
-        openedAnswerIds = _getState4.openedAnswerIds;
+    var _getState5 = getState(),
+        openedAnswerIds = _getState5.openedAnswerIds;
 
     if ((0, _includes2.default)(openedAnswerIds, answerId)) {
       dispatch(removeOpenedAnswerIds(answerId));
@@ -906,8 +971,8 @@ function toggleOpenedAnswerIds(answerId) {
 
 function toggleOpenedDecisionBranchIds(decisionBranchId) {
   return function (dispatch, getState) {
-    var _getState5 = getState(),
-        openedDecisionBranchIds = _getState5.openedDecisionBranchIds;
+    var _getState6 = getState(),
+        openedDecisionBranchIds = _getState6.openedDecisionBranchIds;
 
     if ((0, _includes2.default)(openedDecisionBranchIds, decisionBranchId)) {
       dispatch(removeOpenedDecisionBranchIds(decisionBranchId));
@@ -954,8 +1019,8 @@ function offProcessing() {
 
 function setActiveItem(dataType, id) {
   return function (dispatch, getState) {
-    var _getState6 = getState(),
-        botId = _getState6.botId;
+    var _getState7 = getState(),
+        botId = _getState7.botId;
 
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType: dataType, id: id });
     dispatch(clearEditingAnswerModel());
@@ -999,8 +1064,8 @@ function fetchDecisionBranchModel(dispatch, botId, id) {
 
 function updateAnswerModel(answerModel, newAttrs) {
   return function (dispatch, getState) {
-    var _getState7 = getState(),
-        isProcessing = _getState7.isProcessing;
+    var _getState8 = getState(),
+        isProcessing = _getState8.isProcessing;
 
     if (isProcessing) {
       return;
@@ -1017,8 +1082,8 @@ function updateAnswerModel(answerModel, newAttrs) {
 
 function updateDecisionBranchModel(decisionBranchModel, newAttrs) {
   return function (dispatch, getState) {
-    var _getState8 = getState(),
-        isProcessing = _getState8.isProcessing;
+    var _getState9 = getState(),
+        isProcessing = _getState9.isProcessing;
 
     if (isProcessing) {
       return;
@@ -1064,6 +1129,10 @@ function addEditingDecisionBranchModels(decisionBranchModel) {
 
 function updateEditingDecisionBranchModels(decisionBranchModel) {
   return { type: t.UPDATE_EDITING_DECISION_BRANCH_MODELS, decisionBranchModel: decisionBranchModel };
+}
+
+function deleteEditingDecisionBranchModels(decisionBranchModel) {
+  return { type: t.DELETE_EDITING_DECISION_BRANCH_MODELS, decisionBranchModel: decisionBranchModel };
 }
 
 function clearEditingDecisionBranchModels() {
@@ -1123,6 +1192,7 @@ var CLEAR_EDITING_DECISION_BRANCH_MODEL = exports.CLEAR_EDITING_DECISION_BRANCH_
 var SET_EDITING_DECISION_BRANCH_MODELS = exports.SET_EDITING_DECISION_BRANCH_MODELS = "SET_EDITING_DECISION_BRANCH_MODELS";
 var ADD_EDITING_DECISION_BRANCH_MODELS = exports.ADD_EDITING_DECISION_BRANCH_MODELS = "ADD_EDITING_DECISION_BRANCH_MODELS";
 var UPDATE_EDITING_DECISION_BRANCH_MODELS = exports.UPDATE_EDITING_DECISION_BRANCH_MODELS = "UPDATE_EDITING_DECISION_BRANCH_MODELS";
+var DELETE_EDITING_DECISION_BRANCH_MODELS = exports.DELETE_EDITING_DECISION_BRANCH_MODELS = "DELETE_EDITING_DECISION_BRANCH_MODELS";
 var CLEAR_EDITING_DECISION_BRANCH_MODELS = exports.CLEAR_EDITING_DECISION_BRANCH_MODELS = "CLEAR_EDITING_DECISION_BRANCH_MODELS";
 var ACTIVATE_EDITING_DECISION_BRANCH_MODEL = exports.ACTIVATE_EDITING_DECISION_BRANCH_MODEL = "ACTIVATE_EDITING_DECISION_BRANCH_MODEL";
 var INACTIVATE_EDITING_DECISION_BRANCH_MODELS = exports.INACTIVATE_EDITING_DECISION_BRANCH_MODELS = "INACTIVATE_EDITING_DECISION_BRANCH_MODELS";
@@ -1543,6 +1613,14 @@ function editingDecisionBranchModels() {
       });
       newState = state.concat();
       newState[targetIndex] = decisionBranchModel;
+      return newState;
+
+    case t.DELETE_EDITING_DECISION_BRANCH_MODELS:
+      targetIndex = (0, _findIndex2.default)(state, function (d) {
+        return d.id === decisionBranchModel.id;
+      });
+      newState = state.concat();
+      newState.splice(targetIndex, 1);
       return newState;
 
     case t.CLEAR_EDITING_DECISION_BRANCH_MODELS:
@@ -2278,6 +2356,19 @@ var Answer = function () {
       });
     }
   }, {
+    key: "delete",
+    value: function _delete() {
+      var _attrs3 = this.attrs,
+          botId = _attrs3.botId,
+          id = _attrs3.id;
+
+      return _axios2.default.delete("/bots/" + botId + "/answers/" + id + ".json", {
+        headers: {
+          "X-CSRF-Token": (0, _authenticityToken2.default)()
+        }
+      });
+    }
+  }, {
     key: "id",
     get: function get() {
       return this.attrs.id;
@@ -2381,6 +2472,19 @@ var DecisionBranch = function () {
         authenticity_token: (0, _authenticityToken2.default)()
       }).then(function (res) {
         return new DecisionBranch(res.data);
+      });
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _attrs3 = this.attrs,
+          botId = _attrs3.botId,
+          id = _attrs3.id;
+
+      return _axios2.default.delete("/bots/" + botId + "/decision_branches/" + id + ".json", {
+        headers: {
+          "X-CSRF-Token": (0, _authenticityToken2.default)()
+        }
       });
     }
   }, {

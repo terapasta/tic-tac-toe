@@ -200,6 +200,21 @@ export function updateAnswerModel(answerModel, newAttrs) {
   };
 }
 
+export function updateDecisionBranchModel(decisionBranchModel, newAttrs) {
+  return (dispatch, getState) => {
+    const { isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    decisionBranchModel.update(newAttrs).then((newDecisionBranchModel) => {
+      dispatch(updateDecisionBranchesRepo(newDecisionBranchModel));
+      dispatch(updateEditingDecisionBranchModels(newDecisionBranchModel));
+      dispatch(inactivateEditingDecisionBranchModels());
+      dispatch(offProcessing());
+    });
+  };
+}
+
 export function clearActiveItem() {
   return { type: t.CLEAR_ACTIVE_ITEM };
 }

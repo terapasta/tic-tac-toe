@@ -68,7 +68,7 @@ export default class ConversationItemForm extends Component {
       get(activeItem, "dataType") === "decisionBranch" &&
       editingDecisionBranchModel != null;
     const isAppearNewDecisionBranch =
-      get(activeItem, "dataType") === "answer";
+      get(activeItem, "dataType") === "answer" && get(editingAnswerModel, "id") != null;
 
     return (
       <div>

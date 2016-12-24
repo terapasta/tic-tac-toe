@@ -30,10 +30,12 @@ export function addDecisionBranchToAnswersTree(decisionBranchBody, answerId) {
     if (isProcessing) { return; }
     dispatch(onProcessing());
 
-    DecisionBranch.create(botId, { body: decisionBranchBody }).then((decisionBranchModel) => {
-      dispatch({ type: t.ADD_DECISION_BRANCH_TO_ANSWERS_TREE, decisionBranchModel, answerId });
+    DecisionBranch.create(botId, { body: decisionBranchBody, answer_id: answerId }).then((decisionBranchModel) => {
       dispatch(addDecisionBranchesRepo(decisionBranchModel));
+      dispatch({ type: t.ADD_DECISION_BRANCH_TO_ANSWERS_TREE, decisionBranchModel, answerId });
+      dispatch(addEditingDecisionBranchModels(decisionBranchModel));
       dispatch(offProcessing());
+      dispatch(offAddingDecisionBranch());
     }).catch(console.error);
   };
 }

@@ -148,7 +148,26 @@ export function offProcessing() {
 }
 
 export function setActiveItem(dataType, id) {
-  return { type: t.SET_ACTIVE_ITEM, dataType, id };
+  return (dispatch, getState) => {
+    const { botId } = getState();
+    dispatch({ type: t.SET_ACTIVE_ITEM, dataType, id });
+
+    switch(dataType) {
+      case "answer":
+        if (id == null) {
+          return dispatch(setEditingAnswerModel(new Answer));
+        } else {
+          return Answer.fetch(botId, id).then((answerModel) => {
+            dispatch(setEditingAnswerModel(answerModel));
+          });
+        }
+      case "decisionBranch":
+        return DecisionBranch.fetch(botId, id).then((decisionBranchModel) => {
+          dispatch(setEditingDecisionBranchModels([decisionBranchModel]));
+        });
+    }
+  };
+}
 }
 
 export function clearActiveItem() {

@@ -11,9 +11,12 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
     dispatch(onProcessing());
 
     Answer.create(botId, { body: answerBody }).then((answerModel) => {
-      dispatch({ type: t.ADD_ANSWER_TO_ANSWERS_TREE, answerModel, decisionBranchId });
       dispatch(addAnswersRepo(answerModel));
+      dispatch({ type: t.ADD_ANSWER_TO_ANSWERS_TREE, answerModel, decisionBranchId });
+      dispatch(setEditingAnswerModel(answerModel));
+      dispatch(setActiveItem("answer", answerModel.id));
       dispatch(offProcessing());
+      // TODO: update decisionBranch if decisionBranchId exists
     }).catch(console.error);
   };
 }

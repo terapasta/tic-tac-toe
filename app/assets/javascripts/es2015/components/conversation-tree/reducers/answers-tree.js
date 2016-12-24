@@ -1,7 +1,5 @@
-import compact from "lodash/compact";
-import flatten from "lodash/flatten";
-
 import * as t from "../action-types";
+import { findAnswerFromTree, findDecisionBranchFromTree } from "../helpers";
 
 export default function answersTree(state = [], action) {
   const { type, answerModel, decisionBranchModel, answerId, decisionBranchId } = action;
@@ -50,29 +48,4 @@ export default function answersTree(state = [], action) {
     default:
       return state;
   }
-}
-
-function findAnswerFromTree(answersTree, answerId, foundCallback) {
-  answersTree.forEach((answerNode) => {
-    if (answerNode.id === answerId) {
-      foundCallback(answerNode);
-    } else {
-      const answers = compact(answerNode.decisionBranches.map((db) => db.answer));
-      findAnswerFromTree(answers, answerId, foundCallback);
-    }
-  });
-}
-
-function findDecisionBranchFromTree(answersTree, decisionBranchId, foundCallback) {
-  const handler = (decisionBranchNodes) => {
-    decisionBranchNodes.forEach((decisionBranchNode) => {
-      if (decisionBranchNode.id === decisionBranchId) {
-        foundCallback(decisionBranchNode);
-      } else if (decisionBranchNode.answer != null) {
-        handler(decisionBranchNode.answer.decisionBranches);
-      }
-    });
-  };
-  const decisionBranchNodes = flatten(answersTree.map((a) => a.decisionBranches));
-  handler(decisionBranchNodes);
 }

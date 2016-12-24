@@ -24,7 +24,7 @@ export default class Answer {
       });
   }
 
-  constructor(attrs) {
+  constructor(attrs = {}) {
     this.attrs = attrs;
   }
 

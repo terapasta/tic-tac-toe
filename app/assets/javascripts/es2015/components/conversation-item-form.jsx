@@ -22,6 +22,7 @@ export default class ConversationItemForm extends Component {
       editingDecisionBranchModels: PropTypes.array,
       isAddingDecisionBranch: PropTypes.bool.isRequired,
       onSaveAnswer: PropTypes.func.isRequired,
+      onDeleteAnswer: PropTypes.func.isRequired,
       onSaveDecisionBranch: PropTypes.func.isRequired,
       onEditDecisionBranch: PropTypes.func.isRequired,
       onAddingDecisionBranch: PropTypes.func.isRequired,
@@ -89,6 +90,7 @@ export default class ConversationItemForm extends Component {
                 <a className="btn btn-primary" href="#"
                   onClick={this.onClickSaveAnswerButton.bind(this)}
                   disabled={isProcessing}>保存</a>
+                <span className="btn btn-link" onClick={this.onClickDeleteAnswerButton.bind(this)}>削除</span>
               </div>
             </div>
           </div>
@@ -123,5 +125,12 @@ export default class ConversationItemForm extends Component {
     const { onSaveAnswer, editingAnswerModel, editingDecisionBranchModel } = this.props;
     const { answerBody } = this.state;
     onSaveAnswer(editingAnswerModel, answerBody, get(editingDecisionBranchModel, "id"));
+  }
+
+  onClickDeleteAnswerButton() {
+    const { onDeleteAnswer, editingAnswerModel, editingDecisionBranchModel } = this.props;
+    if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
+      onDeleteAnswer(editingAnswerModel, get(editingDecisionBranchModel, "id"));
+    }
   }
 }

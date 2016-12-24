@@ -261,6 +261,10 @@ export function updateEditingDecisionBranchModels(decisionBranchModel) {
   return { type: t.UPDATE_EDITING_DECISION_BRANCH_MODELS, decisionBranchModel };
 }
 
+export function deleteEditingDecisionBranchModels(decisionBranchModel) {
+  return { type: t.DELETE_EDITING_DECISION_BRANCH_MODELS, decisionBranchModel };
+}
+
 export function clearEditingDecisionBranchModels() {
   return { type: t.CLEAR_EDITING_DECISION_BRANCH_MODELS };
 }

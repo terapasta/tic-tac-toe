@@ -14,11 +14,12 @@ export default class DecisionBranches extends Component {
       decisionBranchModels: PropTypes.array,
       onSave: PropTypes.func.isRequired,
       onEdit: PropTypes.func.isRequired,
+      onDelete: PropTypes.func.isRequired,
     };
   }
 
   render() {
-    const { isProcessing, decisionBranchModels, onSave, onEdit } = this.props;
+    const { isProcessing, decisionBranchModels, onSave, onDelete, onEdit } = this.props;
 
     return (
       <ul className="list-group margin-bottom-8">
@@ -29,6 +30,7 @@ export default class DecisionBranches extends Component {
               key={index}
               index={index}
               onSave={onSave}
+              onDelete={onDelete}
               isDisabled={isProcessing}
             />;
           } else {

@@ -171,6 +171,19 @@ export function setActiveItem(dataType, id) {
     }
   };
 }
+
+export function updateAnswerModel(answerModel, newAttrs) {
+  return (dispatch, getState) => {
+    const { isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    answerModel.update(newAttrs).then((newAnswerModel) => {
+      dispatch(setEditingAnswerModel(newAnswerModel));
+      dispatch(updateAnswersRepo(newAnswerModel));
+      dispatch(offProcessing());
+    });
+  };
 }
 
 export function clearActiveItem() {

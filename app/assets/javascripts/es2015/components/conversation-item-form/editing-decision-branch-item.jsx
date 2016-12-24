@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
-class EditingDecisionBranchItem extends Component {
+export default class EditingDecisionBranchItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: props.decisionBranchModel.body,
-      enterPressed: false,
     };
   }
 
@@ -30,9 +29,9 @@ class EditingDecisionBranchItem extends Component {
   }
 
   onSave() {
-    const { index, isDisabled, onSave } = this.props;
+    const { decisionBranchModel, isDisabled, onSave } = this.props;
     const { value } = this.state;
     if (isDisabled) { return; }
-    onSave(index, value);
+    onSave(decisionBranchModel, value);
   }
 }

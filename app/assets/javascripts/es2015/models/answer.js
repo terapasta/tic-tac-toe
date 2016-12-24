@@ -51,4 +51,13 @@ export default class Answer {
       return new Answer(res.data);
     });
   }
+
+  delete() {
+    const { botId, id } = this.attrs;
+    return axios.delete(`/bots/${botId}/answers/${id}.json`, {
+      headers: {
+        "X-CSRF-Token": authenticityToken(),
+      },
+    });
+  }
 }

@@ -47,8 +47,10 @@ export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
     dispatch(onProcessing());
 
     answerModel.delete().then(() => {
-      dispatch({ type: t.DELETE_ANWER_FROM_ANSWERS_TREE, answerModel, decisionBranchId });
+      dispatch({ type: t.DELETE_ANSWER_FROM_ANSWERS_TREE, answerModel, decisionBranchId });
       dispatch(deleteAnswersRepo(answerModel));
+      dispatch(clearEditingAnswerModel());
+      dispatch(clearActiveItem());
       dispatch(offProcessing());
     }).catch(console.error);
   };

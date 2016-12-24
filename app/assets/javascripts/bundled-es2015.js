@@ -2194,6 +2194,9 @@ var AnswerNode = function (_Component) {
 
 
       var answer = answersRepo[answerNode.id];
+      if (answer == null) {
+        return null;
+      }
       var decisionBrancheNodes = answerNode.decisionBranches;
 
       var headline = answer.headline,
@@ -2568,7 +2571,6 @@ function authenticityToken() {
 }
 
 },{}],31:[function(require,module,exports){
-(function (process){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2667,14 +2669,13 @@ function getProps(node) {
 
 function getReduxMiddlewares() {
   var middlewareList = [_reduxThunk2.default];
-  if (process.env.NODE_ENV !== "production") {
+  if ("production" !== "production") {
     middlewareList.push((0, _reduxLogger2.default)());
   }
   return middlewareList;
 }
 
-}).call(this,require('_process'))
-},{"./parse-json":32,"_process":259,"lodash/camelCase":220,"react":428,"react-dom":260,"react-redux":396,"redux":440,"redux-logger":433,"redux-thunk":434}],32:[function(require,module,exports){
+},{"./parse-json":32,"lodash/camelCase":220,"react":428,"react-dom":260,"react-redux":396,"redux":440,"redux-logger":433,"redux-thunk":434}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

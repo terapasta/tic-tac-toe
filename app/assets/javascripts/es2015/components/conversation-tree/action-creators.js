@@ -6,7 +6,7 @@ import DecisionBranch from "../../models/decision-branch";
 
 export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
   return (dispatch, getState) => {
-    const { botId, isProcessing } = getState();
+    const { botId, isProcessing, editingDecisionBranchModel } = getState();
     if (isProcessing) { return; }
     dispatch(onProcessing());
 
@@ -16,7 +16,10 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
       dispatch(setEditingAnswerModel(answerModel));
       dispatch(setActiveItem("answer", answerModel.id));
       dispatch(offProcessing());
-      // TODO: update decisionBranch if decisionBranchId exists
+
+      if (decisionBranchId != null) {
+        dispatch(updateDecisionBranchModel(editingDecisionBranchModel, { nextAnswerId: answerModel.id }));
+      }
     }).catch(console.error);
   };
 }

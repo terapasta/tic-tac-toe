@@ -198,6 +198,14 @@ export function clearEditingAnswerModel() {
   return { type: t.CLEAR_EDITING_ANSWER_MODEL };
 }
 
+export function setEditingDecisionBranchModel(decisionBranchModel) {
+  return { type: t.SET_EDITING_DECISION_BRANCH_MODEL, decisionBranchModel };
+}
+
+export function clearEditingDecisionBranchModel() {
+  return { type: t.CLEAR_EDITING_DECISION_BRANCH_MODEL };
+}
+
 export function setEditingDecisionBranchModels(decisionBranchModels) {
   return { type: t.SET_EDITING_DECISION_BRANCH_MODELS, decisionBranchModels };
 }

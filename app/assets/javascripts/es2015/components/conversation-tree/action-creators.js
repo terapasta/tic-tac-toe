@@ -57,7 +57,18 @@ export function deleteAnswerFromAnswersTree(answerModel, decisionBranchId) {
 }
 
 export function deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId) {
-  return { type: t.DELETE_DECISION_BRANCH_FROM_ANSWERS_TREE, decisionBranchModel, answerId };
+  return (dispatch, getState) => {
+    const { isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    decisionBranchModel.delete().then(() => {
+      dispatch({ type: t.DELETE_DECISION_BRANCH_FROM_ANSWERS_TREE, decisionBranchModel, answerId });
+      dispatch(deleteDecisionBranchesRepo(decisionBranchModel));
+      dispatch(deleteEditingDecisionBranchModels(decisionBranchModel));
+      dispatch(offProcessing());
+    }).catch(console.error);
+  };
 }
 
 export function updateAnswersRepo(answerModel) {

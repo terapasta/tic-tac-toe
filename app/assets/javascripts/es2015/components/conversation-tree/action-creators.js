@@ -157,17 +157,31 @@ export function setActiveItem(dataType, id) {
 
     switch(dataType) {
       case "answer":
+        dispatch(clearEditingDecisionBranchModel());
         if (id == null) {
           return dispatch(setEditingAnswerModel(new Answer));
         } else {
           return Answer.fetch(botId, id).then((answerModel) => {
             dispatch(setEditingAnswerModel(answerModel));
+            answerModel.fetchDecisionBranches().then(() => {
+              dispatch(setEditingDecisionBranchModels(answerModel.decisionBranchModels));
+            });
           });
         }
       case "decisionBranch":
-        return DecisionBranch.fetch(botId, id).then((decisionBranchModel) => {
-          dispatch(setEditingDecisionBranchModels([decisionBranchModel]));
-        });
+        dispatch(clearEditingAnswerModel());
+        if (id == null) {
+          return dispatch(setEditingDecisionBranchModel(new DecisionBranch));
+        } else {
+          return DecisionBranch.fetch(botId, id).then((decisionBranchModel) => {
+            dispatch(setEditingDecisionBranchModel(decisionBranchModel));
+            if (decisionBranchModel.nextAnswerId != null) {
+              decisionBranchModel.fetchNextAnswer().then(() => {
+                dispatch(setEditingAnswerModel(decisionBranchModel.nextAnswerModel));
+              });
+            }
+          });
+        }
     }
   };
 }

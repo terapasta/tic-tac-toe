@@ -19,6 +19,12 @@ export default function editingDecisionBranchModels(state = [], action) {
       newState[targetIndex] = decisionBranchModel;
       return newState;
 
+    case t.DELETE_EDITING_DECISION_BRANCH_MODELS:
+      targetIndex = findIndex(state, (d) => d.id === decisionBranchModel.id);
+      newState = state.concat();
+      newState.splice(targetIndex, 1);
+      return newState;
+
     case t.CLEAR_EDITING_DECISION_BRANCH_MODELS:
       return [];
 

@@ -157,10 +157,11 @@ export function setActiveItem(dataType, id) {
   return (dispatch, getState) => {
     const { botId } = getState();
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType, id });
+    dispatch(clearEditingAnswerModel());
+    dispatch(clearEditingDecisionBranchModels());
 
     switch(dataType) {
       case "answer":
-        dispatch(clearEditingDecisionBranchModel());
         if (id == null) {
           return dispatch(setEditingAnswerModel(new Answer));
         } else {
@@ -172,21 +173,27 @@ export function setActiveItem(dataType, id) {
           });
         }
       case "decisionBranch":
-        dispatch(clearEditingAnswerModel());
         if (id == null) {
           return dispatch(setEditingDecisionBranchModel(new DecisionBranch));
         } else {
-          return DecisionBranch.fetch(botId, id).then((decisionBranchModel) => {
-            dispatch(setEditingDecisionBranchModel(decisionBranchModel));
-            if (decisionBranchModel.nextAnswerId != null) {
-              decisionBranchModel.fetchNextAnswer().then(() => {
-                dispatch(setEditingAnswerModel(decisionBranchModel.nextAnswerModel));
-              });
-            }
-          });
+          return fetchDecisionBranchModel(dispatch, botId, id);
         }
     }
   };
+}
+
+export function fetchDecisionBranchModel(dispatch, botId, id) {
+  return DecisionBranch.fetch(botId, id).then((decisionBranchModel) => {
+    dispatch(setEditingDecisionBranchModel(decisionBranchModel));
+
+    if (decisionBranchModel.nextAnswerId == null) {
+      dispatch(setEditingAnswerModel(new Answer));
+    } else {
+      decisionBranchModel.fetchNextAnswer().then(() => {
+        dispatch(setEditingAnswerModel(decisionBranchModel.nextAnswerModel));
+      });
+    }
+  });
 }
 
 export function updateAnswerModel(answerModel, newAttrs) {

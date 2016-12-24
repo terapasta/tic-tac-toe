@@ -10,60 +10,36 @@ export default class DecisionBranches extends Component {
 
   static get propTypes() {
     return {
+      isProcessing: PropTypes.bool.isRequired,
       decisionBranchModels: PropTypes.array,
-    };
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      editingIndex: null,
-      isProcessing: false,
+      onSave: PropTypes.func.isRequired,
+      onEdit: PropTypes.func.isRequired,
     };
   }
 
   render() {
-    const { decisionBranchModels } = this.props;
-    const { editingIndex, isProcessing } = this.state;
+    const { isProcessing, decisionBranchModels, onSave, onEdit } = this.props;
 
     return (
       <ul className="list-group margin-bottom-8">
         {decisionBranchModels.map((decisionBranchModel, index) => {
-          if (editingIndex === index) {
+          if (decisionBranchModel.isActive) {
             return <EditingDecisionBranchItem
               decisionBranchModel={decisionBranchModel}
               key={index}
               index={index}
-              onSave={this.onSave.bind(this)}
+              onSave={onSave}
               isDisabled={isProcessing}
             />;
           } else {
             return <DecisionBranchItem
               decisionBranchModel={decisionBranchModel}
               key={index}
-              onEdit={this.onEdit.bind(this, index)}
+              onEdit={() => onEdit(index)}
             />;
           }
         })}
       </ul>
     );
-  }
-
-  onEdit(index) {
-    this.setState({ editingIndex: index });
-  }
-
-  onSave(index, value) {
-    const { decisionBranchModels, onUpdate } = this.props;
-    this.setState({ isProcessing: true });
-
-    decisionBranchModels[index].update({ body: value })
-      .then((decisionBranchModel) => {
-        this.setState({
-          isProcessing: false,
-          editingIndex: null,
-        });
-        onUpdate(decisionBranchModel, index);
-      });
   }
 }

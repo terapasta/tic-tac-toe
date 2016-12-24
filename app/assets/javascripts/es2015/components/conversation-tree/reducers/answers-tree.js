@@ -13,7 +13,7 @@ export default function answersTree(state = [], action) {
       newAnswerNode = { id: answerModel.id, decisionBranches: [] };
 
       if (decisionBranchId == null) {
-        return state.concat([newAnswerNode]);
+        return [newAnswerNode].concat(state);
       } else {
         findDecisionBranchFromTree(state, decisionBranchId, (decisionBranchNode) => {
           decisionBranchNode.answer = newAnswerNode;

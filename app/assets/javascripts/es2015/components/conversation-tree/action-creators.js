@@ -250,3 +250,7 @@ export function clearEditingDecisionBranchModels() {
 export function activateEditingDecisionBranchModel(index) {
   return { type: t.ACTIVATE_EDITING_DECISION_BRANCH_MODEL, index };
 }
+
+export function inactivateEditingDecisionBranchModels() {
+  return { type: t.INACTIVATE_EDITING_DECISION_BRANCH_MODELS };
+}

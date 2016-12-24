@@ -4,6 +4,8 @@ import includes from "lodash/includes";
 import Answer from "../../models/answer";
 import DecisionBranch from "../../models/decision-branch";
 
+import { findAnswerFromTree } from "./helpers";
+
 export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
   return (dispatch, getState) => {
     const { botId, isProcessing, editingDecisionBranchModel } = getState();
@@ -16,6 +18,7 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
       dispatch(setEditingAnswerModel(answerModel));
       dispatch(setActiveItem("answer", answerModel.id));
       dispatch(offProcessing());
+      dispatch(addOpenedAnswerIdsIfHasChildren(answerModel.id));
 
       if (decisionBranchId != null) {
         dispatch(updateDecisionBranchModel(editingDecisionBranchModel, { nextAnswerId: answerModel.id }));
@@ -113,6 +116,17 @@ export function addOpenedAnswerIds(answerId) {
 
 export function removeOpenedAnswerIds(answerId) {
   return { type: t.REMOVE_OPENED_ANSWER_IDS, answerId };
+}
+
+export function addOpenedAnswerIdsIfHasChildren(answerId) {
+  return (dispatch, getState) => {
+    const { answersTree } = getState();
+    findAnswerFromTree(answersTree, answerId, (answerNode) => {
+      if (answerNode.decisionBranches.length > 0) {
+        dispatch(addOpenedAnswerIds(answerId));
+      }
+    });
+  };
 }
 
 export function addOpenedDecisionBranchIds(decisionBranchId) {

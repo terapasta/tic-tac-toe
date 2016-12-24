@@ -54,6 +54,7 @@ export default class ConversationItemForm extends Component {
       isAddingDecisionBranch,
       onSaveDecisionBranch,
       onEditDecisionBranch,
+      onDeleteDecisionBranch,
       onAddingDecisionBranch,
       onCancelAddingDecisionBranch,
       onSaveNewDecisionBranch,
@@ -101,6 +102,9 @@ export default class ConversationItemForm extends Component {
             decisionBranchModels={editingDecisionBranchModels}
             onSave={onSaveDecisionBranch}
             onEdit={onEditDecisionBranch}
+            onDelete={(decisionBranchModel) => {
+              onDeleteDecisionBranch(decisionBranchModel, editingAnswerModel.id);
+            }}
           />
           {isAppearNewDecisionBranch && (
             <NewDecisionBranch

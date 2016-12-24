@@ -49,4 +49,13 @@ export default class DecisionBranch {
       return new DecisionBranch(res.data);
     });
   }
+
+  delete() {
+    const { botId, id } = this.attrs;
+    return axios.delete(`/bots/${botId}/decision_branches/${id}.json`, {
+      headers: {
+        "X-CSRF-Token": authenticityToken(),
+      },
+    });
+  }
 }

@@ -85,6 +85,9 @@ export default class ConversationTree extends Component {
             onEditDecisionBranch={(index) => {
                dispatch(a.activateEditingDecisionBranchModel(index));
             }}
+            onDeleteDecisionBranch={(decisionBranchModel, answerId) => {
+              dispatch(a.deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId));
+            }}
             onAddingDecisionBranch={() => {
               dispatch(a.onAddingDecisionBranch());
             }}

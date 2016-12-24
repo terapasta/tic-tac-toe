@@ -40,6 +40,7 @@ export default class AnswerNode extends Component {
     } = this.props;
 
     const answer = answersRepo[answerNode.id];
+    if (answer == null) { return null; }
     const decisionBrancheNodes = answerNode.decisionBranches;
 
     const {

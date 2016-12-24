@@ -4,7 +4,7 @@ import answersTree from "./reducers/answers-tree";
 import answersRepo from "./reducers/answers-repo";
 import decisionBranchesRepo from "./reducers/decision-branches-repo";
 import openedAnswerIds from "./reducers/opened-answer-ids";
-import openedDecisionBranchIds from "./reducers/opened-answer-ids";
+import openedDecisionBranchIds from "./reducers/opened-decision-branch-ids";
 import isAddingAnswer from "./reducers/is-adding-answer";
 import isAddingDecisionBranch from "./reducers/is-adding-decision-branch";
 import isProcessing from "./reducers/is-processing";

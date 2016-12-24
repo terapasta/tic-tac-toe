@@ -10,6 +10,9 @@ export default function editingDecisionBranchModels(state = [], action) {
     case t.SET_EDITING_DECISION_BRANCH_MODELS:
       return decisionBranchModels;
 
+    case t.ADD_EDITING_DECISION_BRANCH_MODELS:
+      return state.concat([decisionBranchModel]);
+
     case t.UPDATE_EDITING_DECISION_BRANCH_MODELS:
       targetIndex = findIndex(state, (d) => d.id === decisionBranchModel.id);
       newState = state.concat();

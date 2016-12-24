@@ -23,7 +23,7 @@ export default class DecisionBranch {
     });
   }
 
-  constructor(attrs) {
+  constructor(attrs = {}) {
     this.attrs = attrs;
   }
 

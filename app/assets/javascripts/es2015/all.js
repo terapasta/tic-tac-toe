@@ -1,9 +1,10 @@
 import ConversationTree from "./components/conversation-tree";
+import ConversationTreeReducers from "./components/conversation-tree/reducers";
 
-import mountComponent from "./modules/mount-component";
+import { mountComponentWithRedux } from "./modules/mount-component";
 
 function init() {
-  mountComponent(ConversationTree);
+  mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
 }
 
 if (document.readyState === "complete") {

@@ -45,5 +45,19 @@ class LearningTrainingMessage < ActiveRecord::Base
       end
       LearningTrainingMessage.import!(arr)
     end
+
+    def amp_by_sentence_synonyms!(bot)
+      arr = []
+      bot.learning_training_messages.each do |learning_training_message|
+        training_message = bot.training_messages.find_by(body: learning_training_message.question)
+        continue if training_message.blank?
+        training_message.sentence_synonyms.each do |sentence_synonym|
+          copy_model = learning_training_message.dup
+          copy_model.question = sentence_synonym.body
+          arr << copy_model
+        end
+      end
+      LearningTrainingMessage.import!(arr)
+    end
   end
 end

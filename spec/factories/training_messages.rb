@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :training_message do
-    speaker "MyString"
-    body "MyString"
+    training
+    speaker :guest
+    body 'こんにちは、元気ですか'
   end
 end

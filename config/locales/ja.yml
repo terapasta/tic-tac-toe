@@ -215,6 +215,8 @@ ja:
       answer:
         headline: 見出し
         body: 内容
+      training_message:
+        body: 本文
   enums:
     bot:
       learning_status:

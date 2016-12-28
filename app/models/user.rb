@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
 
   has_many :bots
   has_many :word_mappings
+  has_many :sentence_synonyms, foreign_key: :created_user_id
 end

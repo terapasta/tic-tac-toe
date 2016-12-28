@@ -15,16 +15,17 @@ export default class Tree extends Component {
       answersTree: PropTypes.array.isRequired,
       answersRepo: PropTypes.object.isRequired,
       decisionBranchesRepo: PropTypes.object.isRequired,
-      onSelectItem: PropTypes.func,
+      onSelectItem: PropTypes.func.isRequired,
+      onCreatingAnswer: PropTypes.func.isRequired,
+      activeItem: PropTypes.object.isRequired,
+      openedAnswerIDs: PropTypes.array.isRequired,
+      openedDecisionBranchIDs: PropTypes.array.isRequired,
     };
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      openedAnswerIDs: [],
-      openedDecisionBranchIDs: [],
-      activeItem: { type: null, id: null },
       isAdding: false,
     };
   }
@@ -34,12 +35,12 @@ export default class Tree extends Component {
       answersTree,
       answersRepo,
       decisionBranchesRepo,
+      activeItem,
+      openedAnswerIDs,
+      openedDecisionBranchIDs,
     } = this.props;
 
     const {
-      openedAnswerIDs,
-      openedDecisionBranchIDs,
-      activeItem,
       isAdding,
     } = this.state;
 
@@ -68,13 +69,10 @@ export default class Tree extends Component {
 
   onClickItem(answerID) {
     const { onSelectItem } = this.props;
-    const { openedAnswerIDs } = this.state;
     const activeItem = { type: "answer", id: answerID };
 
     this.setState({
-      activeItem,
       isAdding: false,
-      openedAnswerIDs: toggleID(openedAnswerIDs, answerID),
     });
 
     if (isFunction(onSelectItem)) {
@@ -84,13 +82,10 @@ export default class Tree extends Component {
 
   onClickDecisionBranch(decisionBrancheID) {
     const { onSelectItem } = this.props;
-    const { openedDecisionBranchIDs } = this.state;
     const activeItem = { type: "decisionBranch", id: decisionBrancheID };
 
     this.setState({
-      activeItem,
       isAdding: false,
-      openedDecisionBranchIDs: toggleID(openedDecisionBranchIDs, decisionBrancheID),
     });
 
     if (isFunction(onSelectItem)) {
@@ -99,19 +94,13 @@ export default class Tree extends Component {
   }
 
   onClickAdd() {
+    const { onCreatingAnswer } = this.props;
     this.setState({
-      activeItem: { type: null, id: null },
       isAdding: true,
     });
-  }
-}
 
-function toggleID(IDs, targetID) {
-  let newIDs;
-  if (includes(IDs, targetID)) {
-    newIDs = IDs.filter((id) => id != targetID);
-  } else {
-    newIDs = IDs.concat([targetID]);
+    if (isFunction(onCreatingAnswer)) {
+      onCreatingAnswer();
+    }
   }
-  return newIDs;
 }

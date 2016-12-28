@@ -7,6 +7,7 @@ export default class NewDecisionBranch extends Component {
 
   static get propTypes() {
     return {
+      onSave: PropTypes.func.isRequired,
     };
   }
 
@@ -47,7 +48,7 @@ export default class NewDecisionBranch extends Component {
                 </a>
               </div>
               <div className="pull-right">
-                <a className="btn btn-primary" href="#" disabled={isProcessing}>
+                <a className="btn btn-primary" href="#" disabled={isProcessing} onClick={this.onClickSaveButton.bind(this)}>
                   追加
                 </a>
               </div>
@@ -71,5 +72,11 @@ export default class NewDecisionBranch extends Component {
   onChangeValue(e) {
     const { value } = e.target;
     this.setState({ value });
+  }
+
+  onClickSaveButton(e) {
+    e.preventDefault();
+    this.props.onSave(this.state.value);
+    this.setState({ value: "", isAdding: false });
   }
 }

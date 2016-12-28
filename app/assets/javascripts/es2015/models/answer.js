@@ -14,6 +14,16 @@ export default class Answer {
       });
   }
 
+  static create(botId, attrs) {
+    return axios.post(`/bots/${botId}/answers.json`, {
+        answer: attrs,
+        authenticity_token: authenticityToken(),
+      })
+      .then((res) => {
+        return new Answer(res.data);
+      });
+  }
+
   constructor(attrs) {
     this.attrs = attrs;
   }

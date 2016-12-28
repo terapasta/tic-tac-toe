@@ -1,7 +1,6 @@
 class LearnJob < ActiveJob::Base
   queue_as :default
 
-  # TODO job内で例外が発生するとログに表示されないのでデバッグしづらい
   def perform(bot_id)
     bot = Bot.find(bot_id)
     if Learning::Summarizer.new(bot).summary

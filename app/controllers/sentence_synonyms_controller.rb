@@ -4,6 +4,10 @@ class SentenceSynonymsController < ApplicationController
 
   def new
     @training_message = TrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
+    if @training_message.blank?
+      flash[:error] = '未作業の文章がありませんでした'
+      redirect_to root_path and return
+    end
     3.times.map { @training_message.sentence_synonyms.build }
   end
 

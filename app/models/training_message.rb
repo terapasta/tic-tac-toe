@@ -13,7 +13,7 @@ class TrainingMessage < ActiveRecord::Base
 
   accepts_nested_attributes_for :answer, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :sentence_synonyms
-  
+
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
 
@@ -36,7 +36,7 @@ class TrainingMessage < ActiveRecord::Base
   end
 
   def self.pick_sentence_synonyms_not_enough(bot, user)
-    training_messages = bot.training_messages.includes(:sentence_synonyms)
+    training_messages = bot.training_messages.guest.includes(:sentence_synonyms)
     training_messages
       .select {|tm|
         tm.sentence_synonyms.length < 20 &&

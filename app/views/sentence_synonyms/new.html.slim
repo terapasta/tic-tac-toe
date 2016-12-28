@@ -4,7 +4,7 @@
 
   .panel-body
     .pull-right
-      | 累計登録数: --件
+      | 累計登録数: #{current_user.sentence_synonyms.count}件
     = bootstrap_form_for @training_message, url: bot_sentence_synonyms_path(@bot), method: :post do |f|
       = f.hidden_field :id
       = f.static_control :body

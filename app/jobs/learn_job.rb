@@ -5,7 +5,6 @@ class LearnJob < ActiveJob::Base
   def perform(bot_id)
     bot = Bot.find(bot_id)
     if Learning::Summarizer.new(bot).summary
-      binding.pry
       LearningTrainingMessage.amp!(bot)
       LearningTrainingMessage.amp_by_sentence_synonyms!(bot)
       scores = Ml::Engine.new(bot).learn

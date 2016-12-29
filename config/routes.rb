@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :bots, only: [:index, :edit, :update] do
     post :reset, on: :member
-
+    resource :sentence_synonyms, only: [:new, :create]
     resource :imports, only: [:new, :create]
     resource :exports, only: :show
     resources :threads, only: :index do
@@ -31,7 +31,10 @@ Rails.application.routes.draw do
       end
     end
     resource :learning, only: [:update]
-    resources :answers, except: [:new, :create]
+    resources :answers, except: [:new] do
+      resources :decision_branches, only: [:index]
+    end
+    resources :decision_branches, only: [:show, :update, :create]
     resource :conversation_tree, only: [:show]
   end
 

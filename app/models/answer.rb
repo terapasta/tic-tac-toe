@@ -27,7 +27,7 @@ class Answer < ActiveRecord::Base
   validates :headline, length: { maximum: 100 }
 
   scope :top_level, -> (bot_id) {
-    where.not(id: DecisionBranch.select(:next_answer_id).where(bot_id: bot_id))
+    where.not(id: DecisionBranch.select(:next_answer_id).where(bot_id: bot_id).where.not(next_answer_id: nil))
   }
 
   def no_classified?

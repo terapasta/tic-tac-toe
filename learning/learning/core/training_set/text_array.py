@@ -4,9 +4,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class TextArray:
-    def __init__(self, data, vocabulary=None):
+    def __init__(self, data, vocabulary=None, vectorizer=None):
         self.data = data
         self._vocabulary = vocabulary
+        self._vectorizer = vectorizer
 
     # def to_vec(self, type=None):
     #     count_vectorizer = self.__build_count_vectorizer()
@@ -15,27 +16,28 @@ class TextArray:
     #         feature_vectors = feature_vectors.toarray()
 
     def to_vec(self, type=None):
-        # vectorizer = TfidfVectorizer(norm='l2', max_df=0.1, min_df=1)
-        # vectorizer = TfidfVectorizer(min_df=1, max_df=100)
         vectorizer = self.__build_vectorizer()
-        feature_vectors = vectorizer.fit_transform(self.__splited_data())
-        logger.debug("feature_vectors: %s" % feature_vectors)
-        self._vectorizer = vectorizer
-        self._vocabulary = vectorizer.get_feature_names()
+        feature_vectors = vectorizer.transform(self.__splited_data())
         if type == 'array':
             feature_vectors = feature_vectors.toarray()
         return feature_vectors
 
     def __build_vectorizer(self):
+        if self._vectorizer is not None:
+            return self._vectorizer
+
         if self._vocabulary is None:
-            # vectorizer = TfidfVectorizer()
-            vectorizer = CountVectorizer()
-            vectorizer.fit(self.__splited_data())
-            self._vocabulary = vectorizer.get_feature_names()
+            logger.debug('fit vectorizer')
+            self._vectorizer = TfidfVectorizer(norm=None)
+            # vectorizer = TfidfVectorizer(norm='l2', max_df=0.1, min_df=1)
+            # vectorizer = TfidfVectorizer(min_df=1, max_df=100)
+            # vectorizer = CountVectorizer()
+            self._vectorizer.fit(self.__splited_data())
+            self._vocabulary = self._vectorizer.get_feature_names()
         else:
-            vectorizer = CountVectorizer(vocabulary=self.vocabulary)
-            # vectorizer = TfidfVectorizer(vocabulary=self.vocabulary)
-        return vectorizer
+            # vectorizer = CountVectorizer(vocabulary=self.vocabulary)
+            self._vectorizer = TfidfVectorizer(vocabulary=self.vocabulary, norm=None)
+        return self._vectorizer
 
     def __splited_data(self):
         splited_data = []

@@ -40,9 +40,9 @@ class Nlang:
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")
 
-                word_list.append(conv.do(jaconv.kata2hira(lemma)))
+                # word_list.append(conv.do(jaconv.kata2hira(lemma)))
                 # word_list.append(jaconv.kata2hira(lemma))
-                # word_list.append(lemma)
+                word_list.append(lemma)
             node = node.next
         return " ".join(word_list)
 

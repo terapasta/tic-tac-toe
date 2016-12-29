@@ -8,13 +8,40 @@ class AnswersController < ApplicationController
     @answers = @bot.answers.order('id desc').page(params[:page])
   end
 
-  def update
-    if @answer.update answer_params
-      redirect_to bot_answers_path(@bot), notice: '回答を更新しました。'
-    else
-      flash[:alert] = '回答を更新できませんでした。'
+  def show
+    @answer = @bot.answers.find_by(id: params[:id])
+    respond_to do |format|
+      if @answer.present?
+        format.json { render json: @answer.decorate.as_json }
+      else
+        format.json { render json: {}, status: :not_found }
+      end
+    end
+  end
 
-      render :edit
+  def create
+    @answer = @bot.answers.build(answer_params)
+    respond_to do |format|
+      if @answer.save
+        format.json { render json: @answer.decorate.as_json, status: :created }
+      else
+        format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @answer.update answer_params
+        format.html { redirect_to bot_answers_path(@bot), notice: '回答を更新しました。' }
+        format.json { render json: @answer.decorate.as_json, status: :ok }
+      else
+        format.html do
+          flash.now.alert = '回答を更新できませんでした。'
+          render :edit
+        end
+        format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -27,7 +54,7 @@ class AnswersController < ApplicationController
   private
 
     def set_bot
-      @bot = Bot.find params[:bot_id]
+      @bot = current_user.bots.find params[:bot_id]
     end
 
     def set_answer

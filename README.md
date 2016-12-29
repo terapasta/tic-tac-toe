@@ -48,6 +48,7 @@ Pythonのライブラリをインストール。pyenv,virtualenvを使ってい�
 
 ```
 $ cd learning
+$ pyenv virtualenv 3.5.2 donusagi-bot3
 $ pip install -r requirements.txt
 ```
 
@@ -116,3 +117,6 @@ $ cap production deploy
 ```
 $ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
 ```
+
+## 画面上に導線のない画面のURL
+- 同義文登録画面: http://localhost:3000/bots/:bot_id/sentence_synonyms/new

@@ -5,7 +5,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   let(:conversation_bot) { Conversation::Bot.new(@bot, message) }
 
   before(:all) do
-    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.3)
+    learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.5)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
     learn(@bot)
@@ -21,7 +21,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  pending context '「セキュリティーはどうなっている？」とポストされた場合' do
+  context '「セキュリティーはどうなっている？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'セキュリティーはどうなっている？') }
     scenario do
       expect(subject[0].body).to be_include 'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。'
@@ -35,41 +35,71 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  pending context '「何歳ですか？」とポストされた場合' do
-    let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
-    scenario '回答失敗を返すこと' do
-      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
-    end
-  end
-
-  # TODO 「使ってる」に反応してしまう誤答。TFIDFなどで正しく分類されるようにしたい
-  pending context 'サーバーはどこ使ってるの' do
+  context 'サーバーはどこ使ってるの' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'サーバーはどこ使ってるの') }
     scenario do
       expect(subject[0].body).to eq 'インフラは実績も多くセキュリティ評価も高いAmazon Web Services(AWS)のサーバを使っております。高可用性で安定しているので安心です♪'
     end
   end
 
-  # TODO
-  pending context '「ECサイトでも使えますか？」とポストされた場合' do
+  context '「ECサイトでも使えますか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'ECサイトでも使えますか？') }
     scenario do
       expect(subject[0].body).to be_include '個別の商品に関する質問にお答えすることは難しいですが'
     end
   end
 
-  pending context '「どんな質問ならいける？」とポストされた場合' do
+  context '「どんな質問ならいける？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'どんな質問ならいける？') }
     scenario do
       expect(subject[0].body).to be_include '学習用に投入したデータによりますが、WEBサイトなどによく掲載されている'
     end
   end
 
-  # TODO
-  pending context '「クラウドサービスですか？」とポストされた場合' do
+  context '「クラウドサービスですか？」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: 'クラウドサービスですか？') }
     scenario do
       expect(subject[0].body).to be_include 'はい、My-ope officeはクラウドサービスです。'
+    end
+  end
+
+  # 回答失敗のケース
+  context '「何歳ですか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '何歳ですか') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「微分の計算方法知りたい」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '微分の計算方法知りたい') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「管理画面のサンプルがみたいす」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '管理画面のサンプルがみたいす') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「デモサイトはありますか？」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: 'デモサイトはありますか？') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
+    end
+  end
+
+  # TODO
+  pending context '「問い合わせが無くて困っています。」とポストされた場合' do
+    let(:message) { chat.messages.build(speaker: 'guest', body: '問い合わせが無くて困っています。') }
+    scenario do
+      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
     end
   end
 end

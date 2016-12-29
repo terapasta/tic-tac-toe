@@ -6,7 +6,7 @@ class LearningTrainingMessage < ActiveRecord::Base
 
   class << self
     def to_csv(bot)
-      CSV.generate(force_quotes: true) do |csv|
+      CSV.generate(force_quotes: true, row_sep: "\r\n") do |csv|
         bot.learning_training_messages.find_each do |learning_training_message|
           base = [
             learning_training_message.question,
@@ -40,6 +40,20 @@ class LearningTrainingMessage < ActiveRecord::Base
         WordMapping.variations_of(learning_training_message.question, bot.user).each do |sentence|
           copy_model = learning_training_message.dup
           copy_model.question = sentence
+          arr << copy_model
+        end
+      end
+      LearningTrainingMessage.import!(arr)
+    end
+
+    def amp_by_sentence_synonyms!(bot)
+      arr = []
+      bot.learning_training_messages.each do |learning_training_message|
+        training_message = bot.training_messages.find_by(body: learning_training_message.question)
+        next if training_message.blank?
+        training_message.sentence_synonyms.each do |sentence_synonym|
+          copy_model = learning_training_message.dup
+          copy_model.question = sentence_synonym.body
           arr << copy_model
         end
       end

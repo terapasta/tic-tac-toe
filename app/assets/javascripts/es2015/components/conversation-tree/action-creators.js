@@ -200,6 +200,7 @@ export function setActiveItem(dataType, id) {
     const { botId } = getState();
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType, id });
     dispatch(clearEditingAnswerModel());
+    dispatch(clearEditingDecisionBranchModel());
     dispatch(clearEditingDecisionBranchModels());
 
     switch(dataType) {

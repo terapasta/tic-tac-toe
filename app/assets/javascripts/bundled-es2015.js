@@ -1054,6 +1054,7 @@ function setActiveItem(dataType, id) {
 
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType: dataType, id: id });
     dispatch(clearEditingAnswerModel());
+    dispatch(clearEditingDecisionBranchModel());
     dispatch(clearEditingDecisionBranchModels());
 
     switch (dataType) {

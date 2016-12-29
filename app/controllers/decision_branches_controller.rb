@@ -39,9 +39,17 @@ class DecisionBranchesController < ApplicationController
   end
 
   def destroy
-    @decision_branch.destroy
+    ActiveRecord::Base.transaction do
+      @decision_branch.next_answer.self_and_deep_child_answers.map(&:destroy!)
+      @decision_branch.destroy!
+    end
     respond_to do |format|
       format.json { render json: {}, status: :no_content }
+    end
+  rescue => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.json { render json: { error: e.message }, status: :internal_server_error }
     end
   end
 

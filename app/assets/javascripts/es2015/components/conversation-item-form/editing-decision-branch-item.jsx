@@ -22,7 +22,8 @@ export default class EditingDecisionBranchItem extends Component {
           />
           <span className="input-group-btn">
             <button className="btn btn-default" onClick={this.onSave.bind(this)}>保存</button>
-            <button className="btn btn-link" onClick={this.onDelete.bind(this)}>削除</button>
+            {" "}
+            <button className="btn btn-danger" onClick={this.onDelete.bind(this)}>削除</button>
           </span>
         </div>
       </li>

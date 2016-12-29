@@ -91,7 +91,8 @@ export default class ConversationItemForm extends Component {
                 <a className="btn btn-primary" href="#"
                   onClick={this.onClickSaveAnswerButton.bind(this)}
                   disabled={isProcessing}>保存</a>
-                <span className="btn btn-link" onClick={this.onClickDeleteAnswerButton.bind(this)}>削除</span>
+                {" "}
+                <span className="btn btn-danger" onClick={this.onClickDeleteAnswerButton.bind(this)}>削除</span>
               </div>
             </div>
           </div>

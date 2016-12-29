@@ -172,9 +172,10 @@ var ConversationItemForm = function (_Component) {
                   disabled: isProcessing },
                 "\u4FDD\u5B58"
               ),
+              " ",
               _react2.default.createElement(
                 "span",
-                { className: "btn btn-link", onClick: this.onClickDeleteAnswerButton.bind(this) },
+                { className: "btn btn-danger", onClick: this.onClickDeleteAnswerButton.bind(this) },
                 "\u524A\u9664"
               )
             )
@@ -434,9 +435,10 @@ var EditingDecisionBranchItem = function (_Component) {
               { className: "btn btn-default", onClick: this.onSave.bind(this) },
               "\u4FDD\u5B58"
             ),
+            " ",
             _react2.default.createElement(
               "button",
-              { className: "btn btn-link", onClick: this.onDelete.bind(this) },
+              { className: "btn btn-danger", onClick: this.onDelete.bind(this) },
               "\u524A\u9664"
             )
           )

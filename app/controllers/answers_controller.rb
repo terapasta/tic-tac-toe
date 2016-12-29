@@ -46,10 +46,25 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy!
     respond_to do |format|
-      format.html { redirect_to bot_answers_path(@bot), notice: '回答を削除しました。' }
-      format.json { render json: {}, status: :no_content }
+      format.html do
+        @answer.destroy!
+        redirect_to bot_answers_path(@bot), notice: '回答を削除しました。'
+      end
+      format.json do
+        ActiveRecord::Base.transaction do
+          @answer.self_and_deep_child_answers.map(&:destroy!)
+        end
+        render json: {}, status: :no_content
+      end
+    end
+  rescue => e
+    respond_to do |format|
+      format.html { raise e }
+      format.json do
+        logger.error e.message + e.backtrace.join("\n")
+        render json: { error: e.message }, status: :internal_server_error
+      end
     end
   end
 

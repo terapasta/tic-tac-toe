@@ -23,9 +23,10 @@
           <% if @bot.image %>
             <%= image_tag @bot.image_url(:thumb) %>
           <% end %>
-          <% if @bot.learning_status.present? %>
-            <p><%= learning_status_label @bot %></p>
-          <% end %>
+
+          <div id="bot-status-label">
+            <%= render 'shared/learning_status_label', bot: @bot %>
+          </div>
         <% end %>
         <%= link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank' %>
         <%= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item' %>

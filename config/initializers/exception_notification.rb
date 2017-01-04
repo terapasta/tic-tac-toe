@@ -15,7 +15,7 @@ ExceptionNotification.configure do |config|
 
   config.add_notifier :slack, {
     webhook_url: ENV['SLACK_WEBHOOK_URL'],
-    channel: "#my-ope-exception",
+    channel: "#exception",
     additional_parameters: { mrkdwn: true }
   }
 end

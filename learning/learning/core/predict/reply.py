@@ -54,23 +54,6 @@ class Reply:
         logger.debug('results: %s' % results)
         return results
 
-    def __replace_text2vec(self, Xtrain):
-        texts = Xtrain[:,-1:].flatten()
-        splited_texts = Nlang.batch_split(texts)
-        logger.debug('分割後の文字列: %s' % splited_texts)
-
-        # TODO TextArrayクラスで共通化したい
-        texts_vec = self.vectorizer.transform(splited_texts)
-        texts_vec = texts_vec.toarray()
-        logger.debug("texts_vec: %s" % texts_vec)
-        # logger.debug("texts_vec: %s" % texts_vec)
-
-        for text in splited_texts[0].split(' '):
-            voc = self.vectorizer.get_feature_names()
-            if text in voc:
-                wid = voc.index(text)
-                logger.debug("%s のTF-IDF値: %s" % (text, texts_vec[0][wid]))
-
 
     def __out_log(self, answer_id):
         answers_table = self.db['answers']

@@ -28,7 +28,8 @@ class TextArray:
 
         if self._vocabulary is None:
             logger.debug('fit vectorizer')
-            self._vectorizer = TfidfVectorizer(norm=None)
+            self._vectorizer = TfidfVectorizer(use_idf=False)
+            # self._vectorizer = TfidfVectorizer(norm=None)
             # vectorizer = TfidfVectorizer(norm='l2', max_df=0.1, min_df=1)
             # vectorizer = TfidfVectorizer(min_df=1, max_df=100)
             # vectorizer = CountVectorizer()

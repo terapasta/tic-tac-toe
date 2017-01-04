@@ -23,9 +23,10 @@
           <% if @bot.image %>
             <%= image_tag @bot.image_url(:thumb) %>
           <% end %>
-          <% if @bot.learning_status.present? %>
-            <p><%= learning_status_label @bot %></p>
-          <% end %>
+
+          <div id="bot-status-label">
+            <%= render 'shared/learning_status_label', bot: @bot %>
+          </div>
         <% end %>
         <%= link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank' %>
         <%= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item' %>
@@ -35,7 +36,7 @@
         <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item' %>
         <%= link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item' %>
       </div>
-      <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, class: 'btn btn-danger btn-block' %>
+      <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, remote: true, class: 'btn btn-danger btn-block' %>
     </div>
     <% container_main_class = 'col-sm-10 col-sm-offset-2 ' %>
   <% end %>

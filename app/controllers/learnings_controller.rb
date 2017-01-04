@@ -5,8 +5,6 @@ class LearningsController < ApplicationController
   def update
     LearnJob.perform_later(@bot.id)
     @bot.update learning_status: :processing, learning_status_changed_at: Time.current
-
-    redirect_to [:edit, @bot], notice: '学習処理が開始されました。結果が反映されない場合は、数秒〜数分待って試してください。'
   end
 
   private

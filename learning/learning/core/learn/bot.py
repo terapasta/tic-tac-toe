@@ -27,7 +27,6 @@ class Bot:
 
         estimator = self.__get_estimator(training_set)
 
-        Persistance.dump_vocabulary(training_set.body_array.vocabulary, self.bot_id)
         Persistance.dump_model(estimator, self.bot_id)
         Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)

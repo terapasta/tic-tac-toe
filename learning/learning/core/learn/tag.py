@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import MySQLdb
 from learning.log import logger
-from learning.core.training_set.text_array import TextArray
 from learning.core.training_set.training_text import TrainingText
 from learning.core.nlang import Nlang
 from learning.config.config import Config

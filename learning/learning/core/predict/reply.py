@@ -1,16 +1,9 @@
 import numpy as np
-import pandas as pd
 import dataset
-# import MySQLdb
 from learning.log import logger
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.externals import joblib
-from ..nlang import Nlang
 from .model_not_exists_error import ModelNotExistsError
 from learning.config.config import Config
 from learning.core.training_set.text_array import TextArray
-from learning.core.predict.tag import Tag
 from learning.core.persistance import Persistance
 
 class Reply:
@@ -22,13 +15,12 @@ class Reply:
 
         try:
             self.estimator = Persistance.load_model(bot_id)
-            self.vocabulary = Persistance.load_vocabulary(bot_id)
             self.vectorizer = Persistance.load_vectorizer(bot_id)
         except IOError:
             raise ModelNotExistsError()
 
     def predict(self, X):
-        text_array = TextArray(X, vocabulary=self.vocabulary, vectorizer=self.vectorizer)
+        text_array = TextArray(X, vectorizer=self.vectorizer)
         features = text_array.to_vec()
 
         # タグベクトルを追加する処理

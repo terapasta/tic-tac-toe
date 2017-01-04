@@ -25,7 +25,7 @@ class MyopeServer(RPCServer):
 
         try:
             predict_results = Reply(bot_id, learning_parameter).predict(X)
-            logger.debug(predict_results)
+            # logger.debug(predict_results)
             # if answer_id is not None:
             #     answer_id = float(answer_id)
         except ModelNotExistsError:

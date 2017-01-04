@@ -1,18 +1,10 @@
-import numpy as np
-import pandas as pd
 import MySQLdb
-from learning.log import logger
-from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
-from sklearn.cross_validation import KFold
+
+from learning.log import logger
 from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.naive_bayes import BernoulliNB
-from sklearn.grid_search import GridSearchCV
-from sklearn.metrics import classification_report
-from sklearn.metrics import precision_recall_fscore_support
-from sklearn import cross_validation
 from learning.core.evaluator import Evaluator
 from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
@@ -61,12 +53,18 @@ class Bot:
             estimator = MultinomialNB()
             # estimator = MultinomialNB(fit_prior=False)
             # estimator = BernoulliNB()
+            estimator.fit(training_set.x, training_set.y)
         else:
             logger.debug('use algorithm: logistic regression')
-            # estimator = LogisticRegression(C=self.learning_parameter.params_for_algorithm['C'])
-            estimator = LogisticRegression(C=1e5)  # TODO self.learning_parameter.params_for_algorithmがNoneになってしまう
+            # estimator = LogisticRegression(C=1e5)
+            # estimator = LogisticRegression()
+            # estimator.fit(training_set.x, training_set.y)
+            params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
+            grid = GridSearchCV(LogisticRegression(), param_grid=params)
+            grid.fit(training_set.x, training_set.y)
+            estimator = grid.best_estimator_
+            logger.debug('best_params_: %s' % grid.best_params_)
 
-        estimator.fit(training_set.x, training_set.y)
         return estimator
 
     # def __get_best_estimator(self, training_set):

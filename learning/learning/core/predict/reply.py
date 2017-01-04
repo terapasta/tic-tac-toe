@@ -49,12 +49,10 @@ class Reply:
         results_ordered_by_probability = list(map(lambda x: {
             'answer_id': float(x[0]), 'probability': x[1]
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
-        #
-        # logger.debug('X: %s' % X)
-        logger.debug('results_ordered_by_probability: %s' % results_ordered_by_probability)
-        # logger.debug('max_probability: %s' % max_probability)
 
-        return results_ordered_by_probability[0:10]
+        results = results_ordered_by_probability[0:10]
+        logger.debug('results: %s' % results)
+        return results
 
     def __replace_text2vec(self, Xtrain):
         texts = Xtrain[:,-1:].flatten()

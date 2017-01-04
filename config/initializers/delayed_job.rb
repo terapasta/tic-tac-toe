@@ -11,3 +11,14 @@ module Delayed
     end
   end
 end
+
+# 非同期処理内で例外が発生した際も通知させる
+module NotifyWhenDelayedJobFailed
+  def handle_failed_job(job, error)
+    super
+    ExceptionNotifier.notify_exception(error)
+  end
+end
+class Delayed::Worker
+  prepend NotifyWhenDelayedJobFailed
+end

@@ -5,7 +5,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   let(:conversation_bot) { Conversation::Bot.new(@bot, message) }
 
   before(:all) do
-    learning_parameter = build(:learning_parameter, algorithm: :logistic_regression, classify_threshold: 0.65)
+    learning_parameter = build(:learning_parameter, algorithm: :logistic_regression, classify_threshold: 0.62)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
     learn(@bot)
@@ -79,17 +79,8 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  # TODO
   context '「管理画面のサンプルがみたいす」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '管理画面のサンプルがみたいす') }
-    scenario do
-      expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
-    end
-  end
-
-  # TODO
-  pending context '「デモサイトはありますか？」とポストされた場合' do
-    let(:message) { chat.messages.build(speaker: 'guest', body: 'デモサイトはありますか？') }
     scenario do
       expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'
     end

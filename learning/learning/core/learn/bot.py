@@ -15,6 +15,7 @@ class Bot:
     def __init__(self, bot_id, learning_parameter):
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
+        logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     def learn(self):
         logger.debug('Bot.learn start')

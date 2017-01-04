@@ -13,6 +13,10 @@ class Persistance:
         joblib.dump(vocabulary, self.get_vocabulary_path(bot_id))
 
     @classmethod
+    def dump_vectorizer(self, vectorizer, bot_id):
+        joblib.dump(vectorizer, self.get_vectorizer_path(bot_id))
+
+    @classmethod
     def load_model(self, bot_id):
         return joblib.load(self.get_model_path(bot_id))
 
@@ -21,12 +25,20 @@ class Persistance:
         return joblib.load(self.get_vocabulary_path(bot_id))
 
     @classmethod
+    def load_vectorizer(self, bot_id):
+        return joblib.load(self.get_vectorizer_path(bot_id))
+
+    @classmethod
     def get_model_path(self, bot_id):
         config = Config()
-        # TODO ロジスティック回帰とは限らない
-        return "learning/models/%s/%s_logistic_reg_model" % (config.env, bot_id)
+        return "learning/models/%s/%s_estimator" % (config.env, bot_id)
 
     @classmethod
     def get_vocabulary_path(self, bot_id):
         config = Config()
         return "learning/models/%s/%s_vocabulary.pkl" % (config.env, bot_id)
+
+    @classmethod
+    def get_vectorizer_path(self, bot_id):
+        config = Config()
+        return "learning/models/%s/%s_vectorizer.pkl" % (config.env, bot_id)

@@ -28,15 +28,11 @@ class Bot:
 
         Persistance.dump_vocabulary(training_set.body_array.vocabulary, self.bot_id)
         Persistance.dump_model(estimator, self.bot_id)
-        joblib.dump(training_set.body_array.vectorizer, "learning/models/%s/%s_vectorizer.pkl" % (config.env, self.bot_id))  # TODO dumpする処理はこのクラスの責務外なのでリファクタリングしたい
+        Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()
         evaluator.evaluate(estimator, training_set.x, training_set.y)
-        # クロスバリデーションではなく既存データに対して評価する
-        # evaluator.evaluate_using_exist_data(estimator, training_set.x, training_set.y)
-
-        # logger.debug('分類に失敗したデータのインデックス(bot.learning_training_messages[index]で参照出来る): %s' % evaluator.indexes_of_failed(estimator, training_set.x, training_set.y))
         logger.debug('Bot.learn end')
 
         return evaluator

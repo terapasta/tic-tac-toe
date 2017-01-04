@@ -23,7 +23,7 @@ class Reply:
         try:
             self.estimator = Persistance.load_model(bot_id)
             self.vocabulary = Persistance.load_vocabulary(bot_id)
-            self.vectorizer = joblib.load("learning/models/%s/%s_vectorizer.pkl" % (config.env, bot_id))
+            self.vectorizer = Persistance.load_vectorizer(bot_id)
         except IOError:
             raise ModelNotExistsError()
 

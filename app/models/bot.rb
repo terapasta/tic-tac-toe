@@ -31,6 +31,22 @@ class Bot < ActiveRecord::Base
     attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :include_tag_vector, :classify_threshold)
   end
 
+  def reset_training_data!
+    transaction do
+      trainings.destroy_all
+      imported_training_messages.destroy_all
+      learning_training_messages.destroy_all
+
+      # TODO: chats,answersは本来は残しておきたいが、仕様検討する必要があるため一旦削除してしまう
+      chats.destroy_all
+      answers.destroy_all
+
+      # TODO: BOTのファイルをサブディレクトリに格納したい
+      model_files = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}_*")
+      FileUtils.rm(Dir.glob(model_files))
+    end
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?

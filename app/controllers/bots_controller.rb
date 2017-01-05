@@ -1,6 +1,6 @@
 class BotsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_bot, only: [:edit, :update]
+  before_action :set_bot, only: [:edit, :update, :reset]
 
   def index
     @bots = current_user.bots
@@ -16,6 +16,13 @@ class BotsController < ApplicationController
       flash[:notice] = '更新に失敗しました'
     end
     render :edit
+  end
+
+  def reset
+    @bot.reset_training_data!
+    flash[:notice] = '学習データをリセットしました'
+
+    redirect_to [:edit, @bot]
   end
 
   private

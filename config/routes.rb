@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :bots, only: [:index, :edit, :update] do
     post :reset, on: :member
-    resource :sentence_synonyms, only: [:new, :create]
+    resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
     resource :imports, only: [:new, :create]
     resource :exports, only: :show
     resources :threads, only: :index do

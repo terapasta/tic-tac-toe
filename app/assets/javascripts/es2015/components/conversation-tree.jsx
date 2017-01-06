@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from "react";
-import flatten from "lodash/flatten";
-import compact from "lodash/compact";
-import includes from "lodash/includes";
 
 import Tree from "./tree";
 import MasterDetailPanel, { Master, Detail } from "./master-detail-panel";
 import ConversationItemForm from "./conversation-item-form";
+
+import * as a from "./conversation-tree/action-creators";
 
 export default class ConversationTree extends Component {
   static get componentName() {
@@ -21,31 +20,22 @@ export default class ConversationTree extends Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-    const { answersTree, answersRepo, decisionBranchesRepo } = props;
-    this.state = {
-      answersTree,
-      answersRepo,
-      decisionBranchesRepo,
-      activeItem: { type: null, id: null },
-      isCreatingAnswer: false,
-      openedAnswerIDs: [],
-      openedDecisionBranchIDs: [],
-    };
-  }
-
   render() {
-    const { botId } = this.props;
     const {
+      dispatch,
+      isProcessing,
       answersTree,
       answersRepo,
       decisionBranchesRepo,
       activeItem,
-      isCreatingAnswer,
-      openedAnswerIDs,
-      openedDecisionBranchIDs,
-    } = this.state;
+      editingAnswerModel,
+      editingDecisionBranchModel,
+      editingDecisionBranchModels,
+      openedAnswerIds,
+      openedDecisionBranchIds,
+      isAddingAnswer,
+      isAddingDecisionBranch,
+    } = this.props;
 
     return (
       <MasterDetailPanel title="会話ツリー">
@@ -53,120 +43,63 @@ export default class ConversationTree extends Component {
           <Tree
             answersTree={answersTree}
             answersRepo={answersRepo}
-            activeItem={activeItem}
             decisionBranchesRepo={decisionBranchesRepo}
-            onSelectItem={this.onSelectItem.bind(this)}
-            onCreatingAnswer={this.onCreatingAnswer.bind(this)}
-            openedAnswerIDs={openedAnswerIDs}
-            openedDecisionBranchIDs={openedDecisionBranchIDs}
+            activeItem={activeItem}
+            openedAnswerIds={openedAnswerIds}
+            openedDecisionBranchIds={openedDecisionBranchIds}
+            isAddingAnswer={isAddingAnswer}
+            onSelectItem={(dataType, id) => {
+              dispatch(a.toggleOpenedIds(dataType, id));
+              dispatch(a.setActiveItem(dataType, id));
+            }}
+            onCreatingAnswer={() => {
+              dispatch(a.setActiveItem("answer", null));
+            }}
           />
         </Master>
         <Detail>
           <ConversationItemForm
-            botId={botId}
+            isProcessing={isProcessing}
             activeItem={activeItem}
-            onUpdateDecisionBranch={this.onUpdateDecisionBranch.bind(this)}
-            onUpdateAnswer={this.onUpdateAnswer.bind(this)}
-            isCreatingAnswer={isCreatingAnswer}
-            onCreateAnswer={this.onCreateAnswer.bind(this)}
-            onCreateDecisionBranch={this.onCreateDecisionBranch.bind(this)}
+            editingAnswerModel={editingAnswerModel}
+            editingDecisionBranchModel={editingDecisionBranchModel}
+            editingDecisionBranchModels={editingDecisionBranchModels}
+            isAddingDecisionBranch={isAddingDecisionBranch}
+            onSaveAnswer={(answerModel, body, decisionBranchId) => {
+              if (answerModel.id == null) {
+                dispatch(a.addAnswerToAnswersTree(body, decisionBranchId));
+              } else {
+                dispatch(a.updateAnswerModel(answerModel, { body }));
+              }
+            }}
+            onDeleteAnswer={(answerModel, decisionBranchId) => {
+              dispatch(a.deleteAnswerFromAnswersTree(answerModel, decisionBranchId));
+            }}
+            onSaveDecisionBranch={(decisionBranchModel, body) => {
+              if (decisionBranchModel.id == null) {
+                dispatch(a.addDecisionBranchToAnswersTree(body));
+              } else {
+                dispatch(a.updateDecisionBranchModel(decisionBranchModel, { body }));
+              }
+            }}
+            onEditDecisionBranch={(index) => {
+               dispatch(a.activateEditingDecisionBranchModel(index));
+            }}
+            onDeleteDecisionBranch={(decisionBranchModel, answerId) => {
+              dispatch(a.deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId));
+            }}
+            onAddingDecisionBranch={() => {
+              dispatch(a.onAddingDecisionBranch());
+            }}
+            onCancelAddingDecisionBranch={() => {
+              dispatch(a.offAddingDecisionBranch());
+            }}
+            onSaveNewDecisionBranch={(body) => {
+              dispatch(a.addDecisionBranchToAnswersTree(body, activeItem.id));
+            }}
           />
         </Detail>
       </MasterDetailPanel>
     );
   }
-
-  onSelectItem(activeItem) {
-    let { openedAnswerIDs, openedDecisionBranchIDs } = this.state;
-    switch (activeItem.type) {
-      case "answer":
-        openedAnswerIDs = toggleID(openedAnswerIDs, activeItem.id);
-        break;
-      case "decisionBranch":
-        openedDecisionBranchIDs = toggleID(openedDecisionBranchIDs, activeItem.id);
-        break;
-    }
-    this.setState({ activeItem, openedAnswerIDs, openedDecisionBranchIDs });
-  }
-
-  onCreatingAnswer() {
-    this.setState({ isCreatingAnswer: true, activeItem: { type: null, id: null } });
-  }
-
-  onUpdateDecisionBranch(decisionBranchModel) {
-    const { decisionBranchesRepo } = this.state;
-    decisionBranchesRepo[decisionBranchModel.id] = decisionBranchModel.attrs;
-    this.setState({ decisionBranchesRepo });
-  }
-
-  onUpdateAnswer(answerModel) {
-    const { answersRepo } = this.state;
-    answersRepo[answerModel.id] = answerModel.attrs;
-    this.setState({ answersRepo });
-  }
-
-  onCreateAnswer(answerModel, decisionBranchId) {
-    const { answersRepo, answersTree } = this.state;
-    answersRepo[answerModel.id] = answerModel.attrs;
-    if (decisionBranchId == null) {
-      answersTree.unshift({
-        id: answerModel.id,
-        decisionBranches: [],
-      });
-    } else {
-      findDecisionBranchFromTree(answersTree, decisionBranchId, (decisionBranchNode) => {
-        decisionBranchNode.answer = { id: answerModel.id, decisionBranches: [] };
-      });
-    }
-    const activeItem = { type: "answer", id: answerModel.id };
-    this.setState({ answersRepo, answersTree, activeItem });
-  }
-
-  onCreateDecisionBranch(answerId, decisionBranchModel) {
-    const { decisionBranchesRepo, answersTree } = this.state;
-    decisionBranchesRepo[decisionBranchModel.id] = decisionBranchModel.attrs;
-    findAnswerFromTree(answersTree, answerId, (answerNode) => {
-      answerNode.decisionBranches.push({
-        id: decisionBranchModel.id,
-        answer: null,
-      });
-    });
-    const activeItem = { type: "decisionBranch", id: decisionBranchModel.id };
-    this.setState({ decisionBranchesRepo, answersTree, activeItem });
-  }
-}
-
-function findAnswerFromTree(answersTree, answerId, foundCallback) {
-  answersTree.forEach((answerNode) => {
-    if (answerNode.id === answerId) {
-      foundCallback(answerNode);
-    } else {
-      const answers = compact(answerNode.decisionBranches.map((db) => db.answer));
-      findAnswerFromTree(answers, answerId, foundCallback);
-    }
-  });
-}
-
-function findDecisionBranchFromTree(answersTree, decisionBranchId, foundCallback) {
-  const handler = (decisionBranchNodes) => {
-    decisionBranchNodes.forEach((decisionBranchNode) => {
-      if (decisionBranchNode.id === decisionBranchId) {
-        foundCallback(decisionBranchNode);
-      } else if (decisionBranchNode.answer != null) {
-        handler(decisionBranchNode.answer.decisionBranches);
-      }
-    });
-  };
-  const decisionBranchNodes = flatten(answersTree.map((a) => a.decisionBranches));
-  handler(decisionBranchNodes);
-}
-
-function toggleID(IDs, targetID) {
-  let newIDs;
-  if (includes(IDs, targetID)) {
-    newIDs = IDs.filter((id) => id != targetID);
-  } else {
-    newIDs = IDs.concat([targetID]);
-  }
-  return newIDs;
 }

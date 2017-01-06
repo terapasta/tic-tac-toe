@@ -24,7 +24,7 @@ export default class Answer {
       });
   }
 
-  constructor(attrs) {
+  constructor(attrs = {}) {
     this.attrs = attrs;
   }
 
@@ -49,6 +49,15 @@ export default class Answer {
       authenticity_token: authenticityToken(),
     }).then((res) => {
       return new Answer(res.data);
+    });
+  }
+
+  delete() {
+    const { botId, id } = this.attrs;
+    return axios.delete(`/bots/${botId}/answers/${id}.json`, {
+      headers: {
+        "X-CSRF-Token": authenticityToken(),
+      },
     });
   }
 }

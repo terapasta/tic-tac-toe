@@ -40,6 +40,7 @@ export default class AnswerNode extends Component {
     } = this.props;
 
     const answer = answersRepo[answerNode.id];
+    if (answer == null) { return null; }
     const decisionBrancheNodes = answerNode.decisionBranches;
 
     const {
@@ -53,13 +54,13 @@ export default class AnswerNode extends Component {
       "tree__item": hasDecisionBranches,
       "tree__item--no-children": !hasDecisionBranches,
       "tree__item--opened": isOpened,
-      "active": activeItem.type === "answer" && activeItem.id === answerNode.id,
+      "active": activeItem.dataType === "answer" && activeItem.id === answerNode.id,
     });
 
     return (
       <li className="tree__node">
         <div className={itemClassName} id={`answer-${answerNode.id}`}
-          onClick={() => onClickAnswer(answerNode.id)}>
+          onClick={() => onClickAnswer("answer", answerNode.id)}>
           {!isEmpty(headline) && (
             <div className="tree__item-headline">{headline}</div>
           )}
@@ -100,14 +101,14 @@ export default class AnswerNode extends Component {
             "tree__item": hasAnswer,
             "tree__item--no-children": !hasAnswer,
             "tree__item--opened": isOpened,
-            "active": activeItem.type === "decisionBranch" && activeItem.id === id,
+            "active": activeItem.dataType === "decisionBranch" && activeItem.id === id,
           });
           const style = { display: isOpened ? "block" : null };
 
           return (
             <li className="tree__node" key={index}>
               <div className={itemClassName} id={`decision-branch-${id}`}
-                onClick={() => onClickDecisionBranch(id)}>
+                onClick={() => onClickDecisionBranch("decisionBranch", id)}>
                 <div className="tree__item-body">{body}</div>
               </div>
               {hasAnswer && (

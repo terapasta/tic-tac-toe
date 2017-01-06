@@ -18,15 +18,9 @@ export default class Tree extends Component {
       onSelectItem: PropTypes.func.isRequired,
       onCreatingAnswer: PropTypes.func.isRequired,
       activeItem: PropTypes.object.isRequired,
-      openedAnswerIDs: PropTypes.array.isRequired,
-      openedDecisionBranchIDs: PropTypes.array.isRequired,
-    };
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAdding: false,
+      isAddingAnswer: PropTypes.bool.isRequired,
+      openedAnswerIds: PropTypes.array.isRequired,
+      openedDecisionBranchIds: PropTypes.array.isRequired,
     };
   }
 
@@ -36,13 +30,12 @@ export default class Tree extends Component {
       answersRepo,
       decisionBranchesRepo,
       activeItem,
-      openedAnswerIDs,
-      openedDecisionBranchIDs,
+      isAddingAnswer,
+      openedAnswerIds,
+      openedDecisionBranchIds,
+      onSelectItem,
+      onCreatingAnswer,
     } = this.props;
-
-    const {
-      isAdding,
-    } = this.state;
 
     return (
       <ol className="tree">
@@ -52,55 +45,18 @@ export default class Tree extends Component {
             answerNode={answerNode}
             answersRepo={answersRepo}
             decisionBranchesRepo={decisionBranchesRepo}
-            openedAnswerIDs={openedAnswerIDs}
-            openedDecisionBranchIDs={openedDecisionBranchIDs}
+            openedAnswerIDs={openedAnswerIds}
+            openedDecisionBranchIDs={openedDecisionBranchIds}
             activeItem={activeItem}
-            onClickAnswer={this.onClickItem.bind(this)}
-            onClickDecisionBranch={this.onClickDecisionBranch.bind(this)}
+            onClickAnswer={onSelectItem}
+            onClickDecisionBranch={onSelectItem}
           />;
         })}
         <AddNode
-          isAdding={isAdding}
-          onClick={this.onClickAdd.bind(this)}
+          isAdding={isAddingAnswer}
+          onClick={onCreatingAnswer}
         />
       </ol>
     );
-  }
-
-  onClickItem(answerID) {
-    const { onSelectItem } = this.props;
-    const activeItem = { type: "answer", id: answerID };
-
-    this.setState({
-      isAdding: false,
-    });
-
-    if (isFunction(onSelectItem)) {
-      onSelectItem(activeItem);
-    }
-  }
-
-  onClickDecisionBranch(decisionBrancheID) {
-    const { onSelectItem } = this.props;
-    const activeItem = { type: "decisionBranch", id: decisionBrancheID };
-
-    this.setState({
-      isAdding: false,
-    });
-
-    if (isFunction(onSelectItem)) {
-      onSelectItem(activeItem);
-    }
-  }
-
-  onClickAdd() {
-    const { onCreatingAnswer } = this.props;
-    this.setState({
-      isAdding: true,
-    });
-
-    if (isFunction(onCreatingAnswer)) {
-      onCreatingAnswer();
-    }
   }
 }

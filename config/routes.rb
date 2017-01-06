@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resources :answers, except: [:new] do
       resources :decision_branches, only: [:index]
     end
-    resources :decision_branches, only: [:show, :update, :create]
+    resources :decision_branches, only: [:show, :update, :create, :destroy]
     resource :conversation_tree, only: [:show]
   end
 

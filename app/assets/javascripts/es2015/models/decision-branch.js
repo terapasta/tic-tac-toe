@@ -23,12 +23,13 @@ export default class DecisionBranch {
     });
   }
 
-  constructor(attrs) {
+  constructor(attrs = {}) {
     this.attrs = attrs;
   }
 
   get id() { return this.attrs.id; }
   get body() { return this.attrs.body; }
+  get nextAnswerId() { return this.attrs.nextAnswerId; }
 
   fetchNextAnswer() {
     const { botId, nextAnswerId } = this.attrs;
@@ -46,6 +47,15 @@ export default class DecisionBranch {
       authenticity_token: authenticityToken(),
     }).then((res) => {
       return new DecisionBranch(res.data);
+    });
+  }
+
+  delete() {
+    const { botId, id } = this.attrs;
+    return axios.delete(`/bots/${botId}/decision_branches/${id}.json`, {
+      headers: {
+        "X-CSRF-Token": authenticityToken(),
+      },
     });
   }
 }

@@ -1,7 +1,7 @@
 class DecisionBranchesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
-  before_action :set_decision_branch, only: [:show, :update]
+  before_action :set_decision_branch, only: [:show, :update, :destroy]
 
   def index
     respond_to do |format|
@@ -35,6 +35,21 @@ class DecisionBranchesController < ApplicationController
       else
         format.json { render json: @decision_branch.decorate.errors_as_json, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    ActiveRecord::Base.transaction do
+      @decision_branch.next_answer.self_and_deep_child_answers.map(&:destroy!)
+      @decision_branch.destroy!
+    end
+    respond_to do |format|
+      format.json { render json: {}, status: :no_content }
+    end
+  rescue => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.json { render json: { error: e.message }, status: :internal_server_error }
     end
   end
 

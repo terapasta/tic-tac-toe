@@ -1,13 +1,9 @@
 import React, { Component, PropTypes } from "react";
 import TextArea from "react-textarea-autosize";
 import get from "lodash/get";
-import isEqual from "lodash/isEqual";
 
 import DecisionBranches from "./conversation-item-form/decision-branches";
 import NewDecisionBranch from "./conversation-item-form/new-decision-branch";
-
-import Answer from "../models/answer";
-import DecisionBranch from "../models/decision-branch";
 
 export default class ConversationItemForm extends Component {
   static get componentName() {
@@ -16,105 +12,108 @@ export default class ConversationItemForm extends Component {
 
   static get propTypes() {
     return {
-      botId: PropTypes.number.isRequired,
+      isProcessing: PropTypes.bool.isRequired,
       activeItem: PropTypes.shape({
         id: PropTypes.number,
         type: PropTypes.oneOf(["answer", "decisionBranch"]),
       }),
-      onUpdateDecisionBranch: PropTypes.func.isRequired,
-      onUpdateAnswer: PropTypes.func.isRequired,
-      isCreatingAnswer: PropTypes.bool.isRequired,
-      onCreateAnswer: PropTypes.func.isRequired,
-      onCreateDecisionBranch: PropTypes.func.isRequired,
+      editingAnswerModel: PropTypes.object,
+      editingDecisionBranchModel: PropTypes.object,
+      editingDecisionBranchModels: PropTypes.array,
+      isAddingDecisionBranch: PropTypes.bool.isRequired,
+      onSaveAnswer: PropTypes.func.isRequired,
+      onDeleteAnswer: PropTypes.func.isRequired,
+      onSaveDecisionBranch: PropTypes.func.isRequired,
+      onEditDecisionBranch: PropTypes.func.isRequired,
+      onAddingDecisionBranch: PropTypes.func.isRequired,
+      onSaveNewDecisionBranch: PropTypes.func.isRequired,
     };
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      answerModel: null,
       answerBody: null,
-      decisionBranchModels: [],
-      isCreatingAnswer: props.isCreatingAnswer,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { botId, activeItem } = nextProps;
-    if (botId == null || activeItem == null) { return; }
-    if (isEqual(this.props.activeItem, activeItem)) { return; }
-    this.setState({ answerModel: null, decisionBranchModels: [], answerBody: null });
-
-    switch (activeItem.type) {
-      case "answer":
-        Answer.fetch(botId, activeItem.id).then((answerModel) => {
-          this.setState({ answerModel, answerBody: answerModel.body });
-          answerModel.fetchDecisionBranches().then(() => {
-            const { decisionBranchModels } = answerModel;
-            this.setState({ decisionBranchModels });
-          });
-        });
-        break;
-      case "decisionBranch":
-        DecisionBranch.fetch(botId, activeItem.id).then((decisionBranchModel) => {
-          this.setState({ decisionBranchModel });
-          decisionBranchModel.fetchNextAnswer().then(() => {
-            const { nextAnswerModel } = decisionBranchModel;
-            this.setState({ answerModel: nextAnswerModel, answerBody: nextAnswerModel.body });
-          }).catch(() => {
-            this.setState({ isCreatingAnswer: true });
-          });
-        });
-        break;
+    const { editingAnswerModel } = nextProps;
+    if (editingAnswerModel != null) {
+      this.setState({ answerBody: editingAnswerModel.body });
     }
   }
 
   render() {
     const {
+      isProcessing,
       activeItem,
+      editingAnswerModel,
+      editingDecisionBranchModel,
+      editingDecisionBranchModels,
+      isAddingDecisionBranch,
+      onSaveDecisionBranch,
+      onEditDecisionBranch,
+      onDeleteDecisionBranch,
+      onAddingDecisionBranch,
+      onCancelAddingDecisionBranch,
+      onSaveNewDecisionBranch,
     } = this.props;
 
     const {
-      answerModel,
       answerBody,
-      decisionBranchModels,
-      decisionBranchModel,
-      isCreatingAnswer,
     } = this.state;
 
     const isAppearCurrentDecisionBranch =
-      get(activeItem, "type") === "decisionBranch" &&
-      decisionBranchModel != null;
+      get(activeItem, "dataType") === "decisionBranch" &&
+      editingDecisionBranchModel != null;
     const isAppearNewDecisionBranch =
-      get(activeItem, "type") === "answer";
+      get(activeItem, "dataType") === "answer" && get(editingAnswerModel, "id") != null;
 
     return (
       <div>
         {isAppearCurrentDecisionBranch && (
           <div className="form-group">
             <label>現在の選択肢</label>
-            <input className="form-control" disabled={true} type="text" value={decisionBranchModel.body} />
+            <input className="form-control" disabled={true} type="text" value={editingDecisionBranchModel.body} />
           </div>
         )}
-        {(answerModel != null || isCreatingAnswer) && (
+        {(editingAnswerModel != null) && (
           <div className="form-group">
             <label>回答</label>
-            <TextArea className="form-control" rows={3} value={answerBody || ""} onChange={this.onChangeAnswerBody.bind(this)} />
+            <TextArea className="form-control"
+              rows={3}
+              value={answerBody || ""}
+              onChange={this.onChangeAnswerBody.bind(this)}
+              disabled={isProcessing} />
             <div className="help-block clearfix">
               <div className="pull-right">
-                <a className="btn btn-primary" href="#" onClick={this.onClickSaveAnswerButton.bind(this)}>保存</a>
+                <a className="btn btn-primary" href="#"
+                  onClick={this.onClickSaveAnswerButton.bind(this)}
+                  disabled={isProcessing}>保存</a>
+                {" "}
+                <span className="btn btn-danger" onClick={this.onClickDeleteAnswerButton.bind(this)}>削除</span>
               </div>
             </div>
           </div>
         )}
         <div className="form-group">
           <DecisionBranches
-            decisionBranchModels={decisionBranchModels}
-            onUpdate={this.onUpdateDecisionBranch.bind(this)}
+            isProcessing={isProcessing}
+            decisionBranchModels={editingDecisionBranchModels}
+            onSave={onSaveDecisionBranch}
+            onEdit={onEditDecisionBranch}
+            onDelete={(decisionBranchModel) => {
+              onDeleteDecisionBranch(decisionBranchModel, editingAnswerModel.id);
+            }}
           />
           {isAppearNewDecisionBranch && (
             <NewDecisionBranch
-              onSave={this.onSaveDecisionBranch.bind(this)}
+              isProcessing={isProcessing}
+              isAdding={isAddingDecisionBranch}
+              onSave={onSaveNewDecisionBranch}
+              onAdding={onAddingDecisionBranch}
+              onCancelAdding={onCancelAddingDecisionBranch}
             />
           )}
         </div>
@@ -128,44 +127,15 @@ export default class ConversationItemForm extends Component {
 
   onClickSaveAnswerButton(e) {
     e.preventDefault();
-    const { onUpdateAnswer, onCreateAnswer, botId, onUpdateDecisionBranch } = this.props;
-    const { answerModel, answerBody, decisionBranchModel } = this.state;
-    if (answerModel == null) {
-      Answer.create(botId, { body: answerBody }).then((newAnswerModel) => {
-        this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
-        onCreateAnswer(newAnswerModel, decisionBranchModel.id);
-        decisionBranchModel.update({ next_answer_id: newAnswerModel.id }).then((newDecisionBranchModel) => {
-          onUpdateDecisionBranch(newDecisionBranchModel);
-        }).catch(console.error);
-      }).catch(console.error);
-    } else {
-      answerModel.update({ body: answerBody }).then((newAnswerModel) => {
-        this.setState({ answerModel: newAnswerModel, answerBody: newAnswerModel.body });
-        onUpdateAnswer(newAnswerModel);
-      }).catch(console.error);
+    const { onSaveAnswer, editingAnswerModel, editingDecisionBranchModel } = this.props;
+    const { answerBody } = this.state;
+    onSaveAnswer(editingAnswerModel, answerBody, get(editingDecisionBranchModel, "id"));
+  }
+
+  onClickDeleteAnswerButton() {
+    const { onDeleteAnswer, editingAnswerModel, editingDecisionBranchModel } = this.props;
+    if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
+      onDeleteAnswer(editingAnswerModel, get(editingDecisionBranchModel, "id"));
     }
-  }
-
-  onUpdateDecisionBranch(decisionBranchModel, index) {
-    const { onUpdateDecisionBranch } = this.props;
-    const { decisionBranchModels } = this.state;
-    decisionBranchModels[index] = decisionBranchModel;
-    this.setState({ decisionBranchModels });
-    onUpdateDecisionBranch(decisionBranchModel);
-  }
-
-  onSaveDecisionBranch(body) {
-    const { onCreateDecisionBranch, botId } = this.props;
-    const { decisionBranchModels, answerModel } = this.state;
-    DecisionBranch.create(botId, {
-      answer_id: answerModel.id,
-      body,
-    }).then((newDecisionBranchModel) => {
-      decisionBranchModels.push(newDecisionBranchModel);
-      this.setState({
-        decisionBranchModels,
-      });
-      onCreateDecisionBranch(answerModel.id, newDecisionBranchModel);
-    }).catch(console.error);
   }
 }

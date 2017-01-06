@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
-class EditingDecisionBranchItem extends Component {
+export default class EditingDecisionBranchItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: props.decisionBranchModel.body,
-      enterPressed: false,
     };
   }
 
@@ -21,8 +20,10 @@ class EditingDecisionBranchItem extends Component {
             onChange={(e) => this.setState({ value: e.target.value })}
             disabled={isDisabled}
           />
-          <span className="input-group-btn" onClick={this.onSave.bind(this)}>
-            <button className="btn btn-default">保存</button>
+          <span className="input-group-btn">
+            <button className="btn btn-default" onClick={this.onSave.bind(this)}>保存</button>
+            {" "}
+            <button className="btn btn-danger" onClick={this.onDelete.bind(this)}>削除</button>
           </span>
         </div>
       </li>
@@ -30,9 +31,16 @@ class EditingDecisionBranchItem extends Component {
   }
 
   onSave() {
-    const { index, isDisabled, onSave } = this.props;
+    const { decisionBranchModel, isDisabled, onSave } = this.props;
     const { value } = this.state;
     if (isDisabled) { return; }
-    onSave(index, value);
+    onSave(decisionBranchModel, value);
+  }
+
+  onDelete() {
+    const { onDelete, decisionBranchModel } = this.props;
+    if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
+      onDelete(decisionBranchModel);
+    }
   }
 }

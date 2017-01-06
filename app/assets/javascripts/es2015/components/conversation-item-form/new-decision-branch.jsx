@@ -7,15 +7,17 @@ export default class NewDecisionBranch extends Component {
 
   static get propTypes() {
     return {
+      isProcessing: PropTypes.bool.isRequired,
+      isAdding: PropTypes.bool.isRequired,
       onSave: PropTypes.func.isRequired,
+      onAdding: PropTypes.func.isRequired,
+      onCancelAdding: PropTypes.func.isRequired,
     };
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      isAdding: false,
-      isProcessing: false,
       value: "",
     };
   }
@@ -24,6 +26,12 @@ export default class NewDecisionBranch extends Component {
     const {
       isAdding,
       isProcessing,
+      onSave,
+      onAdding,
+      onCancelAdding,
+    } = this.props;
+
+    const {
       value,
     } = this.state;
 
@@ -32,25 +40,28 @@ export default class NewDecisionBranch extends Component {
         {!isAdding && (
           <div className="nav nav-pills nav-stacked">
             <li className="hover-gray">
-              <a href="#" onClick={this.onClickAddingButton.bind(this)}>
+              <span className="btn btn-link" onClick={onAdding}>
                 ＋選択肢を追加する
-              </a>
+              </span>
             </li>
           </div>
         )}
         {isAdding && (
           <div>
-            <input className="form-control" placeholder="新しい選択肢を入力" value={value} onChange={this.onChangeValue.bind(this)} />
+            <input className="form-control" placeholder="新しい選択肢を入力" value={value} onChange={this.onChangeValue.bind(this)} disabled={isProcessing}/>
             <div className="clearfix padding-top-8">
               <div className="pull-left">
-                <a className="btn btn-link" href="#" onClick={this.onClickCancelButton.bind(this)}>
+                <span className="btn btn-link" onClick={onCancelAdding} disabled={isProcessing}>
                   キャンセル
-                </a>
+                </span>
               </div>
               <div className="pull-right">
-                <a className="btn btn-primary" href="#" disabled={isProcessing} onClick={this.onClickSaveButton.bind(this)}>
+                <span className="btn btn-primary" disabled={isProcessing} onClick={() => {
+                    onSave(value);
+                    this.setState({ value: "" });
+                  }}>
                   追加
-                </a>
+                </span>
               </div>
             </div>
           </div>
@@ -59,24 +70,8 @@ export default class NewDecisionBranch extends Component {
     );
   }
 
-  onClickAddingButton(e) {
-    e.preventDefault();
-    this.setState({ isAdding: true });
-  }
-
-  onClickCancelButton(e) {
-    e.preventDefault();
-    this.setState({ isAdding: false });
-  }
-
   onChangeValue(e) {
     const { value } = e.target;
     this.setState({ value });
-  }
-
-  onClickSaveButton(e) {
-    e.preventDefault();
-    this.props.onSave(this.state.value);
-    this.setState({ value: "", isAdding: false });
   }
 }

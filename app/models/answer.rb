@@ -34,4 +34,18 @@ class Answer < ActiveRecord::Base
     return false if bot.nil?
     true
   end
+
+  def self_and_deep_child_answers
+    all = [self]
+    tails = [self]
+    next_tails = nil
+    get_next_answers = -> (answers) {
+      answers.map(&:decision_branches).flatten.map(&:next_answer).flatten.compact
+    }
+    begin
+      all += tails = next_tails || get_next_answers.call(tails)
+      next_tails = get_next_answers.call(tails)
+    end while next_tails.count > 0
+    all
+  end
 end

@@ -6,7 +6,8 @@ class ImportsController < ApplicationController
   end
 
   def create
-    if ImportedTrainingMessage.import_csv(params[:file], @bot)
+    is_success, @error_row = ImportedTrainingMessage.import_csv(params[:file], @bot)
+    if is_success
       flash[:notice] = 'インポートしました'
     else
       flash[:error] = 'インポートに失敗しました'

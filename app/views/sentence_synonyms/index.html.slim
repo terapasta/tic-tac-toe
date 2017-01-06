@@ -1,0 +1,19 @@
+table.table.table-striped
+  thead
+    tr
+      th id
+      th トレーニングメッセージ
+      th 同義文
+  tbody
+    - @training_messages.each do |tm|
+      tr
+        th= tm.id
+        th= tm.body
+        th
+          table.table.table-striped: tbody
+            - tm.sentence_synonyms.each do |ss|
+              tr
+                td= ss.id
+                td= ss.body
+                td= ss.created_user.email
+                th= link_to '削除', bot_sentence_synonym_path(@bot, ss), class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }

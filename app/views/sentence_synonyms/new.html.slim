@@ -8,13 +8,12 @@
     = bootstrap_form_for @training_message, url: bot_sentence_synonyms_path(@bot), method: :post do |f|
       = f.hidden_field :id
       = f.static_control :body
-      
+
       label.control-label
         | 同義文
       = f.fields_for :sentence_synonyms, @training_message.sentence_synonyms do |ss|
         = ss.text_field :body, hide_label: true
-    
+
       = f.submit '登録する', class: 'btn btn-success'
       | &nbsp;
-      = link_to 'スキップする', new_bot_sentence_synonyms_path(@bot), class: 'btn btn-default'
-  
+      = link_to 'スキップする', new_bot_sentence_synonym_path(@bot), class: 'btn btn-default'

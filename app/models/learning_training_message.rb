@@ -46,12 +46,13 @@ class LearningTrainingMessage < ActiveRecord::Base
       LearningTrainingMessage.import!(arr)
     end
 
+    # TODO: ImportedTrainingMessageのみ使えるようにしているが、TrainingMessageも対応する必要がある
     def amp_by_sentence_synonyms!(bot)
       arr = []
       bot.learning_training_messages.each do |learning_training_message|
-        training_message = bot.training_messages.find_by(body: learning_training_message.question)
-        next if training_message.blank?
-        training_message.sentence_synonyms.each do |sentence_synonym|
+        imported_training_message = bot.imported_training_messages.find_by(question: learning_training_message.question)
+        next if imported_training_message.blank?
+        imported_training_message.sentence_synonyms.each do |sentence_synonym|
           copy_model = learning_training_message.dup
           copy_model.question = sentence_synonym.body
           arr << copy_model

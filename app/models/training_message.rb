@@ -39,7 +39,7 @@ class TrainingMessage < ActiveRecord::Base
     training_messages = bot.training_messages.guest.includes(:sentence_synonyms)
     training_messages
       .select {|tm|
-        tm.sentence_synonyms.length < 20 &&
+        tm.sentence_synonyms.length < 15 &&
         tm.sentence_synonyms.none? {|ss| ss.created_user == user}
       }.sample
   end

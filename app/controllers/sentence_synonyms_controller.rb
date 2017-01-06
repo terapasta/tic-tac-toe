@@ -27,6 +27,12 @@ class SentenceSynonymsController < ApplicationController
     end
   end
 
+  def destroy
+    @sentence_synonym = @bot.sentence_synonyms.find(params[:id])
+    @sentence_synonym.destroy
+    redirect_to bot_sentence_synonyms_path(@bot), notice: '削除しました'
+  end
+
   private
     def set_bot
       @bot = Bot.find(params[:bot_id])

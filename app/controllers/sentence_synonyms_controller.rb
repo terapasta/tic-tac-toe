@@ -2,6 +2,10 @@ class SentenceSynonymsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
 
+  def index
+    @training_messages = @bot.training_messages
+  end
+
   def new
     @training_message = TrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
     if @training_message.blank?
@@ -16,7 +20,7 @@ class SentenceSynonymsController < ApplicationController
     @training_message.assign_attributes(training_message_params)
     @training_message.sentence_synonyms.each { |ss| ss.created_user = current_user }
     if @training_message.save
-      redirect_to new_bot_sentence_synonyms_path(@bot), notice: '登録しました。'
+      redirect_to new_bot_sentence_synonym_path(@bot), notice: '登録しました。'
     else
       flash[:alert] = '登録に失敗しました。'
       render :new

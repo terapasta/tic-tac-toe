@@ -1,4 +1,6 @@
 class ImportedTrainingMessage < ActiveRecord::Base
+  include HasManySentenceSynonyms
+
   acts_as_taggable
 
   belongs_to :answer

@@ -5,6 +5,10 @@
 
   <div class="panel-body">
     <%= render 'form' %>
+
+    <% if @error_row.present? %>
+      <p class="text-danger"><%= @error_row %>行目でエラーが発生しました</p>
+    <% end %>
   </div>
 </div>
 

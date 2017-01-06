@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import TextArea from "react-textarea-autosize";
 import get from "lodash/get";
+import flatten from "lodash/flatten";
+import axios from "axios";
+import Promise from "promise";
+import isEmpty from "is-empty";
 
 import DecisionBranches from "./conversation-item-form/decision-branches";
 import NewDecisionBranch from "./conversation-item-form/new-decision-branch";
@@ -34,13 +38,31 @@ export default class ConversationItemForm extends Component {
     super(props);
     this.state = {
       answerBody: null,
+      trainingMessages: [],
     };
   }
 
+  // TODO: reduxでtrainingMessagesを管理するように変更が必須
   componentWillReceiveProps(nextProps) {
-    const { editingAnswerModel } = nextProps;
+    const { editingAnswerModel, botId } = nextProps;
     if (editingAnswerModel != null) {
       this.setState({ answerBody: editingAnswerModel.body });
+
+      if (editingAnswerModel.id == null) {
+        this.setState({ trainingMessages: [] });
+      }
+
+      const answerId = get(this.props, "editingAnswerModel.id");
+      if (botId != null && editingAnswerModel.id != answerId) {
+        this.fetchTrainingMessages(botId, editingAnswerModel.id)
+          .then((messagesList) => {
+            const trainingMessages = flatten(messagesList.map((ms) => ms.map((m) => m.body || m.question)));
+            this.setState({ trainingMessages });
+          })
+          .catch(console.error);
+      }
+    } else {
+      this.setState({ trainingMessages: [] });
     }
   }
 
@@ -72,6 +94,7 @@ export default class ConversationItemForm extends Component {
 
     return (
       <div>
+        {this.renderTrainingMessages()}
         {isAppearCurrentDecisionBranch && (
           <div className="form-group">
             <label>現在の選択肢</label>
@@ -121,6 +144,20 @@ export default class ConversationItemForm extends Component {
     );
   }
 
+  renderTrainingMessages() {
+    const { trainingMessages } = this.state;
+    if (isEmpty(trainingMessages)) { return null; }
+
+    return (
+      <div>
+        <strong>対応する質問</strong>
+        <ul>
+          {trainingMessages.map((tm, index) => <li key={index}>{tm}</li>)}
+        </ul>
+      </div>
+    );
+  }
+
   onChangeAnswerBody(e) {
     this.setState({ answerBody: e.target.value });
   }
@@ -137,5 +174,11 @@ export default class ConversationItemForm extends Component {
     if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
       onDeleteAnswer(editingAnswerModel, get(editingDecisionBranchModel, "id"));
     }
+  }
+
+  fetchTrainingMessages(botId, answerId) {
+    const trainingMessagesPromise = axios.get(`/bots/${botId}/answers/${answerId}/training_messages.json`).then((res) => res.data);
+    const importedTrainingMessagesProimse = axios.get(`/bots/${botId}/answers/${answerId}/imported_training_messages.json`).then((res) => res.data);
+    return Promise.all([trainingMessagesPromise, importedTrainingMessagesProimse]);
   }
 }

@@ -35,6 +35,7 @@ export default class ConversationTree extends Component {
       openedDecisionBranchIds,
       isAddingAnswer,
       isAddingDecisionBranch,
+      botId, // TODO: botIdはここで触りたくない
     } = this.props;
 
     return (
@@ -58,7 +59,9 @@ export default class ConversationTree extends Component {
           />
         </Master>
         <Detail>
+          {/* TODO: botIdは渡したくない */}
           <ConversationItemForm
+            botId={botId}
             isProcessing={isProcessing}
             activeItem={activeItem}
             editingAnswerModel={editingAnswerModel}

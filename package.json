@@ -15,6 +15,7 @@
     "envify": "^4.0.0",
     "is-empty": "^1.0.0",
     "lodash": "^4.17.2",
+    "promise": "^7.1.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^5.0.1",

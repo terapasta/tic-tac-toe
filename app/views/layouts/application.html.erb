@@ -15,7 +15,7 @@
     <%= render 'layouts/header' %>
   <% end %>
 
-  <% if @bot.present? && !chat_page? %>
+  <% if @bot.present? && !chat_page? && current_user.normal? %>
     <div id="sidebar-wrapper" class="col-sm-2 col-xs-12">
       <div class="sidebar-nav list-group">
         <%= link_to edit_bot_path(@bot), class: 'bot-profile list-group-item text-center' do %>

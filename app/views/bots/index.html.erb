@@ -1,20 +1,22 @@
-<div class="col-sm-8 col-sm-offset-2">
-<h1>Bot一覧</h1>
+<% if policy(:bot).index? %>
+  <div class="col-sm-8 col-sm-offset-2">
+  <h1>Bot一覧</h1>
 
-<div class="row">
-  <% @bots.each do |bot| %>
-    <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
-        <%= image_tag bot.image_url(:thumb) %>
-        <div class="caption">
-          <h4><%= bot.name %></h4>
-          <!-- <p>...</p> -->
-          <%= link_to '詳細', edit_bot_path(bot), class: 'btn btn-primary btn-block' %>
+  <div class="row">
+    <% @bots.each do |bot| %>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <%= image_tag bot.image_url(:thumb) %>
+          <div class="caption">
+            <h4><%= bot.name %></h4>
+            <!-- <p>...</p> -->
+            <%= link_to '詳細', edit_bot_path(bot), class: 'btn btn-primary btn-block' %>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 
-<br>
-<%#= link_to '新規登録', new_bot_path, class: "btn btn-default" %>
+  <br>
+  <%#= link_to '新規登録', new_bot_path, class: "btn btn-default" %>
+<% end %>

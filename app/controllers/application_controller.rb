@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError, with: :handle_500
 
+  include Pundit
+
   private
 
     def handle_500(exception)

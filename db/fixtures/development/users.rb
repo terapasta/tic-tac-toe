@@ -1,5 +1,14 @@
-User.seed do |user|
-  user.id = 1
-  user.email = 'hoge@example.com'
-  user.password = 'hogehoge'
-end
+User.seed(:id, [
+  {
+    id: 1,
+    email: 'hoge@example.com',
+    password: 'hogehoge',
+    role: :normal,
+  },
+  {
+    id: 2,
+    email: 'worker@example.com',
+    password: 'samplepass',
+    role: :worker,
+  }
+])

@@ -10,5 +10,11 @@ User.seed(:id, [
     email: 'worker@example.com',
     password: 'samplepass',
     role: :worker,
+  },
+  {
+    id: 3,
+    email: 'worker2@example.com',
+    password: 'samplepass',
+    role: :worker,
   }
 ])

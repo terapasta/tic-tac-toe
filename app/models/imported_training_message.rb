@@ -16,9 +16,13 @@ class ImportedTrainingMessage < ActiveRecord::Base
           current_row = index + 1
           next if row[0].blank?
           answer = bot.answers.find_or_create_by!(body: row[1])
-          imported_training_message = bot.imported_training_messages.build(question: row[0], answer: answer)
-          imported_training_message.underlayer = row[2..-1].compact if row.compact.count > 2
-          imported_training_message.save!
+          bot.imported_training_messages.find_or_initialize_by(question: row[0]).tap do |itm|
+            itm.assign_attributes(
+              answer: answer,
+              underlayer: row.compact.count > 2 ? row[2..-1].compact : nil,
+            )
+            itm.save!
+          end
         end
       end
     end

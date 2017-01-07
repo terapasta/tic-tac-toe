@@ -1,13 +1,9 @@
-# # -*- coding: utf-8 -
-# import unittest
-# import numpy as np
-# from ....core.predict.reply import Reply
+# from unittest import TestCase
+# from nose.tools import ok_, eq_
 #
-# class TestReply(unittest.TestCase):
+# class ReplyTestCase(TestCase):
 #
 #     def test_predict(self):
-#         result = Reply().predict([['ほげほげ']])
-#         self.assertEqual(result, None)
-#
-# if __name__ == '__main__':
-#     unittest.main()
+#         # bot_id = 1
+#         # path = Persistance.get_model_path(bot_id)
+#         # eq_(path, 'learning/models/development/1_estimator')

@@ -103,7 +103,7 @@ class Bot:
     #             'kernel': ['rbf', 'linear'],
     #             # 'gamma': [2**n for n in range(-15, 3)],
     #             # 'C': [2**n for n in range(-5, 15)]
-    #             'gamma': [2**n for n in range(-5, 3)],  # FIXME 開発中はgridsearchの試行数を減らす
+    #             'gamma': [2**n for n in range(-5, 3)],  # 開発中はgridsearchの試行数を減らす
     #             'C': [2**n for n in range(-5, 8)]
     #         }
     #     ]

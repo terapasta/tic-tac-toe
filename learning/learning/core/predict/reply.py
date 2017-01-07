@@ -1,7 +1,8 @@
 import numpy as np
 import dataset
+
+from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.log import logger
-from .model_not_exists_error import ModelNotExistsError
 from learning.config.config import Config
 from learning.core.training_set.text_array import TextArray
 from learning.core.persistance import Persistance

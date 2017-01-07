@@ -109,7 +109,7 @@ $ guard
 
 ```
 $ cd learning
-$ nosetests --all-modules learning/tests/*
+$ nosetests learning/tests
 ```
 
 ## デプロイ

@@ -10,7 +10,7 @@ from learning.log import logger
 from learning.core.predict.tag import Tag
 
 class TrainingMessage(Base):
-    CLASSIFY_FAILED_ID = 2  # TODO Ruby側と重複管理
+    CLASSIFY_FAILED_ID = 2
 
     def __init__(self, db, bot_id, learning_parameter):
         config = Config()
@@ -18,7 +18,6 @@ class TrainingMessage(Base):
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
-        # self.binarizer = joblib.load("learning/models/%s/tag_model_labels.pkl" % config.env)  # TODO 共通化したい
 
     def build(self):
         learning_training_messages = self.__build_learning_training_messages()

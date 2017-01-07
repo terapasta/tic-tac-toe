@@ -32,7 +32,6 @@ class Tag:
         logger.debug("binarizer.classes_: %s" % binarizer.classes_)
         estimator = c.fit(training_set.x, binarized_y)
 
-        # HACK pickleでバイナリにしてDBに保存したい(出来ればRails側で)
         joblib.dump(training_set.body_array.vocabulary, "learning/models/%s/tag_vocabulary.pkl" % self.config.env)
         joblib.dump(estimator, "learning/models/%s/tag_model" % self.config.env)
         joblib.dump(binarizer, "learning/models/%s/tag_model_labels.pkl" % self.config.env)

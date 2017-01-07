@@ -51,7 +51,6 @@ class TrainingMessage(Base):
         # logger.debug("data['question'].count(): %s" % data['question'].count())
         return data
 
-    # HACK learning_training_messagesをクラスにするとリファクタリングできそう
     def __extract_binarized_tag_vector(self, learning_training_messages):
         tag_ids = learning_training_messages['tag_ids']
         tag_ids[tag_ids.isnull()] = ','
@@ -65,7 +64,7 @@ class TrainingMessage(Base):
         except KeyError as e:
             logger.error('タグ学習時に存在していなかったタグが含まれている可能性があります。python learn_tag.pyを実行してください。')
             raise e
-#
+
         logger.debug("tag_vector: %s" % tag_vector)
         return tag_vector
 

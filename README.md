@@ -105,6 +105,13 @@ $ guard
 
 ※ テスト実行中にPython側でエラーが発生するとrspecがストップしてしまう問題があります。その際はPython側RPCサーバを停止するとrspecが流れます。
 
+### Python側のユニットテスト実行方法
+
+```
+$ cd learning
+$ nosetests --all-modules learning/tests/*
+```
+
 ## デプロイ
 ### Capistrano
 

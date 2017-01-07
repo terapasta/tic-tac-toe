@@ -16,7 +16,8 @@ class Config:
         args = sys.argv
         self._env = 'development'
         if len(args) > 1:
-            self._env = args[1]
+            if args[1] in ['development', 'production', 'test']:
+                self._env = args[1]
 
     @property
     def env(self):

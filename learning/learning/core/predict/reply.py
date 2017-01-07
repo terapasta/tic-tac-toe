@@ -44,13 +44,11 @@ class Reply:
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
 
         results = results_ordered_by_probability[0:10]
-        logger.debug('results: %s' % results)
+        self.__out_log_of_results(results)
         return results
 
 
-    def __out_log(self, answer_id):
-        answers_table = self.db['answers']
-        answer = answers_table.find_one(id=answer_id)
-        logger.debug('予測された回答ID: %s' % answer_id)
-        if answer is not None:
-            logger.debug('予測された回答: %s' % answer['body'])
+    def __out_log_of_results(self, results):
+        logger.debug('予測結果(probabilityの高い順)')
+        for result in results:
+            logger.debug(result)

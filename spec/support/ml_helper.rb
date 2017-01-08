@@ -5,11 +5,6 @@ module MlHelper
     LearnJob.new.perform(bot.id)
   end
 
-  def learn(bot)
-    engine = Ml::Engine.new(bot)
-    engine.learn
-  end
-
   def learn_tag_model
     engine = Ml::Engine.new(nil)
     engine.learn_tag_model

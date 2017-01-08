@@ -36,8 +36,9 @@ class LearningTrainingMessage < ActiveRecord::Base
 
     def amp!(bot)
       arr = []
+      amplifier = Learning::Amplifier.new(bot.user)
       bot.learning_training_messages.each do |learning_training_message|
-        WordMapping.variations_of(learning_training_message.question, bot.user).each do |sentence|
+        amplifier.amp(learning_training_message.question).each do |sentence|
           copy_model = learning_training_message.dup
           copy_model.question = sentence
           arr << copy_model

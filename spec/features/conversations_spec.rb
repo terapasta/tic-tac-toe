@@ -8,7 +8,6 @@ feature '意図した通りにBotとの対話が出来る' do
     learning_parameter = build(:learning_parameter, algorithm: :naive_bayes, classify_threshold: 0.5)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'learning_training_messages.csv')
-    learn(@bot)
   end
 
   subject { conversation_bot.reply }

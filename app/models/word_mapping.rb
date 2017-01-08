@@ -8,15 +8,6 @@ class WordMapping < ActiveRecord::Base
 
   scope :for_user, -> (user) { where "user_id IS NULL OR user_id = :user_id", user_id: user&.id }
 
-  def self.variations_of(sentence, user)
-    for_user(user).map do |word_mapping|
-      [
-         sentence.include?(word_mapping.word) ? sentence.gsub(/#{word_mapping.word}/, word_mapping.synonym) : nil,
-         sentence.include?(word_mapping.synonym) ? sentence.gsub(/#{word_mapping.synonym}/, word_mapping.word) : nil
-      ]
-    end.flatten.compact
-  end
-
   private
 
     def unique_pair

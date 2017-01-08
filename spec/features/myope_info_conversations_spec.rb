@@ -79,7 +79,8 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     end
   end
 
-  context '「管理画面のサンプルがみたいす」とポストされた場合' do
+  # TODO
+  pending context '「管理画面のサンプルがみたいす」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '管理画面のサンプルがみたいす') }
     scenario do
       expect(subject[0].body).to eq '回答出来ませんでした。この回答失敗時のメッセージはBot編集画面から変更できます。'

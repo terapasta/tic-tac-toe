@@ -47,7 +47,7 @@ class LearningTrainingMessage < ActiveRecord::Base
       LearningTrainingMessage.import!(arr)
     end
 
-    # TODO: ImportedTrainingMessageのみ使えるようにしているが、TrainingMessageも対応する必要がある
+    # FIXME: ImportedTrainingMessageのみ使えるようにしているが、TrainingMessageも対応する必要がある
     def amp_by_sentence_synonyms!(bot)
       arr = []
       bot.learning_training_messages.each do |learning_training_message|

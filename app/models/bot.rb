@@ -37,12 +37,9 @@ class Bot < ActiveRecord::Base
       trainings.destroy_all
       imported_training_messages.destroy_all
       learning_training_messages.destroy_all
-
-      # TODO: chats,answersは本来は残しておきたいが、仕様検討する必要があるため一旦削除してしまう
       chats.destroy_all
       answers.destroy_all
 
-      # TODO: BOTのファイルをサブディレクトリに格納したい
       model_files = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}_*")
       FileUtils.rm(Dir.glob(model_files))
     end

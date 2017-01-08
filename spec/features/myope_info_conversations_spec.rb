@@ -8,7 +8,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
     learning_parameter = build(:learning_parameter, algorithm: :logistic_regression, classify_threshold: 0.62)
     @bot = create(:bot, learning_parameter: learning_parameter)
     file_import(@bot, 'myope_info.csv')
-    learn(@bot)
+    # learn(@bot)
   end
 
   subject { conversation_bot.reply }

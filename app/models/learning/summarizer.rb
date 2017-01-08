@@ -5,23 +5,11 @@ class Learning::Summarizer
     @bot = bot
   end
 
-  def self.summary_all
-    Bot.all.each do |bot|
-      summarizer = self.new(bot)
-      summarizer.summary()
-    end
-  end
-
   def summary
     LearningTrainingMessage.where(bot: @bot).destroy_all
     Learning::TrainingMessageConverter.new(@bot).convert!
     convert_imported_training_messages!
     convert_decision_branches!
-    true
-  rescue => e
-    Rails.logger.debug(e)
-    Rails.logger.debug(e.backtrace.join("\n"))
-    false
   end
 
   def convert_imported_training_messages!
@@ -36,7 +24,6 @@ class Learning::Summarizer
         learning_training_messages << learning_training_message
       end
     end
-    # TODO ここで例外が発生するとspecが原因不明で失敗してしまう
     # merge_tag_ids!(learning_training_messages)
     LearningTrainingMessage.import!(learning_training_messages)
   end

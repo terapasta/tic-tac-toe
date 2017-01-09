@@ -5,7 +5,7 @@ class Answers::TrainingMessagesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render json: @answer.training_messages }
+      format.json { render json: @answer.training_messages.guest }
     end
   end
 

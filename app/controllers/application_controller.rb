@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # layout 'lumen'
 
-  rescue_from StandardError, with: :handle_500
+  rescue_from StandardError, with: :handle_500 unless Rails.env.development?
 
   include Pundit
 

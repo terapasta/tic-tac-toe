@@ -11,8 +11,9 @@
 
       label.control-label
         | 同義文
-      = f.fields_for :sentence_synonyms, @training_message.sentence_synonyms do |ss|
+      = f.fields_for :sentence_synonyms, @training_message.sentence_synonyms.select{|ss| ss.new_record?} do |ss|
         = ss.text_field :body, hide_label: true
+        = ss.hidden_field :created_user_id, value: current_user.id
 
       = f.submit '登録する', class: 'btn btn-success'
       | &nbsp;

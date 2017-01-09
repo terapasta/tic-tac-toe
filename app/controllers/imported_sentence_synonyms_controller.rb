@@ -18,7 +18,8 @@ class ImportedSentenceSynonymsController < ApplicationController
   def create
     @imported_training_message = @bot.imported_training_messages.find(imported_training_message_params[:id])
     @imported_training_message.assign_attributes(imported_training_message_params)
-    @imported_training_message.sentence_synonyms.each { |ss| ss.created_user = current_user }
+    # HACK 他ユーザーのデータも上書きしてしまう問題の対処。ひとまず画面側にcreated_user_idをもたせた
+    # @imported_training_message.sentence_synonyms.each { |ss| ss.created_user = current_user }
     if @imported_training_message.save
       redirect_to new_bot_imported_sentence_synonym_path(@bot), notice: '登録しました。'
     else
@@ -40,6 +41,6 @@ class ImportedSentenceSynonymsController < ApplicationController
     end
 
     def imported_training_message_params
-      params.require(:imported_training_message).permit(:id, sentence_synonyms_attributes: [:body])
+      params.require(:imported_training_message).permit(:id, sentence_synonyms_attributes: [:body, :created_user_id])
     end
 end

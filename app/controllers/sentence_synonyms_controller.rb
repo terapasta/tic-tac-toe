@@ -18,7 +18,7 @@ class SentenceSynonymsController < ApplicationController
   def create
     @training_message = @bot.training_messages.find(training_message_params[:id])
     @training_message.assign_attributes(training_message_params)
-    @training_message.sentence_synonyms.each { |ss| ss.created_user = current_user }
+    # @training_message.sentence_synonyms.each { |ss| ss.created_user = current_user }
     if @training_message.save
       redirect_to new_bot_sentence_synonym_path(@bot), notice: '登録しました。'
     else
@@ -39,6 +39,6 @@ class SentenceSynonymsController < ApplicationController
     end
 
     def training_message_params
-      params.require(:training_message).permit(:id, sentence_synonyms_attributes: [:body])
+      params.require(:training_message).permit(:id, sentence_synonyms_attributes: [:body, :created_user_id])
     end
 end

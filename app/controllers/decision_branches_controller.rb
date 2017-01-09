@@ -40,7 +40,7 @@ class DecisionBranchesController < ApplicationController
 
   def destroy
     ActiveRecord::Base.transaction do
-      @decision_branch.next_answer.self_and_deep_child_answers.map(&:destroy!)
+      @decision_branch.next_answer.try(:self_and_deep_child_answers).try(:map, &:destroy!)
       @decision_branch.destroy!
     end
     respond_to do |format|

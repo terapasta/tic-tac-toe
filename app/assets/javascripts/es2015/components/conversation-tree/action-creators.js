@@ -196,6 +196,7 @@ export function offProcessing() {
 }
 
 export function setActiveItem(dataType, id) {
+  window.scrollTo(0, 0);
   return (dispatch, getState) => {
     const { botId } = getState();
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType, id });

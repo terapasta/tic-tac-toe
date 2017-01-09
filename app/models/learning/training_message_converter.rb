@@ -40,7 +40,6 @@ class Learning::TrainingMessageConverter
           tag_ids: value[:tag_ids]
         )
       end
-      # TODO ここで例外が発生するとspecが原因不明で失敗してしまう
       # merge_tag_ids!(learning_training_messages)
       LearningTrainingMessage.import!(learning_training_messages)
     end

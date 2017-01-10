@@ -19,8 +19,8 @@ class TrainingMessage(Base):
         self.learning_parameter = learning_parameter
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
 
-    def build(self):
-        learning_training_messages = self.__build_learning_training_messages()
+    def build(self, csv_file_path=None):
+        learning_training_messages = self.__build_learning_training_messages(csv_file_path=csv_file_path)
         body_array = TextArray(learning_training_messages['question'])
         body_vec = body_array.to_vec(type='array')
 
@@ -39,8 +39,12 @@ class TrainingMessage(Base):
         return self._body_array
 
 
-    def __build_learning_training_messages(self):
-        data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
+    def __build_learning_training_messages(self, csv_file_path=None):
+        if csv_file_path is not None:
+            data = pd.read_csv(csv_file_path, encoding='SHIFT-JIS')
+        else:
+            data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
+
         if self.learning_parameter.include_failed_data:
             data_count = data['id'].count()
             other_data = pd.read_sql("select * from learning_training_messages where bot_id <> %s and char_length(question) > 10 order by rand() limit %s;" % (self.bot_id, data_count), self.db)

@@ -1,14 +1,8 @@
-# # -*- coding: utf-8 -
-# import unittest
-# # import numpy as np
-# from ....core.learn.bot import Bot
+# from unittest import TestCase
+# from nose.tools import ok_, eq_
 #
-# class TestBot(unittest.TestCase):
+# class BotTestCase(TestCase):
 #
 #     def test_learn(self):
-#         result = Bot().learn()
-#         print(result)
-#         self.assertIsInstance(result, float)
+#         # training_set.xとyをmockする
 #
-# if __name__ == '__main__':
-#     unittest.main()

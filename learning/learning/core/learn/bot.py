@@ -12,18 +12,19 @@ from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.persistance import Persistance
 
 class Bot:
+
     def __init__(self, bot_id, learning_parameter):
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
-    def learn(self):
+    def learn(self, csv_file_path=None):
         logger.debug('Bot.learn start')
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
         training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
-        training_set.build()
+        training_set.build(csv_file_path=csv_file_path)
 
         estimator = self.__get_estimator(training_set)
 

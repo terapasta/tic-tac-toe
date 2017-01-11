@@ -92,7 +92,8 @@ $ cd learning
 $ python predict.py
 ```
 
-## テストの実行について(Guard)
+## テストの実行について
+### Rails側(Guard)
 
 feature testはPython側エンジンと連携してテストする必要があるため、specを実行する前にtestモードでRPCサーバを起動する。
 
@@ -111,6 +112,21 @@ $ guard
 $ cd learning
 $ nosetests learning/tests
 ```
+
+#### 機械学習エンジンのテスト
+
+前処理・後処理を含めてRails経由でテストする方法はテスト実行に非常に時間がかかってしまうため、チューニング作業する際に時間をロスしてしまう。そのため。nosetestsを使って機械学習エンジンの振る舞いをテスト出来るようにしています。`learning/learning/tests/engine`配下に当該のテストが実装されています。
+
+教師データは本番環境から手動で取得する必要があります。RailsAdminの管理画面から、取得したいBotのLearningTrainingMessageのcsvをエクスポートし、`learning/learning/tests/engine/fixtures`にファイルを配置することで、直接csvファイルから学習処理を走らせることが出来ます。
+
+ファイル例）
+```
+id,question,answer_body,answer_id
+1,こんにちは,はい、こんにちは元気ですか？,11
+2,明日天気はなんですか？,明日は晴れるでしょう！,12
+```
+
+※`learning/learning/tests/engine/fixtures`配下のファイルを参照してください。
 
 ## デプロイ
 ### Capistrano

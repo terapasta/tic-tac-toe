@@ -127,6 +127,8 @@ id,question,answer_body,answer_id
 ```
 
 ※`learning/learning/tests/engine/fixtures`配下のファイルを参照してください。
+※RailsAdminのエクスポート機能でデフォルトで出力されるヘッダーと文言が異なるので注意
+※エクスポートファイルはShift-JISでエクスポートすること
 
 ## デプロイ
 ### Capistrano

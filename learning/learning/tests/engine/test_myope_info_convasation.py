@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+import pandas as pd
 from nose.tools import ok_, eq_
 
 from learning.core.learn.bot import Bot
@@ -12,18 +14,30 @@ class MyopeInfoConvasationTestCase(TestCase):
         'include_tag_vector': False,
         'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
     })
+    threshold = 0.4
+    bot_id = 999  # テスト用のbot_id いずれの値でも動作する
+    csv_file_path = 'learning/tests/engine/fixtures/test_myope_info_convasation.csv'
+    answers = None
 
     def setUp(self):
-        bot_id = 5  # dummy
-        evaluator = Bot(bot_id, self.learning_parameter).learn(csv_file_path='learning/tests/engine/fixtures/test_myope_info_convasation.csv')
+        self.answers = self.__build_answers()
+        evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
     def test_how_is_security(self):
-        threshold = 0.62
         questions = ['セキュリティはどう？']
-        bot_id = 5  # dummy
-        results = Reply(bot_id, self.learning_parameter).predict(questions)
-        print(results)
+        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
+        answer_id = results[0]['answer_id']
+        probability = results[0]['probability']
+        answer_body = self.__get_answer_body(answer_id)
 
-        # 回答が'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。'になること
-        eq_(results[0]['answer_id'], 3692)  # TODO idベタ打ちではなくデータ定義から取得するように変更する
-        # ok_(results[0]['probability'] > threshold)  # TODO
+        eq_(answer_body, 'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。利用ドメイン制限やIP制限など、更にセキュリティ強化の機能も実装を予定しております。')
+        ok_(probability > self.threshold)
+
+    def __get_answer_body(self, answer_id):
+        rows = self.answers.query('answer_id == %s' % answer_id)
+        return rows.iloc[0]['answer_body']
+
+    def __build_answers(self):
+        learning_training_messages = pd.read_csv(self.csv_file_path, encoding='SHIFT-JIS')
+        return learning_training_messages.drop_duplicates(subset=['answer_id'])
+

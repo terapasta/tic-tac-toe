@@ -8,29 +8,29 @@ from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 
 
-class MyopeInfoConvasationTestCase(TestCase):
+class SepteniConvasationTestCase(TestCase):
     learning_parameter = LearningParameter({
         'include_failed_data': False,
         'include_tag_vector': False,
         'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
     })
-    threshold = 0.4
+    threshold = 0.5
     bot_id = 999  # テスト用のbot_id いずれの値でも動作する
-    csv_file_path = 'learning/tests/engine/fixtures/test_myope_info_convasation.csv'
+    csv_file_path = 'learning/tests/engine/fixtures/test_septeni_convasation.csv'
     answers = None
 
     def setUp(self):
         self.answers = self.__build_answers()
         evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
-    def test_how_is_security(self):
-        questions = ['セキュリティはどう？']
+    def test_can_not_connect_akindo(self):
+        questions = ['akindoに接続出来ない']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
         answer_id = results[0]['answer_id']
         probability = results[0]['probability']
         answer_body = self.__get_answer_body(answer_id)
 
-        eq_(answer_body, 'セキュリティ対策については、ファイアウォールやSSL接続などの一般的な対策は行っております。利用ドメイン制限やIP制限など、更にセキュリティ強化の機能も実装を予定しております。')
+        eq_(answer_body, '情シスFAQサイトに解決方法が載っていますので、下記のURLより参照をお願いします\rhttp://faq.septeni.jp/index.php?doc_no=46')
         ok_(probability > self.threshold)
 
     def __get_answer_body(self, answer_id):

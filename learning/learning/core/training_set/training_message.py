@@ -75,4 +75,8 @@ class TrainingMessage(Base):
     def __find_classfy_failed_answer_id(self):
         cursor = self.db.cursor()
         cursor.execute("select id from answers where defined_answer_id = %s" % self.CLASSIFY_FAILED_ID)
-        return cursor.fetchone()[0]
+        result = cursor.fetchone()
+        if result is not None:
+            return cursor.fetchone()[0]
+        else:
+            return None

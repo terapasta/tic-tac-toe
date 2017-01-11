@@ -1,4 +1,5 @@
 from unittest import TestCase
+from unittest.mock import MagicMock, PropertyMock
 
 import pandas as pd
 from nose.tools import ok_, eq_
@@ -6,6 +7,7 @@ from nose.tools import ok_, eq_
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
+from learning.config.config import Config
 
 
 class SepteniConvasationTestCase(TestCase):
@@ -21,7 +23,7 @@ class SepteniConvasationTestCase(TestCase):
 
     def setUp(self):
         self.answers = self.__build_answers()
-        evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+        _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
     def test_can_not_connect_akindo(self):
         questions = ['akindoに接続出来ない']

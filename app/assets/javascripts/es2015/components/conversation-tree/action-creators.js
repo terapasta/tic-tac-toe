@@ -235,6 +235,10 @@ export function fetchDecisionBranchModel(dispatch, botId, id) {
     } else {
       decisionBranchModel.fetchNextAnswer().then(() => {
         dispatch(setEditingAnswerModel(decisionBranchModel.nextAnswerModel));
+      }).catch((err) => {
+        if (err.response.status === 404) {
+          dispatch(setEditingAnswerModel(new Answer));
+        }
       });
     }
   });

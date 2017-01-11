@@ -1176,6 +1176,10 @@ function fetchDecisionBranchModel(dispatch, botId, id) {
     } else {
       decisionBranchModel.fetchNextAnswer().then(function () {
         dispatch(setEditingAnswerModel(decisionBranchModel.nextAnswerModel));
+      }).catch(function (err) {
+        if (err.response.status === 404) {
+          dispatch(setEditingAnswerModel(new _answer2.default()));
+        }
       });
     }
   });

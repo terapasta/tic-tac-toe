@@ -1135,6 +1135,7 @@ function offProcessing() {
 }
 
 function setActiveItem(dataType, id) {
+  window.scrollTo(0, 0);
   return function (dispatch, getState) {
     var _getState8 = getState(),
         botId = _getState8.botId;

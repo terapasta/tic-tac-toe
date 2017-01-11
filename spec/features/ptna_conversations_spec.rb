@@ -26,7 +26,8 @@ feature 'PTNAのデータで意図した通りにBotとの対話が出来る' do
     end
   end
 
-  context '「入会したいのですが」とポストされた場合' do
+  # TODO
+  pending context '「入会したいのですが」とポストされた場合' do
     let(:message) { chat.messages.build(speaker: 'guest', body: '入会したいのですが') }
     scenario do
       expect(subject[0].body).to be_include "オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html"

@@ -17,4 +17,5 @@ table.table.table-striped
                   td= ss.id
                   td= ss.body
                   td= ss.created_user.email
-                  th= link_to '削除', bot_imported_sentence_synonym_path(@bot, ss), class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }
+                  - if current_user.normal?
+                    td= link_to '削除', bot_imported_sentence_synonym_path(@bot, ss), class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }

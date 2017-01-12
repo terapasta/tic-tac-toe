@@ -16,8 +16,8 @@ module HasManySentenceSynonyms
         end
       end
       messages.select {|m|
-        m.sentence_synonyms.length < 15 &&
-        m.sentence_synonyms.none? {|ss| ss.created_user == user}
+        m.sentence_synonyms.length < 18 &&
+        m.sentence_synonyms.select{ |ss| ss.created_user_id == user.id }.count < 3
       }.sample
     end
   end

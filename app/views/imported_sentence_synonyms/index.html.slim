@@ -1,3 +1,16 @@
+- if current_user.normal?
+  .well
+    = form_tag bot_imported_sentence_synonyms_path(@bot), class: 'form-inline', method: :get do
+      = collection_select :filter, :worker_id, User.worker, :id, :email, { include_blank: true, prompt: '-- ワーカーを選択 --', selected: params.dig(:filter, :worker_id) }, class: 'form-control'
+      = submit_tag '絞込', class: 'btn btn-default'
+
+
+  - if params.dig(:filter, :worker_id).present?
+    .well
+      - total_count = @imported_training_messages.count
+      - completed_count = @imported_training_messages.joins(:sentence_synonyms).where('sentence_synonyms.created_user_id' => params.dig(:filter, :worker_id)).count
+      code #{ completed_count} / #{ @imported_training_messages.count }, 残り:#{ total_count - completed_count }
+
 table.table.table-striped
   thead
     tr
@@ -12,7 +25,9 @@ table.table.table-striped
           th= itm.question
           th
             table.table.table-striped: tbody
-              - policy_scope(itm.sentence_synonyms).each do |ss|
+              - ss_list = policy_scope(itm.sentence_synonyms)
+              - ss_list = ss_list.select{ |ss| ss.created_user_id == params[:filter][:worker_id].to_i } if params.dig(:filter, :worker_id).present?
+              - ss_list.each do |ss|
                 tr
                   td= ss.id
                   td= ss.body

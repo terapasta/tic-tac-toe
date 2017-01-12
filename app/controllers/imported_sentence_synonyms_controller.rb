@@ -8,11 +8,14 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def new
     @imported_training_message = ImportedTrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
+    @registered_sentence_synonyms_count = ImportedTrainingMessage.picking_sentence_synonyms(@bot, current_user).count
     if @imported_training_message.blank?
       flash[:error] = '未作業の文章がありませんでした'
       redirect_to root_path and return
     end
-    3.times.map { @imported_training_message.sentence_synonyms.build }
+    (3 - @registered_sentence_synonyms_count).times.map {
+      @imported_training_message.sentence_synonyms.build
+    }
   end
 
   def create

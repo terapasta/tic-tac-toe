@@ -8,6 +8,10 @@ module HasManySentenceSynonyms
 
   module ClassMethods
     def pick_sentence_synonyms_not_enough(bot, user)
+      picking_sentence_synonyms(bot, user).sample
+    end
+
+    def picking_sentence_synonyms(bot, user)
       messages = begin
         if self == TrainingMessage
           bot.training_messages.guest.includes(:sentence_synonyms)
@@ -18,7 +22,7 @@ module HasManySentenceSynonyms
       messages.select {|m|
         m.sentence_synonyms.length < 18 &&
         m.sentence_synonyms.select{ |ss| ss.created_user_id == user.id }.count < 3
-      }.sample
+      }
     end
   end
 end

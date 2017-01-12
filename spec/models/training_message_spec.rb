@@ -20,10 +20,17 @@ RSpec.describe TrainingMessage, :type => :model do
       end
     end
 
-    context 'training_message1nのsentence_synonymsにuserが登録したデータが含まれる場合' do
-      before { training_message1.sentence_synonyms.create!(body: 'hoge', created_user: user) }
-      it 'training_message2が取得されること' do
-        is_expected.to eq training_message2
+    context 'training_message1nのsentence_synonymsにuserが登録したデータが3件含まれる場合' do
+      before do
+        3.times do
+          training_message1.sentence_synonyms.create!(body: 'hoge', created_user: user)
+        end
+      end
+
+      it '何度取得してもtraining_message2が取得されること' do
+        10.times do
+          expect(TrainingMessage.pick_sentence_synonyms_not_enough(bot, user)).to eq(training_message2)
+        end
       end
     end
   end

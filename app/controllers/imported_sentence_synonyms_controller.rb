@@ -8,7 +8,7 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def new
     @imported_training_message = ImportedTrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
-    @registered_sentence_synonyms_count = ImportedTrainingMessage.picking_sentence_synonyms(@bot, current_user).count
+    @registered_sentence_synonyms_count = @imported_training_message.sentence_synonyms.where(created_user_id: current_user.id).count
     if @imported_training_message.blank?
       flash[:error] = '未作業の文章がありませんでした'
       redirect_to root_path and return

@@ -20,10 +20,6 @@ Answer.seed(:id,
   { id: 1001, context: 'normal', body: 'こんにちは！', headline: nil, bot_id: 3 },
 )
 
-WordMapping.seed(:id,
-  { id: 1, word: 'ありがとう', synonym: 'サンキュー' },
-)
-
 Training.seed(:id,
   { id: 1, bot_id: 4},
   { id: 1001, bot_id: 3},

@@ -15,7 +15,7 @@ class Evaluator:
     def evaluate(self, estimator, X, y):
         cv = ShuffleSplit(X.shape[0], n_iter=10, test_size=0.2, random_state=0)
         self.accuracy = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv))
-        # 実行時に警告が
+        # 実行時に警告が出るため一旦コメントアウト(今のところチューニングにもあまり使用していない)
         # self.precision = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='precision_macro'))
         # self.recall = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='recall_macro'))
         # self.f1 = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='f1_macro'))

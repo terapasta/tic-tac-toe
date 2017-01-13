@@ -1,6 +1,5 @@
 from unittest import SkipTest
 from unittest import TestCase
-from unittest.mock import MagicMock, PropertyMock
 
 import pandas as pd
 from nose.tools import ok_, eq_
@@ -8,7 +7,6 @@ from nose.tools import ok_, eq_
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
-from learning.config.config import Config
 
 
 class SepteniConvasationTestCase(TestCase):

@@ -23,7 +23,7 @@ class SepteniConvasationTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.answers = cls.__build_answers()
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
     def test_can_not_connect_akindo(self):
         questions = ['akindoに接続出来ない']
@@ -45,16 +45,14 @@ class SepteniConvasationTestCase(TestCase):
         eq_(answer_body, 'インストールしたいドライバが格納されているフォルダごとPCのデスクトップ上にコピーしていますか')
         ok_(probability > self.threshold)
 
-    # TODO
     def test_add_memory(self):
-        raise SkipTest()
         questions = ['PCにメモリを増設したい']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
         answer_id = results[0]['answer_id']
         probability = results[0]['probability']
         answer_body = self.__get_answer_body(answer_id)
 
-        eq_(answer_body, '使用しているPCの種類はなんですか')
+        eq_(answer_body, 'PCへのメモリ増設についてですね。\r\n\r\n使用しているPCの種類は何ですか？\r\n')
         ok_(probability > self.threshold)
 
     def __get_answer_body(self, answer_id):

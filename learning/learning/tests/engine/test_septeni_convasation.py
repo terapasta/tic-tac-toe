@@ -1,3 +1,4 @@
+from unittest import SkipTest
 from unittest import TestCase
 from unittest.mock import MagicMock, PropertyMock
 
@@ -21,9 +22,10 @@ class SepteniConvasationTestCase(TestCase):
     csv_file_path = 'learning/tests/engine/fixtures/test_septeni_convasation.csv'
     answers = None
 
-    def setUp(self):
-        self.answers = self.__build_answers()
-        _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+    @classmethod
+    def setUpClass(cls):
+        cls.answers = cls.__build_answers()
+        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
     def test_can_not_connect_akindo(self):
         questions = ['akindoに接続出来ない']
@@ -35,11 +37,34 @@ class SepteniConvasationTestCase(TestCase):
         eq_(answer_body, '情シスFAQサイトに解決方法が載っていますので、下記のURLより参照をお願いします\rhttp://faq.septeni.jp/index.php?doc_no=46')
         ok_(probability > self.threshold)
 
+    def test_printer_driver(self):
+        questions = ['プリンタ ドライバ']
+        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
+        answer_id = results[0]['answer_id']
+        probability = results[0]['probability']
+        answer_body = self.__get_answer_body(answer_id)
+
+        eq_(answer_body, 'インストールしたいドライバが格納されているフォルダごとPCのデスクトップ上にコピーしていますか')
+        ok_(probability > self.threshold)
+
+    # TODO
+    def test_add_memory(self):
+        raise SkipTest()
+        questions = ['PCにメモリを増設したい']
+        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
+        answer_id = results[0]['answer_id']
+        probability = results[0]['probability']
+        answer_body = self.__get_answer_body(answer_id)
+
+        eq_(answer_body, '使用しているPCの種類はなんですか')
+        ok_(probability > self.threshold)
+
     def __get_answer_body(self, answer_id):
         rows = self.answers.query('answer_id == %s' % answer_id)
         return rows.iloc[0]['answer_body']
 
-    def __build_answers(self):
-        learning_training_messages = pd.read_csv(self.csv_file_path, encoding='SHIFT-JIS')
+    @classmethod
+    def __build_answers(cls):
+        learning_training_messages = pd.read_csv(cls.csv_file_path, encoding='SHIFT-JIS')
         return learning_training_messages.drop_duplicates(subset=['answer_id'])
 

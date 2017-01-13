@@ -6,12 +6,17 @@ class Ml::Engine
     @bot = bot
   end
 
+  # TODO 現在contextは使用されていないので削除したい
   def reply(context, body)
     return @client.call(:reply, @bot.id, context, body, @bot.learning_parameter_attributes)
   end
 
   def learn
-    @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
+    # @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
+    future = @client.call_async(:learn, @bot.id, @bot.learning_parameter_attributes)
+    future.get
+    # future = @client.call_async(:learn, @bot.id, @bot.learning_parameter_attributes)
+    # future.get
   end
 
   def predict_tags(bodies)

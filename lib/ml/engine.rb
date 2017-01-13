@@ -12,12 +12,16 @@ class Ml::Engine
   end
 
   def learn
-    # @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
-    future = @client.call_async(:learn, @bot.id, @bot.learning_parameter_attributes)
-    future.get
-    # future = @client.call_async(:learn, @bot.id, @bot.learning_parameter_attributes)
-    # future.get
+    @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
   end
+
+  # TODO 非同期でコールバックを実行するメソッドを実装したい(RPCサーバのタイムアウト対策)、RPCサーバを変更する必要があるかも
+  # def async_learn
+  #   future = @client.callback(:learn, @bot.id, @bot.learning_parameter_attributes) do
+  #     Rails.logger.debug('hogehogehogehogehogehogehogehogehogehogehogehoge')
+  #   end
+  #   future.get
+  # end
 
   def predict_tags(bodies)
     @client.call(:predict_tags, bodies)

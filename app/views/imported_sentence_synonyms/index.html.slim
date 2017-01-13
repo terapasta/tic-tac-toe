@@ -8,7 +8,7 @@
   - if params.dig(:filter, :worker_id).present?
     .well
       - total_count = @imported_training_messages.count
-      - completed_count = @imported_training_messages.joins(:sentence_synonyms).where('sentence_synonyms.created_user_id' => params.dig(:filter, :worker_id)).count
+      - completed_count = @imported_training_messages.joins(:sentence_synonyms).where('sentence_synonyms.created_user_id' => params.dig(:filter, :worker_id)).uniq.count
       code #{ completed_count} / #{ @imported_training_messages.count }, 残り:#{ total_count - completed_count }
 
 table.table.table-striped

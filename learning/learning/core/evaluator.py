@@ -9,9 +9,10 @@ class Evaluator:
     def evaluate(self, estimator, X, y):
         cv = ShuffleSplit(X.shape[0], n_iter=10, test_size=0.2, random_state=0)
         self.accuracy = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv))
-        # self.precision = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='precision_macro'))
-        # self.recall = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='recall_macro'))
-        # self.f1 = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='f1_macro'))
+        # TODO 警告がでる？コメントアウトする場合はRails側で落ちないかチェックする
+        self.precision = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='precision_macro'))
+        self.recall = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='recall_macro'))
+        self.f1 = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='f1_macro'))
         self.__out_log()
 
     def evaluate_using_exist_data(self, estimator, X, y):
@@ -34,6 +35,6 @@ class Evaluator:
 
     def __out_log(self):
         logger.debug('accuracy: %s' % self.accuracy)
-        # logger.debug('precision: %s' % self.precision)
-        # logger.debug('recall: %s' % self.recall)
-        # logger.debug('f1: %s' % self.f1)
+        logger.debug('precision: %s' % self.precision)
+        logger.debug('recall: %s' % self.recall)
+        logger.debug('f1: %s' % self.f1)

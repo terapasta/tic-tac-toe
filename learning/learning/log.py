@@ -8,6 +8,7 @@ datefmt='%Y/%m/%d %p %I:%M:%S',)
 logger = getLogger(__name__)
 logger.setLevel(DEBUG)
 
+# TODO 開発時に同じログが2行ずつ出力されてしまう
 # stream handler
 handler = StreamHandler()
 handler.setLevel(DEBUG)

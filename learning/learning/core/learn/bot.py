@@ -49,7 +49,7 @@ class Bot:
         else:
             logger.debug('use algorithm: logistic regression')
 
-            C = self.learning_parameter.params_for_algorithm.get('C')
+            C = self.learning_parameter.params_for_algorithm.get('C', None)
             if C is None:
                 logger.debug('learning_parameter has not parameter C')
                 # params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}

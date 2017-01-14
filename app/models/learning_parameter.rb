@@ -1,4 +1,6 @@
 class LearningParameter < ActiveRecord::Base
+  serialize :params_for_algorithm, JSON
+
   belongs_to :bot
 
   enum algorithm: [ :logistic_regression, :naive_bayes ]

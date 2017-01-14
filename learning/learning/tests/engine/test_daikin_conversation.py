@@ -1,7 +1,6 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 
-from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper

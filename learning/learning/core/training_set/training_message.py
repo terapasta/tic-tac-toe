@@ -43,6 +43,7 @@ class TrainingMessage(Base):
 
     def __build_learning_training_messages(self, csv_file_path=None):
         if csv_file_path is not None:
+            # TODO RailsAdminでダウンロードするcsvファイルを使用するのでUTF-8にしたい
             data = pd.read_csv(csv_file_path, encoding='SHIFT-JIS')
         else:
             data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)

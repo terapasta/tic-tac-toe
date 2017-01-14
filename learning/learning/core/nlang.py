@@ -17,7 +17,6 @@ class Nlang:
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
         # text = text.encode('utf-8')
         tagger.parse('')  # node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
-        logger.debug(text)
         node = tagger.parseToNode(text)
         word_list = []
         while node:

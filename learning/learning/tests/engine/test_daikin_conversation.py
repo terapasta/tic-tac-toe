@@ -1,29 +1,25 @@
 from unittest import TestCase
-from unittest.mock import MagicMock, PropertyMock
-
-import pandas as pd
 from nose.tools import ok_, eq_
-
-from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
-from learning.core.predict.reply import Reply
-from learning.config.config import Config
+from learning.tests import helper
 
 
 class DaikinConversationTestCase(TestCase):
+    CSV_FILE_PATH = 'learning/tests/engine/fixtures/test_daikin_conversation.csv'
+
     learning_parameter = LearningParameter({
         'include_failed_data': False,
         'include_tag_vector': False,
-        'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
+        'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
+        'params_for_algorithm': { 'C': 200 }
     })
     threshold = 0.5
     bot_id = 998  # テスト用のbot_id いずれの値でも動作する
-    csv_file_path = 'learning/tests/engine/fixtures/test_daikin_conversation.csv'
     answers = None
 
     def setUp(self):
-        self.answers = self.__build_answers()
-        _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+        self.answers = helper.build_answers(self.CSV_FILE_PATH, encoding='SHIFT-JIS')
+        # _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
     def test_hoge(self):
         ok_(True)
@@ -41,9 +37,4 @@ class DaikinConversationTestCase(TestCase):
     # def __get_answer_body(self, answer_id):
     #     rows = self.answers.query('answer_id == %s' % answer_id)
     #     return rows.iloc[0]['answer_body']
-
-    # TODO DRYにする
-    def __build_answers(self):
-        learning_training_messages = pd.read_csv(self.csv_file_path, encoding='SHIFT-JIS')
-        return learning_training_messages.drop_duplicates(subset=['answer_id'])
 

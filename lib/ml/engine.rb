@@ -11,6 +11,7 @@ class Ml::Engine
   end
 
   def learn
+    # TODO RPCサーバ側でタイムアウトしてしまうため、結果を非同期で受け取りたい
     @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
   end
 

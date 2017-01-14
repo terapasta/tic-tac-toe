@@ -12,7 +12,7 @@ class DaikinConversationTestCase(TestCase):
         self.csv_file_path = 'learning/tests/engine/fixtures/test_daikin_conversation.csv'
         self.bot_id = 998  # テスト用のbot_id いずれの値でも動作する
         self.threshold = 0.5
-        self.answers = helper.build_answers(self.csv_file_path, encoding='SHIFT-JIS')  # TODO セプテーニの方もhelperを使うように修正
+        self.answers = helper.build_answers(self.csv_file_path, encoding='SHIFT-JIS')
         self.learning_parameter = LearningParameter({
             'include_failed_data': False,
             'include_tag_vector': False,
@@ -26,7 +26,7 @@ class DaikinConversationTestCase(TestCase):
     def test_how_to_add_mail_signature(self):
         questions = ['メールに署名を付ける方法を知りたい']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい
+        answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい。その前にmyope_server#replyのテスト実装が必要
         probability = results[0]['probability']
         answer_body = helper.get_answer_body(self.answers, answer_id)
 

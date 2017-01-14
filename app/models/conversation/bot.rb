@@ -1,7 +1,7 @@
 class Conversation::Bot
   attr_accessor :states
 
-  NUMBER_OF_CONTEXT = 0
+  # HACK たぶん使われていないので削除する
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
@@ -12,14 +12,13 @@ class Conversation::Bot
   end
 
   def reply
-    context = build_context
-    Rails.logger.debug("Conversation#reply context: #{context}, body: #{@message.body}")
+    Rails.logger.debug("Conversation::Bot#reply body: #{@message.body}")
 
-    result = Ml::Engine.new(@bot).reply(context, @message.body)
-    @results = result['results']
+    result = Ml::Engine.new(@bot).reply(@message.body)
+    @results = result[:results]
 
-    answer_id = @results.dig(0, 'answer_id')
-    probability = @results.dig(0, 'probability')
+    answer_id = @results.dig(0, :answer_id)
+    probability = @results.dig(0, :probability)
     Rails.logger.debug(probability)
 
     if answer_id.present? && probability > classify_threshold
@@ -44,13 +43,6 @@ class Conversation::Bot
   end
 
   private
-    def build_context
-      return [] if NUMBER_OF_CONTEXT < 0
-      messages = @ModelClass.where('answer_id is not null').order('id desc').limit(NUMBER_OF_CONTEXT)
-      answer_ids = messages.pluck(:answer_id)
-      Array.new(NUMBER_OF_CONTEXT).fill(0).concat(answer_ids)[-NUMBER_OF_CONTEXT, NUMBER_OF_CONTEXT]
-    end
-
     def classify_threshold
       learning_parameter = @bot.learning_parameter || LearningParameter.build_with_default
       learning_parameter.classify_threshold

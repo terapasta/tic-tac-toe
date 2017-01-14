@@ -14,10 +14,8 @@ class MyopeServer(RPCServer):
     STATUS_CODE_SUCCESS = 1
     STATUS_CODE_MODEL_NOT_EXISTS = 101
 
-    def reply(self, bot_id, context, body, learning_parameter_attributes):
+    def reply(self, bot_id, body, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)
-        # X = list(context)
-        # X.append(body)
         X = np.array([body])
         predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS

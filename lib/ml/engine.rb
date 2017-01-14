@@ -6,9 +6,8 @@ class Ml::Engine
     @bot = bot
   end
 
-  # TODO 現在contextは使用されていないので削除したい
-  def reply(context, body)
-    return @client.call(:reply, @bot.id, context, body, @bot.learning_parameter_attributes)
+  def reply(body)
+    return @client.call(:reply, @bot.id, body, @bot.learning_parameter_attributes).with_indifferent_access
   end
 
   def learn

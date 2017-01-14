@@ -6,7 +6,10 @@ attr = {
     'include_failed_data': False,
     'include_tag_vector': False,
     # 'algorithm': LearningParameter.ALGORITHM_NAIVE_BAYES
-    'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
+    'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
+    # 'params_for_algorithm': { 'C': 200 }
+    'params_for_algorithm': {}
+
 }
 learning_parameter = LearningParameter(attr)
 evaluator = Bot(bot_id, learning_parameter).learn()

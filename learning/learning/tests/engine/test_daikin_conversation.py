@@ -1,5 +1,7 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
+
+from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper
@@ -19,7 +21,8 @@ class DaikinConversationTestCase(TestCase):
             'params_for_algorithm': {'C': 200}
         })
 
-        # _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+        # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
+        _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
     def test_how_to_add_mail_signature(self):
         questions = ['メールに署名を付ける方法を知りたい']

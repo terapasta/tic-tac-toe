@@ -19,7 +19,7 @@ class Bot:
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     def learn(self, csv_file_path=None):
-        logger.debug('Bot#learn start')
+        logger.debug('start Bot#learn')
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
@@ -28,14 +28,16 @@ class Bot:
         training_set.build(csv_file_path=csv_file_path)
 
         estimator = self.__get_estimator(training_set)
+        logger.debug('after Bot#__get_estimator')
 
         Persistance.dump_model(estimator, self.bot_id)
         Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()
+        logger.debug('before Evaluator#evaluate')
         evaluator.evaluate(estimator, training_set.x, training_set.y)
-        logger.debug('Bot.learn end')
+        logger.debug('end Bot#learn')
 
         return evaluator
 

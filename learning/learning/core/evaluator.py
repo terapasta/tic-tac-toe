@@ -42,6 +42,6 @@ class Evaluator:
 
     def __out_log(self):
         logger.debug('accuracy: %s' % self.accuracy)
-        logger.debug('precision: %s' % self.precision)
-        logger.debug('recall: %s' % self.recall)
-        logger.debug('f1: %s' % self.f1)
+        # logger.debug('precision: %s' % self.precision)
+        # logger.debug('recall: %s' % self.recall)
+        # logger.debug('f1: %s' % self.f1)

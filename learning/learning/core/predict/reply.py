@@ -49,6 +49,6 @@ class Reply:
 
 
     def __out_log_of_results(self, results):
-        logger.debug('予測結果(probabilityの高い順)')
+        logger.debug('predicted results (order by probability desc)')
         for result in results:
             logger.debug(result)

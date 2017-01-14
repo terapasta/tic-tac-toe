@@ -63,5 +63,6 @@ class MyopeServer(RPCServer):
         }
 
 
-server = StreamServer(('127.0.0.1', 6000), MyopeServer())
-server.serve_forever()
+if __name__ == '__main__':
+    server = StreamServer(('127.0.0.1', 6000), MyopeServer())
+    server.serve_forever()

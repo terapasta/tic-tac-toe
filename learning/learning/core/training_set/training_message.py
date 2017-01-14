@@ -13,6 +13,7 @@ class TrainingMessage(Base):
     CLASSIFY_FAILED_ID = 2
 
     def __init__(self, db, bot_id, learning_parameter):
+        logger.debug('TrainingMessage#__init__ start')
         config = Config()
         self.db = db
         self.bot_id = bot_id
@@ -20,6 +21,7 @@ class TrainingMessage(Base):
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
 
     def build(self, csv_file_path=None):
+        logger.debug('TrainingMessage#build start')
         learning_training_messages = self.__build_learning_training_messages(csv_file_path=csv_file_path)
         body_array = TextArray(learning_training_messages['question'])
         body_vec = body_array.to_vec(type='array')
@@ -73,9 +75,13 @@ class TrainingMessage(Base):
         return tag_vector
 
     def __find_classfy_failed_answer_id(self):
+        logger.debug('TrainingMessage#__find_classfy_failed_answer_id start')
+        # TODO 複数処理が走るMySQLのコネクションがはれずロックされてしまう
         cursor = self.db.cursor()
         cursor.execute("select id from answers where defined_answer_id = %s" % self.CLASSIFY_FAILED_ID)
+        logger.debug('TrainingMessage#__find_classfy_failed_answer_id after execute')
         result = cursor.fetchone()
+        logger.debug('TrainingMessage#__find_classfy_failed_answer_id after fetch')
         if result is not None:
             return result[0]
         else:

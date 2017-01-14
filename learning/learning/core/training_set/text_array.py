@@ -5,10 +5,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 class TextArray:
     def __init__(self, data, vectorizer=None):
+        logger.debug('TextArray#__init__ start')
         self.data = data
         self._vectorizer = vectorizer
 
     def to_vec(self, type=None):
+        logger.debug('TextArray#to_vec start')
         self._vectorizer = self.__build_vectorizer()
         feature_vectors = self._vectorizer.transform(self.__splited_data())
         if type == 'array':

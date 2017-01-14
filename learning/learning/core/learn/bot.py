@@ -19,10 +19,11 @@ class Bot:
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     def learn(self, csv_file_path=None):
-        logger.debug('Bot.learn start')
+        logger.debug('Bot#learn start')
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
+        logger.debug('Bot after mysql connect')
         training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
         training_set.build(csv_file_path=csv_file_path)
 
@@ -56,7 +57,8 @@ class Bot:
             # estimator = LogisticRegression(C=1e5)
             # estimator = LogisticRegression()
             # estimator.fit(training_set.x, training_set.y)
-            params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
+            # params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
+            params = {'C': [10, 100, 140, 200]}
             grid = GridSearchCV(LogisticRegression(), param_grid=params)
             grid.fit(training_set.x, training_set.y)
             estimator = grid.best_estimator_

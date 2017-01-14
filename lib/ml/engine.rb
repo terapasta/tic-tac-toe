@@ -2,7 +2,7 @@ class Ml::Engine
 
   def initialize(bot)
     @client = MessagePack::RPC::Client.new('127.0.0.1', 6000)
-    @client.timeout = 300
+    @client.timeout = 30.minutes
     @bot = bot
   end
 

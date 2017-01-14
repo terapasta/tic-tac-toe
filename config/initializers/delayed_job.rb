@@ -1,4 +1,7 @@
 Delayed::Worker.logger = Logger.new(File.join(Rails.root, 'log', 'delayed_job.log'))
+Delayed::Worker.max_attempts = 0
+# FIXME ログ出力してくれるようになる？ http://tech.actindi.net/3659991970
+# Delayed::Worker.logger = ActFluentLoggerRails::Logger.new(flush_immediately: true)
 
 module Delayed
   class Job

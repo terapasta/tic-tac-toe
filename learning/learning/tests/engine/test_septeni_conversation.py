@@ -23,7 +23,7 @@ class SepteniConversationTestCase(TestCase):
 
     def setUp(self):
         self.answers = self.__build_answers()
-        _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+        # _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
     def test_can_not_connect_akindo(self):
         questions = ['akindoに接続出来ない']

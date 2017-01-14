@@ -9,6 +9,7 @@ class TextArray:
         self.data = data
         self._vectorizer = vectorizer
 
+    # TODO 処理速度が遅いため改善したい
     def to_vec(self, type=None):
         logger.debug('TextArray#to_vec start')
         self._vectorizer = self.__build_vectorizer()

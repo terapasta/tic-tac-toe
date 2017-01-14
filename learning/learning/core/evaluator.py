@@ -13,8 +13,9 @@ class Evaluator:
         self.f1 = 0
 
     def evaluate(self, estimator, X, y):
-        cv = ShuffleSplit(X.shape[0], n_iter=10, test_size=0.2, random_state=0)
-        self.accuracy = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv))
+        # TODO 本番環境実行時に非常に時間がかかるため一旦コメントアウトする(至急なおしたい)
+        # cv = ShuffleSplit(X.shape[0], n_iter=10, test_size=0.2, random_state=0)
+        # self.accuracy = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv))
         # 実行時に警告が出るため一旦コメントアウト(今のところチューニングにもあまり使用していない)
         # self.precision = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='precision_macro'))
         # self.recall = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='recall_macro'))
@@ -41,6 +42,6 @@ class Evaluator:
 
     def __out_log(self):
         logger.debug('accuracy: %s' % self.accuracy)
-        # logger.debug('precision: %s' % self.precision)
-        # logger.debug('recall: %s' % self.recall)
-        # logger.debug('f1: %s' % self.f1)
+        logger.debug('precision: %s' % self.precision)
+        logger.debug('recall: %s' % self.recall)
+        logger.debug('f1: %s' % self.f1)

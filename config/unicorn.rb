@@ -1,5 +1,5 @@
 worker_processes 2
-timeout 300  # TODO 非同期処理などを活用して出来るだけtimeoutを短くしたい
+timeout 300  # TODO 非同期処理などを活用して出来るだけtimeoutを短くしたい(nginxの設定ファイルも)
 
 listen  '/tmp/unicorn.sock'
 pid     '/tmp/unicorn.pid'

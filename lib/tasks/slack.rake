@@ -23,7 +23,7 @@ namespace :slack do
         # endpoint = Rails.application.routes.url_helpers.api_v1_messages_url  # production環境でAPI経由のアクセスが出来ない
         # # endpoint = 'https://app.my-ope.net/api/v1/messages'
         # response = HTTP.headers('Content-Type' => "application/json")
-        #  .post(endpoint, json: { message: text, bot_id: 1 })  # TODO bot_idを指定できるようにする
+        #  .post(endpoint, json: { message: text, bot_id: 1 })  # HACK bot_idを指定できるようにする
         # messages = response.parse.with_indifferent_access[:messages]
         # messages.each do |message|
         #   body = "#{message[:body]}"
@@ -37,7 +37,7 @@ namespace :slack do
         #   Slack.chat_postMessage params
         # end
 
-        # TODO replyableのreceive_and_reply!メソッドを呼び出す必要がある
+        # HACK replyableのreceive_and_reply!メソッドを呼び出す必要がある
         # chat = Chat.create(bot_id: 1, guest_key: SecureRandom.hex(64))
         # message = chat.messages.build(body: text, speaker: 'guest')
         # messages = receive_and_reply!(chat, message)

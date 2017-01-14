@@ -9,6 +9,8 @@ class LearningParameter:
         self._include_tag_vector = attributes.get('include_tag_vector', False)
         self._algorithm = attributes.get('algorithm', self.ALGORITHM_LOGISTIC_REGRESSION)
         self._params_for_algorithm = attributes.get('params_for_algorithm', {})
+        if self._params_for_algorithm is None:
+            self._params_for_algorithm = {}
 
     @property
     def include_failed_data(self):

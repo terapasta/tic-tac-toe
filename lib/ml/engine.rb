@@ -6,6 +6,7 @@ class Ml::Engine
     @bot = bot
   end
 
+  # TODO 現在contextは使用されていないので削除したい
   def reply(context, body)
     return @client.call(:reply, @bot.id, context, body, @bot.learning_parameter_attributes)
   end
@@ -14,6 +15,14 @@ class Ml::Engine
     # TODO RPCサーバ側でタイムアウトしてしまうため、結果を非同期で受け取りたい
     @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
   end
+
+  # TODO 非同期でコールバックを実行するメソッドを実装したい(RPCサーバのタイムアウト対策)、RPCサーバを変更する必要があるかも
+  # def async_learn
+  #   future = @client.callback(:learn, @bot.id, @bot.learning_parameter_attributes) do
+  #     Rails.logger.debug('hogehogehogehogehogehogehogehogehogehogehogehoge')
+  #   end
+  #   future.get
+  # end
 
   def predict_tags(bodies)
     @client.call(:predict_tags, bodies)

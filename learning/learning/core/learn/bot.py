@@ -19,32 +19,29 @@ class Bot:
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     def learn(self, csv_file_path=None):
-        logger.debug('Bot.learn start')
+        logger.debug('start Bot#learn')
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
+        logger.debug('Bot after mysql connect')
         training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
         training_set.build(csv_file_path=csv_file_path)
 
         estimator = self.__get_estimator(training_set)
+        logger.debug('after Bot#__get_estimator')
 
         Persistance.dump_model(estimator, self.bot_id)
         Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()
+        logger.debug('before Evaluator#evaluate')
         evaluator.evaluate(estimator, training_set.x, training_set.y)
-        logger.debug('Bot.learn end')
+        logger.debug('end Bot#learn')
 
         return evaluator
 
     def __get_estimator(self, training_set):
-        # SVMのグリッドサーチに時間がかかるので、一旦ロジスティック回帰のみにする
-        # estimator = self.__get_best_estimator(training_set)
-        # estimator = self.__logistic_regression(training_set).best_estimator_
-        # SVMを使用する
-        # estimator = self.__svm(training_set).best_estimator_
-
         if self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NAIVE_BAYES:
             logger.debug('use algorithm: naive bayes')
             estimator = MultinomialNB()
@@ -53,14 +50,20 @@ class Bot:
             estimator.fit(training_set.x, training_set.y)
         else:
             logger.debug('use algorithm: logistic regression')
-            # estimator = LogisticRegression(C=1e5)
-            # estimator = LogisticRegression()
-            # estimator.fit(training_set.x, training_set.y)
-            params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
-            grid = GridSearchCV(LogisticRegression(), param_grid=params)
-            grid.fit(training_set.x, training_set.y)
-            estimator = grid.best_estimator_
-            logger.debug('best_params_: %s' % grid.best_params_)
+
+            C = self.learning_parameter.params_for_algorithm.get('C', None)
+            if C is None:
+                logger.debug('learning_parameter has not parameter C')
+                # params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
+                params = {'C': [10, 100, 140, 200]}
+                grid = GridSearchCV(LogisticRegression(), param_grid=params)
+                grid.fit(training_set.x, training_set.y)
+                estimator = grid.best_estimator_
+                logger.debug('best_params_: %s' % grid.best_params_)
+            else:
+                logger.debug('learning_parameter has parameter C')
+                estimator = LogisticRegression(C=C)
+                estimator.fit(training_set.x, training_set.y)
 
         return estimator
 

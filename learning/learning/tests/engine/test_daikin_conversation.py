@@ -22,12 +22,12 @@ class DaikinConversationTestCase(TestCase):
         })
 
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+        # _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
 
     def test_how_to_add_mail_signature(self):
         questions = ['メールに署名を付ける方法を知りたい']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']
+        answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい
         probability = results[0]['probability']
         answer_body = helper.get_answer_body(self.answers, answer_id)
 
@@ -49,5 +49,41 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
 """
         eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
         ok_(probability > self.threshold)
+
+
+    def test_how_much_limit_file_size_attached_mail(self):
+        questions = ['Pointsecとは']
+        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
+        answer_id = results[0]['answer_id']
+        probability = results[0]['probability']
+        answer_body = helper.get_answer_body(self.answers, answer_id)
+
+        expected_answer = """ダイキン社内間であれば、メール送受信の容量制限は10MBになります。
+メール本文も含めた容量になります。
+社外からダイキンメールに添付ファイルを送付された場合ですが、社外のメールサーバの容量制限によって送受信できない場合があります。その際は社外の方へ確認を依頼ください。"""
+        eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
+        ok_(probability > self.threshold)
+
+
+    def test_spam_mail_in_folder(self):
+        questions = ['SPAMフォルダにメールが入っている']
+        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
+        answer_id = results[0]['answer_id']
+        probability = results[0]['probability']
+        answer_body = helper.get_answer_body(self.answers, answer_id)
+
+        expected_answer = """迷惑メールフィルタの性質上、そのようなことがあります。
+自動削除される前に別フォルダに移動してください。"""
+        eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
+        ok_(probability > self.threshold)
+
+
+    def test_dislike_bell_pepper(self):
+        questions = ['ピーマンは嫌いな食べ物です']
+        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
+        probability = results[0]['probability']
+
+        # しきい値を超える回答がないこと
+        ok_(probability < self.threshold)
 
 

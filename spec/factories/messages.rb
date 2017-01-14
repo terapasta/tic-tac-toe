@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :message do
     chat nil
-    speaker "MyString"
+    speaker :guest
     body "MyString"
   end
 end

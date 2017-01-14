@@ -1,7 +1,9 @@
 import numpy as np
+import time
+
 from learning.log import logger
-from sklearn import cross_validation
 from sklearn.cross_validation import ShuffleSplit
+from sklearn.cross_validation import cross_val_score
 from sklearn.metrics import precision_recall_fscore_support
 
 class Evaluator:
@@ -13,13 +15,20 @@ class Evaluator:
         self.f1 = 0
 
     def evaluate(self, estimator, X, y):
-        # TODO 本番環境実行時に非常に時間がかかるため一旦コメントアウトする(至急なおしたい)
-        # cv = ShuffleSplit(X.shape[0], n_iter=10, test_size=0.2, random_state=0)
-        # self.accuracy = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv))
+        start = time.time()
+
+        cv = ShuffleSplit(X.shape[0], n_iter=1, test_size=0.25, random_state=0)
+        self.accuracy = np.mean(cross_val_score(estimator, X, y, cv=cv))
+
         # 実行時に警告が出るため一旦コメントアウト(今のところチューニングにもあまり使用していない)
         # self.precision = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='precision_macro'))
         # self.recall = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='recall_macro'))
         # self.f1 = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='f1_macro'))
+
+        secs = time.time() - start
+        msecs = secs * 1000
+        logger.debug('Evaluator#evaluate#elapsed time: %f ms' % msecs)
+
         self.__out_log()
 
     def evaluate_using_exist_data(self, estimator, X, y):

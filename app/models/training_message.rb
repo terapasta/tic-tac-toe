@@ -9,9 +9,12 @@ class TrainingMessage < ActiveRecord::Base
 
   belongs_to :training
   belongs_to :answer
+  belongs_to :imported_training_message
   has_one :parent_decision_branch, through: :answer, dependent: :nullify
+  has_one :bot, through: :training
 
   accepts_nested_attributes_for :answer, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :imported_training_message
 
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
@@ -19,6 +22,7 @@ class TrainingMessage < ActiveRecord::Base
   validates :body, length: { maximum: 10000 }
 
   before_validation :change_answer_failed
+  after_create :save_associated_message!
 
   def parent
     training
@@ -30,8 +34,11 @@ class TrainingMessage < ActiveRecord::Base
     save!
   end
 
-  def previous
-    training.training_messages.where('id < ?', self.id).order("id desc").first
+  def previous(speaker: nil)
+    training_messages = training.training_messages
+    training_messages = training_messages.where('id < ?', self.id)
+    training_messages = training_messages.where(speaker: speaker) if speaker.present?
+    training_messages.order("id desc").first
   end
 
   private
@@ -40,5 +47,15 @@ class TrainingMessage < ActiveRecord::Base
         self.answer_failed = false
       end
       true
+    end
+
+    def save_associated_message!
+      return unless bot?
+      pre_training_message = previous(speaker: :guest)
+      if pre_training_message.present? && self.answer.present?
+        self.imported_training_message = bot.imported_training_messages.find_or_initialize_by(
+          question: pre_training_message.body, answer: self.answer)
+        self.save!
+      end
     end
 end

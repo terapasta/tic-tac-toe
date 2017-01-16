@@ -34,4 +34,22 @@ RSpec.describe TrainingMessage, :type => :model do
       end
     end
   end
+
+  describe 'after_create' do
+    let(:answer) { build(:answer, body: '元気ですよ。あなたは？') }
+    let(:training) { create(:training, training_messages: [
+      build(:training_message, speaker: :guest, body: 'こんにちは元気ですか？'),
+    ])}
+
+    subject do
+      training_message = training.training_messages.create(
+        speaker: :bot, body: answer.body, answer: answer)
+      training_message.reload.imported_training_message
+    end
+
+    it 'Q&Aのセットでimported_training_messageが紐付いていること' do
+      expect(subject.question).to eq 'こんにちは元気ですか？'
+      expect(subject.answer).to eq answer
+    end
+  end
 end

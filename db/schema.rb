@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106032950) do
+ActiveRecord::Schema.define(version: 20170116125501) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -239,16 +239,18 @@ ActiveRecord::Schema.define(version: 20170106032950) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "training_messages", force: :cascade do |t|
-    t.integer  "training_id",   limit: 4,                     null: false
-    t.integer  "answer_id",     limit: 4
-    t.string   "speaker",       limit: 255,                   null: false
-    t.text     "body",          limit: 65535
-    t.boolean  "learn_enabled",               default: true,  null: false
-    t.boolean  "answer_failed",               default: false, null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.integer  "training_id",                  limit: 4,                     null: false
+    t.integer  "answer_id",                    limit: 4
+    t.integer  "imported_training_message_id", limit: 4
+    t.string   "speaker",                      limit: 255,                   null: false
+    t.text     "body",                         limit: 65535
+    t.boolean  "learn_enabled",                              default: true,  null: false
+    t.boolean  "answer_failed",                              default: false, null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
   end
 
+  add_index "training_messages", ["imported_training_message_id"], name: "index_training_messages_on_imported_training_message_id", using: :btree
   add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree
 
   create_table "training_texts", force: :cascade do |t|

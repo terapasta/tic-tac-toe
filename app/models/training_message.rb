@@ -23,6 +23,7 @@ class TrainingMessage < ActiveRecord::Base
 
   before_validation :change_answer_failed
   after_create :save_associated_message!
+  after_update :update_associated_message!
 
   def parent
     training
@@ -36,9 +37,9 @@ class TrainingMessage < ActiveRecord::Base
 
   def previous(speaker: nil)
     training_messages = training.training_messages
-    training_messages = training_messages.where('id < ?', self.id)
-    training_messages = training_messages.where(speaker: speaker) if speaker.present?
-    training_messages.order("id desc").first
+    training_messages = training_messages.select{|tm| tm.id < self.id}
+    training_messages = training_messages.select{|tm| tm.speaker == speaker.to_s} if speaker.present?
+    training_messages.sort_by{|tm| tm.id}.last
   end
 
   private
@@ -55,7 +56,12 @@ class TrainingMessage < ActiveRecord::Base
       if pre_training_message.present? && self.answer.present?
         self.imported_training_message = bot.imported_training_messages.find_or_initialize_by(
           question: pre_training_message.body, answer: self.answer)
-        self.save!
+        save!
       end
+    end
+
+    def update_associated_message!
+      return unless bot?
+      self.imported_training_message.update!(answer: self.answer)
     end
 end

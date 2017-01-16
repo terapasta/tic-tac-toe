@@ -52,4 +52,27 @@ RSpec.describe TrainingMessage, :type => :model do
       expect(subject.answer).to eq answer
     end
   end
+
+  describe 'before_update' do
+    # let(:imported_training_message) { build(:imported_training_message, question: 'こんにちは元気ですか？', answer: answer) }
+    let(:answer) { build(:answer, body: '元気ですよ。あなたは？') }
+    let(:other_answer) { create(:answer, body: '体調悪いですね。あなたは？') }
+    let(:training) { create(:training, training_messages: [
+      build(:training_message, speaker: :guest, body: 'こんにちは元気ですか？'),
+      build(:training_message, speaker: :bot, body: answer.body, answer: answer),
+    ])}
+
+    context 'training_messageの回答が差し替えられた場合' do
+      subject do
+        training_message = training.training_messages.last
+        training_message.update!(answer: other_answer)
+        training_message.reload.imported_training_message
+      end
+
+      it 'imported_training_messageの回答が差し替わること' do
+        expect(subject.question).to eq 'こんにちは元気ですか？'
+        expect(subject.answer).to eq other_answer
+      end
+    end
+  end
 end

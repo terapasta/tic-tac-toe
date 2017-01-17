@@ -53,7 +53,7 @@ RSpec.describe TrainingMessage, :type => :model do
     end
   end
 
-  describe 'before_update' do
+  describe 'after_update' do
     # let(:imported_training_message) { build(:imported_training_message, question: 'こんにちは元気ですか？', answer: answer) }
     let(:answer) { build(:answer, body: '元気ですよ。あなたは？') }
     let(:other_answer) { create(:answer, body: '体調悪いですね。あなたは？') }
@@ -69,9 +69,22 @@ RSpec.describe TrainingMessage, :type => :model do
         training_message.reload.imported_training_message
       end
 
-      it 'imported_training_messageの回答が差し替わること' do
-        expect(subject.question).to eq 'こんにちは元気ですか？'
-        expect(subject.answer).to eq other_answer
+      context 'training_messageに紐づくimported_training_messageが存在する場合' do
+        it 'imported_training_messageの回答が差し替わること' do
+          expect(subject.question).to eq 'こんにちは元気ですか？'
+          expect(subject.answer).to eq other_answer
+        end
+      end
+
+      context 'training_messageに紐づくimported_training_messageが存在しない場合' do
+        before do
+          training.training_messages.update_all(imported_training_message_id: nil)
+        end
+
+        it 'training_messageに紐づくimported_training_messageが存在しないままであること' do
+          subject
+          training.training_messages.all { |tm| tm.imported_training_message == nil }
+        end
       end
     end
   end

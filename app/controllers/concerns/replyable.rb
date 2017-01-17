@@ -25,8 +25,7 @@ module Replyable
       message.other_answers = responder.other_answers if responder.present?
       message
     end
-    # TODO training_messageのbefore_createで設定したimported_training_messageが保存されないので、明示的に子レコードもsaveしている
-    parent.save!# && parent.messages.each{|m| m.save!}
+    parent.save!
     reply_messages
   end
 

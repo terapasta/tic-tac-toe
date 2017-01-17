@@ -22,7 +22,7 @@ class TrainingMessage < ActiveRecord::Base
   validates :body, length: { maximum: 10000 }
 
   before_validation :change_answer_failed
-  before_save :create_associated_message!
+  before_save :save_associated_message!
 
   def parent
     training
@@ -49,14 +49,18 @@ class TrainingMessage < ActiveRecord::Base
       true
     end
 
-    def create_associated_message!
+    def save_associated_message!
       return unless bot?
-      pre_training_message = previous(speaker: :guest)
-      if pre_training_message.present? && self.answer.present?
-        imported_training_message = bot.imported_training_messages.find_or_initialize_by(
-          question: pre_training_message.body, answer: self.answer)
-        imported_training_message.save!
-        self.imported_training_message = imported_training_message
+      if self.imported_training_message.present?
+        self.imported_training_message.update!(answer: self.answer)
+      else
+        pre_training_message = previous(speaker: :guest)
+        if pre_training_message.present? && self.answer.present?
+          imported_training_message = bot.imported_training_messages.find_or_initialize_by(
+            question: pre_training_message.body, answer: self.answer)
+          imported_training_message.save!
+          self.imported_training_message = imported_training_message
+        end
       end
     end
 end

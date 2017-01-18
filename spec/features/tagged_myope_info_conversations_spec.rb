@@ -10,7 +10,7 @@ feature 'My-ope紹介Botのデータで意図した通りにBotとの対話が�
   #   @bot = create(:bot, learning_parameter: learning_parameter)
   #   file_import(@bot, 'myope_info.csv')
   #
-  #   add_tag_to_imported_training_message(@bot, 'セキュリティは万全なの？', %w(セキュリティ 質問))
+  #   add_tag_to_question_answer(@bot, 'セキュリティは万全なの？', %w(セキュリティ 質問))
   #
   #   learn(@bot)
   # end

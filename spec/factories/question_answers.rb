@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :imported_training_message do
+  factory :question_answer do
     question "MyString"
     answer nil
     underlayer "MyText"

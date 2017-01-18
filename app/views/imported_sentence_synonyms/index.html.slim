@@ -12,9 +12,9 @@
 
   - if params.dig(:filter, :worker_id).present? || @target_date.present?
     .well
-      - total_count = @imported_training_messages.count
-      - completed_count = @imported_training_messages.completed_count_for(params[:filter][:worker_id], @target_date)
-      code #{ completed_count } / #{ @imported_training_messages.count }, 残り:#{ total_count - completed_count }
+      - total_count = @question_answers.count
+      - completed_count = @question_answers.completed_count_for(params[:filter][:worker_id], @target_date)
+      code #{ completed_count } / #{ @question_answers.count }, 残り:#{ total_count - completed_count }
 
 table.table.table-striped
   thead
@@ -24,7 +24,7 @@ table.table.table-striped
       th トレーニングメッセージ
       th 同義文
   tbody
-    - @imported_training_messages.each do |itm|
+    - @question_answers.each do |itm|
       - if current_user.normal? || policy_scope(itm.sentence_synonyms).any?
         tr
           th= itm.id

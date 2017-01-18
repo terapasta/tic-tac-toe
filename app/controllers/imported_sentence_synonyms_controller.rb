@@ -5,25 +5,26 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     authorize SentenceSynonym
-    @imported_training_messages = imported_training_messages
+    @question_answer = @bot.question_answer
     @target_date = parse_target_date
   end
 
   def new
-    @imported_training_message = ImportedTrainingMessage.pick_sentence_synonyms_not_enough(@bot, current_user)
-    if @imported_training_message.blank?
-      redirect_to root_path, alert: '未作業の文章がありませんでした' and return
+    @question_answer = QuestionAnswer.pick_sentence_synonyms_not_enough(@bot, current_user)
+    if @question_answer.blank?
+      flash[:error] = '未作業の文章がありませんでした'
+      redirect_to root_path and return
     end
-    @imported_training_message.build_sentence_synonyms_for(current_user)
+    @question_answer.build_sentence_synonyms_for(current_user)
   end
 
   def create
-    @imported_training_message = imported_training_messages.find(imported_training_message_params[:id])
-    @imported_training_message.assign_attributes(imported_training_message_params)
-    if @imported_training_message.save
+    @question_answer = question_answers.find(question_answer_params[:id])
+    @question_answer.assign_attributes(question_answer_params)
+    if @question_answer.save
       redirect_to new_path, notice: '登録しました。'
     else
-      logger.debug @imported_training_message.errors.full_messages
+      logger.debug @question_answer.errors.full_messages
       flash.now.alert = '登録に失敗しました。'
       render :new
     end

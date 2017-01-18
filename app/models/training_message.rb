@@ -9,12 +9,12 @@ class TrainingMessage < ActiveRecord::Base
 
   belongs_to :training
   belongs_to :answer
-  belongs_to :imported_training_message
+  belongs_to :question_answer
   has_one :parent_decision_branch, through: :answer, dependent: :nullify
   has_one :bot, through: :training
 
   accepts_nested_attributes_for :answer, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :imported_training_message
+  accepts_nested_attributes_for :question_answer
 
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
@@ -51,15 +51,15 @@ class TrainingMessage < ActiveRecord::Base
 
     def save_associated_message!
       return unless bot?
-      if self.imported_training_message.present?
-        self.imported_training_message.update!(answer: self.answer)
+      if self.question_answer.present?
+        self.question_answer.update!(answer: self.answer)
       else
         pre_training_message = previous(speaker: :guest)
         if pre_training_message.present? && self.answer.present?
-          imported_training_message = bot.imported_training_messages.find_or_initialize_by(
+          question_answer = bot.question_answers.find_or_initialize_by(
             question: pre_training_message.body, answer: self.answer)
-          imported_training_message.save!
-          self.imported_training_message = imported_training_message
+          question_answer.save!
+          self.question_answer = question_answer
         end
       end
     end

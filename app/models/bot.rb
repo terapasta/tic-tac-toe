@@ -5,13 +5,13 @@ class Bot < ActiveRecord::Base
   has_many :training_messages, through: :trainings
   has_many :messages, through: :chats
   has_many :learning_training_messages
-  has_many :imported_training_messages
+  has_many :question_answer
   has_many :answers
   has_many :decision_branches
   has_many :services
   has_one :score
   has_one :learning_parameter
-  has_many :sentence_synonyms, through: :imported_training_messages
+  has_many :sentence_synonyms, through: :question_answer
 
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 
@@ -35,7 +35,7 @@ class Bot < ActiveRecord::Base
   def reset_training_data!
     transaction do
       trainings.destroy_all
-      imported_training_messages.destroy_all
+      question_answer.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
       answers.destroy_all

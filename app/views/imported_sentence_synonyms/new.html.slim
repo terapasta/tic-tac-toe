@@ -8,13 +8,13 @@
   .panel-body
     .pull-right
       | 累計登録数: #{current_user.sentence_synonyms.count}件
-    = bootstrap_form_for @imported_training_message, url: form_url, method: :post do |f|
+    = bootstrap_form_for @question_answer, url: form_url, method: :post do |f|
       = f.hidden_field :id
       = f.static_control :question
 
       label.control-label
         | 同義文
-      = f.fields_for :sentence_synonyms, @imported_training_message.sentence_synonyms.select{|ss| ss.new_record?} do |ss|
+      = f.fields_for :sentence_synonyms, @question_answer.sentence_synonyms.select{|ss| ss.new_record?} do |ss|
         = ss.text_field :body, hide_label: true
 
       = f.submit '登録する', class: 'btn btn-success'

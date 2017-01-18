@@ -178,7 +178,7 @@ export default class ConversationItemForm extends Component {
 
   fetchTrainingMessages(botId, answerId) {
     const trainingMessagesPromise = axios.get(`/bots/${botId}/answers/${answerId}/training_messages.json`).then((res) => res.data);
-    const QuestionAnswersProimse = axios.get(`/bots/${botId}/answers/${answerId}/question_answers.json`).then((res) => res.data);
+    const QuestionAnswersProimse = axios.get(`/bots/${botId}/answers/${answerId}/imported_training_messages.json`).then((res) => res.data);
     return Promise.all([trainingMessagesPromise, QuestionAnswersProimse]);
   }
 }

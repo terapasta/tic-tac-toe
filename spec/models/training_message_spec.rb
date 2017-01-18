@@ -44,10 +44,10 @@ RSpec.describe TrainingMessage, :type => :model do
     subject do
       training_message = training.training_messages.create(
         speaker: :bot, body: answer.body, answer: answer)
-      training_message.reload.imported_training_message
+      training_message.reload.question_answer
     end
 
-    it 'Q&Aのセットでimported_training_messageが紐付いていること' do
+    it 'Q&Aのセットでquestion_answerが紐付いていること' do
       expect(subject.question).to eq 'こんにちは元気ですか？'
       expect(subject.answer).to eq answer
     end
@@ -62,11 +62,11 @@ RSpec.describe TrainingMessage, :type => :model do
       subject do
         training_message = training.training_messages.last
         training_message.update!(answer: other_answer)
-        training_message.reload.imported_training_message
+        training_message.reload.question_answer
       end
 
-      context 'training_messageに紐づくimported_training_messageが存在する場合' do
-        it 'imported_training_messageの回答が差し替わること' do
+      context 'training_messageに紐づくquestion_answerが存在する場合' do
+        it 'question_answerの回答が差し替わること' do
           expect(subject.question).to eq 'こんにちは元気ですか？'
           expect(subject.answer).to eq other_answer
         end

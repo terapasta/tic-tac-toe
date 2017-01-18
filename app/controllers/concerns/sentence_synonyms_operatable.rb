@@ -28,12 +28,12 @@ module SentenceSynonymsOperatable
       end
     end
 
-    def imported_training_message_params
-      @_itm_params ||= permitted_params(ImportedTrainingMessage, current_user)
+    def question_answer_params
+      @_itm_params ||= permitted_params(QuestionAnswer, current_user)
     end
 
-    def imported_training_messages
-      (@bot.try(:imported_training_messages) || ImportedTrainingMessage.all).includes(:bot)
+    def question_answers
+      (@bot.try(:question_answers) || QuestionAnswer.all).includes(:bot)
     end
 
     def sentence_synonyms

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170116125501) do
+ActiveRecord::Schema.define(version: 20170118144726) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -135,18 +135,6 @@ ActiveRecord::Schema.define(version: 20170116125501) do
     t.integer  "bot_id",     limit: 4,   null: false
   end
 
-  create_table "imported_training_messages", force: :cascade do |t|
-    t.integer  "bot_id",     limit: 4
-    t.string   "question",   limit: 255
-    t.integer  "answer_id",  limit: 4
-    t.text     "underlayer", limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "imported_training_messages", ["answer_id"], name: "index_imported_training_messages_on_answer_id", using: :btree
-  add_index "imported_training_messages", ["bot_id"], name: "index_imported_training_messages_on_bot_id", using: :btree
-
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",               limit: 4
     t.integer  "algorithm",            limit: 4,     default: 0,     null: false
@@ -186,6 +174,18 @@ ActiveRecord::Schema.define(version: 20170116125501) do
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
+
+  create_table "question_answers", force: :cascade do |t|
+    t.integer  "bot_id",     limit: 4
+    t.string   "question",   limit: 255
+    t.integer  "answer_id",  limit: 4
+    t.text     "underlayer", limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "question_answers", ["answer_id"], name: "index_question_answers_on_answer_id", using: :btree
+  add_index "question_answers", ["bot_id"], name: "index_question_answers_on_bot_id", using: :btree
 
   create_table "scores", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4,  null: false
@@ -239,18 +239,18 @@ ActiveRecord::Schema.define(version: 20170116125501) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "training_messages", force: :cascade do |t|
-    t.integer  "training_id",                  limit: 4,                     null: false
-    t.integer  "answer_id",                    limit: 4
-    t.integer  "imported_training_message_id", limit: 4
-    t.string   "speaker",                      limit: 255,                   null: false
-    t.text     "body",                         limit: 65535
-    t.boolean  "learn_enabled",                              default: true,  null: false
-    t.boolean  "answer_failed",                              default: false, null: false
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
+    t.integer  "training_id",        limit: 4,                     null: false
+    t.integer  "answer_id",          limit: 4
+    t.integer  "question_answer_id", limit: 4
+    t.string   "speaker",            limit: 255,                   null: false
+    t.text     "body",               limit: 65535
+    t.boolean  "learn_enabled",                    default: true,  null: false
+    t.boolean  "answer_failed",                    default: false, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
-  add_index "training_messages", ["imported_training_message_id"], name: "index_training_messages_on_imported_training_message_id", using: :btree
+  add_index "training_messages", ["question_answer_id"], name: "index_training_messages_on_question_answer_id", using: :btree
   add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree
 
   create_table "training_texts", force: :cascade do |t|

@@ -4,7 +4,7 @@ class SentenceSynonymPolicy < ApplicationPolicy
   end
 
   def show?
-    user.normal? || record.created_user == user
+    user.staff? || (user.normal? || record.created_user == user)
   end
 
   def new?
@@ -24,7 +24,7 @@ class SentenceSynonymPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   class Scope < Scope

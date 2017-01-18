@@ -25,7 +25,6 @@ module Replyable
       message.other_answers = responder.other_answers if responder.present?
       message
     end
-
     parent.save!
     reply_messages
   end

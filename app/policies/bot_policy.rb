@@ -4,7 +4,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def show?
-    user.staff? || (user.normal? && record.user == user)
+    update?
   end
 
   def new?

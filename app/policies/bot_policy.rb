@@ -26,4 +26,8 @@ class BotPolicy < ApplicationPolicy
   def destroy?
     user.staff?
   end
+
+  def reset?
+    update?
+  end
 end

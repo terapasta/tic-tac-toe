@@ -7,13 +7,13 @@ class Learning::Summarizer
 
   def summary
     LearningTrainingMessage.where(bot: @bot).destroy_all
-    convert_question_answer!
+    convert_question_answers!
     convert_decision_branches!
   end
 
-  def convert_question_answer!
+  def convert_question_answers!
     learning_training_messages = []
-    @bot.question_answer.find_each do |question_answer|
+    @bot.question_answers.find_each do |question_answer|
       learning_training_message = @bot.learning_training_messages.find_or_initialize_by(
         question: question_answer.question,
         answer_id: question_answer.answer_id
@@ -28,7 +28,7 @@ class Learning::Summarizer
   end
 
   def convert_decision_branches!
-    @bot.question_answer.find_each do |question_answer|
+    @bot.question_answers.find_each do |question_answer|
       if question_answer.underlayer.present?
         current_answer = question_answer.answer
         question_answer.underlayer.each_slice(2) do |decision_branch_body, answer_body|

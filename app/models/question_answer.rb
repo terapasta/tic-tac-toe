@@ -19,7 +19,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   # TODO: 戻り値を配列で返すのは一時対応なので、インポート処理を別クラスに移動していい感じにしたい
   def self.import_csv(file, bot)
-    question_answer = []
+    question_answers = []
     current_row = nil
     open(file.path, "rb:Shift_JIS:UTF-8", undef: :replace) do |f|
       transaction do
@@ -27,7 +27,7 @@ class QuestionAnswer < ActiveRecord::Base
           current_row = index + 1
           next if row[0].blank?
           answer = bot.answers.find_or_create_by!(body: row[1])
-          bot.question_answer.find_or_initialize_by(question: row[0]).tap do |itm|
+          bot.question_answers.find_or_initialize_by(question: row[0]).tap do |itm|
             itm.assign_attributes(
               answer: answer,
               underlayer: row.compact.count > 2 ? row[2..-1].compact : nil,

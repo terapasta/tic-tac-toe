@@ -1,4 +1,4 @@
-- if current_user.normal?
+- if policy(:sentence_synonym).index_filter?
   .well
     = form_tag bot_imported_sentence_synonyms_path(@bot), class: 'form-inline', method: :get do
       = collection_select :filter, :worker_id, User.worker, :id, :email, { include_blank: true, prompt: '-- ワーカーを選択 --', selected: params.dig(:filter, :worker_id) }, class: 'form-control'
@@ -32,5 +32,5 @@ table.table.table-striped
                   td= ss.id
                   td= ss.body
                   td= ss.created_user.email
-                  - if current_user.normal?
+                  - if policy(ss).destroy?
                     td= link_to '削除', bot_imported_sentence_synonym_path(@bot, ss), class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }

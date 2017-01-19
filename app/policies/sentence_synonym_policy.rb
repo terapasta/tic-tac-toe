@@ -3,6 +3,10 @@ class SentenceSynonymPolicy < ApplicationPolicy
     user.present?
   end
 
+  def index_filter?
+    user.staff? || user.normal?
+  end
+
   def show?
     user.staff? || user.normal? || record.created_user == user
   end

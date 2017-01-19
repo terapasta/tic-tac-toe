@@ -5,7 +5,7 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     authorize SentenceSynonym
-    @question_answer = @bot.question_answer
+    @question_answers = @bot.question_answers
     @target_date = parse_target_date
   end
 

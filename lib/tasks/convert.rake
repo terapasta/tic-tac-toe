@@ -28,13 +28,13 @@ namespace :convert do
   end
 
   def bulk_insert(qa_hash, bot)
-    question_answer = qa_hash.map do |key, value|
+    question_answers = qa_hash.map do |key, value|
       QuestionAnswer.new(
         bot_id: bot.id,
         question: key,
         answer_id: value[:answer_id],
       )
     end
-    QuestionAnswer.import!(question_answer)
+    QuestionAnswer.import!(question_answers)
   end
 end

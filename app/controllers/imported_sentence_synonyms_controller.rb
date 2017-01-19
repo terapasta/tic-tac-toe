@@ -4,6 +4,7 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     @imported_training_messages = @bot.imported_training_messages
+    @target_date = parse_target_date
   end
 
   def new
@@ -45,5 +46,14 @@ class ImportedSentenceSynonymsController < ApplicationController
 
     def imported_training_message_params
       params.require(:imported_training_message).permit(:id, sentence_synonyms_attributes: [:body, :created_user_id])
+    end
+
+    def parse_target_date
+      year = params.dig(:filter, 'target_date(1i)')
+      month = params.dig(:filter, 'target_date(2i)')
+      day = params.dig(:filter, 'target_date(3i)')
+      unless [year, month, day].include?(nil)
+        Date.new(year.to_i, month.to_i, day.to_i)
+      end
     end
 end

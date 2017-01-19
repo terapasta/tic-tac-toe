@@ -23,6 +23,8 @@ class SentenceSynonymPolicy < ApplicationPolicy
     user.present?
   end
 
+  # TODO: current_user.normal? の時のみ
+  #       record.training_message.bot.user_id == user.id をチェックしたい
   def destroy?
     user.normal? || user.staff?
   end

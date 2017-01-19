@@ -19,7 +19,6 @@ class QuestionAnswer < ActiveRecord::Base
 
   # TODO: 戻り値を配列で返すのは一時対応なので、インポート処理を別クラスに移動していい感じにしたい
   def self.import_csv(file, bot)
-    question_answers = []
     current_row = nil
     open(file.path, "rb:Shift_JIS:UTF-8", undef: :replace) do |f|
       transaction do

@@ -34,8 +34,6 @@ $ npm run build # 本番公開前に
 
 ---
 
-TODO mecabなどのインストール
-
 参考: http://tech.mof-mof.co.jp/blog/scikit-learn.html
 
 ```

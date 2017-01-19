@@ -9,4 +9,10 @@ class SentenceSynonym < ActiveRecord::Base
       where('sentence_synonyms.created_at BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
     end
   }
+
+  scope :target_user, -> (user_id) {
+    if user_id.present?
+      where('sentence_synonyms.created_user_id' => user_id)
+    end
+  }
 end

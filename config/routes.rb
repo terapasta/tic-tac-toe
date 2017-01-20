@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resource :conversation_tree, only: [:show]
   end
 
+  resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
   resources :word_mappings
 
   scope 'embed/:token' do

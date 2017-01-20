@@ -1,4 +1,5 @@
 class ExportsController < ApplicationController
+  include BotUsable
   before_action :authenticate_user!
   before_action :set_bot
 
@@ -9,6 +10,6 @@ class ExportsController < ApplicationController
 
   private
     def set_bot
-      @bot = current_user.bots.find(params[:bot_id])
+      @bot = bots.find(params[:bot_id])
     end
 end

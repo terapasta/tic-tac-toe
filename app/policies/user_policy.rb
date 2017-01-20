@@ -1,10 +1,10 @@
 class UserPolicy < ApplicationPolicy
   def index?
-    false
+    user.staff?
   end
 
   def show?
-    user.normal?
+    user.staff? || (user.normal? && record == user)
   end
 
   def new?
@@ -12,7 +12,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    false
+    true
   end
 
   def edit?
@@ -20,10 +20,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal?
+    user.staff? || (user.normal? && record == user)
   end
 
   def destroy?
-    false
+    user.staff? && record != user
   end
 end

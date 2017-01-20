@@ -1,9 +1,10 @@
 class BotsController < ApplicationController
+  include BotUsable
   before_action :authenticate_user!
   before_action :set_bot, only: [:edit, :update, :reset]
 
   def index
-    @bots = current_user.bots
+    @bots = bots.all
   end
 
   def edit
@@ -21,13 +22,13 @@ class BotsController < ApplicationController
   def reset
     @bot.reset_training_data!
     flash[:notice] = '学習データをリセットしました'
-
     redirect_to [:edit, @bot]
   end
 
   private
     def set_bot
-      @bot = current_user.bots.find(params[:id])
+      @bot = bots.find(params[:id])
+      authorize @bot
     end
 
     def bot_params

@@ -3,8 +3,12 @@ class SentenceSynonymPolicy < ApplicationPolicy
     user.present?
   end
 
+  def index_filter?
+    user.staff? || user.normal?
+  end
+
   def show?
-    user.normal? || record.created_user == user
+    user.staff? || user.normal? || record.created_user == user
   end
 
   def new?
@@ -23,8 +27,10 @@ class SentenceSynonymPolicy < ApplicationPolicy
     user.present?
   end
 
+  # TODO: current_user.normal? の時のみ
+  #       record.training_message.bot.user_id == user.id をチェックしたい
   def destroy?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   class Scope < Scope

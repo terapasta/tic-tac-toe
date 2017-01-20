@@ -1,4 +1,5 @@
 class DecisionBranchesController < ApplicationController
+  include BotUsable
   before_action :authenticate_user!
   before_action :set_bot
   before_action :set_decision_branch, only: [:show, :update, :destroy]
@@ -56,7 +57,7 @@ class DecisionBranchesController < ApplicationController
   private
 
     def set_bot
-      @bot = current_user.bots.find params[:bot_id]
+      @bot = bots.find params[:bot_id]
     end
 
     def set_decision_branch

@@ -1,10 +1,10 @@
 class BotPolicy < ApplicationPolicy
   def index?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   def show?
-    user.normal?
+    update?
   end
 
   def new?
@@ -12,7 +12,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def create?
-    false
+    user.staff?
   end
 
   def edit?
@@ -20,10 +20,14 @@ class BotPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal?
+    user.staff? || (user.normal? && record.user == user)
   end
 
   def destroy?
-    false
+    user.staff?
+  end
+
+  def reset?
+    update?
   end
 end

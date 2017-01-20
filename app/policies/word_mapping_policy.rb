@@ -1,10 +1,10 @@
 class WordMappingPolicy < ApplicationPolicy
   def index?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   def show?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   def new?
@@ -12,7 +12,7 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def create?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   def edit?
@@ -20,10 +20,10 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal?
+    user.normal? || user.staff?
   end
 
   def destroy?
-    user.normal?
+    user.normal? || user.staff?
   end
 end

@@ -1,5 +1,5 @@
 .chat-container
-  - @dummy_messages.each do |message|
+  - @chat.messages.each do |message|
     - if message.bot?
       = render 'bot', message: message
     - elsif message.guest?

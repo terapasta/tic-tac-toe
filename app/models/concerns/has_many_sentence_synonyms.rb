@@ -34,4 +34,9 @@ module HasManySentenceSynonyms
     @_registered_sentence_synonyms_counts[user] ||=
       sentence_synonyms.where(created_user_id: user.id).count
   end
+
+  def build_sentence_synonyms_for(user, options = { max_count: 3 })
+    count = registered_sentence_synonyms_count_by(user)
+    (options[:max_count] - count).times.map{ sentence_synonyms.build }
+  end
 end

@@ -8,6 +8,14 @@ class ImportedTrainingMessage < ActiveRecord::Base
 
   validates :answer_id, presence: true
 
+  scope :completed_count_for, -> (user_id, target_date) {
+    joins(:sentence_synonyms)
+      .merge(SentenceSynonym.target_user(user_id))
+      .merge(SentenceSynonym.target_date(target_date))
+      .uniq
+      .count
+  }
+
   # TODO: 戻り値を配列で返すのは一時対応なので、インポート処理を別クラスに移動していい感じにしたい
   def self.import_csv(file, bot)
     imported_training_messages = []

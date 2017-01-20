@@ -2,14 +2,17 @@
   .well
     = form_tag bot_imported_sentence_synonyms_path(@bot), class: 'form-inline', method: :get do
       = collection_select :filter, :worker_id, User.worker, :id, :email, { include_blank: true, prompt: '-- ワーカーを選択 --', selected: params.dig(:filter, :worker_id) }, class: 'form-control'
-      = submit_tag '絞込', class: 'btn btn-default'
+      = space 10
+      label 作業日を指定
+      = date_select :filter, :target_date, { selected: ((target_date = params.dig(:filter, :target_date)).present? ? Date.parse(target_date) : Date.today), prompt: '--' }, class: 'form-control'
+      = space 10
+      = submit_tag '絞込', class: 'btn btn-info'
 
-
-  - if params.dig(:filter, :worker_id).present?
+  - if params.dig(:filter, :worker_id).present? || @target_date.present?
     .well
       - total_count = @imported_training_messages.count
-      - completed_count = @imported_training_messages.joins(:sentence_synonyms).where('sentence_synonyms.created_user_id' => params.dig(:filter, :worker_id)).uniq.count
-      code #{ completed_count} / #{ @imported_training_messages.count }, 残り:#{ total_count - completed_count }
+      - completed_count = @imported_training_messages.completed_count_for(params[:filter][:worker_id], @target_date)
+      code #{ completed_count } / #{ @imported_training_messages.count }, 残り:#{ total_count - completed_count }
 
 table.table.table-striped
   thead
@@ -25,9 +28,7 @@ table.table.table-striped
           th= itm.question
           th
             table.table.table-striped: tbody
-              - ss_list = policy_scope(itm.sentence_synonyms)
-              - ss_list = ss_list.select{ |ss| ss.created_user_id == params[:filter][:worker_id].to_i } if params.dig(:filter, :worker_id).present?
-              - ss_list.each do |ss|
+              - policy_scope(itm.sentence_synonyms).target_date(@target_date).target_user(params.dig(:filter, :worker_id)).each do |ss|
                 tr
                   td= ss.id
                   td= ss.body

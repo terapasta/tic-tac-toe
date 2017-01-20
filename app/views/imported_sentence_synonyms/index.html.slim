@@ -1,6 +1,8 @@
+- form_url = @bot ? bot_imported_sentence_synonyms_path(@bot) : imported_sentence_synonyms_path
+
 - if policy(:sentence_synonym).index_filter?
   .well
-    = form_tag bot_imported_sentence_synonyms_path(@bot), class: 'form-inline', method: :get do
+    = form_tag form_url, class: 'form-inline', method: :get do
       = collection_select :filter, :worker_id, User.worker, :id, :email, { include_blank: true, prompt: '-- ワーカーを選択 --', selected: params.dig(:filter, :worker_id) }, class: 'form-control'
       = space 10
       label 作業日を指定
@@ -18,6 +20,7 @@ table.table.table-striped
   thead
     tr
       th id
+      th bot
       th トレーニングメッセージ
       th 同義文
   tbody
@@ -25,6 +28,7 @@ table.table.table-striped
       - if current_user.normal? || policy_scope(itm.sentence_synonyms).any?
         tr
           th= itm.id
+          th= link_to "#{ itm.bot.id } #{ itm.bot.name }", edit_bot_path(itm.bot_id)
           th= itm.question
           th
             table.table.table-striped: tbody
@@ -34,4 +38,5 @@ table.table.table-striped
                   td= ss.body
                   td= ss.created_user.email
                   - if policy(ss).destroy?
-                    td= link_to '削除', bot_imported_sentence_synonym_path(@bot, ss), class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }
+                    - url = @bot ? bot_imported_sentence_synonym_path(@bot, ss) : imported_sentence_synonym_path(ss)
+                    td= link_to '削除', url, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }

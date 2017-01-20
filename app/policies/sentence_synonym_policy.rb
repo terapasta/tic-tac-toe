@@ -1,6 +1,6 @@
 class SentenceSynonymPolicy < ApplicationPolicy
   def index?
-    user.present?
+    user.normal?
   end
 
   def index_filter?
@@ -39,7 +39,7 @@ class SentenceSynonymPolicy < ApplicationPolicy
         scope.all
       else
         scope.where(created_user_id: user.id)
-      end
+      end.includes(:created_user)
     end
   end
 end

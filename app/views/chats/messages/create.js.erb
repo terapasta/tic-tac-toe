@@ -1,10 +1,11 @@
 $('#message_body').val('');
-$('.chat-area').append("<%= escape_javascript(render('chats/guest', message: @message)) %><br />");
+$('.chat-area').append("<%= escape_javascript(render('chats/guest', message: @message)) %>");
 
 <% @bot_messages.each do |bot_message| %>
 <%# 会話している風にするため意図的にbotの発言を遅らせる %>
-$('.chat-area').delay(1300).queue(function() {
-  $(this).append("<%= escape_javascript(render('chats/bot', message: bot_message)) %><br />").dequeue();
+$('.chat-area').delay(500).queue(function() {
+  $(this).append("<%= escape_javascript(render('chats/bot', message: bot_message)) %>")
+    .dequeue();
 
   <% if bot_message.try(:answer).try(:decision_branches).try(:present?) %>
     disable_question_field();

@@ -31,6 +31,10 @@
     &:focus {
       border: 1px solid $blue;
     }
+
+    &[disabled] {
+      background-color: $gray-lighter;
+    }
   }
 
   &__submit {
@@ -47,6 +51,10 @@
 
     &:hover {
       background-color: darken($blue-green, 5%);
+    }
+
+    &[disabled] {
+      opacity: .5;
     }
 
     @media (max-width: $screen-xs-max) {

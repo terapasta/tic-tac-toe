@@ -41,15 +41,25 @@ RSpec.describe TrainingMessage, :type => :model do
       build(:training_message, speaker: :guest, body: 'こんにちは元気ですか？'),
     ])}
 
-    subject do
-      training_message = training.training_messages.create(
-        speaker: :bot, body: answer.body, answer: answer)
-      training_message.reload.question_answer
-    end
+    context 'training_messageが登録された場合' do
+      subject do
+        training_message = training.training_messages.create(
+          speaker: :bot, body: answer.body, answer: answer)
+        training_message.reload.question_answer
+      end
 
-    it 'Q&Aのセットでquestion_answerが紐付いていること' do
-      expect(subject.question).to eq 'こんにちは元気ですか？'
-      expect(subject.answer).to eq answer
+      it 'Q&Aのセットでquestion_answerが紐付いていること' do
+        expect(subject.question).to eq 'こんにちは元気ですか？'
+        expect(subject.answer).to eq answer
+      end
+
+      context 'training_messageがparent_decision_branchを持っている場合' do
+        before { answer.update!(parent_decision_branch: build(:decision_branch)) }
+
+        it 'question_answerが登録されないこと' do
+          is_expected.to be_nil
+        end
+      end
     end
 
     context 'training_messageの回答が差し替えられた場合' do

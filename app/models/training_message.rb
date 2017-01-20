@@ -55,7 +55,7 @@ class TrainingMessage < ActiveRecord::Base
         self.question_answer.update!(answer: self.answer)
       else
         pre_training_message = previous(speaker: :guest)
-        if pre_training_message.present? && self.answer.present?
+        if pre_training_message.present? && self.answer.present? && self.parent_decision_branch.blank?
           question_answer = bot.question_answers.find_or_initialize_by(
             question: pre_training_message.body, answer: self.answer)
           question_answer.save!

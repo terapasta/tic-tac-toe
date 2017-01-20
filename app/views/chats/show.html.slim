@@ -1,0 +1,15 @@
+.chat-container
+  - @dummy_messages.each do |message|
+    - if message.bot?
+      = render 'bot', message: message
+    - elsif message.guest?
+      = render 'guest', message: message
+
+.chat-form: .container
+  = form_for @chat.messages.build, url: chats_messages_path(@bot.token), remote: true do |f|
+    = f.text_field :body, placeholder: '質問を入れてください', hide_label: true, class: 'chat-form__text-field'
+    = f.button class: 'chat-form__submit' do
+      span.visible-sm.visible-md.visible-lg 質問
+      span.visible-xs: i.fa.fa-icon.fa-paper-plane-o
+
+= javascript_include_tag 'chats'

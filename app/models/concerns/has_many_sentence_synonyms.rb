@@ -11,12 +11,15 @@ module HasManySentenceSynonyms
       picking_sentence_synonyms(bot, user).sample
     end
 
+    # botをnilで呼び出す場合があるのでtryを使っています
     def picking_sentence_synonyms(bot, user)
       messages = begin
         if self == TrainingMessage
-          bot.training_messages.guest.includes(:sentence_synonyms)
+          (bot.try(:training_messages) || TrainingMessage)
+            .guest.includes(:sentence_synonyms)
         elsif self == ImportedTrainingMessage
-          bot.imported_training_messages.includes(:sentence_synonyms)
+          (bot.try(:imported_training_messages) || ImportedTrainingMessage)
+            .includes(:sentence_synonyms)
         end
       end
       messages.select {|m|

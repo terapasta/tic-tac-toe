@@ -28,4 +28,10 @@ module HasManySentenceSynonyms
       }
     end
   end
+
+  def registered_sentence_synonyms_count_by(user)
+    @_registered_sentence_synonyms_counts ||= {}
+    @_registered_sentence_synonyms_counts[user] ||=
+      sentence_synonyms.where(created_user_id: user.id).count
+  end
 end

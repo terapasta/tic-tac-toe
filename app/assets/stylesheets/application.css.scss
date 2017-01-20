@@ -12,7 +12,7 @@
 
 @import "compass/utilities/general/clearfix";
 @import "common/variables";
-@import "modules/*";
+@import "modules/**/*";
 
 html {
   min-height: 100%;

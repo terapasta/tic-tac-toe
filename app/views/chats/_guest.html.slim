@@ -1,0 +1,6 @@
+.chat-row
+  .chat-message--my
+    .chat-message__balloon
+      = auto_link(simple_format(message.body), html: { target: '_blank' })
+    .chat-message__icon
+      = image_tag 'silhouette.png', class: 'listen'

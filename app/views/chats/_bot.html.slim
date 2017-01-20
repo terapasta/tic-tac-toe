@@ -1,0 +1,23 @@
+.chat-row
+  .chat-message
+    .chat-message__icon
+      = image_tag message.parent.bot.image_url || 'operator', class: 'listen'
+    .chat-message__balloon
+      = auto_link(simple_format(message.body), html: { target: '_blank' })
+      /- if message.other_answers.present?
+        .small
+          p その他の回答
+          ul
+            - message.other_answers.each do |other_answer|
+              - if other_answer.headline.present?
+              li
+                = link_to other_answer.headline, chats_messages_path(message.parent.bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: tru
+
+- if message.answer.try(:decision_branches).try(:present?)
+  .chat-row
+    .chat-decision-branches: .chat-decision-branches__container
+      .chat-decision-branches__title 回答を選択してください
+      .chat-decision-branches__items
+        - message.answer.decision_branches.each do |decision_branch|
+          = link_to choices_chats_path(message.parent.bot.token, decision_branch), method: :post,remote: true, class: 'chat-decision-branches__item' do
+            = decision_branch.body

@@ -1,4 +1,4 @@
-class CreateImportedTrainingMessage < ActiveRecord::Migration
+class CreateImportedTrainingMessages < ActiveRecord::Migration
   def change
     create_table :imported_training_messages do |t|
       t.references :bot, index: true

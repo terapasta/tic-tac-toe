@@ -39,7 +39,7 @@ class SentenceSynonymPolicy < ApplicationPolicy
         scope.all
       else
         scope.where(created_user_id: user.id)
-      end
+      end.includes(:created_user)
     end
   end
 end

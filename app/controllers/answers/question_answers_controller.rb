@@ -1,11 +1,11 @@
-class Answers::ImportedTrainingMessagesController < ApplicationController
+class Answers::QuestionAnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
   before_action :set_answer
 
   def index
     respond_to do |format|
-      format.json { render json: @answer.imported_training_messages }
+      format.json { render json: @answer.question_answers }
     end
   end
 

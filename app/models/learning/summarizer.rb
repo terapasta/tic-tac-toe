@@ -7,19 +7,19 @@ class Learning::Summarizer
 
   def summary
     LearningTrainingMessage.where(bot: @bot).destroy_all
-    convert_imported_training_messages!
+    convert_question_answers!
     convert_decision_branches!
   end
 
-  def convert_imported_training_messages!
+  def convert_question_answers!
     learning_training_messages = []
-    @bot.imported_training_messages.find_each do |imported_training_message|
+    @bot.question_answers.find_each do |question_answer|
       learning_training_message = @bot.learning_training_messages.find_or_initialize_by(
-        question: imported_training_message.question,
-        answer_id: imported_training_message.answer_id
+        question: question_answer.question,
+        answer_id: question_answer.answer_id
       )
-      unless learning_training_messages.any? {|m| m.question == imported_training_message.question}
-        learning_training_message.answer_body = imported_training_message.answer.body
+      unless learning_training_messages.any? {|m| m.question == question_answer.question}
+        learning_training_message.answer_body = question_answer.answer.body
         learning_training_messages << learning_training_message
       end
     end
@@ -28,10 +28,10 @@ class Learning::Summarizer
   end
 
   def convert_decision_branches!
-    @bot.imported_training_messages.find_each do |imported_training_message|
-      if imported_training_message.underlayer.present?
-        current_answer = imported_training_message.answer
-        imported_training_message.underlayer.each_slice(2) do |decision_branch_body, answer_body|
+    @bot.question_answers.find_each do |question_answer|
+      if question_answer.underlayer.present?
+        current_answer = question_answer.answer
+        question_answer.underlayer.each_slice(2) do |decision_branch_body, answer_body|
           decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: @bot.id)
           if answer_body.present?
             current_answer = @bot.answers.find_or_initialize_by(body: answer_body, bot_id: @bot.id)

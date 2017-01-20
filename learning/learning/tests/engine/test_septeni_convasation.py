@@ -17,7 +17,7 @@ class SepteniConvasationTestCase(TestCase):
     })
     threshold = 0.5
     bot_id = 999  # テスト用のbot_id いずれの値でも動作する
-    csv_file_path = 'learning/tests/engine/fixtures/test_septeni_convasation.csv'
+    csv_file_path = 'learning/tests/engine/fixtures/test_septeni_conversation.csv'
     answers = None
 
     @classmethod
@@ -63,4 +63,3 @@ class SepteniConvasationTestCase(TestCase):
     def __build_answers(cls):
         learning_training_messages = pd.read_csv(cls.csv_file_path, encoding='SHIFT-JIS')
         return learning_training_messages.drop_duplicates(subset=['answer_id'])
-

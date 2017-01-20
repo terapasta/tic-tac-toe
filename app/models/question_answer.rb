@@ -1,4 +1,4 @@
-class ImportedTrainingMessage < ActiveRecord::Base
+class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
 
   acts_as_taggable
@@ -19,7 +19,6 @@ class ImportedTrainingMessage < ActiveRecord::Base
 
   # TODO: 戻り値を配列で返すのは一時対応なので、インポート処理を別クラスに移動していい感じにしたい
   def self.import_csv(file, bot)
-    imported_training_messages = []
     current_row = nil
     open(file.path, "rb:Shift_JIS:UTF-8", undef: :replace) do |f|
       transaction do
@@ -27,7 +26,7 @@ class ImportedTrainingMessage < ActiveRecord::Base
           current_row = index + 1
           next if row[0].blank?
           answer = bot.answers.find_or_create_by!(body: row[1])
-          bot.imported_training_messages.find_or_initialize_by(question: row[0]).tap do |itm|
+          bot.question_answers.find_or_initialize_by(question: row[0]).tap do |itm|
             itm.assign_attributes(
               answer: answer,
               underlayer: row.compact.count > 2 ? row[2..-1].compact : nil,

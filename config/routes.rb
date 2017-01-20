@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     resources :answers, except: [:new] do
       resources :decision_branches, only: [:index]
       resources :training_messages, only: [:index], module: :answers
-      resources :imported_training_messages, only: [:index], module: :answers
+      resources :question_answers, only: [:index], module: :answers
     end
     resources :decision_branches, only: [:show, :update, :create, :destroy]
     resource :conversation_tree, only: [:show]

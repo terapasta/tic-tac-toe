@@ -1,6 +1,6 @@
 namespace :convert do
-  desc 'convert training_messages to imported_training_messages'
-  task :training_messages_to_imported_training_messages, ['bot_id'] => :environment do |task, args|
+  desc 'convert training_messages to question_answer'
+  task :training_messages_to_question_answer, ['bot_id'] => :environment do |task, args|
     bot_id = args[:bot_id]
     convert(bot_id)
   end
@@ -28,13 +28,13 @@ namespace :convert do
   end
 
   def bulk_insert(qa_hash, bot)
-    imported_training_messages = qa_hash.map do |key, value|
-      ImportedTrainingMessage.new(
+    question_answers = qa_hash.map do |key, value|
+      QuestionAnswer.new(
         bot_id: bot.id,
         question: key,
         answer_id: value[:answer_id],
       )
     end
-    ImportedTrainingMessage.import!(imported_training_messages)
+    QuestionAnswer.import!(question_answers)
   end
 end

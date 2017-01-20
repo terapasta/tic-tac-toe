@@ -1,0 +1,86 @@
+%base-chat-message {
+  @include pie-clearfix;
+  position: relative;
+  float: left;
+  width: 50%;
+
+  @media (max-width: $screen-xxs-max) {
+    width: 100%;
+  }
+}
+
+.chat-message {
+  @extend %base-chat-message;
+  $-arrow-size: 6px;
+  $-icon-size: 32px;
+  $-balloon-spacing: 16px;
+
+  &--my {
+    @extend %base-chat-message;
+    float: right;
+
+    .chat-message__icon {
+      left: auto;
+      right: 0;
+    }
+
+    .chat-message__balloon {
+      margin-left: 0;
+      margin-right: $-icon-size + $-balloon-spacing;
+      background-color: $blue;
+      color: $white;
+      word-break: break-all;
+
+      &::before {
+        right: auto;
+        left: 100%;
+        border-right: 0;
+        border-left: $-arrow-size solid $blue;
+      }
+
+      a {
+        color: $white;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    img {
+      width: $-icon-size;
+      height: $-icon-size;
+      border-radius: 50%;
+      border: 1px solid $gray;
+    }
+  }
+
+  &__balloon {
+    position: relative;
+    margin-left: $-icon-size + $-balloon-spacing;
+    padding: 10px;
+    background-color: $gray-lighter;
+    border-radius: 3px;
+    font-size: 12px;
+    letter-spacing: 1px;
+
+    &::before {
+      position: absolute;
+      top: 8px;
+      right: 100%;
+      content: "";
+      width: 0;
+      height: 0;
+      border-right: $-arrow-size solid $gray-lighter;
+      border-top: $-arrow-size solid transparent;
+      border-bottom: $-arrow-size solid transparent;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}

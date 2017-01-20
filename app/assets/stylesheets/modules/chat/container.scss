@@ -1,0 +1,11 @@
+.chat-container {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 43px;
+  padding-bottom: 74px;
+
+  @media (max-width: $screen-xxs-max) {
+    padding-right: 10px;
+    padding-left: 7px;
+  }
+}

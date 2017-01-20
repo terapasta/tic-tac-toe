@@ -30,7 +30,7 @@ class TrainingsController < ApplicationController
   private
     def set_bot
       @bot = bots.find(params[:bot_id])
-      authorize @bot
+      authorize @bot, :show?
     end
 
     def set_training

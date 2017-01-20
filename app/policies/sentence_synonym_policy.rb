@@ -1,6 +1,6 @@
 class SentenceSynonymPolicy < ApplicationPolicy
   def index?
-    user.present?
+    user.normal?
   end
 
   def index_filter?

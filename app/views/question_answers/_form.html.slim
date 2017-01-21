@@ -8,7 +8,7 @@
     = autocomplete_field_tag :answer_body, '', autocomplete_answer_body_bot_question_answers_path(@bot), placeholder: "回答を検索", class: 'form-control'
     i.glyphicon.glyphicon-search.form-control-feedback
   = f.form_group
-    p.form-control-static id="static-answer-body" = @question_answer&.answer&.body
+    = text_area_tag :answer_text_area, @question_answer&.answer&.body, class: 'form-control', rows: 6, readonly: true
   = f.hidden_field :answer_id
   = f.submit class: 'btn btn-success'
   | &nbsp;

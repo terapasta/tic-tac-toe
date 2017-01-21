@@ -34,28 +34,10 @@ class QuestionAnswersController < ApplicationController
     end
   end
 
-  # def destroy
-  #   respond_to do |format|
-  #     format.html do
-  #       @answer.destroy!
-  #       redirect_to bot_answers_path(@bot), notice: '回答を削除しました。'
-  #     end
-  #     format.json do
-  #       ActiveRecord::Base.transaction do
-  #         @answer.self_and_deep_child_answers.map(&:destroy!)
-  #       end
-  #       render json: {}, status: :no_content
-  #     end
-  #   end
-  # rescue => e
-  #   respond_to do |format|
-  #     format.html { raise e }
-  #     format.json do
-  #       logger.error e.message + e.backtrace.join("\n")
-  #       render json: { error: e.message }, status: :internal_server_error
-  #     end
-  #   end
-  # end
+  def destroy
+    @question_answer.destroy!
+    redirect_to bot_question_answers_path(@bot), notice: '削除しました。'
+  end
 
   private
     def set_bot

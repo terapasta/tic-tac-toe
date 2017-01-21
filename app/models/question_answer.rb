@@ -7,6 +7,7 @@ class QuestionAnswer < ActiveRecord::Base
   belongs_to :bot
   belongs_to :answer
   has_many :decision_branches, through: :answer
+  
   serialize :underlayer
 
   validates :answer_id, presence: true

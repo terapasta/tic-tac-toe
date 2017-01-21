@@ -22,20 +22,14 @@ class QuestionAnswersController < ApplicationController
   #   end
   # end
 
-  # def update
-  #   respond_to do |format|
-  #     if @answer.update answer_params
-  #       format.html { redirect_to bot_answers_path(@bot), notice: '回答を更新しました。' }
-  #       format.json { render json: @answer.decorate.as_json, status: :ok }
-  #     else
-  #       format.html do
-  #         flash.now.alert = '回答を更新できませんでした。'
-  #         render :edit
-  #       end
-  #       format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
+  def update
+    if @question_answer.update(question_answer_params)
+      redirect_to bot_question_answers_path(@bot), notice: '更新しました。'
+    else
+      flash.now.alert = '更新できませんでした。'
+      render :edit      
+    end
+  end
 
   # def destroy
   #   respond_to do |format|
@@ -69,7 +63,7 @@ class QuestionAnswersController < ApplicationController
       @question_answer = @bot.question_answers.find params[:id]
     end
 
-  #   def answer_params
-  #     params.require(:answer).permit(:headline, :body)
-  #   end
+    def question_answer_params
+      params.require(:question_answer).permit(:answer_id)
+    end
 end

@@ -4,11 +4,9 @@
     = f.label :answer_id
     = autocomplete_field_tag :answer_body, '', autocomplete_answer_body_bot_question_answers_path(@bot), placeholder: "回答を検索", class: 'form-control'
     i.glyphicon.glyphicon-search.form-control-feedback
-  = f.fields_for :answer, @question_answer.answer do |a|
-    / = a.static_control :body, hide_label: true, class: 'static-answer-body'
-    = a.form_group :body
-      p.form-control-static id="static-answer-body" = a.object.body
-    = a.hidden_field :id
+  = f.form_group
+    p.form-control-static id="static-answer-body" = @question_answer&.answer&.body
+  = f.hidden_field :answer_id
   = f.submit class: 'btn btn-success'
   | &nbsp;
   = link_to '削除する', [@bot, @question_answer], method: :delete, class: 'btn btn-danger', data: { confirm: 'Q&Aを削除します。よろしいですか？' }

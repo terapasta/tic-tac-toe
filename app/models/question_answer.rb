@@ -6,6 +6,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   belongs_to :bot
   belongs_to :answer
+  has_many :training_messages, dependent: :nullify
   has_many :decision_branches, through: :answer
   
   serialize :underlayer

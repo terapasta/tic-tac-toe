@@ -3,7 +3,7 @@ class QuestionAnswersController < ApplicationController
   before_action :authenticate_user!
 
   before_action :set_bot
-  # before_action :set_answer, only: [:edit, :update, :destroy]
+  before_action :set_question_answer, only: [:edit, :update, :destroy]
 
   def index
     @question_answers = @bot.question_answers.order('question').page(params[:page])
@@ -70,14 +70,13 @@ class QuestionAnswersController < ApplicationController
   # end
 
   private
-
     def set_bot
       @bot = current_user.bots.find params[:bot_id]
     end
 
-  #   def set_answer
-  #     @answer = @bot.answers.find params[:id]
-  #   end
+    def set_question_answer
+      @question_answer = @bot.question_answers.find params[:id]
+    end
 
   #   def answer_params
   #     params.require(:answer).permit(:headline, :body)

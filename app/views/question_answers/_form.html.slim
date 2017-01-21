@@ -1,0 +1,7 @@
+= bootstrap_form_for [@bot, @question_answer] do |f|
+  = f.static_control :question
+  / = f.autocomplete_text_field :body, autocomplete_answer_body_bot_trainings_path, placeholder: "回答を入力", class: 'form-control', rows: 4 %>
+  = f.text_field :answer_id
+  = f.submit class: 'btn btn-success'
+  | &nbsp;
+  = link_to '削除する', [@bot, @question_answer], method: :delete, class: 'btn btn-danger', data: { confirm: 'Q&Aを削除します。よろしいですか？' }

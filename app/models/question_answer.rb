@@ -1,10 +1,12 @@
 class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
 
+  paginates_per 500
   acts_as_taggable
 
   belongs_to :bot
   belongs_to :answer
+  has_many :decision_branches, through: :answer
   serialize :underlayer
 
   validates :answer_id, presence: true

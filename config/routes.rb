@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post :reset, on: :member
     resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
+    resources :question_answers
     resource :imports, only: [:new, :create]
     resource :exports, only: :show
     resources :threads, only: :index do

@@ -9,4 +9,4 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w( chats.js trainings.js bots/form.js resources/*.css lumen.css lumen.js cerulean.css cerulean.js)
+Rails.application.config.assets.precompile += %w( chats.js trainings.js bots/form.js question_answers/form.js resources/*.css lumen.css lumen.js cerulean.css cerulean.js)

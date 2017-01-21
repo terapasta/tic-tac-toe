@@ -5,20 +5,11 @@ class QuestionAnswersController < ApplicationController
   before_action :set_bot
   before_action :set_question_answer, only: [:edit, :update, :destroy]
 
+  autocomplete :answer, :body, full: true
+
   def index
     @question_answers = @bot.question_answers.order('question').page(params[:page])
   end
-
-  # def show
-  #   @answer = @bot.answers.find_by(id: params[:id])
-  #   respond_to do |format|
-  #     if @answer.present?
-  #       format.json { render json: @answer.decorate.as_json }
-  #     else
-  #       format.json { render json: {}, status: :not_found }
-  #     end
-  #   end
-  # end
 
   # def create
   #   @answer = @bot.answers.build(answer_params)

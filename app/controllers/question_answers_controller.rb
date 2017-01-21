@@ -11,16 +11,19 @@ class QuestionAnswersController < ApplicationController
     @question_answers = @bot.question_answers.order('question').page(params[:page])
   end
 
-  # def create
-  #   @answer = @bot.answers.build(answer_params)
-  #   respond_to do |format|
-  #     if @answer.save
-  #       format.json { render json: @answer.decorate.as_json, status: :created }
-  #     else
-  #       format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
+  def new
+    @question_answer = @bot.question_answers.build
+  end
+
+  def create
+    @question_answer = @bot.question_answers.build(question_answer_params)
+    if @question_answer.save
+      redirect_to bot_question_answers_path(@bot), notice: '登録しました。'
+    else
+      flash.now.alert = '登録できませんでした。'
+      render :edit      
+    end
+  end
 
   def update
     if @question_answer.update(question_answer_params)
@@ -64,6 +67,6 @@ class QuestionAnswersController < ApplicationController
     end
 
     def question_answer_params
-      params.require(:question_answer).permit(:answer_id)
+      params.require(:question_answer).permit(:question, :answer_id)
     end
 end

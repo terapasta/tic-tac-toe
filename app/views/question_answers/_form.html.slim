@@ -1,5 +1,8 @@
 = bootstrap_form_for [@bot, @question_answer] do |f|
-  = f.static_control :question
+  - if @question_answer.persisted?
+    = f.static_control :question
+  - else
+    = f.text_field :question
   = f.form_group :answer_id, class: 'has-feedback'
     = f.label :answer_id
     = autocomplete_field_tag :answer_body, '', autocomplete_answer_body_bot_question_answers_path(@bot), placeholder: "回答を検索", class: 'form-control'

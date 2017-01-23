@@ -18,6 +18,7 @@ class Evaluator:
     def evaluate(self, estimator, X, y, threshold=0.0):
         threshold = 0.0 if threshold is None else threshold
         self.threshold = threshold
+        logger.debug('self.threshold: %s' % self.threshold)
         start = time.time()
 
         cv = ShuffleSplit(X.shape[0], n_iter=1, test_size=0.25, random_state=0)

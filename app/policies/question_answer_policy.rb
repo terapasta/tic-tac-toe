@@ -1,4 +1,4 @@
-class ImportedTrainingMessagePolicy < ApplicationPolicy
+class QuestionAnswerPolicy < ApplicationPolicy
   def permitted_attributes
     [
       :id,

@@ -14,7 +14,7 @@ module SentenceSynonymsOperatable
     def new_path
       resource_name = params[:controller].singularize
       if @bot
-        send("new_bot_#{ resource_name }_path", bot)
+        send("new_bot_#{ resource_name }_path", @bot)
       else
         send("new_#{ resource_name }_path")
       end

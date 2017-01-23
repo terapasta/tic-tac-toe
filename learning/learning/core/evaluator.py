@@ -13,12 +13,15 @@ class Evaluator:
         self.precision = 0
         self.recall = 0
         self.f1 = 0
+        self.threshold = 0
 
-    def evaluate(self, estimator, X, y):
+    def evaluate(self, estimator, X, y, threshold=0.0):
+        self.threshold = threshold
         start = time.time()
 
         cv = ShuffleSplit(X.shape[0], n_iter=1, test_size=0.25, random_state=0)
-        self.accuracy = np.mean(cross_val_score(estimator, X, y, cv=cv))
+        self.accuracy = np.mean(cross_val_score(estimator, X, y, cv=cv, scoring=self.__accuracy_score))
+        # self.accuracy = np.mean(cross_val_score(estimator, X, y, cv=cv))
 
         # 実行時に警告が出るため一旦コメントアウト(今のところチューニングにもあまり使用していない)
         # self.precision = np.mean(cross_validation.cross_val_score(estimator, X, y, cv=cv, scoring='precision_macro'))
@@ -54,3 +57,16 @@ class Evaluator:
         # logger.debug('precision: %s' % self.precision)
         # logger.debug('recall: %s' % self.recall)
         # logger.debug('f1: %s' % self.f1)
+
+    def __accuracy_score(self, estimator, X, y):
+        y_pred = estimator.predict(X)
+        probabilities = estimator.predict_proba(X)
+        max_probabilities = np.max(probabilities, axis=1)
+
+        # 予測結果と実際を比較
+        bools = y == y_pred
+        # しきい値を超えているもののみをTrueにする
+        bools = bools == (max_probabilities > self.threshold)
+        # 正当率を算出
+        score = np.sum(bools) / np.size(bools, axis=0)
+        return score

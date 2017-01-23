@@ -9,6 +9,10 @@ class Message < ActiveRecord::Base
 
   validates :body, length: { maximum: 10000 }
 
+  scope :answer_failed, -> {
+    where(answer_failed: true)
+  }
+
   def parent
     chat
   end

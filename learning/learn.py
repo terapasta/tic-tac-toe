@@ -5,6 +5,7 @@ bot_id = 5
 attr = {
     'include_failed_data': False,
     'include_tag_vector': False,
+    'classify_threshold': None,
     # 'algorithm': LearningParameter.ALGORITHM_NAIVE_BAYES
     'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
     # 'params_for_algorithm': { 'C': 200 }

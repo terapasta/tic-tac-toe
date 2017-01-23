@@ -16,6 +16,7 @@ class Evaluator:
         self.threshold = 0
 
     def evaluate(self, estimator, X, y, threshold=0.0):
+        threshold = 0.0 if threshold is None else threshold
         self.threshold = threshold
         start = time.time()
 

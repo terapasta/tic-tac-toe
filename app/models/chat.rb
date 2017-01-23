@@ -14,6 +14,10 @@ class Chat < ActiveRecord::Base
       .order('chats.id desc')
   }
 
+  scope :has_answer_failed, -> {
+    joins(:messages).merge(Message.answer_failed)
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)

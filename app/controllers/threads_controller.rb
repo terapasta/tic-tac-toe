@@ -5,6 +5,7 @@ class ThreadsController < ApplicationController
 
   def index
     @chats = @bot.chats.has_multiple_messages.page(params[:page])
+    @chats = @chats.not_staff unless current_user.staff?
     @chats = @chats.has_answer_failed if params[:filter].present?
   end
 

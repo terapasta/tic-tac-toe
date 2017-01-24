@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from "react";
+import { findDOMNode } from "react-dom";
+
+import getOffset from "../modules/get-offset";
 
 import Tree from "./tree";
 import MasterDetailPanel, { Master, Detail } from "./master-detail-panel";
@@ -20,6 +23,19 @@ export default class ConversationTree extends Component {
     };
   }
 
+  componentDidMount() {
+    this.adjsutMasterDetailPanelHeight();
+    window.addEventListener("resize", this.adjsutMasterDetailPanelHeight.bind(this));
+  }
+
+  adjsutMasterDetailPanelHeight() {
+    const masterDetailPanel = findDOMNode(this.refs.masterDetailPanel);
+    const offset = getOffset(masterDetailPanel);
+    const winHeight = window.innerHeight;
+    const height = winHeight - offset.top - 20;
+    masterDetailPanel.style.height = `${height}px`;
+  }
+
   render() {
     const {
       dispatch,
@@ -39,7 +55,7 @@ export default class ConversationTree extends Component {
     } = this.props;
 
     return (
-      <MasterDetailPanel title="会話ツリー">
+      <MasterDetailPanel title="会話ツリー" ref="masterDetailPanel">
         <Master>
           <Tree
             answersTree={answersTree}

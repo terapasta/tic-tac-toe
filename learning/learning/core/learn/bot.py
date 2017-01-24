@@ -36,7 +36,7 @@ class Bot:
 
         evaluator = Evaluator()
         logger.debug('before Evaluator#evaluate')
-        evaluator.evaluate(estimator, training_set.x, training_set.y)
+        evaluator.evaluate(estimator, training_set.x, training_set.y, threshold=self.learning_parameter.classify_threshold)
         logger.debug('end Bot#learn')
 
         return evaluator

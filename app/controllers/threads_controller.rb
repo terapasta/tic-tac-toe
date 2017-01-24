@@ -4,8 +4,9 @@ class ThreadsController < ApplicationController
   before_action :set_bot
 
   def index
-    @chats = @bot.chats.joins(:messages).group('chats.id').having('count(chat_id) > 1').order('chats.id desc').page(params[:page])
-    @chats = @chats.where('messages.answer_failed', true).references(:messages) if params[:filter].present?
+    @chats = @bot.chats.has_multiple_messages.page(params[:page])
+    @chats = @chats.not_staff unless current_user.staff?
+    @chats = @chats.has_answer_failed if params[:filter].present?
   end
 
   private

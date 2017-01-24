@@ -7,6 +7,21 @@ class Chat < ActiveRecord::Base
   belongs_to :bot
   enum context: ContextHoldable::CONTEXTS
 
+  scope :has_multiple_messages, -> {
+    joins(:messages)
+      .group('chats.id')
+      .having('count(chat_id) > 1')
+      .order('chats.id desc')
+  }
+
+  scope :has_answer_failed, -> {
+    joins(:messages).merge(Message.answer_failed)
+  }
+
+  scope :not_staff, -> {
+    where(is_staff: false)
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)

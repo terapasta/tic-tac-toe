@@ -18,6 +18,10 @@ class Chat < ActiveRecord::Base
     joins(:messages).merge(Message.answer_failed)
   }
 
+  scope :not_staff, -> {
+    where(is_staff: false)
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)

@@ -11,6 +11,7 @@ class ChatsController < ApplicationController
 
   def new
     @chat = @bot.chats.new(guest_key: session[:guest_key])
+    @chat.is_staff = true if current_user.staff?
     @chat.messages << @chat.build_start_message
     @chat.save!
     render :show

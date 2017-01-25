@@ -5,7 +5,7 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     authorize SentenceSynonym
-    @question_answers = @bot.question_answers
+    @question_answers = @bot.try(:question_answers) || QuestionAnswer.all
     @target_date = parse_target_date
   end
 

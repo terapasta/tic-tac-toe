@@ -35,7 +35,7 @@ class SentenceSynonymPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      if user.normal?
+      if user.normal? || user.staff?
         scope.all
       else
         scope.where(created_user_id: user.id)

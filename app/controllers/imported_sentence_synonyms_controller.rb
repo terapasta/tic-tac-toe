@@ -5,7 +5,7 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     authorize SentenceSynonym
-    @question_answers = @bot.try(:question_answers) || QuestionAnswer.all
+    @question_answers = (@bot.try(:question_answers) || QuestionAnswer.all).try(:includes, :sentence_synonyms)
     @target_date = parse_target_date
   end
 
@@ -42,9 +42,9 @@ class ImportedSentenceSynonymsController < ApplicationController
     end
 
     def parse_target_date
-      year = params.dig(:filter, 'target_date(1i)')
-      month = params.dig(:filter, 'target_date(2i)')
-      day = params.dig(:filter, 'target_date(3i)')
+      year = params.dig(:filter, 'target_date(1i)').presence || nil
+      month = params.dig(:filter, 'target_date(2i)').presence || nil
+      day = params.dig(:filter, 'target_date(3i)').presence || nil
       unless [year, month, day].include?(nil)
         Date.new(year.to_i, month.to_i, day.to_i)
       end

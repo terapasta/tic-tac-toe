@@ -20,6 +20,9 @@ class Reply:
         except IOError:
             raise ModelNotExistsError()
 
+    def perform(self, X):
+        return self.predict(X)
+
     def predict(self, X):
         text_array = TextArray(X, vectorizer=self.vectorizer)
         features = text_array.to_vec()

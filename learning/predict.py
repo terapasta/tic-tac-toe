@@ -32,4 +32,4 @@ attr = {
     'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
 }
 learning_parameter = LearningParameter(attr)
-Reply(bot_id, learning_parameter).predict(X)
+Reply(bot_id, learning_parameter).perform(X)

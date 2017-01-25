@@ -21,9 +21,8 @@ class MyopeServer(RPCServer):
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
-            # TODO reply.perform(X)に変更する
             # TODO 戻り値をReplyResultクラスにする
-            predict_results = Reply(bot_id, learning_parameter).predict(X)
+            predict_results = Reply(bot_id, learning_parameter).perform(X)
             # logger.debug(predict_results)
             # if answer_id is not None:
             #     answer_id = float(answer_id)

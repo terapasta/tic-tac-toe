@@ -5,6 +5,7 @@ class ReplyResult:
     def __init__(self, answer_ids, probabilities):
         self.answer_ids = answer_ids
         self.probabilities = probabilities
+        # self.similarities
 
     def to_dict(self):
         dict = list(map(lambda x: {

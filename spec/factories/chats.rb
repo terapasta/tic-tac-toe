@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :chat do
-    thread_key "MyString"
+    guest_key 'hogehoge'
   end
 end

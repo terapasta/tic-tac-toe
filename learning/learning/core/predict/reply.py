@@ -47,6 +47,9 @@ class Reply:
         self.__out_log_of_results(results)
         return results
 
+    # TODO
+    def similarity_question_answer_ids(self, question):
+        return []
 
     def __out_log_of_results(self, results):
         logger.debug('predicted results (order by probability desc)')

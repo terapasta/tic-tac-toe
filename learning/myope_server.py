@@ -21,6 +21,8 @@ class MyopeServer(RPCServer):
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
+            # TODO reply.perform(X)に変更する
+            # TODO 戻り値をReplyResultクラスにする
             predict_results = Reply(bot_id, learning_parameter).predict(X)
             # logger.debug(predict_results)
             # if answer_id is not None:
@@ -28,6 +30,10 @@ class MyopeServer(RPCServer):
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
+        # TODO 近い質問を一覧を返す
+        # reply.similarity_question_answer_ids(question)
+
+        # TODO ReplyResultクラスから出力する
         result = {
             'status_code': status_code,
             # 'results':  [{'probability': 0.99974810633704125, 'answer_id': 20}, {'probability': 4.8263524435402245e-05, 'answer_id': 2092}, {'probability': 3.8650944875454533e-06, 'answer_id': 2065}, {'probability': 3.3403655454494557e-06, 'answer_id': 2128}, {'probability': 3.2779455165232719e-06, 'answer_id': 2298}, {'probability': 3.2096909894687076e-06, 'answer_id': 57}, {'probability': 2.770086869426734e-06, 'answer_id': 2030}, {'probability': 2.4034569493278136e-06, 'answer_id': 2314}, {'probability': 2.4034569493267467e-06, 'answer_id': 2337}, {'probability': 2.3194390806239406e-06, 'answer_id': 2047}]

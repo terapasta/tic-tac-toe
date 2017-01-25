@@ -14,6 +14,8 @@ class Reply:
         dbconfig = config.get('database')
         self.db = dataset.connect(dbconfig['endpoint'])
         self.learning_parameter = learning_parameter
+        self.answers = []
+        self.probabilities = []
 
         try:
             self.estimator = Persistance.load_model(bot_id)
@@ -22,7 +24,13 @@ class Reply:
             raise ModelNotExistsError()
 
     def perform(self, X):
-        return self.predict(X)
+        self.predict(X)
+        reply_result = ReplyResult(self.answers, self.probabilities)
+        return reply_result
+
+        # TODO 近い質問を一覧を返す
+        # reply.similarity_question_answer_ids(question)
+
 
     def predict(self, X):
         text_array = TextArray(X, vectorizer=self.vectorizer)
@@ -34,11 +42,11 @@ class Reply:
         #     tag_vec = tag.predict(Xtrain, return_type='binarized')
         #     features = np.c_[tag_vec, Xtrain_vec]
 
-        answers = self.estimator.predict(features)
-        probabilities = self.estimator.predict_proba(features)
+        self.answers = self.estimator.predict(features)
+        self.probabilities = self.estimator.predict_proba(features)
+        return self.answers
+
         # max_probability = np.max(probabilities)
-        reply_result = ReplyResult(answers, probabilities)
-        return reply_result
 
         # for (question, answer, probabilities2) in zip(X, answers, probabilities):
         #     print('question: %s' % question)

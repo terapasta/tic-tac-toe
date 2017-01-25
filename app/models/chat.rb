@@ -15,7 +15,7 @@ class Chat < ActiveRecord::Base
   }
 
   scope :has_answer_failed, -> {
-    joins(:messages).merge(Message.answer_failed)
+    where(id: Message.select(:chat_id).answer_failed)
   }
 
   scope :not_staff, -> {

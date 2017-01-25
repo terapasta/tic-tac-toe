@@ -2,6 +2,7 @@ import numpy as np
 import dataset
 
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
+from learning.core.predict.reply_result import ReplyResult
 from learning.log import logger
 from learning.config.config import Config
 from learning.core.training_set.text_array import TextArray
@@ -35,26 +36,16 @@ class Reply:
 
         answers = self.estimator.predict(features)
         probabilities = self.estimator.predict_proba(features)
-        max_probability = np.max(probabilities)
+        # max_probability = np.max(probabilities)
+        reply_result = ReplyResult(answers, probabilities)
+        return reply_result
 
-        for (question, answer, probabilities2) in zip(X, answers, probabilities):
-            print('question: %s' % question)
-            print('answer: %s' % answer)
-            print('proba: %s \n' % max(probabilities2))
-
-        results_ordered_by_probability = list(map(lambda x: {
-            'answer_id': float(x[0]), 'probability': x[1]
-        }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
-
-        results = results_ordered_by_probability[0:10]
-        self.__out_log_of_results(results)
-        return results
+        # for (question, answer, probabilities2) in zip(X, answers, probabilities):
+        #     print('question: %s' % question)
+        #     print('answer: %s' % answer)
+        #     print('proba: %s \n' % max(probabilities2))
+        #
 
     # TODO
     def similarity_question_answer_ids(self, question):
         return []
-
-    def __out_log_of_results(self, results):
-        logger.debug('predicted results (order by probability desc)')
-        for result in results:
-            logger.debug(result)

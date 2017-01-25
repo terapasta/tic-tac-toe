@@ -1,6 +1,6 @@
 class StaticPagesPolicy < ApplicationPolicy
   def help?
-    user.normal?
+    !user.worker?
   end
 
   def can_use_nav?(bot)

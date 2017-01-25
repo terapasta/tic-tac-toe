@@ -8,7 +8,7 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
-    @question_answers = @bot.question_answers.order('question').page(params[:page])
+    @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
   end
 
   def new
@@ -21,7 +21,7 @@ class QuestionAnswersController < ApplicationController
       redirect_to bot_question_answers_path(@bot), notice: '登録しました。'
     else
       flash.now.alert = '登録できませんでした。'
-      render :edit      
+      render :edit
     end
   end
 
@@ -30,7 +30,7 @@ class QuestionAnswersController < ApplicationController
       redirect_to bot_question_answers_path(@bot), notice: '更新しました。'
     else
       flash.now.alert = '更新できませんでした。'
-      render :edit      
+      render :edit
     end
   end
 

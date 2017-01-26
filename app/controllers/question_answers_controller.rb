@@ -1,6 +1,7 @@
 class QuestionAnswersController < ApplicationController
   include BotUsable
   before_action :authenticate_user!
+  before_action :pundit_auth
 
   before_action :set_bot
   before_action :set_question_answer, only: [:edit, :update, :destroy]
@@ -8,7 +9,6 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
-    authorize QuestionAnswer
     @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
   end
 
@@ -47,7 +47,10 @@ class QuestionAnswersController < ApplicationController
 
     def set_question_answer
       @question_answer = @bot.question_answers.find params[:id]
-      authorize @question_answer
+    end
+
+    def pundit_auth
+      authorize QuestionAnswer
     end
 
     def question_answer_params

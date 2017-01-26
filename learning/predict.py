@@ -2,16 +2,6 @@ from learning.core.predict.reply import Reply
 from learning.core.learn.learning_parameter import LearningParameter
 
 bot_id = 5
-# X = [
-#     # ['どんな会社が使ってる？'],
-#     # ['何歳ですか？'],
-#     # ['セキュリティは？'],
-#     ['セキュリティはどう？'],
-#     # ['サーバはどこ使ってますか？'],
-#     # ['サーバーはどこ使ってるの'],
-#     # ['サーバはどうなっている？'],
-#     # ['セキュリティーはどうなっている？'],
-# ]
 
 X = [
     'セキュリティはどう？',

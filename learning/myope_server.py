@@ -2,6 +2,8 @@ import numpy as np
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
+
+from learning.core.predict.similarity import Similarity
 from learning.log import logger
 from learning.core.predict.reply import Reply
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
@@ -17,7 +19,6 @@ class MyopeServer(RPCServer):
     def reply(self, bot_id, body, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)
         X = np.array([body])
-        predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS
 
         try:
@@ -41,6 +42,10 @@ class MyopeServer(RPCServer):
             'recall': evaluator.recall,
             'f1': evaluator.f1,
         }
+
+    def similarity(self, bot_id, question):
+        result = Similarity(bot_id).question_answers(question)
+        return result
 
     def learn_tag_model(self):
         LearnTag().learn()

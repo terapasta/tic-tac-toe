@@ -1,7 +1,7 @@
 class Message < ActiveRecord::Base
   paginates_per 50
 
-  attr_accessor :other_answers
+  attr_accessor :other_answers, :similar_question_answers
 
   belongs_to :chat
   belongs_to :answer

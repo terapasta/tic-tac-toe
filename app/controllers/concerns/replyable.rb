@@ -22,7 +22,10 @@ module Replyable
 
       answer_failed = answer.is_a?(NullAnswer)
       message = parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer_failed)
-      message.other_answers = responder.other_answers if responder.present?
+      if responder.present?
+        message.other_answers = responder.other_answers
+        message.similar_question_answers = responder.similar_question_answers if answer_failed
+      end
       message
     end
     parent.save!

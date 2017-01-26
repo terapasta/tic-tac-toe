@@ -17,7 +17,7 @@ class QuestionAnswersController < ApplicationController
   end
 
   def create
-    @question_answer = @bot.question_answers.build(question_answer_params)
+    @question_answer = @bot.question_answers.build(permitted_attributes(QuestionAnswer) )
     if @question_answer.save
       redirect_to bot_question_answers_path(@bot), notice: '登録しました。'
     else
@@ -27,7 +27,7 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
-    if @question_answer.update(question_answer_params)
+    if @question_answer.update(permitted_attributes(@question_answer) )
       redirect_to bot_question_answers_path(@bot), notice: '更新しました。'
     else
       flash.now.alert = '更新できませんでした。'
@@ -51,9 +51,5 @@ class QuestionAnswersController < ApplicationController
 
     def pundit_auth
       authorize QuestionAnswer
-    end
-
-    def question_answer_params
-      params.require(:question_answer).permit(:question, :answer_id)
     end
 end

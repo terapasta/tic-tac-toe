@@ -1,16 +1,10 @@
 import MySQLdb
-import numpy as np
-import pandas as pd
-import dataset
 
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.predict.reply_result import ReplyResult
-from learning.core.training_set.training_message import TrainingMessage
-from learning.log import logger
 from learning.config.config import Config
 from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
-from sklearn.metrics.pairwise import cosine_similarity
 
 
 class Reply:

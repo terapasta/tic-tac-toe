@@ -35,9 +35,12 @@ class Similarity:
         logger.debug("similarities: %s" % similarities)
 
         ordered_result = list(map(lambda x: {
-            'question_answer_id': x[0], 'similarity': x[1]
+            'question_answer_id': float(x[0]), 'similarity': x[1]
         }, sorted(zip(question_answers['id'], similarities), key=lambda x: x[1], reverse=True)))
-        return ordered_result
+
+        ordered_result = list(filter((lambda x: x['similarity'] > 0), ordered_result))
+
+        return ordered_result[0:10]
 
     def __all_question_answers(self):
         data = pd.read_sql("select id, question from question_answers where bot_id = %s;" % self.bot_id, self.db)

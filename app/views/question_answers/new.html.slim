@@ -1,0 +1,7 @@
+.panel.panel-default
+  .panel-heading
+    h4 Q&A
+
+  .panel-body
+    = render 'form'
+= link_to t('helpers.link.back'), bot_question_answers_path(@bot), class: "btn btn-default"

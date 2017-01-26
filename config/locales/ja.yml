@@ -215,6 +215,9 @@ ja:
       answer:
         headline: 見出し
         body: 内容
+      question_answer:
+        question: 質問
+        answer_id: 回答
       training_message:
         body: 本文
   enums:

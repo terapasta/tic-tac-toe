@@ -1,12 +1,17 @@
 class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
 
+  paginates_per 100
   acts_as_taggable
 
   belongs_to :bot
   belongs_to :answer
+  has_many :training_messages, dependent: :nullify
+  has_many :decision_branches, through: :answer
+
   serialize :underlayer
 
+  validates :question, presence: true
   validates :answer_id, presence: true
 
   scope :completed_count_for, -> (user_id, target_date) {

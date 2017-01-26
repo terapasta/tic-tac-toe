@@ -5,7 +5,7 @@
     - elsif message.guest?
       = render 'guest', message: message
 
-.chat-form: .container
+.chat-form: .container: .chat-container--no-padding
   = form_for @chat.messages.build, url: chats_messages_path(@bot.token), remote: true do |f|
     = f.text_field :body, placeholder: '質問を入れてください', hide_label: true, class: 'chat-form__text-field'
     = f.button class: 'chat-form__submit', id: 'chat-submit' do

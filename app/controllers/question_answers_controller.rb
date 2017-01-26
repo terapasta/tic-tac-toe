@@ -8,8 +8,8 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
+    authorize QuestionAnswer
     @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
-    authorize @question_answers
   end
 
   def new

@@ -7,6 +7,11 @@ pid     '/tmp/unicorn.pid'
 stderr_path File.expand_path('log/unicorn.stderr.log', ENV['RAILS_ROOT'])
 stdout_path File.expand_path('log/unicorn.stdout.log', ENV['RAILS_ROOT'])
 
+current_dir = "/var/www/donusagi-bot/current"
+before_exec do |server|
+  ENV['BUNDLE_GEMFILE'] = File.expand_path('Gemfile', current_dir)
+end
+
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
 

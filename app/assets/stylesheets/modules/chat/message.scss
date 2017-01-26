@@ -64,8 +64,9 @@
     padding: 10px;
     background-color: $gray-lighter;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 1px;
+    word-wrap: break-word;
 
     &::before {
       position: absolute;
@@ -80,7 +81,11 @@
     }
 
     p {
-      margin: 0;
+      margin-bottom: 1em;
+
+      &:last-child {
+        margin: 0;
+      }
     }
   }
 }

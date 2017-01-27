@@ -30,4 +30,14 @@ class Chat < ActiveRecord::Base
   def has_answer_failed_message?
     messages.any? { |m| m.answer_failed? }
   end
+
+  class << self
+    def find_by_guest_key!(guest_key)
+      chat = where(guest_key: guest_key).last
+      if chat.nil?
+        fail ActiveRecord::RecordNotFound.new("Cannot find by guest_key: #{guest_key}")
+      end
+      chat
+    end
+  end
 end

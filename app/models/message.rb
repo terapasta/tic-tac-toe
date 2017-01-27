@@ -5,7 +5,9 @@ class Message < ActiveRecord::Base
 
   belongs_to :chat
   belongs_to :answer
+
   enum speaker: { bot: 'bot', guest: 'guest' }
+  enum rating: [:none, :good, :bad]
 
   validates :body, length: { maximum: 10000 }
 

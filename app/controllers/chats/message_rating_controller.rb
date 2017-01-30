@@ -5,7 +5,7 @@ class Chats::MessageRatingController < ApplicationController
   respond_to :json
 
   def good
-    pp @message.good!
+    @message.good!
     respond_with @message
   end
 

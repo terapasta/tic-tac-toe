@@ -1,0 +1,24 @@
+h1 Q&A管理
+.text-right
+  = link_to t('helpers.link.new'), new_bot_question_answer_path(@bot), class: "btn btn-default"
+table.table.table-striped
+  thead
+    tr
+      th 質問
+      th 回答
+      th 分岐
+      th
+  tbody
+    - @question_answers.each do |question_answer|
+      tr
+        td = simple_format question_answer.question
+        td = simple_format question_answer.answer.body
+        td
+          ul
+            - question_answer.decision_branches.each do |decision_branch|
+              li = decision_branch.body
+
+        td nowrap="nowrap"
+          = link_to t('helpers.link.edit'), edit_bot_question_answer_path(@bot, question_answer), class: "btn btn-default"
+          = link_to t('helpers.link.destroy'), bot_question_answer_path(@bot, question_answer), method: :delete, data: { confirm: 'Q&Aを削除します。よろしいですか。' }, class: "btn btn-danger"
+= paginate @question_answers

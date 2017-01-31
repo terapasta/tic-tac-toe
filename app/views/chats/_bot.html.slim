@@ -14,10 +14,10 @@
                 = link_to other_answer.headline, chats_messages_path(message.parent.bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: tru
 
 - if message.answer.try(:decision_branches).try(:present?)
-  .chat-row
+  .chat-row data-role="chat-decision-branches"
     .chat-decision-branches: .chat-decision-branches__container
       .chat-decision-branches__title 回答を選択してください
       .chat-decision-branches__items
         - message.answer.decision_branches.each do |decision_branch|
-          = link_to choices_chats_path(message.parent.bot.token, decision_branch), method: :post,remote: true, class: 'chat-decision-branches__item' do
+          = link_to choices_chats_path(message.parent.bot.token, decision_branch), data: { method: :post, remote: true, role: 'chat-decision-branch' }, class: 'chat-decision-branches__item' do
             = decision_branch.body

@@ -22,10 +22,20 @@ class QuestionAnswer < ActiveRecord::Base
       .count
   }
 
+  module Encoding
+    SJIS = 'Shift_JIS'
+    UTF8 = 'UTF-8'
+    ModeEncForUTF8 = 'r'
+    ModeEncForSJIS = "rb:#{SJIS}:#{UTF8}"
+  end
+
   # TODO: 戻り値を配列で返すのは一時対応なので、インポート処理を別クラスに移動していい感じにしたい
-  def self.import_csv(file, bot)
+  def self.import_csv(file, bot, options = {})
+    options = { is_utf8: false }.merge(options)
+    mode_enc = options[:is_utf8] ? Encoding::ModeEncForUTF8 : Encoding::ModeEncForSJIS
     current_row = nil
-    open(file.path, "rb:Shift_JIS:UTF-8", undef: :replace) do |f|
+
+    open(file.path, mode_enc, undef: :replace) do |f|
       transaction do
         CSV.new(f).each_with_index do |row, index|
           current_row = index + 1

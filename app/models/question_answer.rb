@@ -40,13 +40,23 @@ class QuestionAnswer < ActiveRecord::Base
         CSV.new(f).each_with_index do |row, index|
           current_row = index + 1
           next if row[0].blank?
-          answer = bot.answers.find_or_create_by!(body: row[1])
-          bot.question_answers.find_or_initialize_by(question: row[0]).tap do |itm|
-            itm.assign_attributes(
-              answer: answer,
-              underlayer: row.compact.count > 2 ? row[2..-1].compact : nil,
-            )
-            itm.save!
+
+          current_answer = answer = bot.answers.find_or_create_by!(body: row[1])
+
+          question_answer = bot.question_answers.find_or_initialize_by(question: row[0]).tap do |qa|
+            qa.assign_attributes(answer: current_answer)
+            qa.save!
+          end
+
+          if row.compact.count > 2
+            row[2..-1].compact.each_slice(2) do |decision_branch_body, answer_body|
+              decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: bot.id)
+              if answer_body.present?
+                current_answer = bot.answers.find_or_initialize_by(body: answer_body, bot_id: bot.id)
+                decision_branch.next_answer = current_answer
+              end
+              decision_branch.save!
+            end
           end
         end
       end

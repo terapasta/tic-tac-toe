@@ -4,6 +4,7 @@ class Chats::MessagesController < ApplicationController
   before_action :set_chat
 
   def create
+    @bot = Bot.find_by!(token: params[:token])
     @message = @chat.messages.build(message_params) {|m|
       m.speaker = 'guest'
       m.user_agent = request.env['HTTP_USER_AGENT']

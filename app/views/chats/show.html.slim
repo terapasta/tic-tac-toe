@@ -1,7 +1,7 @@
 .chat-container.chat-area
   - @chat.messages.each do |message|
     - if message.bot?
-      = render 'bot', message: message
+      = render 'bot', message: message, is_first_message: true
     - elsif message.guest?
       = render 'guest', message: message
 

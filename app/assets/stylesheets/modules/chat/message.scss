@@ -88,4 +88,52 @@
       }
     }
   }
+
+  &__rating {
+    text-align: right;
+
+    &-title {
+      display: inline-block;
+      padding: 0 10px 0 0;
+      font-size: 11px;
+      color: lighten($gray, 10%);
+    }
+
+    &-button {
+      padding: 0 10px 0 0;
+      font-size: 20px;
+      color: darken($gray-lighter, 10%);
+
+      &:last-child {
+        padding: 0;
+      }
+
+      &:hover {
+        color: darken($gray-lighter, 20%);
+      }
+
+      &:focus {
+        color: darken($gray-lighter, 10%);
+      }
+
+      .fa {
+        transition-duration: .1s;
+        transition-property: all;
+      }
+
+      &:active {
+        .fa {
+          transform: scale(1.25);
+        }
+      }
+
+      &.good.active {
+        color: $brand-success;
+      }
+
+      &.bad.active {
+        color: $brand-danger;
+      }
+    }
+  }
 }

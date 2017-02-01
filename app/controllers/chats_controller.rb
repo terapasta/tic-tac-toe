@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   include IframeSupportable
-  iframe_support :new
+  iframe_support :show, :new
   before_action :set_chat, only: [:show, :destroy]
   before_action :set_bot, only: [:show, :new, :destroy]
   before_action :set_guest_key

@@ -1,5 +1,4 @@
 require 'json'
-require File.expand_path('../config/environment')
 
 helper = SlackBotHelper.new
 

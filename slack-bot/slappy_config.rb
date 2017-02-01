@@ -1,3 +1,5 @@
+require File.expand_path('../config/environment')
+
 Slappy.configure do |config|
   ## Slappy Settings
   #

@@ -1,18 +1,10 @@
 import MeCab
-import jaconv
-from learning.log import logger
-from pykakasi import kakasi
-from sklearn.externals import joblib
 
 class Nlang:
     #UNIDIC_PATH = '/usr/local/lib/mecab/dic/unidic/'
 
     @classmethod
     def split(self, text):
-        vkakasi = kakasi()
-        vkakasi.setMode("J","H")
-        conv = vkakasi.getConverter()
-
         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
         # text = text.encode('utf-8')
@@ -40,8 +32,6 @@ class Nlang:
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")
 
-                # word_list.append(conv.do(jaconv.kata2hira(lemma)))
-                # word_list.append(jaconv.kata2hira(lemma))
                 word_list.append(lemma)
             node = node.next
         return " ".join(word_list)

@@ -88,6 +88,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'bootstrap-tagsinput-rails'
 gem 'draper'
 gem 'pundit'
+gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond'
 
 gem 'newrelic_rpm'
 

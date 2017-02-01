@@ -58,4 +58,12 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
+
+  desc 'donusagi_botを起動'
+  task :start_donusagi_bot do
+    on roles(:app) do
+      execute :sudo, :supervisorctl, :stop, :slack_bot
+      execute :sudo, :supervisorctl, :start, :slack_bot
+    end
+  end
 end

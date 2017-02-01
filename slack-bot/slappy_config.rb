@@ -4,10 +4,9 @@ Slappy.configure do |config|
   # token:
   #   Slack API Token
   #
-  # config.token = 'xoxp-134066513041-135425234518-134834764949-40b7774f2dc8ed4ef14ae2f432220592' # kozoy test token
-  # config.token = 'xoxp-2849050538-2849050540-134825194533-405397c7718a49a98789b5d17c5c68bc' # mofmof team
-  config.token = 'xoxb-135444176535-dz1NEZQ3O2nG168WXKSibs44' # kozoy bot api token
-  # https://slack.com/api/users.list?token=xoxb-135444176535-dz1NEZQ3O2nG168WXKSibs44
+  config.token = ENV['SLACK_BOT_TOKEN']
+  # you can get bot id here:
+  # https://slack.com/api/users.list?token=your_token
 
   # scripts_path_dir:
   #   Slappy scripts directory.
@@ -18,15 +17,15 @@ Slappy.configure do |config|
   # logger:
   #   Use logger object.
   #
-  # file = File.open(File.expand_path('../log') + '/slappy.log', File::WRONLY | File::APPEND | File::CREAT)
-  # file.sync = true
-  # config.logger = Logger.new(file)
+  file = File.open(File.expand_path('../log') + '/slappy.log', File::WRONLY | File::APPEND | File::CREAT)
+  file.sync = true
+  config.logger = Logger.new(file)
 
   # logger.level:
   #   Specify logger level.
   #
-  # production = ENV['RACK_ENV'] == 'production' || ENV['RAILS_ENV'] == 'production'
-  # config.logger.level = production ? Logger::INFO : Logger::DEBUG
+  production = ENV['RACK_ENV'] == 'production' || ENV['RAILS_ENV'] == 'production'
+  config.logger.level = production ? Logger::INFO : Logger::DEBUG
 
   # dsl:
   #   use dsl
@@ -53,13 +52,15 @@ Slappy.configure do |config|
   # username:
   #   Name of bot.
   #
-  config.robot.username = '@myope'
+  config.robot.username = '@donusagi_bot'
 
   # channel:
   #   Channel, private group, or IM channel to send message to.
   #   Can be an encoded ID, or a name. See below for more details.
   #
-  config.robot.channel = '#general'
+  config.robot.channel = '#random'
+
+  config.robot.bot_id = 'U2M8HFV3Q'
 
   # icon_emoji:
   #   emoji to use as the icon for this message. Overrides icon_url.

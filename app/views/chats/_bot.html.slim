@@ -4,6 +4,16 @@
       = image_tag message.parent.bot.image_url || 'operator', class: 'listen'
     .chat-message__balloon
       = auto_link(simple_format(message.body), html: { target: '_blank' })
+    - unless local_assigns[:is_first_message]
+      .chat-message__rating
+        .chat-message__rating-title この返答を評価してください
+        span(
+          data-component="MessageRatingButtons"
+          data-rating=message.rating
+          data-token=local_assigns[:token]
+          data-message-id=local_assigns[:message_id]
+        )
+
       /- if message.other_answers.present?
         .small
           p その他の回答

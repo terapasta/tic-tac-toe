@@ -50,7 +50,15 @@ Rails.application.routes.draw do
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
       scope module: :chats do
-        resources :messages, only: [:create]
+        resources :messages, only: [:create] do
+          resource :rating, only: [], controller: :message_rating do
+            member do
+              put :good
+              put :bad
+              put :nothing
+            end
+          end
+        end
         post 'choices/:id', to: 'choices#create', as: :choices
       end
     end

@@ -21,9 +21,13 @@ export default function mountComponent(component) {
   const mountNodes = getMountNodes(component);
 
   mountNodes.forEach((mountNode) => {
-    const props = getProps(mountNode);
-    render(createElement(component, props), mountNode);
+    directMountComponent(component, mountNode);
   });
+}
+
+export function directMountComponent(component, mountNode) {
+  const props = getProps(mountNode);
+  render(createElement(component, props), mountNode);
 }
 
 export function mountComponentWithRedux(component, reducers) {
@@ -43,7 +47,7 @@ export function mountComponentWithRedux(component, reducers) {
   });
 }
 
-function getMountNodes(component) {
+export function getMountNodes(component) {
   const selector = `[data-component="${component.componentName}"]`;
   return [].slice.call(document.querySelectorAll(selector));
 }

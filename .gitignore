@@ -65,3 +65,5 @@ learning/learning/models/**
 !learning/learning/models/development/.keep
 learning/logs/*
 !*.keep
+
+slack-bot/log

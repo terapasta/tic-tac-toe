@@ -8,4 +8,4 @@ if [ $pid -gt 0 ]; then
 fi
 
 cd /var/www/donusagi-bot/current/slack-bot
-RAILS_ENV=production bundle exec slappy start &
+RAILS_ENV=production nohup bundle exec slappy start > /dev/null 2>&1 &

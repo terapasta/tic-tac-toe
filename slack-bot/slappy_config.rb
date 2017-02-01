@@ -4,7 +4,7 @@ Slappy.configure do |config|
   # token:
   #   Slack API Token
   #
-  config.token = ENV['SLACK_BOT_TOKEN']
+  config.token = ENV['SLACK_API_TOKEN']
   # you can get bot id here:
   # https://slack.com/api/users.list?token=your_token
 

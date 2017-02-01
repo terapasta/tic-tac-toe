@@ -66,4 +66,5 @@ namespace :deploy do
       execute :sudo, :supervisorctl, :start, :slack_bot
     end
   end
+  after :finished, 'deploy:start_donusagi_bot'
 end

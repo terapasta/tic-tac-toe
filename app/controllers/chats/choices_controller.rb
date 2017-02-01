@@ -3,6 +3,7 @@ class Chats::ChoicesController < ApplicationController
   before_action :set_decision_branch
 
   def create
+    @bot = @chat.bot
     answer = @decision_branch.next_answer
     @message = @chat.messages.build(speaker: 'guest', body: @decision_branch.body)
     @bot_messages = [ @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body) ]

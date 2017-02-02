@@ -26,6 +26,7 @@ module StartDash
     config.autoload_paths += %W(
       #{config.root}/lib
       #{config.root}/app/policies
+      #{config.root}/app/decorators/concerns
     )
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

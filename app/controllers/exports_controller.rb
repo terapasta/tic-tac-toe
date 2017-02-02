@@ -7,8 +7,10 @@ class ExportsController < ApplicationController
   end
 
   def show
-    Learning::Summarizer.new(@bot).summary
-    send_data LearningTrainingMessage.to_csv(@bot), filename: 'learning_training_messages.csv', type: :csv
+    question_answers = QuestionAnswersDecorator.new(@bot.question_answers)
+    send_data question_answers.to_csv(encoding: params[:encoding].to_sym),
+      filename: "myope-exports-#{Time.zone.now.strftime('%Y-%m-%d-%H%M%S')}.csv",
+      type: :csv
   end
 
   private

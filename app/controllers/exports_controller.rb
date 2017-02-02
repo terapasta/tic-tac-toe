@@ -9,7 +9,7 @@ class ExportsController < ApplicationController
   def show
     question_answers = QuestionAnswersDecorator.new(@bot.question_answers)
     send_data question_answers.to_csv(encoding: params[:encoding].to_sym),
-      filename: "myope-exports-#{Time.zone.now.strftime('%Y-%m-%d-%H%M%S')}.csv",
+      filename: "myope-exports-#{params[:encoding]}-#{Time.zone.now.strftime('%Y-%m-%d-%H%M%S')}.csv",
       type: :csv
   end
 

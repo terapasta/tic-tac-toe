@@ -50,7 +50,7 @@ RSpec.describe QuestionAnswer do
       end
 
       it 'creates Answer record' do
-        expect{importing.call}.to change(Answer, :count).by(2)
+        expect{importing.call}.to change(Answer, :count).by(4)
       end
     end
 

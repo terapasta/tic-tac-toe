@@ -26,7 +26,7 @@ class QuestionAnswer < ActiveRecord::Base
     SJIS = 'Shift_JIS'
     UTF8 = 'UTF-8'
     ModeEncForUTF8 = 'r'
-    ModeEncForSJIS = "rb:#{SJIS}:#{UTF8}"
+    ModeEncForSJIS = "rb:#{SJIS}:#{UTF_8}"
   end
 
   # TODO: 戻り値を配列で返すのは一時対応なので、インポート処理を別クラスに移動していい感じにしたい
@@ -39,20 +39,22 @@ class QuestionAnswer < ActiveRecord::Base
       transaction do
         CSV.new(f).each_with_index do |row, index|
           current_row = index + 1
-          next if row[0].blank?
+          first_q = row[0]
+          first_a = row[1]
+          next if first_q.blank?
 
-          current_answer = answer = bot.answers.find_or_create_by!(body: row[1])
+          current_answer = answer = bot.answers.find_or_create_by!(body: sjis_safe(first_a))
 
-          question_answer = bot.question_answers.find_or_initialize_by(question: row[0]).tap do |qa|
+          question_answer = bot.question_answers.find_or_initialize_by(question: sjis_safe(first_q)).tap do |qa|
             qa.assign_attributes(answer: current_answer)
             qa.save!
           end
 
           if row.compact.count > 2
             row[2..-1].compact.each_slice(2) do |decision_branch_body, answer_body|
-              decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: bot.id)
+              decision_branch = current_answer.decision_branches.find_or_initialize_by(body: sjis_safe(decision_branch_body), bot_id: bot.id)
               if answer_body.present?
-                current_answer = bot.answers.find_or_initialize_by(body: answer_body, bot_id: bot.id)
+                current_answer = bot.answers.find_or_initialize_by(body: sjis_safe(answer_body), bot_id: bot.id)
                 decision_branch.next_answer = current_answer
               end
               decision_branch.save!
@@ -66,5 +68,21 @@ class QuestionAnswer < ActiveRecord::Base
     Rails.logger.debug(e)
     Rails.logger.debug(e.backtrace.join("\n"))
     [false, current_row]
+  end
+
+  def self.sjis_safe(str)
+    [
+      ["FF5E", "007E"], # wave-dash
+      ["FF0D", "002D"], # full-width minus
+      ["00A2", "FFE0"], # cent as currency
+      ["00A3", "FFE1"], # lb(pound) as currency
+      ["00AC", "FFE2"], # not in boolean algebra
+      ["2014", "2015"], # hyphen
+      ["2016", "2225"], # double vertical lines
+    ].inject(str) do |s, (before, after)|
+      s.gsub(
+        before.to_i(16).chr('UTF-8'),
+        after.to_i(16).chr('UTF-8'))
+    end
   end
 end

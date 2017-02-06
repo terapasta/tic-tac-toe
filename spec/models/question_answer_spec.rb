@@ -27,8 +27,11 @@ RSpec.describe QuestionAnswer do
         'invalid'
       end
 
-      it 'returns false and current_row' do
-        expect(importing.call).to eq([false, 2])
+      it 'returns a CsvImporter instance that has status and failed row number' do
+        result = importing.call
+        expect(result).to be_an_instance_of(QuestionAnswer::CsvImporter)
+        expect(result.succeeded).to_not be
+        expect(result.current_row).to eq(2)
       end
 
       it 'not creates QuestionAnswer record' do
@@ -41,8 +44,10 @@ RSpec.describe QuestionAnswer do
     end
 
     context 'when valid csv' do
-      it 'retuns true wrapped by array' do
-        expect(importing.call).to eq([true])
+      it 'retuns CsvImporter instance' do
+        result = importing.call
+        expect(result).to be_an_instance_of(QuestionAnswer::CsvImporter)
+        expect(result.succeeded).to be
       end
 
       it 'creates QuestionAnswer record' do

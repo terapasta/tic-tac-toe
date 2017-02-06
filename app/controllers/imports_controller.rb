@@ -7,11 +7,12 @@ class ImportsController < ApplicationController
   end
 
   def create
-    is_success, @error_row = QuestionAnswer.import_csv(params[:file], @bot, import_options)
-    if is_success
-      flash[:notice] = 'インポートしました'
+    importer = QuestionAnswer.import_csv(params[:file], @bot, import_options)
+    if importer.suceeded
+      flash.now.notice = 'インポートしました'
     else
-      flash[:error] = 'インポートに失敗しました'
+      flash.now.error = 'インポートに失敗しました'
+      @error_row = importer.current_row
     end
     render :new
   end

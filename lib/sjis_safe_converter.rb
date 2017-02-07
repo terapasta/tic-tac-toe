@@ -1,5 +1,6 @@
 class SjisSafeConverter
   def self.sjis_safe(str)
+    return if str.nil?
     [
       ["FF5E", "007E"], # wave-dash
       ["FF0D", "002D"], # full-width minus

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204053529) do
+ActiveRecord::Schema.define(version: 20170208073832) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(version: 20170204053529) do
   add_index "scores", ["bot_id"], name: "index_scores_on_bot_id", using: :btree
 
   create_table "sentence_synonyms", force: :cascade do |t|
-    t.integer  "training_message_id", limit: 4,     null: false
+    t.integer  "training_message_id", limit: 4
     t.integer  "created_user_id",     limit: 4,     null: false
     t.text     "body",                limit: 65535, null: false
     t.datetime "created_at",                        null: false

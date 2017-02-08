@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 import ConversationTree from "./components/conversation-tree";
 import ConversationTreeReducers from "./components/conversation-tree/reducers";
 

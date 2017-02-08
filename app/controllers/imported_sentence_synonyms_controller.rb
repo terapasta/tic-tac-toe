@@ -5,8 +5,12 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     authorize SentenceSynonym
-    @question_answers = (@bot.try(:question_answers) || QuestionAnswer.all).try(:includes, :sentence_synonyms)
-    @target_date = parse_target_date
+    if params.dig(:filter, :worker_id).blank? && params.dig(:filter, :target_date).blank? && params[:force].blank?
+      render :index_alert
+    else
+      @question_answers = (@bot.try(:question_answers) || QuestionAnswer.all).try(:includes, :sentence_synonyms)
+      @target_date = parse_target_date
+    end
   end
 
   def new
@@ -38,7 +42,9 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   private
     def set_bot
-      @bot = Bot.find(params[:bot_id]) if params[:bot_id].present?
+      if params[:bot_id].present? || params.dig(:filter, :bot_id).present?
+        @bot = Bot.find(params[:bot_id].presence || params.dig(:filter, :bot_id))
+      end
     end
 
     def parse_target_date

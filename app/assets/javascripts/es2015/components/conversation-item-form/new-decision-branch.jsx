@@ -40,7 +40,7 @@ export default class NewDecisionBranch extends Component {
         {!isAdding && (
           <div className="nav nav-pills nav-stacked">
             <li className="hover-gray">
-              <span className="btn btn-link" onClick={onAdding}>
+              <span className="btn btn-link" onClick={onAdding} id="add-decision-branch-button">
                 ＋選択肢を追加する
               </span>
             </li>
@@ -48,7 +48,7 @@ export default class NewDecisionBranch extends Component {
         )}
         {isAdding && (
           <div>
-            <input className="form-control" placeholder="新しい選択肢を入力" value={value} onChange={this.onChangeValue.bind(this)} disabled={isProcessing}/>
+            <input className="form-control" placeholder="新しい選択肢を入力" value={value} onChange={this.onChangeValue.bind(this)} disabled={isProcessing} name="decision-branch-body" />
             <div className="clearfix padding-top-8">
               <div className="pull-left">
                 <span className="btn btn-link" onClick={onCancelAdding} disabled={isProcessing}>

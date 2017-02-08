@@ -9,14 +9,15 @@ export default class EditingDecisionBranchItem extends Component {
   }
 
   render() {
-    const { isDisabled } = this.props;
+    const { isDisabled, decisionBranchModel } = this.props;
     const { value } = this.state;
 
     return (
-      <li className="list-group-item clearfix">
+      <li className="list-group-item clearfix" id={`decision-branch-item-${decisionBranchModel.id}`}>
         <div className="input-group">
           <input className="form-control" type="text"
             value={value}
+            name="decision-branch-body"
             onChange={(e) => this.setState({ value: e.target.value })}
             disabled={isDisabled}
           />

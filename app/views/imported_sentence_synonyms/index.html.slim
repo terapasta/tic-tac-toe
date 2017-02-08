@@ -1,20 +1,4 @@
-- form_url = @bot ? bot_imported_sentence_synonyms_path(@bot) : imported_sentence_synonyms_path
-
-- if policy(:sentence_synonym).index_filter?
-  .well
-    = form_tag form_url, class: 'form-inline', method: :get do
-      = collection_select :filter, :worker_id, User.worker, :id, :email, { include_blank: true, prompt: '-- ワーカーを選択 --', selected: params.dig(:filter, :worker_id) }, class: 'form-control'
-      = space 10
-      label 作業日を指定
-      = date_select :filter, :target_date, { selected: ((target_date = params.dig(:filter, :target_date)).present? ? Date.parse(target_date) : Date.today), prompt: '--' }, class: 'form-control'
-      = space 10
-      = submit_tag '絞込', class: 'btn btn-info'
-
-  - if params.dig(:filter, :worker_id).present? || @target_date.present?
-    .well
-      - total_count = @question_answers.count
-      - completed_count = @question_answers.completed_count_for(params[:filter][:worker_id], @target_date)
-      code #{ completed_count } / #{ @question_answers.count }, 残り:#{ total_count - completed_count }
+= render 'filter_form'
 
 table.table.table-striped
   thead

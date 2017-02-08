@@ -1,0 +1,14 @@
+h4 すべての同義文を表示しようとしています
+p これはとても時間のかかる処理なので以下のフィルターをかけて閲覧することをおすすめします
+
+= render 'filter_form'
+
+p
+  |構わず全件表示させたい場合はこちらのボタンを押してくだだい
+  = space
+  = link_to '全同義文を表示する', imported_sentence_synonyms_path(force: true), class: 'btn btn-warning', data: { confirm: '本当に全同義文を表示しますか？' }
+
+p 各ボットの同義文一覧はこちら
+ul
+  - Bot.all.each do |bot|
+    li= link_to "#{bot.name}の同義文一覧", bot_imported_sentence_synonyms_path(bot), class: 'btn btn-link'

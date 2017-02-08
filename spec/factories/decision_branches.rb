@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :decision_branch do
     bot
     answer
-    body "MyString"
+    sequence(:body) { |n| "decision_branches.body #{n}" }
   end
 end

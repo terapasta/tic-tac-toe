@@ -105,6 +105,7 @@ export default class ConversationItemForm extends Component {
           <div className="form-group">
             <label>回答</label>
             <TextArea className="form-control"
+              name="answer-body"
               rows={3}
               value={answerBody || ""}
               onChange={this.onChangeAnswerBody.bind(this)}
@@ -115,7 +116,7 @@ export default class ConversationItemForm extends Component {
                   onClick={this.onClickSaveAnswerButton.bind(this)}
                   disabled={isProcessing}>保存</a>
                 {" "}
-                <span className="btn btn-danger" onClick={this.onClickDeleteAnswerButton.bind(this)}>削除</span>
+                <span className="btn btn-danger" onClick={this.onClickDeleteAnswerButton.bind(this)} id="delete-answer-button">削除</span>
               </div>
             </div>
           </div>

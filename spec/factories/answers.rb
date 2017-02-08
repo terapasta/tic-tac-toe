@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :answer do
     bot
     context 'normal'
-    body "MyText"
+    sequence(:body) { |n| "answers.body #{n}" } 
   end
 end

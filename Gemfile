@@ -125,7 +125,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'poltergeist'
 
   # dummy data
   gem 'faker'

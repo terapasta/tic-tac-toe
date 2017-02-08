@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :question_answer do
-    question "MyString"
+    sequence(:question) { |n| "question_answers.question #{n}" }
     answer nil
-    underlayer "MyText"
   end
 end

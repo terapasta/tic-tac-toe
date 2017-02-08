@@ -68,7 +68,7 @@ function getProps(node) {
 
 function getReduxMiddlewares() {
   let middlewareList = [thunk];
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== "production" && !/PhantomJS/.test(window.navigator.userAgent)) {
     middlewareList.push(createLogger());
   }
   return middlewareList;

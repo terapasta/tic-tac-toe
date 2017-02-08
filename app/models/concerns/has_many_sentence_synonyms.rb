@@ -3,9 +3,11 @@ module HasManySentenceSynonyms
 
   included do
     has_many :sentence_synonyms,
-      foreign_key: :training_message_id
-      #dependent: :destroy,
+      foreign_key: :training_message_id,
+      dependent: :destroy
     accepts_nested_attributes_for :sentence_synonyms
+
+    before_update :deassociate_sentence_synonyms_if_needed
   end
 
   module ClassMethods
@@ -40,5 +42,19 @@ module HasManySentenceSynonyms
   def build_sentence_synonyms_for(user, options = { max_count: 3 })
     count = registered_sentence_synonyms_count_by(user)
     (options[:max_count] - count).times.map{ sentence_synonyms.build }
+  end
+
+  def deassociate_sentence_synonyms_if_needed
+    target_attr = case self
+    when QuestionAnswer
+      :question
+    when TrainingMessage
+      :body
+    end
+    if send("#{target_attr}_changed?")
+      sentence_synonyms.each do |ss|
+        ss.training_message_id = nil
+      end
+    end
   end
 end

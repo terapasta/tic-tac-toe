@@ -31,8 +31,8 @@ class Answer < ActiveRecord::Base
   }
 
   def no_classified?
-    return false if bot.nil?
-    true
+    return true if bot.nil?
+    false
   end
 
   def self_and_deep_child_answers

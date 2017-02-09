@@ -18,4 +18,12 @@ class ApplicationController < ActionController::Base
 
       render 'errors/error_500', layout: 'blank'
     end
+
+    def after_sign_in_path_for(resource)
+      if resource.worker?
+        new_imported_sentence_synonym_path
+      else
+        super
+      end
+    end
 end

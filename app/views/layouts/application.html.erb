@@ -41,6 +41,7 @@
         <%= link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item' %>
         <%= link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item' %>
         <%= link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item' %>
+        <%= link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item' %>
         <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item' %>
         <%= link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item' %>
       </div>

@@ -19,6 +19,7 @@ respond '正答率' do |e|
     })
   rescue => e
     Slappy.logger.error e.message
+    e.reply_to(e.user, "エラーしたみたいです `#{e.message}`")
   end
 end
 
@@ -44,6 +45,7 @@ respond '.*' do |e|
     e.reply_to(e.user, text) if text.present?
   rescue => e
     Slappy.logger.error e.message
+    e.reply_to(e.user, "エラーしたみたいです `#{e.message}`")
   end
 end
 

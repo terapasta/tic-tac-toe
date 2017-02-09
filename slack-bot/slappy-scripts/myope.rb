@@ -25,6 +25,7 @@ end
 respond '.*' do |e|
   Slappy.logger.info e.data.to_json
   begin
+    return e.data['text'].include?('正答率')
     bot = Bot.first
     chat = bot.chats.find_or_create_by(guest_key: Slappy.configuration.token + Time.zone.now.strftime('%Y-%m-%d'))
 

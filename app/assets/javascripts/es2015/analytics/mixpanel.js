@@ -67,7 +67,10 @@ export default class Mixpanel {
   trackForm(trackable) {
     if (!trackable.isTrackable) { return; }
     const { id, eventName, options } = trackable;
-    mixpanel.track_forms(`#${id}`, eventName, options);
-    this.logger.log("track form", eventName, options);
+    if (trackable.isRemote) {
+      trackable.bindAjaxSuccess(() => this.track(trackable));
+    } else {
+      mixpanel.track_forms(`#${id}`, eventName, options);
+    }
   }
 }

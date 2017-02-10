@@ -1,6 +1,7 @@
 class Chats::MessagesController < ApplicationController
   include Replyable
 
+  skip_before_action :verify_authenticity_token
   before_action :set_chat
 
   def create

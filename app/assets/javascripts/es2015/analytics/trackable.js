@@ -1,3 +1,5 @@
+import getData from "../modules/get-data";
+
 export default class Trackable {
   constructor(el) {
     this.el = el;

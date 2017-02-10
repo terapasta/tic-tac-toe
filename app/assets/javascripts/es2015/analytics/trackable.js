@@ -1,3 +1,5 @@
+import uuid from "uuid/v1";
+
 import getData from "../modules/get-data";
 
 export default class Trackable {
@@ -7,6 +9,15 @@ export default class Trackable {
 
   isTrackable() {
     return !!this.eventName;
+  }
+
+  get id() {
+    let _id = this.el.getAttribute("id");
+    if (_id == null) {
+      _id = uuid();
+      this.el.setAttribute("id", _id);
+    }
+    return _id;
   }
 
   get eventName() {

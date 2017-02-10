@@ -11,6 +11,7 @@ export default class Mixpanel {
     this.initMixpanel(token);
     this.setupProfile();
     this.bindClickLinkEvent();
+    this.bindSubmitFormEvent();
   }
 
   initMixpanel(token) {
@@ -41,10 +42,27 @@ export default class Mixpanel {
     this.logger.log("bind click events");
   }
 
+  bindSubmitFormEvent() {
+    [].forEach.call(document.querySelectorAll("form[data-event-name]"), (form) => {
+      try {
+        this.trackForm(new Trackable(form));
+      } catch(e) {
+        console.error(e);
+      }
+    });
+  }
+
   track(trackable) {
     if (!trackable.isTrackable()) { return; }
     const { eventName, options } = trackable;
     mixpanel.track(eventName, options);
     this.logger.log("track", eventName, options);
+  }
+
+  trackForm(trackable) {
+    if (!trackable.isTrackable()) { return; }
+    const { id, eventName, options } = trackable;
+    mixpanel.track_forms(`#${id}`, eventName, options);
+    this.logger.log("track form", eventName, options);
   }
 }

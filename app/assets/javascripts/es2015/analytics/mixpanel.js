@@ -34,7 +34,12 @@ export default class Mixpanel {
   bindClickLinkEvent() {
     document.addEventListener("click", (e) => {
       try {
-        this.track(new Trackable(e.target));
+        const trackable = new Trackable(e.target);
+        if (trackable.isRemote) {
+          trackable.bindAjaxSuccess(() => this.track(trackable));
+        } else {
+          this.track(trackable);
+        }
       } catch(e) {
         console.error(e);
       }

@@ -11,6 +11,10 @@ export default class Trackable {
     return !!this.eventName;
   }
 
+  get isRemote() {
+    return this.el.getAttribute("data-remote") === "true";
+  }
+
   get id() {
     let _id = this.el.getAttribute("id");
     if (_id == null) {

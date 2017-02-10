@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     end
 
     def after_sign_in_path_for(resource)
-      if resource.worker?
+      if resource.try(:worker?)
         new_imported_sentence_synonym_path
       else
         super

@@ -2,8 +2,8 @@
 
 <div>
   <ul class="nav nav-pills">
-    <li role="presentation" class="<%= 'active' if params[:filter].blank? %>"><%= link_to '全て', bot_threads_path(@bot) %></li>
-    <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, filter: 1) %></li>
+    <li role="presentation" class="<%= 'active' if params[:filter].blank? %>"><%= link_to '全て', bot_threads_path(@bot), data: { event_name: 'Open all threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, filter: 1), data: { event_name: 'Open failed threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
   </ul>
 </div>
 <br />
@@ -38,7 +38,7 @@
         </td>
         <td><%= messages.last.created_at if messages.present? %></td>
         <td>
-          <%= link_to t('helpers.link.show'), bot_thread_messages_path(@bot, chat, index_page: params[:page], filter: params[:filter]), class: "btn btn-default" %>
+          <%= link_to t('helpers.link.show'), bot_thread_messages_path(@bot, chat, index_page: params[:page], filter: params[:filter]), class: "btn btn-default", data: { event_name: 'Open thread messages', bot_id: @bot.id, bot_name: @bot.name, chat_id: chat.id } %>
         </td>
       </tr>
     <% end %>

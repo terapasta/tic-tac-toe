@@ -9,10 +9,10 @@ table.table.table-striped
 
   tbody
     = render @word_mappings
-  
+
 
 = paginate @word_mappings
 
 br
 
-= link_to '新規', new_word_mapping_path, class: 'btn btn-primary'
+= link_to '新規', new_word_mapping_path, class: 'btn btn-primary', data: { event_name: 'Open new word mapping' }

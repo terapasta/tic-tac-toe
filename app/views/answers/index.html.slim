@@ -12,6 +12,6 @@ table.table.table-striped
         td = answer.headline
         td = simple_format answer.body
         td
-          = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default"
-          = link_to t('helpers.link.destroy'), bot_answer_path(@bot, answer), method: :delete, data: { confirm: '回答を削除します。宜しいですか。' }, class: "btn btn-danger"
+          = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default", data: { event_name: 'Edit answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }
+          = link_to t('helpers.link.destroy'), bot_answer_path(@bot, answer), method: :delete, data: { confirm: '回答を削除します。宜しいですか。' }, class: "btn btn-danger", data: { event_name: 'Delete answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }
 = paginate @answers

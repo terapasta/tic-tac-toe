@@ -1,12 +1,12 @@
 h1 ヘルプ
 
 ul
-  li = link_to 'Botの基本的な育て方', 'https://esa-pages.io/p/sharing/3501/posts/144/8f09361946f1ffbb832e.html'
-  li = link_to 'チャット時の「その他の回答」について', 'https://esa-pages.io/p/sharing/3501/posts/145/e51bf9d510da37d62f64.html'
-  li = link_to 'Botの回答の削除について', 'https://esa-pages.io/p/sharing/3501/posts/146/caf4fb1867b57beeb80f.html'
-  li = link_to '回答に選択肢を紐付ける', 'https://esa-pages.io/p/sharing/3501/posts/147/cb73c9c85c7dcfbba92d.html'
-  li = link_to 'CSVによる一括データ投入方法', 'https://esa-pages.io/p/sharing/3501/posts/178/55a39fc9a0807521434d.html'
-  li = link_to 'TIPS', 'https://esa-pages.io/p/sharing/3501/posts/148/da164283c816377c28a0.html'
+  li = link_to 'Botの基本的な育て方', 'https://esa-pages.io/p/sharing/3501/posts/144/8f09361946f1ffbb832e.html', data: { event_name: 'Open how to trainig' }
+  li = link_to 'チャット時の「その他の回答」について', 'https://esa-pages.io/p/sharing/3501/posts/145/e51bf9d510da37d62f64.html', data: { event_name: "Open about 'other answer' in chat"}
+  li = link_to 'Botの回答の削除について', 'https://esa-pages.io/p/sharing/3501/posts/146/caf4fb1867b57beeb80f.html', data: { event_name: 'Open about deleting answer' }
+  li = link_to '回答に選択肢を紐付ける', 'https://esa-pages.io/p/sharing/3501/posts/147/cb73c9c85c7dcfbba92d.html', data: { event_name: 'Open how to associate decision branch to answer' }
+  li = link_to 'CSVによる一括データ投入方法', 'https://esa-pages.io/p/sharing/3501/posts/178/55a39fc9a0807521434d.html', data: { event_name: 'Open how to importing csv data' }
+  li = link_to 'TIPS', 'https://esa-pages.io/p/sharing/3501/posts/148/da164283c816377c28a0.html', data: { event_name: 'Open tips' }
 
 br
 
@@ -21,4 +21,4 @@ ul
   li 株式会社mofmof
   li 西井
   li 080-1397-5845
-  li support@mof-mof.co.jp
+  li= link_to 'support@mof-mof.co.jp', 'mailto:support@mof-mof.co.jp', data: { event_name: 'Open mailer with support email' }

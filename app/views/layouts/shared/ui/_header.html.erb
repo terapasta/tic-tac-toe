@@ -21,16 +21,16 @@
         <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
             <% if policy(:static_pages).help? %>
-              <li><%= link_to "ヘルプ", static_pages_help_path %></li>
+              <li><%= link_to "ヘルプ", static_pages_help_path, data: { event_name: 'Open help', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
             <% if policy(:bot).index? %>
-              <li><%= link_to "Bot一覧", bots_path %></li>
+              <li><%= link_to "Bot一覧", bots_path, data: { event_name: 'Open bot index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
             <% if policy(:word_mapping).index? %>
-              <li><%= link_to "同義語一覧", word_mappings_path %></li>
+              <li><%= link_to "同義語一覧", word_mappings_path, data: { event_name: 'Open word mapping index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
             <% if policy(:user).edit? %>
-              <li><%= link_to 'パスワード変更', edit_user_registration_path %></li>
+              <li><%= link_to 'パスワード変更', edit_user_registration_path, data: { event_name: 'Open edit password', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
             <li><%#= link_to "管理者画面", rails_admin_path %></li>
             <!--<li class="dropdown">
@@ -40,7 +40,7 @@
                 <li><%#= link_to '文脈', rails_admin.index_path(model_name: :context) %></li>
               </ul>
             </li>-->
-            <li><%= link_to "ログアウト", destroy_admin_user_session_path, method: :delete %></li>
+            <li><%= link_to "ログアウト", destroy_admin_user_session_path, data: { method: :delete, event_name: 'Logout', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
           </ul>
           <% unless current_user.normal? %>
             <p class="navbar-text"><span class="label label-info"><%= current_user.role.upcase %></span></p>

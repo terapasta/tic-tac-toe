@@ -12,4 +12,4 @@
   </div>
 </div>
 
-<%= link_to t('helpers.link.back'), bots_path, class: "btn btn-default" %>
+<%= link_to t('helpers.link.back'), bots_path, class: "btn btn-default", data: { event_name: 'Back to bot index from imports', bot_id: @bot.id, bot_name: @bot.name } %>

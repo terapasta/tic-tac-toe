@@ -4,8 +4,8 @@
 
   .panel-body
     p
-      = link_to 'Shift_JISでエクスポート', bot_export_path(@bot, :sjis), class: 'btn btn-default'
+      = link_to 'Shift_JISでエクスポート', bot_export_path(@bot, :sjis), class: 'btn btn-default', data: { event_name: 'Export learning data as Shift_JIS', bot_id: @bot.id, bot_name: @bot.name }
       = space
-      = link_to 'UTF-8でエクスポート', bot_export_path(@bot, :utf8), class: 'btn btn-default'
+      = link_to 'UTF-8でエクスポート', bot_export_path(@bot, :utf8), class: 'btn btn-default', data: { event_name: 'Export learninig data as UTF-8', bot_id: @bot.id, bot_name: @bot.name }
 
     p.help-block ※Excelで開きたい場合はShift_JISでエクスポートしてください

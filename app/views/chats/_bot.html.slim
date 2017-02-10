@@ -21,7 +21,7 @@
             - message.other_answers.each do |other_answer|
               - if other_answer.headline.present?
               li
-                = link_to other_answer.headline, chats_messages_path(message.parent.bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: tru
+                = link_to other_answer.headline, chats_messages_path(message.parent.bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: true
 
 - if message.answer.try(:decision_branches).try(:present?)
   .chat-row data-role="chat-decision-branches"
@@ -29,5 +29,5 @@
       .chat-decision-branches__title 回答を選択してください
       .chat-decision-branches__items
         - message.answer.decision_branches.each do |decision_branch|
-          = link_to choices_chats_path(message.parent.bot.token, decision_branch), data: { method: :post, remote: true, role: 'chat-decision-branch' }, class: 'chat-decision-branches__item' do
+          = link_to choices_chats_path(message.parent.bot.token, decision_branch), data: { method: :post, remote: true, role: 'chat-decision-branch', event_name: 'Select decision branch', bot_id: @bot.id, bot_name: @bot.name, chat_id: @chat.id, decision_branch_id: decision_branch.id, message_id: message.id }, class: 'chat-decision-branches__item' do
             = decision_branch.body

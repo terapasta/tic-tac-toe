@@ -1,4 +1,4 @@
-p= link_to '全同義文一覧へ', imported_sentence_synonyms_path
+p= link_to '全同義文一覧へ', imported_sentence_synonyms_path, data: { event_name: 'Back to sentence synonym index from sentence synonym index' }
 
 = render 'filter_form'
 
@@ -25,4 +25,4 @@ table.table.table-striped
                   td= ss.created_user.email
                   - if policy(ss).destroy?
                     - url = @bot ? bot_imported_sentence_synonym_path(@bot, ss) : imported_sentence_synonym_path(ss)
-                    td= link_to '削除', url, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete }
+                    td= link_to '削除', url, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete sentence synonym', sentence_synonym_id: ss.id, bot_id: @bot.try(:id), bot_name: @bot.try(:name) }

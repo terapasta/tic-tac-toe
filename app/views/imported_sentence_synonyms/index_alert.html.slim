@@ -7,9 +7,9 @@ p
   |構わず全件表示させたい場合はこちらのボタンを押してくだだい
   = space
   - all_path = params[:bot_id].present? ? bot_imported_sentence_synonyms_path(params[:bot_id], force: true) : imported_sentence_synonyms_path(force: true)
-  = link_to '全同義文を表示する', all_path, class: 'btn btn-warning', data: { confirm: '本当に全同義文を表示しますか？' }
+  = link_to '全同義文を表示する', all_path, class: 'btn btn-warning', data: { confirm: '本当に全同義文を表示しますか？', event_name: 'Open force sentence synonym index', bot_id: params[:bot_id] }
 
 p 各ボットの同義文一覧はこちら
 ul
   - Bot.all.each do |bot|
-    li= link_to "#{bot.name}の同義文一覧", bot_imported_sentence_synonyms_path(bot), class: 'btn btn-link'
+    li= link_to "#{bot.name}の同義文一覧", bot_imported_sentence_synonyms_path(bot), class: 'btn btn-link', data: { event_name: 'Open bot sentence synonym index', bot_id: bot.id }

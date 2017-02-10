@@ -8,8 +8,9 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <% if Rails.env.production? %>
+  <% #if Rails.env.production? %>
     <%= render 'layouts/shared/analytics/mixpanel' %>
+  <% #end %>
   <% if user_signed_in? %>
     <%= render 'layouts/shared/js_vars/current_user' %>
   <% end %>
@@ -38,16 +39,16 @@
             <%= render 'shared/learning_status_label', bot: @bot %>
           </div>
         <% end %>
-        <%= link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank' %>
-        <%= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item' %>
-        <%= link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item' %>
-        <%= link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item' %>
-        <%= link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item' %>
-        <%= link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item' %>
-        <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item' %>
-        <%= link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item' %>
+        <%= link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank', data: { event_name: 'Open new chat', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item', data: { event_name: 'Open training', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item', data: { event_name: 'Open exporing', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item', data: { event_name: 'Open importing', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item', data: { event_name: 'Open threads', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open qestion answers', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open answers', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item', data: { event_name: 'Open conversation tree', bot_id: @bot.id, bot_name: @bot.name } %>
       </div>
-      <%= link_to "学習を実行する", bot_learning_path(@bot), method: :patch, remote: true, class: 'btn btn-danger btn-block' %>
+      <%= link_to "学習を実行する", bot_learning_path(@bot), class: 'btn btn-danger btn-block', data: { remote: true, method: :patch, event_name: 'Run learning', bot_id: @bot.id, bot_name: @bot.name } %>
     </div>
     <% container_main_class = 'col-sm-10 col-sm-offset-2 ' %>
   <% end %>

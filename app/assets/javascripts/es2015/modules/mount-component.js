@@ -4,9 +4,8 @@ import { Provider, connect } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import createLogger from "redux-logger";
-import camelCase from "lodash/camelCase";
 
-import parseJSON from "./parse-json";
+import getData from "./get-data";
 
 /**
  * this function expect like below component
@@ -34,7 +33,7 @@ export function mountComponentWithRedux(component, reducers) {
   const mountNodes = getMountNodes(component);
 
   mountNodes.forEach((mountNode) => {
-    const props = getProps(mountNode);
+    const props = getData(mountNode, "component");
     const connectedComponent = connect((state) => state)(component);
     const middlewares = applyMiddleware(...getReduxMiddlewares());
     const store = createStore(reducers, props, middlewares);
@@ -50,20 +49,6 @@ export function mountComponentWithRedux(component, reducers) {
 export function getMountNodes(component) {
   const selector = `[data-component="${component.componentName}"]`;
   return [].slice.call(document.querySelectorAll(selector));
-}
-
-function getProps(node) {
-  let props = {};
-
-  [].forEach.call(node.attributes, (attr) => {
-    const { name, value } = attr;
-    if (/^data\-(?!component)/.test(name)) {
-      const propName = camelCase(name.replace(/^data\-/, ""));
-      props[propName] = parseJSON(value);
-    }
-  });
-
-  return props;
 }
 
 function getReduxMiddlewares() {

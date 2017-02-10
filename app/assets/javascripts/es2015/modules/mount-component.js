@@ -33,7 +33,7 @@ export function mountComponentWithRedux(component, reducers) {
   const mountNodes = getMountNodes(component);
 
   mountNodes.forEach((mountNode) => {
-    const props = getData(mountNode, "component");
+    const props = getProps(mountNode);
     const connectedComponent = connect((state) => state)(component);
     const middlewares = applyMiddleware(...getReduxMiddlewares());
     const store = createStore(reducers, props, middlewares);
@@ -57,4 +57,8 @@ function getReduxMiddlewares() {
     middlewareList.push(createLogger());
   }
   return middlewareList;
+}
+
+function getProps(node) {
+  return getData(node, "component");
 }

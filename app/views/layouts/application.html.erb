@@ -18,9 +18,9 @@
   <% end %>
 
   <% if params[:token].present? %>
-    <%= render 'layouts/header_bot', bot: @bot %>
+    <%= render 'layouts/shared/ui/header_bot', bot: @bot %>
   <% else %>
-    <%= render 'layouts/header' %>
+    <%= render 'layouts/shared/ui/header' %>
   <% end %>
 
   <% if !chat_page? && policy(:static_pages).can_use_nav?(@bot) %>

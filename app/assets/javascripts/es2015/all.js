@@ -15,6 +15,7 @@ window.initMessageRatingButtons = () => {
 function init() {
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
+  window.initMessageRatingButtons();
 }
 
 if (document.readyState === "complete") {

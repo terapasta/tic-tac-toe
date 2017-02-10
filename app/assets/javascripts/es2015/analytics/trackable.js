@@ -31,4 +31,10 @@ export default class Trackable {
   get options() {
     return getData(this.el, "event-name");
   }
+
+  bindAjaxSuccess(handler) {
+    $(this.el).on("ajax:success", () => {
+      handler();
+    });
+  }
 }

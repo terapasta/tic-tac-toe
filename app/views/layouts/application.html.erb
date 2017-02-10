@@ -9,12 +9,12 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <% if Rails.env.production? %>
-    <%= render 'layouts/shared/mixpanel' %>
+    <%= render 'layouts/shared/analytics/mixpanel' %>
   <% end %>
 </head>
 <body>
   <% if Rails.env.production? %>
-    <%= render 'layouts/shared/google_analytics' %>
+    <%= render 'layouts/shared/analytics/google_analytics' %>
   <% end %>
 
   <% if params[:token].present? %>

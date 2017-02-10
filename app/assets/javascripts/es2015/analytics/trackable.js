@@ -7,7 +7,7 @@ export default class Trackable {
     this.el = el;
   }
 
-  isTrackable() {
+  get isTrackable() {
     return !!this.eventName;
   }
 

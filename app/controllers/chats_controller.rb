@@ -7,8 +7,7 @@ class ChatsController < ApplicationController
   before_action :set_warning_message
 
   def show
-    session[:embed] = params[:embed] if params[:embed]
-    redirect_to new_chats_path if @chat.nil?
+    redirect_to new_chats_path(token: params[:token]) if @chat.nil?
   end
 
   def new

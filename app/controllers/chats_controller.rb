@@ -1,8 +1,8 @@
 class ChatsController < ApplicationController
   include IframeSupportable
   iframe_support :show, :new
-  before_action :set_chat, only: [:show, :destroy]
-  before_action :set_bot, only: [:show, :new, :destroy]
+  before_action :set_bot, only: [:show, :new]
+  before_action :set_chat, only: [:show]
   before_action :set_guest_key
   before_action :set_warning_message
 
@@ -18,18 +18,13 @@ class ChatsController < ApplicationController
     render :show
   end
 
-  def destroy
-    flash[:notice] = 'クリアしました'
-    redirect_to new_chats_path(@bot.token)
-  end
-
   private
     def set_bot
       @bot = Bot.find_by!(token: params[:token])
     end
 
     def set_chat
-      @chat = Chat.where(guest_key: session[:guest_key]).last
+      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
     end
 
     def set_guest_key

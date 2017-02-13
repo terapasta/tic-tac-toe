@@ -1,8 +1,7 @@
 class Chats::MessagesController < ApplicationController
   include Replyable
-
   skip_before_action :verify_authenticity_token
-  before_action :set_chat
+  before_action :set_bot_chat
 
   def create
     @bot = Bot.find_by!(token: params[:token])
@@ -14,8 +13,9 @@ class Chats::MessagesController < ApplicationController
   end
 
   private
-    def set_chat
-      @chat = Chat.where(guest_key: session[:guest_key]).last
+    def set_bot_chat
+      @bot = Bot.find_by!(token: params[:token])
+      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
     end
 
     def message_params

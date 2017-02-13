@@ -18,7 +18,7 @@ function init() {
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
   window.initMessageRatingButtons();
-  new Mixpanel("3c53484fb604d6e20438b4fac8d2ea56");
+  Mixpanel.initialize("3c53484fb604d6e20438b4fac8d2ea56");
 }
 
 if (document.readyState === "complete") {

@@ -5,6 +5,10 @@ import CurrentUser from "./current-user";
 import Trackable from "./trackable";
 
 export default class Mixpanel {
+  static initialize(token) {
+    this.sharedInstance = new Mixpanel(token);
+  }
+
   constructor(token) {
     if (window.mixpanel == null) { return; }
     this.logger = new Logger("Mixpanel");
@@ -60,8 +64,7 @@ export default class Mixpanel {
   track(trackable) {
     if (!trackable.isTrackable) { return; }
     const { eventName, options } = trackable;
-    mixpanel.track(eventName, options);
-    this.logger.log("track", eventName, options);
+    this.trackEvent(eventName, options);
   }
 
   trackForm(trackable) {
@@ -72,5 +75,10 @@ export default class Mixpanel {
     } else {
       mixpanel.track_forms(`#${id}`, eventName, options);
     }
+  }
+
+  trackEvent(eventName, options) {
+    mixpanel.track(eventName, options);
+    this.logger.log("track", eventName, options);
   }
 }

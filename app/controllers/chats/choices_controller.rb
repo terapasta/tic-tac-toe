@@ -1,10 +1,8 @@
 class Chats::ChoicesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_chat
-  before_action :set_decision_branch
+  before_action :set_bot_chat_decision_branch
 
   def create
-    @bot = @chat.bot
     answer = @decision_branch.next_answer
     @message = @chat.messages.build(speaker: 'guest', body: @decision_branch.body)
     @bot_messages = [ @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body) ]
@@ -13,11 +11,9 @@ class Chats::ChoicesController < ApplicationController
   end
 
   private
-    def set_chat
-      @chat = Chat.where(guest_key: session[:guest_key]).last
-    end
-
-    def set_decision_branch
+    def set_bot_chat_decision_branch
+      @bot = Bot.find_by!(token: params[:token])
+      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
       @decision_branch = @chat.bot.decision_branches.find(params[:id])
     end
 end

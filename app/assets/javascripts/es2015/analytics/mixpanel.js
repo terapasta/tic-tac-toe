@@ -1,5 +1,3 @@
-import getData from "../modules/get-data";
-
 import Logger from "./logger";
 import CurrentUser from "./current-user";
 import Trackable from "./trackable";

@@ -29,7 +29,7 @@ export default class Trackable {
   }
 
   get options() {
-    return getData(this.el, "event-name");
+    return getData(this.el, "event-name|remote|method|confirm|disable-with");
   }
 
   bindAjaxSuccess(handler) {

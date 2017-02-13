@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 
+import Mixpanel from "../analytics/mixpanel";
 import getOffset from "../modules/get-offset";
 
 import Tree from "./tree";
@@ -66,10 +67,12 @@ export default class ConversationTree extends Component {
             openedDecisionBranchIds={openedDecisionBranchIds}
             isAddingAnswer={isAddingAnswer}
             onSelectItem={(dataType, id) => {
+              Mixpanel.sharedInstance.trackEvent("Select tree node", { dataType, id });
               dispatch(a.toggleOpenedIds(dataType, id));
               dispatch(a.setActiveItem(dataType, id));
             }}
             onCreatingAnswer={() => {
+              Mixpanel.sharedInstance.trackEvent("New answer node");
               dispatch(a.setActiveItem("answer", null));
             }}
           />
@@ -85,35 +88,45 @@ export default class ConversationTree extends Component {
             editingDecisionBranchModels={editingDecisionBranchModels}
             isAddingDecisionBranch={isAddingDecisionBranch}
             onSaveAnswer={(answerModel, body, decisionBranchId) => {
-              if (answerModel.id == null) {
+              const { id } = answerModel;
+              Mixpanel.sharedInstance.trackEvent("Save answer node", { answerId: id, decisionBranchId });
+              if (id == null) {
                 dispatch(a.addAnswerToAnswersTree(body, decisionBranchId));
               } else {
                 dispatch(a.updateAnswerModel(answerModel, { body }));
               }
             }}
             onDeleteAnswer={(answerModel, decisionBranchId) => {
+              Mixpanel.sharedInstance.trackEvent("Delete answer node", { answerId: answerModel.id, decisionBranchId });
               dispatch(a.deleteAnswerFromAnswersTree(answerModel, decisionBranchId));
             }}
             onSaveDecisionBranch={(decisionBranchModel, body) => {
-              if (decisionBranchModel.id == null) {
+              const { id } = decisionBranchModel;
+              Mixpanel.sharedInstance.trackEvent("Save decision branch node", { decisionBranchId: id });
+              if (id == null) {
                 dispatch(a.addDecisionBranchToAnswersTree(body));
               } else {
                 dispatch(a.updateDecisionBranchModel(decisionBranchModel, { body }));
               }
             }}
             onEditDecisionBranch={(index) => {
-               dispatch(a.activateEditingDecisionBranchModel(index));
+              Mixpanel.sharedInstance.trackEvent("Edit decision branch node");
+              dispatch(a.activateEditingDecisionBranchModel(index));
             }}
             onDeleteDecisionBranch={(decisionBranchModel, answerId) => {
+              Mixpanel.sharedInstance.trackEvent("Delete decision branch node", { decisionBranchId: decisionBranchModel.id });
               dispatch(a.deleteDecisionBranchFromAnswersTree(decisionBranchModel, answerId));
             }}
             onAddingDecisionBranch={() => {
+              Mixpanel.sharedInstance.trackEvent("Adding decision branch node");
               dispatch(a.onAddingDecisionBranch());
             }}
             onCancelAddingDecisionBranch={() => {
+              Mixpanel.sharedInstance.trackEvent("Cancel adding decision branch node");
               dispatch(a.offAddingDecisionBranch());
             }}
             onSaveNewDecisionBranch={(body) => {
+              Mixpanel.sharedInstance.trackEvent("Save decision branch node", { decisionBranchId: null });
               dispatch(a.addDecisionBranchToAnswersTree(body, activeItem.id));
             }}
           />

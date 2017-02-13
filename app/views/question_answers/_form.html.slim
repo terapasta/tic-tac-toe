@@ -1,4 +1,6 @@
-= bootstrap_form_for [@bot, @question_answer] do |f|
+- data = @question_answer.persisted? ? { event_name: 'Update question answer', question_answer_id: @question_answer.id, bot_id: @bot.id, bot_name: @bot.name }
+
+= bootstrap_form_for [@bot, @question_answer], data: data do |f|
   - if @question_answer.persisted?
     = f.static_control :question
   - else
@@ -12,6 +14,6 @@
   = f.hidden_field :answer_id
   = f.submit class: 'btn btn-success'
   | &nbsp;
-  = link_to '削除する', [@bot, @question_answer], method: :delete, class: 'btn btn-danger', data: { confirm: 'Q&Aを削除します。よろしいですか？' }
+  = link_to '削除する', [@bot, @question_answer], class: 'btn btn-danger', data: { confirm: 'Q&Aを削除します。よろしいですか？', method: :delete, event_name: 'Delete question answer', question_answer_id: @question_answer.id, bot_id: @bot.id, bot_name: @bot.name }
 
   = javascript_include_tag 'question_answers/form'

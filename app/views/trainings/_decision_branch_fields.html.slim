@@ -1,16 +1,16 @@
 li.nested-fields.list-group-item data-decision-branch-id=decision_branch.id
   / = form_tag choice_bot_training_answer_decision_branch(bot, training, answer decision_branch), method: :post do |f|
   / a href='javascript:void(0);' onclick='click_decision_branch(this);'
-  = bootstrap_form_for [bot, training, answer, decision_branch], remote: true do |f|
+  = bootstrap_form_for [bot, training, answer, decision_branch], data: { remote: true, event_name: 'Update decision branch in training' } do |f|
     .decision-branch-value
-      = link_to decision_branch.body, choice_bot_training_answer_decision_branch_path(bot, training, answer, decision_branch), method: :post
+      = link_to decision_branch.body, choice_bot_training_answer_decision_branch_path(bot, training, answer, decision_branch), data: { method: :post, event_name: 'Select decision branch in training' }
       / span.body = decision_branch.body
       .decision-branch-buttons
         - path = decision_branch.persisted? ? bot_training_answer_decision_branch_path(bot, training, answer, decision_branch) : 'javascript:void(0)'
         / TODO onclickを使わないようにしたい
-        = link_to 'javascript:void(0)', class: 'btn btn-default', onclick: "swtich_to_text_field(this);" do 
+        = link_to 'javascript:void(0)', class: 'btn btn-default', onclick: "swtich_to_text_field(this);", data: { event_name: 'Editing decision branch in training', decision_branch_id: decision_branch.id } do
           span.glyphicon.glyphicon-pencil aria-hidden="true"
-        = link_to path, remote: true, method: :delete, class: 'btn btn-default', onclick: "destroy_decision_branch_field(event);" do 
+        = link_to path, remote: true, method: :delete, class: 'btn btn-default', onclick: "destroy_decision_branch_field(event);", data: { event_name: "Delete decision branch in training", decision_branch_id: decision_branch.id } do
           span.glyphicon.glyphicon-remove aria-hidden="true"
     - style = decision_branch.body.present? ? 'display:none;' : ''
     .decision-branch-field style=style

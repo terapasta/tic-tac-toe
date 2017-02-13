@@ -2,7 +2,7 @@
 
 - if policy(:sentence_synonym).index_filter?
   .well
-    = form_tag form_url, class: 'form-inline', method: :get do
+    = form_tag form_url, class: 'form-inline', method: :get, data: { event_name: 'Filter sentence synonym index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } do
       = collection_select :filter, :worker_id, User.worker, :id, :email, { prompt: '-- ワーカーを選択 --', selected: params.dig(:filter, :worker_id) }, class: 'form-control'
 
       = space 10

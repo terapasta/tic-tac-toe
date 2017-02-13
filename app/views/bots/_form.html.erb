@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@bot) do |f| %>
+<%= bootstrap_form_for(@bot, data: { event_name: "Update bot", bot_id: @bot.id, bot_name: @bot.name }) do |f| %>
   <%= render "shared/errors", object: @bot %>
 
   <%= f.text_field :name %>

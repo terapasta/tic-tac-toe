@@ -1,4 +1,4 @@
-<%= bootstrap_form_tag url: bot_imports_path(@bot), method: :post do |f| %>
+<%= bootstrap_form_tag url: bot_imports_path(@bot), method: :post, data: { event_name: 'Import learning data' } do |f| %>
   <%#= render "shared/errors", object: @bot %>
   <p>
     このインポート機能は、対話データを一括で追加登録する機能です。<br />

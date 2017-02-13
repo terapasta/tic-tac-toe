@@ -4,4 +4,4 @@
 
   .panel-body
     = render 'form'
-= link_to t('helpers.link.back'), bot_question_answers_path(@bot), class: "btn btn-default"
+= link_to t('helpers.link.back'), bot_question_answers_path(@bot), class: "btn btn-default", data: { event_name: 'Back to question answer index from new', bot_id: @bot.id, bot_name: @bot.name }

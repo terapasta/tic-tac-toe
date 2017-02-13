@@ -1,0 +1,2 @@
+javascript:
+  window.currentUser = #{current_user.to_json(only: [:id, :email]).html_safe};

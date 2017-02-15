@@ -11,12 +11,12 @@ class BotsController < ApplicationController
   end
 
   def update
-    if @bot.update(bot_params)
-      flash[:notice] = '更新しました'
+    if @bot.update(permitted_attributes(@bot))
+      redirect_to edit_bot_path(@bot), notice: '更新しました'
     else
-      flash[:notice] = '更新に失敗しました'
+      flash.now.alert = '更新に失敗しました'
+      render :edit
     end
-    render :edit
   end
 
   def reset
@@ -29,9 +29,5 @@ class BotsController < ApplicationController
     def set_bot
       @bot = bots.find(params[:id])
       authorize @bot
-    end
-
-    def bot_params
-      params.require(:bot).permit(:name, :image, :classify_failed_message, :start_message)
     end
 end

@@ -12,6 +12,9 @@ class Bot < ActiveRecord::Base
   has_one :score
   has_one :learning_parameter
   has_many :sentence_synonyms, through: :question_answers
+  has_many :allowed_hosts
+
+  accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 

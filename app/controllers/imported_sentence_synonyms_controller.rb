@@ -5,11 +5,12 @@ class ImportedSentenceSynonymsController < ApplicationController
 
   def index
     authorize SentenceSynonym
-    if params.dig(:filter, :worker_id).blank? && params.dig(:filter, :target_date).blank? && params[:force].blank?
-      render :index_alert
-    else
-      @question_answers = (@bot.try(:question_answers) || QuestionAnswer.all).try(:includes, :sentence_synonyms)
-      @target_date = parse_target_date
+    SentenceSynonymsOperatable::IndexOperator.new(self).tap do |operator|
+      if operator.need_alert?
+        render :index_alert
+      else
+        operator.process
+      end
     end
   end
 
@@ -44,15 +45,6 @@ class ImportedSentenceSynonymsController < ApplicationController
     def set_bot
       if params[:bot_id].present? || params.dig(:filter, :bot_id).present?
         @bot = Bot.find(params[:bot_id].presence || params.dig(:filter, :bot_id))
-      end
-    end
-
-    def parse_target_date
-      year = params.dig(:filter, 'target_date(1i)').presence || nil
-      month = params.dig(:filter, 'target_date(2i)').presence || nil
-      day = params.dig(:filter, 'target_date(3i)').presence || nil
-      unless [year, month, day].include?(nil)
-        Date.new(year.to_i, month.to_i, day.to_i)
       end
     end
 end

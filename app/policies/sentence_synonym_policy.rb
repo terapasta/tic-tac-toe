@@ -32,14 +32,4 @@ class SentenceSynonymPolicy < ApplicationPolicy
   def destroy?
     user.normal? || user.staff?
   end
-
-  class Scope < Scope
-    def resolve
-      if user.normal? || user.staff?
-        scope.all
-      else
-        scope.where(created_user_id: user.id)
-      end.includes(:created_user)
-    end
-  end
 end

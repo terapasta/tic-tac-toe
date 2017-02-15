@@ -3,7 +3,7 @@ class SentenceSynonymPolicy < ApplicationPolicy
     user.staff? || user.normal? || user.worker?
   end
 
-  def index_filter?
+  def worker_filter?
     user.staff? || user.normal?
   end
 

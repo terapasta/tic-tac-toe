@@ -45,13 +45,6 @@ module StartDash
       #g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    config.x.allow_iframe_origins = %w(
-      http://*.mof-mof.co.jp
-      https://*.mof-mof.co.jp
-      http://*.piano.or.jp
-      https://*.piano.or.jp
-    )
-
     config.assets.paths << Compass::Core.base_directory + '/stylesheets'
   end
 end

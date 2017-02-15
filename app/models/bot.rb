@@ -14,6 +14,8 @@ class Bot < ActiveRecord::Base
   has_many :sentence_synonyms, through: :question_answers
   has_many :allowed_hosts
 
+  accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
+
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 
   mount_uploader :image, ImageUploader

@@ -1,9 +1,9 @@
 class SentenceSynonymPolicy < ApplicationPolicy
   def index?
-    user.staff? || user.normal?
+    user.staff? || user.normal? || user.worker?
   end
 
-  def index_filter?
+  def worker_filter?
     user.staff? || user.normal?
   end
 
@@ -31,15 +31,5 @@ class SentenceSynonymPolicy < ApplicationPolicy
   #       record.training_message.bot.user_id == user.id をチェックしたい
   def destroy?
     user.normal? || user.staff?
-  end
-
-  class Scope < Scope
-    def resolve
-      if user.normal? || user.staff?
-        scope.all
-      else
-        scope.where(created_user_id: user.id)
-      end.includes(:created_user)
-    end
   end
 end

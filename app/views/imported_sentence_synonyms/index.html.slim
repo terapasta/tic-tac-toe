@@ -6,23 +6,26 @@ table.table.table-striped
   thead
     tr
       th id
-      th bot
+      - if policy(Bot).show?
+        th bot
       th トレーニングメッセージ
       th 同義文
   tbody
-    - @question_answers.each do |itm|
-      - if current_user.normal? || policy_scope(itm.sentence_synonyms).any?
+    - @filtered_question_answers.each do |qa, ss_list|
+      - if ss_list.any?
         tr
-          th= itm.id
-          th= link_to "#{ itm.bot.id } #{ itm.bot.name }", edit_bot_path(itm.bot_id)
-          th= itm.question
-          th
+          td= qa.id
+          - if policy(Bot).show?
+            th= link_to "#{ qa.bot.id } #{ qa.bot.name }", edit_bot_path(qa.bot_id)
+          td= qa.question
+          td
             table.table.table-striped: tbody
-              - policy_scope(itm.sentence_synonyms).target_date(@target_date).target_user(params.dig(:filter, :worker_id)).each do |ss|
-                tr
+              - ss_list.each do |ss|
+                tr.sentence-synonym-row
                   td= ss.id
                   td= ss.body
                   td= ss.created_user.email
                   - if policy(ss).destroy?
                     - url = @bot ? bot_imported_sentence_synonym_path(@bot, ss) : imported_sentence_synonym_path(ss)
                     td= link_to '削除', url, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete sentence synonym', sentence_synonym_id: ss.id, bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
+                  td= ss.created_at.strftime('%Y/%m/%d')

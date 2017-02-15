@@ -89,6 +89,7 @@ gem 'bootstrap-tagsinput-rails'
 gem 'draper'
 gem 'pundit'
 gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond'
+gem 'nested_form'
 
 gem 'newrelic_rpm'
 

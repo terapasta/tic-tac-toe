@@ -1,6 +1,6 @@
 class SentenceSynonymPolicy < ApplicationPolicy
   def index?
-    user.staff? || user.normal?
+    user.staff? || user.normal? || user.worker?
   end
 
   def index_filter?

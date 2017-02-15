@@ -30,4 +30,18 @@ class BotPolicy < ApplicationPolicy
   def reset?
     update?
   end
+
+  def permitted_attributes
+    [
+      :name,
+      :image,
+      :classify_failed_message,
+      allowed_hosts_attributes: [
+        :id,
+        :scheme,
+        :domain,
+        :_destroy,
+      ]
+    ]
+  end
 end

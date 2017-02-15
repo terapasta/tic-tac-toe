@@ -30,8 +30,4 @@ class BotsController < ApplicationController
       @bot = bots.find(params[:id])
       authorize @bot
     end
-
-    def bot_params
-      params.require(:bot).permit(:name, :image, :classify_failed_message, :start_message)
-    end
 end

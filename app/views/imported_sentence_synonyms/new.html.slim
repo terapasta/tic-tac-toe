@@ -20,3 +20,23 @@
       = f.submit '登録する', class: 'btn btn-success'
       | &nbsp;
       = link_to 'スキップする', skip_url, class: 'btn btn-default', data: { event_name: 'Skip creating sentence synonym', bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
+
+.well
+  h4 同義文の注意点（必ずお読みください）
+  ol
+    li
+      p 接続詞の変更のみは避けてください
+      p 例：質問<code>朝ごはんを食べましたか？</code>の場合
+      ul
+        li <span class="label label-danger">BAD</span> 朝ごはんは食べましたか？
+        li <span class="label label-success">GOOD</span> 既に朝食をとりましたか？
+      br
+    li
+      p 記号・句読点の変更のみは避けてください
+      p 例：質問<code>カードキーは、どこで発行できますか？</code>の場合
+      ul
+        li <span class="label label-danger">BAD</span> カードキーはどこで発行できますか??
+        li <span class="label label-success">GOOD</span> カードキーを発行したいのですが、申請する場所がわかりません
+      br
+    li
+      p なるべく伝えたいことが変わらない別の言い方を作成するようにお願いします

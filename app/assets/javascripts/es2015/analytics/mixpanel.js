@@ -76,6 +76,7 @@ export default class Mixpanel {
   }
 
   trackEvent(eventName, options) {
+    if (window.mixpanel == null) { return; }
     mixpanel.track(eventName, options);
     this.logger.log("track", eventName, options);
   }

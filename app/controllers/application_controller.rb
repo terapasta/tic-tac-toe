@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   # layout 'lumen'
 
   rescue_from StandardError, with: :handle_500 unless Rails.env.development?
+  before_action :inject_request_to_application_policy
 
   include Pundit
 
@@ -25,5 +26,10 @@ class ApplicationController < ActionController::Base
       else
         super
       end
+    end
+
+    def inject_request_to_application_policy
+      _request = @_request
+      ApplicationPolicy.send(:define_method, :request, -> { _request })
     end
 end

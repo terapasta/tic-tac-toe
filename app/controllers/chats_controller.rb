@@ -1,18 +1,20 @@
 class ChatsController < ApplicationController
   include IframeSupportable
   before_action :set_bot, only: [:show, :new]
-  before_action :set_chat, only: [:show]
   before_action :set_guest_key
   before_action :set_warning_message
 
   def show
     iframe_support @bot
+    @chat = @bot.chats.where(guest_key: session[:guest_key]).last
+    authorize @chat
     redirect_to new_chats_path(token: params[:token]) if @chat.nil?
   end
 
   def new
     iframe_support @bot
     @chat = @bot.chats.new(guest_key: session[:guest_key])
+    authorize @chat
     @chat.is_staff = true if current_user.try(:staff?) # ログインしてなくてもチャットできるため
     @chat.messages << @chat.build_start_message
     @chat.save!
@@ -22,10 +24,6 @@ class ChatsController < ApplicationController
   private
     def set_bot
       @bot = Bot.find_by!(token: params[:token])
-    end
-
-    def set_chat
-      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
     end
 
     def set_guest_key

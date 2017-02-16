@@ -3,11 +3,9 @@ module IframeSupportable
 
   def iframe_support(bot)
     response.headers.except!('X-Frame-Options')
-    bot.allowed_hosts.tap do |allowed_hosts|
-      origins = allowed_hosts.map(&:to_origin).presence&.join(' ') || '*'
-      csp = "frame-ancestors 'self' #{origins}"
-      response.headers['X-Content-Security-Policy'] = csp
-      response.headers['Content-Security-Policy'] = csp
-    end
+    origins = bot.allowed_hosts.map(&:to_origin).presence&.join(' ') || '*'
+    csp = "frame-ancestors 'self' #{origins}"
+    response.headers['X-Content-Security-Policy'] = csp
+    response.headers['Content-Security-Policy'] = csp
   end
 end

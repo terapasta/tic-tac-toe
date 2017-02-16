@@ -36,12 +36,15 @@ class BotPolicy < ApplicationPolicy
       :name,
       :image,
       :classify_failed_message,
-      allowed_hosts_attributes: [
-        :id,
-        :scheme,
-        :domain,
-        :_destroy,
-      ]
+      :start_message,
+      {
+        allowed_hosts_attributes: [
+          :id,
+          :scheme,
+          :domain,
+          :_destroy,
+        ],
+      },
     ]
   end
 end

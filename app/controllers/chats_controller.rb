@@ -7,8 +7,11 @@ class ChatsController < ApplicationController
   def show
     iframe_support @bot
     @chat = @bot.chats.where(guest_key: session[:guest_key]).last
-    authorize @chat
-    redirect_to new_chats_path(token: params[:token]) if @chat.nil?
+    if @chat.nil?
+      redirect_to new_chats_path(token: params[:token])
+    else
+      authorize @chat
+    end
   end
 
   def new

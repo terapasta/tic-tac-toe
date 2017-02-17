@@ -4,7 +4,11 @@ class ChatPolicy < ApplicationPolicy
   end
 
   def new?
-    user.staff? || user.id == record.bot.user.id || referer_is_allowed_origin?
+    if request.referer.blank?
+      user.staff? || user.id == record.bot.user.id
+    else
+      referer_is_allowed_origin?
+    end
   end
 
   private
@@ -15,14 +19,14 @@ class ChatPolicy < ApplicationPolicy
           .map(&:to_origin)
           .map(&Addressable::URI.method(:parse))
           .map { |o|
-            is_match_host = if o.host.starts_with?('*')
+            is_match_host = if o.host.starts_with?('*.')
               ref.host.ends_with?(o.host.sub(/^\*\./, ''))
             else
               ref.host == o.host
             end
             is_match_host && ref.scheme == o.scheme
           }
-          .exclude?(false)
+          .include?(true)
         else
           true
         end

@@ -91,6 +91,7 @@ gem 'pundit'
 gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond'
 gem 'nested_form'
 gem 'addressable', require: 'addressable/uri'
+gem 'toastr-rails'
 
 gem 'newrelic_rpm'
 

@@ -22,6 +22,7 @@
 //= require bootstrap-sprockets
 //= require bootstrap-tagsinput
 // require turbolinks
+//= require toastr
 //= require base
 // require_tree .
 //= require bundled-es2015

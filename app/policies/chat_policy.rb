@@ -14,8 +14,12 @@ class ChatPolicy < ApplicationPolicy
         .map(&:to_origin)
         .map(&Addressable::URI.method(:parse))
         .map { |o|
-          o.scheme == ref.scheme &&
-          o.host.sub(/^\*\./, '') == ref.host
+          is_match_host = if o.host.starts_with?('*')
+            ref.host.ends_with?(o.host.sub(/^\*\./, ''))
+          else
+            ref.host == o.host
+          end
+          is_match_host && ref.scheme == o.scheme
         }
         .exclude?(false)
     end

@@ -18,3 +18,4 @@ $ ->
     body = $.grep(data, (item, i) => item.name is 'message[body]')[0]
     if body.value is ""
       xhr.abort()
+      toastr.warning 'メッセージを入力してください'

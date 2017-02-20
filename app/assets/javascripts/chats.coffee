@@ -16,8 +16,9 @@ $ ->
   $newMessageForm.on 'ajax:beforeSend', (e, xhr, settings) =>
     $form = $(e.target)
     data = $form.serializeArray()
-    body = $.grep(data, (item, i) => item.name is 'message[body]')[0]
-    if body.value is ""
+    rawBody = $.grep(data, (item, i) => item.name is 'message[body]')[0].value;
+    body = $.trim(rawBody)
+    if body.length is 0
       xhr.abort()
       toastr.warning 'メッセージを入力してください'
 

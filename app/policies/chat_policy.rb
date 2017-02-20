@@ -5,7 +5,7 @@ class ChatPolicy < ApplicationPolicy
 
   def new?
     if request.referer.blank?
-      user.staff? || user.id == record.bot.user.id
+      user.staff? || user.id == record.bot.user.id || record.bot.allowed_hosts.blank?
     else
       referer_is_allowed_origin?
     end

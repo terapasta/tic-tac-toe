@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
       logger.error exception.message
       logger.error exception.backtrace.join("\n")
 
-      render 'errors/error_500', layout: false
+      render 'errors/error_500', layout: false, status: 500
     end
 
     def after_sign_in_path_for(resource)

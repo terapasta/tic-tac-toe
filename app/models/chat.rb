@@ -19,6 +19,17 @@ class Chat < ActiveRecord::Base
       where(id: Message.select(:chat_id).answer_failed)
     end
   }
+
+  scope :has_good_answer, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).good)
+    end
+  }
+
+  scope :has_bad_answer, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).bad)
+    end
   }
 
   scope :not_staff, -> (flag) {

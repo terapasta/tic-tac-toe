@@ -14,12 +14,17 @@ class Chat < ActiveRecord::Base
       .order('chats.id desc')
   }
 
-  scope :has_answer_failed, -> {
-    where(id: Message.select(:chat_id).answer_failed)
+  scope :has_answer_failed, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).answer_failed)
+    end
+  }
   }
 
-  scope :not_staff, -> {
-    where(is_staff: false)
+  scope :not_staff, -> (flag) {
+    if flag.present?
+      where(is_staff: false)
+    end
   }
 
   def build_start_message

@@ -21,7 +21,6 @@ class QuestionAnswer::CsvImporter
         @current_row = index + 1
         q = sjis_safe(row[0])
         a = sjis_safe(row[1])
-        next if q.blank?
 
         @current_answer = @bot.answers.find_or_create_by!(body: a)
 

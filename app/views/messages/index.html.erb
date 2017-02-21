@@ -20,6 +20,12 @@
           <% if message.answer_failed? %>
             <i class="glyphicon glyphicon-warning-sign text-warning"></i>
           <% end %>
+          <% if message.good? %>
+            <i class="fa fa-thumbs-up text-success"></i>
+          <% end %>
+          <% if message.bad? %>
+            <i class="fa fa-thumbs-down text-danger"></i>
+          <% end %>
         </td>
         <td nowrap="nowrap">
           <%= image_tag message.speaker_image_url, class: 'img-tiny' %>

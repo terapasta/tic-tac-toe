@@ -14,12 +14,28 @@ class Chat < ActiveRecord::Base
       .order('chats.id desc')
   }
 
-  scope :has_answer_failed, -> {
-    where(id: Message.select(:chat_id).answer_failed)
+  scope :has_answer_failed, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).answer_failed)
+    end
   }
 
-  scope :not_staff, -> {
-    where(is_staff: false)
+  scope :has_good_answer, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).good)
+    end
+  }
+
+  scope :has_bad_answer, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).bad)
+    end
+  }
+
+  scope :not_staff, -> (flag) {
+    if flag.present?
+      where(is_staff: false)
+    end
   }
 
   def build_start_message
@@ -29,6 +45,14 @@ class Chat < ActiveRecord::Base
 
   def has_answer_failed_message?
     messages.any? { |m| m.answer_failed? }
+  end
+
+  def has_good_answer?
+    messages.any? { |m| m.good? }
+  end
+
+  def has_bad_answer?
+    messages.any? { |m| m.bad? }
   end
 
   class << self

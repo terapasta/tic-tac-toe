@@ -47,6 +47,14 @@ class Chat < ActiveRecord::Base
     messages.any? { |m| m.answer_failed? }
   end
 
+  def has_good_answer?
+    messages.any? { |m| m.good? }
+  end
+
+  def has_bad_answer?
+    messages.any? { |m| m.bad? }
+  end
+
   class << self
     def find_by_guest_key!(guest_key)
       chat = where(guest_key: guest_key).last

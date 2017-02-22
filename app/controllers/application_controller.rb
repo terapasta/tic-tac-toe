@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError, with: :handle_500 unless Rails.env.development?
   before_action :inject_request_to_application_policy
+  before_action :set_notification
 
   include Pundit
 
@@ -31,5 +32,12 @@ class ApplicationController < ActionController::Base
     def inject_request_to_application_policy
       _request = @_request
       ApplicationPolicy.send(:define_method, :request, -> { _request })
+    end
+
+    def set_notification
+      request.env['exception_notifier.exception_data'] = {
+        remote_ip: request.remote_ip,
+        user_agent: request.user_agent,
+      }
     end
 end

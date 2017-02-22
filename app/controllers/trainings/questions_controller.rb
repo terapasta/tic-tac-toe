@@ -10,6 +10,9 @@ class Trainings::QuestionsController < ApplicationController
     training_message.speaker = 'guest'
     receive_and_reply!(@training, training_message)
     redirect_to bot_training_path(@bot, @training)
+  rescue => e
+    logger.error e.message + e.backtrace.join("\n")
+    redirect_to bot_training_path(@bot, @training), alert: '質問を受け付けられませんでした'
   end
 
   private

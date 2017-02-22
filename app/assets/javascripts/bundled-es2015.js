@@ -2922,6 +2922,7 @@ var TrainingMessageForm = function () {
       return;
     }
     this.bindSubmit();
+    this.isSubmitFromScript = false;
   }
 
   _createClass(TrainingMessageForm, [{
@@ -2930,13 +2931,21 @@ var TrainingMessageForm = function () {
       var _this = this;
 
       this.el.addEventListener("submit", function (e) {
+        if (!_this.isSubmitFromScript) {
+          e.preventDefault();
+        }
+
         var _el$querySelector = _this.el.querySelector("input[type='text']"),
             value = _el$querySelector.value;
 
         var trimed = (0, _trim2.default)(value);
+
         if (trimed.length == 0) {
           e.preventDefault();
           _toastr2.default.warning("メッセージを入力してください");
+        } else {
+          _this.isSubmitFromScript = true;
+          _this.el.submit();
         }
       });
     }

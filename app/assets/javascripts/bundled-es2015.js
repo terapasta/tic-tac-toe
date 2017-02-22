@@ -2941,8 +2941,8 @@ var TrainingMessageForm = function () {
         var trimed = (0, _trim2.default)(value);
 
         if (trimed.length == 0) {
+          e.preventDefault();
           _toastr2.default.warning("メッセージを入力してください");
-          return false;
         } else {
           _this.isSubmitFromScript = true;
           _this.el.submit();

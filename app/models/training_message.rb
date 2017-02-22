@@ -19,7 +19,7 @@ class TrainingMessage < ActiveRecord::Base
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum context: ContextHoldable::CONTEXTS
 
-  validates :body, length: { maximum: 10000 }
+  validates :body, length: { maximum: 10000 }, presence: true
 
   before_validation :change_answer_failed
   before_save :save_associated_message!

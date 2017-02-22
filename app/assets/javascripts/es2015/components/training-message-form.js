@@ -17,8 +17,8 @@ export default class TrainingMessageForm {
       const trimed = trim(value);
 
       if (trimed.length == 0) {
-        e.preventDefault();
         toastr.warning("メッセージを入力してください");
+        return false;
       } else {
         this.isSubmitFromScript = true;
         this.el.submit();

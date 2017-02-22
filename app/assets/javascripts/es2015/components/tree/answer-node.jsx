@@ -65,6 +65,7 @@ export default class AnswerNode extends Component {
             <div className="tree__item-headline">{headline}</div>
           )}
           <div className="tree__item-body">
+            <i className="material-icons" title="質問">chat_bubble_outline</i>
             {body}
           </div>
         </div>
@@ -109,7 +110,10 @@ export default class AnswerNode extends Component {
             <li className="tree__node" key={index}>
               <div className={itemClassName} id={`decision-branch-${id}`}
                 onClick={() => onClickDecisionBranch("decisionBranch", id)}>
-                <div className="tree__item-body">{body}</div>
+                <div className="tree__item-body">
+                  <i className="material-icons upside-down" title="選択肢">call_split</i>
+                  {body}
+                </div>
               </div>
               {hasAnswer && (
                 <ol className="tree" style={style}>

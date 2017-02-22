@@ -3198,6 +3198,11 @@ var AnswerNode = function (_Component) {
           _react2.default.createElement(
             "div",
             { className: "tree__item-body" },
+            _react2.default.createElement(
+              "i",
+              { className: "material-icons", title: "\u8CEA\u554F" },
+              "chat_bubble_outline"
+            ),
             body
           )
         ),
@@ -3255,6 +3260,11 @@ var AnswerNode = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "tree__item-body" },
+                _react2.default.createElement(
+                  "i",
+                  { className: "material-icons upside-down", title: "\u9078\u629E\u80A2" },
+                  "call_split"
+                ),
                 body
               )
             ),

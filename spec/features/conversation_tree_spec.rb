@@ -45,6 +45,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find("#answer-#{answer.id}").click
     expect(page).to have_content(question_answer.question)
     find("#decision-branch-#{decision_branches.first.id}").click
+    page.save_screenshot
     expect(page).to have_content(nested_answer.body)
   end
 

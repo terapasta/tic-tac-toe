@@ -1,8 +1,11 @@
 import { combineReducers } from "redux";
 
+import questionsTree from "./reducers/questions-tree";
+import questionsRepo from "./reducers/questions-repo";
 import answersTree from "./reducers/answers-tree";
 import answersRepo from "./reducers/answers-repo";
 import decisionBranchesRepo from "./reducers/decision-branches-repo";
+import openedQuestionIds from "./reducers/opened-question-ids";
 import openedAnswerIds from "./reducers/opened-answer-ids";
 import openedDecisionBranchIds from "./reducers/opened-decision-branch-ids";
 import isAddingAnswer from "./reducers/is-adding-answer";
@@ -18,9 +21,12 @@ function through(state = null) {
 }
 
 const app = combineReducers({
+  questionsTree,
+  questionsRepo,
   answersTree,
   answersRepo,
   decisionBranchesRepo,
+  openedQuestionIds,
   openedAnswerIds,
   openedDecisionBranchIds,
   isAddingAnswer,

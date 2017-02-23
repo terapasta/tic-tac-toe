@@ -4,6 +4,7 @@ class ConversationTreesController < ApplicationController
 
   def show
     @bot = bots.find params[:bot_id]
+    @question_answers = @bot.question_answers.decorate
     @answers = @bot.answers
       .includes(:decision_branches)
       .top_level(@bot.id)

@@ -111,6 +111,14 @@ export function addDecisionBranchesRepo(decisionBranchModel) {
   return { type: t.ADD_DECISION_BRANCHES_REPO, decisionBranchModel };
 }
 
+export function addOpenedQuestionIds(questionId) {
+  return { type: t.ADD_OPENED_QUESTION_IDS, questionId };
+}
+
+export function removeOpenedQuestionIds(questionId) {
+  return { type: t.REMOVE_OPENED_QUESTION_IDS, questionId };
+}
+
 export function addOpenedAnswerIds(answerId) {
   return { type: t.ADD_OPENED_ANSWER_IDS, answerId };
 }
@@ -138,6 +146,17 @@ export function removeOpenedDecisionBranchIds(decisionBranchId) {
   return { type: t.REMOVE_OPENED_DECISION_BRANCH_IDS, decisionBranchId };
 }
 
+export function toggleOpenedQuestionIds(questionId) {
+  return (dispatch, getState) => {
+    const { openedQuestionIds } = getState();
+    if (includes(openedQuestionIds, questionId)) {
+      dispatch(removeOpenedQuestionIds(questionId));
+    } else {
+      dispatch(addOpenedQuestionIds(questionId));
+    }
+  };
+}
+
 export function toggleOpenedAnswerIds(answerId) {
   return (dispatch, getState) => {
     const { openedAnswerIds } = getState();
@@ -163,6 +182,8 @@ export function toggleOpenedDecisionBranchIds(decisionBranchId) {
 export function toggleOpenedIds(dataType, id) {
   return (dispatch) => {
     switch(dataType) {
+      case "question":
+        return dispatch(toggleOpenedQuestionIds(id))
       case "answer":
         return dispatch(toggleOpenedAnswerIds(id));
       case "decisionBranch":

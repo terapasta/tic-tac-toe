@@ -41,6 +41,8 @@ export default class ConversationTree extends Component {
     const {
       dispatch,
       isProcessing,
+      questionsTree,
+      questionsRepo,
       answersTree,
       answersRepo,
       decisionBranchesRepo,
@@ -48,6 +50,7 @@ export default class ConversationTree extends Component {
       editingAnswerModel,
       editingDecisionBranchModel,
       editingDecisionBranchModels,
+      openedQuestionIds,
       openedAnswerIds,
       openedDecisionBranchIds,
       isAddingAnswer,
@@ -59,13 +62,18 @@ export default class ConversationTree extends Component {
       <MasterDetailPanel title="会話ツリー" ref="masterDetailPanel">
         <Master>
           <Tree
-            answersTree={answersTree}
-            answersRepo={answersRepo}
-            decisionBranchesRepo={decisionBranchesRepo}
-            activeItem={activeItem}
-            openedAnswerIds={openedAnswerIds}
-            openedDecisionBranchIds={openedDecisionBranchIds}
-            isAddingAnswer={isAddingAnswer}
+            {...{
+              questionsTree,
+              questionsRepo,
+              answersTree,
+              answersRepo,
+              decisionBranchesRepo,
+              openedQuestionIds,
+              openedAnswerIds,
+              openedDecisionBranchIds,
+              activeItem,
+              isAddingAnswer,
+            }}
             onSelectItem={(dataType, id) => {
               Mixpanel.sharedInstance.trackEvent("Select tree node", { dataType, id });
               dispatch(a.toggleOpenedIds(dataType, id));

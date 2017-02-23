@@ -4,6 +4,7 @@ import isFunction from "lodash/isFunction";
 
 import AnswerNode from "./tree/answer-node";
 import AddNode from "./tree/add-node";
+import QuestionNode from "./tree/question-node";
 
 export default class Tree extends Component {
   static get componentName() {
@@ -12,6 +13,8 @@ export default class Tree extends Component {
 
   static get propTypes() {
     return {
+      questionsTree: PropTypes.array.isRequired,
+      questionsRepo: PropTypes.object.isRequired,
       answersTree: PropTypes.array.isRequired,
       answersRepo: PropTypes.object.isRequired,
       decisionBranchesRepo: PropTypes.object.isRequired,
@@ -19,6 +22,7 @@ export default class Tree extends Component {
       onCreatingAnswer: PropTypes.func.isRequired,
       activeItem: PropTypes.object.isRequired,
       isAddingAnswer: PropTypes.bool.isRequired,
+      openedQuestionIds: PropTypes.array.isRequired,
       openedAnswerIds: PropTypes.array.isRequired,
       openedDecisionBranchIds: PropTypes.array.isRequired,
     };
@@ -26,11 +30,14 @@ export default class Tree extends Component {
 
   render() {
     const {
+      questionsTree,
+      questionsRepo,
       answersTree,
       answersRepo,
       decisionBranchesRepo,
       activeItem,
       isAddingAnswer,
+      openedQuestionIds,
       openedAnswerIds,
       openedDecisionBranchIds,
       onSelectItem,
@@ -39,7 +46,24 @@ export default class Tree extends Component {
 
     return (
       <ol className="tree">
-        {answersTree.map((answerNode, index) => {
+        {questionsTree.map((questionNode, index) => {
+          return <QuestionNode
+            {...{
+              key: index,
+              answerNode: {},
+              questionNode,
+              questionsRepo,
+              answersRepo,
+              decisionBranchesRepo,
+              openedQuestionIds,
+              openedAnswerIDs: openedAnswerIds,
+              openedDecisionBranchIDs: openedDecisionBranchIds,
+              activeItem,
+              onClickQuestion: onSelectItem,
+              onClickAnswer: onSelectItem,
+              onClickDecisionBranch: onSelectItem,
+            }}
+          />;
           return <AnswerNode
             key={index}
             answerNode={answerNode}

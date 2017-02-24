@@ -47,6 +47,7 @@ export default class ConversationTree extends Component {
       answersRepo,
       decisionBranchesRepo,
       activeItem,
+      editingQuestionModel,
       editingAnswerModel,
       editingDecisionBranchModel,
       editingDecisionBranchModels,
@@ -91,10 +92,24 @@ export default class ConversationTree extends Component {
             botId={botId}
             isProcessing={isProcessing}
             activeItem={activeItem}
+            editingQuestionModel={editingQuestionModel}
             editingAnswerModel={editingAnswerModel}
             editingDecisionBranchModel={editingDecisionBranchModel}
             editingDecisionBranchModels={editingDecisionBranchModels}
             isAddingDecisionBranch={isAddingDecisionBranch}
+            onSaveQuestion={(questionModel, question) => {
+              const { id } = questionModel;
+              Mixpanel.sharedInstance.trackEvent("Save question node", { questionId: id });
+              if (id == null) {
+                dispatch(a.addQuestionToQuestionsTree(question));
+              } else {
+                dispatch(a.updateQuestionModel(questionModel, { question }));
+              }
+            }}
+            onDeleteQuestion={(questionModel) => {
+              Mixpanel.sharedInstance.trackEvent("Delete question node", { id: questionModel.id });
+              dispatch(a.deleteQuestionFromQuestionsTree(questionModel));
+            }}
             onSaveAnswer={(answerModel, body, decisionBranchId) => {
               const { id } = answerModel;
               Mixpanel.sharedInstance.trackEvent("Save answer node", { answerId: id, decisionBranchId });

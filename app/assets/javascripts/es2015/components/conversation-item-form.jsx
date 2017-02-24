@@ -21,6 +21,7 @@ export default class ConversationItemForm extends Component {
         id: PropTypes.number,
         type: PropTypes.oneOf(["answer", "decisionBranch"]),
       }),
+      editingQuestionModel: PropTypes.object,
       editingAnswerModel: PropTypes.object,
       editingDecisionBranchModel: PropTypes.object,
       editingDecisionBranchModels: PropTypes.array,
@@ -38,13 +39,23 @@ export default class ConversationItemForm extends Component {
     super(props);
     this.state = {
       answerBody: null,
+      question: null,
       trainingMessages: [],
     };
   }
 
   // TODO: reduxでtrainingMessagesを管理するように変更が必須
   componentWillReceiveProps(nextProps) {
-    const { editingAnswerModel, botId } = nextProps;
+    const {
+      editingAnswerModel,
+      editingQuestionModel,
+      botId
+    } = nextProps;
+
+    if (editingQuestionModel != null) {
+      this.setState({ question: editingQuestionModel.question });
+    }
+
     if (editingAnswerModel != null) {
       this.setState({ answerBody: editingAnswerModel.body });
 
@@ -70,6 +81,7 @@ export default class ConversationItemForm extends Component {
     const {
       isProcessing,
       activeItem,
+      editingQuestionModel,
       editingAnswerModel,
       editingDecisionBranchModel,
       editingDecisionBranchModels,
@@ -84,6 +96,7 @@ export default class ConversationItemForm extends Component {
 
     const {
       answerBody,
+      question,
     } = this.state;
 
     const isAppearCurrentDecisionBranch =
@@ -101,9 +114,29 @@ export default class ConversationItemForm extends Component {
             <input className="form-control" disabled={true} type="text" value={editingDecisionBranchModel.body} />
           </div>
         )}
+        {(editingQuestionModel != null) && (
+          <div className="form-group">
+            <label><i className="material-icons valign-middle">comment</i>{" "}質問</label>
+            <TextArea className="form-control"
+              name="question-question"
+              rows={3}
+              value={question || ""}
+              onChange={this.onChangeQuestion.bind(this)}
+              disabled={isProcessing} />
+            <div className="help-block clearfix">
+              <div className="pull-right">
+                <a className="btn btn-primary" href="#"
+                  onClick={this.onClickSaveQuestionButton.bind(this)}
+                  disabled={isProcessing}>保存</a>
+                {" "}
+                <span className="btn btn-danger" onClick={this.onClickDeleteQuestionButton.bind(this)} id="delete-answer-button">削除</span>
+              </div>
+            </div>
+          </div>
+        )}
         {(editingAnswerModel != null) && (
           <div className="form-group">
-            <label>回答</label>
+            <label><i className="material-icons valign-middle">chat_bubble_outline</i>{" "}回答</label>
             <TextArea className="form-control"
               name="answer-body"
               rows={3}
@@ -151,7 +184,7 @@ export default class ConversationItemForm extends Component {
 
     return (
       <div>
-        <strong>対応する質問</strong>
+        <strong><i className="material-icons valign-middle">comment</i>{" "}対応する質問</strong>
         <ul>
           {trainingMessages.map((tm, index) => <li key={index}>{tm}</li>)}
         </ul>
@@ -159,8 +192,26 @@ export default class ConversationItemForm extends Component {
     );
   }
 
+  onChangeQuestion(e) {
+    this.setState({ question: e.target.value });
+  }
+
   onChangeAnswerBody(e) {
     this.setState({ answerBody: e.target.value });
+  }
+
+  onClickSaveQuestionButton(e) {
+    e.preventDefault();
+    const { onSaveQuestion, editingQuestionModel } = this.props;
+    const { question } = this.state;
+    onSaveQuestion(editingQuestionModel, question);
+  }
+
+  onClickDeleteQuestionButton() {
+    const { onDeleteQuestion, editingQuestionModel } = this.props;
+    if (window.confirm("本当に削除してよろしいですか？この操作は取り消せません")) {
+      onDeleteQuestion(editingQuestionModel);
+    }
   }
 
   onClickSaveAnswerButton(e) {

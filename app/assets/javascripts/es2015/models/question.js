@@ -16,7 +16,7 @@ export default class Question {
 
   static create(botId, attrs) {
     return axios.post(`/bots/${botId}/question_answers.json`, {
-        answer: attrs,
+        question_answer: attrs,
         authenticity_token: authenticityToken(),
       })
       .then((res) => {

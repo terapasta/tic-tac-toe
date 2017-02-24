@@ -80,9 +80,9 @@ export default class ConversationTree extends Component {
               dispatch(a.toggleOpenedIds(dataType, id));
               dispatch(a.setActiveItem(dataType, id));
             }}
-            onCreatingAnswer={() => {
-              Mixpanel.sharedInstance.trackEvent("New answer node");
-              dispatch(a.setActiveItem("answer", null));
+            onCreatingQuestion={() => {
+              Mixpanel.sharedInstance.trackEvent("New question node");
+              dispatch(a.setActiveItem("question", null));
             }}
           />
         </Master>

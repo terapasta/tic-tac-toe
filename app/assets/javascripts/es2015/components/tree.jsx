@@ -19,7 +19,7 @@ export default class Tree extends Component {
       answersRepo: PropTypes.object.isRequired,
       decisionBranchesRepo: PropTypes.object.isRequired,
       onSelectItem: PropTypes.func.isRequired,
-      onCreatingAnswer: PropTypes.func.isRequired,
+      onCreatingQuestion: PropTypes.func.isRequired,
       activeItem: PropTypes.object.isRequired,
       isAddingAnswer: PropTypes.bool.isRequired,
       openedQuestionIds: PropTypes.array.isRequired,
@@ -41,7 +41,7 @@ export default class Tree extends Component {
       openedAnswerIds,
       openedDecisionBranchIds,
       onSelectItem,
-      onCreatingAnswer,
+      onCreatingQuestion,
     } = this.props;
 
     return (
@@ -64,21 +64,10 @@ export default class Tree extends Component {
               onClickDecisionBranch: onSelectItem,
             }}
           />;
-          return <AnswerNode
-            key={index}
-            answerNode={answerNode}
-            answersRepo={answersRepo}
-            decisionBranchesRepo={decisionBranchesRepo}
-            openedAnswerIDs={openedAnswerIds}
-            openedDecisionBranchIDs={openedDecisionBranchIds}
-            activeItem={activeItem}
-            onClickAnswer={onSelectItem}
-            onClickDecisionBranch={onSelectItem}
-          />;
         })}
         <AddNode
           isAdding={isAddingAnswer}
-          onClick={onCreatingAnswer}
+          onClick={onCreatingQuestion}
         />
       </ol>
     );

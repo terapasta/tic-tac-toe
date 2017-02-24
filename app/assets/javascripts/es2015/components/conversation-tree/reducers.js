@@ -12,6 +12,7 @@ import isAddingAnswer from "./reducers/is-adding-answer";
 import isAddingDecisionBranch from "./reducers/is-adding-decision-branch";
 import isProcessing from "./reducers/is-processing";
 import activeItem from "./reducers/active-item";
+import editingQuestionModel from "./reducers/editing-question-model";
 import editingAnswerModel from "./reducers/editing-answer-model";
 import editingDecisionBranchModel from "./reducers/editing-decision-branch-model";
 import editingDecisionBranchModels from "./reducers/editing-decision-branch-models";
@@ -33,6 +34,7 @@ const app = combineReducers({
   isAddingDecisionBranch,
   isProcessing,
   activeItem,
+  editingQuestionModel,
   editingAnswerModel,
   editingDecisionBranchModel,
   editingDecisionBranchModels,

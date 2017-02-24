@@ -31,7 +31,7 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
   };
 }
 
-export function addQuestionToQuestionTree(question) {
+export function addQuestionToQuestionsTree(question) {
   return (dispatch, getState) => {
     const { botId, isProcessing } = getState();
     if (isProcessing) { return; }

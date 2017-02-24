@@ -25,12 +25,18 @@ class QuestionAnswersController < ApplicationController
   end
 
   def create
-    @question_answer = @bot.question_answers.build(permitted_attributes(QuestionAnswer) )
-    if @question_answer.save
-      redirect_to bot_question_answers_path(@bot), notice: '登録しました。'
-    else
-      flash.now.alert = '登録できませんでした。'
-      render :edit
+    respond_to do |format|
+      @question_answer = @bot.question_answers.build(permitted_attributes(QuestionAnswer))
+      if @question_answer.save
+        format.html { redirect_to bot_question_answers_path(@bot), notice: '登録しました。' }
+        format.json { render json: @question_answer, status: :created }
+      else
+        format.html do
+          flash.now.alert = '登録できませんでした。'
+          render :edit
+        end
+        format.json { render json: @question_answer.decorate.errors_as_json, status: :unprocessable_entity }
+      end
     end
   end
 

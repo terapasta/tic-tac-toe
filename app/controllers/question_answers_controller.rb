@@ -50,8 +50,19 @@ class QuestionAnswersController < ApplicationController
   end
 
   def destroy
-    @question_answer.destroy!
-    redirect_to bot_question_answers_path(@bot), notice: '削除しました。'
+    respond_to do |format|
+      begin
+        @question_answer.destroy!
+        format.html { redirect_to bot_question_answers_path(@bot), notice: '削除しました。' }
+        format.json { render json: {}, status: :no_content }
+      rescue => e
+        format.html { raise e }
+        format.json do
+          logger.error e.message + e.backtrace.join("\n")
+          render json: { error: e.message }, status: :internal_server_error
+        end
+      end
+    end
   end
 
   def autocomplete_answer_body

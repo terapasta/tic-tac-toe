@@ -30,9 +30,9 @@ export default class QuestionNode extends BaseNode {
       answer,
     } = questionNode;
 
-    const {
-      question,
-    } = questionsRepo[questionNode.id];
+    const q = questionsRepo[questionNode.id];
+    if (q == null) { return null; }
+    const { question } = q;
 
     const isOpened = includes(openedQuestionIds, questionNode.id);
     const style = { display: (isOpened ? "block" : "none") };

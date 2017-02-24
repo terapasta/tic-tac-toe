@@ -4,12 +4,20 @@ class QuestionAnswersController < ApplicationController
   before_action :pundit_auth
 
   before_action :set_bot
-  before_action :set_question_answer, only: [:edit, :update, :destroy]
+  before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
 
   autocomplete :answer, :body, full: true
 
   def index
     @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
+  end
+
+  def show
+    respond_to do |format|
+      format.json do
+        render json: @question_answer.decorate.as_json
+      end
+    end
   end
 
   def new

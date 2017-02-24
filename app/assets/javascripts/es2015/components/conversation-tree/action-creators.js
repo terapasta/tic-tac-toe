@@ -1,6 +1,7 @@
 import * as t from "./action-types";
 import includes from "lodash/includes";
 
+import Question from "../../models/question";
 import Answer from "../../models/answer";
 import DecisionBranch from "../../models/decision-branch";
 
@@ -30,6 +31,25 @@ export function addAnswerToAnswersTree(answerBody, decisionBranchId = null) {
   };
 }
 
+export function addQuestionToQuestionTree(question) {
+  return (dispatch, getState) => {
+    const { botId, isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    Question.create(botId, { question }).then((questionModel) => {
+      dispatch(addQuestionsRepo(questionModel));
+      dispatch({ type: t.ADD_QUESTION_TO_QUESTIONS_TREE, questionModel });
+      dispatch(setEditingQuestionModel(questionModel));
+      dispatch(setActiveItem("question", questionModel.id));
+      dispatch(offProcessing());
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
+  };
+}
+
 export function addDecisionBranchToAnswersTree(decisionBranchBody, answerId) {
   return (dispatch, getState) => {
     const { botId, isProcessing } = getState();
@@ -42,6 +62,25 @@ export function addDecisionBranchToAnswersTree(decisionBranchBody, answerId) {
       dispatch(addEditingDecisionBranchModels(decisionBranchModel));
       dispatch(offProcessing());
       dispatch(offAddingDecisionBranch());
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
+  };
+}
+
+export function deleteQuestionFromQuestionsTree(questionModel) {
+  return (dispatch, getState) => {
+    const { isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    questionModel.delete().then(() => {
+      dispatch({ type: t.DELETE_QUESTION_FROM_QUESTIONS_TREE, questionModel });
+      dispatch(deleteQuestionsRepo(questionModel));
+      dispatch(clearEditingQuestionModel());
+      dispatch(clearActiveItem());
+      dispatch(offProcessing());
     }).catch((err) => {
       dispatch(offProcessing());
       console.error(err);
@@ -97,6 +136,18 @@ export function deleteAnswersRepo(answerModel) {
 
 export function addAnswersRepo(answerModel) {
   return { type: t.ADD_ANSWERS_REPO, answerModel };
+}
+
+export function updateQuestionsRepo(questionModel) {
+  return { type: t.UPDATE_QUESTIONS_REPO, questionModel };
+}
+
+export function deleteQuestionsRepo(questionModel) {
+  return { type: t.DELETE_QUESTIONS_REPO, questionModel };
+}
+
+export function addQuestionsRepo(questionModel) {
+  return { type: t.ADD_QUESTIONS_REPO, questionModel };
 }
 
 export function updateDecisionBranchesRepo(decisionBranchModel) {
@@ -221,11 +272,20 @@ export function setActiveItem(dataType, id) {
   return (dispatch, getState) => {
     const { botId } = getState();
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType, id });
+    dispatch(clearEditingQuestionModel());
     dispatch(clearEditingAnswerModel());
     dispatch(clearEditingDecisionBranchModel());
     dispatch(clearEditingDecisionBranchModels());
 
     switch(dataType) {
+      case "question":
+        if (id == null) {
+          return dispatch(setEditingQuestionModel(new Question));
+        } else {
+          return Question.fetch(botId, id).then((questionModel) => {
+            dispatch(setEditingQuestionModel(questionModel));
+          });
+        }
       case "answer":
         if (id == null) {
           return dispatch(setEditingAnswerModel(new Answer));
@@ -265,6 +325,23 @@ export function fetchDecisionBranchModel(dispatch, botId, id) {
   });
 }
 
+export function updateQuestionModel(questionModel, newAttrs) {
+  return (dispatch, getState) => {
+    const { isProcessing } = getState();
+    if (isProcessing) { return; }
+    dispatch(onProcessing());
+
+    questionModel.update(newAttrs).then((newQuestionModel) => {
+      dispatch(setEditingQuestionModel(newQuestionModel));
+      dispatch(updateQuestionsRepo(newQuestionModel));
+      dispatch(offProcessing());
+    }).catch((err) => {
+      dispatch(offProcessing());
+      console.error(err);
+    });
+  };
+}
+
 export function updateAnswerModel(answerModel, newAttrs) {
   return (dispatch, getState) => {
     const { isProcessing } = getState();
@@ -302,6 +379,14 @@ export function updateDecisionBranchModel(decisionBranchModel, newAttrs) {
 
 export function clearActiveItem() {
   return { type: t.CLEAR_ACTIVE_ITEM };
+}
+
+export function setEditingQuestionModel(questionModel) {
+  return { type: t.SET_EDITING_QUESTION_MODEL, questionModel };
+}
+
+export function clearEditingQuestionModel() {
+  return { type: t.CLEAR_EDITING_QUESTION_MODEL };
 }
 
 export function setEditingAnswerModel(answerModel) {

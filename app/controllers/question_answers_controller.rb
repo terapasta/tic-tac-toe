@@ -35,11 +35,17 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
-    if @question_answer.update(permitted_attributes(@question_answer) )
-      redirect_to bot_question_answers_path(@bot), notice: '更新しました。'
-    else
-      flash.now.alert = '更新できませんでした。'
-      render :edit
+    respond_to do |format|
+      if @question_answer.update(permitted_attributes(@question_answer) )
+        format.html { redirect_to bot_question_answers_path(@bot), notice: '更新しました。' }
+        format.json { render json: @question_answer.decorate.as_json, status: :ok }
+      else
+        format.html do
+          flash.now.alert = '更新できませんでした。'
+          render :edit
+        end
+        format.json { render json: @question_answer.decorate.errors_as_json, status: :unprocessable_entity }
+      end
     end
   end
 

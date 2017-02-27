@@ -10,6 +10,6 @@ def get_answer_body(answers, answer_id):
     return rows.iloc[0]['answer_body']
 
 def replace_newline(val):
-    val.replace('\r\n', '').replace('\r', '').replace('\n', '')
+    return val.replace('\r\n', '').replace('\r', '').replace('\n', '')
 
 

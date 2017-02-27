@@ -23,7 +23,8 @@ class TextArray:
         if self._vectorizer is not None:
             return self._vectorizer
 
-        vectorizer = TfidfVectorizer(use_idf=False)
+        # token_patternは1文字のデータを除外しない設定
+        vectorizer = TfidfVectorizer(use_idf=False, token_pattern=u'(?u)\\b\\w+\\b')
         vectorizer.fit(self.__splited_data())
         return vectorizer
 

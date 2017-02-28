@@ -1,6 +1,7 @@
 import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
+from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
 from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegression
@@ -20,13 +21,8 @@ class Bot:
 
     def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
         logger.debug('start Bot#learn')
-        config = Config()
-        dbconfig = config.get('database')
-        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
-        logger.debug('Bot after mysql connect')
-        training_set = TrainingMessage(db, self.bot_id, self.learning_parameter, csv_file_path=csv_file_path, csv_file_encoding=csv_file_encoding)
-        training_set.build()
 
+        training_set = self.__build_training_set(csv_file_path, csv_file_encoding)
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')
 
@@ -40,6 +36,19 @@ class Bot:
         logger.debug('end Bot#learn')
 
         return evaluator
+
+    def __build_training_set(self, csv_file_path, csv_file_encoding):
+        if csv_file_path is None:
+            config = Config()
+            dbconfig = config.get('database')
+            db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
+                                 passwd=dbconfig['password'], charset='utf8')
+            logger.debug('Bot after mysql connect')
+            training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
+        else:
+            training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
+
+        return training_set.build()
 
     def __get_estimator(self, training_set):
         if self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NAIVE_BAYES:

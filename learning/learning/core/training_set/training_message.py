@@ -34,6 +34,7 @@ class TrainingMessage(Base):
         self._x = x
         self._y = learning_training_messages['answer_id']
         logger.debug(self._x)
+        return self
 
     @property
     def body_array(self):

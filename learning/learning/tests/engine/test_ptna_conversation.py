@@ -33,6 +33,6 @@ class PtnaConversationTestCase(TestCase):
 
         expected_answer = '教室の一覧に性別が表示されていますので、そちらをご参照ください。'
 
-        eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(probability > self.threshold)
 

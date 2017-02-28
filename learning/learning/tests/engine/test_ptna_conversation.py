@@ -13,7 +13,7 @@ class PtnaConversationTestCase(TestCase):
         self.csv_file_path = 'learning/tests/engine/fixtures/test_ptna_conversation.csv'
         self.bot_id = 996  # テスト用のbot_id いずれの値でも動作する
         self.threshold = 0.5
-        self.answers = helper.build_answers(self.csv_file_path, encoding='SHIFT-JIS')
+        self.answers = helper.build_answers(self.csv_file_path)
         self.learning_parameter = LearningParameter({
             'include_failed_data': False,
             'include_tag_vector': False,

@@ -18,14 +18,14 @@ class Bot:
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
-    def learn(self, csv_file_path=None):
+    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
         logger.debug('start Bot#learn')
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
         logger.debug('Bot after mysql connect')
-        training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
-        training_set.build(csv_file_path=csv_file_path)
+        training_set = TrainingMessage(db, self.bot_id, self.learning_parameter, csv_file_path=csv_file_path, csv_file_encoding=csv_file_encoding)
+        training_set.build()
 
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')

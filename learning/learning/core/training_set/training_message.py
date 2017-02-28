@@ -12,17 +12,21 @@ from learning.core.predict.tag import Tag
 class TrainingMessage(Base):
     CLASSIFY_FAILED_ID = 2
 
-    def __init__(self, db, bot_id, learning_parameter):
+    def __init__(self, db, bot_id, learning_parameter, csv_file_path=None, csv_file_encoding='UTF-8'):
         logger.debug('TrainingMessage#__init__ start')
-        config = Config()
+        self._csv_file_path = csv_file_path
+        self._csv_file_encoding = csv_file_encoding
         self.db = db
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
 
-    def build(self, csv_file_path=None):
+    # @classmethod
+    # def init_from_csv_file(cls, bot_id, path=None, encoding='UTF-8'):
+
+    def build(self):
         logger.debug('TrainingMessage#build start')
-        learning_training_messages = self.__build_learning_training_messages(csv_file_path=csv_file_path)
+        learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
         body_vec = body_array.to_vec(type='array')
 
@@ -40,11 +44,11 @@ class TrainingMessage(Base):
     def body_array(self):
         return self._body_array
 
-
-    def __build_learning_training_messages(self, csv_file_path=None):
-        if csv_file_path is not None:
-            # TODO RailsAdminでダウンロードするcsvファイルを使用するのでUTF-8にしたい
-            data = pd.read_csv(csv_file_path, encoding='SHIFT-JIS')
+    def __build_learning_training_messages(self):
+        print('hoge')
+        print(self._csv_file_path)
+        if self._csv_file_path is not None:
+            data = pd.read_csv(self._csv_file_path, encoding=self._csv_file_encoding)
         else:
             data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
 

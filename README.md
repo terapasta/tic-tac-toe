@@ -108,7 +108,7 @@ $ guard
 
 ```
 $ cd learning
-$ nosetests learning/tests
+$ nosetests -s learning/tests
 ```
 
 #### 機械学習エンジンのテスト

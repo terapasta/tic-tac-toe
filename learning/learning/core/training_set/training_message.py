@@ -1,28 +1,22 @@
-import MeCab
 import numpy as np
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.externals import joblib
 from .base import Base
-from learning.config.config import Config
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
-from learning.core.predict.tag import Tag
 
 class TrainingMessage(Base):
     CLASSIFY_FAILED_ID = 2
 
     def __init__(self, db, bot_id, learning_parameter):
         logger.debug('TrainingMessage#__init__ start')
-        config = Config()
         self.db = db
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
 
-    def build(self, csv_file_path=None):
+    def build(self):
         logger.debug('TrainingMessage#build start')
-        learning_training_messages = self.__build_learning_training_messages(csv_file_path=csv_file_path)
+        learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
         body_vec = body_array.to_vec(type='array')
 
@@ -35,18 +29,14 @@ class TrainingMessage(Base):
         self._x = x
         self._y = learning_training_messages['answer_id']
         logger.debug(self._x)
+        return self
 
     @property
     def body_array(self):
         return self._body_array
 
-
-    def __build_learning_training_messages(self, csv_file_path=None):
-        if csv_file_path is not None:
-            # TODO RailsAdminでダウンロードするcsvファイルを使用するのでUTF-8にしたい
-            data = pd.read_csv(csv_file_path, encoding='SHIFT-JIS')
-        else:
-            data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
+    def __build_learning_training_messages(self):
+        data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
 
         if self.learning_parameter.include_failed_data:
             data_count = data['id'].count()
@@ -54,8 +44,6 @@ class TrainingMessage(Base):
             other_data['answer_id'] = self.classfy_failed_answer_id
             data = pd.concat([data, other_data])
         logger.debug("data['id'].count(): %s" % data['id'].count())
-        # data = pd.read_csv('prototype_id.csv', encoding='SHIFT-JIS')
-        # logger.debug("data['question'].count(): %s" % data['question'].count())
         return data
 
     def __extract_binarized_tag_vector(self, learning_training_messages):

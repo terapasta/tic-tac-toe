@@ -19,6 +19,6 @@ class TextArrayTestCase(TestCase):
         text_array = TextArray(X)
         vec = text_array.to_vec()
 
-        # 3x6のスパース行列であること
+        # 3x7のスパース行列であること
         ok_(isinstance(vec, scipy.sparse.csr.csr_matrix))
-        eq_(vec.shape, (3, 6))
+        eq_(vec.shape, (3, 7))

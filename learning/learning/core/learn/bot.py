@@ -1,8 +1,10 @@
+from collections import Counter
+
 import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
+from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
-from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from learning.core.evaluator import Evaluator
@@ -18,15 +20,10 @@ class Bot:
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
-    def learn(self, csv_file_path=None):
+    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
         logger.debug('start Bot#learn')
-        config = Config()
-        dbconfig = config.get('database')
-        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'], passwd=dbconfig['password'], charset='utf8')
-        logger.debug('Bot after mysql connect')
-        training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
-        training_set.build(csv_file_path=csv_file_path)
 
+        training_set = self.__build_training_set(csv_file_path, csv_file_encoding)
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')
 
@@ -40,6 +37,19 @@ class Bot:
         logger.debug('end Bot#learn')
 
         return evaluator
+
+    def __build_training_set(self, csv_file_path, csv_file_encoding):
+        if csv_file_path is None:
+            config = Config()
+            dbconfig = config.get('database')
+            db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
+                                 passwd=dbconfig['password'], charset='utf8')
+            logger.debug('Bot after mysql connect')
+            training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
+        else:
+            training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
+
+        return training_set.build()
 
     def __get_estimator(self, training_set):
         if self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NAIVE_BAYES:
@@ -56,6 +66,8 @@ class Bot:
                 logger.debug('learning_parameter has not parameter C')
                 # params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
                 params = {'C': [10, 100, 140, 200]}
+                # class_weight = self.__build_class_weight(training_set)
+                # grid = GridSearchCV(LogisticRegression(class_weight=class_weight), param_grid=params)
                 grid = GridSearchCV(LogisticRegression(), param_grid=params)
                 grid.fit(training_set.x, training_set.y)
                 estimator = grid.best_estimator_
@@ -66,6 +78,18 @@ class Bot:
                 estimator.fit(training_set.x, training_set.y)
 
         return estimator
+
+    # # 不均衡データ対策
+    # def __build_class_weight(self, training_set):
+    #     counter = Counter(training_set.y)
+    #     max_count = max(counter.values())
+    #
+    #     class_weight = {}
+    #     for key, value in counter.most_common():
+    #         class_weight[key] = max_count / value
+    #
+    #     logger.debug('Bot#__build_class_weight class_weight: %s' % class_weight)
+    #     return class_weight
 
     # def __get_best_estimator(self, training_set):
     #     grid_logi = self.__logistic_regression(training_set)

@@ -28,5 +28,5 @@ class TrainingMessageFromCsv(Base):
 
     def __build_learning_training_messages(self):
         data = pd.read_csv(self._file_path, encoding=self._encoding)
-        logger.debug("count of learning data: %s" % data['id'].count())
+        logger.debug("TrainingMessageFromCsv#__build_learning_training_messages count of learning data: %s" % data['id'].count())
         return data

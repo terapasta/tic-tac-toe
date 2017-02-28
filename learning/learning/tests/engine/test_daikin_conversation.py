@@ -21,7 +21,7 @@ class DaikinConversationTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.answers = helper.build_answers(cls.csv_file_path, encoding='SHIFT-JIS')
+        cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
         # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
@@ -79,8 +79,8 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
         ok_(probability > self.threshold)
 
 
-    def test_dislike_bell_pepper(self):
-        questions = ['ピーマンは嫌いな食べ物です']
+    def test_dislike_shiitake(self):
+        questions = ['しいたけは嫌いな食べ物です']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
         probability = results[0]['probability']
 

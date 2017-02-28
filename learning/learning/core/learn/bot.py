@@ -1,9 +1,10 @@
+from collections import Counter
+
 import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
 from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
-from sklearn.externals import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from learning.core.evaluator import Evaluator
@@ -65,6 +66,8 @@ class Bot:
                 logger.debug('learning_parameter has not parameter C')
                 # params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}
                 params = {'C': [10, 100, 140, 200]}
+                # class_weight = self.__build_class_weight(training_set)
+                # grid = GridSearchCV(LogisticRegression(class_weight=class_weight), param_grid=params)
                 grid = GridSearchCV(LogisticRegression(), param_grid=params)
                 grid.fit(training_set.x, training_set.y)
                 estimator = grid.best_estimator_
@@ -75,6 +78,18 @@ class Bot:
                 estimator.fit(training_set.x, training_set.y)
 
         return estimator
+
+    # # 不均衡データ対策
+    # def __build_class_weight(self, training_set):
+    #     counter = Counter(training_set.y)
+    #     max_count = max(counter.values())
+    #
+    #     class_weight = {}
+    #     for key, value in counter.most_common():
+    #         class_weight[key] = max_count / value
+    #
+    #     logger.debug('Bot#__build_class_weight class_weight: %s' % class_weight)
+    #     return class_weight
 
     # def __get_best_estimator(self, training_set):
     #     grid_logi = self.__logistic_regression(training_set)

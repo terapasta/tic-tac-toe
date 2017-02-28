@@ -9,7 +9,6 @@ class TrainingMessageFromCsv(Base):
         self._encoding = encoding
         self._bot_id = bot_id
         self._learning_parameter = learning_parameter
-        # self.classfy_failed_answer_id = self.__find_classfy_failed_answer_id()
 
     def build(self):
         learning_training_messages = self.__build_learning_training_messages()

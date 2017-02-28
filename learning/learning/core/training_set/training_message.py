@@ -1,13 +1,8 @@
-import MeCab
 import numpy as np
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.externals import joblib
 from .base import Base
-from learning.config.config import Config
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
-from learning.core.predict.tag import Tag
 
 class TrainingMessage(Base):
     CLASSIFY_FAILED_ID = 2

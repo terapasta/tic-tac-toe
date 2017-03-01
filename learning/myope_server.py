@@ -6,6 +6,7 @@ from sklearn.externals import joblib
 from learning.core.predict.similarity import Similarity
 from learning.log import logger
 from learning.core.predict.reply import Reply
+from learning.core.predict.null_reply_result import NullReplyResult
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
 from learning.core.learn.tag import Tag as LearnTag
@@ -20,6 +21,7 @@ class MyopeServer(RPCServer):
         learning_parameter = LearningParameter(learning_parameter_attributes)
         X = np.array([body])
         status_code = self.STATUS_CODE_SUCCESS
+        reply_result = NullReplyResult()
 
         try:
             reply_result = Reply(bot_id, learning_parameter).perform(X)

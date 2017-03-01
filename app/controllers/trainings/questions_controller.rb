@@ -1,5 +1,6 @@
 class Trainings::QuestionsController < ApplicationController
   include Replyable
+  include BotUsable
 
   before_action :authenticate_user!
   before_action :set_bot
@@ -17,7 +18,7 @@ class Trainings::QuestionsController < ApplicationController
 
   private
     def set_bot
-      @bot = current_user.bots.find(params[:bot_id])
+      @bot = bots.find(params[:bot_id])
     end
 
     def set_training

@@ -8,14 +8,16 @@ namespace :daikin do
     fail 'Not found bot' if bot.nil?
 
     data = CSV.parse(file_path.read)
+    data = data.drop(1000) if Rails.env.development?
 
     result = CSV.generate(force_quotes: true, row_sep: "\r\n") { |out|
       data.each do |row|
         message = Struct.new(:body, :class).new(row.first, 'test')
         responder = Conversation::Bot.new(bot, message)
-        answers = responder.reply.map(&:body)
-        puts answers
-        out << row + answers
+        answers = responder.reply
+        answer_bodies = answers.map(&:body)
+        puts answer_bodies
+        out << [answers.detect(&:no_classified?).present? ? '✕' : '◯'] + row + answer_bodies
       end
     }
 

@@ -39,7 +39,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # pagination
 gem 'kaminari'
 
-# search
+# search form
 gem 'ransack'
 
 # Use ActiveModel has_secure_password

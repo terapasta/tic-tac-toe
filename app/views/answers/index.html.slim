@@ -1,4 +1,8 @@
 h1 回答一覧
+= search_form_for [:bot, @q], html: { class: 'form-inline' } do |f|
+  .form-group
+    = f.search_field :body_or_headline_cont, size:64, class: 'form-control col-sm-10'
+    = f.submit class: 'form-control col-sm-2'
 table.table.table-striped
   thead
     tr
@@ -7,11 +11,15 @@ table.table.table-striped
       th
   tbody
 
-    - @answers.each do |answer|
+    - if @answers.count > 0
+      - @answers.each do |answer|
+        tr
+          td = answer.headline
+          td = simple_format answer.body
+          td
+            = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default", data: { event_name: 'Edit answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }
+            = link_to t('helpers.link.destroy'), bot_answer_path(@bot, answer), method: :delete, data: { confirm: '回答を削除します。宜しいですか。' }, class: "btn btn-danger", data: { event_name: 'Delete answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }
+    -else
       tr
-        td = answer.headline
-        td = simple_format answer.body
-        td
-          = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default", data: { event_name: 'Edit answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }
-          = link_to t('helpers.link.destroy'), bot_answer_path(@bot, answer), method: :delete, data: { confirm: '回答を削除します。宜しいですか。' }, class: "btn btn-danger", data: { event_name: 'Delete answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }
+        td colspan=3 回答が見つかりませんでした。
 = paginate @answers

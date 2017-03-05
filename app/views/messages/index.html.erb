@@ -9,6 +9,7 @@
       <th>本文</th>
       <th>発言日時</th>
       <th>UA</th>
+      <th/>
     </tr>
   </thead>
 
@@ -34,6 +35,9 @@
         <td><%= message.body %></td>
         <td><%= message.created_at %></td>
         <td><%= message.user_agent %></td>
+        <td>
+          <%= link_to_unless( message.answer_failed?, '失敗', bot_thread_message_path(@bot, @chat, message), method: :patch, class: 'btn btn-default') {} %>
+        </td>
       </tr>
     <% end %>
   </tbody>

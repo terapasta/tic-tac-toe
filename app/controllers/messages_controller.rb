@@ -8,10 +8,6 @@ class MessagesController < ApplicationController
     @messages = @chat.messages.page(params[:page])
   end
 
-  def update
-    redirect_to bot_thread_messages_path
-  end
-
   private
     def set_bot
       @bot = bots.find(params[:bot_id])

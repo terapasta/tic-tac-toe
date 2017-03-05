@@ -1,8 +1,8 @@
 h1 回答一覧
 = search_form_for [:bot, @q], html: { class: 'form-inline' } do |f|
   .form-group
-    = f.search_field :body_or_headline_cont, size:64, class: 'form-control col-sm-10'
-    = f.submit class: 'form-control col-sm-2'
+    = f.search_field :body_or_headline_cont, size:64, class: 'form-control'
+    = f.submit class: 'form-control'
 table.table.table-striped
   thead
     tr

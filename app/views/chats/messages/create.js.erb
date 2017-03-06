@@ -7,7 +7,7 @@ $('.chat-area').delay(500).queue(function() {
   $(this).append("<%= escape_javascript(render('chats/bot', message: bot_message, token: @bot.try(:token), message_id: bot_message.id)) %>")
     .dequeue();
 
-  <% if bot_message&.answer&.decision_branches&.present? || bot_message&.similar_question_answers&.present? %>
+  <% if bot_message&.answer&.decision_branches&.present? %>
     disable_question_field();
   <% else %>
     enable_question_field();

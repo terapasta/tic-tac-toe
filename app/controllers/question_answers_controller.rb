@@ -40,6 +40,10 @@ class QuestionAnswersController < ApplicationController
     redirect_to bot_question_answers_path(@bot), notice: '削除しました。'
   end
 
+  def autocomplete_answer_body
+    render json: @bot.answers.search_by(params[:term]).as_json(only: [:id, :body, :headline], methods: [:value])
+  end
+
   private
     def set_bot
       @bot = bots.find params[:bot_id]

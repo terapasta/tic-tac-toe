@@ -44,12 +44,10 @@ class Conversation::Bot
   end
 
   def similar_question_answers
-    # FIXME 山形のローカル環境でエラーして進めなかったので、一旦固定のデータを返すようにする
-    @bot.question_answers.limit(3)
-    # result = @engine.similarity(@message.body)
-    # result.map do |hash|
-    #   @bot.question_answers.find(hash['question_answer_id'])
-    # end
+    result = @engine.similarity(@message.body)
+    result.map do |hash|
+      @bot.question_answers.find(hash['question_answer_id'])
+    end
   end
 
   private

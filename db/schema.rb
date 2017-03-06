@@ -175,17 +175,18 @@ ActiveRecord::Schema.define(version: 20170305232124) do
   add_index "learning_training_messages", ["bot_id"], name: "index_learning_training_messages_on_bot_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "chat_id",              limit: 4
-    t.integer  "answer_id",            limit: 4
-    t.string   "speaker",              limit: 255,                   null: false
-    t.text     "body",                 limit: 65535
-    t.string   "user_agent",           limit: 1024
-    t.boolean  "learn_enabled",                      default: true,  null: false
-    t.boolean  "answer_failed",                      default: false, null: false
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.integer  "rating",               limit: 4,     default: 0
-    t.boolean  "answer_user_modified",               default: false, null: false
+    t.integer  "chat_id",               limit: 4
+    t.integer  "answer_id",             limit: 4
+    t.string   "speaker",               limit: 255,                   null: false
+    t.text     "body",                  limit: 65535
+    t.string   "user_agent",            limit: 1024
+    t.boolean  "learn_enabled",                       default: true,  null: false
+    t.boolean  "answer_failed",                       default: false, null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.integer  "rating",                limit: 4,     default: 0
+    t.boolean  "answer_user_modified",                default: false, null: false
+    t.boolean  "answer_failed_by_user",               default: false, null: false
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree

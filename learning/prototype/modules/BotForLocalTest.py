@@ -29,7 +29,7 @@ class Bot:
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
-    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
+    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8', sample_weight=None, solver=None):
         logger.debug('start Bot#learn')
 
         ''' 
@@ -37,7 +37,7 @@ class Bot:
             ロジスティック回帰モデルを使用し学習実行
         '''
         training_set = self.__build_training_set_from_csv(csv_file_path, csv_file_encoding)
-        estimator = self.__get_estimator_logit(training_set)
+        estimator = self.__get_estimator_logit(training_set, sample_weight=sample_weight, solver=solver)
         logger.debug('after Bot#__get_estimator')
 
         Persistance.dump_model(estimator, self.bot_id)
@@ -62,7 +62,7 @@ class Bot:
 
         return training_set.build()
 
-    def __get_estimator_logit(self, training_set):
+    def __get_estimator_logit(self, training_set, sample_weight=None, solver=None):
         ''' 
             ロジスティック回帰モデル専用
         '''
@@ -80,8 +80,11 @@ class Bot:
             estimator = grid.best_estimator_
             logger.debug('best_params_: %s' % grid.best_params_)
         else:
+            if solver is None:
+                solver = 'liblinear' # default solver on scikit-learn
+
             logger.debug('learning_parameter has parameter C')
-            estimator = LogisticRegression(C=C)
-            estimator.fit(training_set.x, training_set.y)
+            estimator = LogisticRegression(C=C, solver=solver)
+            estimator.fit(training_set.x, training_set.y, sample_weight=sample_weight)
 
         return estimator

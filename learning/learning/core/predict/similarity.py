@@ -25,7 +25,7 @@ class Similarity:
     def question_answers(self, question):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        question_answers = self.__all_question_answers()
+        question_answers = self.__all_question_answers(question)
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
         # FIXME 1件のquestionのためにTextArrayクラスを使用するのは直感的ではない
         question_array = TextArray([question], vectorizer=self.vectorizer)
@@ -42,6 +42,6 @@ class Similarity:
 
         return ordered_result[0:10]
 
-    def __all_question_answers(self):
-        data = pd.read_sql("select id, question from question_answers where bot_id = %s;" % self.bot_id, self.db)
+    def __all_question_answers(self, question):
+        data = pd.read_sql("select id, question from question_answers where bot_id = %s and question <> '%s';" % (self.bot_id, question), self.db)
         return data

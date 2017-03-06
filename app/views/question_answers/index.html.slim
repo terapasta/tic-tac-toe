@@ -12,7 +12,7 @@ table.table.table-striped
     - @question_answers.each do |question_answer|
       tr
         td = simple_format question_answer.question
-        td = simple_format question_answer.answer.body
+        td = simple_format question_answer.answer&.body
         td
           ul
             - question_answer.decision_branches.each do |decision_branch|

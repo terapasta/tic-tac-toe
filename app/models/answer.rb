@@ -30,6 +30,14 @@ class Answer < ActiveRecord::Base
     where.not(id: DecisionBranch.select(:next_answer_id).where(bot_id: bot_id).where.not(next_answer_id: nil))
   }
 
+  scope :search_by, -> (term) {
+    if term.present?
+      where('body LIKE ?', "%#{term}%")
+    end
+  }
+
+  alias_attribute :value, :body
+
   def no_classified?
     return true if bot.nil?
     false

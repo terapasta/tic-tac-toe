@@ -38,7 +38,7 @@ class Similarity:
             'question_answer_id': float(x[0]), 'similarity': x[1]
         }, sorted(zip(question_answers['id'], similarities), key=lambda x: x[1], reverse=True)))
 
-        ordered_result = list(filter((lambda x: x['similarity'] > 0), ordered_result))
+        ordered_result = list(filter((lambda x: x['similarity'] > 0.5), ordered_result))
 
         return ordered_result[0:10]
 

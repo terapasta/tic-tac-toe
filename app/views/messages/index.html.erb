@@ -36,7 +36,8 @@
         <td><%= message.created_at %></td>
         <td><%= message.user_agent %></td>
         <td>
-          <%= link_to_unless( message.answer_failed?, '失敗', bot_thread_message_path(@bot, @chat, message), method: :patch, class: 'btn btn-default') {} %>
+          <%= link_to_unless( message.answer_failed?, '失敗', bot_thread_message_answer_failed_path(@bot, @chat, message),
+                              method: :post, class: 'btn btn-default') {} %>
         </td>
       </tr>
     <% end %>

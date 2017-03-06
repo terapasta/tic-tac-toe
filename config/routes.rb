@@ -18,7 +18,9 @@ Rails.application.routes.draw do
     resource :imports, only: [:new, :create]
     resources :exports, only: [:index, :show], param: :encoding
     resources :threads, only: :index do
-      resources :messages, only: [:index, :update]
+      resources :messages, only: [:index] do
+        resource :answer_failed, only: [:create, :destroy], controller: :answer_failed
+      end
     end
     # resource :imports, only: [:new, :create]
 

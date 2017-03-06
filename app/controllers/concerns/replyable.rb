@@ -24,7 +24,10 @@ module Replyable
       message = parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer_failed)
       if responder.present?
         message.other_answers = responder.other_answers
-        message.similar_question_answers = responder.similar_question_answers if answer_failed
+
+        if answer_failed && parent.bot.has_feature?(:suggest_question)
+          message.similar_question_answers = responder.similar_question_answers
+        end
       end
       message
     end

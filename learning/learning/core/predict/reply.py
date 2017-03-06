@@ -6,7 +6,6 @@ from learning.config.config import Config
 from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
 
-
 class Reply:
     def __init__(self, bot_id, learning_parameter):
         config = Config()
@@ -26,7 +25,7 @@ class Reply:
 
     def perform(self, X):
         self.predict(X)
-        reply_result = ReplyResult(self.answers, self.probabilities)
+        reply_result = ReplyResult(self.answer_ids, self.probabilities)
         return reply_result
 
     def predict(self, X):
@@ -39,14 +38,8 @@ class Reply:
         #     tag_vec = tag.predict(Xtrain, return_type='binarized')
         #     features = np.c_[tag_vec, Xtrain_vec]
 
-        self.answers = self.estimator.predict(features)
+        # self.answers = self.estimator.predict(features)
         self.probabilities = self.estimator.predict_proba(features)
+        self.answer_ids = self.estimator.classes_
+
         return self.answers
-
-        # max_probability = np.max(probabilities)
-
-        # for (question, answer, probabilities2) in zip(X, answers, probabilities):
-        #     print('question: %s' % question)
-        #     print('answer: %s' % answer)
-        #     print('proba: %s \n' % max(probabilities2))
-        #

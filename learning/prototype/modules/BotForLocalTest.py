@@ -68,6 +68,9 @@ class Bot:
         '''
         logger.debug('use algorithm: logistic regression')
 
+        if solver is None:
+            solver = 'liblinear' # default solver on scikit-learn
+
         C = self.learning_parameter.params_for_algorithm.get('C', None)
         if C is None:
             logger.debug('learning_parameter has not parameter C')
@@ -75,14 +78,11 @@ class Bot:
             params = {'C': [10, 100, 140, 200]}
             # class_weight = self.__build_class_weight(training_set)
             # grid = GridSearchCV(LogisticRegression(class_weight=class_weight), param_grid=params)
-            grid = GridSearchCV(LogisticRegression(), param_grid=params)
+            grid = GridSearchCV(LogisticRegression(solver=solver), param_grid=params, fit_params={'sample_weight':sample_weight})
             grid.fit(training_set.x, training_set.y)
             estimator = grid.best_estimator_
             logger.debug('best_params_: %s' % grid.best_params_)
         else:
-            if solver is None:
-                solver = 'liblinear' # default solver on scikit-learn
-
             logger.debug('learning_parameter has parameter C')
             estimator = LogisticRegression(C=C, solver=solver)
             estimator.fit(training_set.x, training_set.y, sample_weight=sample_weight)

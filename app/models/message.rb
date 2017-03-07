@@ -10,6 +10,7 @@ class Message < ActiveRecord::Base
   enum rating: [:nothing, :good, :bad]
 
   validates :body, length: { maximum: 10000 }
+  validate :answer_failed_validate, on: :update
 
   scope :answer_failed, -> {
     where(answer_failed: true)

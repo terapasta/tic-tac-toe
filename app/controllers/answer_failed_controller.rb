@@ -6,7 +6,8 @@ class AnswerFailedController < ApplicationController
   before_action :set_message
 
   def create
-    if @message.update({answer_failed_by_user: true, answer_failed: true})
+    @message.set_answer_status_to_failed
+    if @message.save
       redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答失敗に変更しました。'
     else
       flash.now.alert = '回答失敗に変更できませんでした。'
@@ -15,7 +16,8 @@ class AnswerFailedController < ApplicationController
   end
 
   def destroy
-    if @message.update({answer_failed_by_user: false, answer_failed: false})
+    @message.set_answer_status_to_success
+    if @message.save
       redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答成功に変更しました。'
     else
       flash.now.alert = '回答成功に変更できませんでした。'

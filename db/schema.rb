@@ -185,7 +185,6 @@ ActiveRecord::Schema.define(version: 20170305232124) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
     t.integer  "rating",                limit: 4,     default: 0
-    t.boolean  "answer_user_modified",                default: false, null: false
     t.boolean  "answer_failed_by_user",               default: false, null: false
   end
 

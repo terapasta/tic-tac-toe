@@ -6,33 +6,20 @@ class AnswerFailedController < ApplicationController
   before_action :set_message
 
   def create
-    respond_to do |format|
-      @message.answer_failed_by_user = true
-      if @message.update({ answer_failed_by_user: true, answer_failed: true })
-        format.html { redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答失敗に変更しました。' }
-        format.json { render json: @message.decorate.as_json, status: :ok }
-      else
-        format.html do
-          flash.now.alert = '回答失敗に変更できませんでした。'
-          redirect_to bot_thread_messages_path(@bot, @chat, @message)
-        end
-        format.json { render json: @message.decorate.errors_as_json, status: :unprocessable_entity }
-      end
+    if @message.update({answer_failed_by_user: true, answer_failed: true})
+      redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答失敗に変更しました。'
+    else
+      flash.now.alert = '回答失敗に変更できませんでした。'
+      redirect_to bot_thread_messages_path(@bot, @chat, @message)
     end
   end
 
   def destroy
-    respond_to do |format|
-      if @message.update({ answer_failed_by_user: false, answer_failed: false })
-        format.html { redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答成功に変更しました。' }
-        format.json { render json: @message.decorate.as_json, status: :ok }
-      else
-        format.html do
-          flash.now.alert = '回答成功に変更できませんでした。'
-          redirect_to bot_thread_messages_path(@bot, @chat, @message)
-        end
-        format.json { render json: @message.decorate.errors_as_json, status: :unprocessable_entity }
-      end
+    if @message.update({answer_failed_by_user: false, answer_failed: false})
+      redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答成功に変更しました。'
+    else
+      flash.now.alert = '回答成功に変更できませんでした。'
+      redirect_to bot_thread_messages_path(@bot, @chat, @message)
     end
   end
 

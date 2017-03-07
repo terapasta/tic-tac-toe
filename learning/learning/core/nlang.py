@@ -43,3 +43,5 @@ class Nlang:
         for text in texts:
             splited_texts.append(self.split(text))
         return splited_texts
+
+

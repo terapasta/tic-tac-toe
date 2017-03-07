@@ -2,7 +2,7 @@ h1 回答一覧
 = search_form_for [:bot, @q], html: { class: 'form-inline' } do |f|
   .form-group
     = f.search_field :body_or_headline_cont, size:64, class: 'form-control'
-    = f.submit class: 'form-control btn btn-default'
+    = f.submit class: 'btn btn-default'
 table.table.table-striped
   thead
     tr

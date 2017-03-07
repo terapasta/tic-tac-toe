@@ -36,8 +36,16 @@
         <td><%= message.created_at %></td>
         <td><%= message.user_agent %></td>
         <td>
-          <%= link_to_unless( message.answer_failed?, '失敗', bot_thread_message_answer_failed_path(@bot, @chat, message),
-                              method: :post, class: 'btn btn-default') {} %>
+          <% if message.bot? %>
+            <% unless message.answer_failed? %>
+                  <%= link_to '回答失敗にする', bot_thread_message_answer_failed_path(@bot, @chat, message),
+                                      method: :post, class: 'btn btn-sm btn-warning' %>
+            <% end %>
+            <% if answer_failed_destroyable?(message) %>
+                  <%= link_to '回答成功にする', bot_thread_message_answer_failed_path(@bot, @chat, message),
+                                      method: :delete, class: 'btn btn-sm btn-default' %>
+            <% end %>
+          <% end %>
         </td>
       </tr>
     <% end %>

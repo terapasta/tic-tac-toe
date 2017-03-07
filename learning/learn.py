@@ -1,5 +1,6 @@
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
+from myope_server import MyopeServer
 
 bot_id = 1
 attr = {
@@ -12,5 +13,5 @@ attr = {
     'params_for_algorithm': {}
 
 }
-learning_parameter = LearningParameter(attr)
-evaluator = Bot(bot_id, learning_parameter).learn()
+myope_server = MyopeServer()
+myope_server.learn(bot_id, attr)

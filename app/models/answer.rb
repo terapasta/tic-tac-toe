@@ -10,15 +10,7 @@ class Answer < ActiveRecord::Base
   accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
   # accepts_nested_attributes_for :parent_decision_branch, reject_if: :all_blank, allow_destroy: true
 
-  # PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
-  # TRANSITION_CONTEXT_CONTACT_ID = 1007
-  # STOP_CONTEXT_ID = 1000
-  # ASK_GUEST_NAME_ID = 1001
-  # ASK_EMAIL_ID = 1002
-  # ASK_BODY_ID = 1003
-  # ASK_COMPLETE_ID = 1004
-  # ASK_ERROR_ID = 1005
-  # ASK_CONFIRM_ID = 1006
+  NO_CLASSIFIED_ID = 0
 
   enum context: ContextHoldable::CONTEXTS
   #enum transition_to: { contact: 'contact' }
@@ -55,5 +47,12 @@ class Answer < ActiveRecord::Base
       next_tails = get_next_answers.call(tails)
     end while next_tails.count > 0
     all
+  end
+
+  def self.find_or_null_answer(answer_id, bot, probability, classify_threshold)
+    if answer_id.blank? || answer_id == NO_CLASSIFIED_ID || probability < classify_threshold
+      return NullAnswer.new(bot)
+    end
+    return Answer.find(answer_id)
   end
 end

@@ -18,14 +18,11 @@ class Conversation::Bot
     result = @engine.reply(@message.body)
     @results = result[:results]
 
-    answer_id = @results.dig(0, :answer_id)
+    answer_id = @results.dig(0, :answer_id)  # TODO エンジン側でprobabilityが最も高い単一の回答を返すようにする
     probability = @results.dig(0, :probability)
     Rails.logger.debug(probability)
 
-    if answer_id.present? && probability > classify_threshold
-      @answer = Answer.find_by(id: answer_id, type: nil)
-    end
-    @answer = NullAnswer.new(@bot) if @answer.nil?
+    @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト

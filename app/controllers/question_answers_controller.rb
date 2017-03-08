@@ -58,9 +58,17 @@ class QuestionAnswersController < ApplicationController
   def destroy
     respond_to do |format|
       begin
-        @question_answer.destroy!
-        format.html { redirect_to bot_question_answers_path(@bot), notice: '削除しました。' }
-        format.json { render json: {}, status: :no_content }
+        format.html do
+          @question_answer.destroy!
+          redirect_to bot_question_answers_path(@bot), notice: '削除しました。'
+        end
+        format.json do
+          ActiveRecord::Base.transaction do
+            Array(@question_answer.answer&.self_and_deep_child_answers).map(&:destroy!)
+            @question_answer.destroy!
+          end
+          render json: {}, status: :no_content
+        end
       rescue => e
         format.html { raise e }
         format.json do

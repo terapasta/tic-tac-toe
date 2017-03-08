@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 
 const testHelper = require("../../test-helper");
 const componentPath = testHelper.appPath("es2015/components/conversation-item-form/current-decision-branch");
-const modelPath = testHelper.appPath("es2015/models/question");
+const modelPath = testHelper.appPath("es2015/models/decision-branch");
 jest.unmock(componentPath);
 jest.unmock(modelPath);
 const CurrentDecisionBranch = require(componentPath).default;
@@ -31,8 +31,17 @@ describe("CurrentDecisionBranch", () => {
       it("renders decision branch", () => {
         const activeItem = { dataType: "decisionBranch" };
         const editingDecisionBranchModel = new DecisionBranch({ body: "hoge" });
-        const wrapper = shallow(<CurrentDecisionBranch {...{ activeItem, editingDecisionBranchModel }} />);
-        expect(wrapper.find(<input value="hoge" />));
+        const wrapper = shallow(<CurrentDecisionBranch {...{
+          activeItem,
+          editingDecisionBranchModel
+        }} />);
+        const input = <input
+          className="form-control"
+          disabled={true}
+          type="text"
+          value="hoge"
+        />;
+        expect(wrapper.contains(input)).toBe(true);
       });
     });
   });

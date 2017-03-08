@@ -3,6 +3,7 @@ import classNames from "classnames";
 import isEmpty from "is-empty";
 import includes from "lodash/includes";
 import assign from "lodash/assign";
+import get from "lodash/get";
 
 import BaseNode from "./base-node";
 import AnswerNode from "./answer-node";
@@ -27,7 +28,8 @@ export default class DecisionBranchNode extends BaseNode {
     } = this.props;
 
     const { id, answer } = decisionBranchNode;
-    const { body } = decisionBranchesRepo[id];
+    const body = get(decisionBranchesRepo[id], "body");
+    if (body == null) { return null; }
     const isOpened = includes(openedDecisionBranchIDs, id);
     const hasAnswer = answer != null;
     const itemClassName = classNames({

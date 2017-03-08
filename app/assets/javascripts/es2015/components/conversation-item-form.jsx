@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from "react";
-import TextArea from "react-textarea-autosize";
 import get from "lodash/get";
 import flatten from "lodash/flatten";
 import axios from "axios";
 import Promise from "promise";
 import isEmpty from "is-empty";
 
+import CurrentDecisionBranch from "./conversation-item-form/current-decision-branch";
 import DecisionBranches from "./conversation-item-form/decision-branches";
 import NewDecisionBranch from "./conversation-item-form/new-decision-branch";
+import QuestionForm from "./conversation-item-form/question-form";
+import ReferenceQuestions from "./conversation-item-form/reference-questions";
+import AnswerForm from "./conversation-item-form/answer-form";
 
 export default class ConversationItemForm extends Component {
   static get componentName() {
@@ -49,32 +52,12 @@ export default class ConversationItemForm extends Component {
     const {
       editingAnswerModel,
       editingQuestionModel,
-      botId
     } = nextProps;
 
-    if (editingQuestionModel != null) {
-      this.setState({ question: editingQuestionModel.question });
-    }
-
-    if (editingAnswerModel != null) {
-      this.setState({ answerBody: editingAnswerModel.body });
-
-      if (editingAnswerModel.id == null) {
-        this.setState({ trainingMessages: [] });
-      }
-
-      const answerId = get(this.props, "editingAnswerModel.id");
-      if (botId != null && editingAnswerModel.id != answerId) {
-        this.fetchTrainingMessages(botId, editingAnswerModel.id)
-          .then((messagesList) => {
-            const trainingMessages = flatten(messagesList.map((ms) => ms.map((m) => m.body || m.question)));
-            this.setState({ trainingMessages });
-          })
-          .catch(console.error);
-      }
-    } else {
-      this.setState({ trainingMessages: [] });
-    }
+    this.setState({
+      question: get(editingQuestionModel, "question", ""),
+      answerBody: get(editingAnswerModel, "body", ""),
+    });
   }
 
   render() {
@@ -85,6 +68,7 @@ export default class ConversationItemForm extends Component {
       editingAnswerModel,
       editingDecisionBranchModel,
       editingDecisionBranchModels,
+      referenceQuestionModels,
       isAddingDecisionBranch,
       onSaveDecisionBranch,
       onEditDecisionBranch,
@@ -99,95 +83,57 @@ export default class ConversationItemForm extends Component {
       question,
     } = this.state;
 
-    const isAppearCurrentDecisionBranch =
-      get(activeItem, "dataType") === "decisionBranch" &&
-      editingDecisionBranchModel != null;
-    const isAppearNewDecisionBranch =
-      get(activeItem, "dataType") === "answer" && get(editingAnswerModel, "id") != null;
-
     return (
       <div>
-        {this.renderTrainingMessages()}
-        {isAppearCurrentDecisionBranch && (
-          <div className="form-group">
-            <label>現在の選択肢</label>
-            <input className="form-control" disabled={true} type="text" value={editingDecisionBranchModel.body} />
-          </div>
-        )}
-        {(editingQuestionModel != null) && (
-          <div className="form-group">
-            <label><i className="material-icons valign-middle">comment</i>{" "}質問</label>
-            <TextArea className="form-control"
-              name="question-question"
-              rows={3}
-              value={question || ""}
-              onChange={this.onChangeQuestion.bind(this)}
-              disabled={isProcessing} />
-            <div className="help-block clearfix">
-              <div className="pull-right">
-                <a className="btn btn-primary" href="#"
-                  onClick={this.onClickSaveQuestionButton.bind(this)}
-                  disabled={isProcessing}>保存</a>
-                {" "}
-                <span className="btn btn-danger" onClick={this.onClickDeleteQuestionButton.bind(this)} id="delete-answer-button">削除</span>
-              </div>
-            </div>
-          </div>
-        )}
-        {(editingAnswerModel != null) && (
-          <div className="form-group">
-            <label><i className="material-icons valign-middle">chat_bubble_outline</i>{" "}回答</label>
-            <TextArea className="form-control"
-              name="answer-body"
-              rows={3}
-              value={answerBody || ""}
-              onChange={this.onChangeAnswerBody.bind(this)}
-              disabled={isProcessing} />
-            <div className="help-block clearfix">
-              <div className="pull-right">
-                <a className="btn btn-primary" href="#"
-                  onClick={this.onClickSaveAnswerButton.bind(this)}
-                  disabled={isProcessing}>保存</a>
-                {" "}
-                <span className="btn btn-danger" onClick={this.onClickDeleteAnswerButton.bind(this)} id="delete-answer-button">削除</span>
-              </div>
-            </div>
-          </div>
-        )}
+        <ReferenceQuestions {...{ referenceQuestionModels }} />
+        <CurrentDecisionBranch {...{ activeItem, editingDecisionBranchModel }} />
+        <QuestionForm
+          {...{
+            editingQuestionModel,
+            isProcessing,
+            answerBody,
+            question,
+            onChangeQuestion: this.onChangeQuestion.bind(this),
+            onChangeAnswerBody: this.onChangeAnswerBody.bind(this),
+            onClickSaveQuestionButton: this.onClickSaveQuestionButton.bind(this),
+            onClickDeleteQuestionButton: this.onClickDeleteQuestionButton.bind(this),
+          }}
+        />
+        <AnswerForm
+          {...{
+            isProcessing,
+            activeItem,
+            editingAnswerModel,
+            answerBody,
+            onChange: this.onChangeAnswerBody.bind(this),
+            onSave: this.onClickSaveAnswerButton.bind(this),
+            onDelete: this.onClickDeleteAnswerButton.bind(this),
+          }}
+        />
         <div className="form-group">
           <DecisionBranches
-            isProcessing={isProcessing}
-            decisionBranchModels={editingDecisionBranchModels}
-            onSave={onSaveDecisionBranch}
-            onEdit={onEditDecisionBranch}
-            onDelete={(decisionBranchModel) => {
-              onDeleteDecisionBranch(decisionBranchModel, editingAnswerModel.id);
+            {...{
+              isProcessing,
+              decisionBranchModels: editingDecisionBranchModels,
+              onSave: onSaveDecisionBranch,
+              onEdit: onEditDecisionBranch,
+              onDelete(decisionBranchModel) {
+                onDeleteDecisionBranch(decisionBranchModel, editingAnswerModel.id);
+              },
             }}
           />
-          {isAppearNewDecisionBranch && (
-            <NewDecisionBranch
-              isProcessing={isProcessing}
-              isAdding={isAddingDecisionBranch}
-              onSave={onSaveNewDecisionBranch}
-              onAdding={onAddingDecisionBranch}
-              onCancelAdding={onCancelAddingDecisionBranch}
-            />
-          )}
+          <NewDecisionBranch
+            {...{
+              activeItem,
+              editingAnswerModel,
+              isProcessing,
+              isAdding: isAddingDecisionBranch,
+              onSave: onSaveNewDecisionBranch,
+              onAdding: onAddingDecisionBranch,
+              onCancelAdding: onCancelAddingDecisionBranch,
+            }}
+          />
         </div>
-      </div>
-    );
-  }
-
-  renderTrainingMessages() {
-    const { trainingMessages } = this.state;
-    if (isEmpty(trainingMessages)) { return null; }
-
-    return (
-      <div>
-        <strong><i className="material-icons valign-middle">comment</i>{" "}対応する質問</strong>
-        <ul>
-          {trainingMessages.map((tm, index) => <li key={index}>{tm}</li>)}
-        </ul>
       </div>
     );
   }
@@ -202,9 +148,9 @@ export default class ConversationItemForm extends Component {
 
   onClickSaveQuestionButton(e) {
     e.preventDefault();
-    const { onSaveQuestion, editingQuestionModel } = this.props;
-    const { question } = this.state;
-    onSaveQuestion(editingQuestionModel, question);
+    const { onSaveQuestion, editingQuestionModel, editingAnswerModel } = this.props;
+    const { question, answerBody } = this.state;
+    onSaveQuestion(editingQuestionModel, question, editingAnswerModel, answerBody);
   }
 
   onClickDeleteQuestionButton() {

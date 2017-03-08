@@ -53,7 +53,7 @@ class Message < ActiveRecord::Base
   private
     def answer_failed_validate
       if answer_failed_changed?
-        if !bot?
+        unless bot?
           errors.add('Bot以外のメッセージの回答ステータスは変更できません。')
         end
         if !answer_failed? && answer_failed_was == true && answer_failed_by_user_was == false

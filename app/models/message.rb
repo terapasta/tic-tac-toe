@@ -38,14 +38,16 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def set_answer_status_to_failed
+  def save_to_answer_failed
     self.answer_failed = true
     self.answer_failed_by_user = true
+    save
   end
 
-  def set_answer_status_to_success
+  def save_to_answer_succeed
     self.answer_failed = false
     self.answer_failed_by_user = false
+    save
   end
 
   private

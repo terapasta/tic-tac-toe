@@ -25,7 +25,9 @@
       "lodash",
       "react",
       "enzyme",
-      "axios"
+      "axios",
+      "is-empty",
+      "react-textarea-autosize"
     ]
   },
   "dependencies": {

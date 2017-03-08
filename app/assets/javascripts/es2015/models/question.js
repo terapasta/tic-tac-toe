@@ -35,7 +35,7 @@ export default class Question {
     const { id, botId } = this.attrs;
     return axios.get(`/bots/${botId}/question_answers/${id}/answer.json`)
       .then((res) => {
-        this.answer = new Answer(res.data);
+        this.answer = new Answer(assign({ botId }, res.data));
       });
   }
 

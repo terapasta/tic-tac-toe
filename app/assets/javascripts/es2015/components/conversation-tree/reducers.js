@@ -16,6 +16,7 @@ import editingQuestionModel from "./reducers/editing-question-model";
 import editingAnswerModel from "./reducers/editing-answer-model";
 import editingDecisionBranchModel from "./reducers/editing-decision-branch-model";
 import editingDecisionBranchModels from "./reducers/editing-decision-branch-models";
+import referenceQuestionModels from "./reducers/reference-question-models";
 
 function through(state = null) {
   return state;
@@ -38,6 +39,7 @@ const app = combineReducers({
   editingAnswerModel,
   editingDecisionBranchModel,
   editingDecisionBranchModels,
+  referenceQuestionModels,
   botId: through,
 });
 

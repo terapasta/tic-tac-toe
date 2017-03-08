@@ -18,17 +18,16 @@ class TrainingMessage(Base):
         logger.debug('TrainingMessage#build start')
         learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
-        body_vec = body_array.to_vec(type='array')
+        body_vec = body_array.to_vec()
 
-        x = body_vec
         if self.learning_parameter.include_tag_vector:
+            body_vec = body_vec.toarray()
             tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
-            x = np.c_[tag_vec, body_vec]
+            body_vec = np.c_[tag_vec, body_vec]
 
         self._body_array = body_array
-        self._x = x
+        self._x = body_vec
         self._y = learning_training_messages['answer_id']
-        logger.debug(self._x)
         return self
 
     @property

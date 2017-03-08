@@ -10,13 +10,10 @@ class TextArray:
         self.separated_sentences = Nlang.batch_split(self.sentences)
         self._vectorizer = vectorizer
 
-    # TODO 処理速度が遅いため改善したい
-    def to_vec(self, type=None):
+    def to_vec(self):
         logger.debug('TextArray#to_vec start')
         self._vectorizer = self.__build_vectorizer()
         feature_vectors = self._vectorizer.transform(self.separated_sentences)
-        if type == 'array':
-            feature_vectors = feature_vectors.toarray()
         logger.debug('TextArray#to_vec end')
         return feature_vectors
 

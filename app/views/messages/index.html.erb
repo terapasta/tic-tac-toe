@@ -41,7 +41,7 @@
                   <%= link_to '回答失敗にする', bot_thread_message_answer_failed_path(@bot, @chat, message),
                                       method: :post, class: 'btn btn-sm btn-warning' %>
             <% end %>
-            <% if answer_failed_destroyable?(message) %>
+            <% if policy(message).answer_successable? %>
                   <%= link_to '回答成功にする', bot_thread_message_answer_failed_path(@bot, @chat, message),
                                       method: :delete, class: 'btn btn-sm btn-default' %>
             <% end %>

@@ -15,6 +15,11 @@ class Message < ActiveRecord::Base
     where(answer_failed: true)
   }
 
+  scope :exchanging_messages_count, -> {
+    # 質問1つに回答が1つ返ってきた状態を対話数とカウントするのでguestの質問数=対話数とみなせる。
+    where('speaker = ?', speakers[:guest]).count()
+  }
+
   def parent
     chat
   end

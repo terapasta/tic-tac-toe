@@ -15,6 +15,7 @@
     <tr>
       <th>ID</th>
       <th></th>
+      <th>対話数</th>
       <th>本文</th>
       <th nowrap="nowrap">最終発言日時</th>
       <th></th>
@@ -38,6 +39,11 @@
         </td>
         <td>
           <% messages = chat.messages.order('id desc') %>
+          <%=
+            messages.exchanging_messages_count
+          %>
+        </td>
+        <td>
           <%= '...<br />'.html_safe if messages.count > 3 %>
           <% messages.limit(3).reverse.each do |message| %>
             <%= image_tag message.speaker_image_url, class: 'img-tiny' %>

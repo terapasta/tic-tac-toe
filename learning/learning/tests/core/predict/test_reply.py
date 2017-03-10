@@ -3,6 +3,7 @@
 #
 # class ReplyTestCase(TestCase):
 #
+#     # TODO 機械学習がからむケースでも単体テストを実行できるようにしたい
 #     def test_predict(self):
 #         # bot_id = 1
 #         # path = Persistance.get_model_path(bot_id)

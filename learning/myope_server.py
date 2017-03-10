@@ -2,8 +2,11 @@ import numpy as np
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
+
+from learning.core.predict.similarity import Similarity
 from learning.log import logger
 from learning.core.predict.reply import Reply
+from learning.core.predict.null_reply_result import NullReplyResult
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
 from learning.core.learn.tag import Tag as LearnTag
@@ -17,22 +20,17 @@ class MyopeServer(RPCServer):
     def reply(self, bot_id, body, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)
         X = np.array([body])
-        predict_results = {}
         status_code = self.STATUS_CODE_SUCCESS
+        reply_result = NullReplyResult()
 
         try:
-            predict_results = Reply(bot_id, learning_parameter).predict(X)
-            # logger.debug(predict_results)
-            # if answer_id is not None:
-            #     answer_id = float(answer_id)
+            reply_result = Reply(bot_id, learning_parameter).perform(X)
         except ModelNotExistsError:
             status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
 
         result = {
             'status_code': status_code,
-            # 'results':  [{'probability': 0.99974810633704125, 'answer_id': 20}, {'probability': 4.8263524435402245e-05, 'answer_id': 2092}, {'probability': 3.8650944875454533e-06, 'answer_id': 2065}, {'probability': 3.3403655454494557e-06, 'answer_id': 2128}, {'probability': 3.2779455165232719e-06, 'answer_id': 2298}, {'probability': 3.2096909894687076e-06, 'answer_id': 57}, {'probability': 2.770086869426734e-06, 'answer_id': 2030}, {'probability': 2.4034569493278136e-06, 'answer_id': 2314}, {'probability': 2.4034569493267467e-06, 'answer_id': 2337}, {'probability': 2.3194390806239406e-06, 'answer_id': 2047}]
-
-            'results': predict_results,
+            'results': reply_result.to_dict(),
         }
         return result
         # return { 'status_code': status_code, 'answer_id': answer_id }
@@ -46,6 +44,10 @@ class MyopeServer(RPCServer):
             'recall': evaluator.recall,
             'f1': evaluator.f1,
         }
+
+    def similarity(self, bot_id, question):
+        result = Similarity(bot_id).question_answers(question)
+        return result
 
     def learn_tag_model(self):
         LearnTag().learn()

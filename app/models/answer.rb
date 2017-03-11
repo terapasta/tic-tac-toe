@@ -1,7 +1,8 @@
 class Answer < ActiveRecord::Base
   include ContextHoldable
 
-  belongs_to :bot, required: true
+  # FIXME Answerでは必須、DefinedAnswerでnil許容にしたい
+  belongs_to :bot  #, required: true
   has_many :decision_branches, dependent: :destroy
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
   has_many :training_messages, dependent: :destroy

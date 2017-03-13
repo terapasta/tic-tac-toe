@@ -7,6 +7,8 @@ from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
 
 class Reply:
+    CLASSIFY_FAILED_ANSWER_ID = 0
+
     def __init__(self, bot_id, learning_parameter):
         config = Config()
         dbconfig = config.get('database')

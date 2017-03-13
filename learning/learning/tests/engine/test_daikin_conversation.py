@@ -1,27 +1,29 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 
+from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper
 
 
 class DaikinConversationTestCase(TestCase):
+    csv_file_path = 'learning/tests/engine/fixtures/test_daikin_conversation.csv'
+    bot_id = 998  # テスト用のbot_id いずれの値でも動作する
+    threshold = 0.5
+    learning_parameter = LearningParameter({
+        'include_failed_data': False,
+        'include_tag_vector': False,
+        'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
+        'params_for_algorithm': {'C': 200}
+    })
 
-    def setUp(self):
-        self.csv_file_path = 'learning/tests/engine/fixtures/test_daikin_conversation.csv'
-        self.bot_id = 998  # テスト用のbot_id いずれの値でも動作する
-        self.threshold = 0.5
-        self.answers = helper.build_answers(self.csv_file_path, encoding='SHIFT-JIS')
-        self.learning_parameter = LearningParameter({
-            'include_failed_data': False,
-            'include_tag_vector': False,
-            'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
-            'params_for_algorithm': {'C': 200}
-        })
 
+    @classmethod
+    def setUpClass(cls):
+        cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(self.bot_id, self.learning_parameter).learn(csv_file_path=self.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
     def test_how_to_add_mail_signature(self):
         questions = ['メールに署名を付ける方法を知りたい']
@@ -46,12 +48,12 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
 １０．返信/転送を行う際に挿入される署名を選択します。
 １１．『OK』ボタンを押下します。
 """
-        eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(probability > self.threshold)
 
 
     def test_how_much_limit_file_size_attached_mail(self):
-        questions = ['Pointsecとは']
+        questions = ['社外からのメール添付ファイルの受信容量制限は？']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
         answer_id = results[0]['answer_id']
         probability = results[0]['probability']
@@ -60,7 +62,7 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
         expected_answer = """ダイキン社内間であれば、メール送受信の容量制限は10MBになります。
 メール本文も含めた容量になります。
 社外からダイキンメールに添付ファイルを送付された場合ですが、社外のメールサーバの容量制限によって送受信できない場合があります。その際は社外の方へ確認を依頼ください。"""
-        eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(probability > self.threshold)
 
 
@@ -73,12 +75,12 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
 
         expected_answer = """迷惑メールフィルタの性質上、そのようなことがあります。
 自動削除される前に別フォルダに移動してください。"""
-        eq_(helper.replace_newline(answer_body), helper.replace_newline(expected_answer))
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(probability > self.threshold)
 
 
-    def test_dislike_bell_pepper(self):
-        questions = ['ピーマンは嫌いな食べ物です']
+    def test_dislike_shiitake(self):
+        questions = ['しいたけは嫌いな食べ物です']
         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
         probability = results[0]['probability']
 

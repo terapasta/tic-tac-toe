@@ -23,6 +23,10 @@ class Ml::Engine
   #   future.get
   # end
 
+  def similarity(question)
+    @client.call(:similarity, @bot.id, question)
+  end
+
   def predict_tags(bodies)
     @client.call(:predict_tags, bodies)
   end

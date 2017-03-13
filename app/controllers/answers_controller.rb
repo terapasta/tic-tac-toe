@@ -6,7 +6,8 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
 
   def index
-    @answers = @bot.answers.order('id desc').page(params[:page])
+    @q = @bot.answers.ransack(params[:q])
+    @answers = @q.result(distinct: true).order('id desc').page(params[:page])
   end
 
   def show

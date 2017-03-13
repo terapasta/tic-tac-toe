@@ -1,3 +1,4 @@
+- bot = message.parent.bot
 .chat-row
   .chat-message
     .chat-message__icon
@@ -21,13 +22,34 @@
             - message.other_answers.each do |other_answer|
               - if other_answer.headline.present?
               li
-                = link_to other_answer.headline, chats_messages_path(message.parent.bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: true
+                = link_to other_answer.headline, chats_messages_path(bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: true
 
 - if message.answer.try(:decision_branches).try(:present?)
-  .chat-row data-role="chat-decision-branches"
-    .chat-decision-branches: .chat-decision-branches__container
-      .chat-decision-branches__title 回答を選択してください
-      .chat-decision-branches__items
-        - message.answer.decision_branches.each do |decision_branch|
-          = link_to choices_chats_path(message.parent.bot.token, decision_branch), data: { method: :post, remote: true, role: 'chat-decision-branch', event_name: 'Select decision branch', bot_id: @bot.id, bot_name: @bot.name, chat_id: @chat.id, decision_branch_id: decision_branch.id, message_id: message.id }, class: 'chat-decision-branches__item' do
-            = decision_branch.body
+  = render layout: 'chats/decision_branches', locals: { title: '回答を選択してください' } do
+    - message.answer.decision_branches.each do |decision_branch|
+      = link_to choices_chats_path(bot.token, decision_branch),
+        data: { method: :post,
+          remote: true,
+          role: 'chat-decision-branch',
+          event_name: 'Select decision branch',
+          bot_id: @bot.id,
+          bot_name: @bot.name,
+          chat_id: @chat.id,
+          decision_branch_id: decision_branch.id,
+          message_id: message.id }, class: 'chat-decision-branches__item' do
+        = decision_branch.body
+
+- if message.similar_question_answers.present?
+  = render layout: 'chats/decision_branches', locals: { title: 'こちらの質問ではないですか？' } do
+    - message.similar_question_answers.each do |question_answer|
+      = link_to chats_messages_path(bot.token, 'message[body]' => question_answer.question),
+        class: 'chat-decision-branches__item',
+        data: { method: :post,
+          remote: true,
+          role: 'chat-decision-branch',
+          event_name: 'Select suggested question',
+          bot_id: @bot.id,
+          bot_name: @bot.name,
+          chat_id: @chat.id,
+          question_answer_id: question_answer.id } do
+        = question_answer.question

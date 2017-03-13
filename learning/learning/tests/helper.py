@@ -9,7 +9,7 @@ def get_answer_body(answers, answer_id):
     rows = answers.query('answer_id == %s' % answer_id)
     return rows.iloc[0]['answer_body']
 
-def replace_newline(val):
-    val.replace('\r\n', '').replace('\r', '').replace('\n', '')
+def replace_newline_and_space(val):
+    return val.replace('\r\n', '').replace('\r', '').replace('\n', '').replace(' ', '')
 
 

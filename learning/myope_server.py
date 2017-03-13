@@ -1,9 +1,11 @@
 import numpy as np
+import time
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
 
 from learning.core.predict.similarity import Similarity
+from learning.core.stop_watch import stop_watch
 from learning.log import logger
 from learning.core.predict.reply import Reply
 from learning.core.predict.null_reply_result import NullReplyResult
@@ -35,6 +37,7 @@ class MyopeServer(RPCServer):
         return result
         # return { 'status_code': status_code, 'answer_id': answer_id }
 
+    @stop_watch
     def learn(self, bot_id, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)
         evaluator = Bot(bot_id, learning_parameter).learn()

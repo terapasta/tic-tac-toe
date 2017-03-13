@@ -1,7 +1,6 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 
-from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper
@@ -27,10 +26,8 @@ class DaikinConversationTestCase(TestCase):
 
     def test_how_to_add_mail_signature(self):
         questions = ['メールに署名を付ける方法を知りたい']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい。その前にmyope_server#replyのテスト実装が必要
-        probability = results[0]['probability']
-        answer_body = helper.get_answer_body(self.answers, answer_id)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = """署名の作り方については『【Outlook2010操作マニュアル 応用編】 署名の作成』を参照してください。
 http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
@@ -49,42 +46,37 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
 １１．『OK』ボタンを押下します。
 """
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        ok_(probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
 
     def test_how_much_limit_file_size_attached_mail(self):
         questions = ['社外からのメール添付ファイルの受信容量制限は？']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']
-        probability = results[0]['probability']
-        answer_body = helper.get_answer_body(self.answers, answer_id)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = """ダイキン社内間であれば、メール送受信の容量制限は10MBになります。
 メール本文も含めた容量になります。
 社外からダイキンメールに添付ファイルを送付された場合ですが、社外のメールサーバの容量制限によって送受信できない場合があります。その際は社外の方へ確認を依頼ください。"""
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        ok_(probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
 
     def test_spam_mail_in_folder(self):
         questions = ['SPAMフォルダにメールが入っている']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']
-        probability = results[0]['probability']
-        answer_body = helper.get_answer_body(self.answers, answer_id)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = """迷惑メールフィルタの性質上、そのようなことがあります。
 自動削除される前に別フォルダに移動してください。"""
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        ok_(probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
 
     def test_dislike_shiitake(self):
         questions = ['しいたけは嫌いな食べ物です']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        probability = results[0]['probability']
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
         # しきい値を超える回答がないこと
-        ok_(probability < self.threshold)
+        ok_(result.probability < self.threshold)
 
 

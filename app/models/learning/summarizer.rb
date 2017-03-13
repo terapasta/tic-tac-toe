@@ -14,6 +14,8 @@ class Learning::Summarizer
   def convert_question_answers!
     learning_training_messages = []
     @bot.question_answers.find_each do |question_answer|
+      next if question_answer.answer.blank?
+
       learning_training_message = @bot.learning_training_messages.find_or_initialize_by(
         question: question_answer.question,
         answer_id: question_answer.answer_id
@@ -29,16 +31,16 @@ class Learning::Summarizer
 
   def convert_decision_branches!
     @bot.question_answers.find_each do |question_answer|
-      if question_answer.underlayer.present?
-        current_answer = question_answer.answer
-        question_answer.underlayer.each_slice(2) do |decision_branch_body, answer_body|
-          decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: @bot.id)
-          if answer_body.present?
-            current_answer = @bot.answers.find_or_initialize_by(body: answer_body, bot_id: @bot.id)
-            decision_branch.next_answer = current_answer
-          end
-          decision_branch.save!
+      next if question_answer.answer.blank? || question_answer.underlayer.blank?
+
+      current_answer = question_answer.answer
+      question_answer.underlayer.each_slice(2) do |decision_branch_body, answer_body|
+        decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: @bot.id)
+        if answer_body.present?
+          current_answer = @bot.answers.find_or_initialize_by(body: answer_body, bot_id: @bot.id)
+          decision_branch.next_answer = current_answer
         end
+        decision_branch.save!
       end
     end
   end

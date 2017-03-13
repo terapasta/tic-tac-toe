@@ -2,6 +2,7 @@ import axios from "axios";
 import assign from "lodash/assign";
 
 import DecisionBranch from "./decision-branch";
+import Question from "./question";
 
 import authenticityToken from "../modules/authenticity-token";
 import snakeCaseKeys from "../modules/snake-case-keys";
@@ -38,6 +39,14 @@ export default class Answer {
         this.decisionBranchModels = res.data.map((d) => {
           return new DecisionBranch(d);
         });
+      });
+  }
+
+  fetchQuestions() {
+    const { id, botId } = this.attrs;
+    return axios.get(`/bots/${botId}/answers/${id}/question_answers.json`)
+      .then((res) => {
+        this.questions = res.data.map((d) => new Question(d));
       });
   }
 

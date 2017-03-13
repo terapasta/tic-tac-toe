@@ -90,6 +90,17 @@
 
     &-body {
       line-height: 24px;
+
+      .material-icons {
+        margin-right: 5px;
+        font-size: 18px;
+        vertical-align: middle;
+        color: #aaa;
+
+        &.upside-down {
+          transform: rotate(180deg);
+        }
+      }
     }
 
     &-add {

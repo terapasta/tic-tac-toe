@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import get from "lodash/get";
 
 export default class NewDecisionBranch extends Component {
   static get componentName() {
@@ -24,6 +25,8 @@ export default class NewDecisionBranch extends Component {
 
   render() {
     const {
+      activeItem,
+      editingAnswerModel,
       isAdding,
       isProcessing,
       onSave,
@@ -34,6 +37,11 @@ export default class NewDecisionBranch extends Component {
     const {
       value,
     } = this.state;
+
+    if (get(activeItem, "dataType") != "answer" ||
+        get(editingAnswerModel, "id") == null ) {
+      return null;
+    }
 
     return (
       <div>

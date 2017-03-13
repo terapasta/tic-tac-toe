@@ -1,8 +1,7 @@
 class Answer < ActiveRecord::Base
   include ContextHoldable
 
-  # FIXME Answerでは必須、DefinedAnswerでnil許容にしたい
-  belongs_to :bot  #, required: true
+  belongs_to :bot
   has_many :decision_branches, dependent: :destroy
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
   has_many :training_messages, dependent: :destroy
@@ -18,6 +17,7 @@ class Answer < ActiveRecord::Base
 
   validates :body, presence: true, length: { maximum: 65535 }
   validates :headline, length: { maximum: 100 }
+  validates :bot_id, presence: true, if: :is_answer?
 
   scope :top_level, -> (bot_id) {
     where.not(id: DecisionBranch.select(:next_answer_id).where(bot_id: bot_id).where.not(next_answer_id: nil))
@@ -34,6 +34,11 @@ class Answer < ActiveRecord::Base
   def no_classified?
     return true if bot.nil?
     false
+  end
+
+  # STIのDefinedAnswerと識別するためのメソッド
+  def is_answer?
+    self.class.name == 'Answer'
   end
 
   def self_and_deep_child_answers

@@ -18,8 +18,8 @@ class Conversation::Bot
     result = @engine.reply(@message.body)
     @results = result[:results]
 
-    answer_id = @results.dig(0, :answer_id)  # TODO エンジン側でprobabilityが最も高い単一の回答を返すようにする
-    probability = @results.dig(0, :probability)
+    answer_id = result[:answer_id]
+    probability = result[:probability]
     Rails.logger.debug(probability)
 
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)

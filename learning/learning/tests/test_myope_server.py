@@ -18,6 +18,9 @@ class MyopeServerTestCase(TestCase):
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
         }
 
+    # def test_reply(self):
+    #     ok_(True)
+
     def test_learn(self):
         m = MagicMock()
         evaluator = MagicMock(

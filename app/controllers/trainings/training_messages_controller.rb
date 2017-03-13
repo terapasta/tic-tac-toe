@@ -1,5 +1,6 @@
 class Trainings::TrainingMessagesController < ApplicationController
   include Replyable
+  include BotUsable
 
   before_action :authenticate_user!
   before_action :set_bot
@@ -14,7 +15,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     training_message = @training.training_messages.build(training_message_params)
     training_message.answer = answer
     training_message.speaker = 'bot'
-    
+
     if params[:parent_decision_branch_id].present?
       decision_branch = @bot.decision_branches.find_by(id: params[:parent_decision_branch_id])
       answer.parent_decision_branch = decision_branch
@@ -101,7 +102,7 @@ class Trainings::TrainingMessagesController < ApplicationController
     end
 
     def set_bot
-      @bot = current_user.bots.find(params[:bot_id])
+      @bot = bots.find(params[:bot_id])
     end
 
     def set_training

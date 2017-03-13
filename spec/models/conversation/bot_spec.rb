@@ -10,9 +10,9 @@ RSpec.describe Conversation::Bot do
 
     before do
       Ml::Engine.any_instance.stub(:reply).and_return({
-        results: [{
-          answer_id: answer.id, probability: 0.999
-        }]
+        answer_id: answer.id,
+        probability: 0.999,
+        results: []
       })
     end
 
@@ -27,9 +27,9 @@ RSpec.describe Conversation::Bot do
 
       before do
         Ml::Engine.any_instance.stub(:reply).and_return({
-          results: [{
-            answer_id: 0, probability: 0.999
-          }]
+          answer_id: Answer::NO_CLASSIFIED_ID,
+          probability: 1.0,
+          results: []
         })
       end
 

@@ -15,17 +15,18 @@ module Replyable
       parent.context = answer.context
 
       body = answer.body
+      # HACK 条件が冗長すぎるので改善したい
       if answer.no_classified? && parent.is_a?(Chat) && parent.bot.has_feature?(:chitchat)
         # 分類出来なかった場合かつ親モデルがChatの場合、Docomoの雑談APIを使って返す
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 
       answer_failed = answer.is_a?(NullAnswer)
-      message = parent.messages.build(speaker: 'bot', answer_id: answer.id, body: body, answer_failed: answer_failed)
+      message = parent.messages.build(speaker: 'bot', answer_id: answer.id || Answer::NO_CLASSIFIED_ID, body: body, answer_failed: answer_failed)
       if responder.present?
         message.other_answers = responder.other_answers
 
-        if answer_failed && parent.bot.has_feature?(:suggest_question)
+        if answer_failed && parent.is_a?(Chat) && parent.bot.has_feature?(:suggest_question)
           message.similar_question_answers = responder.similar_question_answers
         end
       end

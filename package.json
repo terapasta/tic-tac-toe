@@ -27,7 +27,8 @@
       "enzyme",
       "axios",
       "is-empty",
-      "react-textarea-autosize"
+      "react-textarea-autosize",
+      "classnames"
     ]
   },
   "dependencies": {

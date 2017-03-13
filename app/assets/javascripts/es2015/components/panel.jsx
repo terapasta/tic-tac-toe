@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 import isEmpty from "is-empty";
 import classNames from "classnames";
 
-function PanelHead(props) {
+export function PanelHead(props) {
   const { title } = props;
   if (isEmpty(title)) { return null; }
 

@@ -57,8 +57,9 @@ class Answer < ActiveRecord::Base
 
   def self.find_or_null_answer(answer_id, bot, probability, classify_threshold)
     if answer_id.blank? || answer_id == NO_CLASSIFIED_ID || probability < classify_threshold
-      return NullAnswer.new(bot)
+      NullAnswer.new(bot)
+    else
+      Answer.find(answer_id)
     end
-    return Answer.find(answer_id)
   end
 end

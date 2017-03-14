@@ -1,4 +1,3 @@
-from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from myope_server import MyopeServer
 

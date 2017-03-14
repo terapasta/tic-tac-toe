@@ -80,14 +80,14 @@ $ python myope_server.py
 
 ```
 $ cd learning
-$ python learn.py
+$ python -m bin.learn
 ```
 
 予測処理を単体で実行する
 
 ```
 $ cd learning
-$ python predict.py
+$ python -m bin.predict
 ```
 
 ## テストの実行について

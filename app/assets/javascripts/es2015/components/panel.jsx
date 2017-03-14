@@ -14,18 +14,28 @@ export function PanelHead(props) {
 }
 
 function Panel(props) {
-  const { title, modifier, children } = props;
+  const { title, modifier, children, isClickable, onClickBody, id } = props;
   const className = classNames("panel", {
     "panel-default": modifier == null || modifier === "default",
     "panel-danger": modifier === "danger",
   });
 
   return (
-    <div className={className}>
+    <div className={className} id={id}>
       <PanelHead {...{ title }} />
-      <div className="panel-body">
-        {children}
-      </div>
+      {isClickable && (
+        <a {...{
+          className: "panel-body",
+          href: "#",
+          style: { display: "block"},
+          onClick: onClickBody,
+        }}>{children}</a>
+      )}
+      {!isClickable && (
+        <div className="panel-body">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

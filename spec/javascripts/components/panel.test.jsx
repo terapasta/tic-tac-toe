@@ -43,4 +43,11 @@ describe("Panel", () => {
       expect(wrapper.find(".panel-danger").length).toBe(1);
     });
   });
+
+  describe("when isClickable is true", () => {
+    it("renders .panel-body as A tag", () => {
+      const wrapper = shallow(<Panel isClickable={true} />);
+      expect(wrapper.find("a.panel-body").length).toBe(1);
+    });
+  });
 });

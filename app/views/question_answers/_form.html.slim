@@ -1,6 +1,7 @@
 - data = @question_answer.persisted? ? { event_name: 'Update question answer', question_answer_id: @question_answer.id, bot_id: @bot.id, bot_name: @bot.name } : {}
 
 span(
+  data-bot-id=@bot.id
   data-component="QuestionAnswerForm"
 )
 

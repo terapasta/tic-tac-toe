@@ -8,6 +8,10 @@ class AnswersController < ApplicationController
   def index
     @q = @bot.answers.ransack(params[:q])
     @answers = @q.result(distinct: true).order('id desc').page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: @answers.as_json(only: [:id, :headline, :body, :created_at]) }
+    end
   end
 
   def show

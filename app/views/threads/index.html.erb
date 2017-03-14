@@ -39,9 +39,7 @@
         </td>
         <td>
           <% messages = chat.messages.order('id desc') %>
-          <%=
-            messages.exchanging_messages_count
-          %>
+          <%= chat[:exchanging_messages_count] %>
         </td>
         <td>
           <%= '...<br />'.html_safe if messages.count > 3 %>

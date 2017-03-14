@@ -39,7 +39,7 @@ RSpec.describe Chat, type: :model do
 
       it '2件以上のメッセージがあるchatモデルを取得できること' do
         bot_message_greeting
-        guest = guest_message_question1
+        guest_message_question1
 
         expect(Chat.has_multiple_messages.find_by(chat.id).present?).to eq(true)
       end

@@ -29,7 +29,8 @@
       "is-empty",
       "react-textarea-autosize",
       "classnames",
-      "sinon"
+      "sinon",
+      "promise"
     ]
   },
   "dependencies": {

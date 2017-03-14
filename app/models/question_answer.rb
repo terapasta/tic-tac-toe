@@ -9,6 +9,8 @@ class QuestionAnswer < ActiveRecord::Base
   has_many :training_messages, dependent: :nullify
   has_many :decision_branches, through: :answer
 
+  accepts_nested_attributes_for :answer
+
   serialize :underlayer
 
   validates :question, presence: true

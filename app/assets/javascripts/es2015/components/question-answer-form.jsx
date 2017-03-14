@@ -156,7 +156,7 @@ export default class QuestionAnswerForm extends Component {
                 選択した回答{" "}
                 <a {...{
                   href: "#",
-                  classNames: "btn btn-warning btn-sm",
+                  className: "btn btn-warning btn-sm",
                   onClick: this.onClickRejectAnswer.bind(this),
                   id: "reject-answer",
                 }}>&times; 選択を解除</a>

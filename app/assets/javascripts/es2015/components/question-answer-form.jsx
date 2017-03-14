@@ -5,6 +5,7 @@ import isEmpty from "is-empty";
 import axios from "axios";
 import debounce from "lodash/debounce";
 import get from "lodash/get";
+import trim from "lodash/trim";
 
 import Panel from "./panel";
 import Question from "../models/question";
@@ -185,10 +186,10 @@ export default class QuestionAnswerForm extends Component {
       <span>
         <p>
           {!isEmpty(a.headline) && (
-            <span>
-              <small>{a.headline}</small>
+            <div style={{paddingBottom: "10px"}}>
+              <small>見出し：{a.headline}</small>
               <br />
-            </span>
+            </div>
           )}
           {a.body}
         </p>
@@ -215,7 +216,7 @@ export default class QuestionAnswerForm extends Component {
     const { botId } = this.props;
     const { searchingAnswerQuery, searchingAnswerPage } = this.state;
     const params = {
-      q: { body_or_headline_cont: searchingAnswerQuery },
+      "q[body_or_headline_cont]": trim(searchingAnswerQuery),
       page: searchingAnswerPage,
     };
 
@@ -275,9 +276,11 @@ export default class QuestionAnswerForm extends Component {
 
   onChangeSearchAnswer(e) {
     const { value } = e.target;
+    const val = trim(value);
     this.setState({ searchingAnswerQuery: value });
-    if (!isEmpty(value) && value.length > 0) {
-      this.debouncedSearchAnswers(value);
+    if (!isEmpty(val)) {
+      this.setState({ searchingAnswerPage: 1 });
+      this.debouncedSearchAnswers();
     } else {
       this.setState({ candidateAnswers: [] });
     }

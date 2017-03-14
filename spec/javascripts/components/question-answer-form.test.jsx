@@ -156,7 +156,7 @@ describe("QuestionAnswerForm", () => {
         return wrapper.instance().searchAnswers().then(() => {
           expect(axios.get).toBeCalledWith("/bots/1/answers.json", {
             params: {
-              q: { body_or_headline_cont: "sample"},
+              "q[body_or_headline_cont]": "sample",
               page: 1,
             }
           });

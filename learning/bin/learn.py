@@ -1,7 +1,12 @@
+import argparse
+
 from learning.core.learn.learning_parameter import LearningParameter
 from myope_server import MyopeServer
 
-bot_id = 1
+parser = argparse.ArgumentParser()
+parser.add_argument('--bot_id', default=1, type=int)
+args = parser.parse_args()
+
 attr = {
     'include_failed_data': False,
     'include_tag_vector': False,
@@ -13,4 +18,4 @@ attr = {
 
 }
 myope_server = MyopeServer()
-myope_server.learn(bot_id, attr)
+myope_server.learn(args.bot_id, attr)

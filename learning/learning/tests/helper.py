@@ -1,6 +1,16 @@
 import pandas as pd
 from nose.tools import eq_
 
+from learning.core.learn.learning_parameter import LearningParameter
+
+
+def learning_parameter():
+    return LearningParameter({
+        'include_failed_data': False,
+        'include_tag_vector': False,
+        'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
+    })
+
 def build_answers(csv_file_path, encoding='UTF-8'):
     learning_training_messages = pd.read_csv(csv_file_path, encoding=encoding)
     return learning_training_messages.drop_duplicates(subset=['answer_id'])

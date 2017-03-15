@@ -235,26 +235,26 @@ export default class QuestionAnswerForm extends Component {
     });
   }
 
-  postQuestionAnswer(payload) {
+  saveQuestionAnswer(payload) {
     if (this.state.isProcessing) { return; }
     this.setState({ isProcessing: true });
 
     const { botId, id } = this.props;
-    const method = isEmpty(id) ? "post" : "put";
-    const path = isEmpty(id) ?
-      `/bots/${botId}/question_answers.json` :
-      `/bots/${botId}/question_answers/${id}.json`;
+    let promise;
 
-    return axios[method](path, payload)
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          isProcessing: false,
-        });
+    if (isEmpty(id)) {
+      promise = Question.create(botId, payload)
+    } else {
+      promise = (new Question({ botId, id })).update(payload);
+    }
+
+    return promise
+      .then((questionModel) => {
+        console.log(questionModel);
+        this.setState({ isProcessing: false });
       }).catch((err) => {
-        this.setState({
-          isProcessing: false,
-        });
+        console.error(err);
+        this.setState({ isProcessing: false });
       });
   }
 
@@ -341,9 +341,7 @@ export default class QuestionAnswerForm extends Component {
     }
 
     if (errors.length === 0) {
-      this.postQuestionAnswer({
-        question_answer: payload
-      });
+      this.saveQuestionAnswer(payload);
     } else {
       window.alert(errors.join(", "));
     }

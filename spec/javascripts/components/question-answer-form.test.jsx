@@ -117,7 +117,7 @@ describe("QuestionAnswerForm", () => {
         const fakeEvent = { target: { value: "sample query" } };
         wrapper.find("#answer-search").simulate("change", fakeEvent);
 
-        expect(instance.debouncedSearchAnswers).toBeCalledWith("sample query");
+        expect(instance.debouncedSearchAnswers).toBeCalled();
 
         instance.debouncedSearchAnswers = jest.fn();
 
@@ -249,7 +249,7 @@ describe("QuestionAnswerForm", () => {
             id: 1,
           }} />);
           const instance = wrapper.instance();
-          instance.postQuestionAnswer = jest.fn();
+          instance.saveQuestionAnswer = jest.fn();
           window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
@@ -257,7 +257,7 @@ describe("QuestionAnswerForm", () => {
             answerBody: "",
           });
           wrapper.find("input[type='submit']").simulate("click");
-          expect(instance.postQuestionAnswer).not.toBeCalled();
+          expect(instance.saveQuestionAnswer).not.toBeCalled();
           expect(window.alert).toBeCalled();
         });
       });
@@ -269,7 +269,7 @@ describe("QuestionAnswerForm", () => {
             id: 1,
           }} />);
           const instance = wrapper.instance();
-          instance.postQuestionAnswer = jest.fn();
+          instance.saveQuestionAnswer = jest.fn();
           window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
@@ -277,13 +277,11 @@ describe("QuestionAnswerForm", () => {
             answerBody: "sample",
           });
           wrapper.find("input[type='submit']").simulate("click");
-          expect(instance.postQuestionAnswer).toBeCalledWith({
-            question_answer: {
-              question: "sample",
-              answer_attributes: {
-                body: "sample",
-                headline: "",
-              },
+          expect(instance.saveQuestionAnswer).toBeCalledWith({
+            question: "sample",
+            answer_attributes: {
+              body: "sample",
+              headline: "",
             },
           });
           expect(window.alert).not.toBeCalled();
@@ -299,7 +297,7 @@ describe("QuestionAnswerForm", () => {
             id: 1,
           }} />);
           const instance = wrapper.instance();
-          instance.postQuestionAnswer = jest.fn();
+          instance.saveQuestionAnswer = jest.fn();
           window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
@@ -307,11 +305,9 @@ describe("QuestionAnswerForm", () => {
             selectedAnswer: { id: 1 },
           });
           wrapper.find("input[type='submit']").simulate("click");
-          expect(instance.postQuestionAnswer).toBeCalledWith({
-            question_answer: {
-              question: "sample",
-              answer_id: 1,
-            },
+          expect(instance.saveQuestionAnswer).toBeCalledWith({
+            question: "sample",
+            answer_id: 1,
           });
           expect(window.alert).not.toBeCalled();
         });
@@ -324,7 +320,7 @@ describe("QuestionAnswerForm", () => {
             id: 1,
           }} />);
           const instance = wrapper.instance();
-          instance.postQuestionAnswer = jest.fn();
+          instance.saveQuestionAnswer = jest.fn();
           window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
@@ -332,14 +328,14 @@ describe("QuestionAnswerForm", () => {
             selectedAnswer: null,
           });
           wrapper.find("input[type='submit']").simulate("click");
-          expect(instance.postQuestionAnswer).not.toBeCalledWith();
+          expect(instance.saveQuestionAnswer).not.toBeCalledWith();
           expect(window.alert).toBeCalled();
         });
       });
     });
   });
 
-  describe("#postQuestionAnswer", () => {
+  describe("#saveQuestionAnswer", () => {
     describe("when exists id", () => {
       xit("does send request to question_answers#update", () => {
       });

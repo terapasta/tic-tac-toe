@@ -265,7 +265,6 @@ describe("QuestionAnswerForm", () => {
           }} />);
           const instance = wrapper.instance();
           instance.saveQuestionAnswer = jest.fn();
-          window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
             answerMode: AnswerMode.Input,
@@ -273,7 +272,7 @@ describe("QuestionAnswerForm", () => {
           });
           wrapper.find("input[type='submit']").simulate("click");
           expect(instance.saveQuestionAnswer).not.toBeCalled();
-          expect(window.alert).toBeCalled();
+          expect(wrapper.state("errors").length).not.toBe(0);
         });
       });
 
@@ -285,7 +284,6 @@ describe("QuestionAnswerForm", () => {
           }} />);
           const instance = wrapper.instance();
           instance.saveQuestionAnswer = jest.fn();
-          window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
             answerMode: AnswerMode.Input,
@@ -299,7 +297,7 @@ describe("QuestionAnswerForm", () => {
               headline: "",
             },
           });
-          expect(window.alert).not.toBeCalled();
+          expect(wrapper.state("errors").length).toBe(0);
         });
       })
     });
@@ -313,7 +311,6 @@ describe("QuestionAnswerForm", () => {
           }} />);
           const instance = wrapper.instance();
           instance.saveQuestionAnswer = jest.fn();
-          window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
             answerMode: AnswerMode.Select,
@@ -324,7 +321,7 @@ describe("QuestionAnswerForm", () => {
             question: "sample",
             answer_id: 1,
           });
-          expect(window.alert).not.toBeCalled();
+          expect(wrapper.state("errors").length).toBe(0);
         });
       });
 
@@ -336,7 +333,6 @@ describe("QuestionAnswerForm", () => {
           }} />);
           const instance = wrapper.instance();
           instance.saveQuestionAnswer = jest.fn();
-          window.alert = jest.fn();
           wrapper.setState({
             questionBody: "sample",
             answerMode: AnswerMode.Select,
@@ -344,7 +340,7 @@ describe("QuestionAnswerForm", () => {
           });
           wrapper.find("input[type='submit']").simulate("click");
           expect(instance.saveQuestionAnswer).not.toBeCalledWith();
-          expect(window.alert).toBeCalled();
+          expect(wrapper.state("errors").length).not.toBe(0);
         });
       });
     });
@@ -479,6 +475,23 @@ describe("QuestionAnswerForm", () => {
           });
         });
       });
+    });
+  });
+
+  describe("when click load more button", () => {
+    it("calls searchAnswer method", () => {
+      const wrapper = shallow(<QuestionAnswerForm {...{
+        botId: 1,
+        id: 1,
+      }} />)
+      const instance = wrapper.instance();
+      instance.searchAnswers = jest.fn();
+      wrapper.setState({
+        answerMode: AnswerMode.Select,
+        candidateAnswers: [{ id: 1 }],
+      });
+      wrapper.find("#load-more").simulate("click", { preventDefault(){} });
+      expect(instance.searchAnswers).toBeCalled();
     });
   });
 });

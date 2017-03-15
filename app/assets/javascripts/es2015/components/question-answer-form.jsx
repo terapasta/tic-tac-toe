@@ -38,6 +38,7 @@ export default class QuestionAnswerForm extends Component {
       answerMode: AnswerMode.Input,
       searchingAnswerQuery: "",
       searchingAnswerPage: 1,
+      hasNextPage: true,
       candidateAnswers: [],
       selectedAnswer: null,
       isProcessing: false,
@@ -63,6 +64,8 @@ export default class QuestionAnswerForm extends Component {
       answerId,
       answerMode,
       searchingAnswerQuery,
+      searchingAnswerPage,
+      hasNextPage,
       candidateAnswers,
       selectedAnswer,
       isProcessing,
@@ -162,7 +165,7 @@ export default class QuestionAnswerForm extends Component {
               }}
             />
           {isProcessing && <div className="well">検索中...</div>}
-          {!isProcessing && !isEmpty(candidateAnswers) && (
+          {!isEmpty(candidateAnswers) && (
             <div className="well" id="candidate-answers">
               {candidateAnswers.map((a, i) => {
                 return (
@@ -176,6 +179,13 @@ export default class QuestionAnswerForm extends Component {
                   </Panel>
                 );
               })}
+              {hasNextPage && (
+                <div className="form-group">
+                  <a href="#" id="load-more" className="btn btn-default" disabled={isProcessing} onClick={this.onClickLoadMore.bind(this)}>
+                    {isProcessing ? "読み込み中..." : "更に読み込む"}
+                  </a>
+                </div>
+              )}
             </div>
           )}
           {!isEmpty(selectedAnswer) && (
@@ -266,11 +276,14 @@ export default class QuestionAnswerForm extends Component {
     return axios.get(`/bots/${botId}/answers.json`, { params }).then((res) => {
       const newSearchingAnswerPage = res.data.length > 0 ?
         searchingAnswerPage + 1 : searchingAnswerPage;
+      const hasNextPage = res.data.length > 0;
+      const newCandidateAnswers = this.state.candidateAnswers.concat(res.data);
 
       this.setState({
         isProcessing: false,
-        candidateAnswers: res.data,
+        candidateAnswers: newCandidateAnswers,
         searchingAnswerPage: newSearchingAnswerPage,
+        hasNextPage,
       });
     }).catch((err) => {
       console.error(err);
@@ -395,5 +408,10 @@ export default class QuestionAnswerForm extends Component {
     if (errors.length === 0) {
       this.saveQuestionAnswer(payload);
     }
+  }
+
+  onClickLoadMore(e) {
+    e.preventDefault();
+    this.searchAnswers();
   }
 }

@@ -31,6 +31,7 @@ export default class Answer {
 
   get id() { return this.attrs.id; }
   get body() { return this.attrs.body; }
+  get headline() { return this.attrs.headline; }
 
   fetchDecisionBranches() {
     const { id, botId } = this.attrs;

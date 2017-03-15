@@ -7,7 +7,6 @@ class Nlang:
     def split(self, text):
         #tagger = MeCab.Tagger("-d " + DataParser.UNIDIC_PATH)
         tagger = MeCab.Tagger("-u learning/dict/custom.dic")
-        # text = text.encode('utf-8')
         tagger.parse('')  # node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         node = tagger.parseToNode(text)
         word_list = []
@@ -24,7 +23,7 @@ class Nlang:
                 if pos == '動詞' and features[1] == '非自立':
                     node = node.next
                     continue
-                lemma = node.feature.split(",")[6]  #.decode("utf-8")
+                lemma = node.feature.split(",")[6]
                 if lemma == 'ある':
                     node = node.next
                     continue
@@ -38,8 +37,9 @@ class Nlang:
 
     @classmethod
     def batch_split(self, texts):
-        #logging.debug('hogehoge')
         splited_texts = []
         for text in texts:
             splited_texts.append(self.split(text))
         return splited_texts
+
+

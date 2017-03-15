@@ -1,4 +1,5 @@
 class Trainings::DecisionBranchesController < ApplicationController
+  include BotUsable
   before_action :authenticate_user!
   before_action :set_models
   before_action :set_decision_branch, only: [:update, :destroy, :choice]
@@ -42,7 +43,7 @@ class Trainings::DecisionBranchesController < ApplicationController
 
   private
     def set_models
-      @bot = current_user.bots.find(params[:bot_id])
+      @bot = bots.find(params[:bot_id])
       @training = @bot.trainings.find(params[:training_id])
       @answer = @bot.answers.find(params[:answer_id])
     end

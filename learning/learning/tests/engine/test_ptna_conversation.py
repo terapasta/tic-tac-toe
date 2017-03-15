@@ -26,13 +26,11 @@ class PtnaConversationTestCase(TestCase):
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい。その前にmyope_server#replyのテスト実装が必要
-        probability = results[0]['probability']
-        answer_body = helper.get_answer_body(self.answers, answer_id)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '教室の一覧に性別が表示されていますので、そちらをご参照ください。'
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        ok_(probability > self.threshold)
+        ok_(result.probability > self.threshold)
 

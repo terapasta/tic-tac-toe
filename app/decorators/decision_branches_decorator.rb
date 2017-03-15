@@ -5,4 +5,8 @@ class DecisionBranchesDecorator < Draper::CollectionDecorator
       result
     }
   end
+
+  def as_tree_json
+    map(&:as_tree_node_json)
+  end
 end

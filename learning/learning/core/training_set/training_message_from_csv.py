@@ -13,12 +13,11 @@ class TrainingMessageFromCsv(Base):
     def build(self):
         learning_training_messages = self.__build_learning_training_messages()
         body_array = TextArray(learning_training_messages['question'])
-        x = body_array.to_vec(type='array')
+        x = body_array.to_vec()
 
         self._body_array = body_array
         self._x = x
         self._y = learning_training_messages['answer_id']
-        logger.debug(self._x)
         return self
 
     @property

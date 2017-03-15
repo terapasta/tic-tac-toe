@@ -37,11 +37,16 @@ export default class DecisionBranches extends Component {
             return <DecisionBranchItem
               decisionBranchModel={decisionBranchModel}
               key={index}
-              onEdit={() => onEdit(index)}
+              onEdit={this.bindOnEdit(index)}
             />;
           }
         })}
       </ul>
     );
+  }
+
+  // NOTE testの時にstubにできるようにこうしておく
+  bindOnEdit(index) {
+    return () => { this.props.onEdit(index); };
   }
 }

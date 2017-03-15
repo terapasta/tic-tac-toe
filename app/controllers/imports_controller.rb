@@ -23,7 +23,7 @@ class ImportsController < ApplicationController
     end
 
     def import_options
-      { is_utf8: params[:commit].include?('UTF-8') }
+      { is_utf8: params[:commit]&.include?('UTF-8') }
     end
 
     # def bot_params

@@ -3,6 +3,7 @@ from collections import Counter
 import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
+from learning.core.stop_watch import stop_watch
 from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
 from sklearn.linear_model import LogisticRegression
@@ -20,6 +21,7 @@ class Bot:
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
+    @stop_watch
     def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
         logger.debug('start Bot#learn')
 

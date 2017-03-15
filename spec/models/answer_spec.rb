@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
+  describe 'validations' do
+    subject(:answer) { build(:answer) }
+    context 'when bot_id is nil' do
+      before { answer.bot_id = nil }
+      it { is_expected.to be_invalid }
+    end
+  end
+
   describe '#self_and_deep_child_answers' do
     let!(:answer) do
       create(:answer)

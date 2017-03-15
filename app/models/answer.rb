@@ -1,7 +1,7 @@
 class Answer < ActiveRecord::Base
   include ContextHoldable
 
-  belongs_to :bot, required: true
+  belongs_to :bot
   has_many :decision_branches, dependent: :destroy
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
   has_many :training_messages, dependent: :destroy
@@ -10,21 +10,14 @@ class Answer < ActiveRecord::Base
   accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
   # accepts_nested_attributes_for :parent_decision_branch, reject_if: :all_blank, allow_destroy: true
 
-  # PRE_TRANSITION_CONTEXT_CONTACT_ID = [16, 49]
-  # TRANSITION_CONTEXT_CONTACT_ID = 1007
-  # STOP_CONTEXT_ID = 1000
-  # ASK_GUEST_NAME_ID = 1001
-  # ASK_EMAIL_ID = 1002
-  # ASK_BODY_ID = 1003
-  # ASK_COMPLETE_ID = 1004
-  # ASK_ERROR_ID = 1005
-  # ASK_CONFIRM_ID = 1006
+  NO_CLASSIFIED_ID = 0
 
   enum context: ContextHoldable::CONTEXTS
   #enum transition_to: { contact: 'contact' }
 
   validates :body, presence: true, length: { maximum: 65535 }
   validates :headline, length: { maximum: 100 }
+  validates :bot_id, presence: true, if: :is_answer?
 
   scope :top_level, -> (bot_id) {
     where.not(id: DecisionBranch.select(:next_answer_id).where(bot_id: bot_id).where.not(next_answer_id: nil))
@@ -43,6 +36,11 @@ class Answer < ActiveRecord::Base
     false
   end
 
+  # STIのDefinedAnswerと識別するためのメソッド
+  def is_answer?
+    self.class.name == 'Answer'
+  end
+
   def self_and_deep_child_answers
     all = [self]
     tails = [self]
@@ -55,5 +53,13 @@ class Answer < ActiveRecord::Base
       next_tails = get_next_answers.call(tails)
     end while next_tails.count > 0
     all
+  end
+
+  def self.find_or_null_answer(answer_id, bot, probability, classify_threshold)
+    if answer_id.blank? || answer_id == NO_CLASSIFIED_ID || probability < classify_threshold
+      NullAnswer.new(bot)
+    else
+      Answer.find(answer_id)
+    end
   end
 end

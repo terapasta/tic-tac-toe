@@ -5,21 +5,3 @@ span(
   data-bot-id=@bot.id
   data-id=@question_answer.id
 )
-
-= bootstrap_form_for [@bot, @question_answer], data: data do |f|
-  - if @question_answer.persisted?
-    = f.static_control :question
-  - else
-    = f.text_field :question
-  = f.form_group :answer_id, class: 'has-feedback'
-    = f.label :answer_id
-    = autocomplete_field_tag :answer_body, '', autocomplete_answer_body_bot_question_answers_path(@bot), placeholder: "回答を検索", class: 'form-control'
-    i.glyphicon.glyphicon-search.form-control-feedback
-  = f.form_group
-    = text_area_tag :answer_text_area, @question_answer&.answer&.body, class: 'form-control', rows: 6, readonly: true
-  = f.hidden_field :answer_id
-  = f.submit class: 'btn btn-success'
-  | &nbsp;
-  = link_to '削除する', [@bot, @question_answer], class: 'btn btn-danger', data: { confirm: 'Q&Aを削除します。よろしいですか？', method: :delete, event_name: 'Delete question answer', question_answer_id: @question_answer.id, bot_id: @bot.id, bot_name: @bot.name }
-
-  = javascript_include_tag 'question_answers/form'

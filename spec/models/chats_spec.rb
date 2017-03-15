@@ -9,64 +9,61 @@ RSpec.describe Chat, type: :model do
     create(:chat, bot: bot)
   end
 
-  let(:bot_message_greeting) do
-    create(:message, chat: chat, speaker: 'bot', body: 'hello')
-  end
-
-  let(:bot_message_answer1) do
-    create(:message, chat: chat, speaker: 'bot')
-  end
-
-  let(:bot_message_answer2) do
-    create(:message, chat: chat, speaker: 'bot')
-  end
-
-  let(:guest_message_question1) do
-    create(:message, chat: chat)
-  end
-
-  let(:guest_message_question2) do
-    create(:message, chat: chat)
-  end
-
   describe 'scope' do
-    context 'has_multiple_messages' do
-      it '1件しかメッセージがないchatモデルは取得できないこと' do
-        bot_message_greeting
-
-        expect(Chat.has_multiple_messages.find_by(chat.id).present?).not_to eq(true)
+    describe 'has_multiple_messages' do
+      subject do
+        Chat.has_multiple_messages.find_by(chat.id)
       end
 
-      it '2件以上のメッセージがあるchatモデルを取得できること' do
-        bot_message_greeting
-        guest_message_question1
-
-        expect(Chat.has_multiple_messages.find_by(chat.id).present?).to eq(true)
+      let!(:bot_message_greeting) do
+        create(:message, chat: chat, speaker: 'bot', body: 'hello')
       end
 
-      it '取得できる結果はchatモデルであること' do
-        bot_message_greeting
-        guest_message_question1
-
-        expect(Chat.has_multiple_messages.find(chat.id).kind_of?(Chat)).to eq(true)
+      context '1件しかメッセージがない場合' do
+        it 'メッセージは取得できないこと' do
+          expect(subject.present?).not_to be
+        end
       end
 
-      it '取得できる結果に対話セット数を含むこと' do
-        bot_message_greeting
-        guest_message_question1
+      context '2件のメッセージがある場合' do
+        let!(:guest_message_question1) do
+          create(:message, chat: chat)
+        end
 
-        expect(Chat.has_multiple_messages.find(chat.id).has_attribute?(:exchanging_messages_count)).to eq(true)
+        it 'メッセージを取得できること' do
+          expect(subject.present?).to be
+        end
+
+        it '取得できる結果クラスはchatモデルであること' do
+          expect(subject.kind_of?(Chat)).to be
+        end
+
+        it '取得結果に対話セット数を含むこと' do
+          expect(subject.has_attribute?(:exchanging_messages_count)).to be
+        end
       end
 
-      it '取得できる結果に対話セット数はゲストメッセージと同数であること' do
-        # 質問1つに回答が1つ返ってきた状態を対話数とカウントするのでguestの質問数=対話数とみなす。
-        bot_message_greeting
-        guest_message_question1
-        bot_message_answer1
-        guest_message_question2
-        bot_message_answer2
+      context '対話が繰り返されたメッセージがある場合(3件以上のメッセージ）' do
+        let!(:guest_message_question1) do
+          create(:message, chat: chat)
+        end
 
-        expect(Chat.has_multiple_messages.find(chat.id)[:exchanging_messages_count]).to eq(2)
+        let!(:guest_message_question2) do
+          create(:message, chat: chat)
+        end
+
+        let!(:bot_message_answer1) do
+          create(:message, chat: chat, speaker: 'bot')
+        end
+
+        let!(:bot_message_answer2) do
+          create(:message, chat: chat, speaker: 'bot')
+        end
+
+        it '対話セット数はゲストメッセージと同数であること' do
+          # 質問1つに回答が1つ返ってきた状態を対話数とカウントするのでguestの質問数=対話数とみなす。
+          expect(subject[:exchanging_messages_count]).to eq(2)
+        end
       end
     end
   end

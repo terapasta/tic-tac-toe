@@ -73,6 +73,7 @@ export default class QuestionAnswerForm extends Component {
               rows: 3,
               onChange: this.onChangeQuestionBody.bind(this),
               placeholder: "質問を入力してください（例：カードキー無くしてしまったのですが、どうすればいいですか）",
+              disabled: isProcessing,
             }}
           />
         </div>
@@ -85,10 +86,12 @@ export default class QuestionAnswerForm extends Component {
           }}>
             <label>回答</label>
             <label className="checkbox-inline">
-              <Radio value={AnswerMode.Input} />{" "}新しく回答を入力
+              <Radio value={AnswerMode.Input} disabled={isProcessing} />
+              {" "}新しく回答を入力
             </label>
             <label className="checkbox-inline">
-              <Radio value={AnswerMode.Select} />{" "}既存の回答を選択
+              <Radio value={AnswerMode.Select} disabled={isProcessing} />
+              {" "}既存の回答を選択
             </label>
           </RadioGroup>
         </div>
@@ -103,6 +106,7 @@ export default class QuestionAnswerForm extends Component {
                   className: "form-control",
                   onChange: this.onChangeAnswerHeadline.bind(this),
                   placeholder: "回答の見出しを入力してください（例：紛失物について）",
+                  disabled: isProcessing,
                 }}
               />
             </div>
@@ -115,7 +119,8 @@ export default class QuestionAnswerForm extends Component {
                   className: "form-control",
                   rows: 3,
                   onChange: this.onChangeAnswerBody.bind(this),
-                  placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）"
+                  placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
+                  disabled: isProcessing,
                 }}
               />
             </div>
@@ -174,6 +179,7 @@ export default class QuestionAnswerForm extends Component {
               className: "btn btn-primary",
               value: "登録",
               onClick: this.onClickSubmitButton.bind(this),
+              disabled: isProcessing,
             }}
           />
         </div>

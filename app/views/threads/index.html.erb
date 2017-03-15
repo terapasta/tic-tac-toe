@@ -24,35 +24,36 @@
 
   <tbody>
     <% @chats.each do |chat| %>
-      <tr>
-        <td><%= chat.id %></td>
-        <td>
-          <% if chat.has_answer_failed_message? %>
-            <i class="glyphicon glyphicon-warning-sign text-warning"></i>
-          <% end %>
-          <% if chat.has_good_answer? %>
-            <i class="fa fa-thumbs-up text-success"></i>
-          <% end %>
-          <% if chat.has_bad_answer? %>
-            <i class="fa fa-thumbs-down text-danger"></i>
-          <% end %>
-        </td>
-        <td>
-          <%= chat[:exchanging_messages_count] %>
-        </td>
-        <td>
-          <% messages = chat.messages.order('id desc') %>
-          <%= '...<br />'.html_safe if messages.count > 3 %>
-          <% messages.limit(3).reverse.each do |message| %>
-            <%= image_tag message.speaker_image_url, class: 'img-tiny' %>
-            <%= message.body %></br />
-          <% end %>
-        </td>
-        <td><%= messages.last.created_at if messages.present? %></td>
-        <td>
-          <%= link_to t('helpers.link.show'), bot_thread_messages_path(@bot, chat, index_page: params[:page], filter: params[:filter]), class: "btn btn-default", data: { event_name: 'Open thread messages', bot_id: @bot.id, bot_name: @bot.name, chat_id: chat.id } %>
-        </td>
-      </tr>
+      <% chat.messages.order('id desc').tap do |messages| %>
+        <tr>
+          <td><%= chat.id %></td>
+          <td>
+            <% if chat.has_answer_failed_message? %>
+              <i class="glyphicon glyphicon-warning-sign text-warning"></i>
+            <% end %>
+            <% if chat.has_good_answer? %>
+              <i class="fa fa-thumbs-up text-success"></i>
+            <% end %>
+            <% if chat.has_bad_answer? %>
+              <i class="fa fa-thumbs-down text-danger"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= chat[:exchanging_messages_count] %>
+          </td>
+          <td>
+            <%= '...<br />'.html_safe if messages.count > 3 %>
+            <% messages.limit(3).reverse.each do |message| %>
+              <%= image_tag message.speaker_image_url, class: 'img-tiny' %>
+              <%= message.body %></br />
+            <% end %>
+          </td>
+          <td><%= messages.last.created_at if messages.present? %></td>
+          <td>
+            <%= link_to t('helpers.link.show'), bot_thread_messages_path(@bot, chat, index_page: params[:page], filter: params[:filter]), class: "btn btn-default", data: { event_name: 'Open thread messages', bot_id: @bot.id, bot_name: @bot.name, chat_id: chat.id } %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

@@ -9,6 +9,7 @@ import trim from "lodash/trim";
 
 import Panel from "./panel";
 import Question from "../models/question";
+import jump from "../modules/jump";
 
 export const AnswerMode = {
   Input: "input",
@@ -40,6 +41,8 @@ export default class QuestionAnswerForm extends Component {
       candidateAnswers: [],
       selectedAnswer: null,
       isProcessing: false,
+      persistedAnswerId: null,
+      errors: [],
     };
     this.debouncedSearchAnswers = debounce(this.searchAnswers, 250);
   }
@@ -50,6 +53,10 @@ export default class QuestionAnswerForm extends Component {
 
   render() {
     const {
+      id
+    } = this.props;
+
+    const {
       questionBody,
       answerHeadline,
       answerBody,
@@ -59,10 +66,25 @@ export default class QuestionAnswerForm extends Component {
       candidateAnswers,
       selectedAnswer,
       isProcessing,
+      errors,
     } = this.state;
 
+    const title = `Q&A${isEmpty(id) ? "新規登録" : "編集"}`;
+    const hasPersistedAnswer = !isEmpty(id) && !isEmpty(answerBody);
+    const inputAnswerLabel = hasPersistedAnswer ?
+      "回答を編集" : "新しく回答を入力";
+
     return (
-      <Panel title="Q&A">
+      <Panel title={title}>
+        {!isEmpty(errors) && (
+          <div className="alert alert-danger">
+            <ul>
+              {errors.map((e, i) => (
+                <li key={i}>{e}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="form-group">
           <label htmlFor="question-body">質問</label>
           <TextArea
@@ -87,7 +109,7 @@ export default class QuestionAnswerForm extends Component {
             <label>回答</label>
             <label className="checkbox-inline">
               <Radio value={AnswerMode.Input} disabled={isProcessing} />
-              {" "}新しく回答を入力
+              {" "}{inputAnswerLabel}
             </label>
             <label className="checkbox-inline">
               <Radio value={AnswerMode.Select} disabled={isProcessing} />
@@ -209,9 +231,24 @@ export default class QuestionAnswerForm extends Component {
   fetchQuestionAnswer() {
     const { botId, id } = this.props;
     if (isEmpty(botId) || isEmpty(id)) { return; }
+    if (this.state.isProcessing) { return; }
+    this.setState({ isProcessing: true });
 
-    Question.fetch(botId, id).then((questionModel) => {
-      console.log(questionModel);
+    return Question.fetch(botId, id).then((questionModel) => {
+      this.setState({ questionBody: questionModel.question });
+
+      return questionModel.fetchAnswer().then(() => {
+        const { body, headline, id } = questionModel.answer;
+        this.setState({
+          answerBody: body,
+          answerHeadline: headline,
+          persistedAnswerId: id,
+          isProcessing: false,
+        });
+      });
+    }).catch((err) => {
+      console.error(err);
+      this.setState({ isProcessing: false });
     });
   }
 
@@ -256,8 +293,7 @@ export default class QuestionAnswerForm extends Component {
 
     return promise
       .then((questionModel) => {
-        console.log(questionModel);
-        this.setState({ isProcessing: false });
+        jump.to(questionModel.editPath);
       }).catch((err) => {
         console.error(err);
         this.setState({ isProcessing: false });
@@ -310,11 +346,16 @@ export default class QuestionAnswerForm extends Component {
 
   onClickSubmitButton() {
     const {
+      id
+    } = this.props;
+
+    const {
       answerMode,
       answerBody,
       answerHeadline,
       selectedAnswer,
-      questionBody
+      questionBody,
+      persistedAnswerId,
     } = this.state;
 
     let errors = [];
@@ -335,6 +376,9 @@ export default class QuestionAnswerForm extends Component {
             body: answerBody,
             headline: answerHeadline,
           };
+          if (!isEmpty(persistedAnswerId)) {
+            payload.answer_attributes.id = persistedAnswerId;
+          }
         }
         break;
       case AnswerMode.Select:
@@ -346,10 +390,10 @@ export default class QuestionAnswerForm extends Component {
         break;
     }
 
+    this.setState({ errors });
+
     if (errors.length === 0) {
       this.saveQuestionAnswer(payload);
-    } else {
-      window.alert(errors.join(", "));
     }
   }
 }

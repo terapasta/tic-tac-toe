@@ -7,24 +7,39 @@ import testHelper from "../test-helper";
 const componentPath = testHelper.appPath("es2015/components/question-answer-form");
 const panelComponentPath = testHelper.appPath("es2015/components/panel");
 const modelPath = testHelper.appPath("es2015/models/question");
+const jumpPath = testHelper.appPath("es2015/modules/jump");
 
 jest.unmock(componentPath);
 jest.unmock(panelComponentPath);
 jest.unmock(modelPath);
+jest.unmock(jumpPath);
 
 const QuestionAnswerForm = require(componentPath).default;
 const { AnswerMode } = require(componentPath);
 const Question = require(modelPath).default;
+const jump = require(jumpPath).default;
 
 let fakeFetch;
 let originalFetch = Question.fetch;
 let originalAxiosGet = axios.get;
+let fakeQuestionModel;
+let fakeAnswerModel;
 
 describe("QuestionAnswerForm", () => {
   beforeEach(() => {
-    Question.fetch = fakeFetch = jest.fn(() => {
-      return { then: ()=>{} };
-    });
+    fakeAnswerModel = {
+      id: "sample id",
+      headline: "sample headline",
+      body: "sample body",
+    };
+    fakeQuestionModel = {
+      botId: "sample bot id",
+      id: "sample id",
+      question: "sample question",
+      fetchAnswer: jest.fn(() => new Promise((r) => r())),
+      answer: fakeAnswerModel,
+    };
+    Question.fetch = jest.fn(() => new Promise((r) => r(fakeQuestionModel)));
   });
 
   afterEach(() => {
@@ -337,12 +352,132 @@ describe("QuestionAnswerForm", () => {
 
   describe("#saveQuestionAnswer", () => {
     describe("when exists id", () => {
-      xit("does send request to question_answers#update", () => {
+      beforeEach(() => {
+        fakeQuestionModel = {
+          editPath: "sample edit path",
+        };
+        Question.prototype.update = jest.fn(() => {
+          return new Promise((r) => r(fakeQuestionModel));
+        });
+        jump.to = jest.fn();
+      });
+
+      it("does send request to question_answers#update", () => {
+        const wrapper = shallow(<QuestionAnswerForm {...{
+          botId: 1,
+          id: 1,
+        }} />);
+
+        return wrapper.instance().saveQuestionAnswer("sample payload").then(() => {
+          expect(Question.prototype.update).toBeCalledWith("sample payload");
+          expect(jump.to).toBeCalledWith("sample edit path");
+        });
       });
     });
 
     describe("when not exists id", () => {
-      xit("does send request to question_answers#create", () => {
+      beforeEach(() => {
+        fakeQuestionModel = {
+          editPath: "sample edit path",
+        };
+        Question.create = jest.fn(() => {
+          return new Promise((r) => r(fakeQuestionModel));
+        });
+        jump.to = jest.fn();
+      });
+
+      it("does send request to question_answers#create", () => {
+        const wrapper = shallow(<QuestionAnswerForm {...{
+          botId: 1,
+          id: null,
+        }} />);
+
+        return wrapper.instance().saveQuestionAnswer("sample payload").then(() => {
+          expect(Question.create).toBeCalledWith(1, "sample payload");
+          expect(jump.to).toBeCalledWith("sample edit path");
+        });
+      });
+    });
+  });
+
+  describe("#fetchQuestionAnswer", () => {
+    describe("when not exists id", () => {
+      beforeEach(() => {
+        Question.fetch = jest.fn();
+      });
+
+      afterEach(() => {
+        Question.fetch = originalFetch;
+      });
+
+      it("does not fetch", () => {
+        const wrapper = shallow(<QuestionAnswerForm {...{
+          botId: 1,
+          id: null,
+        }} />);
+        wrapper.instance().fetchQuestionAnswer();
+        expect(Question.fetch).not.toBeCalled();
+      });
+    });
+
+    describe("when exists id", () => {
+      beforeEach(() => {
+        fakeAnswerModel = {
+          id: "sample id",
+          headline: "sample headline",
+          body: "sample body",
+        };
+        fakeQuestionModel = {
+          botId: "sample bot id",
+          id: "sample id",
+          question: "sample question",
+          fetchAnswer: jest.fn(() => new Promise((r) => r())),
+          answer: fakeAnswerModel,
+        };
+
+        Question.fetch = jest.fn(() => new Promise((r) => r(fakeQuestionModel)));
+      });
+
+      afterEach(() => {
+        Question.fetch = originalFetch;
+      });
+
+      it("does fetch question and answer", () => {
+        const wrapper = shallow(<QuestionAnswerForm {...{
+          botId: 1,
+          id: 1,
+        }} />);
+
+        return wrapper.instance().fetchQuestionAnswer().then(() => {
+          expect(Question.fetch).toBeCalled();
+          expect(wrapper.state("questionBody")).toBe("sample question");
+          expect(fakeQuestionModel.fetchAnswer).toBeCalled();
+          expect(wrapper.state("answerBody")).toBe("sample body");
+          expect(wrapper.state("answerHeadline")).toBe("sample headline");
+          expect(wrapper.state("persistedAnswerId")).toBe("sample id");
+          expect(wrapper.state("isProcessing")).toBe(false);
+        });
+      });
+
+      describe("when failed fetchAnswer", () => {
+        beforeEach(() => {
+          fakeQuestionModel.fetchAnswer = jest.fn(() => (
+            new Promise((_, r) => r("sample error"))
+          ));
+        });
+
+        it("assigns false to isProcessing", () => {
+          const wrapper = shallow(<QuestionAnswerForm {...{
+            botId: 1,
+            id: 1,
+          }} />);
+          wrapper.setState({ answerBody: null });
+
+          return wrapper.instance().fetchQuestionAnswer().then(() => {
+            expect(wrapper.state("answerBody")).toBeNull();
+            expect(wrapper.state("isProcessing")).toBe(false);
+          });
+        });
       });
     });
   });

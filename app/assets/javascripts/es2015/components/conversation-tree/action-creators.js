@@ -324,6 +324,7 @@ export function setActiveItem(dataType, id) {
           return dispatch(setEditingQuestionModel(new Question));
         } else {
           return Question.fetch(botId, id).then((questionModel) => {
+            if (getState().activeItem.dataType !== "question") { return; }
             dispatch(setEditingQuestionModel(questionModel));
             questionModel.fetchAnswer().then(() => {
               dispatch(setEditingAnswerModel(questionModel.answer));
@@ -339,6 +340,7 @@ export function setActiveItem(dataType, id) {
           return dispatch(setEditingAnswerModel(new Answer));
         } else {
           return Answer.fetch(botId, id).then((answerModel) => {
+            if (getState().activeItem.dataType !== "answer") { return; }
             dispatch(setEditingAnswerModel(answerModel));
             answerModel.fetchDecisionBranches().then(() => {
               dispatch(setEditingDecisionBranchModels(answerModel.decisionBranchModels));

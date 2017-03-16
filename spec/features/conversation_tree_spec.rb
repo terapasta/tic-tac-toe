@@ -76,12 +76,11 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'updates answer' do
-    skip 'ここは環境によって落ちたりするみたいなのでskip'
     find("#question-#{question_answers.first.id}").click
     find("#answer-#{answer.id}").click
-    sleep 4
     fill_in 'answer-body', with: 'updated answer'
     click_link '保存'
+    sleep 2
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated answer')
     end
@@ -117,7 +116,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn').click
     end
-    skip 'ここは環境によって落ちたりするみたいなのでskip'
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn-danger').click
     end

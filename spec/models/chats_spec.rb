@@ -26,7 +26,7 @@ RSpec.describe Chat, type: :model do
       end
 
       context '2件のメッセージがある場合' do
-        let!(:guest_message_question1) do
+        let!(:guest_message_question) do
           create(:message, chat: chat)
         end
 
@@ -44,25 +44,21 @@ RSpec.describe Chat, type: :model do
       end
 
       context '対話が繰り返されたメッセージがある場合(3件以上のメッセージ）' do
-        let!(:guest_message_question1) do
-          create(:message, chat: chat)
+        let (:count) do
+          2
         end
 
-        let!(:guest_message_question2) do
-          create(:message, chat: chat)
+        let!(:guest_message_questions) do
+          create_list(:message, count, chat: chat)
         end
 
-        let!(:bot_message_answer1) do
-          create(:message, chat: chat, speaker: 'bot')
-        end
-
-        let!(:bot_message_answer2) do
-          create(:message, chat: chat, speaker: 'bot')
+        let!(:bot_message_answers) do
+          create_list(:message, count, chat: chat, speaker: 'bot')
         end
 
         it '対話セット数はゲストメッセージと同数であること' do
           # 質問1つに回答が1つ返ってきた状態を対話数とカウントするのでguestの質問数=対話数とみなす。
-          expect(subject[:exchanging_messages_count]).to eq(2)
+          expect(subject[:exchanging_messages_count]).to eq(count)
         end
       end
     end

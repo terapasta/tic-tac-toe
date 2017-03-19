@@ -13,8 +13,8 @@ module CsvGeneratable
   private
     def recursive_put_rows_to_csv(csv, base, answer)
       row = base.dup
-      row << answer.body
-      if answer.decision_branches.present?
+      row << answer.body if answer.present?
+      if answer&.decision_branches.present?
         answer.decision_branches.each do |decision_branch|
           row2 = row.dup
           row2 << decision_branch.body

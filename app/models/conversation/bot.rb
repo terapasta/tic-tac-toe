@@ -9,22 +9,20 @@ class Conversation::Bot
     @bot = bot
     @message = message
     @ModelClass = message.class
+    @engine = Ml::Engine.new(@bot)
   end
 
   def reply
     Rails.logger.debug("Conversation::Bot#reply body: #{@message.body}")
 
-    result = Ml::Engine.new(@bot).reply(@message.body)
+    result = @engine.reply(@message.body)
     @results = result[:results]
 
-    answer_id = @results.dig(0, :answer_id)
-    probability = @results.dig(0, :probability)
+    answer_id = result[:answer_id]
+    probability = result[:probability]
     Rails.logger.debug(probability)
 
-    if answer_id.present? && probability > classify_threshold
-      @answer = Answer.find_by(id: answer_id, type: nil)
-    end
-    @answer = NullAnswer.new(@bot) if @answer.nil?
+    @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
@@ -40,6 +38,13 @@ class Conversation::Bot
       .select {|data| data['probability'] > 0.001 }
       .map { |data| @bot.answers.find_by(id: data['answer_id']) || DefinedAnswer.find_by(id: data['answer_id']) }
       .select { |answer| answer.try(:headline).try(:present?) && @answer.id != answer.id }[0..4]
+  end
+
+  def similar_question_answers
+    result = @engine.similarity(@message.body)
+    result.map do |hash|
+      @bot.question_answers.find(hash['question_answer_id'])
+    end
   end
 
   private

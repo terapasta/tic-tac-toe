@@ -10,12 +10,32 @@ RSpec.describe Conversation::Bot do
 
     before do
       Ml::Engine.any_instance.stub(:reply).and_return({
-        results: [{
-          answer_id: answer.id, probability: 0.999
-        }]
+        answer_id: answer.id,
+        probability: 0.999,
+        results: []
       })
     end
 
     it { is_expected.to eq [answer] }
+
+    context '#replyの結果のanswer_idが0の場合' do
+      # FIXME DatabaseCleanerでdefined_answerがテストケースごとに削除されてしまうための対処
+      # defined_answerはマスタデータなので削除されないようにしたい
+      let!(:defined_answer) do
+        create(:defined_answer, defined_answer_id: DefinedAnswer::CLASSIFY_FAILED_ID, body: 'hogehoge')
+      end
+
+      before do
+        Ml::Engine.any_instance.stub(:reply).and_return({
+          answer_id: Answer::NO_CLASSIFIED_ID,
+          probability: 1.0,
+          results: []
+        })
+      end
+
+      it 'NullAnswerが返ること' do
+        expect(subject.first).to be_a NullAnswer
+      end
+    end
   end
 end

@@ -21,29 +21,26 @@ class BenefitoneConversationTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい。その前にmyope_server#replyのテスト実装が必要
-        probability = results[0]['probability']
-        answer_body = helper.get_answer_body(self.answers, answer_id)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '保管されている契約書ですか？'
         eq_(answer_body, expected_answer)
-        ok_(probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
     def test_please_rent_excard(self):
         questions = ['EXカードを貸してください']
-        results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-        answer_id = results[0]['answer_id']
-        probability = results[0]['probability']
-        answer_body = helper.get_answer_body(self.answers, answer_id)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'それでは、総務部の方に確認してください。　総務の人は、田中さん（内線801401）、中島さん（内線801402）、渡辺さん（内線801403）です。'
         eq_(answer_body, expected_answer)
-        ok_(probability > self.threshold)
+        ok_(result.probability > self.threshold)
+
 
     # # TODO 不均衡データが原因で、分類失敗出来ず、「それでは、総武の方に〜」が選択されてしまう
     # def test_dislike_carrot(self):

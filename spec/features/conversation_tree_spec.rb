@@ -15,8 +15,11 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     create(:bot, user: user)
   end
 
-  let!(:question_answer) do
-    create(:question_answer, answer: answer)
+  let!(:question_answers) do
+    [
+      create(:question_answer, bot: bot, answer: answer),
+      create(:question_answer, bot: bot),
+    ]
   end
 
   let!(:answer) do
@@ -42,22 +45,27 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'display tree nodes' do
+    find("#question-#{question_answers.first.id}").click
+    expect(page).to have_content(answer.body)
     find("#answer-#{answer.id}").click
-    expect(page).to have_content(question_answer.question)
+    expect(page).to have_content(question_answers.first.question)
     find("#decision-branch-#{decision_branches.first.id}").click
     expect(page).to have_content(nested_answer.body)
   end
 
-  scenario 'creates answer'  do
+  scenario 'creates question with answer'  do
     find('.tree__item-add').click
+    fill_in 'question-question', with: 'new question'
     fill_in 'answer-body', with: 'new answer'
     click_link '保存'
     within '.master-detail-panel__master' do
+      expect(page).to have_content('new question')
       expect(page).to have_content('new answer')
     end
   end
 
   scenario 'creates decision_branch' do
+    find("#question-#{question_answers.first.id}").click
     find("#answer-#{answer.id}").click
     find('#add-decision-branch-button').click
     fill_in 'decision-branch-body', with: 'new decision branch'
@@ -68,16 +76,18 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'updates answer' do
+    find("#question-#{question_answers.first.id}").click
     find("#answer-#{answer.id}").click
-    sleep 1
     fill_in 'answer-body', with: 'updated answer'
     click_link '保存'
+    sleep 2
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated answer')
     end
   end
 
   scenario 'updates decision branch' do
+    find("#question-#{question_answers.first.id}").click
     find("#answer-#{answer.id}").click
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn').click
@@ -92,6 +102,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes answer' do
+    find("#question-#{question_answers.first.id}").click
     find("#answer-#{answer.id}").click
     find("#delete-answer-button").click
     within '.master-detail-panel__master' do
@@ -100,11 +111,11 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes decision branch' do
+    find("#question-#{question_answers.first.id}").click
     find("#answer-#{answer.id}").click
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn').click
     end
-    skip 'ここは環境によって落ちたりするみたいなのでskip'
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn-danger').click
     end

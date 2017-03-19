@@ -15,7 +15,7 @@ class Chats::MessagesController < ApplicationController
   private
     def set_bot_chat
       @bot = Bot.find_by!(token: params[:token])
-      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
+      @chat = @bot.chats.find_last_by!(session[:guest_key])
     end
 
     def message_params

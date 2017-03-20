@@ -16,6 +16,7 @@ class Nlang:
             pos = features[0]
             # logger.debug("node.feature: %s" % node.feature)
             # if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
+            # FIXME 助動詞を捨てると「咲かない」の「ない」がなくなってしまうため、意味が異なるものになってしまう。対応策を検討したい。
             if pos in ["名詞", "動詞", "形容詞", "感動詞", "副詞"]:
                 if pos == '名詞' and features[1] == '非自立':
                     node = node.next

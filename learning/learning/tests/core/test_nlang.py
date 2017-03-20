@@ -19,10 +19,13 @@ class TestNlang(unittest.TestCase):
         result = Nlang.split('明日から明後日')
         eq_(result, '明日 明後日')
 
+    def test_split_except_aru(self):
+        result = Nlang.split('不謹慎である')
+        eq_(result, '不謹慎')
 
 
-    # 代名詞を捨てる
+
+
     # 形容動詞を捨てる
     # 非自立名詞を捨てる
     # 非自立動詞を捨てる
-    # あるを捨てる

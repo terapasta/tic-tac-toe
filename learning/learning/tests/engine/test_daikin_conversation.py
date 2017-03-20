@@ -7,7 +7,7 @@ from learning.tests import helper
 
 
 class DaikinConversationTestCase(TestCase):
-    csv_file_path = 'learning/tests/engine/fixtures/test_daikin_conversation.csv'
+    csv_file_path = 'learning/tests/fixtures/test_daikin_conversation.csv'
     bot_id = 998  # テスト用のbot_id いずれの値でも動作する
     threshold = 0.5
     learning_parameter = helper.learning_parameter(params_for_algorithm={'C': 200})

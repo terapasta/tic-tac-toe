@@ -10,7 +10,7 @@ from learning.tests import helper
 class PtnaConversationTestCase(TestCase):
 
     def setUp(self):
-        self.csv_file_path = 'learning/tests/engine/fixtures/test_ptna_conversation.csv'
+        self.csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
         self.bot_id = 996  # テスト用のbot_id いずれの値でも動作する
         self.threshold = 0.5
         self.answers = helper.build_answers(self.csv_file_path)

@@ -30,3 +30,7 @@ class TestNlang(unittest.TestCase):
     def test_split_except_aru(self):
         result = Nlang.split('不謹慎である')
         eq_(result, '不謹慎')
+
+    def test_split_keep_auxiliary_verb_nai(self):
+        result = Nlang.split('楽しくない')
+        eq_(result, '楽しい ない')

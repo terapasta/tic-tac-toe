@@ -15,9 +15,12 @@ class TestNlang(unittest.TestCase):
         result = Nlang.split('あらゆる宝')
         eq_(result, '宝')
 
+    def test_split_except_particle(self):
+        result = Nlang.split('明日から明後日')
+        eq_(result, '明日 明後日')
 
 
-    # 助詞を捨てる
+
     # 代名詞を捨てる
     # 形容動詞を捨てる
     # 非自立名詞を捨てる

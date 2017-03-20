@@ -11,11 +11,12 @@ class TestNlang(unittest.TestCase):
         result = Nlang.split('明日は雨')
         eq_(result, '明日 雨')
 
-    # def text_split_karamage(self):
-    #     result = Nlang.split('人狼は')
-    #     self.assertEqual(result, '人 狼')
+    def test_split_except_adnominal(self):
+        result = Nlang.split('あらゆる宝')
+        eq_(result, '宝')
 
-    # 連体詞を捨てる
+
+
     # 助詞を捨てる
     # 代名詞を捨てる
     # 形容動詞を捨てる

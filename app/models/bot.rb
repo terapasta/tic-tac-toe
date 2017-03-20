@@ -10,7 +10,7 @@ class Bot < ActiveRecord::Base
   has_many :decision_branches
   has_many :services
   has_one :score
-  has_one :learning_parameter
+  has_one :learning_parameter, dependent: :delete
   has_many :sentence_synonyms, through: :question_answers
   has_many :allowed_hosts
 

@@ -6,9 +6,12 @@
     <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, filter: 1), data: { event_name: 'Open failed threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
     <li role="presentation" class="<%= 'active' if params[:good].present? %>"><%= link_to 'Goodがある対話', bot_threads_path(@bot, good: 1), data: { event_name: 'Open good threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
     <li role="presentation" class="<%= 'active' if params[:bad].present? %>"><%= link_to 'Badがある対話', bot_threads_path(@bot, bad: 1), data: { event_name: 'Open bad threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li style="float: right">
+      <%= link_to '対話履歴をエクスポート', bot_threads_path(format: :csv), class: 'btn btn-default' %>
+    </li>
   </ul>
 </div>
-<br />
+<br class="clear"/>
 
 <table class="table table-striped table-bordered">
   <thead>

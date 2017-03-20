@@ -1,5 +1,5 @@
 class QuestionAnswersDecorator < Draper::CollectionDecorator
-  include CsvGeneratable
+  include QuestionAnswersCsvGeneratable
 
   def as_tree_json
     map(&:as_tree_node_json)

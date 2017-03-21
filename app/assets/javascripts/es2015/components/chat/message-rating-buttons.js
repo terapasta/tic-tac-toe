@@ -3,8 +3,8 @@ import { findDOMNode } from "react-dom";
 import classNames from "classnames";
 import values from "lodash/values";
 
-import { directMountComponent, getMountNodes } from "../modules/mount-component";
-import * as API from "../api/chat-message-rating";
+import { directMountComponent, getMountNodes } from "../../modules/mount-component";
+import * as API from "../../api/chat-message-rating";
 
 const FaIcons = {
   Good: "fa fa-thumbs-up",

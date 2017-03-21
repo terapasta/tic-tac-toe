@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from "react";
 import ChatHeader from "./header";
 import ChatContainer from "./container";
 import ChatForm from "./form";
+import ChatRow from "./row";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -18,7 +19,7 @@ export default class ChatApp extends Component {
       <div>
         <ChatHeader botName="サンプル" />
         <ChatContainer>
-          sample
+          <ChatRow />
         </ChatContainer>
         <ChatForm />
       </div>

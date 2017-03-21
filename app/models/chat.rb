@@ -9,7 +9,9 @@ class Chat < ActiveRecord::Base
 
   scope :has_multiple_messages, -> {
     joins(:messages)
-      .group('chats.id')
+      .select('chats.*',
+              "SUM(CASE WHEN speaker = 'guest' THEN 1 ELSE 0 END) as exchanging_messages_count")
+      .group('chat_id')
       .having('count(chat_id) > 1')
       .order('chats.id desc')
   }

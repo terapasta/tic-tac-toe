@@ -16,7 +16,7 @@ class PtnaConversationTestCase(TestCase):
         self.answers = helper.build_answers(self.csv_file_path)
 
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(csv_file_path=self.csv_file_path)
+        # _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(csv_file_path=self.csv_file_path)
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']
@@ -28,3 +28,30 @@ class PtnaConversationTestCase(TestCase):
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)
 
+    def test_hello(self):
+        questions = ['こんにちは']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = 'こんにちは'
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)
+
+    def test_want_to_join(self):
+        questions = ['入会したいのですが']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = 'オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html'
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)
+
+
+    # TODO
+    # def test_fail_want_to_eat_ramen(self):
+    #     questions = ['おいしいラーメンが食べたいです']
+    #     result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+    #
+    #     ok_(result.probability < self.threshold)

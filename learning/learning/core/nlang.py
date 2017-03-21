@@ -16,7 +16,7 @@ class Nlang:
         while node:
             features = node.feature.split(",")
             pos = features[0]
-            logger.debug("node.feature: %s" % node.feature)
+            # logger.debug("node.feature: %s" % node.feature)
 
             if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
                 lemma = node.feature.split(",")[6]

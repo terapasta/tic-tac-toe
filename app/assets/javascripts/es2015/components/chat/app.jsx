@@ -5,6 +5,7 @@ import ChatContainer from "./container";
 import ChatForm from "./form";
 import ChatRow from "./row";
 import BotMessage from "./bot-message";
+import GuestMessage from "./guest-message";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -20,8 +21,11 @@ export default class ChatApp extends Component {
       <div>
         <ChatHeader botName="サンプル" />
         <ChatContainer>
-          <ChatRow />
+          <ChatRow>
             <BotMessage />
+          </ChatRow>
+          <ChatRow>
+            <GuestMessage />
           </ChatRow>
         </ChatContainer>
         <ChatForm />

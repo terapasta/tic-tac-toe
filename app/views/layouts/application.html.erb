@@ -21,9 +21,7 @@
     <%= render 'layouts/shared/analytics/google_analytics' %>
   <% end %>
 
-  <% if params[:token].present? %>
-    <%= render 'layouts/shared/ui/header_bot', bot: @bot %>
-  <% else %>
+  <% unless chat_page? %>
     <%= render 'layouts/shared/ui/header' %>
   <% end %>
 

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 
 import ChatHeader from "./header";
 import ChatContainer from "./container";
+import ChatForm from "./form";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -19,6 +20,7 @@ export default class ChatApp extends Component {
         <ChatContainer>
           sample
         </ChatContainer>
+        <ChatForm />
       </div>
     );
   }

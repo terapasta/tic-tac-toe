@@ -53,9 +53,13 @@
     <% container_main_class = 'col-sm-10 col-sm-offset-2 ' %>
   <% end %>
 
-  <div class="container container-main <%= container_main_class %>">
-    <%= render "shared/flash" %>
+  <% if chat_page? %>
     <%= yield %>
-  </div>
+  <% else %>
+    <div class="container container-main <%= container_main_class %>">
+      <%= render "shared/flash" %>
+      <%= yield %>
+    </div>
+  <% end %>
 </body>
 </html>

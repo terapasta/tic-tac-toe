@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 
 import ChatHeader from "./header";
+import ChatArea from "./area";
 import ChatContainer from "./container";
 import ChatForm from "./form";
 import ChatRow from "./row";

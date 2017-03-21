@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from "react";
 
-function ChatContainer(props) {
+function ChatArea(props) {
   const { children } = props;
 
   return (
-    <div className="chat-container">
+    <div className="chat-area">
       {children}
     </div>
   );
 }
 
-export default ChatContainer;
+export default ChatArea;

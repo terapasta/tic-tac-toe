@@ -5,6 +5,7 @@ import ChatArea from "./area";
 import ChatContainer from "./container";
 import ChatForm from "./form";
 import ChatRow from "./row";
+import ChatSection from "./section";
 import BotMessage from "./bot-message";
 import GuestMessage from "./guest-message";
 
@@ -21,14 +22,20 @@ export default class ChatApp extends Component {
     return (
       <div>
         <ChatHeader botName="サンプル" />
-        <ChatContainer>
-          <ChatRow>
-            <BotMessage />
-          </ChatRow>
-          <ChatRow>
-            <GuestMessage />
-          </ChatRow>
-        </ChatContainer>
+        <ChatArea>
+          <ChatSection>
+            <ChatRow>
+              <ChatContainer>
+                <BotMessage />
+              </ChatContainer>
+            </ChatRow>
+            <ChatRow>
+              <ChatContainer>
+                <GuestMessage />
+              </ChatContainer>
+            </ChatRow>
+          </ChatSection>
+        </ChatArea>
         <ChatForm />
       </div>
     );

@@ -41,6 +41,14 @@ def copy_testdata_csv(learning_dir, csv_file_name):
             copied_csv_file_path = copy_testdata_csv(learning_dir, csv_file_name)
 
     '''
+    if type(csv_file_name) == list:
+        copied_csv_file_paths = []
+        for f in csv_file_name:
+            n = copy_testdata_csv(learning_dir, f)
+            copied_csv_file_paths.append(n)
+
+        return copied_csv_file_paths
+
     original_csv_dir = os.path.join(learning_dir, 'learning/tests/engine/fixtures/')
     original_file_path = os.path.join(original_csv_dir, csv_file_name)
 

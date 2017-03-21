@@ -1,3 +1,7 @@
+span(
+  data-component="ChatApp"
+)
+
 .chat-container.chat-area
   - @chat.messages.each_with_index do |message, i|
     - if message.bot?

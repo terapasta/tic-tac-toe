@@ -1,5 +1,7 @@
 import "babel-polyfill";
 
+import ChatApp from "./components/chat/app";
+
 import ConversationTree from "./components/conversation-tree";
 import ConversationTreeReducers from "./components/conversation-tree/reducers";
 import BotResetButton from "./components/bot-reset-button";
@@ -16,6 +18,7 @@ function init() {
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
   mountComponent(QuestionAnswerForm);
+  mountComponent(ChatApp);
   window.initMessageRatingButtons();
   Mixpanel.initialize("3c53484fb604d6e20438b4fac8d2ea56");
 }

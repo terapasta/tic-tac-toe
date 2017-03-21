@@ -1,8 +1,7 @@
 %base-chat-container {
+  @include pie-clearfix;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 43px;
-  padding-bottom: 74px;
   margin: 0 auto;
   max-width: 720px;
 

@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from "react";
 
+import ChatHeader from "./header";
+
 export default class ChatApp extends Component {
   static get componentName() {
     return "ChatApp";
@@ -11,7 +13,9 @@ export default class ChatApp extends Component {
 
   render() {
     return (
-      <div>chat</div>
+      <div>
+        <ChatHeader botName="サンプル" />
+      </div>
     );
   }
 }

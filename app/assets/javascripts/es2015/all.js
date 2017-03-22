@@ -10,10 +10,6 @@ import QuestionAnswerForm from "./components/question-answer-form";
 import mountComponent, { mountComponentWithRedux } from "./modules/mount-component";
 import Mixpanel from "./analytics/mixpanel";
 
-window.initMessageRatingButtons = () => {
-  MessageRatingButtons.mountComponentAll();
-};
-
 function init() {
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);

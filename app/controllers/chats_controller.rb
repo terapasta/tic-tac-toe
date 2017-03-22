@@ -16,12 +16,12 @@ class ChatsController < ApplicationController
 
   def new
     iframe_support @bot
-    @chat = @bot.chats.new(guest_key: session[:guest_key])
-    authorize @chat
-    @chat.is_staff = true if current_user.try(:staff?) # ログインしてなくてもチャットできるため
-    @chat.is_normal = true if current_user.try(:normal?)
-    @chat.build_start_message
-    @chat.save!
+    @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
+      authorize chat
+      chat.is_staff = true if current_user.try(:staff?)
+      chat.is_normal = true if current_user.try(:normal?)
+      chat.build_start_message
+    end
     render :show
   end
 

@@ -127,6 +127,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-doc'
   gem 'pry-stack_explorer'
+  gem 'tapp'
 
   # rspec
   gem 'rspec-rails', '~> 3.0.0'

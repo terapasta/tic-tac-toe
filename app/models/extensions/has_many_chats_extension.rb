@@ -6,4 +6,10 @@ module HasManyChatsExtension
       end
     end
   end
+
+  def find_last_by(guest_key)
+    find_last_by!(guest_key)
+  rescue => e
+    nil
+  end
 end

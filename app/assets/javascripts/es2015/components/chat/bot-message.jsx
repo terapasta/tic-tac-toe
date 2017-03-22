@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 
 import MessageRatingButtons from "./message-rating-buttons";
 
-export default class BotMessage extends Component {
+export default class ChatBotMessage extends Component {
   static get propTypes() {
     return {};
   }

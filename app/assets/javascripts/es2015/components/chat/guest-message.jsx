@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 
-export default class GuestMessage extends Component {
+export default class ChatGuestMessage extends Component {
   static get propTypes() {
     return {};
   }

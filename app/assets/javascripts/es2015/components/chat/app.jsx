@@ -7,8 +7,8 @@ import ChatForm from "./form";
 import ChatRow from "./row";
 import ChatSection from "./section";
 import ChatDecisionBranches from "./decision-branches";
-import BotMessage from "./bot-message";
-import GuestMessage from "./guest-message";
+import ChatBotMessage from "./bot-message";
+import ChatGuestMessage from "./guest-message";
 
 export default class ChatApp extends Component {
   static get componentName() {

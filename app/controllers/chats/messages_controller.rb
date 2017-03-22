@@ -3,6 +3,18 @@ class Chats::MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_bot_chat
 
+  def index
+    @messages = @chat.messages.page(params[:page]).per(20)
+    respond_to do |format|
+      format.json do
+        render json: {
+          messages: @messages,
+          total_pages: @messages.total_pages,
+        }
+      end
+    end
+  end
+
   def create
     @bot = Bot.find_by!(token: params[:token])
     @message = @chat.messages.build(message_params) {|m|

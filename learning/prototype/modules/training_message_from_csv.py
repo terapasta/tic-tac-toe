@@ -1,6 +1,7 @@
 import pandas as pd
 from learning.core.training_set.base import Base
-from learning.core.training_set.text_array import TextArray
+#from learning.core.training_set.text_array import TextArray
+from .text_array import TextArray
 from learning.log import logger
 
 class TrainingMessageFromCsv(Base):

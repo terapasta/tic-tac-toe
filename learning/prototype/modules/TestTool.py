@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from scipy.sparse import csr_matrix
 import numpy as np
 
 def bincount(x, weights=None, minlength=None):
@@ -60,4 +61,42 @@ def copy_testdata_csv(learning_dir, csv_file_name):
     print('CSV file for test=[%s]' % copied_csv_file_path)
 
     return copied_csv_file_path
-    
+
+
+'''
+    feature をダンプするためのツール
+'''
+def get_item_from_vocabulary(vocabulary, index):
+    '''
+        vocabulary から指定インデックスの単語を参照
+    '''
+    for k, v in vocabulary.items():
+        if v == index:
+            return k
+
+    return None
+
+def dump_features(arr, vocabulary):
+    features_str = ''
+
+    for i, v in enumerate(arr):
+        if v == 0.0:
+            continue
+
+        if features_str != '':
+            features_str += ' '
+        
+        item = get_item_from_vocabulary(vocabulary, i)
+        features_str += '%s=%0.3f' % (item, v)
+
+    return '[' + features_str + ']'
+
+def get_dumped_features(X_error, vocabulary):
+    dumped_features = []
+
+    for i, label in enumerate(X_error):
+        arr = X_error[i].toarray()[0]
+        dump_str = dump_features(arr, vocabulary)
+        dumped_features.append('index=%d%s' % (i, dump_str))
+
+    return dumped_features

@@ -4008,7 +4008,6 @@ var QuestionAnswerForm = function (_Component) {
 
     _this.state = {
       questionBody: "",
-      answerHeadline: "",
       answerBody: "",
       answerId: null,
       answerMode: AnswerMode.Input,
@@ -4038,7 +4037,6 @@ var QuestionAnswerForm = function (_Component) {
       var id = this.props.id;
       var _state = this.state,
           questionBody = _state.questionBody,
-          answerHeadline = _state.answerHeadline,
           answerBody = _state.answerBody,
           answerId = _state.answerId,
           answerMode = _state.answerMode,
@@ -4125,34 +4123,17 @@ var QuestionAnswerForm = function (_Component) {
         ),
         answerMode === AnswerMode.Input && _react2.default.createElement(
           "div",
-          null,
-          _react2.default.createElement(
-            "div",
-            { className: "form-group" },
-            _react2.default.createElement("input", {
-              id: "answer-headline",
-              value: answerHeadline,
-              name: "question_answer[answer_attributes][headline]",
-              className: "form-control",
-              onChange: this.onChangeAnswerHeadline.bind(this),
-              placeholder: "回答の見出しを入力してください（例：紛失物について）",
-              disabled: isProcessing
-            })
-          ),
-          _react2.default.createElement(
-            "div",
-            { className: "form-group" },
-            _react2.default.createElement(_reactTextareaAutosize2.default, {
-              id: "answer-body",
-              value: answerBody,
-              name: "question_answer[answer_attributes][body]",
-              className: "form-control",
-              rows: 3,
-              onChange: this.onChangeAnswerBody.bind(this),
-              placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
-              disabled: isProcessing
-            })
-          )
+          { className: "form-group" },
+          _react2.default.createElement(_reactTextareaAutosize2.default, {
+            id: "answer-body",
+            value: answerBody,
+            name: "question_answer[answer_attributes][body]",
+            className: "form-control",
+            rows: 3,
+            onChange: this.onChangeAnswerBody.bind(this),
+            placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
+            disabled: isProcessing
+          })
         ),
         answerMode === AnswerMode.Select && _react2.default.createElement(
           "div",
@@ -4244,17 +4225,6 @@ var QuestionAnswerForm = function (_Component) {
         _react2.default.createElement(
           "p",
           null,
-          !(0, _isEmpty2.default)(a.headline) && _react2.default.createElement(
-            "div",
-            { style: { paddingBottom: "10px" } },
-            _react2.default.createElement(
-              "small",
-              null,
-              "\u898B\u51FA\u3057\uFF1A",
-              a.headline
-            ),
-            _react2.default.createElement("br", null)
-          ),
           a.body
         ),
         _react2.default.createElement(
@@ -4294,12 +4264,10 @@ var QuestionAnswerForm = function (_Component) {
         return questionModel.fetchAnswer().then(function () {
           var _questionModel$answer = questionModel.answer,
               body = _questionModel$answer.body,
-              headline = _questionModel$answer.headline,
               id = _questionModel$answer.id;
 
           _this3.setState({
             answerBody: body,
-            answerHeadline: headline,
             persistedAnswerId: id,
             isProcessing: false
           });
@@ -4325,7 +4293,7 @@ var QuestionAnswerForm = function (_Component) {
           searchingAnswerPage = _state2.searchingAnswerPage;
 
       var params = {
-        "q[body_or_headline_cont]": (0, _trim2.default)(searchingAnswerQuery),
+        "q[body_cont]": (0, _trim2.default)(searchingAnswerQuery),
         page: searchingAnswerPage
       };
 
@@ -4385,11 +4353,6 @@ var QuestionAnswerForm = function (_Component) {
       this.setState({ answerMode: answerMode });
     }
   }, {
-    key: "onChangeAnswerHeadline",
-    value: function onChangeAnswerHeadline(e) {
-      this.setState({ answerHeadline: e.target.value });
-    }
-  }, {
     key: "onChangeAnswerBody",
     value: function onChangeAnswerBody(e) {
       this.setState({ answerBody: e.target.value });
@@ -4433,7 +4396,6 @@ var QuestionAnswerForm = function (_Component) {
       var _state3 = this.state,
           answerMode = _state3.answerMode,
           answerBody = _state3.answerBody,
-          answerHeadline = _state3.answerHeadline,
           selectedAnswer = _state3.selectedAnswer,
           questionBody = _state3.questionBody,
           persistedAnswerId = _state3.persistedAnswerId;
@@ -4454,8 +4416,7 @@ var QuestionAnswerForm = function (_Component) {
             errors.push("回答を入力してください");
           } else {
             payload.answer_attributes = {
-              body: answerBody,
-              headline: answerHeadline
+              body: answerBody
             };
             if (!(0, _isEmpty2.default)(persistedAnswerId)) {
               payload.answer_attributes.id = persistedAnswerId;

@@ -29,7 +29,6 @@ describe("QuestionAnswerForm", () => {
   beforeEach(() => {
     fakeAnswerModel = {
       id: "sample id",
-      headline: "sample headline",
       body: "sample body",
     };
     fakeQuestionModel = {
@@ -171,7 +170,7 @@ describe("QuestionAnswerForm", () => {
         return wrapper.instance().searchAnswers().then(() => {
           expect(axios.get).toBeCalledWith("/bots/1/answers.json", {
             params: {
-              "q[body_or_headline_cont]": "sample",
+              "q[body_cont]": "sample",
               page: 1,
             }
           });
@@ -241,20 +240,6 @@ describe("QuestionAnswerForm", () => {
     });
   });
 
-  describe("when input text to answer headline's input", () => {
-    it("calls onChangeAnswerHeadline and assign value to answerHeadline", () => {
-      const wrapper = shallow(<QuestionAnswerForm {...{
-        botId: 1,
-        id: 1,
-      }} />);
-      const fakeEvent = { target: { value: "sample headline" } };
-      const instance = wrapper.instance();
-
-      wrapper.find("#answer-headline").simulate("change", fakeEvent);
-      expect(wrapper.state("answerHeadline")).toBe("sample headline");
-    });
-  });
-
   describe("when click submit button", () => {
     describe("when answerMode is 'input'", () => {
       describe("when empty answerBody", () => {
@@ -294,7 +279,6 @@ describe("QuestionAnswerForm", () => {
             question: "sample",
             answer_attributes: {
               body: "sample",
-              headline: "",
             },
           });
           expect(wrapper.state("errors").length).toBe(0);
@@ -420,7 +404,6 @@ describe("QuestionAnswerForm", () => {
       beforeEach(() => {
         fakeAnswerModel = {
           id: "sample id",
-          headline: "sample headline",
           body: "sample body",
         };
         fakeQuestionModel = {
@@ -449,7 +432,6 @@ describe("QuestionAnswerForm", () => {
           expect(wrapper.state("questionBody")).toBe("sample question");
           expect(fakeQuestionModel.fetchAnswer).toBeCalled();
           expect(wrapper.state("answerBody")).toBe("sample body");
-          expect(wrapper.state("answerHeadline")).toBe("sample headline");
           expect(wrapper.state("persistedAnswerId")).toBe("sample id");
           expect(wrapper.state("isProcessing")).toBe(false);
         });

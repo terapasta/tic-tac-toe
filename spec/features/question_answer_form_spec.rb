@@ -25,7 +25,6 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
         expect{
           expect{
             fill_in 'question-body', with: 'sample question'
-            fill_in 'answer-headline', with: 'sample answer headline'
             fill_in 'answer-body', with: 'sample answer body'
             click_button '登録'
             sleep 1

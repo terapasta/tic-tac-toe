@@ -32,7 +32,6 @@ export default class QuestionAnswerForm extends Component {
     super(props);
     this.state = {
       questionBody: "",
-      answerHeadline: "",
       answerBody: "",
       answerId: null,
       answerMode: AnswerMode.Input,
@@ -59,7 +58,6 @@ export default class QuestionAnswerForm extends Component {
 
     const {
       questionBody,
-      answerHeadline,
       answerBody,
       answerId,
       answerMode,
@@ -121,34 +119,19 @@ export default class QuestionAnswerForm extends Component {
           </RadioGroup>
         </div>
         {answerMode === AnswerMode.Input && (
-          <div>
-            <div className="form-group">
-              <input
-                {...{
-                  id: "answer-headline",
-                  value: answerHeadline,
-                  name: "question_answer[answer_attributes][headline]",
-                  className: "form-control",
-                  onChange: this.onChangeAnswerHeadline.bind(this),
-                  placeholder: "回答の見出しを入力してください（例：紛失物について）",
-                  disabled: isProcessing,
-                }}
-              />
-            </div>
-            <div className="form-group">
-              <TextArea
-                {...{
-                  id: "answer-body",
-                  value: answerBody,
-                  name: "question_answer[answer_attributes][body]",
-                  className: "form-control",
-                  rows: 3,
-                  onChange: this.onChangeAnswerBody.bind(this),
-                  placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
-                  disabled: isProcessing,
-                }}
-              />
-            </div>
+          <div className="form-group">
+            <TextArea
+              {...{
+                id: "answer-body",
+                value: answerBody,
+                name: "question_answer[answer_attributes][body]",
+                className: "form-control",
+                rows: 3,
+                onChange: this.onChangeAnswerBody.bind(this),
+                placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
+                disabled: isProcessing,
+              }}
+            />
           </div>
         )}
         {answerMode === AnswerMode.Select && (
@@ -222,15 +205,7 @@ export default class QuestionAnswerForm extends Component {
   renderAnswer(a) {
     return (
       <span>
-        <p>
-          {!isEmpty(a.headline) && (
-            <div style={{paddingBottom: "10px"}}>
-              <small>見出し：{a.headline}</small>
-              <br />
-            </div>
-          )}
-          {a.body}
-        </p>
+        <p>{a.body}</p>
         <div className="text-muted">
           <small>ID: {a.id} / 登録日時: {a.created_at}</small>
         </div>
@@ -248,10 +223,9 @@ export default class QuestionAnswerForm extends Component {
       this.setState({ questionBody: questionModel.question });
 
       return questionModel.fetchAnswer().then(() => {
-        const { body, headline, id } = questionModel.answer;
+        const { body, id } = questionModel.answer;
         this.setState({
           answerBody: body,
-          answerHeadline: headline,
           persistedAnswerId: id,
           isProcessing: false,
         });
@@ -269,7 +243,7 @@ export default class QuestionAnswerForm extends Component {
     const { botId } = this.props;
     const { searchingAnswerQuery, searchingAnswerPage } = this.state;
     const params = {
-      "q[body_or_headline_cont]": trim(searchingAnswerQuery),
+      "q[body_cont]": trim(searchingAnswerQuery),
       page: searchingAnswerPage,
     };
 
@@ -321,10 +295,6 @@ export default class QuestionAnswerForm extends Component {
     this.setState({ answerMode });
   }
 
-  onChangeAnswerHeadline(e) {
-    this.setState({ answerHeadline: e.target.value });
-  }
-
   onChangeAnswerBody(e) {
     this.setState({ answerBody: e.target.value });
   }
@@ -365,7 +335,6 @@ export default class QuestionAnswerForm extends Component {
     const {
       answerMode,
       answerBody,
-      answerHeadline,
       selectedAnswer,
       questionBody,
       persistedAnswerId,
@@ -387,7 +356,6 @@ export default class QuestionAnswerForm extends Component {
         } else {
           payload.answer_attributes = {
             body: answerBody,
-            headline: answerHeadline,
           };
           if (!isEmpty(persistedAnswerId)) {
             payload.answer_attributes.id = persistedAnswerId;

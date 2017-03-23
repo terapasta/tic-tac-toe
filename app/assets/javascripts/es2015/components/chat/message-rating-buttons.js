@@ -11,7 +11,7 @@ const FaIcons = {
   Bad:  "fa fa-thumbs-down",
 };
 
-const Ratings = {
+export const Ratings = {
   Nothing: "nothing",
   Good: "good",
   Bad: "bad",

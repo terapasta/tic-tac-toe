@@ -17,7 +17,7 @@ class SepteniConvasationTestCase(TestCase):
     })
     threshold = 0.5
     bot_id = 999  # テスト用のbot_id いずれの値でも動作する
-    csv_file_path = 'learning/tests/engine/fixtures/test_septeni_conversation.csv'
+    csv_file_path = 'learning/tests/fixtures/test_septeni_conversation.csv'
     answers = None
 
     # セプテーニはデータを一度洗い替えしているため、今まで通っているテストケースが通らなくなった

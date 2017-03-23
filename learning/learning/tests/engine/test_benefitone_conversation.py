@@ -2,20 +2,14 @@ from unittest import TestCase
 from nose.tools import ok_, eq_
 
 from learning.core.learn.bot import Bot
-from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper
 
 
 class BenefitoneConversationTestCase(TestCase):
-    csv_file_path = 'learning/tests/engine/fixtures/test_benefitone_conversation.csv'
+    csv_file_path = 'learning/tests/fixtures/test_benefitone_conversation.csv'
     bot_id = 995  # テスト用のbot_id いずれの値でも動作する
     threshold = 0.5
-    learning_parameter = LearningParameter({
-        'include_failed_data': False,
-        'include_tag_vector': False,
-        'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
-    })
 
     @classmethod
     def setUpClass(cls):
@@ -25,7 +19,7 @@ class BenefitoneConversationTestCase(TestCase):
 
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']
-        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '保管されている契約書ですか？'
@@ -34,7 +28,7 @@ class BenefitoneConversationTestCase(TestCase):
 
     def test_please_rent_excard(self):
         questions = ['EXカードを貸してください']
-        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'それでは、総務部の方に確認してください。　総務の人は、田中さん（内線801401）、中島さん（内線801402）、渡辺さん（内線801403）です。'

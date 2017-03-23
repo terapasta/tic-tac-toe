@@ -9,6 +9,7 @@ gevent==1.1.2
 greenlet==0.4.10
 gsocketpool==0.1.5
 html5lib==0.9999999
+imbalanced-learn==0.2.1
 ipykernel==4.5.2
 ipython==5.0.0
 ipython-genutils==0.1.0

@@ -60,7 +60,7 @@ RSpec.describe Message, :type => :model do
       context '回答失敗に変更できない場合' do
         it 'Bot以外の回答成功メッセージは回答失敗に変更できないこと' do
           expect(answer_success.save_to_answer_failed).not_to be
-          expect(answer_success.errors[:only_bot_message_allowed_answer_status_changing].size).to eq(1)
+          expect(answer_success.errors[:answer_failed].size).to eq(1)
         end
       end
     end
@@ -75,7 +75,7 @@ RSpec.describe Message, :type => :model do
       context '回答成功に変更できない場合' do
         it 'Botによって回答失敗とされたメッセージを回答成功にできないこと' do
           expect(answer_failed.save_to_answer_succeed).not_to be
-          expect(answer_failed.errors[:only_answer_failed_by_user].size).to eq(1)
+          expect(answer_failed.errors[:answer_failed].size).to eq(1)
         end
       end
     end
@@ -90,7 +90,7 @@ RSpec.describe Message, :type => :model do
       context '更新失敗する場合' do
         it '内部の回答失敗属性が不整合な状態で回答成功に変更できないこと' do
           expect(answer_failed_by_user.update(body: 'changed body', answer_failed: false)).not_to be
-          expect(answer_failed_by_user.errors[:irregular_answer_failed_by_user].size).to eq(1)
+          expect(answer_failed_by_user.errors[:answer_failed].size).to eq(1)
         end
       end
     end

@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from "react";
 
+import * as a from "./action-creators";
+
 import ChatHeader from "./header";
 import ChatArea from "./area";
 import ChatContainer from "./container";
@@ -17,6 +19,11 @@ export default class ChatApp extends Component {
 
   static get propTypes() {
     return {};
+  }
+
+  componentDidMount() {
+    const { dispatch, token } = this.props;
+    dispatch(a.fetchMessages(token));
   }
 
   render() {

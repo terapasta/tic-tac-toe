@@ -1,17 +1,13 @@
 class Chats::MessagesController < ApplicationController
   include Replyable
+  include ApiRespondable
   skip_before_action :verify_authenticity_token
   before_action :set_bot_chat
 
   def index
     @messages = @chat.messages.page(params[:page]).per(20)
     respond_to do |format|
-      format.json do
-        render json: {
-          messages: @messages,
-          total_pages: @messages.total_pages,
-        }
-      end
+      format.json { render_collection_json @messages }
     end
   end
 

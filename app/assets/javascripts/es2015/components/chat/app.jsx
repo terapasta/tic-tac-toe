@@ -8,9 +8,9 @@ import ChatContainer from "./container";
 import ChatForm from "./form";
 import ChatRow from "./row";
 import ChatSection from "./section";
-import ChatDecisionBranches from "./decision-branches";
-import ChatBotMessage from "./bot-message";
-import ChatGuestMessage from "./guest-message";
+import ChatDecisionBranchesRow from "./decision-branches-row";
+import ChatBotMessageRow from "./bot-message-row";
+import ChatGuestMessageRow from "./guest-message-row";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -27,22 +27,35 @@ export default class ChatApp extends Component {
   }
 
   render() {
+    const {
+      messages
+    } = this.props;
+
+    const {
+      classifiedData
+    } = messages;
+
     return (
       <div>
         <ChatHeader botName="サンプル" />
         <ChatArea>
-          <ChatSection>
-            <ChatRow>
-              <ChatContainer>
-                <BotMessage />
-              </ChatContainer>
-            </ChatRow>
-            <ChatRow>
-              <ChatContainer>
-                <GuestMessage />
-              </ChatContainer>
-            </ChatRow>
-          </ChatSection>
+          {classifiedData.map((section, i) => {
+            const isFirst = i === 0;
+            return (
+              <ChatSection {...{ isManager: false, isActive: false, key: i }}>
+                <ChatGuestMessageRow {...{
+                  section,
+                }} />
+                <ChatBotMessageRow {...{
+                  section,
+                  isFirst,
+                }} />
+                <ChatDecisionBranchesRow {...{
+                  section,
+                }} />
+              </ChatSection>
+            );
+          })}
         </ChatArea>
         <ChatForm />
       </div>

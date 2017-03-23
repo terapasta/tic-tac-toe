@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import values from "lodash/values";
+import assign from "lodash/assign";
 
 import ChatRow from "./row";
 import ChatContainer from "./container";
@@ -8,16 +9,13 @@ import { Ratings } from "./message-rating-buttons";
 
 function ChatBotMessageRow({ section: { answer }, isFirst }) {
   if (answer == null) { return null; }
-  const { body, rating } = answer;
+
+  const _props = assign({ isFirst }, answer);
 
   return (
     <ChatRow>
       <ChatContainer>
-        <ChatBotMessage {...{
-          body,
-          rating,
-          isFirst,
-        }} />
+        <ChatBotMessage {..._props} />
       </ChatContainer>
     </ChatRow>
   );

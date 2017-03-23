@@ -51,7 +51,12 @@ class QuestionAnswerPolicy < ApplicationPolicy
           sentence_synonyms_attributes: [
             :body,
             :created_user_id
-          ]
+          ],
+          answer_attributes: [
+            :id,
+            :body,
+            :headline,
+          ],
         }
       ]
     end

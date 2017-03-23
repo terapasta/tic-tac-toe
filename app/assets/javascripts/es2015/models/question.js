@@ -30,6 +30,10 @@ export default class Question {
 
   get id() { return this.attrs.id; }
   get question() { return this.attrs.question; }
+  get botId() { return this.attrs.botId; }
+  get editPath() {
+    return `/bots/${this.botId}/question_answers/${this.id}/edit`;
+  }
 
   fetchAnswer() {
     const { id, botId } = this.attrs;

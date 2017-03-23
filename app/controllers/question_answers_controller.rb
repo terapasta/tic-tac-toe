@@ -26,7 +26,7 @@ class QuestionAnswersController < ApplicationController
 
   def create
     respond_to do |format|
-      @question_answer = @bot.question_answers.build(permitted_attributes(QuestionAnswer))
+      @question_answer = @bot.question_answers.build(question_answer_params)
       if @question_answer.save
         format.html { redirect_to bot_question_answers_path(@bot), notice: '登録しました。' }
         format.json { render json: @question_answer, status: :created }
@@ -94,5 +94,13 @@ class QuestionAnswersController < ApplicationController
 
     def pundit_auth
       authorize QuestionAnswer
+    end
+
+    def question_answer_params
+      permitted_attributes(@question_answer || QuestionAnswer).tap do |prm|
+        if prm[:answer_attributes].present? && params[:action] == 'create'
+          prm[:answer_attributes][:bot_id] = @bot.id
+        end
+      end
     end
 end

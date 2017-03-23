@@ -11,7 +11,7 @@ jest.unmock(modelPath);
 const AnswerForm = require(componentPath).default;
 const Answer = require(modelPath).default;
 
-const editingAnswerModel = new Answer();
+const editingAnswerModel = new Answer({ id: 1 });
 const questionActiveItem = { dataType: "question" };
 const answerActiveItem = { dataType: "answer" };
 const decisionBranchActiveItem = { dataType: "decisionBranch" };

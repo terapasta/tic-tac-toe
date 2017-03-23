@@ -10,7 +10,9 @@ export default class ChatBotMessage extends Component {
   render() {
     const {
       iconImageUrl,
+      rating,
       body,
+      isFirst,
     } = this.props;
 
     return (
@@ -22,8 +24,11 @@ export default class ChatBotMessage extends Component {
           {body}
         </div>
         <div className="chat-message__rating">
-          <div className="chat-message__rating-title">この返答を評価してください</div>
-          <MessageRatingButtons />
+          {!isFirst && (
+            <MessageRatingButtons {...{
+              rating,
+            }} />
+          )}
         </div>
       </div>
     );

@@ -6,12 +6,11 @@ import ChatGuestMessage from "./guest-message";
 
 function ChatGuestMessageRow({ section: { question } }) {
   if (question == null) { return null; }
-  const { body } = question;
 
   return (
     <ChatRow>
       <ChatContainer>
-        <ChatGuestMessage {...{ body }} />
+        <ChatGuestMessage {...question} />
       </ChatContainer>
     </ChatRow>
   );

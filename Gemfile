@@ -97,7 +97,7 @@ gem 'addressable', require: 'addressable/uri'
 gem 'toastr-rails'
 gem 'natto'
 gem 'config'
-gem 'natto'
+gem 'active_model_serializers'
 
 gem 'newrelic_rpm'
 

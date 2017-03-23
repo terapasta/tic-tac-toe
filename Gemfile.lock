@@ -35,6 +35,11 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     active_hash (1.4.1)
       activesupport (>= 2.2.2)
+    active_model_serializers (0.10.5)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.2)
     activejob (4.2.4)
       activesupport (= 4.2.4)
       globalid (>= 0.3.0)
@@ -114,6 +119,8 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
+    case_transform (0.2)
+      activesupport
     chronic (0.10.2)
     chrono (0.3.0)
       activesupport
@@ -242,6 +249,7 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.6)
+    jsonapi-renderer (0.1.2)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -531,6 +539,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
+  active_model_serializers
   activerecord-import
   acts-as-taggable-on (~> 3.4)
   addressable

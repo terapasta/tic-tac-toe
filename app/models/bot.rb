@@ -8,11 +8,11 @@ class Bot < ActiveRecord::Base
   has_many :question_answers
   has_many :answers
   has_many :decision_branches
-  has_many :services
-  has_one :score
-  has_one :learning_parameter
+  has_many :services, dependent: :destroy
+  has_one :score, dependent: :destroy
+  has_one :learning_parameter, dependent: :destroy
   has_many :sentence_synonyms, through: :question_answers
-  has_many :allowed_hosts
+  has_many :allowed_hosts, dependent: :destroy
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 

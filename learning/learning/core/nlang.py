@@ -1,5 +1,8 @@
 import MeCab
 
+from learning.log import logger
+
+
 class Nlang:
     #UNIDIC_PATH = '/usr/local/lib/mecab/dic/unidic/'
 
@@ -11,22 +14,28 @@ class Nlang:
         node = tagger.parseToNode(text)
         word_list = []
         while node:
-            # logger.debug(node.feature)
             features = node.feature.split(",")
             pos = features[0]
-            # logger.debug("node.feature: %s" % node.feature)
-            # if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
-            if pos in ["名詞", "動詞", "形容詞", "感動詞", "副詞"]:
+            logger.debug("node.feature: %s" % node.feature)
+
+            if pos in ["名詞", "動詞", "形容詞", "感動詞", "助動詞", "副詞"]:
+                lemma = node.feature.split(",")[6]
+
                 if pos == '名詞' and features[1] == '非自立':
                     node = node.next
                     continue
                 if pos == '動詞' and features[1] == '非自立':
                     node = node.next
                     continue
-                lemma = node.feature.split(",")[6]
+
+                if pos == '助動詞' and lemma != 'ない':
+                    node = node.next
+                    continue
+
                 if lemma == 'ある':
                     node = node.next
                     continue
+
 
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")

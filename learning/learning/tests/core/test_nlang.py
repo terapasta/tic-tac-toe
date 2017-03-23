@@ -1,17 +1,36 @@
-# # -*- coding: utf-8 -
-# import random
-# import unittest
-# from ...core.nlang import Nlang
-#
-# class TestNlang(unittest.TestCase):
-#
-#     def test_split(self):
-#         result = Nlang.split('明日は天気かな？')
-#         self.assertEqual(result, '明日 天気')
-#
-#     def text_split_karamage(self):
-#         result = Nlang.split('人狼は')
-#         self.assertEqual(result, '人 狼')
-#
-# if __name__ == '__main__':
-#     unittest.main()
+import unittest
+
+from nose.tools import eq_
+
+from learning.core.nlang import Nlang
+
+
+class TestNlang(unittest.TestCase):
+
+    def test_split_except_conjunction(self):
+        result = Nlang.split('明日は雨')
+        eq_(result, '明日 雨')
+
+    def test_split_except_adnominal(self):
+        result = Nlang.split('あらゆる宝')
+        eq_(result, '宝')
+
+    def test_split_except_particle(self):
+        result = Nlang.split('明日から明後日')
+        eq_(result, '明日 明後日')
+
+    def test_split_except_not_independent_noun(self):
+        result = Nlang.split('朝起きること')
+        eq_(result, '朝 起きる')
+
+    def test_split_except_not_independent_(self):
+        result = Nlang.split('食べちゃう')
+        eq_(result, '食べる')
+
+    def test_split_except_aru(self):
+        result = Nlang.split('不謹慎である')
+        eq_(result, '不謹慎')
+
+    def test_split_keep_auxiliary_verb_nai(self):
+        result = Nlang.split('楽しくない')
+        eq_(result, '楽しい ない')

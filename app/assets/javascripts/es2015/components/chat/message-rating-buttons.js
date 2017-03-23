@@ -25,8 +25,6 @@ export default class MessageRatingButtons extends Component {
   static get propTypes() {
     return {
       rating: PropTypes.oneOf(values(Ratings)).isRequired,
-      token: PropTypes.string.isRequired,
-      messageId: PropTypes.number.isRequired,
     };
   }
 
@@ -64,6 +62,7 @@ export default class MessageRatingButtons extends Component {
 
     return (
       <span>
+        <div className="chat-message__rating-title">この返答を評価してください</div>
         <a href="#" className={goodClassName}
           ref="root" onClick={this.onClick.bind(this, Ratings.Good)}>
           <i className={FaIcons.Good} />

@@ -8,17 +8,19 @@ export default class ChatGuestMessage extends Component {
   render() {
     const {
       iconImageUrl,
-      body
+      body,
     } = this.props;
+
+    const iconStyle = {
+      backgroundImage: `url(${iconImageUrl})`,
+    };
 
     return (
       <div className="chat-message--my">
         <div className="chat-message__balloon">
           {body}
         </div>
-        <div className="chat-message__icon">
-          <img className="listen" src={iconImageUrl} />
-        </div>
+        <div className="chat-message__icon" style={iconStyle} />
       </div>
     );
   }

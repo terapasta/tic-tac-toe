@@ -49,12 +49,15 @@
     position: absolute;
     top: 0;
     left: 0;
-
-    img {
-      width: $-icon-size;
-      height: $-icon-size;
-      border-radius: 50%;
-      border: 1px solid $gray;
+    width: $-icon-size;
+    height: $-icon-size;
+    border-radius: 50%;
+    border: 1px solid $gray;
+    overflow: hidden;
+    background: {
+      position: center center;
+      size: cover;
+      repeat: no-repeat;
     }
   }
 

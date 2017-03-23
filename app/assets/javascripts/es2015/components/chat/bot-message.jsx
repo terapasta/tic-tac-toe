@@ -9,17 +9,19 @@ export default class ChatBotMessage extends Component {
 
   render() {
     const {
+      isFirst,
       iconImageUrl,
       rating,
       body,
-      isFirst,
     } = this.props;
+
+    const iconStyle = {
+      backgroundImage: `url(${iconImageUrl})`,
+    };
 
     return (
       <div className="chat-message">
-        <div className="chat-message__icon">
-          <img className="listen" src={iconImageUrl} />
-        </div>
+        <div className="chat-message__icon" style={iconStyle} />
         <div className="chat-message__balloon">
           {body}
         </div>

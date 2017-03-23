@@ -7,7 +7,7 @@ class Chats::MessagesController < ApplicationController
   def index
     @messages = @chat.messages.page(params[:page]).per(20)
     respond_to do |format|
-      format.json { render_collection_json @messages }
+      format.json { render_collection_json @messages, include: 'answer,answer.decision_branches' }
     end
   end
 

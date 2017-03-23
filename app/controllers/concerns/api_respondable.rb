@@ -11,7 +11,13 @@ module ApiRespondable
       }
     end
 
-    def render_collection_json(collection)
-      render json: collection, meta: api_pagination(collection), adapter: :json
+    def render_collection_json(collection, options = {})
+      config = {
+        json: collection,
+        meta: api_pagination(collection),
+        adapter: :json,
+      }
+
+      render config.merge(options)
     end
 end

@@ -3,7 +3,7 @@ class Chat < ActiveRecord::Base
   paginates_per 50
 
   has_many :messages,
-    -> { order(created_at: :desc) }
+    -> { order(created_at: :asc) }
   has_many :contact_states
   belongs_to :bot
   enum context: ContextHoldable::CONTEXTS

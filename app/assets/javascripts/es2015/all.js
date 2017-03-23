@@ -1,6 +1,8 @@
 import "babel-polyfill";
+import promiseMiddleware from 'redux-promise';
 
 import ChatApp from "./components/chat/app";
+import ChatAppReducers from "./components/chat/reducers";
 
 import ConversationTree from "./components/conversation-tree";
 import ConversationTreeReducers from "./components/conversation-tree/reducers";
@@ -11,6 +13,7 @@ import mountComponent, { mountComponentWithRedux } from "./modules/mount-compone
 import Mixpanel from "./analytics/mixpanel";
 
 function init() {
+  mountComponentWithRedux(ChatApp, ChatAppReducers, [promiseMiddleware]);
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
   mountComponent(QuestionAnswerForm);

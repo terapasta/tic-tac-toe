@@ -17,9 +17,9 @@
       = f.fields_for :sentence_synonyms, @question_answer.sentence_synonyms.select{|ss| ss.new_record?} do |ss|
         = ss.text_field :body, hide_label: true
 
-      = f.submit '登録する', class: 'btn btn-success'
+      = f.submit '登録する', class: 'btn btn-success', id: 'submit'
       | &nbsp;
-      = link_to 'スキップする', skip_url, class: 'btn btn-default', data: { event_name: 'Skip creating sentence synonym', bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
+      = link_to 'スキップする', skip_url, class: 'btn btn-default', id: 'cancel', data: { event_name: 'Skip creating sentence synonym', bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
 
 .well
   h4 同義文の注意点（必ずお読みください）

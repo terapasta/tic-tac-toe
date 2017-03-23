@@ -1,22 +1,42 @@
 require 'rails_helper'
 
-feature 'worker作業の挙動確認' do
+feature 'worker作業画面の確認', js: true do
+  let!(:user) do
+    create(:user, role: :worker)
+  end
+
+  let!(:question_answer) do
+    create(:question_answer, bot: bot)
+  end
+
+  let!(:bot) do
+    create(:bot, user: user)
+  end
+
+  background do
+    visit new_user_session_path
+    fill_in 'Eメール', with: user.email
+    fill_in 'パスワード', with: 'hogehoge'
+    click_on 'ログイン'
+  end
+
   scenario 'スキップした場合' do
     visit new_imported_sentence_synonym_path
-    click_on 'スキップする'
+    find('#cancel').click
     expect(current_path).to eq '/imported_sentence_synonyms/new'
   end
 
   scenario '同義文がブランクの場合の登録' do
     visit new_imported_sentence_synonym_path
+    find('#submit').click
     expect(current_path).to eq '/imported_sentence_synonyms/new'
   end
 
-  scenario '同義文が記述してある場合の登録' do
+  scenario '同義文が入力してある場合の登録' do
     visit new_imported_sentence_synonym_path
-    fill_in "Body", with: "test"
-    click_on '登録する'
+    fill_in 'question_answer_sentence_synonyms_attributes_0_body', with: 'test'
+    find('#submit').click
     expect(page). to have_content '登録しました。'
-    expect(current_path).to eq '/imported_sentence_synonyms/new'
   end
+
 end

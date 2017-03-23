@@ -37,7 +37,7 @@ export function classify(data, messages) {
 export function classifyBotMessage(sections, message) {
   let secs = cloneDeep(sections);
   let lastSec = last(secs);
-  lastSec.answer = pick(message, ["id", "body", "createdAt", "rating"]);
+  lastSec.answer = pick(message, ["id", "body", "createdAt", "rating", "iconImageUrl"]);
   secs[secs.length - 1] = lastSec;
 
   const decisionBranches = get(message, "answer.decisionBranches");

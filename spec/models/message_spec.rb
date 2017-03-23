@@ -83,7 +83,9 @@ RSpec.describe Message, :type => :model do
     describe '#update' do
       context '更新成功する場合' do
         it 'メッセージ本文を変更できること' do
-          expect(answer_success.update(body: 'changed body')).to be
+          expect{
+            answer_success.update(body: 'changed body')
+          }.to change(answer_success, :body).from('MyString').to('changed body')
         end
       end
 

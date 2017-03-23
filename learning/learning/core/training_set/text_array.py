@@ -8,6 +8,7 @@ class TextArray:
         logger.debug('TextArray#__init__ start')
         self.sentences = sentences
         self.separated_sentences = Nlang.batch_split(self.sentences)
+        self.blank_indexes = self.__collect_blank_indexes(self.separated_sentences)
         self._vectorizer = vectorizer
 
     def to_vec(self):
@@ -26,6 +27,10 @@ class TextArray:
         # vectorizer = TfidfVectorizer(use_idf=False)
         vectorizer.fit(self.separated_sentences)
         return vectorizer
+
+    def __collect_blank_indexes(self, separated_sentences):
+        indexes = [i for i, val in enumerate(separated_sentences) if val == '']
+        return indexes
 
     @property
     def vectorizer(self):

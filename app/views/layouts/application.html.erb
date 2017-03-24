@@ -15,6 +15,7 @@
   <% if user_signed_in? %>
     <%= render 'layouts/shared/js_vars/current_user' %>
   <% end %>
+  <%= render 'layouts/shared/js_vars/images' %>
 </head>
 <body>
   <% if Rails.env.production? %>

@@ -12,7 +12,7 @@ export default class ChatGuestMessage extends Component {
     } = this.props;
 
     const iconStyle = {
-      backgroundImage: `url(${iconImageUrl})`,
+      backgroundImage: `url(${window.Images["silhouette.png"]})`,
     };
 
     return (

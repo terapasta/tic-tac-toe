@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import assign from "lodash/assign";
 
 import * as a from "./action-creators";
 
@@ -11,6 +12,7 @@ import ChatSection from "./section";
 import ChatDecisionBranchesRow from "./decision-branches-row";
 import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
+import ChatGuestMessage from "./guest-message";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -32,7 +34,10 @@ export default class ChatApp extends Component {
 
   render() {
     const {
-      messages
+      dispatch,
+      token,
+      messages,
+      form,
     } = this.props;
 
     const {
@@ -42,7 +47,7 @@ export default class ChatApp extends Component {
     return (
       <div>
         <ChatHeader botName="サンプル" />
-        <ChatArea>
+        <ChatArea ref="area">
           {classifiedData.map((section, i) => {
             const isFirst = i === 0;
             return (
@@ -61,7 +66,14 @@ export default class ChatApp extends Component {
             );
           })}
         </ChatArea>
-        <ChatForm />
+        <ChatForm {...assign({
+          onChange(e){
+            dispatch(a.changeMessageBody({ messageBody: e.target.value }));
+          },
+          onSubmit(messageBody){
+            dispatch(a.postMessage(token, messageBody));
+          },
+        }, form)} />
       </div>
     );
   }

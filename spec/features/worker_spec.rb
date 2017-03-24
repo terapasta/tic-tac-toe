@@ -16,7 +16,6 @@ feature 'worker作業画面の確認' do
   end
 
   background do
-    visit new_user_session_path
     sign_in user
   end
 
@@ -31,9 +30,9 @@ feature 'worker作業画面の確認' do
   context '同義文がブランクの場合の登録' do
     scenario 'same record count' do
       visit new_imported_sentence_synonym_path
-      before_sentencesynonym_count = SentenceSynonym.all.count
+      before_sentencesynonym_count = SentenceSynonym.count
       find('#submit').click
-      expect(before_sentencesynonym_count).to eq SentenceSynonym.all.count
+      expect(before_sentencesynonym_count).to eq SentenceSynonym.count
     end
   end
 

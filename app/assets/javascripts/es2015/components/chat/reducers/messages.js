@@ -7,7 +7,11 @@ import pick from "lodash/pick";
 import isEmpty from "is-empty";
 import Promise from "promise";
 import { handleActions } from "redux-actions";
-import { fetchMessages } from "../action-creators";
+
+import {
+  fetchMessages,
+  postMessage,
+} from "../action-creators";
 
 const Speaker = {
   Bot: "bot",
@@ -60,6 +64,20 @@ export default handleActions({
     const data = state.data.concat(messages);
     const classifiedData = classify(state.classifiedData, messages);
     return assign({}, state, { data, classifiedData, meta });
+  },
+
+  [postMessage]: (state, action) => {
+    const { payload } = action;
+
+    if (action.error) {
+      console.error(payload);
+      toastr.error('質問を送信できませんでした。ご迷惑おかけして申し訳ありません。', 'エラー');
+      return state;
+    }
+
+    const { messages } = payload.data;
+    const classifiedData = classify(state.classifiedData, messages);
+    return assign({}, state, { classifiedData });
   },
 }, {
   data: [],

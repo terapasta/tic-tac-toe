@@ -30,9 +30,7 @@ feature 'worker作業画面の確認' do
   context '同義文がブランクの場合の登録' do
     scenario 'same record count' do
       visit new_imported_sentence_synonym_path
-      before_sentencesynonym_count = SentenceSynonym.count
-      find('#submit').click
-      expect(before_sentencesynonym_count).to eq SentenceSynonym.count
+      expect{ find('#submit').click }.not_to change(SentenceSynonym, :count)
     end
   end
 

@@ -92,6 +92,12 @@
     }
   }
 
+  &__balloon-loader {
+    & > div {
+      margin: 0 auto;
+    }
+  }
+
   &__rating {
     text-align: right;
 

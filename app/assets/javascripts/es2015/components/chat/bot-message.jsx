@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import Loading from "react-loading";
 
 import MessageRatingButtons from "./message-rating-buttons";
 
@@ -10,6 +11,7 @@ export default class ChatBotMessage extends Component {
   render() {
     const {
       isFirst,
+      isLoading,
       iconImageUrl,
       rating,
       body,
@@ -23,10 +25,15 @@ export default class ChatBotMessage extends Component {
       <div className="chat-message">
         <div className="chat-message__icon" style={iconStyle} />
         <div className="chat-message__balloon">
-          {body}
+          {!isLoading && body}
+          {isLoading && (
+            <div className="chat-message__balloon-loader">
+              <Loading type="spin" color="#e3e3e3" height={32} width={32} />
+            </div>
+          )}
         </div>
         <div className="chat-message__rating">
-          {!isFirst && (
+          {!isLoading && !isFirst && (
             <MessageRatingButtons {...{
               rating,
             }} />

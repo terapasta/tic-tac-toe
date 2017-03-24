@@ -29,11 +29,11 @@ feature 'worker作業画面の確認' do
   end
 
   context '同義文がブランクの場合の登録' do
-    scenario 'Message "登録しました。" is displayed' do
+    scenario 'same record count' do
       visit new_imported_sentence_synonym_path
+      before_sentencesynonym_count = SentenceSynonym.all.count
       find('#submit').click
-      expect(current_path).to eq '/imported_sentence_synonyms/new'
-      expect(page). to have_content '登録しました。'
+      expect(before_sentencesynonym_count).to eq SentenceSynonym.all.count
     end
   end
 

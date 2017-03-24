@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import messages from "./reducers/messages";
+import form from "./reducers/form";
 
 function through(state = null) {
   return state;
@@ -8,6 +9,7 @@ function through(state = null) {
 
 const app = combineReducers({
   messages,
+  form,
   token: through,
 });
 

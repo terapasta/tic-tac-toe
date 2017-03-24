@@ -26,6 +26,10 @@ export default class ChatApp extends Component {
     dispatch(a.fetchMessages(token));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    scrollToBottomIfNeeded(prevProps, this.props);
+  }
+
   render() {
     const {
       messages
@@ -60,5 +64,13 @@ export default class ChatApp extends Component {
         <ChatForm />
       </div>
     );
+  }
+}
+
+function scrollToBottomIfNeeded(prevProps, props) {
+  const prevCount = prevProps.messages.classifiedData.length
+  const currentCount = props.messages.classifiedData.length;
+  if (currentCount > prevCount) {
+    window.scrollTo(0, document.body.scrollHeight);
   }
 }

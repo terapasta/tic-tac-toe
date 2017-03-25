@@ -4,6 +4,8 @@ import numpy as np
 
 
 class Base(metaclass=ABCMeta):
+    COUNT_OF_APPEND_BLANK = 3
+
     @abstractmethod
     def build(self):
         pass

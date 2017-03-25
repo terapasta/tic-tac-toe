@@ -17,17 +17,24 @@ class TrainingMessage(Base):
     def build(self):
         logger.debug('TrainingMessage#build start')
         learning_training_messages = self.__build_learning_training_messages()
-        body_array = TextArray(learning_training_messages['question'])
+        questions = np.array(learning_training_messages['question'])
+        answer_ids = np.array(learning_training_messages['answer_id'])
+
+        # 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
+        questions = np.append(questions, [''] * self.COUNT_OF_APPEND_BLANK)
+        answer_ids = np.append(answer_ids, [Reply.CLASSIFY_FAILED_ANSWER_ID] * self.COUNT_OF_APPEND_BLANK)
+
+        body_array = TextArray(questions)
         body_vec = body_array.to_vec()
 
-        if self.learning_parameter.include_tag_vector:
-            body_vec = body_vec.toarray()
-            tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
-            body_vec = np.c_[tag_vec, body_vec]
+        # if self.learning_parameter.include_tag_vector:
+        #     body_vec = body_vec.toarray()
+        #     tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
+        #     body_vec = np.c_[tag_vec, body_vec]
 
         self._body_array = body_array
         self._x = body_vec
-        self._y = learning_training_messages['answer_id']
+        self._y = answer_ids
         return self
 
     @property

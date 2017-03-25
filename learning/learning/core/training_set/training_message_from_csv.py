@@ -7,7 +7,6 @@ from learning.core.training_set.text_array import TextArray
 from learning.log import logger
 
 class TrainingMessageFromCsv(Base):
-    COUNT_OF_APPEND_BLANK = 3
 
     def __init__(self, bot_id, file_path, learning_parameter, encoding='UTF-8'):
         self._file_path = file_path

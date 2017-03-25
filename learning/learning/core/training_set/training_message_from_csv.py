@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from .base import Base
 from learning.core.training_set.text_array import TextArray
@@ -12,12 +13,22 @@ class TrainingMessageFromCsv(Base):
 
     def build(self):
         learning_training_messages = self.__build_learning_training_messages()
-        body_array = TextArray(learning_training_messages['question'])
+        questions = learning_training_messages['question']
+        questions = questions.append(pd.Series(['', '', '']))
+
+        body_array = TextArray(questions)
+        # excepted_indexes = body_array.except_blank()
         x = body_array.to_vec()
+
+        # logger.debug("x.toarray(): %s" % x.toarray())
+
+        answer_ids = np.array(learning_training_messages['answer_id'])
+        answer_ids = np.append(answer_ids, [0,0,0])
+        # answer_ids = np.delete(answer_ids, excepted_indexes)
 
         self._body_array = body_array
         self._x = x
-        self._y = learning_training_messages['answer_id']
+        self._y = answer_ids
         return self
 
     @property

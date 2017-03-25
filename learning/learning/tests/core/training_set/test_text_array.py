@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import scipy
 
 from learning.core.persistance import Persistance
@@ -24,12 +25,14 @@ class TextArrayTestCase(TestCase):
         eq_(vec.shape, (3, 7))
 
     def test_except_blank(self):
-        X = np.array([
+        arr = np.array([
             '',
             'こんにちは、元気ですか？',
             '',
             'あなたの名前を教えてください'
         ])
+        X = pd.Series(arr)
+
         text_array = TextArray(X)
         excepted_indexes = text_array.except_blank()
 

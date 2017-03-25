@@ -8,7 +8,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 class TextArray:
     def __init__(self, sentences, vectorizer=None):
         logger.debug('TextArray#__init__ start')
-        self.sentences = sentences
+        self.sentences = np.array(sentences)
         self.separated_sentences = Nlang.batch_split(self.sentences)
         self._vectorizer = vectorizer
 
@@ -21,6 +21,7 @@ class TextArray:
 
     def except_blank(self):
         indexes = self.__collect_blank_indexes()
+        logger.debug("indexes: %s" % indexes)
         self.sentences = np.delete(self.sentences, indexes)
         self.separated_sentences = np.delete(self.separated_sentences, indexes)
         return indexes

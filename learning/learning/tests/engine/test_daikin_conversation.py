@@ -1,6 +1,7 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 
+from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper
@@ -71,7 +72,8 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
         questions = ['しいたけは嫌いな食べ物です']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
-        # しきい値を超える回答がないこと
-        ok_(result.probability < self.threshold)
+        # ラベル0(分類失敗)に分類されること
+        eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+        ok_(result.probability > self.threshold)
 
 

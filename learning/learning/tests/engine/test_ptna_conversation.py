@@ -53,9 +53,14 @@ class PtnaConversationTestCase(TestCase):
         # questions = ['']
         result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
 
-        print(result.answer_id)
         # ラベル0(分類失敗)に分類されること
-        eq_(result.answer_id, 0)
+        eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
         ok_(result.probability > self.threshold)
 
-    # TODO ブランクのテストケースを追加する
+    def test_fail_blank(self):
+        questions = ['']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+
+        # ラベル0(分類失敗)に分類されること
+        eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+        ok_(result.probability > self.threshold)

@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+
+from learning.core.predict.reply import Reply
 from .base import Base
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
@@ -20,7 +22,7 @@ class TrainingMessageFromCsv(Base):
 
         # 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
         questions = np.append(questions, [''] * self.COUNT_OF_APPEND_BLANK)
-        answer_ids = np.append(answer_ids, [0] * self.COUNT_OF_APPEND_BLANK)
+        answer_ids = np.append(answer_ids, [Reply.CLASSIFY_FAILED_ANSWER_ID] * self.COUNT_OF_APPEND_BLANK)
 
         body_array = TextArray(questions)
         x = body_array.to_vec()

@@ -19,12 +19,12 @@ class TextArray:
         logger.debug('TextArray#to_vec end')
         return feature_vectors
 
-    def except_blank(self):
-        indexes = self.__collect_blank_indexes()
-        logger.debug("indexes: %s" % indexes)
-        self.sentences = np.delete(self.sentences, indexes)
-        self.separated_sentences = np.delete(self.separated_sentences, indexes)
-        return indexes
+    # def except_blank(self):
+    #     indexes = self.__collect_blank_indexes()
+    #     logger.debug("indexes: %s" % indexes)
+    #     self.sentences = np.delete(self.sentences, indexes)
+    #     self.separated_sentences = np.delete(self.separated_sentences, indexes)
+    #     return indexes
 
     def __build_vectorizer(self):
         if self._vectorizer is not None:
@@ -36,9 +36,9 @@ class TextArray:
         vectorizer.fit(self.separated_sentences)
         return vectorizer
 
-    def __collect_blank_indexes(self):
-        indexes = [i for i, val in enumerate(self.separated_sentences) if val == '']
-        return indexes
+    # def __collect_blank_indexes(self):
+    #     indexes = [i for i, val in enumerate(self.separated_sentences) if val == '']
+    #     return indexes
 
     @property
     def vectorizer(self):

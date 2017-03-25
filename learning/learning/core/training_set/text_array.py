@@ -1,3 +1,5 @@
+import numpy as np
+
 from learning.core.nlang import Nlang
 from learning.log import logger
 from sklearn.feature_extraction.text import CountVectorizer
@@ -8,7 +10,6 @@ class TextArray:
         logger.debug('TextArray#__init__ start')
         self.sentences = sentences
         self.separated_sentences = Nlang.batch_split(self.sentences)
-        self.blank_indexes = self.__collect_blank_indexes(self.separated_sentences)
         self._vectorizer = vectorizer
 
     def to_vec(self):
@@ -17,6 +18,12 @@ class TextArray:
         feature_vectors = self._vectorizer.transform(self.separated_sentences)
         logger.debug('TextArray#to_vec end')
         return feature_vectors
+
+    def except_blank(self):
+        indexes = self.__collect_blank_indexes()
+        self.sentences = np.delete(self.sentences, indexes)
+        self.separated_sentences = np.delete(self.separated_sentences, indexes)
+        return indexes
 
     def __build_vectorizer(self):
         if self._vectorizer is not None:
@@ -28,8 +35,8 @@ class TextArray:
         vectorizer.fit(self.separated_sentences)
         return vectorizer
 
-    def __collect_blank_indexes(self, separated_sentences):
-        indexes = [i for i, val in enumerate(separated_sentences) if val == '']
+    def __collect_blank_indexes(self):
+        indexes = [i for i, val in enumerate(self.separated_sentences) if val == '']
         return indexes
 
     @property

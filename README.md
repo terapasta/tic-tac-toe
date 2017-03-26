@@ -98,3 +98,18 @@ $ cap production deploy
 ```
 $ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
 ```
+
+## Slack 連携
+### Slack bot サーバー立ち上げ
+```
+$ cd slack-bot
+$ slappy start
+```
+### 開発用デバッグBOTの設定
+1. https://api.slack.com/appsの"Create New App"から新しいアプリを登録する。
+2. 登録したAppを選択しFeatures/Bot UsersからBotユーザーを登録。
+3. Features/OAuth & Permissionsから権限追加画面を開き、Permission Scopesに"Add a bot user with the username {botユーザー名称}"を追加されていることを確認する
+4. 同画面のOAuth Tokens & Redirect URLs欄の"Install App To Team"ボタンを押し、Bot User OAuth Access Tokenを発行する。
+5. ENV['SLACK_TOKEN']に取得したBot User OAuth Access Tokenを設定する。
+
+※OAuth Access Tokenの方ではReal Time Messaging APIが利用できない為、slappy start実行時にエラーが発生します。

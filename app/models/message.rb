@@ -1,4 +1,7 @@
+require 'message/answer_failed_operable'
+
 class Message < ActiveRecord::Base
+  include AnswerFailedOperable
   paginates_per 50
 
   attr_accessor :other_answers, :similar_question_answers
@@ -10,10 +13,6 @@ class Message < ActiveRecord::Base
   enum rating: [:nothing, :good, :bad]
 
   validates :body, length: { maximum: 10000 }
-
-  scope :answer_failed, -> {
-    where(answer_failed: true)
-  }
 
   def parent
     chat

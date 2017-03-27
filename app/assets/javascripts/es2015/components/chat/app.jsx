@@ -24,6 +24,7 @@ export default class ChatApp extends Component {
   }
 
   componentDidMount() {
+    a.trackMixpanel("Open new chat");
     const { dispatch, token } = this.props;
     dispatch(a.fetchMessages(token));
   }

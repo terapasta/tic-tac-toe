@@ -6,6 +6,7 @@ export default class ChatForm extends Component {
       onChange: PropTypes.func.isRequired,
       onSubmit: PropTypes.func.isRequired,
       messageBody: PropTypes.string.isRequired,
+      isDisabled: PropTypes.bool.isRequired,
     };
   }
 
@@ -13,7 +14,8 @@ export default class ChatForm extends Component {
     const {
       onChange,
       onSubmit,
-      messageBody
+      messageBody,
+      isDisabled,
     } = this.props;
 
     return (
@@ -27,8 +29,13 @@ export default class ChatForm extends Component {
                 placeholder="質問を入れてください"
                 value={messageBody}
                 onChange={onChange}
+                disabled={isDisabled}
               />
-            <button className="chat-form__submit" id="chat-submit" onClick={() => { onSubmit(messageBody) }}>
+            <button
+              className="chat-form__submit"
+              id="chat-submit"
+              onClick={() => { onSubmit(messageBody) }}
+              disabled={isDisabled}>
                 <span className="visible-sm visible-md visible-lg">質問</span>
                 <span className="visible-xs">
                   <i className="fa fa-icon fa-paper-plane-o" />

@@ -4,6 +4,8 @@ import { handleActions } from "redux-actions";
 import {
   changeMessageBody,
   clearMessageBody,
+  disableForm,
+  enableForm,
 } from "../action-creators";
 
 export default handleActions({
@@ -22,6 +24,15 @@ export default handleActions({
   [clearMessageBody]: (state, action) => {
     return assign({}, state, { messageBody: "" });
   },
+
+  [disableForm]: (state, action) => {
+    return assign({}, state, { isDisabled: true });
+  },
+
+  [enableForm]: (state, action) => {
+    return assign({}, state, { isDisabled: false });
+  },
 }, {
   messageBody: "",
+  isDisabled: false,
 });

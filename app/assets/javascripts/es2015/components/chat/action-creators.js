@@ -12,6 +12,8 @@ export const postMessageIfNeeded = (token, messageBody) => {
   const m = trim(messageBody);
   return (dispatch, getState) => {
     if (isEmpty(m)) { return toastr.warning(c.ErrorPostMessage) }
+    if(getState().form.isDisabled) { return; }
+    dispatch(disableForm());
     postMessage(token, m, dispatch);
   };
 };
@@ -20,6 +22,7 @@ export function postMessage(token, messageBody, dispatch) {
   API.postMessage(token, messageBody)
     .then((res) => dispatch(createdMessage(res)))
     .then(() => dispatch(clearMessageBody()))
+    .then(() => dispatch(enableForm()))
     .catch((err) => {
       console.error(err);
       toastr.error(c.ErrorCreateMessage, c.ErrorTitle);
@@ -28,3 +31,5 @@ export function postMessage(token, messageBody, dispatch) {
 
 export const changeMessageBody = createAction("CHANGE_MESSAGE_BODY");
 export const clearMessageBody = createAction("CLEAR_MESSAGE_BODY");
+export const disableForm = createAction("DISABLE_FORM");
+export const enableForm = createAction("ENABLE_FORM");

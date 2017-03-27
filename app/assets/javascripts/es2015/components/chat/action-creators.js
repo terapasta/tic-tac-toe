@@ -18,3 +18,4 @@ export const postMessage = createAction("POST_MESSAGE", (token, messageBody) => 
 });
 
 export const changeMessageBody = createAction("CHANGE_MESSAGE_BODY");
+export const clearMessageBody = createAction("CLEAR_MESSAGE_BODY");

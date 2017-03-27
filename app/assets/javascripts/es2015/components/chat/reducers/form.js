@@ -1,6 +1,10 @@
 import assign from "lodash/assign";
 import { handleActions } from "redux-actions";
-import { changeMessageBody } from "../action-creators";
+
+import {
+  changeMessageBody,
+  clearMessageBody,
+} from "../action-creators";
 
 export default handleActions({
   [changeMessageBody]: (state, action) => {
@@ -13,6 +17,10 @@ export default handleActions({
     return assign({}, state, {
       messageBody,
     });
+  },
+
+  [clearMessageBody]: (state, action) => {
+    return assign({}, state, { messageBody: "" });
   },
 }, {
   messageBody: "",

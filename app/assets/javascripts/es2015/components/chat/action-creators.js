@@ -19,6 +19,7 @@ export const postMessageIfNeeded = (token, messageBody) => {
     if(getState().form.isDisabled) { return; }
     dispatch(disableForm());
     postMessage(token, m, dispatch);
+    trackMixpanel("Create chat message");
   };
 };
 

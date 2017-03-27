@@ -1,3 +1,3 @@
 class LearningTrainingMessagesDecorator < Draper::CollectionDecorator
-  include CsvGeneratable
+  include QuestionAnswersCsvGenerable
 end

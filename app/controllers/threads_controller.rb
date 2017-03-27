@@ -11,6 +11,15 @@ class ThreadsController < ApplicationController
       .has_good_answer(params[:good])
       .has_bad_answer(params[:bad])
       .page(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data BotThreadsMessagesDecorator.new(@chats).to_csv(encoding: :sjis),
+                  filename: "myope-threads-exports-#{params[:encoding]}-#{Time.zone.now.strftime('%Y-%m-%d-%H%M%S')}.csv",
+                  type: :csv
+      end
+    end
   end
 
   private

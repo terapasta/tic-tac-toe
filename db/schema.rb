@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170319185324) do
+ActiveRecord::Schema.define(version: 20170325044850) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -324,6 +324,5 @@ ActiveRecord::Schema.define(version: 20170319185324) do
 
   add_index "word_mappings", ["user_id"], name: "index_word_mappings_on_user_id", using: :btree
 
-  add_foreign_key "learning_training_messages", "bots"
   add_foreign_key "word_mappings", "users"
 end

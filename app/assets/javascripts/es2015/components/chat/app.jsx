@@ -71,7 +71,7 @@ export default class ChatApp extends Component {
             dispatch(a.changeMessageBody({ messageBody: e.target.value }));
           },
           onSubmit(messageBody){
-            dispatch(a.postMessage(token, messageBody));
+            dispatch(a.postMessageIfNeeded(token, messageBody));
           },
         }, form)} />
       </div>

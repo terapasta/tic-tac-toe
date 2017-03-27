@@ -10,7 +10,7 @@ import { handleActions } from "redux-actions";
 
 import {
   fetchMessages,
-  postMessage,
+  createdMessage,
 } from "../action-creators";
 
 const Speaker = {
@@ -66,16 +66,8 @@ export default handleActions({
     return assign({}, state, { data, classifiedData, meta });
   },
 
-  [postMessage]: (state, action) => {
-    const { payload } = action;
-
-    if (action.error) {
-      console.error(payload);
-      toastr.error('質問を送信できませんでした。ご迷惑おかけして申し訳ありません。', 'エラー');
-      return state;
-    }
-
-    const { messages } = payload.data;
+  [createdMessage]: (state, action) => {
+    const { messages } = action.payload.data;
     const classifiedData = classify(state.classifiedData, messages);
     return assign({}, state, { classifiedData });
   },

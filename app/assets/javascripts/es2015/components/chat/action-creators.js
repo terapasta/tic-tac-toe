@@ -3,6 +3,7 @@ import trim from "lodash/trim";
 import isEmpty from "is-empty";
 import toastr from "toastr";
 import * as API from "../../api/chat-messages";
+import * as MessageRatingAPI from "../../api/chat-message-rating";
 import * as c from "./constants";
 
 export const fetchMessages = createAction("FETCH_MESSAGES", API.fetchMessages);
@@ -33,3 +34,23 @@ export const changeMessageBody = createAction("CHANGE_MESSAGE_BODY");
 export const clearMessageBody = createAction("CLEAR_MESSAGE_BODY");
 export const disableForm = createAction("DISABLE_FORM");
 export const enableForm = createAction("ENABLE_FORM");
+
+export function changeMessageRatingTo(type, token, messageId) {
+  return (dispatch, getState) => {
+    switch (type) {
+      case c.Ratings.Good:
+        dispatch(goodMessage(token, messageId));
+        break;
+      case c.Ratings.Bad:
+        dispatch(badMessage(token, messageId));
+        break;
+      case c.Ratings.Nothing:
+        dispatch(nothingMessage(token, messageId));
+        break;
+    }
+  };
+}
+
+export const goodMessage = createAction("GOOD_MESSAGE", MessageRatingAPI.good);
+export const badMessage = createAction("BAD_MESSAGE", MessageRatingAPI.bad);
+export const nothingMessage = createAction("NOTHING_MESSAGE", MessageRatingAPI.nothing);

@@ -237,11 +237,9 @@ export default class QuestionAnswerForm extends Component {
   }
 
   searchAnswers() {
-    if (this.state.isProcessing) { return; }
-    this.setState({ isProcessing: true });
-
     const { botId } = this.props;
     const { searchingAnswerQuery, searchingAnswerPage } = this.state;
+    console.log("searchAnswers", searchingAnswerQuery)
     const params = {
       "q[body_cont]": trim(searchingAnswerQuery),
       page: searchingAnswerPage,
@@ -251,17 +249,15 @@ export default class QuestionAnswerForm extends Component {
       const newSearchingAnswerPage = res.data.length > 0 ?
         searchingAnswerPage + 1 : searchingAnswerPage;
       const hasNextPage = res.data.length > 0;
-      const newCandidateAnswers = this.state.candidateAnswers.concat(res.data);
+      const newCandidateAnswers = searchingAnswerPage === 1 ? res.data : this.state.candidateAnswers.concat(res.data);
 
       this.setState({
-        isProcessing: false,
         candidateAnswers: newCandidateAnswers,
         searchingAnswerPage: newSearchingAnswerPage,
         hasNextPage,
       });
     }).catch((err) => {
       console.error(err);
-      this.setState({ isProcessing: false });
     });
   }
 

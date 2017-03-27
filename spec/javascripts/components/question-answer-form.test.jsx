@@ -157,38 +157,23 @@ describe("QuestionAnswerForm", () => {
       axios.get = originalAxiosGet;
     });
 
-    describe("when isProcessing is false", () => {
-      it("does request to search API and set true to isProcessing", () => {
-        const wrapper = shallow(<QuestionAnswerForm {...{
-          botId: 1,
-          id: 1,
-        }} />)
+    it("does request to search API and set true to isProcessing", () => {
+      const wrapper = shallow(<QuestionAnswerForm {...{
+        botId: 1,
+        id: 1,
+      }} />)
 
-        wrapper.setState({ isProcessing: false, searchingAnswerQuery: "sample" });
-        expect(wrapper.state("candidateAnswers")).toEqual([]);
+      wrapper.setState({ isProcessing: false, searchingAnswerQuery: "sample" });
+      expect(wrapper.state("candidateAnswers")).toEqual([]);
 
-        return wrapper.instance().searchAnswers().then(() => {
-          expect(axios.get).toBeCalledWith("/bots/1/answers.json", {
-            params: {
-              "q[body_cont]": "sample",
-              page: 1,
-            }
-          });
-          expect(wrapper.state("candidateAnswers")).toEqual(["sample answer"]);
+      return wrapper.instance().searchAnswers().then(() => {
+        expect(axios.get).toBeCalledWith("/bots/1/answers.json", {
+          params: {
+            "q[body_cont]": "sample",
+            page: 1,
+          }
         });
-      });
-    });
-
-    describe("when isProcessing is true", () => {
-      it("does not request to search API", () => {
-        const wrapper = shallow(<QuestionAnswerForm {...{
-          botId: 1,
-          id: 1,
-        }} />);
-
-        wrapper.setState({ isProcessing: true, searchingAnswerQuery: "sample" });
-        expect(wrapper.instance().searchAnswers()).toBeUndefined();
-        expect(axios.get).not.toBeCalled();
+        expect(wrapper.state("candidateAnswers")).toEqual(["sample answer"]);
       });
     });
   });

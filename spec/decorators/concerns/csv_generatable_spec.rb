@@ -51,7 +51,3 @@ end
 describe QuestionAnswersDecorator.new([]) do
   it_behaves_like CsvGeneratable
 end
-
-describe LearningTrainingMessagesDecorator.new([]) do
-  it_behaves_like CsvGeneratable
-end

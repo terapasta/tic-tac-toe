@@ -1,5 +1,3 @@
-require 'message/answer_failed_operable'
-
 class Message < ActiveRecord::Base
   include AnswerFailedOperable
   paginates_per 50

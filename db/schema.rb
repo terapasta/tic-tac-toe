@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170325044850) do
+ActiveRecord::Schema.define(version: 20170327052525) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -65,14 +65,15 @@ ActiveRecord::Schema.define(version: 20170325044850) do
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",                    limit: 4
     t.string   "name",                       limit: 255
-    t.string   "token",                      limit: 64,  null: false
+    t.string   "token",                      limit: 64,                  null: false
     t.string   "classify_failed_message",    limit: 255
     t.string   "start_message",              limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.string   "image",                      limit: 255
     t.string   "learning_status",            limit: 255
     t.datetime "learning_status_changed_at"
+    t.boolean  "is_limited",                             default: false
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree

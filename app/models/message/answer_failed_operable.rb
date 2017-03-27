@@ -1,4 +1,4 @@
-module AnswerFailedOperable
+module Message::AnswerFailedOperable
   extend ActiveSupport::Concern
 
   included do

@@ -47,7 +47,7 @@ export default class ChatApp extends Component {
     return (
       <div>
         <ChatHeader botName="サンプル" />
-        <ChatArea ref="area">
+        <ChatArea>
           {classifiedData.map((section, i) => {
             const isFirst = i === 0;
             return (

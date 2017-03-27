@@ -1,11 +1,21 @@
 import React, { Component, PropTypes } from "react";
 import Loading from "react-loading";
+import values from "lodash/values";
+import * as c from "./constants";
 
 import MessageRatingButtons from "./message-rating-buttons";
 
 export default class ChatBotMessage extends Component {
   static get propTypes() {
-    return {};
+    return {
+      isFirst: PropTypes.bool.isRequired,
+      isLoading: PropTypes.bool,
+      iconImageUrl: PropTypes.string,
+      id: PropTypes.number.isRequired,
+      body: PropTypes.string.isRequired,
+      rating: PropTypes.oneOf(values(c.Ratings)),
+      onChangeRatingTo: PropTypes.func.isRequired,
+    };
   }
 
   render() {
@@ -13,8 +23,10 @@ export default class ChatBotMessage extends Component {
       isFirst,
       isLoading,
       iconImageUrl,
+      id,
       rating,
       body,
+      onChangeRatingTo,
     } = this.props;
 
     const iconStyle = {
@@ -35,7 +47,9 @@ export default class ChatBotMessage extends Component {
         <div className="chat-message__rating">
           {!isLoading && !isFirst && (
             <MessageRatingButtons {...{
+              messageId: id,
               rating,
+              onChangeRatingTo,
             }} />
           )}
         </div>

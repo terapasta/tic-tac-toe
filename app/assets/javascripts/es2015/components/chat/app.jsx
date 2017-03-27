@@ -58,6 +58,9 @@ export default class ChatApp extends Component {
                 <ChatBotMessageRow {...{
                   section,
                   isFirst,
+                  onChangeRatingTo(type, messageId) {
+                    dispatch(a.changeMessageRatingTo(type, token, messageId));
+                  },
                 }} />
                 <ChatDecisionBranchesRow {...{
                   section,

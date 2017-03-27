@@ -7,10 +7,14 @@ import ChatContainer from "./container";
 import ChatBotMessage from "./bot-message";
 import { Ratings } from "./message-rating-buttons";
 
-function ChatBotMessageRow({ section: { answer }, isFirst }) {
+function ChatBotMessageRow({
+  section: { answer },
+  isFirst,
+  onChangeRatingTo,
+}) {
   if (answer == null) { return null; }
 
-  const _props = assign({ isFirst }, answer);
+  const _props = assign({ isFirst, onChangeRatingTo }, answer);
 
   return (
     <ChatRow>
@@ -25,6 +29,7 @@ ChatBotMessageRow.propTypes = {
   answer: PropTypes.shape({
     body: PropTypes.string,
     rating: PropTypes.oneOf(values(Ratings)),
+    onChangeRatingTo: PropTypes.func.isRequired,
   }),
 };
 

@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          # :confirmable,
 
   has_many :bots
-  has_many :word_mappings
+  has_many :word_mappings, dependent: :destroy
   has_many :sentence_synonyms, foreign_key: :created_user_id
 
   enum role: { normal: 0, worker: 1, staff: 2 }

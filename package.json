@@ -30,7 +30,7 @@
       "react-textarea-autosize",
       "classnames",
       "sinon",
-      "promise"
+      "promise",
       "redux-actions",
       "redux-promise"
     ]

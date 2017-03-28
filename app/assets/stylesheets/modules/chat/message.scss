@@ -43,6 +43,32 @@
         text-decoration: underline;
       }
     }
+
+    .chat-message__textarea {
+      margin-left: 0;
+      margin-right: $-icon-size + $-balloon-spacing;
+
+      @media (min-width: $screen-xs-min) {
+        margin-top: 0;
+      }
+    }
+
+    .chat-message__part-label {
+      left: auto;
+      right: 100%;
+      margin-left: 0;
+      margin-right: 14px;
+      text-align: right;
+
+      @media (max-width: $screen-xxs-max) {
+        right: auto;
+        left: 0;
+        bottom: 100%;
+        margin-bottom: 4px;
+        margin-right: 0;
+        text-align: left;
+      }
+    }
   }
 
   &__icon {

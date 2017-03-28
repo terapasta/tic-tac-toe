@@ -24,9 +24,14 @@ $chat-section-switch-size-xs: 32px;
     @extend %base-chat-section;
     padding-top: 16px;
     padding-left: $chat-section-switch-container-width;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color: darken($gray-lighter, 10%);
+    border-bottom: 1px solid darken($gray-lighter, 10%);
+
+    &:first-child {
+      border-top: 1px solid darken($gray-lighter, 10%);
+    }
+    &:last-child {
+      border-bottom: 0;
+    }
 
     @media (max-width: $screen-xs-max) {
       padding-left: $chat-section-switch-container-width-xs;

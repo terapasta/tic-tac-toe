@@ -6,6 +6,7 @@ function ChatSection(props) {
   const {
     children,
     isManager,
+    isFirst,
     isActive,
     onClick,
     section,
@@ -30,14 +31,16 @@ function ChatSection(props) {
   return (
     <div className={className}>
       <div className="chat-section__switch-container">
-        <a href="#"
-          className="chat-section__switch"
-          onClick={onClickWrapper}>
-          <i className="material-icons">school</i>
-          <div className="chat-section__tooltip">
-            {tooltipText}
-          </div>
-        </a>
+        {!isFirst && (
+          <a href="#"
+            className="chat-section__switch"
+            onClick={onClickWrapper}>
+            <i className="material-icons">school</i>
+            <div className="chat-section__tooltip">
+              {tooltipText}
+            </div>
+          </a>
+        )}
       </div>
       {children}
       {isActive && (
@@ -52,7 +55,9 @@ function ChatSection(props) {
 
 ChatSection.propTypes = {
   isManager: PropTypes.bool.isRequired,
+  isFirst: PropTypes.bool.isRequired,
   isActive: PropTypes.bool.isRequired,
+  section: PropTypes.object.isRequired,
 };
 
 export default ChatSection;

@@ -55,6 +55,7 @@ export default class ChatApp extends Component {
             return (
               <ChatSection {...{
                   isManager,
+                  isFirst,
                   isActive: false,
                   key: i,
                   section,

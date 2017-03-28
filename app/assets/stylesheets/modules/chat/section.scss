@@ -78,6 +78,10 @@ $chat-section-switch-size-xs: 32px;
       }
     }
 
+    &:focus {
+      color: $gray-light;
+    }
+
     .material-icons {
       position: relative;
       top: -1px;
@@ -115,5 +119,15 @@ $chat-section-switch-size-xs: 32px;
     display: none;
     padding: 8px 0 16px;
     text-align: center;
+  }
+
+  &__disable-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba($white, .65);
   }
 }

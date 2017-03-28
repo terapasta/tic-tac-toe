@@ -83,6 +83,16 @@
       border-bottom: $-arrow-size solid transparent;
     }
 
+    &[disabled] {
+      opacity: .65;
+    }
+
+    @media (max-width: $screen-xxs-max) {
+      &.has-part-label {
+        margin-top: 19px;
+      }
+    }
+
     p {
       margin-bottom: 1em;
 
@@ -95,6 +105,42 @@
   &__balloon-loader {
     & > div {
       margin: 0 auto;
+    }
+  }
+
+  &__textarea {
+    position: relative;
+    margin-top: 16px;
+    margin-left: $-icon-size + $-balloon-spacing;
+
+    @media (max-width: $screen-xxs-max) {
+      &.has-part-label {
+        margin-top: 35px;
+      }
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+
+  &__part-label {
+    position: absolute;
+    font-size: 13px;
+    width: 100px;
+
+    @media (max-width: $screen-xxs-max) {
+      bottom: 100%;
+      right: 0;
+      margin-bottom: 4px;
+      text-align: right;
+    }
+
+    @media (min-width: $screen-xs-min) {
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      margin-left: 14px;
     }
   }
 

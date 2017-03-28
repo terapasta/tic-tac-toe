@@ -2,7 +2,7 @@ class Chat < ActiveRecord::Base
   include ContextHoldable
   paginates_per 50
 
-  has_many :messages,
+  has_many :messages
   has_many :contact_states
   belongs_to :bot
   enum context: ContextHoldable::CONTEXTS

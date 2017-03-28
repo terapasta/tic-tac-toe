@@ -12,3 +12,7 @@ export function postMessage(token, messageBody) {
     }
   }, config());
 }
+
+export function chooseDecisionBranch(token, decisionBranchId) {
+  return axios.post(`/embed/${token}/chats/choices/${decisionBranchId}.json`, config());
+}

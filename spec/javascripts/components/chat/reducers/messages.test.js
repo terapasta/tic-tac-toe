@@ -9,7 +9,11 @@ jest.unmock(reducerPath);
 jest.unmock(actionCreatorPath);
 
 const messages = require(reducerPath).default;
-const { classify, classifyBotMessage } = require(reducerPath);
+const {
+  classify,
+  classifyBotMessage,
+  doneDecisionBranchesOtherThanLast,
+} = require(reducerPath);
 const { fetchMessages } = require(actionCreatorPath);
 
 describe("classifyBotMessage", () => {
@@ -82,5 +86,21 @@ describe("chat/reducers/messages", () => {
         expect(state).toEqual("old");
       });
     });
+  });
+});
+
+describe("doneDecisionBranchesOtherThanLast", () => {
+  it("assigns true to isDone", () => {
+    const fakeClassifiedData = [
+      { answer: {}, question: {} },
+      { decisionBranches: ["fake"] },
+      { answer: {}, question: {} },
+      { decisionBranches: ["fake"] },
+    ];
+    const result = doneDecisionBranchesOtherThanLast(fakeClassifiedData);
+    expect(result[0].isDone).toBeUndefined();
+    expect(result[1].isDone).toBe(true);
+    expect(result[2].isDone).toBeUndefined();
+    expect(result[3].isDone).toBeUndefined();
   });
 });

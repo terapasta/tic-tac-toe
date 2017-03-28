@@ -102,3 +102,13 @@ export function changeRatingHandler(state, action) {
   ];
   return assign({}, state, { classifiedData });
 }
+
+export function doneDecisionBranchesOtherThanLast(classifiedData) {
+  const data = cloneDeep(classifiedData);
+  return data.map((section, i) => {
+    if (!isEmpty(section.decisionBranches) && i !== data.length - 1) {
+      section.isDone = true;
+    }
+    return section;
+  });
+}

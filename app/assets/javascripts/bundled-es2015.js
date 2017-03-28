@@ -42,12 +42,11 @@ var _mixpanel2 = _interopRequireDefault(_mixpanel);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function init() {
+  _mixpanel2.default.initialize("3c53484fb604d6e20438b4fac8d2ea56");
   (0, _mountComponent.mountComponentWithRedux)(_app2.default, _reducers2.default, [_reduxPromise2.default]);
   (0, _mountComponent.mountComponentWithRedux)(_conversationTree2.default, _reducers4.default);
   (0, _mountComponent2.default)(_botResetButton2.default);
   (0, _mountComponent2.default)(_questionAnswerForm2.default);
-  (0, _mountComponent2.default)(_app2.default);
-  _mixpanel2.default.initialize("3c53484fb604d6e20438b4fac8d2ea56");
 }
 
 if (document.readyState === "complete") {
@@ -404,6 +403,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fetchMessages = fetchMessages;
 exports.postMessage = postMessage;
+exports.chooseDecisionBranch = chooseDecisionBranch;
 
 var _axios = require("axios");
 
@@ -427,6 +427,10 @@ function postMessage(token, messageBody) {
       body: messageBody
     }
   }, (0, _config2.default)());
+}
+
+function chooseDecisionBranch(token, decisionBranchId) {
+  return _axios2.default.post("/embed/" + token + "/chats/choices/" + decisionBranchId + ".json", (0, _config2.default)());
 }
 
 },{"./config":8,"axios":82}],8:[function(require,module,exports){
@@ -722,8 +726,10 @@ function makeDummyLink(url) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nothingMessage = exports.badMessage = exports.goodMessage = exports.enableForm = exports.disableForm = exports.clearMessageBody = exports.changeMessageBody = exports.postMessageIfNeeded = exports.createdMessage = exports.fetchMessages = undefined;
+exports.nothingMessage = exports.badMessage = exports.goodMessage = exports.chosenDecisionBranch = exports.enableForm = exports.disableForm = exports.clearMessageBody = exports.changeMessageBody = exports.postMessageIfNeeded = exports.createdMessage = exports.fetchMessages = undefined;
 exports.postMessage = postMessage;
+exports.disableFormIfHasDecisionBranches = disableFormIfHasDecisionBranches;
+exports.chooseDecisionBranch = chooseDecisionBranch;
 exports.changeMessageRatingTo = changeMessageRatingTo;
 exports.trackMixpanel = trackMixpanel;
 
@@ -736,6 +742,14 @@ var _assign2 = _interopRequireDefault(_assign);
 var _trim = require("lodash/trim");
 
 var _trim2 = _interopRequireDefault(_trim);
+
+var _find = require("lodash/find");
+
+var _find2 = _interopRequireDefault(_find);
+
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
 
 var _isEmpty = require("is-empty");
 
@@ -789,11 +803,10 @@ var postMessageIfNeeded = exports.postMessageIfNeeded = function postMessageIfNe
 
 function postMessage(token, messageBody, dispatch) {
   API.postMessage(token, messageBody).then(function (res) {
-    return dispatch(createdMessage(res));
-  }).then(function () {
-    return dispatch(clearMessageBody());
-  }).then(function () {
-    return dispatch(enableForm());
+    dispatch(createdMessage(res));
+    dispatch(clearMessageBody());
+    dispatch(enableForm());
+    dispatch(disableFormIfHasDecisionBranches(res.data));
   }).catch(function (err) {
     console.error(err);
     _toastr2.default.error(c.ErrorCreateMessage, c.ErrorTitle);
@@ -804,6 +817,33 @@ var changeMessageBody = exports.changeMessageBody = (0, _reduxActions.createActi
 var clearMessageBody = exports.clearMessageBody = (0, _reduxActions.createAction)("CLEAR_MESSAGE_BODY");
 var disableForm = exports.disableForm = (0, _reduxActions.createAction)("DISABLE_FORM");
 var enableForm = exports.enableForm = (0, _reduxActions.createAction)("ENABLE_FORM");
+
+function disableFormIfHasDecisionBranches(data) {
+  return function (dispatch, getState) {
+    var botMessage = (0, _find2.default)(data.messages, function (m) {
+      return m.speaker === "bot";
+    });
+    var decisionBranches = (0, _get2.default)(botMessage, "answer.decisionBranches");
+    if ((0, _isEmpty2.default)(decisionBranches)) {
+      return;
+    }
+    dispatch(disableForm());
+  };
+}
+
+function chooseDecisionBranch(token, decisionBranchId) {
+  return function (dispatch, getState) {
+    API.chooseDecisionBranch(token, decisionBranchId).then(function (res) {
+      dispatch(chosenDecisionBranch(res));
+      dispatch(enableForm());
+    }).catch(function (err) {
+      console.error(err);
+      _toastr2.default.error(c.ErrorCreateMessage, c.ErrorTitle);
+    });
+  };
+}
+
+var chosenDecisionBranch = exports.chosenDecisionBranch = (0, _reduxActions.createAction)("CHOSEN_DECISION_BRANCH");
 
 function changeMessageRatingTo(type, token, messageId) {
   return function (dispatch, getState) {
@@ -838,7 +878,7 @@ function trackMixpanel(eventName, options) {
   _mixpanel2.default.sharedInstance.trackEvent(eventName, opt);
 }
 
-},{"../../analytics/mixpanel":4,"../../api/chat-message-rating":6,"../../api/chat-messages":7,"../../modules/snake-case-keys":79,"./constants":15,"is-empty":430,"lodash/assign":605,"lodash/trim":657,"redux-actions":850,"toastr":871}],11:[function(require,module,exports){
+},{"../../analytics/mixpanel":4,"../../api/chat-message-rating":6,"../../api/chat-messages":7,"../../modules/snake-case-keys":79,"./constants":15,"is-empty":430,"lodash/assign":605,"lodash/find":618,"lodash/get":621,"lodash/trim":657,"redux-actions":850,"toastr":871}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -967,7 +1007,10 @@ var ChatApp = function (_Component) {
                 }
               }),
               _react2.default.createElement(_decisionBranchesRow2.default, {
-                section: section
+                section: section,
+                onChoose: function onChoose(decisionBranchId) {
+                  dispatch(a.chooseDecisionBranch(token, decisionBranchId));
+                }
               })
             );
           })
@@ -1283,9 +1326,12 @@ var _decisionBranches2 = _interopRequireDefault(_decisionBranches);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ChatDecisionBranchesRow(_ref) {
-  var decisionBranches = _ref.section.decisionBranches;
+  var _ref$section = _ref.section,
+      decisionBranches = _ref$section.decisionBranches,
+      isDone = _ref$section.isDone,
+      onChoose = _ref.onChoose;
 
-  if ((0, _isEmpty2.default)(decisionBranches)) {
+  if ((0, _isEmpty2.default)(decisionBranches) || isDone) {
     return null;
   }
 
@@ -1296,9 +1342,9 @@ function ChatDecisionBranchesRow(_ref) {
       _container2.default,
       null,
       _react2.default.createElement(_decisionBranches2.default, {
-        title: "sample",
+        title: "\u56DE\u7B54\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044",
         items: decisionBranches,
-        onSelect: function onSelect() {}
+        onChoose: onChoose
       })
     )
   );
@@ -1348,7 +1394,7 @@ var ChatDecisionBranches = function (_Component) {
       var _props = this.props,
           title = _props.title,
           items = _props.items,
-          onSelect = _props.onSelect;
+          onChoose = _props.onChoose;
 
 
       return _react2.default.createElement(
@@ -1373,7 +1419,7 @@ var ChatDecisionBranches = function (_Component) {
                   key: i,
                   onClick: function onClick(e) {
                     e.preventDefault();
-                    onSelect(i, item);
+                    onChoose(item.id);
                   } },
                 item.body
               );
@@ -1388,7 +1434,7 @@ var ChatDecisionBranches = function (_Component) {
       return {
         title: _react.PropTypes.string.isRequired,
         items: _react.PropTypes.array.isRequired,
-        onSelect: _react.PropTypes.func.isRequired
+        onChoose: _react.PropTypes.func.isRequired
       };
     }
   }]);
@@ -1876,6 +1922,7 @@ var _handleActions;
 exports.classify = classify;
 exports.classifyBotMessage = classifyBotMessage;
 exports.changeRatingHandler = changeRatingHandler;
+exports.doneDecisionBranchesOtherThanLast = doneDecisionBranchesOtherThanLast;
 
 var _assign = require("lodash/assign");
 
@@ -1975,12 +2022,17 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
       meta = _payload$data.meta;
 
   var data = state.data.concat(messages);
-  var classifiedData = classify(state.classifiedData, messages);
+  var classifiedData = doneDecisionBranchesOtherThanLast(classify(state.classifiedData, messages));
   return (0, _assign2.default)({}, state, { data: data, classifiedData: classifiedData, meta: meta });
 }), _defineProperty(_handleActions, _actionCreators.createdMessage, function (state, action) {
   var messages = action.payload.data.messages;
 
   var classifiedData = classify(state.classifiedData, messages);
+  return (0, _assign2.default)({}, state, { classifiedData: classifiedData });
+}), _defineProperty(_handleActions, _actionCreators.chosenDecisionBranch, function (state, action) {
+  var messages = action.payload.data.messages;
+
+  var classifiedData = doneDecisionBranchesOtherThanLast(classify(state.classifiedData, messages));
   return (0, _assign2.default)({}, state, { classifiedData: classifiedData });
 }), _defineProperty(_handleActions, _actionCreators.goodMessage, changeRatingHandler), _defineProperty(_handleActions, _actionCreators.badMessage, changeRatingHandler), _defineProperty(_handleActions, _actionCreators.nothingMessage, changeRatingHandler), _handleActions), {
   data: [],
@@ -2002,6 +2054,16 @@ function changeRatingHandler(state, action) {
   var section = state.classifiedData[index];
   var classifiedData = [].concat(_toConsumableArray(state.classifiedData.slice(0, index)), [(0, _assign2.default)(section, { answer: pickUp(message) })], _toConsumableArray(state.classifiedData.slice(index + 1)));
   return (0, _assign2.default)({}, state, { classifiedData: classifiedData });
+}
+
+function doneDecisionBranchesOtherThanLast(classifiedData) {
+  var data = (0, _cloneDeep2.default)(classifiedData);
+  return data.map(function (section, i) {
+    if (!(0, _isEmpty2.default)(section.decisionBranches) && i !== data.length - 1) {
+      section.isDone = true;
+    }
+    return section;
+  });
 }
 
 },{"../action-creators":10,"is-empty":430,"lodash/assign":605,"lodash/chunk":609,"lodash/cloneDeep":610,"lodash/findIndex":619,"lodash/get":621,"lodash/last":644,"lodash/pick":647,"promise":663,"redux-actions":850}],27:[function(require,module,exports){

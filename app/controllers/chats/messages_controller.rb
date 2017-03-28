@@ -5,7 +5,7 @@ class Chats::MessagesController < ApplicationController
   before_action :set_bot_chat
 
   def index
-    @messages = @chat.messages.oreder(created_at: :desc).page(params[:page]).per(20)
+    @messages = @chat.messages.order(created_at: :desc).page(params[:page]).per(20)
     respond_to do |format|
       format.json { render_collection_json @messages.reverse, include: 'answer,answer.decision_branches' }
     end

@@ -15,7 +15,8 @@ function ChatSection(props) {
   } = props;
 
   const { decisionBranches, isDone } = section;
-  if (!isEmpty(decisionBranches) && isDone) { console.log(section); return null; }
+  const isDecisionBranch = !isEmpty(decisionBranches);
+  if (isDecisionBranch && isDone) { console.log(section); return null; }
 
   const className = classNames({
     "chat-section": !isManager,
@@ -30,7 +31,7 @@ function ChatSection(props) {
   return (
     <div className={className}>
       <div className="chat-section__switch-container">
-        {!isFirst && (
+        {!isFirst && !isDecisionBranch && (
           <a href="#"
             className="chat-section__switch"
             onClick={onClickWrapper}>

@@ -32,7 +32,8 @@
       "sinon",
       "promise",
       "redux-actions",
-      "redux-promise"
+      "redux-promise",
+      "uuid"
     ]
   },
   "dependencies": {

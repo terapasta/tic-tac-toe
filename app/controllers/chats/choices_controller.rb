@@ -7,7 +7,10 @@ class Chats::ChoicesController < ApplicationController
     @message = @chat.messages.build(speaker: 'guest', body: @decision_branch.body)
     @bot_messages = [ @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body) ]
     @chat.save!
-    render 'chats/messages/create'
+    respond_to do |format|
+      format.html { render 'chats/messages/create' }
+      format.json { render json: [@message, *@bot_messages], adapter: :json }
+    end
   end
 
   private

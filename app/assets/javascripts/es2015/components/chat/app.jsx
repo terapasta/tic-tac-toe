@@ -52,12 +52,13 @@ export default class ChatApp extends Component {
         <ChatArea>
           {classifiedData.map((section, i) => {
             const isFirst = i === 0;
+            const { isActive, isDisabled } = section;
             return (
               <ChatSection {...{
                   isManager,
                   isFirst,
-                  isActive: section.isActive,
-                  isDisabled: section.isDisabled,
+                  isActive,
+                  isDisabled,
                   key: i,
                   index: i,
                   section,
@@ -67,10 +68,12 @@ export default class ChatApp extends Component {
                 }}>
                 <ChatGuestMessageRow {...{
                   section,
+                  isActive,
                 }} />
                 <ChatBotMessageRow {...{
                   section,
                   isFirst,
+                  isActive,
                   onChangeRatingTo(type, messageId) {
                     dispatch(a.changeMessageRatingTo(type, token, messageId));
                   },

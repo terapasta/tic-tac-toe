@@ -15,6 +15,7 @@ import {
   goodMessage,
   badMessage,
   nothingMessage,
+  chosenDecisionBranch,
 } from "../action-creators";
 
 const Speaker = {
@@ -66,13 +67,19 @@ export default handleActions({
 
     const { messages, meta } = payload.data;
     const data = state.data.concat(messages);
-    const classifiedData = classify(state.classifiedData, messages);
+    const classifiedData = doneDecisionBranchesOtherThanLast(classify(state.classifiedData, messages));
     return assign({}, state, { data, classifiedData, meta });
   },
 
   [createdMessage]: (state, action) => {
     const { messages } = action.payload.data;
     const classifiedData = classify(state.classifiedData, messages);
+    return assign({}, state, { classifiedData });
+  },
+
+  [chosenDecisionBranch]: (state, action) => {
+    const { messages } = action.payload.data;
+    const classifiedData = doneDecisionBranchesOtherThanLast(classify(state.classifiedData, messages));
     return assign({}, state, { classifiedData });
   },
 

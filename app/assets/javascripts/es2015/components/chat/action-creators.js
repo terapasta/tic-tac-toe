@@ -52,6 +52,23 @@ export function disableFormIfHasDecisionBranches(data) {
     dispatch(disableForm());
   };
 }
+
+export function chooseDecisionBranch(token, decisionBranchId) {
+  return (dispatch, getState) => {
+    API.chooseDecisionBranch(token, decisionBranchId)
+      .then((res) => {
+        dispatch(chosenDecisionBranch(res));
+        dispatch(enableForm());
+      })
+      .catch((err) => {
+        console.error(err);
+        toastr.error(c.ErrorCreateMessage, c.ErrorTitle);
+      });
+  };
+}
+
+export const chosenDecisionBranch = createAction("CHOSEN_DECISION_BRANCH");
+
 export function changeMessageRatingTo(type, token, messageId) {
   return (dispatch, getState) => {
     switch (type) {

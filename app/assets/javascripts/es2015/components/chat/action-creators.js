@@ -1,6 +1,8 @@
 import { createAction } from "redux-actions";
 import assign from "lodash/assign";
 import trim from "lodash/trim";
+import find from "lodash/find";
+import get from "lodash/get";
 import isEmpty from "is-empty";
 import toastr from "toastr";
 import * as API from "../../api/chat-messages";
@@ -25,9 +27,12 @@ export const postMessageIfNeeded = (token, messageBody) => {
 
 export function postMessage(token, messageBody, dispatch) {
   API.postMessage(token, messageBody)
-    .then((res) => dispatch(createdMessage(res)))
-    .then(() => dispatch(clearMessageBody()))
-    .then(() => dispatch(enableForm()))
+    .then((res) => {
+      dispatch(createdMessage(res));
+      dispatch(clearMessageBody());
+      dispatch(enableForm());
+      dispatch(disableFormIfHasDecisionBranches(res.data));
+    })
     .catch((err) => {
       console.error(err);
       toastr.error(c.ErrorCreateMessage, c.ErrorTitle);
@@ -39,6 +44,14 @@ export const clearMessageBody = createAction("CLEAR_MESSAGE_BODY");
 export const disableForm = createAction("DISABLE_FORM");
 export const enableForm = createAction("ENABLE_FORM");
 
+export function disableFormIfHasDecisionBranches(data) {
+  return (dispatch, getState) => {
+    const botMessage = find(data.messages, (m) => m.speaker === "bot");
+    const decisionBranches = get(botMessage, "answer.decisionBranches");
+    if (isEmpty(decisionBranches)) { return; }
+    dispatch(disableForm());
+  };
+}
 export function changeMessageRatingTo(type, token, messageId) {
   return (dispatch, getState) => {
     switch (type) {

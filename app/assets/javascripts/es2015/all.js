@@ -12,12 +12,11 @@ import mountComponent, { mountComponentWithRedux } from "./modules/mount-compone
 import Mixpanel from "./analytics/mixpanel";
 
 function init() {
+  Mixpanel.initialize("3c53484fb604d6e20438b4fac8d2ea56");
   mountComponentWithRedux(ChatApp, ChatAppReducers, [promiseMiddleware]);
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
   mountComponent(QuestionAnswerForm);
-  mountComponent(ChatApp);
-  Mixpanel.initialize("3c53484fb604d6e20438b4fac8d2ea56");
 }
 
 if (document.readyState === "complete") {

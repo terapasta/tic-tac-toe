@@ -65,6 +65,9 @@ export default class ChatApp extends Component {
                 }} />
                 <ChatDecisionBranchesRow {...{
                   section,
+                  onChoose(decisionBranchId) {
+                    dispatch(a.chooseDecisionBranch(token, decisionBranchId));
+                  }
                 }} />
               </ChatSection>
             );

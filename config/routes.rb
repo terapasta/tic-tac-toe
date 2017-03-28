@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resource :answer, only: [:show], module: :question_answers
       get :autocomplete_answer_body, on: :collection
     end
+    resources :topic_tags
     resource :imports, only: [:new, :create]
     resources :exports, only: [:index, :show], param: :encoding
     resources :threads, only: :index do

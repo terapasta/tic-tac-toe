@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import classNames from "classnames";
+import isEmpty from "is-empty";
 
 function ChatSection(props) {
   const {
@@ -7,7 +8,11 @@ function ChatSection(props) {
     isManager,
     isActive,
     onClick,
+    section,
   } = props;
+
+  const { decisionBranches, isDone } = section;
+  if (!isEmpty(decisionBranches) && isDone) { console.log(section); return null; }
 
   const className = classNames({
     "chat-section": !isManager,

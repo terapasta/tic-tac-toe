@@ -10,7 +10,7 @@ default: &default
   database: donusagi_bot
   pool: 5
   username: root
-  password: niH4itYi
+  password:
 
 development:
   <<: *default

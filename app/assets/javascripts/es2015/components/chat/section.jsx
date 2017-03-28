@@ -8,8 +8,10 @@ function ChatSection(props) {
     isManager,
     isFirst,
     isActive,
+    isDisabled,
     onClick,
     section,
+    index,
   } = props;
 
   const { decisionBranches, isDone } = section;
@@ -22,11 +24,8 @@ function ChatSection(props) {
   });
   const onClickWrapper = (e) => {
     e.preventDefault();
-    onClick();
+    onClick(index);
   };
-  const tooltipText = isActive ?
-    "キャンセルする場合はクリックしてください" :
-    "回答が正しくない場合、クリックして別の回答を教えられます"
 
   return (
     <div className={className}>
@@ -36,18 +35,23 @@ function ChatSection(props) {
             className="chat-section__switch"
             onClick={onClickWrapper}>
             <i className="material-icons">school</i>
-            <div className="chat-section__tooltip">
-              {tooltipText}
-            </div>
+            {!isActive && (
+              <div className="chat-section__tooltip">
+                回答が正しくない場合、クリックして別の回答を教えられます
+              </div>
+            )}
           </a>
         )}
       </div>
       {children}
       {isActive && (
         <div className="chat-section__actions">
-          <a className="btn btn-link btn-xs-sm" href="#">キャンセル</a>
+          <a className="btn btn-link btn-xs-sm" href="#" onClick={onClickWrapper}>キャンセル</a>
           <a className="btn btn-primary btn-xs-sm" href="#">この内容で教える</a>
         </div>
+      )}
+      {isDisabled && (
+        <div className="chat-section__disable-cover" />
       )}
     </div>
   );
@@ -56,7 +60,8 @@ function ChatSection(props) {
 ChatSection.propTypes = {
   isManager: PropTypes.bool.isRequired,
   isFirst: PropTypes.bool.isRequired,
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   section: PropTypes.object.isRequired,
 };
 

@@ -56,9 +56,14 @@ export default class ChatApp extends Component {
               <ChatSection {...{
                   isManager,
                   isFirst,
-                  isActive: false,
+                  isActive: section.isActive,
+                  isDisabled: section.isDisabled,
                   key: i,
+                  index: i,
                   section,
+                  onClick(index) {
+                    dispatch(a.toggleActiveSection(index));
+                  }
                 }}>
                 <ChatGuestMessageRow {...{
                   section,

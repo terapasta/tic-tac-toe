@@ -28,3 +28,39 @@ class PtnaConversationTestCase(TestCase):
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)
 
+    def test_hello(self):
+        questions = ['こんにちは']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = 'こんにちは'
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)
+
+    def test_want_to_join(self):
+        questions = ['入会したいのですが']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = 'オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html'
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)
+
+    def test_fail_want_to_eat_ramen(self):
+        questions = ['おいしいラーメンが食べたいです']
+        # questions = ['']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+
+        # ラベル0(分類失敗)に分類されること
+        eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+        ok_(result.probability > self.threshold)
+
+    def test_fail_blank(self):
+        questions = ['']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+
+        # ラベル0(分類失敗)に分類されること
+        eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+        ok_(result.probability > self.threshold)

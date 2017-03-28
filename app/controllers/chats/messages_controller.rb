@@ -5,19 +5,21 @@ class Chats::MessagesController < ApplicationController
   before_action :set_bot_chat
 
   def index
-    @messages = @chat.messages.page(params[:page]).per(20)
+    @messages = @chat.messages.oreder(created_at: :desc).page(params[:page]).per(20)
     respond_to do |format|
-      format.json { render_collection_json @messages, include: 'answer,answer.decision_branches' }
+      format.json { render_collection_json @messages.reverse, include: 'answer,answer.decision_branches' }
     end
   end
 
   def create
     @bot = Bot.find_by!(token: params[:token])
-    @message = @chat.messages.build(message_params) {|m|
-      m.speaker = 'guest'
-      m.user_agent = request.env['HTTP_USER_AGENT']
-    }
-    @bot_messages = receive_and_reply!(@chat, @message, params[:message][:other_answer_id])
+    ActiveRecord::Base.transaction do
+      @message = @chat.messages.create!(message_params) {|m|
+        m.speaker = 'guest'
+        m.user_agent = request.env['HTTP_USER_AGENT']
+      }
+      @bot_messages = receive_and_reply!(@chat, @message, params[:message][:other_answer_id])
+    end
     respond_to do |format|
       format.js
       format.json { render_collection_json [@message, *@bot_messages], include: 'answer,answer.decision_branches' }

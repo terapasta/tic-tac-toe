@@ -1,0 +1,10 @@
+h1 Q&Aトピック編集
+.row
+  .col-md-6.col-xs-12
+    = bootstrap_form_for @topic_tag, url: bot_topic_tag_path(@bot, @topic_tag) do |f|
+
+      = f.text_field :name
+
+      .actions
+        = f.submit class: 'btn btn-primary'
+        

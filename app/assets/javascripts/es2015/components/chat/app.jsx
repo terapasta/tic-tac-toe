@@ -39,6 +39,7 @@ export default class ChatApp extends Component {
       token,
       messages,
       form,
+      isManager,
     } = this.props;
 
     const {
@@ -52,7 +53,12 @@ export default class ChatApp extends Component {
           {classifiedData.map((section, i) => {
             const isFirst = i === 0;
             return (
-              <ChatSection {...{ isManager: false, isActive: false, key: i }}>
+              <ChatSection {...{
+                  isManager,
+                  isActive: false,
+                  key: i,
+                  section,
+                }}>
                 <ChatGuestMessageRow {...{
                   section,
                 }} />

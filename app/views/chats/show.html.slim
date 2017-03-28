@@ -1,6 +1,7 @@
 span(
   data-component="ChatApp"
   data-token=@bot.token
+  data-is-manager=(current_user.normal? || current_user.staff?).to_json
 )
 
 /.chat-container.chat-area

@@ -11,6 +11,7 @@ const app = combineReducers({
   messages,
   form,
   token: through,
+  isManager: through,
 });
 
 export default app;

@@ -16,6 +16,9 @@ import {
   badMessage,
   nothingMessage,
   chosenDecisionBranch,
+  activeSection,
+  disableSection,
+  inactiveSection,
 } from "../action-creators";
 
 const Speaker = {
@@ -86,6 +89,21 @@ export default handleActions({
   [goodMessage]: changeRatingHandler,
   [badMessage]: changeRatingHandler,
   [nothingMessage]: changeRatingHandler,
+
+  [activeSection]: sectionActiveStateHandler((datum) => {
+    datum.isActive = true;
+    delete datum.isDisabled;
+  }),
+
+  [disableSection]: sectionActiveStateHandler((datum) => {
+    delete datum.isActive;
+    datum.isDisabled = true;
+  }),
+
+  [inactiveSection]: sectionActiveStateHandler((datum) => {
+    delete datum.isActive;
+    delete datum.isDisabled;
+  }),
 }, {
   data: [],
   classifiedData: [],
@@ -118,4 +136,13 @@ export function doneDecisionBranchesOtherThanLast(classifiedData) {
     }
     return section;
   });
+}
+
+export function sectionActiveStateHandler(manipulator) {
+  return (state, action) => {
+    const data = cloneDeep(state.classifiedData);
+    const datum = data[action.payload];
+    manipulator(datum);
+    return assign({}, state, { classifiedData: data });
+  }
 }

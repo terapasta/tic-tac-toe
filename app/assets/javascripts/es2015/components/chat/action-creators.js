@@ -98,3 +98,28 @@ export function trackMixpanel(eventName, options) {
   const opt = assign({ bot_id: id, bot_name: name, }, snakeCaseOptions);
   Mixpanel.sharedInstance.trackEvent(eventName, opt);
 }
+
+export function toggleActiveSection(index) {
+  return (dispatch, getState) => {
+    const { messages } = getState();
+    const { classifiedData } = messages;
+    const hasActive = classifiedData.filter((s) => s.isActive).length > 0;
+    classifiedData.forEach((section, i) => {
+      if (i === index) {
+        if (section.isActive) {
+          dispatch(inactiveSection(i));
+        } else {
+          dispatch(activeSection(i));
+        }
+      } else if (hasActive) {
+        dispatch(inactiveSection(i));
+      } else{
+        dispatch(disableSection(i));
+      }
+    });
+  };
+}
+
+export const activeSection = createAction("ACTIVE_SECTION");
+export const disableSection = createAction("DISABLE_SECTION");
+export const inactiveSection = createAction("INACTIVE_SECTION");

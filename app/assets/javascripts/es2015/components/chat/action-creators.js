@@ -2,11 +2,13 @@ import { createAction } from "redux-actions";
 import assign from "lodash/assign";
 import trim from "lodash/trim";
 import find from "lodash/find";
+import findIndex from "lodash/findIndex";
 import get from "lodash/get";
 import isEmpty from "is-empty";
 import toastr from "toastr";
 import * as API from "../../api/chat-messages";
 import * as MessageRatingAPI from "../../api/chat-message-rating";
+import * as ChatTrainigsAPI from "../../api/chat-trainings";
 import * as c from "./constants";
 
 import Mixpanel from "../../analytics/mixpanel";
@@ -136,5 +138,42 @@ export const newLearning = createAction("NEW_LEARNING");
 export const updateLearning = createAction("UPDATE_LEARNING");
 export const enableLearning = createAction("ENABLE_LEARNING");
 export const disableLearning = createAction("DISABLE_LEARNING");
+
+export function saveLearning({ questionId, answerId }) {
+  return (dispatch, getState) => {
+    const { messages, learnings, token } = getState();
+    const { classifiedData } = messages;
+    const sectionIndex = findIndex(classifiedData, {
+      question: { id: questionId },
+      answer: { id: answerId },
+    });
+    const section = classifiedData[sectionIndex];
+    const learningIndex = findIndex(learnings, { questionId, answerId });
+    const learning = learnings[learningIndex];
+    const { questionBody, answerBody } = learning;
+
+    if (!learning) { return; }
+    if (isEmpty(questionBody) || isEmpty(answerBody)) {
+      return toastr.warning("質問と新しい回答を入力してください");
+    }
+
+    dispatch(disableLearning({ questionId, answerId }));
+
+    ChatTrainigsAPI.create(token, {
+      questionBody,
+      answerBody,
+      questionId,
+      answerId,
+    }).then((res) => {
+      dispatch(updateMessage({ id: questionId, body: questionBody }));
+      dispatch(updateMessage({ id: answerId, body: answerBody }));
+      classifiedData.forEach((_, i) => dispatch(inactiveSection(i)));
+      toastr.success(c.SucceededTraining);
+    }).catch((err) => {
+      console.error(err);
+      dispatch(enableLearning({ questionId, answerId }));
+    });
+  };
+}
 
 export const updateMessage = createAction("UPDATE_MESSAGE");

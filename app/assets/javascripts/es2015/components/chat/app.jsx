@@ -79,8 +79,12 @@ export default class ChatApp extends Component {
                   section,
                   isFirst,
                   isActive,
+                  learnings,
                   onChangeRatingTo(type, messageId) {
                     dispatch(a.changeMessageRatingTo(type, token, messageId));
+                  },
+                  onChangeLearning(payload) {
+                    dispatch(a.updateLearning(payload));
                   },
                 }} />
                 <ChatDecisionBranchesRow {...{

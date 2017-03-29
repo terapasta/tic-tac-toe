@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from "react";
+import find from "lodash/find";
 import TextArea from "react-textarea-autosize";
 
-function ChatGuestMessageEditor(props) {
-  // const {
-  //   body
-  // } = props;
-
+function ChatGuestMessageEditor({
+  learning: {
+    questionId,
+    answerId,
+    questionBody,
+  },
+  onChangeLearning,
+}) {
   const iconStyle = {
     backgroundImage: `url(${window.Images["silhouette.png"]})`,
   };
@@ -16,7 +20,15 @@ function ChatGuestMessageEditor(props) {
         <div className="chat-message__part-label">質問</div>
         <TextArea
           className="form-control"
-          rows={2}
+          rows={1}
+          value={questionBody}
+          onChange={(e) => {
+            onChangeLearning({
+              questionId,
+              answerId,
+              questionBody: e.target.value,
+            });
+          }}
         />
       </div>
       <div className="chat-message__icon" style={iconStyle} />

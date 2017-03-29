@@ -28,7 +28,6 @@ class Similarity:
         """
         question_answers = self.__all_question_answers(question)
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
-        # FIXME 1件のquestionのためにTextArrayクラスを使用するのは直感的ではない
         question_array = TextArray([question], vectorizer=self.vectorizer)
 
         similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())

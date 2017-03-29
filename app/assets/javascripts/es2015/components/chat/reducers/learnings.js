@@ -7,6 +7,8 @@ import { handleActions } from "redux-actions";
 import {
   newLearning,
   updateLearning,
+  enableLearning,
+  disableLearning,
 } from "../action-creators";
 
 export default handleActions({
@@ -39,4 +41,27 @@ export default handleActions({
       ...state.slice(index + 1),
     ];
   },
+
+  [enableLearning]: switchActivityHandler((target) => {
+    delete target.isDisabled;
+  }),
+
+  [disableLearning]: switchActivityHandler((target) => {
+    target.isDisabled = true;
+  })
 }, []);
+
+export function switchActivityHandler(manipulator) {
+  return (state, action) => {
+    const { questionId, answerId } = action.payload;
+    const index = findIndex(state, { questionId, answerId });
+    const target = state[index];
+    manipulator(target);
+
+    return [
+      ...state.slice(0, index),
+      target,
+      ...state.slice(index + 1),
+    ];
+  };
+}

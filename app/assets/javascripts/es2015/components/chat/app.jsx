@@ -63,8 +63,12 @@ export default class ChatApp extends Component {
                   key: i,
                   index: i,
                   section,
+                  learnings,
                   onClick(index) {
                     dispatch(a.toggleActiveSection(index));
+                  },
+                  onSaveLearning(payload) {
+                    dispatch(a.saveLearning(payload));
                   }
                 }}>
                 <ChatGuestMessageRow {...{

@@ -16,3 +16,8 @@ export function postMessage(token, messageBody) {
 export function chooseDecisionBranch(token, decisionBranchId) {
   return axios.post(`/embed/${token}/chats/choices/${decisionBranchId}.json`, config());
 }
+
+export function updateMessage(token, messageId, payload) {
+  const path = `/embed/${token}/chats/messages/${messageId}.json`;
+  return axios.put(path, assign({ message: payload }, config()));
+}

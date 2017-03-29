@@ -104,12 +104,20 @@ export function toggleActiveSection(index) {
     const { messages } = getState();
     const { classifiedData } = messages;
     const hasActive = classifiedData.filter((s) => s.isActive).length > 0;
+    const section = classifiedData[index];
+    const { question, answer } = section;
+
     classifiedData.forEach((section, i) => {
       if (i === index) {
         if (section.isActive) {
           dispatch(inactiveSection(i));
         } else {
           dispatch(activeSection(i));
+          dispatch(newLearning({
+            questionId: question.id,
+            answerId: answer.id,
+            questionBody: question.body,
+          }));
         }
       } else if (hasActive) {
         dispatch(inactiveSection(i));
@@ -123,3 +131,6 @@ export function toggleActiveSection(index) {
 export const activeSection = createAction("ACTIVE_SECTION");
 export const disableSection = createAction("DISABLE_SECTION");
 export const inactiveSection = createAction("INACTIVE_SECTION");
+
+export const newLearning = createAction("NEW_LEARNING");
+export const updateLearning = createAction("UPDATE_LEARNING");

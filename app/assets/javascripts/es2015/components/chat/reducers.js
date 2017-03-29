@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 
 import messages from "./reducers/messages";
 import form from "./reducers/form";
+import learnings from "./reducers/learnings";
 
 function through(state = null) {
   return state;
@@ -10,6 +11,7 @@ function through(state = null) {
 const app = combineReducers({
   messages,
   form,
+  learnings,
   token: through,
   isManager: through,
 });

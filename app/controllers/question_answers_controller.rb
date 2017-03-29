@@ -9,7 +9,6 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
-    binding.pry
     @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
   end
 

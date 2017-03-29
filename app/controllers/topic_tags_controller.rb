@@ -4,28 +4,17 @@ class TopicTagsController < ApplicationController
 
   before_action :set_topic_tag, only: [:show, :edit, :update, :destroy]
 
-  # GET /topic_tags
-  # GET /topic_tags.json
   def index
-    @topic_tags = TopicTag.where(bot_id = @bot.id)
+    @topic_tags = @bot.topic_tags
   end
 
-  # GET /topic_tags/1
-  # GET /topic_tags/1.json
-  def show
-  end
-
-  # GET /topic_tags/new
   def new
     @topic_tag = @bot.topic_tags.build
   end
 
-  # GET /topic_tags/1/edit
   def edit
   end
 
-  # POST /topic_tags
-  # POST /topic_tags.json
   def create
     respond_to do |format|
       @topic_tag = TopicTag.new(topic_tag_params)
@@ -43,8 +32,6 @@ class TopicTagsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /topic_tags/1
-  # PATCH/PUT /topic_tags/1.json
   def update
     respond_to do |format|
       if @topic_tag.update(topic_tag_params)
@@ -60,8 +47,6 @@ class TopicTagsController < ApplicationController
     end
   end
 
-  # DELETE /topic_tags/1
-  # DELETE /topic_tags/1.json
   def destroy
     @topic_tag.destroy
     respond_to do |format|
@@ -71,16 +56,14 @@ class TopicTagsController < ApplicationController
   end
 
   private
-
     def set_bot
       @bot = Bot.find_by(params[:id])
     end
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_topic_tag
       @topic_tag = TopicTag.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def topic_tag_params
       params.require(:topic_tag).permit(:name)
     end

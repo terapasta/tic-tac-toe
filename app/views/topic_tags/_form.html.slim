@@ -1,1 +1,8 @@
+.row
+  .col-md-6.col-xs-12
+    = bootstrap_form_for [@bot, @topic_tag] do |f|
 
+      = f.text_field :name
+
+      .actions
+        = f.submit class: 'btn btn-primary'

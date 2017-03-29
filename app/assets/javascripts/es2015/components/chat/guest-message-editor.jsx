@@ -7,6 +7,7 @@ function ChatGuestMessageEditor({
     questionId,
     answerId,
     questionBody,
+    isDisabled,
   },
   onChangeLearning,
 }) {
@@ -29,6 +30,7 @@ function ChatGuestMessageEditor({
               questionBody: e.target.value,
             });
           }}
+          disabled={isDisabled}
         />
       </div>
       <div className="chat-message__icon" style={iconStyle} />

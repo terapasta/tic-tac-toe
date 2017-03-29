@@ -5,7 +5,12 @@ import classNames from "classnames";
 function ChatBotMessageEditor({
   body,
   iconImageUrl,
-  learning: { questionId, answerId, answerBody },
+  learning: {
+    questionId,
+    answerId,
+    answerBody,
+    isDisabled,
+  },
   onChangeLearning,
 }) {
 
@@ -35,6 +40,7 @@ function ChatBotMessageEditor({
               answerBody: e.target.value,
             });
           }}
+          disabled={isDisabled}
         />
       </div>
     </div>

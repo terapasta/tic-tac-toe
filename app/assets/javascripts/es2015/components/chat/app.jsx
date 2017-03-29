@@ -39,6 +39,7 @@ export default class ChatApp extends Component {
       token,
       messages,
       form,
+      learnings,
       isManager,
     } = this.props;
 
@@ -69,6 +70,10 @@ export default class ChatApp extends Component {
                 <ChatGuestMessageRow {...{
                   section,
                   isActive,
+                  learnings,
+                  onChangeLearning(payload) {
+                    dispatch(a.updateLearning(payload));
+                  },
                 }} />
                 <ChatBotMessageRow {...{
                   section,

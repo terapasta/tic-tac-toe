@@ -2,11 +2,12 @@ import React, { Component, PropTypes } from "react";
 import TextArea from "react-textarea-autosize";
 import classNames from "classnames";
 
-function ChatBotMessageEditor(props) {
-  const {
-    body,
-    iconImageUrl,
-  } = props;
+function ChatBotMessageEditor({
+  body,
+  iconImageUrl,
+  learning: { questionId, answerId, answerBody },
+  onChangeLearning,
+}) {
 
   const iconStyle = {
     backgroundImage: `url(${iconImageUrl})`,
@@ -25,7 +26,15 @@ function ChatBotMessageEditor(props) {
         <div className="chat-message__part-label">新しい回答</div>
         <TextArea
           className="form-control"
-          rows={2}
+          rows={1}
+          value={answerBody}
+          onChange={(e) => {
+            onChangeLearning({
+              questionId,
+              answerId,
+              answerBody: e.target.value,
+            });
+          }}
         />
       </div>
     </div>

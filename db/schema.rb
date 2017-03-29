@@ -260,6 +260,15 @@ ActiveRecord::Schema.define(version: 20170415054829) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "topic_taggings", force: :cascade do |t|
+    t.integer  "question_answers_id", limit: 4, null: false
+    t.integer  "topic_tags_id",       limit: 4, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "topic_taggings", ["question_answers_id", "topic_tags_id"], name: "index_topic_taggings_on_question_answers_id_and_topic_tags_id", unique: true, using: :btree
+
   create_table "topic_tags", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.integer  "bot_id",     limit: 4,   null: false

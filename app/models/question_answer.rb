@@ -8,6 +8,7 @@ class QuestionAnswer < ActiveRecord::Base
   belongs_to :answer
   has_many :training_messages, dependent: :nullify
   has_many :decision_branches, through: :answer
+  has_many :topic_taggings, through: :topic_tag
 
   accepts_nested_attributes_for :answer
 

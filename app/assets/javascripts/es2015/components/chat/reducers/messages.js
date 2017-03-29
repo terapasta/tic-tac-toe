@@ -19,6 +19,7 @@ import {
   activeSection,
   disableSection,
   inactiveSection,
+  updateMessage,
 } from "../action-creators";
 
 const Speaker = {
@@ -104,6 +105,19 @@ export default handleActions({
     delete datum.isActive;
     delete datum.isDisabled;
   }),
+
+  [updateMessage]: (state, action) => {
+    const { id, body } = action.payload;
+    const data = cloneDeep(state.classifiedData);
+    data.forEach((section) => {
+      ["question", "answer"].forEach((attr) => {
+        if (get(section, `${attr}.id`) === id) {
+          section[attr].body = body;
+        }
+      });
+    });
+    return assign({}, state, { classifiedData: data });
+  }
 }, {
   data: [],
   classifiedData: [],

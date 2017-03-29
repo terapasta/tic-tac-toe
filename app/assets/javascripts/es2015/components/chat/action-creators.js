@@ -136,3 +136,5 @@ export const newLearning = createAction("NEW_LEARNING");
 export const updateLearning = createAction("UPDATE_LEARNING");
 export const enableLearning = createAction("ENABLE_LEARNING");
 export const disableLearning = createAction("DISABLE_LEARNING");
+
+export const updateMessage = createAction("UPDATE_MESSAGE");

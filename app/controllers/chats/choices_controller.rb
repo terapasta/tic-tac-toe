@@ -3,13 +3,13 @@ class Chats::ChoicesController < ApplicationController
   before_action :set_bot_chat_decision_branch
 
   def create
-    answer = @decision_branch.next_answer
-    @message = @chat.messages.build(speaker: 'guest', body: @decision_branch.body)
-    @bot_messages = [ @chat.messages.build(speaker: 'bot', answer_id: answer.id, body: answer.body) ]
-    @chat.save!
+    ActiveRecord::Base.transaction do
+      @message = @chat.messages.create!(guest_message_params)
+      @bot_message = @chat.messages.create!(bot_message_params)
+    end
     respond_to do |format|
       format.html { render 'chats/messages/create' }
-      format.json { render json: [@message, *@bot_messages], adapter: :json }
+      format.json { render json: [@message, @bot_message], adapter: :json }
     end
   end
 
@@ -18,5 +18,22 @@ class Chats::ChoicesController < ApplicationController
       @bot = Bot.find_by!(token: params[:token])
       @chat = @bot.chats.where(guest_key: session[:guest_key]).last
       @decision_branch = @chat.bot.decision_branches.find(params[:id])
+      @answer = @decision_branch.next_answer
+    end
+
+    def guest_message_params
+      {
+        speaker: 'guest',
+        body: @decision_branch.body
+      }
+    end
+
+    def bot_message_params
+      {
+        speaker: 'bot',
+        answer_id: @answer.id,
+        body: @answer.body,
+        created_at: @message.created_at + 1.second,
+      }
     end
 end

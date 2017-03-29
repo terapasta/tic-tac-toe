@@ -106,10 +106,10 @@ $ cd slack-bot
 $ slappy start
 ```
 ### 開発用デバッグBOTの設定
-1. https://api.slack.com/appsの"Create New App"から新しいアプリを登録する。
-2. 登録したAppを選択しFeatures/Bot UsersからBotユーザーを登録。
-3. Features/OAuth & Permissionsから権限追加画面を開き、Permission Scopesに"Add a bot user with the username {botユーザー名称}"を追加されていることを確認する
-4. 同画面のOAuth Tokens & Redirect URLs欄の"Install App To Team"ボタンを押し、Bot User OAuth Access Tokenを発行する。
-5. ENV['SLACK_TOKEN']に取得したBot User OAuth Access Tokenを設定する。
+Slack連携はCustom Botとしてslackに登録したBotユーザーデータを利用して行います。
 
-※OAuth Access Tokenの方ではReal Time Messaging APIが利用できない為、slappy start実行時にエラーが発生します。
+1. https://my.slack.com/services/new/botにアクセスしCustom bot userを作成する。
+2. ENV['SLACK_TOKEN']に取得したAPI Tokenを設定する。
+3. https://slack.com/api/users.list?pretty=1&token={取得したAPI Token}を実行して、登録したCustom bot userのidを表示、slappy_config.rbのconfig.robot.bot_idに指定する。
+
+以上でslack連携を行うことができるようになります。

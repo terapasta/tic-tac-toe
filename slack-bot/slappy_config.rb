@@ -51,10 +51,14 @@ Slappy.configure do |config|
   #   Official API document:
   #     https://api.slack.com/methods/chat.postMessage
 
+  # as_user:
+  #   Pass true to post the message as the authed user (or registered custom bot user), instead of as a temporary bot.
+  config.robot.as_user = true
+
   # username:
-  #   Name of bot.
+  #   Name of bot ,when config.robot.as_user is false.
   #
-  config.robot.username = '@donusagi_bot'
+  # config.robot.username = '@donusagi_bot'
 
   # channel:
   #   Channel, private group, or IM channel to send message to.
@@ -62,6 +66,10 @@ Slappy.configure do |config|
   #
   config.robot.channel = '#random'
 
+  # bot_id:
+  #   Used to match pattern suffix given by respond method.
+  #   This value is slack's user id.
+  #   Bot name of destination in a message is converted to user id, and is compared this value.
   config.robot.bot_id = 'U2M8HFV3Q'
 
   # icon_emoji:
@@ -70,7 +78,7 @@ Slappy.configure do |config|
   # config.robot.icon_emoji = nil
 
   # icon_url:
-  #    URL to an image to use as the icon for this message
+  #    URL to an image to use as the icon for this message, when config.robot.as_user is false
   #
   # config.robot.icon_url = nil
 end

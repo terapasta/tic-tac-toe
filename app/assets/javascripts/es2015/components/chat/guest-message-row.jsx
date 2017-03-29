@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import find from "lodash/find";
+import get from "lodash/get";
 
 import ChatRow from "./row";
 import ChatContainer from "./container";
@@ -15,8 +16,8 @@ function ChatGuestMessageRow({
   if (question == null) { return null; }
 
   const learning = find(learnings, {
-    questionId: question.id,
-    answerId: answer.id,
+    questionId: get(question, "id"),
+    answerId: get(answer, "id"),
   });
 
   return (

@@ -10,7 +10,7 @@ import Promise from "promise";
 import { handleActions } from "redux-actions";
 
 import {
-  fetchMessages,
+  fetchedMessages,
   createdMessage,
   goodMessage,
   badMessage,
@@ -27,9 +27,9 @@ const Speaker = {
   Guest: "guest",
 };
 
-export function classify(data, messages) {
+export function classify(data, messages, isLastPage) {
   let sections = cloneDeep(data);
-  if (data.length === 0) {
+  if (data.length === 0 && isLastPage) {
     sections.push({ answer: messages.shift() });
   }
 
@@ -61,24 +61,20 @@ export function classifyBotMessage(sections, message) {
 }
 
 export default handleActions({
-  [fetchMessages]: (state, action) => {
-    const { payload } = action;
+  [fetchedMessages]: (state, action) => {
+    const { isLastPage, data: { messages, meta } } = action.payload;
+    let classifiedData = doneDecisionBranchesOtherThanLast(classify([], messages, isLastPage));
 
-    if (action.error) {
-      console.error(payload);
-      return state;
+    if (meta.currentPage > 1) {
+      classifiedData = classifiedData.concat(state.classifiedData);
     }
-
-    const { messages, meta } = payload.data;
-    const data = state.data.concat(messages);
-    const classifiedData = doneDecisionBranchesOtherThanLast(classify(state.classifiedData, messages));
-    return assign({}, state, { data, classifiedData, meta });
+    return assign({}, state, { classifiedData, meta, isNeedScroll: false });
   },
 
   [createdMessage]: (state, action) => {
     const { messages } = action.payload.data;
     const classifiedData = classify(state.classifiedData, messages);
-    return assign({}, state, { classifiedData });
+    return assign({}, state, { classifiedData, isNeedScroll: true });
   },
 
   [chosenDecisionBranch]: (state, action) => {
@@ -106,6 +102,7 @@ export default handleActions({
     delete datum.isDisabled;
   }),
 
+  // TODO replaceMessageに直したい
   [updateMessage]: (state, action) => {
     const { id, body } = action.payload;
     const data = cloneDeep(state.classifiedData);

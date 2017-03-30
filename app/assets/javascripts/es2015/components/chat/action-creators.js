@@ -13,8 +13,33 @@ import * as c from "./constants";
 
 import Mixpanel from "../../analytics/mixpanel";
 import snakeCaseKeys from "../../modules/snake-case-keys";
-export const fetchMessages = createAction("FETCH_MESSAGES", API.fetchMessages);
+
+export const fetchedMessages = createAction("FETCHED_MESSAGES");
 export const createdMessage = createAction("CREATED_MESSAGE");
+
+export function fetchMessages(token, page = 1) {
+  return (dispatch, getState) => {
+    dispatch(disableReadMore());
+    API.fetchMessages(token, page).then((res) => {
+      const { currentPage, totalPages } = get(res, "data.meta");
+      const isApperedReadMore = currentPage < totalPages;
+      const isLastPage = !isApperedReadMore;
+      dispatch(enableReadMore());
+      dispatch(fetchedMessages(assign(res, { isLastPage })));
+      dispatch(isApperedReadMore ? appearReadMore() : disappearReadMore());
+    }).catch((err) => {
+      console.error(err);
+    });
+  };
+}
+
+export function fetchNextMessages() {
+  return (dispatch, getState) => {
+    const { token, messages: { meta: { currentPage } } } = getState();
+    const nextPage = currentPage + 1;
+    dispatch(fetchMessages(token, nextPage));
+  };
+}
 
 export const postMessageIfNeeded = (token, messageBody) => {
   const m = trim(messageBody);

@@ -1,4 +1,9 @@
 .chat-area {
+  .btn-default {
+    background-image: none;
+    background-color: $white;
+  }
+
   .btn-primary {
     background: {
       color: $blue;

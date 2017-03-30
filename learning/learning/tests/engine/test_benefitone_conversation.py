@@ -45,12 +45,12 @@ class BenefitoneConversationTestCase(TestCase):
     #     # しきい値を超える回答がないこと
     #     ok_(probability < self.threshold)
     #
-    # def test_blank(self):
+    # def test_fail_blank(self):
     #     questions = ['']
-    #     results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-    #     probability = results[0]['probability']
+    #     result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
     #
-    #     # しきい値を超える回答がないこと
-    #     ok_(probability < self.threshold)
+    #     # ラベル0(分類失敗)に分類されること
+    #     eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+    #     ok_(result.probability > self.threshold)
 
 

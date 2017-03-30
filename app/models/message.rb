@@ -46,7 +46,10 @@ class Message < ActiveRecord::Base
     elsif guest?
       assign_attributes(body: question_answer.question)
     end
-    self.trained_at = Time.current
+    assign_attributes(
+      rating: :nothing,
+      trained_at: Time.current,
+    )
     save!
   end
 end

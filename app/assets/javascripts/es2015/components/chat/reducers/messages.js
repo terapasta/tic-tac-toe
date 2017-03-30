@@ -22,6 +22,10 @@ import {
   updateMessage,
 } from "../action-creators";
 
+import {
+  Ratings
+} from "../constants";
+
 const Speaker = {
   Bot: "bot",
   Guest: "guest",
@@ -110,6 +114,7 @@ export default handleActions({
       ["question", "answer"].forEach((attr) => {
         if (get(section, `${attr}.id`) === id) {
           section[attr].body = body;
+          section[attr].rating = Ratings.Nothing;
         }
       });
     });

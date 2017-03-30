@@ -1,11 +1,17 @@
 %base-chat-message {
   @include pie-clearfix;
+  transition-property: opacity;
+  transition-duration: .5s;
   position: relative;
   float: left;
   width: 50%;
 
   @media (max-width: $screen-xxs-max) {
     width: 100%;
+  }
+
+  &.faded {
+    opacity: 0;
   }
 }
 

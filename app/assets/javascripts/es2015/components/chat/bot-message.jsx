@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import Loading from "react-loading";
 import values from "lodash/values";
+import classNames from "classnames";
 import * as c from "./constants";
 
 import MessageRatingButtons from "./message-rating-buttons";
@@ -18,6 +19,17 @@ export default class ChatBotMessage extends Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFaded: true,
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => { this.setState({ isFaded: false })}, 0);
+  }
+
   render() {
     const {
       isFirst,
@@ -29,14 +41,16 @@ export default class ChatBotMessage extends Component {
       onChangeRatingTo,
     } = this.props;
 
+    const { isFaded } = this.state;
+    const className = classNames("chat-message", { "faded": isFaded });
     const iconStyle = {
       backgroundImage: `url(${iconImageUrl})`,
     };
 
     return (
-      <div className="chat-message">
-        <div className="chat-message__icon" style={iconStyle} />
-        <div className="chat-message__balloon">
+      <div className={className}>
+        <div className="chat-message__icon" style={iconStyle} key="icon" />
+        <div className="chat-message__balloon" key="balloon">
           {!isLoading && body}
           {isLoading && (
             <div className="chat-message__balloon-loader">
@@ -44,7 +58,7 @@ export default class ChatBotMessage extends Component {
             </div>
           )}
         </div>
-        <div className="chat-message__rating">
+        <div className="chat-message__rating" key="rating">
           {!isLoading && !isFirst && (
             <MessageRatingButtons {...{
               messageId: id,

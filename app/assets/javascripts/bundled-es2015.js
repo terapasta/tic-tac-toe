@@ -1528,6 +1528,10 @@ var _values = require("lodash/values");
 
 var _values2 = _interopRequireDefault(_values);
 
+var _classnames = require("classnames");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _constants = require("./constants");
 
 var c = _interopRequireWildcard(_constants);
@@ -1549,55 +1553,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ChatBotMessage = function (_Component) {
   _inherits(ChatBotMessage, _Component);
 
-  function ChatBotMessage() {
-    _classCallCheck(this, ChatBotMessage);
-
-    return _possibleConstructorReturn(this, (ChatBotMessage.__proto__ || Object.getPrototypeOf(ChatBotMessage)).apply(this, arguments));
-  }
-
-  _createClass(ChatBotMessage, [{
-    key: "render",
-    value: function render() {
-      var _props = this.props,
-          isFirst = _props.isFirst,
-          isLoading = _props.isLoading,
-          iconImageUrl = _props.iconImageUrl,
-          id = _props.id,
-          rating = _props.rating,
-          body = _props.body,
-          onChangeRatingTo = _props.onChangeRatingTo;
-
-
-      var iconStyle = {
-        backgroundImage: "url(" + iconImageUrl + ")"
-      };
-
-      return _react2.default.createElement(
-        "div",
-        { className: "chat-message" },
-        _react2.default.createElement("div", { className: "chat-message__icon", style: iconStyle }),
-        _react2.default.createElement(
-          "div",
-          { className: "chat-message__balloon" },
-          !isLoading && body,
-          isLoading && _react2.default.createElement(
-            "div",
-            { className: "chat-message__balloon-loader" },
-            _react2.default.createElement(_reactLoading2.default, { type: "spin", color: "#e3e3e3", height: 32, width: 32 })
-          )
-        ),
-        _react2.default.createElement(
-          "div",
-          { className: "chat-message__rating" },
-          !isLoading && !isFirst && _react2.default.createElement(_messageRatingButtons2.default, {
-            messageId: id,
-            rating: rating,
-            onChangeRatingTo: onChangeRatingTo
-          })
-        )
-      );
-    }
-  }], [{
+  _createClass(ChatBotMessage, null, [{
     key: "propTypes",
     get: function get() {
       return {
@@ -1612,12 +1568,77 @@ var ChatBotMessage = function (_Component) {
     }
   }]);
 
+  function ChatBotMessage(props) {
+    _classCallCheck(this, ChatBotMessage);
+
+    var _this = _possibleConstructorReturn(this, (ChatBotMessage.__proto__ || Object.getPrototypeOf(ChatBotMessage)).call(this, props));
+
+    _this.state = {
+      isFaded: true
+    };
+    return _this;
+  }
+
+  _createClass(ChatBotMessage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.setState({ isFaded: false });
+      }, 0);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          isFirst = _props.isFirst,
+          isLoading = _props.isLoading,
+          iconImageUrl = _props.iconImageUrl,
+          id = _props.id,
+          rating = _props.rating,
+          body = _props.body,
+          onChangeRatingTo = _props.onChangeRatingTo;
+      var isFaded = this.state.isFaded;
+
+      var className = (0, _classnames2.default)("chat-message", { "faded": isFaded });
+      var iconStyle = {
+        backgroundImage: "url(" + iconImageUrl + ")"
+      };
+
+      return _react2.default.createElement(
+        "div",
+        { className: className },
+        _react2.default.createElement("div", { className: "chat-message__icon", style: iconStyle, key: "icon" }),
+        _react2.default.createElement(
+          "div",
+          { className: "chat-message__balloon", key: "balloon" },
+          !isLoading && body,
+          isLoading && _react2.default.createElement(
+            "div",
+            { className: "chat-message__balloon-loader" },
+            _react2.default.createElement(_reactLoading2.default, { type: "spin", color: "#e3e3e3", height: 32, width: 32 })
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "chat-message__rating", key: "rating" },
+          !isLoading && !isFirst && _react2.default.createElement(_messageRatingButtons2.default, {
+            messageId: id,
+            rating: rating,
+            onChangeRatingTo: onChangeRatingTo
+          })
+        )
+      );
+    }
+  }]);
+
   return ChatBotMessage;
 }(_react.Component);
 
 exports.default = ChatBotMessage;
 
-},{"./constants":17,"./message-rating-buttons":26,"lodash/values":665,"react":847,"react-loading":804}],17:[function(require,module,exports){
+},{"./constants":17,"./message-rating-buttons":26,"classnames":114,"lodash/values":665,"react":847,"react-loading":804}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2077,6 +2098,10 @@ var _reactLoading = require("react-loading");
 
 var _reactLoading2 = _interopRequireDefault(_reactLoading);
 
+var _classnames = require("classnames");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2088,28 +2113,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ChatGuestMessage = function (_Component) {
   _inherits(ChatGuestMessage, _Component);
 
-  function ChatGuestMessage() {
+  _createClass(ChatGuestMessage, null, [{
+    key: "propTypes",
+    get: function get() {
+      return {};
+    }
+  }]);
+
+  function ChatGuestMessage(props) {
     _classCallCheck(this, ChatGuestMessage);
 
-    return _possibleConstructorReturn(this, (ChatGuestMessage.__proto__ || Object.getPrototypeOf(ChatGuestMessage)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ChatGuestMessage.__proto__ || Object.getPrototypeOf(ChatGuestMessage)).call(this, props));
+
+    _this.state = {
+      isFaded: true
+    };
+    return _this;
   }
 
   _createClass(ChatGuestMessage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.setState({ isFaded: false });
+      }, 0);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _props = this.props,
           isLoading = _props.isLoading,
           iconImageUrl = _props.iconImageUrl,
           body = _props.body;
+      var isFaded = this.state.isFaded;
 
-
+      var className = (0, _classnames2.default)("chat-message--my", { "faded": isFaded });
       var iconStyle = {
         backgroundImage: "url(" + window.Images["silhouette.png"] + ")"
       };
 
       return _react2.default.createElement(
         "div",
-        { className: "chat-message--my" },
+        { className: className },
         _react2.default.createElement(
           "div",
           { className: "chat-message__balloon" },
@@ -2123,11 +2170,6 @@ var ChatGuestMessage = function (_Component) {
         _react2.default.createElement("div", { className: "chat-message__icon", style: iconStyle })
       );
     }
-  }], [{
-    key: "propTypes",
-    get: function get() {
-      return {};
-    }
   }]);
 
   return ChatGuestMessage;
@@ -2135,7 +2177,7 @@ var ChatGuestMessage = function (_Component) {
 
 exports.default = ChatGuestMessage;
 
-},{"react":847,"react-loading":804}],25:[function(require,module,exports){
+},{"classnames":114,"react":847,"react-loading":804}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

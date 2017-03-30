@@ -1194,7 +1194,7 @@ var ChatApp = function (_Component) {
       return _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(_header2.default, { botName: "\u30B5\u30F3\u30D7\u30EB" }),
+        _react2.default.createElement(_header2.default, { botName: window.currentBot.name }),
         _react2.default.createElement(
           _area2.default,
           null,

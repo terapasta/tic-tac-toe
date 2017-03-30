@@ -51,7 +51,7 @@ export default class ChatApp extends Component {
 
     return (
       <div>
-        <ChatHeader botName="サンプル" />
+        <ChatHeader botName={window.currentBot.name} />
         <ChatArea>
           <ChatReadMore {...assign({
             isManager,

@@ -1059,6 +1059,7 @@ function saveLearning(_ref) {
       dispatch(updateMessage({ id: questionId, body: questionBody }));
       dispatch(updateMessage({ id: answerId, body: answerBody }));
       dispatch(enableLearning({ questionId: questionId, answerId: answerId }));
+      dispatch(enableForm());
       classifiedData.forEach(function (_, i) {
         return dispatch(inactiveSection(i));
       });

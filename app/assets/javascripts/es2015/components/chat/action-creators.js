@@ -199,6 +199,7 @@ export function saveLearning({ questionId, answerId }) {
       dispatch(updateMessage({ id: questionId, body: questionBody }));
       dispatch(updateMessage({ id: answerId, body: answerBody }));
       dispatch(enableLearning({ questionId, answerId }));
+      dispatch(enableForm());
       classifiedData.forEach((_, i) => dispatch(inactiveSection(i)));
       toastr.success(c.SucceededTraining);
     }).catch((err) => {

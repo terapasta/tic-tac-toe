@@ -12,14 +12,17 @@ module ApiRespondable
     end
 
     def render_collection_json(collection, options = {})
-      config = {
-        json: collection,
-        adapter: :json,
-      }
+      is_reverse = options.delete(:reverse)
+      config = {}
 
       if collection.respond_to?(:current_page)
-        config = config.merge(meta: api_pagination(collection))
+        config.merge!(meta: api_pagination(collection))
       end
+
+      config.merge!(
+        json: is_reverse ? collection.reverse : collection,
+        adapter: :json,
+      )
 
       render config.merge(options)
     end

@@ -964,6 +964,12 @@ function toggleActiveSection(index) {
         dispatch(disableSection(i));
       }
     });
+
+    if (hasActive) {
+      dispatch(enableForm());
+    } else {
+      dispatch(disableForm());
+    }
   };
 }
 
@@ -2637,17 +2643,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require("react-dom");
 
 var _find = require("lodash/find");
 
 var _find2 = _interopRequireDefault(_find);
 
-var _get = require("lodash/get");
+var _get2 = require("lodash/get");
 
-var _get2 = _interopRequireDefault(_get);
+var _get3 = _interopRequireDefault(_get2);
 
 var _classnames = require("classnames");
 
@@ -2657,118 +2667,191 @@ var _isEmpty = require("is-empty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _getOffset2 = require("../../modules/get-offset");
+
+var _getOffset3 = _interopRequireDefault(_getOffset2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ChatSection(props) {
-  var children = props.children,
-      isManager = props.isManager,
-      isFirst = props.isFirst,
-      isActive = props.isActive,
-      isDisabled = props.isDisabled,
-      onClick = props.onClick,
-      section = props.section,
-      learnings = props.learnings,
-      index = props.index,
-      onSaveLearning = props.onSaveLearning;
-  var decisionBranches = section.decisionBranches,
-      isDone = section.isDone,
-      question = section.question,
-      answer = section.answer;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var questionId = (0, _get2.default)(question, "id");
-  var answerId = (0, _get2.default)(answer, "id");
-  var learning = (0, _find2.default)(learnings, { questionId: questionId, answerId: answerId });
-  var isDecisionBranch = !(0, _isEmpty2.default)(decisionBranches);
-  if (isDecisionBranch && isDone) {
-    return null;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HeaderHeight = 47;
+
+var ChatSection = function (_Component) {
+  _inherits(ChatSection, _Component);
+
+  function ChatSection() {
+    _classCallCheck(this, ChatSection);
+
+    return _possibleConstructorReturn(this, (ChatSection.__proto__ || Object.getPrototypeOf(ChatSection)).apply(this, arguments));
   }
 
-  var className = (0, _classnames2.default)({
-    "chat-section": !isManager,
-    "chat-section--bordered": isManager,
-    "active": isActive
-  });
-
-  var onClickWrapper = function onClickWrapper(e) {
-    e.preventDefault();
-    if ((0, _get2.default)(learning, "isDisabled")) {
-      return;
+  _createClass(ChatSection, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      this.scrollToRootIfChangedToActive(prevProps);
     }
-    onClick(index);
-  };
+  }, {
+    key: "scrollToRootIfChangedToActive",
+    value: function scrollToRootIfChangedToActive(prevProps) {
+      if (!prevProps.isActive && this.props.isActive) {
+        var _getOffset = (0, _getOffset3.default)((0, _reactDom.findDOMNode)(this.refs.root)),
+            top = _getOffset.top;
 
-  var onSaveLearningWrapper = function onSaveLearningWrapper(e) {
-    e.preventDefault();
-    if (learning.isDisabled) {
-      return;
+        window.scrollTo(0, top - HeaderHeight);
+      }
     }
-    onSaveLearning({
-      questionId: questionId,
-      answerId: answerId
-    });
-  };
+  }, {
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          isManager = _props.isManager,
+          isFirst = _props.isFirst,
+          isActive = _props.isActive,
+          isDisabled = _props.isDisabled,
+          onClick = _props.onClick,
+          section = _props.section,
+          index = _props.index,
+          onSaveLearning = _props.onSaveLearning;
+      var decisionBranches = section.decisionBranches,
+          isDone = section.isDone,
+          question = section.question,
+          answer = section.answer;
 
-  return _react2.default.createElement(
-    "div",
-    { className: className },
-    _react2.default.createElement(
-      "div",
-      { className: "chat-section__switch-container" },
-      !isFirst && !isDecisionBranch && _react2.default.createElement(
-        "a",
-        { href: "#",
-          className: "chat-section__switch",
-          onClick: onClickWrapper,
-          disabled: (0, _get2.default)(learning, "isDisabled") },
+      var isDecisionBranch = !(0, _isEmpty2.default)(decisionBranches);
+      if (isDecisionBranch && isDone) {
+        return null;
+      }
+
+      var className = (0, _classnames2.default)({
+        "chat-section": !isManager,
+        "chat-section--bordered": isManager,
+        "active": isActive
+      });
+
+      return _react2.default.createElement(
+        "div",
+        { className: className, ref: "root" },
         _react2.default.createElement(
-          "i",
-          { className: "material-icons" },
-          "school"
-        ),
-        !isActive && _react2.default.createElement(
           "div",
-          { className: "chat-section__tooltip" },
-          "\u56DE\u7B54\u304C\u6B63\u3057\u304F\u306A\u3044\u5834\u5408\u3001\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u5225\u306E\u56DE\u7B54\u3092\u6559\u3048\u3089\u308C\u307E\u3059"
-        )
-      )
-    ),
-    children,
-    isActive && _react2.default.createElement(
-      "div",
-      { className: "chat-section__actions" },
-      _react2.default.createElement(
-        "a",
-        { className: "btn btn-link btn-xs-sm",
-          href: "#",
-          onClick: onClickWrapper,
-          disabled: learning.isDisabled },
-        "\u30AD\u30E3\u30F3\u30BB\u30EB"
-      ),
-      _react2.default.createElement(
-        "a",
-        { className: "btn btn-primary btn-xs-sm",
-          href: "#",
-          onClick: onSaveLearningWrapper,
-          disabled: learning.isDisabled },
-        "\u3053\u306E\u5185\u5BB9\u3067\u6559\u3048\u308B"
-      )
-    ),
-    isDisabled && _react2.default.createElement("div", { className: "chat-section__disable-cover" })
-  );
-}
+          { className: "chat-section__switch-container" },
+          !isFirst && !isDecisionBranch && _react2.default.createElement(
+            "a",
+            { href: "#",
+              className: "chat-section__switch",
+              onClick: this.onClick.bind(this),
+              disabled: (0, _get3.default)(this.learning, "isDisabled") },
+            _react2.default.createElement(
+              "i",
+              { className: "material-icons" },
+              "school"
+            ),
+            !isActive && _react2.default.createElement(
+              "div",
+              { className: "chat-section__tooltip" },
+              "\u56DE\u7B54\u304C\u6B63\u3057\u304F\u306A\u3044\u5834\u5408\u3001\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u5225\u306E\u56DE\u7B54\u3092\u6559\u3048\u3089\u308C\u307E\u3059"
+            )
+          )
+        ),
+        children,
+        isActive && _react2.default.createElement(
+          "div",
+          { className: "chat-section__actions" },
+          _react2.default.createElement(
+            "a",
+            { className: "btn btn-link btn-xs-sm",
+              href: "#",
+              onClick: this.onClick.bind(this),
+              disabled: this.learning.isDisabled },
+            "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          ),
+          _react2.default.createElement(
+            "a",
+            { className: "btn btn-primary btn-xs-sm",
+              href: "#",
+              onClick: this.onSaveLearning.bind(this),
+              disabled: this.learning.isDisabled },
+            "\u3053\u306E\u5185\u5BB9\u3067\u6559\u3048\u308B"
+          )
+        ),
+        isDisabled && _react2.default.createElement("div", { className: "chat-section__disable-cover" })
+      );
+    }
+  }, {
+    key: "onClick",
+    value: function onClick(e) {
+      e.preventDefault();
+      var _props2 = this.props,
+          onClick = _props2.onClick,
+          index = _props2.index;
 
-ChatSection.propTypes = {
-  isManager: _react.PropTypes.bool.isRequired,
-  isFirst: _react.PropTypes.bool.isRequired,
-  isActive: _react.PropTypes.bool,
-  isDisabled: _react.PropTypes.bool,
-  section: _react.PropTypes.object.isRequired,
-  onSaveLearning: _react.PropTypes.func.isRequired
-};
+      if ((0, _get3.default)(this.learning, "isDisabled")) {
+        return;
+      }
+      onClick(index);
+    }
+  }, {
+    key: "onSaveLearning",
+    value: function onSaveLearning(e) {
+      e.preventDefault();
+      var onSaveLearning = this.props.onSaveLearning;
+      var questionId = this.questionId,
+          answerId = this.answerId;
+
+      if ((0, _get3.default)(this.learning, "isDisabled")) {
+        return;
+      }
+      this.props.onSaveLearning({
+        questionId: questionId,
+        answerId: answerId
+      });
+    }
+  }, {
+    key: "learning",
+    get: function get() {
+      var learnings = this.props.learnings;
+      var questionId = this.questionId,
+          answerId = this.answerId;
+
+      return (0, _find2.default)(learnings, { questionId: questionId, answerId: answerId }) || {};
+    }
+  }, {
+    key: "questionId",
+    get: function get() {
+      return (0, _get3.default)(this.props, "section.question.id");
+    }
+  }, {
+    key: "answerId",
+    get: function get() {
+      return (0, _get3.default)(this.props, "section.answer.id");
+    }
+  }], [{
+    key: "propTypes",
+    get: function get() {
+      return {
+        isManager: _react.PropTypes.bool.isRequired,
+        isFirst: _react.PropTypes.bool.isRequired,
+        isActive: _react.PropTypes.bool,
+        isDisabled: _react.PropTypes.bool,
+        section: _react.PropTypes.object.isRequired,
+        index: _react.PropTypes.number.isRequired,
+        onClick: _react.PropTypes.func.isRequired,
+        onSaveLearning: _react.PropTypes.func.isRequired
+      };
+    }
+  }]);
+
+  return ChatSection;
+}(_react.Component);
 
 exports.default = ChatSection;
 
-},{"classnames":112,"is-empty":434,"lodash/find":622,"lodash/get":625,"react":845}],33:[function(require,module,exports){
+},{"../../modules/get-offset":79,"classnames":112,"is-empty":434,"lodash/find":622,"lodash/get":625,"react":845,"react-dom":675}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -57,6 +57,7 @@
     "react-dom": "^15.4.1",
     "react-linkify": "^0.2.0",
     "react-loading": "^0.0.9",
+    "react-nl2br": "^0.2.0",
     "react-radio-group": "^3.0.1",
     "react-loading": "^0.0.9",
     "react-redux": "^5.0.1",

@@ -184,3 +184,8 @@ export function saveLearning({ questionId, answerId }) {
 }
 
 export const updateMessage = createAction("UPDATE_MESSAGE");
+
+export const appearReadMore = createAction("APPEAR_READ_MORE");
+export const disappearReadMore = createAction("DISAPPEAR_READ_MORE");
+export const enableReadMore = createAction("ENABLE_READ_MORE");
+export const disableReadMore = createAction("DISABLE_READ_MORE");

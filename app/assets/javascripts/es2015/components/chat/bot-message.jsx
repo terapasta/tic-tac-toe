@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import Loading from "react-loading";
+import Linkify from "react-linkify";
+import nl2br from "react-nl2br";
 import values from "lodash/values";
 import classNames from "classnames";
 import * as c from "./constants";
@@ -51,7 +53,7 @@ export default class ChatBotMessage extends Component {
       <div className={className}>
         <div className="chat-message__icon" style={iconStyle} key="icon" />
         <div className="chat-message__balloon" key="balloon">
-          {!isLoading && body}
+          {!isLoading && <Linkify properties={{ target: "_blank" }}>{nl2br(body)}</Linkify>}
           {isLoading && (
             <div className="chat-message__balloon-loader">
               <Loading type="spin" color="#e3e3e3" height={32} width={32} />

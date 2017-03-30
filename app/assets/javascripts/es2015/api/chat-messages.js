@@ -2,7 +2,9 @@ import axios from "axios";
 import config from "./config"
 
 export function fetchMessages(token, page = 1) {
-  return axios.get(`/embed/${token}/chats/messages.json`);
+  return axios.get(`/embed/${token}/chats/messages.json`, {
+    params: { page }
+  });
 }
 
 export function postMessage(token, messageBody) {

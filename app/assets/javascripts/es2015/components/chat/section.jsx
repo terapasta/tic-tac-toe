@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from "react";
+import { findDOMNode } from "react-dom";
 import find from "lodash/find";
 import get from "lodash/get";
 import classNames from "classnames";
 import isEmpty from "is-empty";
+import getOffset from "../../modules/get-offset";
+
+const HeaderHeight = 47;
 
 export default class ChatSection extends Component {
   static get propTypes() {
@@ -32,6 +36,17 @@ export default class ChatSection extends Component {
     return get(this.props, "section.answer.id");
   }
 
+  componentDidUpdate(prevProps) {
+    this.scrollToRootIfChangedToActive(prevProps);
+  }
+
+  scrollToRootIfChangedToActive(prevProps) {
+    if (!prevProps.isActive && this.props.isActive) {
+      const { top } = getOffset(findDOMNode(this.refs.root));
+      window.scrollTo(0, top - HeaderHeight);
+    }
+  }
+
   render() {
     const {
       children,
@@ -56,7 +71,7 @@ export default class ChatSection extends Component {
     });
 
     return (
-      <div className={className}>
+      <div className={className} ref="root">
         <div className="chat-section__switch-container">
           {!isFirst && !isDecisionBranch && (
             <a href="#"

@@ -126,7 +126,7 @@ export default class ChatApp extends Component {
 function scrollToBottomIfNeeded(prevProps, props) {
   const prevCount = prevProps.messages.classifiedData.length
   const currentCount = props.messages.classifiedData.length;
-  if (currentCount > prevCount) {
+  if (currentCount > prevCount && (prevCount === 0 || props.messages.isNeedScroll)) {
     window.scrollTo(0, document.body.scrollHeight);
   }
 }

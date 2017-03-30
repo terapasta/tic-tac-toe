@@ -3,7 +3,9 @@ class Chats::TrainingsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @question_answer = @bot.question_answers.create!(question_answer_params)
+      @question_answer = @bot.question_answers.find_or_create_by!(question: question_answer_params[:question])
+      @answer = @bot.answers.find_or_create_by!(body: question_answer_params[:answer_attributes][:body])
+      @question_answer.update!(answer: @answer)
       @question_message.update_for_training_with!(@question_answer)
       @answer_message.update_for_training_with!(@question_answer)
     end

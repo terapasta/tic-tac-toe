@@ -4,8 +4,8 @@ class Chats::TrainingsController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @question_answer = @bot.question_answers.create!(question_answer_params)
-      @question_message.update!(body: @question_answer.question)
-      @answer_message.update!(body: @question_answer.answer.body, answer_id: @question_answer.answer.id)
+      @question_message.update_for_training_with!(@question_answer)
+      @answer_message.update_for_training_with!(@question_answer)
     end
     render json: @question_answer, adapter: :json
   rescue => e

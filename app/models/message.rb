@@ -37,4 +37,16 @@ class Message < ActiveRecord::Base
       'operator'
     end
   end
+
+  def update_for_training_with!(question_answer)
+    if bot?
+      question_answer.answer.tap do |a|
+        assign_attributes(body: a.body, answer_id: a.id)
+      end
+    elsif guest?
+      assign_attributes(body: question_answer.question)
+    end
+    self.trained_at = Time.current
+    save!
+  end
 end

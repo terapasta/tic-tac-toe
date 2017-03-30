@@ -127,6 +127,12 @@ export function toggleActiveSection(index) {
         dispatch(disableSection(i));
       }
     });
+
+    if (hasActive) {
+      dispatch(enableForm());
+    } else {
+      dispatch(disableForm());
+    }
   };
 }
 

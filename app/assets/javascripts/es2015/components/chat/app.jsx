@@ -13,6 +13,7 @@ import ChatDecisionBranchesRow from "./decision-branches-row";
 import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
 import ChatGuestMessage from "./guest-message";
+import ChatReadMore from "./read-more";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -41,6 +42,7 @@ export default class ChatApp extends Component {
       form,
       learnings,
       isManager,
+      readMore,
     } = this.props;
 
     const {
@@ -51,6 +53,13 @@ export default class ChatApp extends Component {
       <div>
         <ChatHeader botName="サンプル" />
         <ChatArea>
+          <ChatReadMore {...assign({
+            isManager,
+            onClick(e) {
+              e.preventDefault();
+              dispatch(a.fetchNextMessages());
+            },
+          }, readMore)} />
           {classifiedData.map((section, i) => {
             const isFirst = i === 0;
             const { isActive, isDisabled } = section;

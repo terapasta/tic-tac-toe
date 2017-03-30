@@ -2603,6 +2603,8 @@ var _reduxActions = require("redux-actions");
 
 var _actionCreators = require("../action-creators");
 
+var _constants = require("../constants");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -2689,6 +2691,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
     ["question", "answer"].forEach(function (attr) {
       if ((0, _get2.default)(section, attr + ".id") === id) {
         section[attr].body = body;
+        section[attr].rating = _constants.Ratings.Nothing;
       }
     });
   });
@@ -2734,7 +2737,7 @@ function sectionActiveStateHandler(manipulator) {
   };
 }
 
-},{"../action-creators":11,"is-empty":436,"lodash/assign":611,"lodash/chunk":615,"lodash/cloneDeep":616,"lodash/findIndex":625,"lodash/get":627,"lodash/last":650,"lodash/pick":653,"promise":669,"redux-actions":856}],32:[function(require,module,exports){
+},{"../action-creators":11,"../constants":17,"is-empty":436,"lodash/assign":611,"lodash/chunk":615,"lodash/cloneDeep":616,"lodash/findIndex":625,"lodash/get":627,"lodash/last":650,"lodash/pick":653,"promise":669,"redux-actions":856}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

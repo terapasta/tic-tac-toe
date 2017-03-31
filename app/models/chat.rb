@@ -40,6 +40,12 @@ class Chat < ActiveRecord::Base
     end
   }
 
+  scope :has_answer_marked, -> (flag) {
+    if flag.present?
+      where(id: Message.select(:chat_id).answer_marked)
+    end
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)

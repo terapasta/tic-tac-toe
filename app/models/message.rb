@@ -1,3 +1,5 @@
+require 'message/answer_markable'
+
 class Message < ActiveRecord::Base
   include AnswerMarkable
   paginates_per 50

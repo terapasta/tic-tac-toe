@@ -10,6 +10,10 @@ class Message < ActiveRecord::Base
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum rating: [:nothing, :good, :bad]
 
+  scope :answer_failed, -> {
+    where(answer_failed: true)
+  }
+
   validates :body, length: { maximum: 10000 }
 
   def parent

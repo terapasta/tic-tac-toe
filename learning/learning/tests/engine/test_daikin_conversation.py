@@ -1,6 +1,7 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 
+from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
 from learning.tests import helper
@@ -17,7 +18,7 @@ class DaikinConversationTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
     def test_how_to_add_mail_signature(self):
         questions = ['メールに署名を付ける方法を知りたい']
@@ -71,7 +72,8 @@ http://www.intra.daikin.co.jp/office365/ol2010/Applied.html?cid=C008
         questions = ['しいたけは嫌いな食べ物です']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
-        # しきい値を超える回答がないこと
-        ok_(result.probability < self.threshold)
+        # ラベル0(分類失敗)に分類されること
+        eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+        ok_(result.probability > self.threshold)
 
 

@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from learning.config.config import Config
 from learning.core.persistance import Persistance
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
+from learning.core.predict.reply import Reply
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
 
@@ -27,7 +28,6 @@ class Similarity:
         """
         question_answers = self.__all_question_answers(question)
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
-        # FIXME 1件のquestionのためにTextArrayクラスを使用するのは直感的ではない
         question_array = TextArray([question], vectorizer=self.vectorizer)
 
         similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
@@ -43,5 +43,6 @@ class Similarity:
         return ordered_result[0:10]
 
     def __all_question_answers(self, question):
-        data = pd.read_sql("select id, question from question_answers where bot_id = %s and question <> '%s';" % (self.bot_id, question), self.db)
+        data = pd.read_sql("select id, question from question_answers where bot_id = %s and question <> '%s' and answer_id <> %s;"
+                           % (self.bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self.db)
         return data

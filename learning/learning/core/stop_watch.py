@@ -10,7 +10,8 @@ def stop_watch(func) :
         start = time.time()
         result = func(*args,**kargs)
         elapsed_time =  time.time() - start
-        # HACK 関数のファクション名も含めたい(__module__使える？)
-        logger.debug("%s processing time: %s [sec]" % (func.__name__, elapsed_time))
+        class_name= args[0].__class__.__name__
+        func_name = func.__name__
+        logger.debug("%s processing time: %s [sec]" % ((class_name + '.' + func_name), elapsed_time))
         return result
     return wrapper

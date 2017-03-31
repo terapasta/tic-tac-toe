@@ -5,6 +5,8 @@ from learning.core.predict.reply_result import ReplyResult
 from learning.config.config import Config
 from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
+from learning.log import logger
+
 
 class Reply:
     CLASSIFY_FAILED_ANSWER_ID = 0
@@ -32,7 +34,9 @@ class Reply:
 
     def predict(self, X):
         text_array = TextArray(X, vectorizer=self.vectorizer)
+        logger.debug('Reply#predict text_array.separated_sentences: %s' % text_array.separated_sentences)
         features = text_array.to_vec()
+        logger.debug('Reply#predict features: %s' % features)
 
         # タグベクトルを追加する処理
         # if self.learning_parameter.include_tag_vector:

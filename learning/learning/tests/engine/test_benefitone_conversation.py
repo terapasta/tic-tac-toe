@@ -15,7 +15,7 @@ class BenefitoneConversationTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+        _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(csv_file_path=cls.csv_file_path)
 
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']
@@ -45,12 +45,12 @@ class BenefitoneConversationTestCase(TestCase):
     #     # しきい値を超える回答がないこと
     #     ok_(probability < self.threshold)
     #
-    # def test_blank(self):
+    # def test_fail_blank(self):
     #     questions = ['']
-    #     results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-    #     probability = results[0]['probability']
+    #     result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
     #
-    #     # しきい値を超える回答がないこと
-    #     ok_(probability < self.threshold)
+    #     # ラベル0(分類失敗)に分類されること
+    #     eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
+    #     ok_(result.probability > self.threshold)
 
 

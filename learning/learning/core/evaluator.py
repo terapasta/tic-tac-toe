@@ -23,6 +23,7 @@ class Evaluator:
 
         cv = ShuffleSplit(X.shape[0], n_iter=1, test_size=0.25, random_state=0)
         self.accuracy = np.mean(cross_val_score(estimator, X, y, cv=cv, scoring=self.__accuracy_score))
+        print(self.accuracy)
         # self.accuracy = np.mean(cross_val_score(estimator, X, y, cv=cv))
 
         # 実行時に警告が出るため一旦コメントアウト(今のところチューニングにもあまり使用していない)

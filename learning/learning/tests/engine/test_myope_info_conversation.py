@@ -27,7 +27,7 @@
 #     def test_how_to_add_mail_signature(self):
 #         questions = ['']
 #         results = Reply(self.bot_id, self.learning_parameter).predict(questions)
-#         answer_id = results[0]['answer_id']  # HACK Resultsクラスなどを作ってアクセスをシンプルにしたい。その前にmyope_server#replyのテスト実装が必要
+#         answer_id = results[0]['answer_id']
 #         probability = results[0]['probability']
 #         answer_body = helper.get_answer_body(self.answers, answer_id)
 #

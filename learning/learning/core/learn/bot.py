@@ -51,6 +51,8 @@ class Bot:
         else:
             training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
 
+        training_set.build()
+        logger.debug('Bot#__build_training_set training_set.count_sample_by_y: %s' % training_set.count_sample_by_y())
         return training_set.build()
 
     def __get_estimator(self, training_set):

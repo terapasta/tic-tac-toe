@@ -1,4 +1,4 @@
-module AnswerMarkable
+module Message::AnswerMarkable
   extend ActiveSupport::Concern
 
   included do

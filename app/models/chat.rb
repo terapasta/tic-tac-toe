@@ -57,6 +57,10 @@ class Chat < ActiveRecord::Base
     messages.any? { |m| m.bad? }
   end
 
+  def has_answer_marked_message?
+    messages.any? { |m| m.answer_marked? }
+  end
+
   class << self
     def find_by_guest_key!(guest_key)
       chat = where(guest_key: guest_key).last

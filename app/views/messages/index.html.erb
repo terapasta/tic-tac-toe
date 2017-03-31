@@ -4,12 +4,11 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th></th>
+      <th width="70px"></th>
       <th>発言者</th>
       <th>本文</th>
       <th>発言日時</th>
       <th>UA</th>
-      <th/>
     </tr>
   </thead>
 
@@ -27,26 +26,25 @@
           <% if message.bad? %>
             <i class="fa fa-thumbs-down text-danger"></i>
           <% end %>
+          <% if message.bot? %>
+              <% unless message.answer_marked? %>
+                  <%= link_to bot_thread_message_answer_marked_path(@bot, @chat, message), method: :post do %>
+                      <i class="fa fa-answer-not-marked-flag"></i>
+                  <% end %>
+              <% end %>
+              <% if message.answer_marked? %>
+                  <%= link_to bot_thread_message_answer_marked_path(@bot, @chat, message), method: :delete do %>
+                      <i class="fa fa-answer-marked-flag"></i>
+                  <% end %>
+              <% end %>
+          <% end %>
         </td>
         <td nowrap="nowrap">
-          <%= image_tag message.speaker_image_url, class: 'img-tiny' %>
           <%= message.speaker_i18n %>
         </td>
         <td><%= message.body %></td>
         <td><%= message.created_at %></td>
         <td><%= message.user_agent %></td>
-        <td>
-          <% if message.bot? %>
-            <% unless message.answer_failed? %>
-                  <%= link_to '回答失敗にする', bot_thread_message_answer_failed_path(@bot, @chat, message),
-                                      method: :post, class: 'btn btn-sm btn-warning' %>
-            <% end %>
-            <% if policy(message).answer_successable? %>
-                  <%= link_to '回答成功にする', bot_thread_message_answer_failed_path(@bot, @chat, message),
-                                      method: :delete, class: 'btn btn-sm btn-default' %>
-            <% end %>
-          <% end %>
-        </td>
       </tr>
     <% end %>
   </tbody>

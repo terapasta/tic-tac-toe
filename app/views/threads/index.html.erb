@@ -40,6 +40,9 @@
             <% if chat.has_bad_answer? %>
               <i class="fa fa-thumbs-down text-danger"></i>
             <% end %>
+            <% if chat.has_answer_marked_message? %>
+                <i class="fa fa-flag text-warning"></i>
+            <% end %>
           </td>
           <td>
             <%= chat[:exchanging_messages_count] %>

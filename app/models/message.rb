@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  include AnswerFailedOperable
+  include AnswerMarkable
   paginates_per 50
 
   attr_accessor :other_answers, :similar_question_answers

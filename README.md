@@ -103,13 +103,13 @@ $ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --a
 ### Slack bot サーバー立ち上げ
 ```
 $ cd slack-bot
-$ slappy start
+$ bundle exec slappy start
 ```
 ### 開発用デバッグBOTの設定
 Slack連携はCustom Botとしてslackに登録したBotユーザーデータを利用して行います。
 
 1. https://my.slack.com/services/new/botにアクセスしCustom bot userを作成する。
-2. ENV['SLACK_TOKEN']に取得したAPI Tokenを設定する。
+2. ENV['SLACK_TOKEN']に取得したAPI Tokenを設定する。環境変数のセットにはdotenv gemが利用できます。
 3. https://slack.com/api/users.list?pretty=1&token={取得したAPI Token}を実行して、登録したCustom bot userのidを表示、slappy_config.rbのconfig.robot.bot_idに指定する。
 
 以上でslack連携を行うことができるようになります。

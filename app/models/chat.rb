@@ -40,6 +40,18 @@ class Chat < ActiveRecord::Base
     end
   }
 
+  scope :not_normal, -> (flag) {
+    if flag.present?
+      where(is_normal: false)
+    end
+  }
+
+  scope :normal, -> (flag) {
+    if flag.present?
+      where(is_normal: true)
+    end
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)

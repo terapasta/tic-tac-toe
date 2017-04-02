@@ -7,6 +7,8 @@ class ThreadsController < ApplicationController
     @chats = @bot.chats
       .has_multiple_messages
       .not_staff(!current_user.staff?)
+      .not_normal(!params[:normal].present?)
+      .normal(params[:normal])
       .has_answer_failed(params[:filter])
       .has_good_answer(params[:good])
       .has_bad_answer(params[:bad])

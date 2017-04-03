@@ -9,14 +9,20 @@ namespace :sentence_synonyms do
       arr = SentenceSynonym.where(training_message_id: training_message_id).pluck(:body)
       arr.each_with_index do |body, idx|
         if idx.even?
-          f_in.puts(body)
+          f_in.puts(separate(body))
           if idx + 1 == arr.count
-            f_out.puts(arr.first)
+            f_out.puts(separate(arr.first))
           end
         elsif idx.odd?
-          f_out.puts(body)
+          f_out.puts(separate(body))
         end
       end
     end
+  end
+
+  def separate(text)
+    # HACK カスタム辞書使いたい
+    natto = Natto::MeCab.new
+    natto.enum_parse(text).map(&:surface).join(' ')
   end
 end

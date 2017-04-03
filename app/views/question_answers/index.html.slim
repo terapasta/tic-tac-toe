@@ -1,4 +1,11 @@
 h1 Q&A管理
+.row
+  .col-md-2.col-xs-4
+    = bootstrap_form_for @bot, url: {action: 'index'}, method: :GET do |f|
+      = f.collection_select :id, @topic_tags.all, :id, :name, hide_label: true
+      = f.submit '検索', name: "search"
+      br
+      br
 .text-right
   = link_to t('helpers.link.new'), new_bot_question_answer_path(@bot), class: "btn btn-default", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
 table.table.table-striped
@@ -24,4 +31,5 @@ table.table.table-striped
         td nowrap="nowrap"
           = link_to t('helpers.link.edit'), edit_bot_question_answer_path(@bot, question_answer), class: "btn btn-default", data: { event_name: 'Open edit question answer', bot_id: @bot.id, bot_name: @bot.name }
           = link_to t('helpers.link.destroy'), bot_question_answer_path(@bot, question_answer), data: { confirm: 'Q&Aを削除します。よろしいですか。', method: :delete, event_name: 'Delete question answer', bot_id: @bot.id, bot_name: @bot.name }, class: "btn btn-danger"
-= paginate @question_answers
+/ ↓トピックで検索かけると undefined method `total_pages' とエラーが発生        
+/= paginate @question_answers

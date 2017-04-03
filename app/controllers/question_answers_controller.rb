@@ -9,7 +9,24 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
-    @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
+    if params[:search]
+      @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
+      @topic_tags = @bot.topic_tags.all
+      #↓検索ロジックをmodelに移す
+      topic_taggings. = TopicTagging.where(topic_tag_id: params[:bot][:id])
+      @search = Array.new
+      topic_taggings.each do |topic_tagging|
+        @question_answers.each do |question_answer|
+          if question_answer.id == topic_tagging.question_answer.id
+            @search << question_answer
+          end
+        end
+      end
+      @question_answers = @search
+    else
+      @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
+      @topic_tags = @bot.topic_tags.all
+    end
   end
 
   def show

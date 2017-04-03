@@ -96,6 +96,7 @@ gem 'nested_form'
 gem 'addressable', require: 'addressable/uri'
 gem 'toastr-rails'
 gem 'config'
+gem 'natto'
 
 gem 'newrelic_rpm'
 

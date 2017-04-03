@@ -12,8 +12,10 @@ table.table.table-striped
   tbody
     - @question_answers.each do |question_answer|
       tr
-        - question_answer.topic_tags.each do |tag|
-          td = tag.name 
+        td 
+          - question_answer.topic_tags.each do |topic_tag|
+            span.label.label-primary = topic_tag.name
+            br
         td = simple_format question_answer.question
         td = simple_format question_answer&.answer&.body
           ul

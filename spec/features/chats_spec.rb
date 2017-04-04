@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Chats', type: :features do
+RSpec.describe 'Chats', type: :features, js: true do
   let!(:normal_user) do
     create(:user)
   end
@@ -93,7 +93,7 @@ RSpec.describe 'Chats', type: :features do
       context 'iframe経由の場合' do
         context 'リファラが許可ホストに入っている場合' do
           before do
-            Capybara.current_session.driver.header('Referer', 'http://example.com')
+            Capybara.current_session.driver.add_header('Referer', 'http://example.com')
           end
 
           scenario do
@@ -107,7 +107,7 @@ RSpec.describe 'Chats', type: :features do
 
         context 'リファラが許可ホストに入っていない場合' do
           before do
-            Capybara.current_session.driver.header('Referer', 'http://hoge.com')
+            Capybara.current_session.driver.add_header('Referer', 'http://hoge.com')
           end
 
           scenario do

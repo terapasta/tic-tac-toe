@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th width="70px"></th>
+      <th colspan="2"></th>
       <th>発言者</th>
       <th>本文</th>
       <th>発言日時</th>
@@ -16,7 +16,7 @@
     <% @messages.each do |message| %>
       <tr>
         <td><%= message.id %></td>
-        <td>
+        <td width="48px">
           <% if message.answer_failed? %>
             <i class="glyphicon glyphicon-warning-sign text-warning"></i>
           <% end %>
@@ -26,6 +26,8 @@
           <% if message.bad? %>
             <i class="fa fa-thumbs-down text-danger"></i>
           <% end %>
+        </td>
+        <td width="24px">
           <% if message.bot? %>
               <% unless message.answer_marked? %>
                   <%= link_to bot_thread_message_answer_marked_path(@bot, @chat, message), method: :post do %>

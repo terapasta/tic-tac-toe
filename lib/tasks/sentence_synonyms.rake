@@ -4,19 +4,28 @@ namespace :sentence_synonyms do
     f_in = File.open('input.txt', 'w')
     f_out = File.open('output.txt', 'w')
 
+    in_arr = []
+    out_arr = []
+
     training_message_ids = SentenceSynonym.pluck(:training_message_id).uniq
     training_message_ids.each do |training_message_id|
       arr = SentenceSynonym.where(training_message_id: training_message_id).pluck(:body)
       arr.each_with_index do |body, idx|
         if idx.even?
-          f_in.puts(separate(body))
+          in_arr << separate(body)
           if idx + 1 == arr.count
-            f_out.puts(separate(arr.first))
+            out_arr << separate(arr.first)
           end
         elsif idx.odd?
-          f_out.puts(separate(body))
+          out_arr << separate(body)
         end
       end
+    end
+
+    arr = in_arr.zip(out_arr).shuffle
+    arr.each do |row|
+      f_in.puts(row[0])
+      f_out.puts(row[1])
     end
   end
 

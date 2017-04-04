@@ -24,6 +24,7 @@ export default class ChatForm extends Component {
           <div className=".chat-container--no-padding">
             <div className="form">
               <input
+                name="chat-message-body"
                 className="chat-form__text-field"
                 type="text"
                 placeholder="質問を入れてください"

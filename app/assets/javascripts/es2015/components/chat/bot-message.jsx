@@ -50,7 +50,7 @@ export default class ChatBotMessage extends Component {
     };
 
     return (
-      <div className={className}>
+      <div className={className} id={`message-${id}`}>
         <div className="chat-message__icon" style={iconStyle} key="icon" />
         <div className="chat-message__balloon" key="balloon">
           {!isLoading && <Linkify properties={{ target: "_blank" }}>{nl2br(body)}</Linkify>}

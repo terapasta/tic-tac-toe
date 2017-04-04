@@ -21,6 +21,7 @@ function ChatGuestMessageEditor({
         <div className="chat-message__part-label">質問</div>
         <TextArea
           className="form-control"
+          name="chat-guest-message-body"
           rows={1}
           value={questionBody}
           onChange={(e) => {

@@ -31,6 +31,7 @@ function ChatBotMessageEditor({
         <div className="chat-message__part-label">新しい回答</div>
         <TextArea
           className="form-control"
+          name="chat-bot-message-body"
           rows={1}
           value={answerBody}
           onChange={(e) => {

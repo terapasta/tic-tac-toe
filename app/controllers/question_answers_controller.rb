@@ -9,23 +9,10 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
+    @topic_tags = @bot.topic_tags.all
+    @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
     if params[:search]
-      @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
-      @topic_tags = @bot.topic_tags.all
-      #↓検索ロジックをmodelに移す
-      topic_taggings. = TopicTagging.where(topic_tag_id: params[:bot][:id])
-      @search = Array.new
-      topic_taggings.each do |topic_tagging|
-        @question_answers.each do |question_answer|
-          if question_answer.id == topic_tagging.question_answer.id
-            @search << question_answer
-          end
-        end
-      end
-      @question_answers = @search
-    else
-      @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
-      @topic_tags = @bot.topic_tags.all
+      @question_answers = QuestionAnswer.topic_search(params[:topic][:id]).page(params[:page])
     end
   end
 
@@ -118,6 +105,7 @@ class QuestionAnswersController < ApplicationController
         if prm[:answer_attributes].present? && params[:action] == 'create'
           prm[:answer_attributes][:bot_id] = @bot.id
         end
+        binding.pry
       end
     end
 end

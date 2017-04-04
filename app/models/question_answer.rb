@@ -25,6 +25,11 @@ class QuestionAnswer < ActiveRecord::Base
       .count
   }
 
+  scope :topic_search, -> (topic_tag_id) {
+    joins(:topic_tags)
+      .where(topic_tags: {id: topic_tag_id})
+  }
+
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
   end

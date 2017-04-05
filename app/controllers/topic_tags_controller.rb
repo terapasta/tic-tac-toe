@@ -1,4 +1,5 @@
 class TopicTagsController < ApplicationController
+  include BotUsable
   before_action :authenticate_user!
   before_action :set_bot
 
@@ -57,7 +58,7 @@ class TopicTagsController < ApplicationController
 
   private
     def set_bot
-      @bot = Bot.find_by(params[:id])
+      @bot = bots.find params[:bot_id]
     end
 
     def set_topic_tag

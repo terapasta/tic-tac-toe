@@ -2,7 +2,7 @@ h1 Q&A管理
 .form-inline
   .text-right
     = form_tag bot_question_answers_path(@bot), method: :get do
-      = collection_select :topic, :id, @topic_tags.all, :id, :name
+      = collection_select :topic, :id, @topic_tags.all, :id, :name, prompt: "トピックを選択してください"
       = submit_tag '検索', name: "search", class: "btn btn-default"
       br
       br

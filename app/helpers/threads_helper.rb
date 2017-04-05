@@ -1,10 +1,10 @@
 module ThreadsHelper
-  def role_filter_params(param={})
+  def role_filter_params(param = {})
     params = message_params
     params.merge param
   end
 
-  def message_filter_params(param={})
+  def message_filter_params(param = {})
     params = role_params
     params.merge param
   end

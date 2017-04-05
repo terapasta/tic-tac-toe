@@ -105,7 +105,6 @@ class QuestionAnswersController < ApplicationController
         if prm[:answer_attributes].present? && params[:action] == 'create'
           prm[:answer_attributes][:bot_id] = @bot.id
         end
-        binding.pry
       end
     end
 end

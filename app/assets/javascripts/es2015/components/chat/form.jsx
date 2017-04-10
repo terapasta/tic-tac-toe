@@ -10,9 +10,15 @@ export default class ChatForm extends Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isInputting: false,
+    };
+  }
+
   render() {
     const {
-      onChange,
       onSubmit,
       messageBody,
       isDisabled,
@@ -29,7 +35,8 @@ export default class ChatForm extends Component {
                 type="text"
                 placeholder="質問を入れてください"
                 value={messageBody}
-                onChange={onChange}
+                onChange={this.onChange.bind(this)}
+                onKeyUp={this.onKeyUp.bind(this)}
                 disabled={isDisabled}
               />
             <button
@@ -47,5 +54,20 @@ export default class ChatForm extends Component {
         </div>
       </div>
     );
+  }
+
+  onChange(e) {
+    this.setState({ isInputting: true });
+    this.props.onChange(e);
+  }
+
+  onKeyUp(e) {
+    if (e.keyCode === 13) {
+      if (this.state.isInputting) {
+        return this.setState({ isInputting: false });
+      }
+      const { onSubmit, messageBody } = this.props;
+      onSubmit(messageBody);
+    }
   }
 }

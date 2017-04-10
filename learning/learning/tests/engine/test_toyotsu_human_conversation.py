@@ -15,25 +15,23 @@ class ToyotsuHumanConversationTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(csv_file_path=cls.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(csv_file_path=cls.csv_file_path)
 
-    def test_hoge(self):
-        ok_(True)
+    def test_jal_mileage(self):
+        questions = ['JAL マイレージ']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
-    # def test_want_to_check_contract(self):
-    #     questions = ['契約書を見たいのですが']
-    #     result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
-    #     answer_body = helper.get_answer_body(self.answers, result.answer_id)
-    #
-    #     expected_answer = '保管されている契約書ですか？'
-    #     eq_(answer_body, expected_answer)
-    #     ok_(result.probability > self.threshold)
-    #
-    # def test_please_rent_excard(self):
-    #     questions = ['EXカードを貸してください']
-    #     result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
-    #     answer_body = helper.get_answer_body(self.answers, result.answer_id)
-    #
-    #     expected_answer = 'それでは、総務部の方に確認してください。　総務の人は、田中さん（内線801401）、中島さん（内線801402）、渡辺さん（内線801403）です。'
-    #     eq_(answer_body, expected_answer)
-    #     ok_(result.probability > self.threshold)
+        expected_answer = '''
+JALマイレージバンクで計上される費用は
+すべて海外出張時の費用となります。
+そのうち、国内旅費で計上されるものは、
+通常、国内空港使用料だと思いますが、
+詳細は、こちらではわかりません。
+
+旅行代理店から、航空券等発注の際、
+控えをいただいていると思いますので、
+そちらでご確認ください。
+'''
+        eq_(answer_body, expected_answer)
+        ok_(result.probability > self.threshold)

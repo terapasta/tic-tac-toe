@@ -9,7 +9,7 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
-    @topic_tags = @bot.topic_tags.all
+    @topic_tags = @bot.topic_tags
     @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
     if params[:search]
       @question_answers = QuestionAnswer.topic_search(params[:topic][:id]).page(params[:page])

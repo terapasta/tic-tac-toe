@@ -17,43 +17,28 @@ class TopicTagsController < ApplicationController
   end
 
   def create
-    respond_to do |format|
-      @topic_tag = TopicTag.new(topic_tag_params)
-      @topic_tag.bot_id = @bot.id
-      if @topic_tag.save
-        format.html { redirect_to bot_topic_tags_path(@bot), notice: '登録しました。' }
-        format.json { render :show, status: :created, location: @topic_tag }
-      else
-        format.html do
-          flash.now.alert = '登録できませんでした。'
-          render :new
-        end
-        format.json { render json: @topic_tag.errors, status: :unprocessable_entity }
-      end
+    @topic_tag = TopicTag.new(topic_tag_params)
+    @topic_tag.bot_id = @bot.id
+    if @topic_tag.save
+      redirect_to bot_topic_tags_path(@bot), notice: '登録しました。'
+    else
+      flash.now.alert = '登録できませんでした。'
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @topic_tag.update(topic_tag_params)
-        format.html { redirect_to bot_topic_tags_path(@bot), notice: '更新しました。' }
-        format.json { render :show, status: :ok, location: @topic_tag }
-      else
-        format.html do
-          flash.now.alert = '更新できませんでした。'
-          render :edit
-        end
-        format.json { render json: @topic_tag.errors, status: :unprocessable_entity }
-      end
+    if @topic_tag.update(topic_tag_params)
+      redirect_to bot_topic_tags_path(@bot), notice: '更新しました。'
+    else
+      flash.now.alert = '更新できませんでした。'
+      render :edit
     end
   end
 
   def destroy
     @topic_tag.destroy
-    respond_to do |format|
-      format.html { redirect_to bot_topic_tags_path(@bot), notice: '削除しました。' }
-      format.json { head :no_content }
-    end
+    redirect_to bot_topic_tags_path(@bot), notice: '削除しました。'
   end
 
   private

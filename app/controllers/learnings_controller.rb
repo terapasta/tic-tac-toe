@@ -9,7 +9,7 @@ class LearningsController < ApplicationController
 
   def update
     LearnJob.perform_later(@bot.id)
-    @bot.update learning_status: :processing, learning_status_changed_at: Time.current
+    @bot.update_learning_status_to_processing
   end
 
   private

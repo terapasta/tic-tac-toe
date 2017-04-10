@@ -50,6 +50,13 @@ class Bot < ActiveRecord::Base
     end
   end
 
+  def update_learning_status_to_processing
+    update(
+      learning_status: :processing,
+      learning_status_changed_at: Time.current,
+    )
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?

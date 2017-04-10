@@ -37,10 +37,15 @@ table.table.table-striped
           ul
             - question_answer.decision_branches.each do |decision_branch|
               li = decision_branch.body
+<<<<<<< c29d6c8a262e2fc0f9f6a6d57469754c16542b3f
 <<<<<<< 5a63766092ad70c50f9716cb0944c88cf62fb7bd
 =======
         td = question_answer.created_at
         td = question_answer.updated_at
+=======
+        td = l question_answer.created_at, format: :short
+        td = l question_answer.updated_at, format: :short
+>>>>>>> 日時のフォーマット修正
 
 >>>>>>> questions.questionカラム、created_atカラム、updated_atカラムを昇順降順できるようにする
         td nowrap="nowrap"

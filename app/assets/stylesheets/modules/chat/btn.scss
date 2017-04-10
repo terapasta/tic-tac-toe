@@ -1,7 +1,9 @@
-.chat-area {
+.chat-area,
+.chat-header {
   .btn-default {
     background-image: none;
     background-color: $white;
+    text-shadow: none;
   }
 
   .btn-primary {

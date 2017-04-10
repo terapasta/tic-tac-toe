@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :exports, only: [:index, :show], param: :encoding
     resources :threads, only: :index do
       resources :messages, only: [:index] do
-        resource :answer_failed, only: [:create, :destroy], controller: :answer_failed
+        resource :answer_marked, only: [:create, :destroy], controller: :answer_marked
       end
     end
     # resource :imports, only: [:new, :create]

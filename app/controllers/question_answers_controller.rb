@@ -12,7 +12,7 @@ class QuestionAnswersController < ApplicationController
     @topic_tags = @bot.topic_tags
     @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
     if params[:search]
-      @question_answers = QuestionAnswer.topic_search(params[:topic][:id]).page(params[:page])
+      @question_answers = QuestionAnswer.topic_tag(params[:topic][:id]).page(params[:page])
     end
   end
 

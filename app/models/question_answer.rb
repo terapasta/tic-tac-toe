@@ -25,7 +25,7 @@ class QuestionAnswer < ActiveRecord::Base
       .count
   }
 
-  scope :topic_search, -> (topic_tag_id) {
+  scope :topic_tag, -> (topic_tag_id) {
     joins(:topic_tags)
       .where(topic_tags: {id: topic_tag_id})
   }

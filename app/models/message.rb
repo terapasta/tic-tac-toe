@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  include AnswerFailedOperable
+  include AnswerMarkable
   paginates_per 50
 
   attr_accessor :other_answers, :similar_question_answers
@@ -9,6 +9,10 @@ class Message < ActiveRecord::Base
 
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum rating: [:nothing, :good, :bad]
+
+  scope :answer_failed, -> {
+    where(answer_failed: true)
+  }
 
   validates :body, length: { maximum: 10000 }
 

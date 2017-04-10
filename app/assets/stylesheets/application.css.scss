@@ -252,3 +252,19 @@ body {
 .nav-pills li.hover-gray a:hover {
   background-color: #eee;
 }
+
+.fa-answer-not-marked-flag {
+  @extend .fa-flag;
+  color: $icon-disabled-color;
+  &:hover {
+    color: $icon-warning-color;
+  }
+}
+
+.fa-answer-marked-flag {
+  @extend .fa-flag;
+  color: $icon-warning-color;
+  &:hover {
+    color: $icon-disabled-color;
+  }
+}

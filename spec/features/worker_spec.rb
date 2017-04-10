@@ -22,7 +22,7 @@ feature 'worker作業画面の確認' do
   context 'スキップした場合' do
     scenario 'display same page' do
       visit new_imported_sentence_synonym_path
-      find('#cancel').click
+      find('#cancel-button').click
       expect(current_path).to eq '/imported_sentence_synonyms/new'
     end
   end
@@ -30,7 +30,7 @@ feature 'worker作業画面の確認' do
   context '同義文がブランクの場合の登録' do
     scenario 'same record count' do
       visit new_imported_sentence_synonym_path
-      expect{ find('#submit').click }.not_to change(SentenceSynonym, :count)
+      expect{ find('#submit-button').click }.not_to change(SentenceSynonym, :count)
     end
   end
 
@@ -38,7 +38,7 @@ feature 'worker作業画面の確認' do
     scenario 'Message "登録しました。" is displayed' do
       visit new_imported_sentence_synonym_path
       fill_in 'question_answer_sentence_synonyms_attributes_0_body', with: 'test'
-      find('#submit').click
+      find('#submit-button').click
       expect(page). to have_content '登録しました。'
     end
   end

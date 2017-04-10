@@ -1,81 +1,50 @@
 require 'rails_helper'
 
 RSpec.describe Message, :type => :model do
-  let(:answer_success) do
-    create(:message)
-  end
-
   let(:answer_success_by_bot) do
     create(:message, speaker: :bot)
   end
 
-  let(:answer_failed) do
+  let(:answer_failed_by_bot) do
     create(:message, :failed)
   end
 
-  let(:answer_failed_by_user) do
-    create(:message, :failed_by_user)
-  end
-
-  describe 'AnswerFailedOperable' do
-    describe 'scope' do
-      describe 'answer_failed' do
-        subject do
-          Message.answer_failed
+  describe 'AnswerMarkable' do
+    describe '#save_to_answer_marked' do
+      context '注意回答に変更できる場合' do
+        it 'Botの回答メッセージであれば注意回答に変更できること' do
+          expect(answer_success_by_bot.save_to_answer_marked).to be
+          expect(answer_failed_by_bot.save_to_answer_marked).to be
         end
+      end
 
-        before do
-          answer_success
-          answer_success_by_bot
-          answer_failed
+      context '注意回答に変更できない場合' do
+        let(:guest_message) do
+          create(:message)
         end
-
-        context 'システム由来の回答失敗メッセージが混在する場合' do
-          it 'システム由来の回答失敗メッセージが取得できること' do
-            expect(Message.count()).to eq(3)
-            expect(subject.count()).to eq(1)
-          end
-        end
-
-        context 'システム・ユーザー由来の回答失敗メッセージが混在する場合' do
-          before do
-            answer_failed_by_user
-          end
-
-          it 'システム・ユーザー由来、どちらのメッセージも取得できること' do
-            expect(Message.count()).to eq(4)
-            expect(subject.count()).to eq(2)
-          end
+        
+        it 'Bot以外のメッセージは注意回答に変更できないこと' do
+          expect(guest_message.save_to_answer_marked).not_to be
         end
       end
     end
 
-    describe '#save_to_answer_failed' do
-      context '回答失敗に変更できる場合' do
-        it 'Botの回答成功メッセージであれば回答失敗に変更できること' do
-          expect(answer_success_by_bot.save_to_answer_succeed).to be
+    describe '#save_to_remove_answer_marked' do
+      context '注意回答の取り消しができる場合' do
+        it 'Botの回答メッセージであれば注意回答の取り消し状態にできること' do
+          expect(answer_success_by_bot.save_to_remove_answer_marked).to be
+          expect(answer_failed_by_bot.save_to_remove_answer_marked).to be
         end
       end
 
-      context '回答失敗に変更できない場合' do
-        it 'Bot以外の回答成功メッセージは回答失敗に変更できないこと' do
-          expect(answer_success.save_to_answer_failed).not_to be
-          expect(answer_success.errors[:answer_failed].size).to eq(1)
+      context '注意回答の取り消しができない場合' do
+        let(:answer_marked_by_guest) do
+          create(:message, answer_marked: true)
         end
-      end
-    end
 
-    describe '#save_to_answer_succeed' do
-      context '回答成功に変更できる場合' do
-        it 'ユーザーが回答失敗に変更したメッセージを回答成功にできること' do
-          expect(answer_failed_by_user.save_to_answer_succeed).to be
-        end
-      end
-
-      context '回答成功に変更できない場合' do
-        it 'Botによって回答失敗とされたメッセージを回答成功にできないこと' do
-          expect(answer_failed.save_to_answer_succeed).not_to be
-          expect(answer_failed.errors[:answer_failed].size).to eq(1)
+        it 'Bot以外のメッセージは注意回答の取り消し状態にできないこと' do
+          # botのメッセージ以外は注意回答にできないので、本来は発生しないケース
+          expect(answer_marked_by_guest.save_to_remove_answer_marked).not_to be
         end
       end
     end
@@ -84,15 +53,8 @@ RSpec.describe Message, :type => :model do
       context '更新成功する場合' do
         it 'メッセージ本文を変更できること' do
           expect{
-            answer_success.update(body: 'changed body')
-          }.to change(answer_success, :body).from('MyString').to('changed body')
-        end
-      end
-
-      context '更新失敗する場合' do
-        it '内部の回答失敗属性が不整合な状態で回答成功に変更できないこと' do
-          expect(answer_failed_by_user.update(body: 'changed body', answer_failed: false)).not_to be
-          expect(answer_failed_by_user.errors[:answer_failed].size).to eq(1)
+            answer_success_by_bot.update(body: 'changed body')
+          }.to change(answer_success_by_bot, :body).from('MyString').to('changed body')
         end
       end
     end

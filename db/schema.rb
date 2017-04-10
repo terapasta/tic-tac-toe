@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330033331) do
+ActiveRecord::Schema.define(version: 20170331073034) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -176,17 +176,17 @@ ActiveRecord::Schema.define(version: 20170330033331) do
   add_index "learning_training_messages", ["bot_id"], name: "index_learning_training_messages_on_bot_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "chat_id",               limit: 4
-    t.integer  "answer_id",             limit: 4
-    t.string   "speaker",               limit: 255,                   null: false
-    t.text     "body",                  limit: 65535
-    t.string   "user_agent",            limit: 1024
-    t.boolean  "learn_enabled",                       default: true,  null: false
-    t.boolean  "answer_failed",                       default: false, null: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.integer  "rating",                limit: 4,     default: 0
-    t.boolean  "answer_failed_by_user",               default: false, null: false
+    t.integer  "chat_id",       limit: 4
+    t.integer  "answer_id",     limit: 4
+    t.string   "speaker",       limit: 255,                   null: false
+    t.text     "body",          limit: 65535
+    t.string   "user_agent",    limit: 1024
+    t.boolean  "learn_enabled",               default: true,  null: false
+    t.boolean  "answer_failed",               default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "rating",        limit: 4,     default: 0
+    t.boolean  "answer_marked",               default: false, null: false
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree

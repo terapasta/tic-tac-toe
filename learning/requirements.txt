@@ -26,6 +26,7 @@ MarkupSafe==0.23
 matplotlib==1.5.1
 mecab-python3==0.7
 mistune==0.7.3
+mojimoji==0.0.5
 mox==0.5.3
 mprpc==0.1.10
 msgpack-python==0.4.8

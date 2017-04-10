@@ -32,7 +32,7 @@
   <% if chat_page? %>
     <%= yield %>
   <% else %>
-    <div class="container container-main <%= container_main_class %>">
+    <div class="<%= root_container_class %>">
       <%= render "shared/flash" %>
       <%= yield %>
     </div>

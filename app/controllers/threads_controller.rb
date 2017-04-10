@@ -12,6 +12,7 @@ class ThreadsController < ApplicationController
       .has_answer_failed(params[:filter])
       .has_good_answer(params[:good])
       .has_bad_answer(params[:bad])
+      .has_answer_marked(params[:answer_marked])
       .page(params[:page])
 
     respond_to do |format|

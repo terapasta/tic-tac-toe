@@ -15,6 +15,7 @@
     <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, params: message_filter_params({filter: 1})), data: { event_name: 'Open failed threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
     <li role="presentation" class="<%= 'active' if params[:good].present? %>"><%= link_to 'Goodがある対話', bot_threads_path(@bot, params: message_filter_params({good: 1})), data: { event_name: 'Open good threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
     <li role="presentation" class="<%= 'active' if params[:bad].present? %>"><%= link_to 'Badがある対話', bot_threads_path(@bot, params: message_filter_params({bad: 1})), data: { event_name: 'Open bad threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li role="presentation" class="<%= 'active' if params[:answer_marked].present? %>"><%= link_to '注意回答がある対話', bot_threads_path(@bot, answer_marked: 1), data: { event_name: 'Open marked threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
     <li style="float: right">
       <%= link_to '対話履歴をエクスポート', bot_threads_path(format: :csv), class: 'btn btn-default' %>
     </li>
@@ -26,7 +27,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th></th>
+      <th width="72px"></th>
       <th>セット数</th>
       <th>本文</th>
       <th nowrap="nowrap">最終発言日時</th>
@@ -48,6 +49,9 @@
             <% end %>
             <% if chat.has_bad_answer? %>
               <i class="fa fa-thumbs-down text-danger"></i>
+            <% end %>
+            <% if chat.has_answer_marked_message? %>
+                <i class="fa fa-flag text-warning"></i>
             <% end %>
           </td>
           <td>

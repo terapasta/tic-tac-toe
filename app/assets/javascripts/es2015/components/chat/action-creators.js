@@ -9,6 +9,7 @@ import toastr from "toastr";
 import * as API from "../../api/chat-messages";
 import * as MessageRatingAPI from "../../api/chat-message-rating";
 import * as ChatTrainigsAPI from "../../api/chat-trainings";
+import * as BotLearningAPI from "../../api/bot-learning";
 import * as c from "./constants";
 
 import Mixpanel from "../../analytics/mixpanel";
@@ -215,3 +216,24 @@ export const appearReadMore = createAction("APPEAR_READ_MORE");
 export const disappearReadMore = createAction("DISAPPEAR_READ_MORE");
 export const enableReadMore = createAction("ENABLE_READ_MORE");
 export const disableReadMore = createAction("DISABLE_READ_MORE");
+
+export function startLearningIfPossible(botId) {
+  return (dispatch, getState) => {
+    const { learning: { status } } = getState();
+    if (status !== c.LearningStatus.Processing) {
+      dispatch(startLearning(botId));
+    }
+  };
+}
+
+export function pollLearningStatus(botId) {
+  return (dispatch, getState) => {
+    dispatch(getLearningStatus(botId));
+    setInterval(() => {
+      dispatch(getLearningStatus(botId));
+    }, 10000);
+  };
+}
+
+export const startLearning = createAction("START_LEARNING", BotLearningAPI.start);
+export const getLearningStatus = createAction("GET_LEARNING_STATUS", BotLearningAPI.status);

@@ -9,7 +9,7 @@ module ThreadsHelper
 
   private
     def message_params
-      params.slice(:filter, :good, :bad, :marked)
+      params.slice(:filter, :good, :bad, :answer_marked)
     end
 
     def role_params

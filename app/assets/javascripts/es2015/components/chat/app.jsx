@@ -28,6 +28,7 @@ export default class ChatApp extends Component {
     a.trackMixpanel("Open new chat");
     const { dispatch, token } = this.props;
     dispatch(a.fetchMessages(token));
+    dispatch(a.pollLearningStatus(window.currentBot.id));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -40,6 +41,7 @@ export default class ChatApp extends Component {
       token,
       messages,
       form,
+      learning,
       learnings,
       isManager,
       readMore,
@@ -51,7 +53,12 @@ export default class ChatApp extends Component {
 
     return (
       <div>
-        <ChatHeader botName={window.currentBot.name} />
+        <ChatHeader {...{
+          botName: window.currentBot.name,
+          learningStatus: learning.status,
+          isManager,
+          onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
+        }} />
         <ChatArea>
           <ChatReadMore {...assign({
             isManager,

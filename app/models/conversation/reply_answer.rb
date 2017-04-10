@@ -3,7 +3,7 @@ require 'forwardable'
 class Conversation::ReplyAnswer
   extend Forwardable
 
-  def_delegators :@base, *Answer.attribute_names
+  def_delegators :@base, *Answer.instance_methods
 
   attr_accessor :probability
 

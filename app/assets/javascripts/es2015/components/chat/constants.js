@@ -8,3 +8,9 @@ export const Ratings = {
   Good: "good",
   Bad: "bad",
 };
+
+export const LearningStatus = {
+  Processing: "processing",
+  Failed: "failed",
+  Succeeded: "successed",
+};

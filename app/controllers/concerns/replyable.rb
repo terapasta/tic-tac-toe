@@ -2,7 +2,6 @@ module Replyable
   extend ActiveSupport::Concern
 
   def receive_and_reply!(parent, message, other_answer_id = nil)
-    question = message.body
     if other_answer_id.present?
       answer = parent.bot.answers.find(other_answer_id)
     else

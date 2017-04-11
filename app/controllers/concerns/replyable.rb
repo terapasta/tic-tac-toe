@@ -2,6 +2,7 @@ module Replyable
   extend ActiveSupport::Concern
 
   def receive_and_reply!(parent, message, other_answer_id = nil)
+    question = message.body
     if other_answer_id.present?
       answer = parent.bot.answers.find(other_answer_id)
       answers = [answer]
@@ -24,7 +25,7 @@ module Replyable
       if responder.present?
         message.other_answers = responder.other_answers
 
-        if enabled_suggest_question?(answer, parent)
+        if enabled_suggest_question?(question, answer, parent)
           message.similar_question_answers = responder.similar_question_answers
         end
       end
@@ -45,9 +46,9 @@ module Replyable
       parent.bot.has_feature?(:chitchat)
     end
 
-    def enabled_suggest_question?(answer, parent)
-      answer.probability < Settings.threshold_of_suggest_similar_questions &&
-      parent.is_a?(Chat) &&
-      parent.bot.has_feature?(:suggest_question)
+    def enabled_suggest_question?(question, answer, parent)
+      return false unless parent.is_a?(Chat) && parent.bot.has_feature?(:suggest_question)
+
+      answer.probability < Settings.threshold_of_suggest_similar_questions
     end
 end

@@ -1,12 +1,12 @@
 h1 Q&A管理
 .clearfix
-  .form-inline
-    .pull-left
+  .pull-left
+    .form-inline
       = form_tag bot_question_answers_path(@bot), method: :get do
         = collection_select :topic, :id, @topic_tags.all, :id, :name, { prompt: "トピックを選択してください" }, class: 'form-control'
         = submit_tag '検索', name: "search", class: "btn btn-default"
-    .pull-right
-      = link_to t('helpers.link.new'), new_bot_question_answer_path(@bot), class: "btn btn-default", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+  .pull-right
+    = link_to t('helpers.link.new'), new_bot_question_answer_path(@bot), class: "btn btn-default", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
 table.table.table-striped
   thead
     tr

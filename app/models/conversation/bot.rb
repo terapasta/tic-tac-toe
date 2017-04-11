@@ -23,7 +23,7 @@ class Conversation::Bot
     Rails.logger.debug(probability)
 
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
-    reply_answer = Conversation::ReplyAnswer.new(@answer, probability)
+    reply_answer = Conversation::ReplyAnswer.new(answer: @answer, probability: probability)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト

@@ -31,7 +31,7 @@ class Conversation::Bot
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
 
-    [reply]
+    reply
   end
 
   def other_answers

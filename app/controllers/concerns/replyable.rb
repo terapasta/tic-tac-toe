@@ -5,14 +5,14 @@ module Replyable
     question = message.body
     if other_answer_id.present?
       answer = parent.bot.answers.find(other_answer_id)
-      answers = [answer]
     else
       responder = Conversation::Switcher.new.responder(message, session[:states])
-      answers = responder.do_reply
+      reply = responder.do_reply
+      answer = reply.answer
     end
     # session[:states] = responder.states
 
-    reply_messages = answers.map do |answer|
+    reply_messages = [answer].map do |answer|
       parent.context = answer.context
 
       body = answer.body
@@ -31,6 +31,7 @@ module Replyable
       end
       message
     end
+
     parent.save!
     reply_messages
   end

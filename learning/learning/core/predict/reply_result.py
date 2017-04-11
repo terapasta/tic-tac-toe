@@ -26,6 +26,8 @@ class ReplyResult:
 
     def out_log_of_results(self):
         dict = self.__limited_result()
+        logger.debug('question: %s' % self.question)
+        logger.debug('question_feature_count: %s' % self.question_feature_count)
         logger.debug('predicted results (order by probability desc)')
         for row in dict:
             logger.debug(row)

@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)  # Rails側と重複しないIDを指定
 args = parser.parse_args()
 
-body = 'セキュリティはどう'
+body = 'こんにちは。明日は何か予定がありますか？'
 
 attr = {
     'include_failed_data': False,

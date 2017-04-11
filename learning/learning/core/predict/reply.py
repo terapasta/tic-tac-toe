@@ -1,4 +1,5 @@
 import MySQLdb
+import numpy as np
 
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.predict.reply_result import ReplyResult
@@ -28,16 +29,11 @@ class Reply:
             raise ModelNotExistsError()
 
     def perform(self, X):
-        self.predict(X)
-        reply_result = ReplyResult(self.answer_ids, self.probabilities, X[0], 0)
-        reply_result.out_log_of_results()
-        return reply_result
-
-    def predict(self, X):
         text_array = TextArray(X, vectorizer=self.vectorizer)
-        logger.debug('Reply#predict text_array.separated_sentences: %s' % text_array.separated_sentences)
+        logger.debug('Reply#perform text_array.separated_sentences: %s' % text_array.separated_sentences)
         features = text_array.to_vec()
-        logger.debug('Reply#predict features: %s' % features)
+        logger.debug('Reply#perform features: %s' % features)
+        count = np.count_nonzero(features.toarray())
 
         # タグベクトルを追加する処理
         # if self.learning_parameter.include_tag_vector:
@@ -49,4 +45,6 @@ class Reply:
         self.probabilities = self.estimator.predict_proba(features)
         self.answer_ids = self.estimator.classes_
 
-        return self.answers
+        reply_result = ReplyResult(self.answer_ids, self.probabilities, X[0], count)
+        reply_result.out_log_of_results()
+        return reply_result

@@ -13,10 +13,10 @@ class ReplyTestCase(TestCase):
         _ = Bot(cls.BOT_ID, helper.learning_parameter())\
             .learn(csv_file_path='learning/tests/fixtures/default.csv')
 
-    def test_predict(self):
+    def test_perform(self):
         X = ['Windowsにログイン出来ない']
         reply = Reply(self.BOT_ID, helper.learning_parameter())
-        answers = reply.predict(X)
+        answers = reply.perform(X)
 
         # 戻り値にlistが返ること
         eq_(answers.__class__, list)

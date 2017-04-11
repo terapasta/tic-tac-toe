@@ -13,7 +13,7 @@ describe Replyable do
     let(:question_feature_count) { 3 }
     let(:answer) { create(:answer) }
     let(:probability) { Settings.threshold_of_suggest_similar_questions - 0.01 }
-    let(:reply_answer) { Conversation::Reply.new(
+    let(:reply) { Conversation::Reply.new(
       answer: answer,
       probability: probability,
       question: question,
@@ -21,7 +21,7 @@ describe Replyable do
     ) }
 
     # HACK privateメソッドをテストしてしまっているためクラス設計がよくない
-    subject { replayable.send(:enabled_suggest_question?, question, reply_answer, chat) }
+    subject { replayable.send(:enabled_suggest_question?, reply, chat) }
 
     it { is_expected.to be_truthy }
 

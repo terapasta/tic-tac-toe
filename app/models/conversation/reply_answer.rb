@@ -1,18 +1,8 @@
-require 'forwardable'
-
 class Conversation::ReplyAnswer
-  extend Forwardable
-
-  def_delegators :@base, *Answer.instance_methods, *Answer.attribute_names
-
-  attr_accessor :probability
+  attr_accessor :answer, :probability
 
   def initialize(answer, probability)
-    @base = answer
+    @answer = answer
     @probability = probability
-  end
-
-  def answer
-    @base
   end
 end

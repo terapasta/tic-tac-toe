@@ -25,6 +25,11 @@ describe Replyable do
 
     it { is_expected.to be_truthy }
 
+    context '回答のprobabilityがしきい値を超えている場合' do
+      let(:probability) { 0.91 }
+      it { is_expected.to be_falsey }
+    end
+
     context '質問が5文字以下で、probabilityが0.9未満の場合' do
       let(:question) { '質問です' }
       let(:probability) { 0.89 }

@@ -1,6 +1,7 @@
 import argparse
 
 from learning.core.learn.learning_parameter import LearningParameter
+from learning.log import logger
 from myope_server import MyopeServer
 
 parser = argparse.ArgumentParser()
@@ -16,4 +17,6 @@ attr = {
 }
 
 myope_server = MyopeServer()
-myope_server.reply(args.bot_id, body, attr)
+result = myope_server.reply(args.bot_id, body, attr)
+
+logger.debug(result)

@@ -46,7 +46,7 @@ module Replyable
     end
 
     def enabled_suggest_question?(answer, parent)
-      answer.no_classified? &&
+      answer.probability < Settings.threshold_of_suggest_similar_questions &&
       parent.is_a?(Chat) &&
       parent.bot.has_feature?(:suggest_question)
     end

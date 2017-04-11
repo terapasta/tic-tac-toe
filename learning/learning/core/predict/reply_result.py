@@ -9,8 +9,7 @@ class ReplyResult:
         self._result = self.__sort()
 
     def to_dict(self):
-        d = self._result[0:10]
-        self.__out_log_of_results(d)
+        d = self.__limited_result()
         return d
 
     @property
@@ -23,13 +22,17 @@ class ReplyResult:
         if len(self._probabilities) > 0:
             return self._result[0]['probability']
 
+    def out_log_of_results(self):
+        dict = self.__limited_result()
+        logger.debug('predicted results (order by probability desc)')
+        for row in dict:
+            logger.debug(row)
+
     def __sort(self):
         dict = list(map(lambda x: {
             'answer_id': float(x[0]), 'probability': x[1]
         }, sorted(zip(self._answer_ids, self._probabilities[0]), key=lambda x: x[1], reverse=True)))
         return dict
 
-    def __out_log_of_results(self, dict):
-        logger.debug('predicted results (order by probability desc)')
-        for row in dict:
-            logger.debug(row)
+    def __limited_result(self):
+        return self._result[0:10]

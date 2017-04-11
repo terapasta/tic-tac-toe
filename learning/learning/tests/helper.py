@@ -23,6 +23,8 @@ def build_answers(csv_file_path, encoding='UTF-8'):
 
 def get_answer_body(answers, answer_id):
     rows = answers.query('answer_id == %s' % answer_id)
+    if rows.empty:
+        return None
     return rows.iloc[0]['answer_body']
 
 def replace_newline_and_space(val):

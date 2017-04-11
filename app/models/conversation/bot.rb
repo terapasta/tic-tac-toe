@@ -23,13 +23,16 @@ class Conversation::Bot
     Rails.logger.debug(probability)
 
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
+    reply_answer = Conversation::ReplyAnswer.new(@answer, probability)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
     # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
-    [@answer]
+
+
+    [reply_answer]
   end
 
   def other_answers

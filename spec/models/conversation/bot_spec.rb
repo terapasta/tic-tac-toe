@@ -16,7 +16,7 @@ RSpec.describe Conversation::Bot do
       })
     end
 
-    it { is_expected.to eq [answer] }
+    it { expect(subject.first.answer).to eq answer }
 
     context '#replyの結果のanswer_idが0の場合' do
       # FIXME DatabaseCleanerでdefined_answerがテストケースごとに削除されてしまうための対処
@@ -34,7 +34,7 @@ RSpec.describe Conversation::Bot do
       end
 
       it 'NullAnswerが返ること' do
-        expect(subject.first).to be_a NullAnswer
+        expect(subject.first.answer).to be_a NullAnswer
       end
     end
   end

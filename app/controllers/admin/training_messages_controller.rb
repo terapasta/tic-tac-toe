@@ -1,5 +1,5 @@
 class Admin::TrainingMessagesController < ApplicationController
-  before_action :authenticate_admin_user!
+  before_action :authenticate_staff_user
   before_action :set_bot
   before_action :set_training_message, only: [:edit, :update]
 
@@ -30,5 +30,12 @@ class Admin::TrainingMessagesController < ApplicationController
 
     def training_message_params
       params.require(:training_message).permit(:tag_list)
+    end
+
+    def authenticate_staff_user
+      if current_user.role != 'staff'
+        flash[:alert] = '管理者用ページです。権限があるアカウントでログインしてください。'
+        redirect_to root_path
+      end
     end
 end

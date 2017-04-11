@@ -1,5 +1,5 @@
 class Admin::TrainingTextsController < ApplicationController
-  before_action :authenticate_admin_user!
+  before_action :authenticate_staff_user
 
   def new
     @training_text = TrainingText.build_by_sample
@@ -18,5 +18,12 @@ class Admin::TrainingTextsController < ApplicationController
   private
     def training_text_params
       params.require(:training_text).permit(:body, :tag_list)
+    end
+
+    def authenticate_staff_user
+      if current_user.role != 'staff'
+        flash[:alert] = '管理者用ページです。権限があるアカウントでログインしてください。'
+        redirect_to root_path
+      end
     end
 end

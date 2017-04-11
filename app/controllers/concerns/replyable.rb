@@ -48,7 +48,7 @@ module Replyable
 
     def enabled_suggest_question?(question, answer, parent)
       return false unless parent.is_a?(Chat) && parent.bot.has_feature?(:suggest_question)
-
-      answer.probability < Settings.threshold_of_suggest_similar_questions
+      (answer.probability < Settings.threshold_of_suggest_similar_questions) ||
+      (answer.probability < 0.9 && question.length <= 5)
     end
 end

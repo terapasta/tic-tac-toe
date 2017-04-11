@@ -29,7 +29,7 @@ class Reply:
 
     def perform(self, X):
         self.predict(X)
-        reply_result = ReplyResult(self.answer_ids, self.probabilities)
+        reply_result = ReplyResult(self.answer_ids, self.probabilities, X[0], 0)
         reply_result.out_log_of_results()
         return reply_result
 

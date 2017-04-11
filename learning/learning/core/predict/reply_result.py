@@ -3,7 +3,9 @@ from learning.log import logger
 
 class ReplyResult:
 
-    def __init__(self, answer_ids, probabilities):
+    def __init__(self, answer_ids, probabilities, question, question_feature_count):
+        self.question = question
+        self.question_feature_count = question_feature_count
         self._answer_ids = answer_ids
         self._probabilities = probabilities
         self._result = self.__sort()

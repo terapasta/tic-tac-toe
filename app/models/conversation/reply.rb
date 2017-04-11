@@ -1,4 +1,4 @@
-class Conversation::ReplyAnswer
+class Conversation::Reply
   attr_accessor :question, :question_feature_count, :answer, :probability
 
   def initialize(attributes)

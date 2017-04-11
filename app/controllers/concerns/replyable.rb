@@ -8,7 +8,7 @@ module Replyable
       answers = [answer]
     else
       responder = Conversation::Switcher.new.responder(message, session[:states])
-      answers = responder.reply
+      answers = responder.do_reply
     end
     # session[:states] = responder.states
 

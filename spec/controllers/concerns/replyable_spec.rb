@@ -12,7 +12,7 @@ describe Replyable do
     let(:question) { '質問です。ほげほげ、もげもげ' }
     let(:answer) { create(:answer) }
     let(:probability) { Settings.threshold_of_suggest_similar_questions - 0.01 }
-    let(:reply_answer) { Conversation::ReplyAnswer.new(answer: answer, probability: probability) }
+    let(:reply_answer) { Conversation::Reply.new(answer: answer, probability: probability) }
 
     # HACK privateメソッドをテストしてしまっているためクラス設計がよくない
     subject { replayable.send(:enabled_suggest_question?, question, reply_answer, chat) }

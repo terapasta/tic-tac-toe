@@ -1,8 +1,9 @@
 class Conversation::ReplyAnswer
-  attr_accessor :answer, :probability
+  attr_accessor :question, :question_feature_count, :answer, :probability
 
-  def initialize(answer, probability)
-    @answer = answer
-    @probability = probability
+  def initialize(attributes)
+    attributes.each do | key, value |
+      public_send("#{key}=", value) if respond_to?("#{key}=")
+    end
   end
 end

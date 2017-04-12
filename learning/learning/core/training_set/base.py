@@ -51,26 +51,26 @@ class Base(metaclass=ABCMeta):
             minlength = np.asscalar(np.asarray(minlength, dtype=np.intp))
             return np.zeros(minlength, dtype=np.intp)
 
-    def separate_train_data(self, excluded_labels):
+    def indices_of_train_and_excluded_data(self, excluded_labels):
         '''
             学習セットから指定のラベルを分離する。
             parameter
               excluded_labels 学習セットから分離したいラベル (list)
             return
               学習セットにおけるサンプルのインデックス (numpy.ndarray)
-                main_indexes: 分離ラベル以外のインデックス
-                separated_indexes: 分離ラベルのインデックス
+                indices_train: 分離ラベル以外のインデックス
+                indices_exluded: 分離ラベルのインデックス
         '''
-        main_indexes_list = []
-        separated_indexes_list = []
+        indices_train_list = []
+        indices_exluded_list = []
 
         for index, label in enumerate(self.y):
             if label not in excluded_labels:
-                main_indexes_list.append(index)
+                indices_train_list.append(index)
             else:
-                separated_indexes_list.append(index)
+                indices_exluded_list.append(index)
 
-        main_indexes = np.array(main_indexes_list, dtype=np.int64)
-        separated_indexes = np.array(separated_indexes_list, dtype=np.int64)
+        indices_train = np.array(indices_train_list, dtype=np.int64)
+        indices_exluded = np.array(indices_exluded_list, dtype=np.int64)
 
-        return main_indexes, separated_indexes
+        return indices_train, indices_exluded

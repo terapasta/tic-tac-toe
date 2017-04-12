@@ -20,10 +20,12 @@ class Conversation::Bot
 
     answer_id = result[:answer_id]
     probability = result[:probability]
+    question = result[:question]
+    question_feature_count = result[:question_feature_count]
     Rails.logger.debug(probability)
-
+binding.pry
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
-    reply = Conversation::Reply.new(answer: @answer, probability: probability)
+    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, answer: @answer, probability: probability)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト

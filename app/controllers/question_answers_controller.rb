@@ -10,6 +10,7 @@ class QuestionAnswersController < ApplicationController
 
   def index
     @topic_tags = @bot.topic_tags
+    @search_result = params.dig(:topic, :id)
     @question_answers = @bot.question_answers
       .topic_tag(params.dig(:topic, :id))
       .includes(:decision_branches)

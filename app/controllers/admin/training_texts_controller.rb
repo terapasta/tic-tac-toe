@@ -1,4 +1,5 @@
 class Admin::TrainingTextsController < ApplicationController
+  include JudgeUserRole
   before_action :authenticate_staff_user
 
   def new
@@ -18,12 +19,5 @@ class Admin::TrainingTextsController < ApplicationController
   private
     def training_text_params
       params.require(:training_text).permit(:body, :tag_list)
-    end
-
-    def authenticate_staff_user
-      if current_user.role != 'staff'
-        flash[:alert] = '管理者用ページです。権限があるアカウントでログインしてください。'
-        redirect_to root_path
-      end
     end
 end

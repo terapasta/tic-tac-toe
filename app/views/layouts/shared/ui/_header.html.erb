@@ -40,7 +40,7 @@
                 <li><%#= link_to '文脈', rails_admin.index_path(model_name: :context) %></li>
               </ul>
             </li>-->
-            <li><%= link_to "ログアウト", destroy_admin_user_session_path, data: { method: :delete, event_name: 'Logout', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
+            <li><%= link_to "ログアウト", destroy_user_session_path, data: { method: :delete, event_name: 'Logout', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
           </ul>
           <% unless current_user.normal? %>
             <p class="navbar-text"><span class="label label-info"><%= current_user.role.upcase %></span></p>

@@ -23,7 +23,7 @@ class Conversation::Bot
     question = result[:question]
     question_feature_count = result[:question_feature_count]
     Rails.logger.debug(probability)
-binding.pry
+
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
     reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, answer: @answer, probability: probability)
 

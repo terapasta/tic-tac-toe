@@ -26,8 +26,9 @@ class QuestionAnswer < ActiveRecord::Base
   }
 
   scope :topic_tag, -> (topic_tag_id) {
-    joins(:topic_tags)
-      .where(topic_tags: {id: topic_tag_id})
+    if topic_tag_id.present?
+      joins(:topic_tags).where(topic_tags: {id: topic_tag_id})
+    end
   }
 
   def self.import_csv(file, bot, options = {})

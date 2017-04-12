@@ -10,11 +10,11 @@ class QuestionAnswersController < ApplicationController
 
   def index
     @topic_tags = @bot.topic_tags
-    if params[:search]
-      @question_answers = QuestionAnswer.topic_tag(params[:topic][:id]).page(params[:page])
-    else
-      @question_answers = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page])
-    end
+    @question_answers = @bot.question_answers
+      .topic_tag(params.dig(:topic, :id))
+      .includes(:decision_branches)
+      .order('question')
+      .page(params[:page])
   end
 
   def show

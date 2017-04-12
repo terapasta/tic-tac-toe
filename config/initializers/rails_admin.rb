@@ -3,10 +3,11 @@ RailsAdmin.config do |config|
   ### Popular gems integration
 
   ## == Devise ==
-  config.authenticate_with do
-    warden.authenticate! scope: :admin_user
+  config.authorize_with do
+    redirect_to main_app.root_path unless current_user.role == 'staff'
+    flash[:alert] = '管理者用ページです。権限があるアカウントでログインしてください。'
   end
-  config.current_user_method(&:current_admin_user)
+  config.current_user_method(&:current_user)
 
   ## == Cancan ==
   # config.authorize_with :cancan

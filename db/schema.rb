@@ -187,10 +187,12 @@ ActiveRecord::Schema.define(version: 20170331073034) do
     t.datetime "updated_at",                                  null: false
     t.integer  "rating",        limit: 4,     default: 0
     t.boolean  "answer_marked",               default: false, null: false
+    t.datetime "trained_at"
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
+  add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4

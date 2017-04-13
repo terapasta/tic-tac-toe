@@ -46,6 +46,11 @@ class Chat < ActiveRecord::Base
     end
   }
 
+  scope :question_message, -> (chat_id, answer_message_id) {
+    #回答メッセージの直近guestメッセージを質問メッセージとして扱う
+    find_by(id: chat_id).messages.guest.where('id < ?', answer_message_id).order(:id).last
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
     Message.new(speaker: 'bot', answer_id: nil, body: body)

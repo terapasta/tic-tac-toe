@@ -7,6 +7,8 @@ class Message < ActiveRecord::Base
   belongs_to :chat
   belongs_to :answer
 
+  after_create :send_mail
+
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum rating: [:nothing, :good, :bad]
 
@@ -35,6 +37,12 @@ class Message < ActiveRecord::Base
       'silhouette.png'
     else
       'operator'
+    end
+  end
+
+  def send_mail
+    if bot? && answer_failed?
+      AnswerFailedMailer.create(self).deliver_later
     end
   end
 end

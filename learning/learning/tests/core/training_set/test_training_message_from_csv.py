@@ -93,6 +93,13 @@ class TrainingMessageFromCsvTestCase(TestCase):
         eq_(n_expected_excluded, np.sum(indices_excluded == expected_indices_excluded))
         eq_(n_expected_excluded, np.sum(y_excluded == expected_y_excluded))
 
+        '''
+            indices_of_train_and_excluded_dataで得られた
+            学習セット(indices_train) の件数をチェック
+        '''
+        n_expected_train_set = training_set.x.shape[0] - n_expected_excluded
+        eq_(np.size(indices_train), n_expected_train_set)
+
     def test_blank_excluded_labels(self):
         attr = {
             'include_failed_data': False,

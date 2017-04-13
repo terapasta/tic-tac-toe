@@ -54,7 +54,7 @@ class Evaluator:
         '''
             学習セットから分離させたラベルにより予測し、
             正しく回答失敗となる確率を求める
-            proba <= failure_score_threshold なら回答失敗
+            proba <= self.threshold なら回答失敗
         '''
         if np.size(indices_excluded) == 0:
             return
@@ -63,8 +63,7 @@ class Evaluator:
         probabilities = estimator.predict_proba(X_excluded)
         max_probabilities = np.max(probabilities, axis=1)
 
-        _threshold = learning_parameter.failure_score_threshold
-        failure_score_threshold = 0.5 if _threshold is None else _threshold
+        failure_score_threshold = self.threshold
         logger.debug('failure_score_threshold: %s' % failure_score_threshold)
 
         bools = (max_probabilities <= failure_score_threshold)

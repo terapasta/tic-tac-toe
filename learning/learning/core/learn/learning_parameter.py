@@ -21,12 +21,6 @@ class LearningParameter:
         if self._excluded_labels_for_fitting is None:
             self._excluded_labels_for_fitting = []
 
-        '''
-            分離されたラベルで予測実行時、
-            回答失敗と判定される probability のしきい値を指定
-        '''
-        self._failure_score_threshold = attributes.get('failure_score_threshold')
-
     @property
     def include_failed_data(self):
         return self._include_failed_data
@@ -50,7 +44,3 @@ class LearningParameter:
     @property
     def excluded_labels_for_fitting(self):
         return self._excluded_labels_for_fitting
-
-    @property
-    def failure_score_threshold(self):
-        return self._failure_score_threshold

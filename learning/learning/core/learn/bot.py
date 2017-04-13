@@ -1,10 +1,6 @@
 from collections import Counter
 
-try:
-    import MySQLdb
-except:
-    pass
-
+import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
 from learning.core.stop_watch import stop_watch

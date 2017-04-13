@@ -22,6 +22,7 @@ class QuestionAnswersController < ApplicationController
 
   def new
     @question_answer = @bot.question_answers.build
+    @question_answer.question = params[:question]
   end
 
   def create

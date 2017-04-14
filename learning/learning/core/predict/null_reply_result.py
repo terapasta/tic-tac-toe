@@ -6,9 +6,17 @@ class NullReplyResult:
         return {}
 
     @property
+    def question(self):
+        return ''
+
+    @property
     def answer_id(self):
         return Reply.CLASSIFY_FAILED_ANSWER_ID
 
     @property
     def probability(self):
         return 1
+
+    @property
+    def question_feature_count(self):
+        return 0

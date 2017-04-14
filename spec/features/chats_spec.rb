@@ -66,7 +66,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'show answer and rating' do
-          visit "/embed/#{bot.token}/chats/new"
+          visit "/embed/#{bot.token}/chats/new_app"
           fill_in 'chat-message-body', with: 'サンプルメッセージ'
           click_button '質問'
           sleep 1
@@ -85,7 +85,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'show decision branches' do
-          visit "/embed/#{bot.token}/chats/new"
+          visit "/embed/#{bot.token}/chats/new_app"
 
           has_decision_branch_answer_message.chat = Chat.last
           has_decision_branch_answer_message.save
@@ -103,7 +103,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'training' do
-          visit "/embed/#{bot.token}/chats/new"
+          visit "/embed/#{bot.token}/chats/new_app"
           fill_in 'chat-message-body', with: 'サンプルメッセージ'
           click_button '質問'
           sleep 1
@@ -120,9 +120,10 @@ RSpec.describe 'Chats', type: :features, js: true do
             find('.chat-section__switch').click
             expect(find('textarea[name="chat-guest-message-body"]').value).to eq('トレーニング質問')
             expect(find('textarea[name="chat-bot-message-body"]').value).to eq('トレーニング回答')
-            click_link 'この内容で教える'
-            sleep 1
-            expect(page).to have_content('学習データに登録しました')
+            expect{
+              click_link 'この内容で教える'
+              sleep 1
+            }.to change(QuestionAnswer, :count).by(1)
           end
         end
       end

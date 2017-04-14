@@ -40,6 +40,18 @@ class Chat < ActiveRecord::Base
     end
   }
 
+  scope :not_normal, -> (flag) {
+    if flag.present?
+      where(is_normal: false)
+    end
+  }
+
+  scope :normal, -> (flag) {
+    if flag.present?
+      where(is_normal: true)
+    end
+  }
+
   scope :has_answer_marked, -> (flag) {
     if flag.present?
       where(id: Message.select(:chat_id).answer_marked)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331073034) do
+ActiveRecord::Schema.define(version: 20170402073948) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -85,8 +85,10 @@ ActiveRecord::Schema.define(version: 20170331073034) do
     t.datetime "updated_at",                             null: false
     t.integer  "bot_id",     limit: 4,                   null: false
     t.boolean  "is_staff",               default: false
+    t.boolean  "is_normal",              default: false, null: false
   end
 
+  add_index "chats", ["is_normal"], name: "index_chats_on_is_normal", using: :btree
   add_index "chats", ["is_staff"], name: "index_chats_on_is_staff", using: :btree
 
   create_table "contact_answers", force: :cascade do |t|

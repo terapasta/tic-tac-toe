@@ -23,6 +23,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
 
         training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
+        n_training_set = np.size(training_set.y) # 当初学習セットの件数
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
         '''
@@ -32,7 +33,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
               当初の学習セットとindices_trainの要素数が一致する
               indices_excludedの要素数は0
         '''
-        eq_(training_set.x.shape[0], np.size(indices_train))
+        eq_(np.size(indices_train), n_training_set)
         eq_(np.size(indices_excluded), 0)
 
     def test_exist_excluded_labels(self):
@@ -48,6 +49,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
 
         training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
+        n_training_set = np.size(training_set.y) # 当初学習セットの件数
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
         y_excluded = training_set.y[indices_excluded]
@@ -96,7 +98,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
             indices_of_train_and_excluded_dataで得られた
             学習セット(indices_train) の件数をチェック
         '''
-        n_expected_train_set = training_set.x.shape[0] - n_expected_excluded
+        n_expected_train_set = n_training_set - n_expected_excluded
         eq_(np.size(indices_train), n_expected_train_set)
 
     def test_blank_excluded_labels(self):
@@ -112,6 +114,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
 
         training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
+        n_training_set = np.size(training_set.y) # 当初学習セットの件数
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
         '''
@@ -119,7 +122,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
               当初の学習セットとindices_trainの要素数が一致する
               indices_excludedの要素数は0
         '''
-        eq_(training_set.x.shape[0], np.size(indices_train))
+        eq_(np.size(indices_train), n_training_set)
         eq_(np.size(indices_excluded), 0)
 
     def test_nomatch_excluded_labels(self):
@@ -135,6 +138,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
 
         training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
+        n_training_set = np.size(training_set.y) # 当初学習セットの件数
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
         '''
@@ -142,5 +146,5 @@ class TrainingMessageFromCsvTestCase(TestCase):
               当初の学習セットとindices_trainの要素数が一致する
               indices_excludedの要素数は0
         '''
-        eq_(training_set.x.shape[0], np.size(indices_train))
+        eq_(np.size(indices_train), n_training_set)
         eq_(np.size(indices_excluded), 0)

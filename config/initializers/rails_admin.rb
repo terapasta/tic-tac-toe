@@ -4,8 +4,7 @@ RailsAdmin.config do |config|
 
   ## == Devise ==
   config.authorize_with do
-    redirect_to main_app.root_path unless current_user.role == 'staff'
-    flash[:alert] = '管理者用ページです。権限があるアカウントでログインしてください。'
+    redirect_to main_app.root_path, flash: {alert: '管理者用ページです。権限があるアカウントでログインしてください。'} unless current_user.staff?
   end
   config.current_user_method(&:current_user)
 

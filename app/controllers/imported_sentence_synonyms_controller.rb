@@ -17,10 +17,10 @@ class ImportedSentenceSynonymsController < ApplicationController
   def new
     @question_answer = QuestionAnswer.pick_sentence_synonyms_not_enough(@bot, current_user)
     if @question_answer.blank?
-      flash[:error] = '未作業の文章がありませんでした'
-      redirect_to root_path and return
+      flash.now.alert = '未作業の文章がありませんでした'
+    else
+      @question_answer.build_sentence_synonyms_for(current_user)
     end
-    @question_answer.build_sentence_synonyms_for(current_user)
   end
 
   def create

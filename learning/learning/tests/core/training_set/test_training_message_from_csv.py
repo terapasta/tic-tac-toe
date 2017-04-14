@@ -9,7 +9,6 @@ from learning.core.training_set.training_message_from_csv import TrainingMessage
 class TrainingMessageFromCsvTestCase(TestCase):
     def setUp(self):
         self.csv_file_path = 'learning/tests/fixtures/test_daikin_conversation.csv'
-        self.csv_file_encoding = 'utf-8'
         self.bot_id = 9999
 
     def test_no_exist_excluded_labels(self):
@@ -22,7 +21,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
         }
         learning_parameter = LearningParameter(attr)
 
-        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter, encoding=self.csv_file_encoding)
+        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
@@ -47,7 +46,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
         }
         learning_parameter = LearningParameter(attr)
 
-        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter, encoding=self.csv_file_encoding)
+        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
@@ -111,7 +110,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
         }
         learning_parameter = LearningParameter(attr)
 
-        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter, encoding=self.csv_file_encoding)
+        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 
@@ -134,7 +133,7 @@ class TrainingMessageFromCsvTestCase(TestCase):
         }
         learning_parameter = LearningParameter(attr)
 
-        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter, encoding=self.csv_file_encoding)
+        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
         training_set.build()
         indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
 

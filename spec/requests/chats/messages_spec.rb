@@ -31,6 +31,7 @@ RSpec.describe 'chats/messages', type: :request do
 
   describe 'GET chats/messages' do
     before do
+      Capybara.reset_session!
       get "#{chat_path}/new" # make guest_key and chat
       Message.last.tap do |m|
         m.answer = answer

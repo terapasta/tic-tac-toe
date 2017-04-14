@@ -24,6 +24,11 @@ class Chats::MessagesController < ApplicationController
       format.js
       format.json { render_collection_json [@message, *@bot_messages], include: 'answer,answer.decision_branches' }
     end
+  rescue => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.json { render json: { error: e.message }, status: :unprocessable_entity }
+    end
   end
 
   private

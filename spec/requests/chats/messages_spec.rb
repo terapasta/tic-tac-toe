@@ -36,7 +36,7 @@ RSpec.describe 'chats/messages', type: :request do
         m.answer = answer
         m.save
       end
-      decision_branches.tapp.first.tap do |db|
+      decision_branches.first.tap do |db|
         db.next_answer = next_answer
         db.save
       end
@@ -45,7 +45,7 @@ RSpec.describe 'chats/messages', type: :request do
     context 'when json format' do
       it 'returns json data' do
         get "#{chat_path}/messages.json"
-        expect(res_json.tapp['messages'].is_a?(Array)).to be
+        expect(res_json['messages'].is_a?(Array)).to be
         expect(res_json['messages'].first['answer']['id']).to be
         expect(res_json['meta']['totalPages']).to be_present
       end

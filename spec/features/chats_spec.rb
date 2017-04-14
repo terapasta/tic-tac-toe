@@ -87,8 +87,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         scenario 'show decision branches' do
           visit "/embed/#{bot.token}/chats/new_app"
 
-          has_decision_branch_answer_message.chat = Chat.last
-          has_decision_branch_answer_message.save
+          has_decision_branch_answer_message.update(chat: Chat.last)
           allow_any_instance_of(Chats::MessagesController).to receive(:receive_and_reply!).and_return([has_decision_branch_answer_message])
 
           fill_in 'chat-message-body', with: 'サンプルメッセージ'
@@ -123,6 +122,8 @@ RSpec.describe 'Chats', type: :features, js: true do
             expect{
               click_link 'この内容で教える'
               sleep 1
+              # このテキストは表示されているがコードからは見つけられないのでコメントアウト
+              # expect(page).to have_content('学習データに登録しました')
             }.to change(QuestionAnswer, :count).by(1)
           end
         end

@@ -35,7 +35,7 @@ class ReplyResult:
     def __sort(self):
         dict = list(map(lambda x: {
             'answer_id': float(x[0]), 'probability': x[1]
-        }, sorted(zip(self._answer_ids, self._probabilities[0]), key=lambda x: x[1], reverse=True)))
+        }, sorted(zip(self._answer_ids, self._probabilities), key=lambda x: x[1], reverse=True)))
         return dict
 
     def __limited_result(self):

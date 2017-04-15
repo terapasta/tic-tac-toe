@@ -10,6 +10,7 @@ class Chats::MessageRatingController < ApplicationController
 
   def bad
     @message.bad!
+    SendBadRateMailService.new(@message).send_mail
     respond_with @message
   end
 

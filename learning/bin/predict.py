@@ -8,11 +8,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)  # Rails側と重複しないIDを指定
 args = parser.parse_args()
 
-body = 'こんにちは。明日は何か予定がありますか？'
+body = 'プリンの話や'
 
 attr = {
     'include_failed_data': False,
     'include_tag_vector': False,
+    'use_similarity_classification': True,
     'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
 }
 

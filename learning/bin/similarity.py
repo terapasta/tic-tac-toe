@@ -6,6 +6,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)
 args = parser.parse_args()
 
-question = 'オフィス'
+question = 'エラー'
 result = Similarity(args.bot_id).question_answers(question)
 print(result)

@@ -80,7 +80,7 @@ class Reply:
         # TODO similarityクラスで共通化する
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        question_answers = self.__all_question_answers(question)
+        question_answers = self.__all_question_answers()
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
         question_array = TextArray([question], vectorizer=self.vectorizer)
 
@@ -96,8 +96,8 @@ class Reply:
         return df['answer_id'], df['similarity']
 
     # TODO similarityクラスで共通化する
-    def __all_question_answers(self, question):
+    def __all_question_answers(self):
         data = pd.read_sql(
-            "select id, question, answer_id from question_answers where bot_id = %s and question <> '%s' and answer_id <> %s;"
-            % (self.bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self.db)
+            "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
+            % (self.bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self.db)
         return data

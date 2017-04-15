@@ -1,5 +1,7 @@
 import MySQLdb
 import numpy as np
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
 
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.predict.reply_result import ReplyResult
@@ -42,9 +44,38 @@ class Reply:
         #     features = np.c_[tag_vec, Xtrain_vec]
 
         # self.answers = self.estimator.predict(features)
-        self.probabilities = self.estimator.predict_proba(features)
-        self.answer_ids = self.estimator.classes_
+        # self.probabilities = self.estimator.predict_proba(features)
+        # self.answer_ids = self.estimator.classes_
 
-        reply_result = ReplyResult(self.answer_ids, self.probabilities, X[0], count)
+        df = self.question_answers(X[0])
+
+
+        reply_result = ReplyResult(df['answer_id'], [df['similarity']], X[0], count)
         reply_result.out_log_of_results()
         return reply_result
+
+    def question_answers(self, question):
+        """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
+        """
+        question_answers = self.__all_question_answers(question)
+        all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
+        question_array = TextArray([question], vectorizer=self.vectorizer)
+
+        similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
+        similarities = similarities.flatten()
+        logger.debug("similarities: %s" % similarities)
+
+        ordered_result = list(map(lambda x: {
+            'question_answer_id': float(x[0]), 'similarity': x[1], 'answer_id': x[2]
+        }, sorted(zip(question_answers['id'], similarities, question_answers['answer_id']), key=lambda x: x[1], reverse=True)))
+
+
+        # ordered_result = list(filter((lambda x: x['similarity'] > 0.1), ordered_result))
+        return pd.DataFrame.from_dict(ordered_result[0:10])
+
+
+    def __all_question_answers(self, question):
+        data = pd.read_sql(
+            "select id, question, answer_id from question_answers where bot_id = %s and question <> '%s' and answer_id <> %s;"
+            % (self.bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self.db)
+        return data

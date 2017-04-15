@@ -53,6 +53,7 @@ class MyopeServer(RPCServer):
 
     def similarity(self, bot_id, question):
         result = Similarity(bot_id).question_answers(question)
+        logger.debug(result)
         return result
 
     def learn_tag_model(self):

@@ -5,6 +5,7 @@ class Chat < ActiveRecord::Base
   has_many :messages
   has_many :contact_states
   belongs_to :bot
+  has_one :bot_user, through: :bot, source: :user
   enum context: ContextHoldable::CONTEXTS
 
   scope :has_multiple_messages, -> {

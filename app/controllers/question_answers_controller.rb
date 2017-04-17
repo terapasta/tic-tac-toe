@@ -9,18 +9,15 @@ class QuestionAnswersController < ApplicationController
   autocomplete :answer, :body, full: true
 
   def index
-<<<<<<< 5a63766092ad70c50f9716cb0944c88cf62fb7bd
     @topic_tags = @bot.topic_tags
     @search_result = params.dig(:topic, :id)
-    @question_answers = @bot.question_answers
+    @q = @bot.question_answers
       .topic_tag(params.dig(:topic, :id))
       .includes(:decision_branches)
       .order('question')
       .page(params[:page])
-=======
-    @q = @bot.question_answers.includes(:decision_branches).order('question').page(params[:page]).search(params[:q])
+      .search(params[:q])
     @question_answers = @q.result
->>>>>>> questions.questionカラム、created_atカラム、updated_atカラムを昇順降順できるようにする
   end
 
   def show

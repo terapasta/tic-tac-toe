@@ -14,12 +14,8 @@ h1 Q&A管理
 table.table.table-striped
   thead
     tr
-<<<<<<< 5a63766092ad70c50f9716cb0944c88cf62fb7bd
       th トピックタグ
-      th 質問
-=======
       th = sort_link(@q, :question, '質問', default_order: :desc)
->>>>>>> questions.questionカラム、created_atカラム、updated_atカラムを昇順降順できるようにする
       th 回答
       th 分岐
       th = sort_link(@q, :created_at, '作成日時', default_order: :desc)
@@ -37,17 +33,11 @@ table.table.table-striped
           ul
             - question_answer.decision_branches.each do |decision_branch|
               li = decision_branch.body
-<<<<<<< c29d6c8a262e2fc0f9f6a6d57469754c16542b3f
-<<<<<<< 5a63766092ad70c50f9716cb0944c88cf62fb7bd
-=======
         td = question_answer.created_at
         td = question_answer.updated_at
-=======
         td = l question_answer.created_at, format: :short
         td = l question_answer.updated_at, format: :short
->>>>>>> 日時のフォーマット修正
 
->>>>>>> questions.questionカラム、created_atカラム、updated_atカラムを昇順降順できるようにする
         td nowrap="nowrap"
           = link_to t('helpers.link.edit'), edit_bot_question_answer_path(@bot, question_answer), class: "btn btn-default", data: { event_name: 'Open edit question answer', bot_id: @bot.id, bot_name: @bot.name }
           = link_to t('helpers.link.destroy'), bot_question_answer_path(@bot, question_answer), data: { confirm: 'Q&Aを削除します。よろしいですか。', method: :delete, event_name: 'Delete question answer', bot_id: @bot.id, bot_name: @bot.name }, class: "btn btn-danger"

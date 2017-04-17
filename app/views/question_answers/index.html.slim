@@ -9,7 +9,7 @@ h1 Q&A管理
 table.table.table-striped
   thead
     tr
-      th トピック
+      th トピックタグ
       th 質問
       th 回答
       th 分岐
@@ -17,7 +17,7 @@ table.table.table-striped
   tbody
     - @question_answers.each do |question_answer|
       tr
-        td 
+        td
           - question_answer.topic_tags.each do |topic_tag|
             span.label.label-primary = topic_tag.name
             br

@@ -21,7 +21,7 @@ class QuestionAnswersController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        render json: @question_answer.decorate.as_json
+        render json: @question_answer.decorate.as_json(include: [:topic_tags])
       end
     end
   end
@@ -47,16 +47,29 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
+    ActiveRecord::Base.transaction do
+      @question_answer.topic_taggings.destroy_all
+      @question_answer.update!(permitted_attributes(@question_answer))
+    end
     respond_to do |format|
-      if @question_answer.update(permitted_attributes(@question_answer) )
-        format.html { redirect_to bot_question_answers_path(@bot), notice: '更新しました。' }
-        format.json { render json: @question_answer.decorate.as_json, status: :ok }
-      else
-        format.html do
-          flash.now.alert = '更新できませんでした。'
-          render :edit
-        end
-        format.json { render json: @question_answer.decorate.errors_as_json, status: :unprocessable_entity }
+      format.html do
+        redirect_to bot_question_answers_path(@bot), notice: '更新しました。'
+      end
+      format.json do
+        render json: @question_answer.decorate.as_json,
+               status: :ok
+      end
+    end
+  rescue => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.html do
+        flash.now.alert = '更新できませんでした。'
+        render :edit
+      end
+      format.json do
+        render json: @question_answer.decorate.errors_as_json,
+               status: :unprocessable_entity
       end
     end
   end

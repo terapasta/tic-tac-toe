@@ -12,6 +12,7 @@ class QuestionAnswer < ActiveRecord::Base
   has_many :topic_tags, through: :topic_taggings
 
   accepts_nested_attributes_for :answer
+  accepts_nested_attributes_for :topic_taggings
 
   serialize :underlayer
 

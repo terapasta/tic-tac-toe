@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :admin_users
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
@@ -68,13 +67,6 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :admin do
-    resources :training_texts, only: [:new, :create]
-    resources :bots, only: [:index] do
-      resources :training_messages, only: [:edit, :update]
-      get 'next', to: 'training_messages#next'
-    end
-  end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   namespace :api, { format: 'json' } do

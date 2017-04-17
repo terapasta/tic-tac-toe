@@ -6,6 +6,7 @@ class Chats::ChoicesController < ApplicationController
     ActiveRecord::Base.transaction do
       @message = @chat.messages.create!(guest_message_params)
       @bot_message = @chat.messages.create!(bot_message_params)
+      @bot_messages = [@bot_message]
     end
     respond_to do |format|
       format.js { render 'chats/messages/create' }

@@ -8,7 +8,7 @@ class Chats::ChoicesController < ApplicationController
       @bot_message = @chat.messages.create!(bot_message_params)
     end
     respond_to do |format|
-      format.html { render 'chats/messages/create' }
+      format.js { render 'chats/messages/create' }
       format.json { render json: [@message, @bot_message], adapter: :json }
     end
   end

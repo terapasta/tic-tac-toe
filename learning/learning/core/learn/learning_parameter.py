@@ -3,6 +3,7 @@ from learning.log import logger
 class LearningParameter:
     ALGORITHM_LOGISTIC_REGRESSION = 0
     ALGORITHM_NAIVE_BAYES = 1
+    ALGORITHM_NEURAL_NETWORK = 2
 
     def __init__(self, attributes):
         self._include_failed_data = attributes['include_failed_data']  # TODO 使われていないパラメータなので削除したい

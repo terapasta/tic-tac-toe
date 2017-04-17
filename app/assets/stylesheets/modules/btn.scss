@@ -1,0 +1,9 @@
+.btn {
+  &.btn-xs-sm {
+    @media (max-width: $screen-xs-max) {
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  }
+}

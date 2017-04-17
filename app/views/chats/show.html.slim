@@ -1,3 +1,6 @@
+header.chat-header
+  h1.chat-header__title= @bot.name
+
 .chat-container.chat-area
   - @chat.messages.each_with_index do |message, i|
     - if message.bot?

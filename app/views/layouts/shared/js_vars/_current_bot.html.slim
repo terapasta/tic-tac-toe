@@ -1,0 +1,3 @@
+- if @bot.present?
+  javascript:
+    window.currentBot = #{@bot.to_json(only: [:id, :name]).html_safe};

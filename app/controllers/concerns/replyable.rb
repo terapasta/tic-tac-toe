@@ -20,7 +20,13 @@ module Replyable
         body = DocomoClient.new.reply(parent, parent.bot, message.body)
       end
 
-      message = parent.messages.build(speaker: 'bot', answer_id: answer.id || Answer::NO_CLASSIFIED_ID, body: body, answer_failed: answer.no_classified?)
+      message = parent.messages.create!(
+        speaker: 'bot',
+        answer_id: answer.id || Answer::NO_CLASSIFIED_ID,
+        body: body,
+        answer_failed: answer.no_classified?,
+        created_at: message.created_at + 1.second,
+      )
       if responder.present?
         message.other_answers = responder.other_answers
 

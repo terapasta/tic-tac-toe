@@ -9,7 +9,7 @@ RSpec.describe Conversation::Bot do
     subject { conversation_bot.do_reply }
 
     before do
-      Ml::Engine.any_instance.stub(:reply).and_return({
+      allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
         answer_id: answer.id,
         probability: 0.999,
         results: []

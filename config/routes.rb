@@ -37,7 +37,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    resource :learning, only: [:update]
+    resource :learning, only: [:show, :update]
     resources :answers, except: [:new] do
       resources :decision_branches, only: [:index]
       resources :training_messages, only: [:index], module: :answers
@@ -52,8 +52,10 @@ Rails.application.routes.draw do
 
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
+      get :show_app
+      get :new_app
       scope module: :chats do
-        resources :messages, only: [:create] do
+        resources :messages, only: [:index, :create] do
           resource :rating, only: [], controller: :message_rating do
             member do
               put :good
@@ -62,6 +64,7 @@ Rails.application.routes.draw do
             end
           end
         end
+        resources :trainings, only: [:create]
         post 'choices/:id', to: 'choices#create', as: :choices
       end
     end

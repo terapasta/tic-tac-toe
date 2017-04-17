@@ -29,13 +29,15 @@ export function directMountComponent(component, mountNode) {
   render(createElement(component, props), mountNode);
 }
 
-export function mountComponentWithRedux(component, reducers) {
+export function mountComponentWithRedux(component, reducers, additionalMiddlewares = []) {
   const mountNodes = getMountNodes(component);
 
   mountNodes.forEach((mountNode) => {
     const props = getProps(mountNode);
     const connectedComponent = connect((state) => state)(component);
-    const middlewares = applyMiddleware(...getReduxMiddlewares());
+    const middlewares = applyMiddleware(
+      ...getReduxMiddlewares(),
+      ...additionalMiddlewares);
     const store = createStore(reducers, props, middlewares);
 
     render (

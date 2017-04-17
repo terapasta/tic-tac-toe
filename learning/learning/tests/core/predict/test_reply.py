@@ -13,14 +13,12 @@ class ReplyTestCase(TestCase):
         _ = Bot(cls.BOT_ID, helper.learning_parameter())\
             .learn(csv_file_path='learning/tests/fixtures/default.csv')
 
-    def test_predict(self):
+    def test_perform(self):
         X = ['Windowsにログイン出来ない']
         reply = Reply(self.BOT_ID, helper.learning_parameter())
-        answers = reply.predict(X)
+        reply_result = reply.perform(X)
 
-        # 戻り値にlistが返ること
-        eq_(answers.__class__, list)
-        # answer_idsに1件以上の値が格納されていること
-        ok_(len(reply.answer_ids) > 0)
-        # probabilitiesに1件以上の値が格納されていること
-        ok_(len(reply.probabilities) > 0)
+        # answer_idにいずれかのidがセットされていること
+        ok_(reply_result.answer_id != 0)
+        # probabilityが0より大きいこと
+        ok_(reply_result.probability > 0)

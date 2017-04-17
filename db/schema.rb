@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327052525) do
+ActiveRecord::Schema.define(version: 20170415054829) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -85,8 +85,10 @@ ActiveRecord::Schema.define(version: 20170327052525) do
     t.datetime "updated_at",                             null: false
     t.integer  "bot_id",     limit: 4,                   null: false
     t.boolean  "is_staff",               default: false
+    t.boolean  "is_normal",              default: false, null: false
   end
 
+  add_index "chats", ["is_normal"], name: "index_chats_on_is_normal", using: :btree
   add_index "chats", ["is_staff"], name: "index_chats_on_is_staff", using: :btree
 
   create_table "contact_answers", force: :cascade do |t|
@@ -150,14 +152,15 @@ ActiveRecord::Schema.define(version: 20170327052525) do
   end
 
   create_table "learning_parameters", force: :cascade do |t|
-    t.integer  "bot_id",               limit: 4
-    t.integer  "algorithm",            limit: 4,     default: 0,     null: false
-    t.text     "params_for_algorithm", limit: 65535
-    t.boolean  "include_failed_data",                default: false, null: false
-    t.boolean  "include_tag_vector",                 default: false, null: false
-    t.float    "classify_threshold",   limit: 24,    default: 0.5,   null: false
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.integer  "bot_id",                        limit: 4
+    t.integer  "algorithm",                     limit: 4,     default: 0,     null: false
+    t.text     "params_for_algorithm",          limit: 65535
+    t.boolean  "include_failed_data",                         default: false, null: false
+    t.boolean  "include_tag_vector",                          default: false, null: false
+    t.float    "classify_threshold",            limit: 24,    default: 0.5,   null: false
+    t.boolean  "use_similarity_classification",               default: false, null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -176,21 +179,23 @@ ActiveRecord::Schema.define(version: 20170327052525) do
   add_index "learning_training_messages", ["bot_id"], name: "index_learning_training_messages_on_bot_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "chat_id",               limit: 4
-    t.integer  "answer_id",             limit: 4
-    t.string   "speaker",               limit: 255,                   null: false
-    t.text     "body",                  limit: 65535
-    t.string   "user_agent",            limit: 1024
-    t.boolean  "learn_enabled",                       default: true,  null: false
-    t.boolean  "answer_failed",                       default: false, null: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.integer  "rating",                limit: 4,     default: 0
-    t.boolean  "answer_failed_by_user",               default: false, null: false
+    t.integer  "chat_id",       limit: 4
+    t.integer  "answer_id",     limit: 4
+    t.string   "speaker",       limit: 255,                   null: false
+    t.text     "body",          limit: 65535
+    t.string   "user_agent",    limit: 1024
+    t.boolean  "learn_enabled",               default: true,  null: false
+    t.boolean  "answer_failed",               default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "rating",        limit: 4,     default: 0
+    t.boolean  "answer_marked",               default: false, null: false
+    t.datetime "trained_at"
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
+  add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4

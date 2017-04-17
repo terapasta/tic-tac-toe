@@ -12,7 +12,7 @@ class Conversation::Bot
     @engine = Ml::Engine.new(@bot)
   end
 
-  def reply
+  def do_reply
     Rails.logger.debug("Conversation::Bot#reply body: #{@message.body}")
 
     result = @engine.reply(@message.body)
@@ -20,16 +20,20 @@ class Conversation::Bot
 
     answer_id = result[:answer_id]
     probability = result[:probability]
+    question = result[:question]
+    question_feature_count = result[:question_feature_count]
     Rails.logger.debug(probability)
 
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
+    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, answer: @answer, probability: probability)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
     # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
     #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
     # end
-    [@answer]
+
+    reply
   end
 
   def other_answers

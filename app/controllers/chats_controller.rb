@@ -19,6 +19,7 @@ class ChatsController < ApplicationController
     @chat = @bot.chats.new(guest_key: session[:guest_key])
     authorize @chat
     @chat.is_staff = true if current_user.try(:staff?) # ログインしてなくてもチャットできるため
+    @chat.is_normal = true if current_user.try(:normal?)
     @chat.messages << @chat.build_start_message
     @chat.save!
     render :show

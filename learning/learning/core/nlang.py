@@ -1,4 +1,5 @@
 import MeCab
+import mojimoji
 
 from learning.log import logger
 
@@ -40,7 +41,7 @@ class Nlang:
                 if lemma == "*":
                     lemma = node.surface  #.decode("utf-8")
 
-                word_list.append(lemma)
+                word_list.append(mojimoji.han_to_zen(lemma))
             node = node.next
         return " ".join(word_list)
 

@@ -101,7 +101,6 @@ def get_dumped_features(X_error, vocabulary):
 
     return dumped_features
 
-
 '''
     データ性質を分析するためのツール
 '''
@@ -231,4 +230,3 @@ def accuracy_score(y, y_pred, y_probas):
     score = np.sum(bools) / np.size(bools, axis=0)
 
     return score
-

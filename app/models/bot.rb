@@ -6,6 +6,7 @@ class Bot < ActiveRecord::Base
   has_many :messages, through: :chats
   has_many :learning_training_messages
   has_many :question_answers
+  has_many :topic_tags
   has_many :answers
   has_many :decision_branches
   has_many :services, dependent: :destroy

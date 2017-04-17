@@ -3964,6 +3964,10 @@ var _trim = require("lodash/trim");
 
 var _trim2 = _interopRequireDefault(_trim);
 
+var _includes = require("lodash/includes");
+
+var _includes2 = _interopRequireDefault(_includes);
+
 var _panel = require("./panel");
 
 var _panel2 = _interopRequireDefault(_panel);
@@ -4002,7 +4006,8 @@ var QuestionAnswerForm = function (_Component) {
     get: function get() {
       return {
         botId: _react.PropTypes.number.isRequired,
-        id: _react.PropTypes.number
+        id: _react.PropTypes.number,
+        topicTags: _react.PropTypes.array.isRequired
       };
     }
   }]);
@@ -4024,7 +4029,8 @@ var QuestionAnswerForm = function (_Component) {
       selectedAnswer: null,
       isProcessing: false,
       persistedAnswerId: null,
-      errors: []
+      errors: [],
+      selectedTopicTags: []
     };
     _this.debouncedSearchAnswers = (0, _debounce2.default)(_this.searchAnswers, 250);
     return _this;
@@ -4040,7 +4046,9 @@ var QuestionAnswerForm = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var id = this.props.id;
+      var _props = this.props,
+          id = _props.id,
+          topicTags = _props.topicTags;
       var _state = this.state,
           questionBody = _state.questionBody,
           answerBody = _state.answerBody,
@@ -4052,7 +4060,8 @@ var QuestionAnswerForm = function (_Component) {
           candidateAnswers = _state.candidateAnswers,
           selectedAnswer = _state.selectedAnswer,
           isProcessing = _state.isProcessing,
-          errors = _state.errors;
+          errors = _state.errors,
+          selectedTopicTags = _state.selectedTopicTags;
 
 
       var title = "Q&A" + ((0, _isEmpty2.default)(id) ? "新規登録" : "編集");
@@ -4212,6 +4221,42 @@ var QuestionAnswerForm = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "form-group" },
+          _react2.default.createElement(
+            "label",
+            null,
+            "Q&A\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0"
+          ),
+          (0, _isEmpty2.default)(topicTags) && _react2.default.createElement(
+            "p",
+            null,
+            "Q&A\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u306F\u3042\u308A\u307E\u305B\u3093"
+          ),
+          topicTags.map(function (t, i) {
+            return _react2.default.createElement(
+              "div",
+              { key: i },
+              _react2.default.createElement(
+                "label",
+                null,
+                _react2.default.createElement("input", { type: "checkbox",
+                  value: t[0],
+                  disabled: isProcessing,
+                  onChange: _this2.onChangeTopicTag.bind(_this2, t),
+                  checked: (0, _includes2.default)(selectedTopicTags.map(function (t) {
+                    return t[0];
+                  }), t[0]) }),
+                " ",
+                t[1]
+              )
+            );
+          }),
+          selectedTopicTags.map(function (t, i) {
+            return _react2.default.createElement("input", { type: "hidden", key: i, name: "question_answer[topic_taggings_attributes][" + i + "][topic_tag_id]", value: t[0] });
+          })
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "form-group" },
           _react2.default.createElement("input", {
             type: "submit",
             className: "btn btn-primary",
@@ -4252,9 +4297,9 @@ var QuestionAnswerForm = function (_Component) {
     value: function fetchQuestionAnswer() {
       var _this3 = this;
 
-      var _props = this.props,
-          botId = _props.botId,
-          id = _props.id;
+      var _props2 = this.props,
+          botId = _props2.botId,
+          id = _props2.id;
 
       if ((0, _isEmpty2.default)(botId) || (0, _isEmpty2.default)(id)) {
         return;
@@ -4272,10 +4317,14 @@ var QuestionAnswerForm = function (_Component) {
               body = _questionModel$answer.body,
               id = _questionModel$answer.id;
 
+          var selectedTopicTags = questionModel.topicTags.map(function (t) {
+            return [t.id, t.name];
+          });
           _this3.setState({
             answerBody: body,
             persistedAnswerId: id,
-            isProcessing: false
+            isProcessing: false,
+            selectedTopicTags: selectedTopicTags
           });
         });
       }).catch(function (err) {
@@ -4323,9 +4372,9 @@ var QuestionAnswerForm = function (_Component) {
       }
       this.setState({ isProcessing: true });
 
-      var _props2 = this.props,
-          botId = _props2.botId,
-          id = _props2.id;
+      var _props3 = this.props,
+          botId = _props3.botId,
+          id = _props3.id;
 
       var promise = void 0;
 
@@ -4398,12 +4447,18 @@ var QuestionAnswerForm = function (_Component) {
           answerBody = _state3.answerBody,
           selectedAnswer = _state3.selectedAnswer,
           questionBody = _state3.questionBody,
-          persistedAnswerId = _state3.persistedAnswerId;
+          persistedAnswerId = _state3.persistedAnswerId,
+          selectedTopicTags = _state3.selectedTopicTags;
 
 
       var errors = [];
       var payload = {
-        question: questionBody
+        question: questionBody,
+        topic_taggings_attributes: selectedTopicTags.map(function (t) {
+          return {
+            topic_tag_id: t[0]
+          };
+        })
       };
 
       if ((0, _isEmpty2.default)(questionBody)) {
@@ -4444,6 +4499,22 @@ var QuestionAnswerForm = function (_Component) {
       e.preventDefault();
       this.searchAnswers();
     }
+  }, {
+    key: "onChangeTopicTag",
+    value: function onChangeTopicTag(topicTag, e) {
+      var selectedTopicTags = this.state.selectedTopicTags;
+
+      var newSelectedTopicTags = void 0;
+
+      if (e.target.checked) {
+        newSelectedTopicTags = selectedTopicTags.concat([topicTag]);
+      } else {
+        newSelectedTopicTags = selectedTopicTags.filter(function (t) {
+          return t[0] != topicTag[0];
+        });
+      }
+      this.setState({ selectedTopicTags: newSelectedTopicTags });
+    }
   }]);
 
   return QuestionAnswerForm;
@@ -4451,7 +4522,7 @@ var QuestionAnswerForm = function (_Component) {
 
 exports.default = QuestionAnswerForm;
 
-},{"../models/question":52,"../modules/jump":56,"./panel":41,"axios":62,"is-empty":409,"lodash/debounce":579,"lodash/get":586,"lodash/trim":616,"react":799,"react-radio-group":757,"react-textarea-autosize":773}],43:[function(require,module,exports){
+},{"../models/question":52,"../modules/jump":56,"./panel":41,"axios":62,"is-empty":409,"lodash/debounce":579,"lodash/get":586,"lodash/includes":589,"lodash/trim":616,"react":799,"react-radio-group":757,"react-textarea-autosize":773}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5624,6 +5695,11 @@ var Question = function () {
     key: "editPath",
     get: function get() {
       return "/bots/" + this.botId + "/question_answers/" + this.id + "/edit";
+    }
+  }, {
+    key: "topicTags",
+    get: function get() {
+      return this.attrs.topicTags;
     }
   }]);
 

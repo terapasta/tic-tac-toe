@@ -46,7 +46,8 @@
         <%= link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item', data: { event_name: 'Open importing', bot_id: @bot.id, bot_name: @bot.name } %>
         <%= link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item', data: { event_name: 'Open threads', bot_id: @bot.id, bot_name: @bot.name } %>
         <%= link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open qestion answers', bot_id: @bot.id, bot_name: @bot.name } %>
-        <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open answers', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "Q&Aトピックタグ", bot_topic_tags_path(@bot), class: 'list-group-item', data: { event_name: 'Open topic tags', bot_id: @bot.id, bot_name: @bot.name } %>
+        <%= link_to "回答", bot_answers_path(@bot), class: 'list-group-item' %>
         <%= link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item', data: { event_name: 'Open conversation tree', bot_id: @bot.id, bot_name: @bot.name } %>
       </div>
       <%= link_to "学習を実行する", bot_learning_path(@bot), class: 'btn btn-danger btn-block', data: { remote: true, method: :patch, event_name: 'Run learning', bot_id: @bot.id, bot_name: @bot.name } %>

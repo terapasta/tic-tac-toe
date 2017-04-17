@@ -34,6 +34,7 @@ export default class Question {
   get editPath() {
     return `/bots/${this.botId}/question_answers/${this.id}/edit`;
   }
+  get topicTags() { return this.attrs.topicTags; }
 
   fetchAnswer() {
     const { id, botId } = this.attrs;

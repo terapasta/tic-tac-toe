@@ -13,8 +13,8 @@ RSpec.describe Learning::Converter do
       let!(:learning_training_message) { create(:learning_training_message, bot: bot, question: 'エクセルの使い方を教えて') }
 
       it '質問文の「エクセル」が「Excel」に変換されていること' do
-        m = bot.learning_training_messages.first
         subject
+        m = bot.learning_training_messages.first
         expect(m.question).to eq 'Excelの使い方を教えて'
       end
     end

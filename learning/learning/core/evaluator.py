@@ -14,6 +14,7 @@ class Evaluator:
         self.recall = 0
         self.f1 = 0
         self.threshold = 0
+        self.failure_score = 0
 
     def evaluate(self, estimator, X, y, threshold=0.0):
         threshold = 0.0 if threshold is None else threshold
@@ -36,6 +37,38 @@ class Evaluator:
         logger.debug('Evaluator#evaluate#elapsed time: %f ms' % msecs)
 
         self.__out_log()
+
+    def evaluate_with_failure_score(self, estimator, training_set, learning_parameter):
+        '''
+            学習セットから分離させたいラベルが
+            excluded_labels_for_fitting により指定されている場合、
+            分離対象ラベルを学習セットから除外後、accuracyを算出
+        '''
+        indices_train, indices_excluded = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
+        X = training_set.x[indices_train]
+        y = training_set.y[indices_train]
+
+        threshold = learning_parameter.classify_threshold
+        self.evaluate(estimator, X, y, threshold=threshold)
+
+        '''
+            学習セットから分離させたラベルにより予測し、
+            正しく回答失敗となる確率を求める
+            proba <= self.threshold なら回答失敗
+        '''
+        if np.size(indices_excluded) == 0:
+            return
+
+        X_excluded = training_set.x[indices_excluded]
+        probabilities = estimator.predict_proba(X_excluded)
+        max_probabilities = np.max(probabilities, axis=1)
+
+        failure_score_threshold = self.threshold
+        logger.debug('failure_score_threshold: %s' % failure_score_threshold)
+
+        bools = (max_probabilities <= failure_score_threshold)
+        self.failure_score = np.sum(bools) / np.size(bools, axis=0)
+        logger.debug('failure score: %s' % self.failure_score)
 
     def evaluate_using_exist_data(self, estimator, X, y):
         y_pred = estimator.predict(X)

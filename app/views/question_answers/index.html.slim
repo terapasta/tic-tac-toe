@@ -17,7 +17,6 @@ table.table.table-striped
       th トピックタグ
       th = sort_link(@q, :question, '質問', default_order: :desc)
       th 回答
-      th 分岐
       th = sort_link(@q, :created_at, '作成日時', default_order: :desc)
       th = sort_link(@q, :updated_at, '更新日時', default_order: :desc)
       th
@@ -30,10 +29,6 @@ table.table.table-striped
             br
         td = simple_format question_answer.question
         td = simple_format question_answer&.answer&.body
-        td 
-          ul
-            - question_answer.decision_branches.each do |decision_branch|
-              li = decision_branch.body
         td = l question_answer.created_at, format: :short
         td = l question_answer.updated_at, format: :short
 

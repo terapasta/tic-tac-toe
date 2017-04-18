@@ -4,8 +4,14 @@ class LearnJob < ActiveJob::Base
   def perform(bot_id)
     bot = Bot.find(bot_id)
     Learning::Summarizer.new(bot).summary
-    LearningTrainingMessage.amp!(bot)
-    LearningTrainingMessage.amp_by_sentence_synonyms!(bot)
+
+    if bot.learning_parameter.use_similarity_classification?
+      Learning::Converter.new(bot).unify_words.save!
+    else
+      LearningTrainingMessage.amp!(bot)
+      LearningTrainingMessage.amp_by_sentence_synonyms!(bot)
+    end
+
     scores = Ml::Engine.new(bot).learn
     bot.score ||= bot.build_score
     bot.score.update!(scores)

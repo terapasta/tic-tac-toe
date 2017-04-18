@@ -19,6 +19,17 @@ class Learning::Converter
   end
 
   def save
+    save!
+  rescue => e
+    false
+  end
+
+  def save!
+    ActiveRecord::Base.transaction do
+      @bot.learning_training_messages.each do |learning_training_message|
+        learning_training_message.save!
+      end
+    end
     true
   end
 end

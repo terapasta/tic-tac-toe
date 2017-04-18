@@ -4,5 +4,6 @@ span(
   data-component="QuestionAnswerForm"
   data-bot-id=@bot.id
   data-id=@question_answer.id
+  data-topic-tags=@bot.topic_tags.pluck(:id, :name)
   data-question-body=@question_answer.question
 )

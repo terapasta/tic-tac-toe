@@ -95,8 +95,9 @@ gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond
 gem 'nested_form'
 gem 'addressable', require: 'addressable/uri'
 gem 'toastr-rails'
-gem 'config'
 gem 'natto'
+gem 'config'
+gem 'active_model_serializers'
 
 gem 'newrelic_rpm'
 
@@ -126,6 +127,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-doc'
   gem 'pry-stack_explorer'
+  gem 'tapp'
 
   # rspec
   gem 'rspec-rails', '~> 3.0.0'

@@ -8,8 +8,11 @@ class QuestionAnswer < ActiveRecord::Base
   belongs_to :answer
   has_many :training_messages, dependent: :nullify
   has_many :decision_branches, through: :answer
+  has_many :topic_taggings, dependent: :destroy
+  has_many :topic_tags, through: :topic_taggings
 
   accepts_nested_attributes_for :answer
+  accepts_nested_attributes_for :topic_taggings
 
   serialize :underlayer
 
@@ -21,6 +24,12 @@ class QuestionAnswer < ActiveRecord::Base
       .merge(SentenceSynonym.target_date(target_date))
       .uniq
       .count
+  }
+
+  scope :topic_tag, -> (topic_tag_id) {
+    if topic_tag_id.present?
+      joins(:topic_tags).where(topic_tags: {id: topic_tag_id})
+    end
   }
 
   def self.import_csv(file, bot, options = {})

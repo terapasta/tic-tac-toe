@@ -1,11 +1,17 @@
 %base-chat-message {
   @include pie-clearfix;
+  transition-property: opacity;
+  transition-duration: .5s;
   position: relative;
   float: left;
   width: 50%;
 
   @media (max-width: $screen-xxs-max) {
     width: 100%;
+  }
+
+  &.faded {
+    opacity: 0;
   }
 }
 
@@ -43,18 +49,47 @@
         text-decoration: underline;
       }
     }
+
+    .chat-message__textarea {
+      margin-left: 0;
+      margin-right: $-icon-size + $-balloon-spacing;
+
+      @media (min-width: $screen-xs-min) {
+        margin-top: 0;
+      }
+    }
+
+    .chat-message__part-label {
+      left: auto;
+      right: 100%;
+      margin-left: 0;
+      margin-right: 14px;
+      text-align: right;
+
+      @media (max-width: $screen-xxs-max) {
+        right: auto;
+        left: 0;
+        bottom: 100%;
+        margin-bottom: 4px;
+        margin-right: 0;
+        text-align: left;
+      }
+    }
   }
 
   &__icon {
     position: absolute;
     top: 0;
     left: 0;
-
-    img {
-      width: $-icon-size;
-      height: $-icon-size;
-      border-radius: 50%;
-      border: 1px solid $gray;
+    width: $-icon-size;
+    height: $-icon-size;
+    border-radius: 50%;
+    border: 1px solid $gray;
+    overflow: hidden;
+    background: {
+      position: center center;
+      size: cover;
+      repeat: no-repeat;
     }
   }
 
@@ -80,12 +115,64 @@
       border-bottom: $-arrow-size solid transparent;
     }
 
+    &[disabled] {
+      opacity: .65;
+    }
+
+    @media (max-width: $screen-xxs-max) {
+      &.has-part-label {
+        margin-top: 19px;
+      }
+    }
+
     p {
       margin-bottom: 1em;
 
       &:last-child {
         margin: 0;
       }
+    }
+  }
+
+  &__balloon-loader {
+    & > div {
+      margin: 0 auto;
+    }
+  }
+
+  &__textarea {
+    position: relative;
+    margin-top: 16px;
+    margin-left: $-icon-size + $-balloon-spacing;
+
+    @media (max-width: $screen-xxs-max) {
+      &.has-part-label {
+        margin-top: 35px;
+      }
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+
+  &__part-label {
+    position: absolute;
+    font-size: 13px;
+    width: 100px;
+
+    @media (max-width: $screen-xxs-max) {
+      bottom: 100%;
+      right: 0;
+      margin-bottom: 4px;
+      text-align: right;
+    }
+
+    @media (min-width: $screen-xs-min) {
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      margin-left: 14px;
     }
   }
 

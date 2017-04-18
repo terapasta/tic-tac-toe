@@ -1,27 +1,25 @@
 class ChatsController < ApplicationController
   include IframeSupportable
-  before_action :set_bot, only: [:show, :new]
+  before_action :set_bot
   before_action :set_guest_key
   before_action :set_warning_message
 
   def show
-    iframe_support @bot
-    @chat = @bot.chats.where(guest_key: session[:guest_key]).last
-    if @chat.nil?
-      redirect_to new_chats_path(token: params[:token])
-    else
-      authorize @chat
-    end
+    show_action
   end
 
   def new
-    iframe_support @bot
-    @chat = @bot.chats.new(guest_key: session[:guest_key])
-    authorize @chat
-    @chat.is_staff = true if current_user.try(:staff?) # ログインしてなくてもチャットできるため
-    @chat.messages << @chat.build_start_message
-    @chat.save!
+    new_action
     render :show
+  end
+
+  def show_app
+    show_action
+  end
+
+  def new_app
+    new_action
+    render :show_app
   end
 
   private
@@ -40,5 +38,24 @@ class ChatsController < ApplicationController
 
     def message_params
       params.require(:message).permit(:body)
+    end
+
+    def show_action
+      iframe_support @bot
+      @chat = @bot.chats.find_last_by(session[:guest_key])
+      if @chat.nil?
+        redirect_to new_chats_path(token: params[:token])
+      else
+        authorize @chat
+      end
+    end
+
+    def new_action
+      iframe_support @bot
+      @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
+        authorize chat
+        chat.is_staff = true if current_user.try(:staff?)
+        chat.is_normal = true if current_user.try(:normal?)
+      end
     end
 end

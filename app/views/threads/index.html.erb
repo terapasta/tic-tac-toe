@@ -2,13 +2,20 @@
 
 <div>
   <ul class="nav nav-pills">
-    <li role="presentation" class="<%= 'active' if params[:filter].blank? && params[:good].blank? && params[:bad].blank? && params[:answer_marked].blank? %>">
-      <%= link_to '全て', bot_threads_path(@bot), data: { event_name: 'Open all threads', bot_id: @bot.id, bot_name: @bot.name } %>
+    <li role="presentation" class="<%= 'active' if params[:normal].blank? %>">
+      <%= link_to '通常対話のみ', bot_threads_path(@bot, params: role_filter_params), data: { event_name: 'Open all threads', bot_id: @bot.id, bot_name: @bot.name } %>
     </li>
-    <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, filter: 1), data: { event_name: 'Open failed threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
-    <li role="presentation" class="<%= 'active' if params[:good].present? %>"><%= link_to 'Goodがある対話', bot_threads_path(@bot, good: 1), data: { event_name: 'Open good threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
-    <li role="presentation" class="<%= 'active' if params[:bad].present? %>"><%= link_to 'Badがある対話', bot_threads_path(@bot, bad: 1), data: { event_name: 'Open bad threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
-    <li role="presentation" class="<%= 'active' if params[:answer_marked].present? %>"><%= link_to '注意回答がある対話', bot_threads_path(@bot, answer_marked: 1), data: { event_name: 'Open marked threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li role="presentation" class="<%= 'active' if params[:normal].present? %>"><%= link_to 'Bot管理者対話のみ', bot_threads_path(@bot, role_filter_params({normal: 1})), data: { event_name: 'Open normal threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+  </ul>
+  <br>
+  <ul class="nav nav-pills">
+    <li role="presentation" class="<%= 'active' if params[:filter].blank? && params[:good].blank? && params[:bad].blank? && params[:answer_marked].blank? %>">
+      <%= link_to '全て', bot_threads_path(@bot, params: message_filter_params), data: { event_name: 'Open all threads', bot_id: @bot.id, bot_name: @bot.name } %>
+    </li>
+    <li role="presentation" class="<%= 'active' if params[:filter].present? %>"><%= link_to '回答失敗のみ', bot_threads_path(@bot, params: message_filter_params({ filter: 1 })), data: { event_name: 'Open failed threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li role="presentation" class="<%= 'active' if params[:good].present? %>"><%= link_to 'Goodがある対話', bot_threads_path(@bot, params: message_filter_params({ good: 1 })), data: { event_name: 'Open good threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li role="presentation" class="<%= 'active' if params[:bad].present? %>"><%= link_to 'Badがある対話', bot_threads_path(@bot, params: message_filter_params({ bad: 1 })), data: { event_name: 'Open bad threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
+    <li role="presentation" class="<%= 'active' if params[:answer_marked].present? %>"><%= link_to '注意回答がある対話', bot_threads_path(@bot, params: message_filter_params({ answer_marked: 1 })), data: { event_name: 'Open marked threads', bot_id: @bot.id, bot_name: @bot.name } %></li>
     <li style="float: right">
       <%= link_to '対話履歴をエクスポート', bot_threads_path(format: :csv), class: 'btn btn-default' %>
     </li>
@@ -20,7 +27,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th width="72px"></th>
+      <th width="72px">フラグ</th>
       <th>セット数</th>
       <th>本文</th>
       <th nowrap="nowrap">最終発言日時</th>

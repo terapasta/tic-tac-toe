@@ -15,4 +15,29 @@
     font-weight: bold;
     color: $gray-light;
   }
+
+  &__right {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    right: 4px;
+  }
+
+  &__button {
+    padding: 6px 8px !important;
+
+    .material-icons {
+      vertical-align: middle;
+    }
+
+    span {
+      display: none;
+    }
+
+    @media (min-width: $screen-sm-min) {
+      span {
+        display: inline;
+      }
+    }
+  }
 }

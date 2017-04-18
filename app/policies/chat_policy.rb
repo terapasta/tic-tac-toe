@@ -9,6 +9,14 @@ class ChatPolicy < ApplicationPolicy
     referer_is_allowed_origin?
   end
 
+  def show_app?
+    new?
+  end
+
+  def new_app?
+    new?
+  end
+
   private
     def referer_is_allowed_origin?
       ref = URI.parse(request.referer)

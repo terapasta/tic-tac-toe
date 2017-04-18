@@ -31,7 +31,7 @@ respond '.*' do |e|
     chat = bot.chats.find_or_create_by(guest_key: Slappy.configuration.token + Time.zone.now.strftime('%Y-%m-%d'))
 
     if chat.messages.count.zero?
-      chat.messages << chat.build_start_message
+      chat.build_start_message
       chat.save!
     end
 

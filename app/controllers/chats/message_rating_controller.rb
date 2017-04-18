@@ -1,22 +1,21 @@
 class Chats::MessageRatingController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_bot_chat_message
-  respond_to :json
 
   def good
     @message.good!
-    respond_with @message
+    render json: @message, adapter: :json
   end
 
   def bad
     @message.bad!
     SendBadRateMailService.new(@message).send_mail
-    respond_with @message
+    render json: @message, adapter: :json
   end
 
   def nothing
     @message.nothing!
-    respond_with @message
+    render json: @message, adapter: :json
   end
 
   private

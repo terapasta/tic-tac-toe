@@ -28,6 +28,7 @@ module StartDash
       #{config.root}/app/policies
       #{config.root}/app/decorators/concerns
       #{config.root}/app/models/extensions
+      #{config.root}/app/serializers
     )
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

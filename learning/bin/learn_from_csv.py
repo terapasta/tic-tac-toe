@@ -15,4 +15,4 @@ attr = {
     'params_for_algorithm': {}
 }
 learning_parameter = LearningParameter(attr)
-_evaluator = Bot(args.bot_id, learning_parameter).learn(csv_file_path='bin/files/septeni.csv')
+_evaluator = Bot(args.bot_id, learning_parameter).learn(csv_file_path='bin/files/toyotsu_human.csv')

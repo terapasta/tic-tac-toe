@@ -6,6 +6,7 @@ import axios from "axios";
 import debounce from "lodash/debounce";
 import get from "lodash/get";
 import trim from "lodash/trim";
+import includes from "lodash/includes";
 
 import Panel from "./panel";
 import Question from "../models/question";
@@ -25,6 +26,7 @@ export default class QuestionAnswerForm extends Component {
     return {
       botId: PropTypes.number.isRequired,
       id: PropTypes.number,
+      topicTags: PropTypes.array.isRequired,
     };
   }
 
@@ -43,6 +45,7 @@ export default class QuestionAnswerForm extends Component {
       isProcessing: false,
       persistedAnswerId: null,
       errors: [],
+      selectedTopicTags: [],
     };
     this.debouncedSearchAnswers = debounce(this.searchAnswers, 250);
   }
@@ -58,7 +61,8 @@ export default class QuestionAnswerForm extends Component {
 
   render() {
     const {
-      id
+      id,
+      topicTags,
     } = this.props;
 
     const {
@@ -73,6 +77,7 @@ export default class QuestionAnswerForm extends Component {
       selectedAnswer,
       isProcessing,
       errors,
+      selectedTopicTags,
     } = this.state;
 
     const title = `Q&A${isEmpty(id) ? "新規登録" : "編集"}`;
@@ -193,6 +198,28 @@ export default class QuestionAnswerForm extends Component {
           </div>
         )}
         <div className="form-group">
+          <label>Q&amp;Aトピックタグ</label>
+          {isEmpty(topicTags) && (
+            <p>Q&amp;Aトピックタグはありません</p>
+          )}
+          {topicTags.map((t, i) => (
+            <div key={i}>
+              <label>
+                <input type="checkbox"
+                  value={t[0]}
+                  disabled={isProcessing}
+                  onChange={this.onChangeTopicTag.bind(this, t)}
+                  checked={includes(selectedTopicTags.map((t) => t[0]), t[0])}/>
+                {" "}
+                {t[1]}
+              </label>
+            </div>
+          ))}
+          {selectedTopicTags.map((t, i) => (
+            <input type="hidden" key={i} name={`question_answer[topic_taggings_attributes][${i}][topic_tag_id]`} value={t[0]} />
+          ))}
+        </div>
+        <div className="form-group">
           <input
             {...{
               type: "submit",
@@ -229,10 +256,12 @@ export default class QuestionAnswerForm extends Component {
 
       return questionModel.fetchAnswer().then(() => {
         const { body, id } = questionModel.answer;
+        const selectedTopicTags = questionModel.topicTags.map((t) => [t.id, t.name]);
         this.setState({
           answerBody: body,
           persistedAnswerId: id,
           isProcessing: false,
+          selectedTopicTags,
         });
       });
     }).catch((err) => {
@@ -339,11 +368,15 @@ export default class QuestionAnswerForm extends Component {
       selectedAnswer,
       questionBody,
       persistedAnswerId,
+      selectedTopicTags,
     } = this.state;
 
     let errors = [];
     let payload = {
       question: questionBody,
+      topic_taggings_attributes: selectedTopicTags.map((t) => ({
+        topic_tag_id: t[0],
+      })),
     };
 
     if (isEmpty(questionBody)) {
@@ -382,5 +415,17 @@ export default class QuestionAnswerForm extends Component {
   onClickLoadMore(e) {
     e.preventDefault();
     this.searchAnswers();
+  }
+
+  onChangeTopicTag(topicTag, e) {
+    const { selectedTopicTags } = this.state;
+    let newSelectedTopicTags;
+
+    if (e.target.checked) {
+      newSelectedTopicTags = selectedTopicTags.concat([topicTag]);
+    } else {
+      newSelectedTopicTags = selectedTopicTags.filter((t) => t[0] != topicTag[0]);
+    }
+    this.setState({ selectedTopicTags: newSelectedTopicTags });
   }
 }

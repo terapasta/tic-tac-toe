@@ -1,0 +1,24 @@
+.chat-area,
+.chat-header {
+  .btn-default {
+    background-image: none;
+    background-color: $white;
+    text-shadow: none;
+  }
+
+  .btn-primary {
+    background: {
+      color: $blue;
+      image: none;
+    }
+    border: 0;
+
+    &:focus {
+      background-color: $blue;
+    }
+
+    &:hover {
+      background-color: lighten($blue, 5%);
+    }
+  }
+}

@@ -30,11 +30,10 @@ table.table.table-striped
             br
         td = simple_format question_answer.question
         td = simple_format question_answer&.answer&.body
+        td 
           ul
             - question_answer.decision_branches.each do |decision_branch|
               li = decision_branch.body
-        td = question_answer.created_at
-        td = question_answer.updated_at
         td = l question_answer.created_at, format: :short
         td = l question_answer.updated_at, format: :short
 

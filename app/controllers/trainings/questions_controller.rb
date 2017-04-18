@@ -7,9 +7,10 @@ class Trainings::QuestionsController < ApplicationController
   before_action :set_training
 
   def create
-    training_message = @training.training_messages.build(training_message_params)
-    training_message.speaker = 'guest'
-    receive_and_reply!(@training, training_message)
+    ActiveRecord::Base.transaction do
+      training_message = @training.training_messages.create!(training_message_params.merge(speaker: 'guest'))
+      receive_and_reply!(@training, training_message)
+    end
     redirect_to bot_training_path(@bot, @training)
   rescue => e
     logger.error e.message + e.backtrace.join("\n")

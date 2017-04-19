@@ -35,7 +35,7 @@ class Bot:
 
         evaluator = Evaluator()
         logger.debug('before Evaluator#evaluate')
-        evaluator.evaluate(estimator, training_set.x, training_set.y, threshold=self.learning_parameter.classify_threshold)
+        evaluator.evaluate_with_failure_score(estimator, training_set, self.learning_parameter)
         logger.debug('end Bot#learn')
 
         return evaluator
@@ -56,12 +56,21 @@ class Bot:
         return training_set
 
     def __get_estimator(self, training_set):
+        '''
+            学習セットから分離させたいラベルが
+            excluded_labels_for_fitting により指定されている場合、
+            分離対象ラベルを学習セットから除外する
+        '''
+        indices_train, _ = training_set.indices_of_train_and_excluded_data(self.learning_parameter.excluded_labels_for_fitting)
+        training_set_x = training_set.x[indices_train]
+        training_set_y = training_set.y[indices_train]
+
         if self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NAIVE_BAYES:
             logger.debug('use algorithm: naive bayes')
             estimator = MultinomialNB()
             # estimator = MultinomialNB(fit_prior=False)
             # estimator = BernoulliNB()
-            estimator.fit(training_set.x, training_set.y)
+            estimator.fit(training_set_x, training_set_y)
         else:
             logger.debug('use algorithm: logistic regression')
 
@@ -73,13 +82,13 @@ class Bot:
                 # class_weight = self.__build_class_weight(training_set)
                 # grid = GridSearchCV(LogisticRegression(class_weight=class_weight), param_grid=params)
                 grid = GridSearchCV(LogisticRegression(), param_grid=params)
-                grid.fit(training_set.x, training_set.y)
+                grid.fit(training_set_x, training_set_y)
                 estimator = grid.best_estimator_
                 logger.debug('best_params_: %s' % grid.best_params_)
             else:
                 logger.debug('learning_parameter has parameter C')
                 estimator = LogisticRegression(C=C)
-                estimator.fit(training_set.x, training_set.y)
+                estimator.fit(training_set_x, training_set_y)
 
         return estimator
 

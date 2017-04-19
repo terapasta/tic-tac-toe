@@ -12,11 +12,4 @@
 このチャットの日時：<%= @guest_message.created_at %>
 
 この質問に対応できるように以下のページから登録と学習をしてみてください。
-<%- answer = @bot_message.answer -%>
-<%- if answer.no_classified? %>
-<%= new_bot_question_answer_url(bot_id: @guest_message.chat.bot_id, question: @guest_message.body) %>
-<%- else -%>
-  <%- answer.question_answers.each do | question | -%>
-<%= edit_bot_question_answer_url(bot_id: @guest_message.chat.bot_id, id: question.id) %>
-  <%- end -%>
-<%- end -%>
+<%= new_bot_question_answer_url(bot_id: @guest_message.chat.bot.id, question: @guest_message.body) %>

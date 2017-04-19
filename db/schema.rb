@@ -13,24 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20170415054829) do
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
-
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
     t.string   "domain",     limit: 255,             null: false
@@ -259,6 +241,24 @@ ActiveRecord::Schema.define(version: 20170415054829) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "topic_taggings", force: :cascade do |t|
+    t.integer  "question_answer_id", limit: 4, null: false
+    t.integer  "topic_tag_id",       limit: 4, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "topic_taggings", ["question_answer_id", "topic_tag_id"], name: "index_topic_taggings_on_question_answer_id_and_topic_tag_id", unique: true, using: :btree
+
+  create_table "topic_tags", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.integer  "bot_id",     limit: 4,   null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "topic_tags", ["name", "bot_id"], name: "index_topic_tags_on_name_and_bot_id", unique: true, using: :btree
 
   create_table "training_messages", force: :cascade do |t|
     t.integer  "training_id",        limit: 4,                     null: false

@@ -5,6 +5,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 200;
   padding: 10px 0;
   border-top: 1px solid darken($gray-lighter, 10%);
   height: 58px;
@@ -15,7 +16,8 @@
     padding-left: 7px;
   }
 
-  form {
+  form,
+  .form {
     position: relative;
   }
 

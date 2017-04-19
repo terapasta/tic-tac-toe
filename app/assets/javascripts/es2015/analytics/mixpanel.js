@@ -8,8 +8,8 @@ export default class Mixpanel {
   }
 
   constructor(token) {
-    if (window.mixpanel == null) { return; }
     this.logger = new Logger("Mixpanel");
+    if (window.mixpanel == null) { return; }
     this.initMixpanel(token);
     this.setupProfile();
     this.bindClickLinkEvent();
@@ -76,8 +76,8 @@ export default class Mixpanel {
   }
 
   trackEvent(eventName, options) {
+    this.logger.log("track", eventName, options);
     if (window.mixpanel == null) { return; }
     mixpanel.track(eventName, options);
-    this.logger.log("track", eventName, options);
   }
 }

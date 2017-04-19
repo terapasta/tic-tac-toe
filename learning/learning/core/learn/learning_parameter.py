@@ -15,6 +15,14 @@ class LearningParameter:
         if self._params_for_algorithm is None:
             self._params_for_algorithm = {}
 
+        '''
+            学習(fit)時に、
+            学習セットから分離させたいラベルを指定する
+        '''
+        self._excluded_labels_for_fitting = attributes.get('excluded_labels_for_fitting')
+        if self._excluded_labels_for_fitting is None:
+            self._excluded_labels_for_fitting = []
+
     @property
     def include_failed_data(self):
         return self._include_failed_data
@@ -38,3 +46,7 @@ class LearningParameter:
     @property
     def params_for_algorithm(self):
         return self._params_for_algorithm
+
+    @property
+    def excluded_labels_for_fitting(self):
+        return self._excluded_labels_for_fitting

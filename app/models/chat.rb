@@ -59,8 +59,8 @@ class Chat < ActiveRecord::Base
   }
 
   def build_start_message
-    body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.body
-    Message.new(speaker: 'bot', answer_id: nil, body: body)
+    body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting.try(:body)
+    self.messages << Message.new(speaker: 'bot', answer_id: nil, body: body)
   end
 
   def has_answer_failed_message?

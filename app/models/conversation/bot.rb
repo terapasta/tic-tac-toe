@@ -37,7 +37,7 @@ class Conversation::Bot
   end
 
   def other_answers
-    reply if @results.blank?
+    [] if @results.blank?
     @results
       .select {|data| data['probability'] > 0.001 }
       .map { |data| @bot.answers.find_by(id: data['answer_id']) || DefinedAnswer.find_by(id: data['answer_id']) }

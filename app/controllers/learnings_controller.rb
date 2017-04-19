@@ -3,13 +3,22 @@ class LearningsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
 
+  def show
+    render_learning_status
+  end
+
   def update
     LearnJob.perform_later(@bot.id)
-    @bot.update learning_status: :processing, learning_status_changed_at: Time.current
+    @bot.update_learning_status_to_processing
+    render_learning_status
   end
 
   private
     def set_bot
       @bot = bots.find(params[:bot_id])
+    end
+
+    def render_learning_status
+      render json: @bot.as_json(only: [:learning_status])
     end
 end

@@ -1,11 +1,12 @@
 class Bot < ActiveRecord::Base
   belongs_to :user
-  has_many :chats, -> { extending FindChatExtension }
+  has_many :chats, -> { extending HasManyChatsExtension }
   has_many :trainings
   has_many :training_messages, through: :trainings
   has_many :messages, through: :chats
   has_many :learning_training_messages
   has_many :question_answers
+  has_many :topic_tags
   has_many :answers
   has_many :decision_branches
   has_many :services, dependent: :destroy
@@ -47,6 +48,13 @@ class Bot < ActiveRecord::Base
       model_files = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}_*")
       FileUtils.rm(Dir.glob(model_files))
     end
+  end
+
+  def update_learning_status_to_processing
+    update(
+      learning_status: :processing,
+      learning_status_changed_at: Time.current,
+    )
   end
 
   private

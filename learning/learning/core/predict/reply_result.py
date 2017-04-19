@@ -22,7 +22,10 @@ class ReplyResult:
     @property
     def probability(self):
         if len(self._probabilities) > 0:
-            return self._result[0]['probability']
+            if self.answer_id == 0:
+                return 1
+            else:
+                return self._result[0]['probability']
 
     def out_log_of_results(self):
         dict = self.__limited_result()

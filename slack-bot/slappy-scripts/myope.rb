@@ -44,7 +44,7 @@ respond '.*' do |e|
     text = messages.map(&:body).join(",")
     e.reply_to(e.user, text) if text.present?
   rescue => e
-    Slappy.logger.error e.message
+    Slappy.logger.error e.message + e.backtrace.join("\n")
     e.reply_to(e.user, "エラーしたみたいです `#{e.message}`")
   end
 end

@@ -42,9 +42,9 @@ respond '.*' do |e|
         user_agent: 'slack',
       )
       messages = receive_and_reply!(chat, message)
+      text = messages.map(&:body).join("\n")
+      e.reply_to(e.user, text) if text.present?
     end
-    text = messages.map(&:body).join("\n")
-    e.reply_to(e.user, text) if text.present?
   rescue => e
     Slappy.logger.error e.message + e.backtrace.join("\n")
     e.reply_to(e.user, "エラーしたみたいです `#{e.message}`")

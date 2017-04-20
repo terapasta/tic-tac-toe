@@ -35,13 +35,15 @@ respond '.*' do |e|
       chat.save!
     end
 
-    message = chat.messages.build(
-      body: e.data['text'].gsub(/<@[A-Z0-9]+>/, ''),
-      speaker: 'guest',
-      user_agent: 'slack',
-    )
-    messages = receive_and_reply!(chat, message)
-    text = messages.map(&:body).join(",")
+    ActiveRecord::Base.transaction do
+      message = chat.messages.create!(
+        body: e.data['text'].gsub(/<@[A-Z0-9]+>/, ''),
+        speaker: 'guest',
+        user_agent: 'slack',
+      )
+      messages = receive_and_reply!(chat, message)
+    end
+    text = messages.map(&:body).join("\n")
     e.reply_to(e.user, text) if text.present?
   rescue => e
     Slappy.logger.error e.message + e.backtrace.join("\n")

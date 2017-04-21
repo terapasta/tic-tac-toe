@@ -21,8 +21,10 @@ class ReplyResult:
 
     @property
     def probability(self):
+        from learning.core.predict.reply import Reply
+
         if len(self._probabilities) > 0:
-            if self.answer_id == 0:
+            if self.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID:
                 return 1
             else:
                 return self._result[0]['probability']

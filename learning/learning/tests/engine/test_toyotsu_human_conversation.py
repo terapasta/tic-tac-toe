@@ -10,16 +10,17 @@ class ToyotsuHumanConversationTestCase(TestCase):
     csv_file_path = 'learning/tests/fixtures/test_toyotsu_human_conversation.csv'
     bot_id = 994  # テスト用のbot_id いずれの値でも動作する  # TODO Botごとに重複しないようにするのが手間なので、指定しないでも動くようにしたい
     threshold = 0.5
+    learning_parameter = helper.learning_parameter(use_similarity_classification=True)
 
     @classmethod
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(csv_file_path=cls.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
 
     def test_jal_mileage(self):
         questions = ['JAL マイレージ']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -40,7 +41,7 @@ JALマイレージバンクで計上される費用は
 
     def test_overseas_business_trip_pay(self):
         questions = ['海外の出張費を精算したい']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -65,3 +66,12 @@ JALマイレージバンクで計上される費用は
         ok_(result.probability > self.threshold)
 
 
+    def test_borned_child(self):
+        questions = ['子供が生まれた']
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = 'TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養異動届」を委託先のクローバーへ提出して下さい。'
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)

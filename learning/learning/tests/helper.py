@@ -8,13 +8,15 @@ def learning_parameter(
         include_failed_data=False,
         include_tag_vector=False,
         algorithm=LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
-        params_for_algorithm=None
+        params_for_algorithm=None,
+        use_similarity_classification=False
     ):
     return LearningParameter({
         'include_failed_data': include_failed_data,
         'include_tag_vector': include_tag_vector,
         'algorithm': algorithm,
-        'params_for_algorithm': params_for_algorithm
+        'params_for_algorithm': params_for_algorithm,
+        'use_similarity_classification': False
     })
 
 def build_answers(csv_file_path, encoding='UTF-8'):

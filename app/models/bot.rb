@@ -45,8 +45,8 @@ class Bot < ActiveRecord::Base
       chats.destroy_all
       answers.destroy_all
 
-      model_files = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}_*")
-      FileUtils.rm(Dir.glob(model_files))
+      model_dir = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}")
+      FileUtils.rm_r(model_dir)
     end
   end
 

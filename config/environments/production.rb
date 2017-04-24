@@ -70,7 +70,7 @@ Rails.application.configure do
     address:        'smtp.sendgrid.net',
     port:           587,
     domain:         'mof-mof.co.jp',
-    user_name:      ENV['SENDGRID_USERNAMAE'],
+    user_name:      ENV['SENDGRID_USERNAME'],
     password:       ENV['SENDGRID_API_KEY'],
     enable_starttls_auto: true
   }

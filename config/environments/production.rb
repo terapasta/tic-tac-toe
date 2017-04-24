@@ -66,12 +66,13 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :authentication => :plain,
-    :address => "smtp.mailgun.org",
-    :port => 587,
-    :domain => "mof-mof.co.jp",
-    :user_name => "postmaster@mof-mof.co.jp",
-    :password => ENV['MAILGUN_PASSWORD']
+    authentication: 'plain',
+    address:        'smtp.sendgrid.net',
+    port:           587,
+    domain:         'mof-mof.co.jp',
+    user_name:      ENV['SENDGRID_USERNAMAE'],
+    password:       ENV['SENDGRID_API_KEY'],
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

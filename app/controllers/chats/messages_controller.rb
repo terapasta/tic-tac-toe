@@ -19,6 +19,7 @@ class Chats::MessagesController < ApplicationController
         m.user_agent = request.env['HTTP_USER_AGENT']
       }
       @bot_messages = receive_and_reply!(@chat, @message, params[:message][:other_answer_id])
+      SendAnswerFailedMailService.new(@bot_messages, current_user).send_mail
     end
     respond_to do |format|
       format.js

@@ -31,7 +31,7 @@ __jsのビルド__
 
 ```
 $ npm run watch # 開発時
-$ npm run build # 本番公開前に
+$ npm run build # git commit前 & 本番公開前に
 ```
 
 ---

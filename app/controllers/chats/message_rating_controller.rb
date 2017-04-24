@@ -9,7 +9,7 @@ class Chats::MessageRatingController < ApplicationController
 
   def bad
     @message.bad!
-    SendBadRateMailService.new(@message).send_mail
+    SendBadRateMailService.new(@message, current_user).send_mail
     render json: @message, adapter: :json
   end
 

@@ -16,7 +16,7 @@ def learning_parameter(
         'include_tag_vector': include_tag_vector,
         'algorithm': algorithm,
         'params_for_algorithm': params_for_algorithm,
-        'use_similarity_classification': False
+        'use_similarity_classification': use_similarity_classification
     })
 
 def build_answers(csv_file_path, encoding='UTF-8'):

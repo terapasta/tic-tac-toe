@@ -78,6 +78,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tickets, only: [:new, :create]
+
   # authenticated :admin_user do
   #   #rails_admin.dashboard_path
   # end

@@ -239,6 +239,7 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.8.0)
+    inflection (1.0.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -533,6 +534,12 @@ GEM
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.8.7.6)
+    zendesk_api (1.14.2)
+      faraday (~> 0.9)
+      hashie (>= 1.2, < 4.0, != 3.3.0)
+      inflection
+      mime-types
+      multipart-post (~> 2.0)
 
 PLATFORMS
   ruby
@@ -626,9 +633,10 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   whenever
+  zendesk_api
 
 RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.6
+   1.14.6

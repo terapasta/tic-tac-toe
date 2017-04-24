@@ -60,6 +60,9 @@ gem 'enum_help'
 # Use Unicorn as the app server
 gem 'unicorn'
 
+# Zendesk API
+gem "zendesk_api"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

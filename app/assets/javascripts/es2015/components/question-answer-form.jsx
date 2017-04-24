@@ -51,6 +51,11 @@ export default class QuestionAnswerForm extends Component {
   }
 
   componentDidMount() {
+    const {
+      questionBody
+    } = this.props;
+
+    this.setState({ questionBody: questionBody });
     this.fetchQuestionAnswer();
   }
 

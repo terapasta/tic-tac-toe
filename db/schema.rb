@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415054829) do
+ActiveRecord::Schema.define(version: 20170424022147) do
 
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(version: 20170415054829) do
   end
 
   add_index "contact_states", ["chat_id"], name: "index_contact_states_on_chat_id", using: :btree
+
+  create_table "contacts", force: :cascade do |t|
+    t.string   "email",      limit: 255,   null: false
+    t.string   "subject",    limit: 255,   null: false
+    t.text     "content",    limit: 65535, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "contexts", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -241,6 +249,14 @@ ActiveRecord::Schema.define(version: 20170415054829) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "tickets", force: :cascade do |t|
+    t.string   "recipient",   limit: 255, null: false
+    t.string   "subject",     limit: 255, null: false
+    t.string   "description", limit: 255, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "topic_taggings", force: :cascade do |t|
     t.integer  "question_answer_id", limit: 4, null: false

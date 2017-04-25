@@ -61,7 +61,10 @@ gem 'enum_help'
 gem 'unicorn'
 
 # Zendesk API
-gem "zendesk_api"
+gem 'zendesk_api'
+
+# Use zendesk API parameter
+gem 'virtus'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

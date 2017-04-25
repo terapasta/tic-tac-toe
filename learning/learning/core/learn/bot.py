@@ -29,8 +29,13 @@ class Bot:
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')
 
-        Persistance.dump_model(estimator, self.bot_id)
-        Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
+        '''
+            除外ラベルが入力されている場合は
+            モデルをdumpしない
+        '''
+        if len(self.learning_parameter.excluded_labels_for_fitting) == 0:
+            Persistance.dump_model(estimator, self.bot_id)
+            Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)
 
         evaluator = Evaluator()

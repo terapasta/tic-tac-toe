@@ -1,7 +1,7 @@
 require 'zendesk_api'
 
-class ZendeskApiInit
-  def self.client
+class ZendeskClient
+  def self.shared_client
     @client ||= ZendeskAPI::Client.new do |config|
       # Mandatory:
 
@@ -12,10 +12,10 @@ class ZendeskApiInit
 
       # Choose one of the following depending on your authentication choice
       config.token = ENV['ZENDESK_TOKEN']
-      # config.password = ENV['ZENDESK_PASSWORD']
+      # config.password = "your zendesk password"
 
       # OAuth Authentication
-      config.access_token = ENV['ZENDESK_TOKEN_OAUTH']
+      # config.access_token = "your OAuth access token"
 
       # Optional:
 

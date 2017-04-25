@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 col-sm-10 col-offset-1">
+    <h2>お問い合わせフォーム</h2>
+    <br />
+    <%= bootstrap_form_for(:ticket, url: contacts_path, method: "post" ) do |f| %>
+      <%= f.email_field :email, hide_label: true, placeholder: "メールアドレス      *記載されたメールアドレス宛に返信致します。" %>
+      <%= f.text_field :subject, hide_label: true, placeholder: "件名" %>
+      <%= f.text_area :description, rows: 10, hide_label: true, placeholder: "お問い合わせ内容" %>
+      <%= f.submit "送信する", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

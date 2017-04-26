@@ -10,6 +10,7 @@ import ChatForm from "./form";
 import ChatRow from "./row";
 import ChatSection from "./section";
 import ChatDecisionBranchesRow from "./decision-branches-row";
+import ChatSimilarQuestionAnswersRow from "./similar-question-answers-row";
 import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
 import ChatGuestMessage from "./guest-message";
@@ -111,6 +112,12 @@ export default class ChatApp extends Component {
                   section,
                   onChoose(decisionBranchId) {
                     dispatch(a.chooseDecisionBranch(token, decisionBranchId));
+                  }
+                }} />
+                <ChatSimilarQuestionAnswersRow {...{
+                  section,
+                  onChoose(question) {
+                    dispatch(a.postMessageIfNeeded(token, question));
                   }
                 }} />
               </ChatSection>

@@ -31,7 +31,7 @@ class TextArray:
             return self._vectorizer
 
         # token_patternは1文字のデータを除外しない設定
-        vectorizer = TfidfVectorizer(use_idf=False, token_pattern=u'(?u)\\b\\w+\\b')
+        vectorizer = TfidfVectorizer(use_idf=True, token_pattern=u'(?u)\\b\\w+\\b')
         # vectorizer = TfidfVectorizer(use_idf=False)
         vectorizer.fit(self.separated_sentences)
         return vectorizer

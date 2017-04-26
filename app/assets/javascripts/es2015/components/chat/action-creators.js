@@ -60,6 +60,7 @@ export function postMessage(token, messageBody, dispatch) {
       dispatch(clearMessageBody());
       dispatch(enableForm());
       dispatch(disableFormIfHasDecisionBranches(res.data));
+      dispatch(disableFormIfHasSimilerQuestoinAnswers(res.data));
     })
     .catch((err) => {
       console.error(err);
@@ -96,6 +97,15 @@ export function chooseDecisionBranch(token, decisionBranchId) {
 }
 
 export const chosenDecisionBranch = createAction("CHOSEN_DECISION_BRANCH");
+
+export function disableFormIfHasSimilerQuestoinAnswers(data) {
+  return (dispatch, getState) => {
+    const botMessage = find(data.messages, (m) => m.speaker === "bot");
+    const similarQuestionAnswers = find(botMessage, "similarQuestionAnswers");
+    if (isEmpty(similarQuestionAnswers)) { return; }
+    dispatch(disableForm());
+  };
+}
 
 export function changeMessageRatingTo(type, token, messageId) {
   return (dispatch, getState) => {

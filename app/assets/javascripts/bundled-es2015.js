@@ -6660,6 +6660,10 @@ var QuestionAnswerForm = function (_Component) {
   _createClass(QuestionAnswerForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var questionBody = this.props.questionBody;
+
+
+      this.setState({ questionBody: questionBody });
       this.fetchQuestionAnswer();
     }
   }, {

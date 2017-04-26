@@ -53,4 +53,15 @@ JALマイレージバンクで計上される費用は
         ok_(result.probability > self.threshold)
 
 
+    def test_dont_know_account_item_of_visa(self):
+        questions = ['VISAの勘定科目がわからない']
+        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = '''
+9238：支払手数料　※注意：入出国空港税（9311）と間違えないこと
+'''
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)
+
 

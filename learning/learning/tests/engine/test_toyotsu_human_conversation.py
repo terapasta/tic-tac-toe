@@ -41,7 +41,12 @@ JALマイレージバンクで計上される費用は
 
 
     def test_overseas_business_trip_pay(self):
-        questions = ['海外の出張費を精算したい']
+        '''
+        Question:『「医療費精算（海外送金・国内支払）」海外で受診した健康診断結果は、どうしたらいいですか？』あたりと
+        ベクトル表現が近くなってしまうため、ちょっとしたアルゴリズムの変化でテストが壊れる可能性がある。
+        現状の仕組みでは完全に対処しきれないので、壊れてしまった際はあまり力をかけ過ぎずに一旦コメントアウトしてしまってもOK
+        '''
+        questions = ['海外の出張費の精算の方法は？']
         result = Reply(self.bot_id, self.learning_parameter, csv_file_path=self.question_answer_csv_file_path).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 

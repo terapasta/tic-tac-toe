@@ -1173,13 +1173,23 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require("react-dom");
+
 var _assign = require("lodash/assign");
 
 var _assign2 = _interopRequireDefault(_assign);
 
+var _getOffset = require("../../modules/get-offset");
+
+var _getOffset2 = _interopRequireDefault(_getOffset);
+
 var _actionCreators = require("./action-creators");
 
 var a = _interopRequireWildcard(_actionCreators);
+
+var _constants = require("./constants");
+
+var c = _interopRequireWildcard(_constants);
 
 var _header = require("./header");
 
@@ -1262,7 +1272,7 @@ var ChatApp = function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
-      scrollToBottomIfNeeded(prevProps, this.props);
+      scrollToLastSectionIfNeeded(prevProps, this);
     }
   }, {
     key: "render",
@@ -1281,7 +1291,7 @@ var ChatApp = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        null,
+        { ref: "root" },
         _react2.default.createElement(_header2.default, {
           botName: window.currentBot.name,
           learningStatus: learning.status,
@@ -1386,15 +1396,30 @@ var ChatApp = function (_Component) {
 exports.default = ChatApp;
 
 
-function scrollToBottomIfNeeded(prevProps, props) {
+function scrollToLastSectionIfNeeded(prevProps, component) {
+  var props = component.props,
+      refs = component.refs;
+
   var prevCount = prevProps.messages.classifiedData.length;
   var currentCount = props.messages.classifiedData.length;
   if (currentCount > prevCount && (prevCount === 0 || props.messages.isNeedScroll)) {
-    window.scrollTo(0, document.body.scrollHeight);
+
+    var rootNode = (0, _reactDom.findDOMNode)(refs.root);
+    var areaNode = rootNode.querySelector(".chat-area");
+    var children = [].slice.call(areaNode.children);
+    var targetNode = children.reverse().filter(function (n) {
+      return n.querySelector(".chat-decision-branches") == null;
+    })[0];
+    if (targetNode == null) {
+      return;
+    }
+    var offset = (0, _getOffset2.default)(targetNode);
+
+    window.scrollTo(0, offset.top - c.HeaderHeight);
   }
 }
 
-},{"./action-creators":12,"./area":14,"./bot-message-row":16,"./container":19,"./decision-branches-row":20,"./form":22,"./guest-message":25,"./guest-message-row":24,"./header":26,"./read-more":28,"./row":35,"./section":36,"./similar-question-answers-row":37,"lodash/assign":617,"react":855}],14:[function(require,module,exports){
+},{"../../modules/get-offset":85,"./action-creators":12,"./area":14,"./bot-message-row":16,"./constants":18,"./container":19,"./decision-branches-row":20,"./form":22,"./guest-message":25,"./guest-message-row":24,"./header":26,"./read-more":28,"./row":35,"./section":36,"./similar-question-answers-row":37,"lodash/assign":617,"react":855,"react-dom":683}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1775,6 +1800,8 @@ var LearningStatus = exports.LearningStatus = {
   Failed: "failed",
   Succeeded: "successed"
 };
+
+var HeaderHeight = exports.HeaderHeight = 47;
 
 },{}],19:[function(require,module,exports){
 "use strict";

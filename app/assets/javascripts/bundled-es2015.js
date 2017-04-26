@@ -3032,7 +3032,6 @@ function doneDecisionBranchesOtherThanLast(classifiedData) {
   return data.map(function (section, i) {
     var isExistsDB = !(0, _isEmpty2.default)(section.decisionBranches);
     var isExistsSQA = !(0, _isEmpty2.default)(section.similarQuestionAnswers);
-    console.log(isExistsDB, isExistsSQA, section);
     if ((isExistsDB || isExistsSQA) && i !== data.length - 1) {
       section.isDone = true;
     }
@@ -7076,7 +7075,6 @@ var QuestionAnswerForm = function (_Component) {
           searchingAnswerQuery = _state2.searchingAnswerQuery,
           searchingAnswerPage = _state2.searchingAnswerPage;
 
-      console.log("searchAnswers", searchingAnswerQuery);
       var params = {
         "q[body_cont]": (0, _trim2.default)(searchingAnswerQuery),
         page: searchingAnswerPage

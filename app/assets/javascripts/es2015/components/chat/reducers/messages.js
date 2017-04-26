@@ -155,7 +155,6 @@ export function doneDecisionBranchesOtherThanLast(classifiedData) {
   return data.map((section, i) => {
     const isExistsDB = !isEmpty(section.decisionBranches);
     const isExistsSQA = !isEmpty(section.similarQuestionAnswers);
-    console.log(isExistsDB, isExistsSQA, section)
     if ((isExistsDB || isExistsSQA) && i !== data.length - 1) {
       section.isDone = true;
     }

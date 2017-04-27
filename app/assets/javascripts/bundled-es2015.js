@@ -6493,6 +6493,9 @@ var LearningButton = function (_Component) {
     key: "onClickButton",
     value: function onClickButton(e) {
       e.preventDefault();
+      if (this.state.isDisabled) {
+        return;
+      }
       this.setState({ isDisabled: true });
       this.startLearning();
     }

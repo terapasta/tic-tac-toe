@@ -95,6 +95,7 @@ export default class LearningButton extends Component {
 
   onClickButton(e) {
     e.preventDefault();
+    if (this.state.isDisabled) { return; }
     this.setState({ isDisabled: true });
     this.startLearning();
   }

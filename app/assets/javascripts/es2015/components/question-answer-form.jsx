@@ -273,7 +273,6 @@ export default class QuestionAnswerForm extends Component {
   searchAnswers() {
     const { botId } = this.props;
     const { searchingAnswerQuery, searchingAnswerPage } = this.state;
-    console.log("searchAnswers", searchingAnswerQuery)
     const params = {
       "q[body_cont]": trim(searchingAnswerQuery),
       page: searchingAnswerPage,

@@ -14,3 +14,5 @@ export const LearningStatus = {
   Failed: "failed",
   Succeeded: "successed",
 };
+
+export const HeaderHeight = 47;

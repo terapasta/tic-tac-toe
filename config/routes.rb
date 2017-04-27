@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session]
+  devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
     put 'users' => 'devise/registrations#update', as: 'user_registration'

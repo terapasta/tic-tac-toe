@@ -22,6 +22,9 @@
         <% end %>
       <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-primary" %>
     <% end %>
+    <div class="forgot_password" >
+      <%= link_to 'パスワードをお忘れの方', new_user_password_path %>
+    </div>
   </div>
 </div>
 <%#= render "devise/shared/links" %>

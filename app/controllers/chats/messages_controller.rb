@@ -23,7 +23,7 @@ class Chats::MessagesController < ApplicationController
     end
     respond_to do |format|
       format.js
-      format.json { render_collection_json [@message, *@bot_messages], include: 'answer,answer.decision_branches' }
+      format.json { render_collection_json [@message, *@bot_messages], include: 'answer,answer.decision_branches,similar_question_answers' }
     end
   rescue => e
     logger.error e.message + e.backtrace.join("\n")

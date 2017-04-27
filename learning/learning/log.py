@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 # file handler
-fhandler = TimedRotatingFileHandler("./logs/application.log", when='D', backupCount=30)
+fhandler = TimedRotatingFileHandler("./logs/application.log", when='D', backupCount=30, encoding='utf-8')
 fhandler.setLevel(logging.DEBUG)
 fhandler.setFormatter(formatter)
 logger.addHandler(fhandler)

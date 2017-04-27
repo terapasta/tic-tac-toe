@@ -148,3 +148,28 @@ class TrainingMessageFromCsvTestCase(TestCase):
         '''
         eq_(np.size(indices_train), n_training_set)
         eq_(np.size(indices_excluded), 0)
+
+    def test_vectorize_using_all_bots(self):
+        attr = {
+            'include_failed_data': False,
+            'include_tag_vector': False,
+            'classify_threshold': 0.5,
+            'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
+            'params_for_algorithm': {},
+            'vectorize_using_all_bots': True
+        }
+        learning_parameter = LearningParameter(attr)
+
+        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter)
+        training_set.build()
+        n_training_set = np.size(training_set.y) # 生成された学習セットの件数
+
+        '''
+            生成された学習の件数をチェック
+            CSV内の学習セットの件数 + 追加生成されたラベル0の数
+        '''
+        import pandas as pd
+        df = pd.read_csv(self.csv_file_path, encoding='utf-8')
+        n_training_set_original = df['id'].count()
+
+        eq_(n_training_set, n_training_set_original + training_set.COUNT_OF_APPEND_BLANK)

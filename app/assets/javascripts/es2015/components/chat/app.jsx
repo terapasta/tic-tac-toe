@@ -120,7 +120,7 @@ export default class ChatApp extends Component {
                 <ChatSimilarQuestionAnswersRow {...{
                   section,
                   onChoose(question) {
-                    dispatch(a.postMessageIfNeeded(token, question));
+                    dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
                   }
                 }} />
               </ChatSection>

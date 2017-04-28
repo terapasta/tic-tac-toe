@@ -42,14 +42,18 @@ export function fetchNextMessages() {
   };
 }
 
-export const postMessageIfNeeded = (token, messageBody) => {
+export const postMessageIfNeeded = (token, messageBody, options = { isForce: false }) => {
   const m = trim(messageBody);
   return (dispatch, getState) => {
+    const process = () => {
+      dispatch(disableForm());
+      postMessage(token, m, dispatch);
+      trackMixpanel("Create chat message");
+    };
+    if (options.isForce) { process(); }
     if (isEmpty(m)) { return toastr.warning(c.ErrorPostMessage) }
     if(getState().form.isDisabled) { return; }
-    dispatch(disableForm());
-    postMessage(token, m, dispatch);
-    trackMixpanel("Create chat message");
+    process();
   };
 };
 

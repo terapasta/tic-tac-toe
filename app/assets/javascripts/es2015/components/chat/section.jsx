@@ -80,7 +80,7 @@ export default class ChatSection extends Component {
     return (
       <div className={className} ref="root">
         <div className="chat-section__switch-container">
-          {!isFirst && !isDecisionBranch && (
+          {!isFirst && !isDecisionBranch && !isSQA && (
             <a href="#"
               className="chat-section__switch"
               onClick={this.onClick.bind(this)}

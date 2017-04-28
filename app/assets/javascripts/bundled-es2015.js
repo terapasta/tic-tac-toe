@@ -926,17 +926,25 @@ function fetchNextMessages() {
 }
 
 var postMessageIfNeeded = exports.postMessageIfNeeded = function postMessageIfNeeded(token, messageBody) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { isForce: false };
+
   var m = (0, _trim2.default)(messageBody);
   return function (dispatch, getState) {
+    var process = function process() {
+      dispatch(disableForm());
+      postMessage(token, m, dispatch);
+      trackMixpanel("Create chat message");
+    };
+    if (options.isForce) {
+      process();
+    }
     if ((0, _isEmpty2.default)(m)) {
       return _toastr2.default.warning(c.ErrorPostMessage);
     }
     if (getState().form.isDisabled) {
       return;
     }
-    dispatch(disableForm());
-    postMessage(token, m, dispatch);
-    trackMixpanel("Create chat message");
+    process();
   };
 };
 
@@ -1367,7 +1375,7 @@ var ChatApp = function (_Component) {
               _react2.default.createElement(_similarQuestionAnswersRow2.default, {
                 section: section,
                 onChoose: function onChoose(question) {
-                  dispatch(a.postMessageIfNeeded(token, question));
+                  dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
                 }
               })
             );
@@ -3061,10 +3069,26 @@ function changeRatingHandler(state, action) {
 
 function doneDecisionBranchesOtherThanLast(classifiedData) {
   var data = (0, _cloneDeep2.default)(classifiedData);
-  return data.map(function (section, i) {
+  var beforeLastIndex = data.length - 2;
+  var lastIndex = data.length - 1;
+  var beforeLastSection = data[beforeLastIndex];
+  var lastSection = data[lastIndex];
+
+  var hasDBorSQL = function hasDBorSQL(section) {
     var isExistsDB = !(0, _isEmpty2.default)(section.decisionBranches);
     var isExistsSQA = !(0, _isEmpty2.default)(section.similarQuestionAnswers);
-    if ((isExistsDB || isExistsSQA) && i !== data.length - 1) {
+    return isExistsDB || isExistsSQA;
+  };
+
+  return data.map(function (section, i) {
+    var isLast = i == lastIndex;
+    var isBeforeLast = i == beforeLastIndex;
+
+    if (hasDBorSQL(section) && !isLast) {
+      // 最後から２つのsectionが両方共選択系だったらdoneしない
+      if (hasDBorSQL(beforeLastSection) && hasDBorSQL(lastSection) && isBeforeLast) {
+        return section;
+      }
       section.isDone = true;
     }
     return section;
@@ -3246,7 +3270,7 @@ var ChatSection = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "chat-section__switch-container" },
-          !isFirst && !isDecisionBranch && _react2.default.createElement(
+          !isFirst && !isDecisionBranch && !isSQA && _react2.default.createElement(
             "a",
             { href: "#",
               className: "chat-section__switch",

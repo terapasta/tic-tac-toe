@@ -17,6 +17,7 @@ function ChatDecisionBranchesRow({
         <ChatDecisionBranches
           title="回答を選択してください"
           items={decisionBranches}
+          selectAttribute="id"
           onChoose={onChoose}
         />
       </ChatContainer>
@@ -26,6 +27,7 @@ function ChatDecisionBranchesRow({
 
 ChatDecisionBranchesRow.propTypes = {
   decisionBranches: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
     body: PropTypes.string,
   })),
 };

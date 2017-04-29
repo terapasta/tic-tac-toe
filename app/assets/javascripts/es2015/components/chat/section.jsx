@@ -60,9 +60,16 @@ export default class ChatSection extends Component {
       onSaveLearning,
     } = this.props;
 
-    const { decisionBranches, isDone, question, answer } = section;
+    const {
+      decisionBranches,
+      similarQuestionAnswers,
+      isDone,
+      question,
+      answer
+    } = section;
     const isDecisionBranch = !isEmpty(decisionBranches);
-    if (isDecisionBranch && isDone) { return null; }
+    const isSQA = !isEmpty(similarQuestionAnswers);
+    if ((isDecisionBranch || isSQA) && isDone) { return null; }
 
     const className = classNames({
       "chat-section": !isManager,
@@ -73,7 +80,7 @@ export default class ChatSection extends Component {
     return (
       <div className={className} ref="root">
         <div className="chat-section__switch-container">
-          {!isFirst && !isDecisionBranch && (
+          {!isFirst && !isDecisionBranch && !isSQA && (
             <a href="#"
               className="chat-section__switch"
               onClick={this.onClick.bind(this)}

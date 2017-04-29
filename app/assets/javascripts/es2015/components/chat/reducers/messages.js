@@ -61,6 +61,12 @@ export function classifyBotMessage(sections, message) {
   if (!isEmpty(decisionBranches)) {
     secs.push({ decisionBranches });
   }
+
+  const { similarQuestionAnswers } = message;
+  if (!isEmpty(similarQuestionAnswers)) {
+    secs.push({ similarQuestionAnswers });
+  }
+
   return secs;
 }
 
@@ -77,7 +83,7 @@ export default handleActions({
 
   [createdMessage]: (state, action) => {
     const { messages } = action.payload.data;
-    const classifiedData = classify(state.classifiedData, messages);
+    const classifiedData = doneDecisionBranchesOtherThanLast(classify(state.classifiedData, messages));
     return assign({}, state, { classifiedData, isNeedScroll: true });
   },
 
@@ -127,7 +133,7 @@ export default handleActions({
 });
 
 function pickUp(message) {
-  return pick(message, ["id", "body", "createdAt", "rating", "iconImageUrl"]);
+  return pick(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers"]);
 }
 
 export function changeRatingHandler(state, action) {
@@ -146,8 +152,26 @@ export function changeRatingHandler(state, action) {
 
 export function doneDecisionBranchesOtherThanLast(classifiedData) {
   const data = cloneDeep(classifiedData);
+  const beforeLastIndex = data.length - 2;
+  const lastIndex = data.length - 1;
+  const beforeLastSection = data[beforeLastIndex];
+  const lastSection = data[lastIndex];
+
+  const hasDBorSQL = (section) => {
+    const isExistsDB = !isEmpty(section.decisionBranches);
+    const isExistsSQA = !isEmpty(section.similarQuestionAnswers);
+    return isExistsDB || isExistsSQA;
+  };
+
   return data.map((section, i) => {
-    if (!isEmpty(section.decisionBranches) && i !== data.length - 1) {
+    const isLast = i == lastIndex;
+    const isBeforeLast = i == beforeLastIndex;
+
+    if (hasDBorSQL(section) && !isLast) {
+      // 最後から２つのsectionが両方共選択系だったらdoneしない
+      if (hasDBorSQL(beforeLastSection) &&
+          hasDBorSQL(lastSection) &&
+          isBeforeLast) { return section; }
       section.isDone = true;
     }
     return section;

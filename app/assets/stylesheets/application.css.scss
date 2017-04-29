@@ -13,6 +13,7 @@
 
 @import "compass/utilities/general/clearfix";
 @import "common/variables";
+@import "common/keyframes";
 @import "helpers/**/*";
 @import "modules/**/*";
 
@@ -263,4 +264,8 @@ body {
   &:hover {
     color: $icon-disabled-color;
   }
+}
+
+.forgot_password {
+  margin-top: 10px;
 }

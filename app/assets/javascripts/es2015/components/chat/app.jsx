@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from "react";
+import { findDOMNode } from "react-dom";
 import assign from "lodash/assign";
 
+import getOffset from "../../modules/get-offset";
 import * as a from "./action-creators";
+import * as c from "./constants";
 
 import ChatHeader from "./header";
 import ChatArea from "./area";
@@ -10,6 +13,7 @@ import ChatForm from "./form";
 import ChatRow from "./row";
 import ChatSection from "./section";
 import ChatDecisionBranchesRow from "./decision-branches-row";
+import ChatSimilarQuestionAnswersRow from "./similar-question-answers-row";
 import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
 import ChatGuestMessage from "./guest-message";
@@ -32,7 +36,7 @@ export default class ChatApp extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    scrollToBottomIfNeeded(prevProps, this.props);
+    scrollToLastSectionIfNeeded(prevProps, this);
   }
 
   render() {
@@ -52,7 +56,7 @@ export default class ChatApp extends Component {
     } = messages;
 
     return (
-      <div>
+      <div ref="root">
         <ChatHeader {...{
           botName: window.currentBot.name,
           learningStatus: learning.status,
@@ -113,6 +117,12 @@ export default class ChatApp extends Component {
                     dispatch(a.chooseDecisionBranch(token, decisionBranchId));
                   }
                 }} />
+                <ChatSimilarQuestionAnswersRow {...{
+                  section,
+                  onChoose(question) {
+                    dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
+                  }
+                }} />
               </ChatSection>
             );
           })}
@@ -130,10 +140,22 @@ export default class ChatApp extends Component {
   }
 }
 
-function scrollToBottomIfNeeded(prevProps, props) {
+function scrollToLastSectionIfNeeded(prevProps, component) {
+  const { props, refs } = component;
   const prevCount = prevProps.messages.classifiedData.length
   const currentCount = props.messages.classifiedData.length;
-  if (currentCount > prevCount && (prevCount === 0 || props.messages.isNeedScroll)) {
-    window.scrollTo(0, document.body.scrollHeight);
+  if (currentCount > prevCount &&
+     (prevCount === 0 || props.messages.isNeedScroll)) {
+
+    const rootNode = findDOMNode(refs.root);
+    const areaNode = rootNode.querySelector(".chat-area");
+    const children = [].slice.call(areaNode.children);
+    const targetNode = children.reverse().filter((n) => (
+      n.querySelector(".chat-decision-branches") == null
+    ))[0];
+    if (targetNode == null) { return; }
+    const offset = getOffset(targetNode);
+
+    window.scrollTo(0, offset.top - c.HeaderHeight);
   }
 }

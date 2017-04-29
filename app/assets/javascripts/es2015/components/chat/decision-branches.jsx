@@ -6,6 +6,7 @@ export default class ChatDecisionBranches extends Component {
       title: PropTypes.string.isRequired,
       items: PropTypes.array.isRequired,
       onChoose: PropTypes.func.isRequired,
+      selectAttribute: PropTypes.string.isRequired,
     };
   }
 
@@ -14,6 +15,7 @@ export default class ChatDecisionBranches extends Component {
       title,
       items,
       onChoose,
+      selectAttribute,
     } = this.props;
 
     return (
@@ -29,7 +31,7 @@ export default class ChatDecisionBranches extends Component {
                 key={i}
                 onClick={(e) => {
                   e.preventDefault();
-                  onChoose(item.id);
+                  onChoose(item[selectAttribute]);
                 }}>
                 {item.body}
               </a>

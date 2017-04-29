@@ -5,6 +5,7 @@ class Chat < ActiveRecord::Base
   has_many :messages
   has_many :contact_states
   belongs_to :bot
+  has_one :bot_user, through: :bot, source: :user
   enum context: ContextHoldable::CONTEXTS
 
   scope :has_multiple_messages, -> {
@@ -56,6 +57,11 @@ class Chat < ActiveRecord::Base
     if flag.present?
       where(id: Message.select(:chat_id).answer_marked)
     end
+  }
+
+  scope :question_message, -> (chat_id, answer_message_id) {
+    #回答メッセージの直近guestメッセージを質問メッセージとして扱う
+    find_by(id: chat_id).messages.guest.where('id < ?', answer_message_id).order(:id).last
   }
 
   def build_start_message

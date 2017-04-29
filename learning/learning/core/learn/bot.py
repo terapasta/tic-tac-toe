@@ -8,6 +8,7 @@ from learning.core.training_set.training_message_from_csv import TrainingMessage
 from learning.log import logger
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.neural_network import MLPClassifier
 from learning.core.evaluator import Evaluator
 from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
@@ -77,6 +78,28 @@ class Bot:
             # estimator = MultinomialNB(fit_prior=False)
             # estimator = BernoulliNB()
             estimator.fit(training_set_x, training_set_y)
+
+        elif self.learning_parameter.algorithm == LearningParameter.ALGORITHM_NEURAL_NETWORK:
+            logger.debug('use algorithm: Multi-layer Perceptron')
+
+            activation = self.learning_parameter.params_for_algorithm.get('activation', None)
+            if activation is None:
+                logger.debug('learning_parameter has not parameter [activation]')
+                params = {'activation':['identity','logistic','tanh','relu']}
+                grid = GridSearchCV(
+                    MLPClassifier(max_iter=10000, shuffle=False, random_state=0),
+                    param_grid=params
+                )
+                grid.fit(training_set_x, training_set_y)
+                estimator = grid.best_estimator_
+                logger.debug('best_params_: %s' % grid.best_params_)
+            else:
+                logger.debug('learning_parameter has parameter [activation]')
+                estimator = MLPClassifier(
+                    activation=activation, max_iter=10000, shuffle=False, random_state=0
+                )
+                estimator.fit(training_set_x, training_set_y)
+
         else:
             logger.debug('use algorithm: logistic regression')
 

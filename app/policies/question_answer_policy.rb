@@ -55,7 +55,6 @@ class QuestionAnswerPolicy < ApplicationPolicy
           answer_attributes: [
             :id,
             :body,
-            :headline,
           ],
           topic_taggings_attributes: [
             :id,

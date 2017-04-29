@@ -54,9 +54,6 @@ $ ->
     # $textarea.val(body).focus()
 
   $(autocompleteSelector).railsAutocomplete()
-  $(autocompleteSelector).on 'railsAutocomplete.select', (e, data) ->
-    $headline = $(@).parents('.message-body-edit').find('#training_message_answer_attributes_headline')
-    $headline.val(data.item.headline)
   $(autocompleteSelector).on 'focus', (e) ->
     $(@).select()
 

@@ -15,15 +15,6 @@
           data-message-id=local_assigns[:message_id]
         )
 
-      /- if message.other_answers.present?
-        .small
-          p その他の回答
-          ul
-            - message.other_answers.each do |other_answer|
-              - if other_answer.headline.present?
-              li
-                = link_to other_answer.headline, chats_messages_path(bot.token, message: { body: other_answer.headline, other_answer_id: other_answer.id }), method: :post, remote: true
-
 - if message.answer.try(:decision_branches).try(:present?)
   = render layout: 'chats/decision_branches', locals: { title: '回答を選択してください' } do
     - message.answer.decision_branches.each do |decision_branch|

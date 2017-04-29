@@ -46,21 +46,6 @@
           </div>
         <% end %>
       <% end %>
-
-      <% if message.other_answers.present? %>
-        <div class="small">
-          <p>その他の回答</p>
-          <ul>
-            <% message.other_answers.each do |other_answer| %>
-              <% if other_answer.headline.present? %>
-              <li>
-                <%= link_to other_answer.headline, bot_training_questions_path(bot, message.training, training_message: { body: other_answer.headline, other_answer_id: other_answer.id }), data: { method: :post, event_name: 'Select other answer', answer_id: other_answer.id } %>
-              </li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
     </div>
 
     <div class="col-sm-12">

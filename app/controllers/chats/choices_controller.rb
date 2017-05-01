@@ -10,7 +10,7 @@ class Chats::ChoicesController < ApplicationController
     end
     respond_to do |format|
       format.js { render 'chats/messages/create' }
-      format.json { render json: [@message, @bot_message], adapter: :json }
+      format.json { render json: [@message, @bot_message], adapter: :json, include: 'answer,answer.decision_branches,similar_question_answers' }
     end
   end
 

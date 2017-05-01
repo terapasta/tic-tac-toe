@@ -152,10 +152,26 @@ export function changeRatingHandler(state, action) {
 
 export function doneDecisionBranchesOtherThanLast(classifiedData) {
   const data = cloneDeep(classifiedData);
-  return data.map((section, i) => {
+  const beforeLastIndex = data.length - 2;
+  const lastIndex = data.length - 1;
+  const beforeLastSection = data[beforeLastIndex];
+  const lastSection = data[lastIndex];
+
+  const hasDBorSQL = (section) => {
     const isExistsDB = !isEmpty(section.decisionBranches);
     const isExistsSQA = !isEmpty(section.similarQuestionAnswers);
-    if ((isExistsDB || isExistsSQA) && i !== data.length - 1) {
+    return isExistsDB || isExistsSQA;
+  };
+
+  return data.map((section, i) => {
+    const isLast = i == lastIndex;
+    const isBeforeLast = i == beforeLastIndex;
+
+    if (hasDBorSQL(section) && !isLast) {
+      // 最後から２つのsectionが両方共選択系だったらdoneしない
+      if (hasDBorSQL(beforeLastSection) &&
+          hasDBorSQL(lastSection) &&
+          isBeforeLast) { return section; }
       section.isDone = true;
     }
     return section;

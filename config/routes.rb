@@ -5,8 +5,6 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', as: 'user_registration'
   end
 
-  get 'static_pages/help'
-
   resources :bots, only: [:index, :edit, :update] do
     post :reset, on: :member
     resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
@@ -77,6 +75,8 @@ Rails.application.routes.draw do
       resources :messages, only: :create
     end
   end
+
+  resource :contacts, only: [:new, :create]
 
   # authenticated :admin_user do
   #   #rails_admin.dashboard_path

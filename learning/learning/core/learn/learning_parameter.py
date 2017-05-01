@@ -27,7 +27,7 @@ class LearningParameter:
             学習セットのベクトル構築(TextArray#to_vec)時に、
             利用可能な全Botの学習セットを使用する
         '''
-        self._vectorize_using_all_bots = attributes.get('vectorize_using_all_bots', False)
+        self._vectorize_using_all_bots = attributes.get('vectorize_using_all_bots', True)
 
     @property
     def include_failed_data(self):

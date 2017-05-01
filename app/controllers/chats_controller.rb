@@ -13,11 +13,11 @@ class ChatsController < ApplicationController
     render :show
   end
 
-  def show_app
+  def show_old
     show_action
   end
 
-  def new_app
+  def new_old
     new_action
     render :show_app
   end

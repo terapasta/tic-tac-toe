@@ -1,18 +1,19 @@
-header.chat-header
-  h1.chat-header__title= @bot.name
+span(
+  data-component="ChatApp"
+  data-token=@bot.token
+  data-is-manager=(current_user.present? && (current_user.normal? || current_user.staff?)).to_json
+  data-flash-message=flash[:warning]
+)
 
-.chat-container.chat-area
-  - @chat.messages.each_with_index do |message, i|
-    - if message.bot?
-      = render 'bot', message: message, is_first_message: i.zero?, token: params[:token], message_id: message.id
-    - elsif message.guest?
-      = render 'guest', message: message
-
-.chat-form: .container: .chat-container--no-padding
-  = form_for @chat.messages.build, url: chats_messages_path(@bot.token), data: { remote: true, event_name: 'Create chat message', bot_id: @bot.id, bot_name: @bot.name, chat_id: @chat.id } do |f|
-    = f.text_field :body, placeholder: '質問を入れてください', hide_label: true, class: 'chat-form__text-field'
-    = f.button class: 'chat-form__submit', id: 'chat-submit' do
-      span.visible-sm.visible-md.visible-lg 質問
-      span.visible-xs: i.fa.fa-icon.fa-paper-plane-o
-
-= javascript_include_tag 'chats'
+/ TODO 2017-05-19 を過ぎたら削除する
+- if user_signed_in? && Time.current < Time.zone.parse('2017-05-19 23:59:59')
+  .modal-backdrop.fade.in
+  .modal.fade.in tabindex="-1" style="display:block;" data-role="notification-modal"
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close type="button"
+            span aria-hidden="true"  &times;
+          h4.modal-title 新しいチャットのご紹介
+        .modal-body
+          iframe src="https://www.youtube.com/embed/A0UIKr-dwcM" frameborder="0" allowfullscreen=true style="width:100%; height:300px;"

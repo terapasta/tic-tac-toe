@@ -23,10 +23,10 @@ class Bot:
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     @stop_watch
-    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
+    def learn(self, csv_file_path=None, external_vocabulary_csv_file_path=None, csv_file_encoding='UTF-8'):
         logger.debug('start Bot#learn')
 
-        training_set = self.__build_training_set(csv_file_path, csv_file_encoding)
+        training_set = self.__build_training_set(csv_file_path, external_vocabulary_csv_file_path, csv_file_encoding)
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')
 
@@ -41,13 +41,13 @@ class Bot:
 
         return evaluator
 
-    def __build_training_set(self, csv_file_path, csv_file_encoding):
+    def __build_training_set(self, csv_file_path, external_vocabulary_csv_file_path, csv_file_encoding):
         config = Config()
         dbconfig = config.get('database')
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
                              passwd=dbconfig['password'], charset='utf8')
         if csv_file_path is not None:
-            training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
+            training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, external_vocabulary_csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
         else:
             logger.debug('Bot after mysql connect')
             training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)

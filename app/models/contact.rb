@@ -1,4 +1,4 @@
-class Contact < ActiveRecord::Base
+class Contact
   include Virtus.model
   include ActiveModel::Model
 

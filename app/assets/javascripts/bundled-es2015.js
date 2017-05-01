@@ -1163,6 +1163,12 @@ function startLearningIfPossible(botId) {
 
 function pollLearningStatus(botId) {
   return function (dispatch, getState) {
+    var _getState5 = getState(),
+        isManager = _getState5.isManager;
+
+    if (!isManager) {
+      return;
+    }
     dispatch(getLearningStatus(botId));
     setInterval(function () {
       dispatch(getLearningStatus(botId));

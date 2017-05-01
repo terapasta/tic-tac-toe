@@ -242,6 +242,8 @@ export function startLearningIfPossible(botId) {
 
 export function pollLearningStatus(botId) {
   return (dispatch, getState) => {
+    const { isManager } = getState();
+    if (!isManager) { return; }
     dispatch(getLearningStatus(botId));
     setInterval(() => {
       dispatch(getLearningStatus(botId));

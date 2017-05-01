@@ -26,3 +26,11 @@
 //= require base
 // require_tree .
 //= require bundled-es2015
+
+$(function() {
+  var $notificationModal = $('[data-role="notification-modal"]');
+  $notificationModal.find('.close').on('click', () => {
+    $notificationModal.removeAttr("style").hide();
+    $('.modal-backdrop').hide();
+  });
+});

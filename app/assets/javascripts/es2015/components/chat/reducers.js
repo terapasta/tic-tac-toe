@@ -18,6 +18,7 @@ const app = combineReducers({
   readMore,
   token: through,
   isManager: through,
+  flashMessage: through,
 });
 
 export default app;

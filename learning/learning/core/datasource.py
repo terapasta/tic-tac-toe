@@ -3,7 +3,6 @@ import pandas as pd
 
 from learning.config.config import Config
 
-
 class Datasource:
     def __init__(self, type='database'):
         self._type = type
@@ -22,4 +21,13 @@ class Datasource:
     def learning_training_messages(self, bot_id):
         if self._type == 'database':
             data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, self._db)
+        return data
+
+
+    def question_answers(self, bot_id):
+        from learning.core.predict.reply import Reply
+
+        data = pd.read_sql(
+            "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
+            % (bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
         return data

@@ -1,11 +1,10 @@
-import MySQLdb
 import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
+from learning.core.datasource import Datasource
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.predict.reply_result import ReplyResult
-from learning.config.config import Config
 from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
@@ -15,13 +14,10 @@ class Reply:
     CLASSIFY_FAILED_ANSWER_ID = 0
 
     def __init__(self, bot_id, learning_parameter, csv_file_path=None):
-        config = Config()
-        dbconfig = config.get('database')
-        self.db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
-                             passwd=dbconfig['password'], charset='utf8')
-        self.bot_id = bot_id
         self.learning_parameter = learning_parameter
+        self._bot_id = bot_id
         self._csv_file_path = csv_file_path
+        self._datasource = Datasource()
 
         try:
             self.estimator = Persistance.load_model(bot_id)
@@ -74,9 +70,7 @@ class Reply:
     # TODO similarityクラスで共通化する
     def __build_question_answers(self):
         if self._csv_file_path is None:
-            data = pd.read_sql(
-                "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
-                % (self.bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self.db)
+            data = self._datasource.question_answers(self._bot_id)
         else:
             data = pd.read_csv(self._csv_file_path)
         return data

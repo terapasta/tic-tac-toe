@@ -19,10 +19,10 @@ class Bot:
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     @stop_watch
-    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8', datasource_type='database'):
+    def learn(self, datasource_type='database'):
         logger.debug('start Bot#learn')
 
-        training_set = self.__build_training_set(csv_file_path, csv_file_encoding, datasource_type)
+        training_set = self.__build_training_set(datasource_type)
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')
 
@@ -42,7 +42,7 @@ class Bot:
 
         return evaluator
 
-    def __build_training_set(self, csv_file_path, csv_file_encoding, datasource_type):
+    def __build_training_set(self, datasource_type):
         datasource = Datasource(type=datasource_type)
 
         # if csv_file_path is not None:

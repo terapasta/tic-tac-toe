@@ -13,10 +13,9 @@ from learning.log import logger
 class Reply:
     CLASSIFY_FAILED_ANSWER_ID = 0
 
-    def __init__(self, bot_id, learning_parameter, csv_file_path=None):
+    def __init__(self, bot_id, learning_parameter):
         self.learning_parameter = learning_parameter
         self._bot_id = bot_id
-        self._csv_file_path = csv_file_path
 
         try:
             self.estimator = Persistance.load_model(bot_id)

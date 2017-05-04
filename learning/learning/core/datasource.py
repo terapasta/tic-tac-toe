@@ -64,7 +64,14 @@ class Datasource:
 
     def question_answers_for_suggest(self, bot_id, question):
         from learning.core.predict.reply import Reply
-        data = pd.read_sql(
-            "select id, question from question_answers where bot_id = %s and question <> '%s' and answer_id <> %s;"
-            % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+
+        if self._type == 'database':
+            data = pd.read_sql(
+                "select id, question from question_answers where bot_id = %s and question <> '%s' and answer_id <> %s;"
+                % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+        elif self._type == 'csv':
+            data = self._question_answers[self._question_answers['bot_id'] == bot_id]
+            data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
+            data = data[data['question'] != question]
+
         return data

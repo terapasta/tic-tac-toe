@@ -8,18 +8,19 @@ from learning.log import logger
 
 class Similarity:
     def __init__(self, bot_id):
-        self._datasource = Datasource()
         self._bot_id = bot_id
+
         try:
             self.vectorizer = Persistance.load_vectorizer(bot_id)
         except IOError:
             raise ModelNotExistsError()
 
 
-    def question_answers(self, question):
+    def question_answers(self, question, datasource_type='database'):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        question_answers = self._datasource.question_answers_for_suggest(self._bot_id, question)
+        datasource = Datasource(type=datasource_type)
+        question_answers = datasource.question_answers_for_suggest(self._bot_id, question)
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
         question_array = TextArray([question], vectorizer=self.vectorizer)
 

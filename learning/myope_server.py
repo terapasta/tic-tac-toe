@@ -56,19 +56,6 @@ class MyopeServer(RPCServer):
         logger.debug(result)
         return result
 
-    def learn_tag_model(self):
-        LearnTag().learn()
-        return { 'status_code': self.STATUS_CODE_SUCCESS }
-
-    def predict_tags(self, bodies):
-        result = PredictTag().predict(bodies)
-        logger.debug("result.__class__.__name__: %s" % result.__class__.__name__)
-        return {
-            'status_code': self.STATUS_CODE_SUCCESS,
-            # 'tags': result.tolist()
-            'tags': result
-        }
-
 
 if __name__ == '__main__':
     server = StreamServer(('127.0.0.1', 6000), MyopeServer())

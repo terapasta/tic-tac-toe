@@ -113,3 +113,70 @@ Slack連携はCustom Botとしてslackに登録したBotユーザーデータを
 3. https://slack.com/api/users.list?pretty=1&token={取得したAPI Token}を実行して、登録したCustom bot userのidを表示、slappy_config.rbのconfig.robot.bot_idに指定する。
 
 以上でslack連携を行うことができるようになります。
+
+
+## Coudwatch Logsの設定
+
+__参考__
+
+- http://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/logs/QuickStartEC2Instance.html
+- http://qiita.com/aidy91614/items/bafcce212effe66455db
+
+__/etc/awslogs/awslogs.conf 設定内容__
+
+```
+[/var/www/donusagi-bot/shared/log/delayed_job.log]
+datetime_format = %b %d %H:%M:%S
+file = /var/www/donusagi-bot/shared/log/delayed_job.log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/www/donusagi-bot/shared/log/delayed_job.log
+
+[/var/www/donusagi-bot/shared/log/production.log]
+datetime_format = %b %d %H:%M:%S
+file = /var/www/donusagi-bot/shared/log/production.log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/www/donusagi-bot/shared/log/production.log
+
+[/var/www/donusagi-bot/shared/log/slappy.log]
+datetime_format = %b %d %H:%M:%S
+file = /var/www/donusagi-bot/shared/log/slappy.log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/www/donusagi-bot/shared/log/slappy.log
+
+[/var/www/donusagi-bot/shared/log/unicorn.stderr.log]
+datetime_format = %b %d %H:%M:%S
+file = /var/www/donusagi-bot/shared/log/unicorn.stderr.log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/www/donusagi-bot/shared/log/unicorn.stderr.log
+
+[/var/www/donusagi-bot/shared/log/unicorn.stdout.log]
+datetime_format = %b %d %H:%M:%S
+file = /var/www/donusagi-bot/shared/log/unicorn.stdout.log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/www/donusagi-bot/shared/log/unicorn.stdout.log
+```
+
+__logrotate__
+
+```
+/var/www/donusagi-bot/shared/log/*.log {
+  daily
+  create 0644 deploy deploy
+  rotate 7
+  missingok
+  compress
+  delaycompress
+  copytruncate
+  notifempty
+}
+```

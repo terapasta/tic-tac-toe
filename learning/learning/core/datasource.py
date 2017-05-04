@@ -18,9 +18,15 @@ class Datasource:
         return db
 
 
+    def store_data_from(self):
+        return None
+
     def learning_training_messages(self, bot_id):
         if self._type == 'database':
             data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, self._db)
+        elif self._type == 'csv':
+            data = None
+
         return data
 
 

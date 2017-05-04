@@ -9,14 +9,15 @@ from learning.tests import helper
 
 class PtnaConversationTestCase(TestCase):
 
+    # TODO setUpClassに変更する(毎回学習処理が走ってしまうため)
     def setUp(self):
-        self.csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
-        self.bot_id = 996  # テスト用のbot_id いずれの値でも動作する
+        self.csv_file_path = './fixtures/learning_training_messages/ptna.csv'
+        self.bot_id = 8  # bot_id = 8 はPTNA
         self.threshold = 0.5
         self.answers = helper.build_answers(self.csv_file_path)
 
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(csv_file_path=self.csv_file_path)
+        # _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(datasource_type='csv')
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']

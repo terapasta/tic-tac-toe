@@ -2,7 +2,6 @@ from sklearn.grid_search import GridSearchCV
 
 from learning.core.datasource import Datasource
 from learning.core.stop_watch import stop_watch
-from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB

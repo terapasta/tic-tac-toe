@@ -21,6 +21,8 @@ class Learning::Converter
   def save
     save!
   rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
     false
   end
 

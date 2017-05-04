@@ -1,6 +1,3 @@
-from collections import Counter
-
-import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
 from learning.core.datasource import Datasource
@@ -11,7 +8,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.neural_network import MLPClassifier
 from learning.core.evaluator import Evaluator
-from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.persistance import Persistance
@@ -49,13 +45,12 @@ class Bot:
 
     def __build_training_set(self, csv_file_path, csv_file_encoding):
         datasource = Datasource()
-        db = datasource.db
 
         if csv_file_path is not None:
             training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
         else:
             logger.debug('Bot after mysql connect')
-            training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
+            training_set = TrainingMessage(datasource, self.bot_id, self.learning_parameter)
 
         training_set.build()
         logger.debug('Bot#__build_training_set training_set.count_sample_by_y: %s' % training_set.count_sample_by_y())

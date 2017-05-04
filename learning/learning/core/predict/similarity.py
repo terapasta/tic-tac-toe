@@ -1,12 +1,7 @@
-import MySQLdb
-import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
-
-from learning.config.config import Config
 from learning.core.datasource import Datasource
 from learning.core.persistance import Persistance
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
-from learning.core.predict.reply import Reply
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
 

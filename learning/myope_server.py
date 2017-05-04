@@ -11,8 +11,6 @@ from learning.core.predict.reply import Reply
 from learning.core.predict.null_reply_result import NullReplyResult
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
-from learning.core.learn.tag import Tag as LearnTag
-from learning.core.predict.tag import Tag as PredictTag
 from learning.core.learn.learning_parameter import LearningParameter
 
 class MyopeServer(RPCServer):

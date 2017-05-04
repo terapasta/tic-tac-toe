@@ -17,7 +17,6 @@ class Reply:
         self.learning_parameter = learning_parameter
         self._bot_id = bot_id
         self._csv_file_path = csv_file_path
-        self._datasource = Datasource()
 
         try:
             self.estimator = Persistance.load_model(bot_id)
@@ -26,7 +25,9 @@ class Reply:
             raise ModelNotExistsError()
 
 
-    def perform(self, X):
+    def perform(self, X, datasource_type='database'):
+        datasource = Datasource(datasource_type)
+
         text_array = TextArray(X, vectorizer=self.vectorizer)
         logger.debug('Reply#perform text_array.separated_sentences: %s' % text_array.separated_sentences)
         features = text_array.to_vec()
@@ -34,7 +35,7 @@ class Reply:
         count = np.count_nonzero(features.toarray())
 
         if self.learning_parameter.use_similarity_classification:
-            answer_ids, probabilities = self.__search_simiarity(X[0])
+            answer_ids, probabilities = self.__search_simiarity(datasource, X[0])
         else:
             answer_ids, probabilities = self.__predict(features)
 
@@ -48,11 +49,11 @@ class Reply:
         answer_ids = self.estimator.classes_
         return answer_ids, probabilities[0]
 
-    def __search_simiarity(self, question):
+    def __search_simiarity(self, datasource, question):
         # TODO similarityクラスで共通化する
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        question_answers = self.__build_question_answers()
+        question_answers = datasource.question_answers(self._bot_id)
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
         question_array = TextArray([question], vectorizer=self.vectorizer)
 
@@ -66,11 +67,3 @@ class Reply:
 
         df = pd.DataFrame.from_dict(ordered_result)
         return df['answer_id'], df['similarity']
-
-    # TODO similarityクラスで共通化する
-    def __build_question_answers(self):
-        if self._csv_file_path is None:
-            data = self._datasource.question_answers(self._bot_id)
-        else:
-            data = pd.read_csv(self._csv_file_path)
-        return data

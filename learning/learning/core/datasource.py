@@ -15,7 +15,8 @@ class Datasource:
             self._db = self.__connect_db()
 
         if type == 'csv':
-            self._learning_training_messages = self.__build_learning_training_messages_from_csv()
+            self._learning_training_messages = self.__build_data_from_csv('learning_training_messages')
+            self._question_answers = self.__build_data_from_csv('question_answers')
 
 
     def __connect_db(self):
@@ -26,9 +27,9 @@ class Datasource:
         return db
 
 
-    def __build_learning_training_messages_from_csv(self):
+    def __build_data_from_csv(self, table_name):
         arr = []
-        files = glob.glob('./fixtures/learning_training_messages/*')
+        files = glob.glob('./fixtures/%s/*' % table_name)
         logger.debug(files)
 
         for file in files:
@@ -51,9 +52,14 @@ class Datasource:
     def question_answers(self, bot_id):
         from learning.core.predict.reply import Reply
 
-        data = pd.read_sql(
-            "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
-            % (bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+        if self._type == 'database':
+            data = pd.read_sql(
+                "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
+                % (bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+        elif self._type == 'csv':
+            data = self._question_answers[self._question_answers['bot_id'] == bot_id]
+            data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
+
         return data
 
     def question_answers_for_suggest(self, bot_id, question):

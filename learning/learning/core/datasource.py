@@ -1,7 +1,11 @@
+import glob
+
 import MySQLdb
 import pandas as pd
 
 from learning.config.config import Config
+from learning.log import logger
+
 
 class Datasource:
     def __init__(self, type='database'):
@@ -9,6 +13,10 @@ class Datasource:
 
         if type == 'database':
             self._db = self.__connect_db()
+
+        if type == 'csv':
+            self._learning_training_messages = self.__build_learning_training_messages_from_csv()
+
 
     def __connect_db(self):
         config = Config()
@@ -18,14 +26,24 @@ class Datasource:
         return db
 
 
-    def store_data_from(self):
-        return None
+    def __build_learning_training_messages_from_csv(self):
+        arr = []
+        files = glob.glob('./fixtures/learning_training_messages/*')
+        logger.debug(files)
+
+        for file in files:
+            df = pd.read_csv(file)
+            arr.append(df)
+
+        data = pd.concat(arr)
+        return data
+
 
     def learning_training_messages(self, bot_id):
         if self._type == 'database':
             data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, self._db)
         elif self._type == 'csv':
-            data = None
+            data = self._learning_training_messages[self._learning_training_messages['bot_id'] == bot_id]
 
         return data
 

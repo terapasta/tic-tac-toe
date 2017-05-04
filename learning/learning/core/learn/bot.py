@@ -3,6 +3,7 @@ from collections import Counter
 import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
+from learning.core.datasource import Datasource
 from learning.core.stop_watch import stop_watch
 from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
@@ -47,10 +48,9 @@ class Bot:
         return evaluator
 
     def __build_training_set(self, csv_file_path, csv_file_encoding):
-        config = Config()
-        dbconfig = config.get('database')
-        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
-                             passwd=dbconfig['password'], charset='utf8')
+        datasource = Datasource()
+        db = datasource.db
+
         if csv_file_path is not None:
             training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
         else:

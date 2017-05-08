@@ -32,7 +32,42 @@ class QuestionAnswer < ActiveRecord::Base
     end
   }
 
+  scope :count_sentence_synonyms_all, -> (bot_id) {
+    where('bot_id' => bot_id)
+    .joins(:sentence_synonyms)
+      .count
+  }
+
+   scope :grouping_sentence_synonyms, -> (bot_id) {
+    where('bot_id' => bot_id)
+    .joins(:sentence_synonyms)
+    .group(:training_message_id)
+    .count
+   }
+
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
   end
+end
+
+def count_sentence_synonyms_registration_number(grouping_sentence_synonyms)
+  registration_number = {}
+
+  grouping_sentence_synonyms.each_value{|value|
+    case value
+    when 3
+      registration_number["3"] =+ 1
+    when 6
+      registration_number["6"] =+ 1
+    when 9
+      registration_number["9"] =+ 1
+    when 12
+      registration_number["12"] =+ 1
+    when 15
+      registration_number["15"] =+ 1
+    when 18
+      registration_number["18"] =+ 1
+    end
+   }
+   return registration_number
 end

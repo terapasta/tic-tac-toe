@@ -6,6 +6,8 @@ class ImportedSentenceSynonymsController < ApplicationController
   def index
     authorize SentenceSynonym
     SentenceSynonymsOperatable::IndexOperator.new(self).tap do |operator|
+      @sentence_synonyms_all = QuestionAnswer.count_sentence_synonyms_all(@bot.id)
+      @sentence_synonyms_registration_number = count_sentence_synonyms_registration_number(QuestionAnswer.grouping_sentence_synonyms(@bot.id))
       if operator.need_alert?
         render :index_alert
       else

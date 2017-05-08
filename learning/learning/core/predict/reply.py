@@ -1,11 +1,10 @@
-import MySQLdb
 import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
+from learning.core.datasource import Datasource
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.predict.reply_result import ReplyResult
-from learning.config.config import Config
 from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
@@ -14,14 +13,9 @@ from learning.log import logger
 class Reply:
     CLASSIFY_FAILED_ANSWER_ID = 0
 
-    def __init__(self, bot_id, learning_parameter, csv_file_path=None):
-        config = Config()
-        dbconfig = config.get('database')
-        self.db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
-                             passwd=dbconfig['password'], charset='utf8')
-        self.bot_id = bot_id
+    def __init__(self, bot_id, learning_parameter):
         self.learning_parameter = learning_parameter
-        self._csv_file_path = csv_file_path
+        self._bot_id = bot_id
 
         try:
             self.estimator = Persistance.load_model(bot_id)
@@ -30,7 +24,9 @@ class Reply:
             raise ModelNotExistsError()
 
 
-    def perform(self, X):
+    def perform(self, X, datasource_type='database'):
+        datasource = Datasource(datasource_type)
+
         text_array = TextArray(X, vectorizer=self.vectorizer)
         logger.debug('Reply#perform text_array.separated_sentences: %s' % text_array.separated_sentences)
         features = text_array.to_vec()
@@ -38,7 +34,7 @@ class Reply:
         count = np.count_nonzero(features.toarray())
 
         if self.learning_parameter.use_similarity_classification:
-            answer_ids, probabilities = self.__search_simiarity(X[0])
+            answer_ids, probabilities = self.__search_simiarity(datasource, X[0])
         else:
             answer_ids, probabilities = self.__predict(features)
 
@@ -52,11 +48,11 @@ class Reply:
         answer_ids = self.estimator.classes_
         return answer_ids, probabilities[0]
 
-    def __search_simiarity(self, question):
+    def __search_simiarity(self, datasource, question):
         # TODO similarityクラスで共通化する
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        question_answers = self.__build_question_answers()
+        question_answers = datasource.question_answers(self._bot_id)
         all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
         question_array = TextArray([question], vectorizer=self.vectorizer)
 
@@ -70,13 +66,3 @@ class Reply:
 
         df = pd.DataFrame.from_dict(ordered_result)
         return df['answer_id'], df['similarity']
-
-    # TODO similarityクラスで共通化する
-    def __build_question_answers(self):
-        if self._csv_file_path is None:
-            data = pd.read_sql(
-                "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
-                % (self.bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self.db)
-        else:
-            data = pd.read_csv(self._csv_file_path)
-        return data

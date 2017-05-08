@@ -3,6 +3,8 @@ class ImportedSentenceSynonymsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
 
+  newrelic_ignore_apdex only: [:new]
+
   def index
     authorize SentenceSynonym
     SentenceSynonymsOperatable::IndexOperator.new(self).tap do |operator|

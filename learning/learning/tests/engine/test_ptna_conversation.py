@@ -8,21 +8,16 @@ from learning.tests import helper
 
 
 class PtnaConversationTestCase(TestCase):
-    csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
-    external_vocabulary_csv_file_path = 'learning/tests/fixtures/test_external_vocabulary.csv'
-    bot_id = 996  # テスト用のbot_id いずれの値でも動作する
-    threshold = 0.5
 
-    @classmethod
-    def setUpClass(cls):
-        cls.answers = helper.build_answers(cls.csv_file_path)
-        cls.learning_parameter = helper.learning_parameter()
+    # TODO setUpClassに変更する(毎回学習処理が走ってしまうため)
+    def setUp(self):
+        self.csv_file_path = './fixtures/learning_training_messages/ptna.csv'
+        self.bot_id = 8  # bot_id = 8 はPTNA
+        self.threshold = 0.5
+        self.answers = helper.build_answers(self.csv_file_path)
+
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(
-            csv_file_path=cls.csv_file_path, 
-            external_vocabulary_csv_file_path=cls.external_vocabulary_csv_file_path
-        )
-
+        # _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(datasource_type='csv')
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']

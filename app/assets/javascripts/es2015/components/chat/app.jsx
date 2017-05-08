@@ -18,6 +18,7 @@ import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
 import ChatGuestMessage from "./guest-message";
 import ChatReadMore from "./read-more";
+import ChatFlashMessage from "./flash-message";
 
 export default class ChatApp extends Component {
   static get componentName() {
@@ -49,6 +50,7 @@ export default class ChatApp extends Component {
       learnings,
       isManager,
       readMore,
+      flashMessage,
     } = this.props;
 
     const {
@@ -64,6 +66,7 @@ export default class ChatApp extends Component {
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
         <ChatArea>
+          <ChatFlashMessage flashMessage={flashMessage} />
           <ChatReadMore {...assign({
             isManager,
             onClick(e) {

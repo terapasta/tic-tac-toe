@@ -1,24 +1,26 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 
-import numpy as np
 from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 
+from learning.core.datasource import Datasource
 from learning.core.evaluator import Evaluator
 from learning.core.learn.learning_parameter import LearningParameter
-from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
+from learning.core.training_set.training_message import TrainingMessage
+
 
 class EvaluatorTestCase(TestCase):
     def setUp(self):
-        self.csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
-        self.bot_id = 9999
+        # self.csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
+        self.bot_id = 8  # bot_id = 8 はPTNA
 
     def __get_estimator_and_training_set(self, learning_parameter):
+        datasource = Datasource(type='csv')
         '''
             学習セットから分離させたいラベルを除外して予測
         '''
-        training_set = TrainingMessageFromCsv(self.bot_id, self.csv_file_path, learning_parameter).build()
+        training_set = TrainingMessage(datasource, self.bot_id, learning_parameter).build()
         indices_train, _ = training_set.indices_of_train_and_excluded_data(learning_parameter.excluded_labels_for_fitting)
         training_set_x = training_set.x[indices_train]
         training_set_y = training_set.y[indices_train]

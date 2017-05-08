@@ -8,6 +8,7 @@ from learning.tests import helper
 
 
 class PtnaConversationTestCase(TestCase):
+    learning_parameter = helper.learning_parameter()
 
     # TODO setUpClassに変更する(毎回学習処理が走ってしまうため)
     def setUp(self):

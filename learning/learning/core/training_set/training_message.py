@@ -8,15 +8,15 @@ from learning.log import logger
 
 class TrainingMessage(Base):
 
-    def __init__(self, db, bot_id, learning_parameter):
+    def __init__(self, datasource, bot_id, learning_parameter):
         logger.debug('TrainingMessage#__init__ start')
-        self.db = db
-        self.bot_id = bot_id
+        self._datasource = datasource
+        self._bot_id = bot_id
         self.learning_parameter = learning_parameter
 
     def build(self):
         logger.debug('TrainingMessage#build start')
-        learning_training_messages = self.__build_learning_training_messages()
+        learning_training_messages = self._datasource.learning_training_messages(self._bot_id)
         questions = np.array(learning_training_messages['question'])
         answer_ids = np.array(learning_training_messages['answer_id'])
 
@@ -40,17 +40,6 @@ class TrainingMessage(Base):
     @property
     def body_array(self):
         return self._body_array
-
-    def __build_learning_training_messages(self):
-        data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % self.bot_id, self.db)
-
-        if self.learning_parameter.include_failed_data:
-            data_count = data['id'].count()
-            other_data = pd.read_sql("select * from learning_training_messages where bot_id <> %s and char_length(question) > 10 order by rand() limit %s;" % (self.bot_id, data_count), self.db)
-            other_data['answer_id'] = Reply.CLASSIFY_FAILED_ANSWER_ID
-            data = pd.concat([data, other_data])
-        logger.debug("data['id'].count(): %s" % data['id'].count())
-        return data
 
     def __extract_binarized_tag_vector(self, learning_training_messages):
         tag_ids = learning_training_messages['tag_ids']

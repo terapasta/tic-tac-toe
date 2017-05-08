@@ -8,8 +8,8 @@ from learning.tests import helper
 
 
 class PtnaConversationMLPTestCase(TestCase):
-    csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
-    bot_id = 996  # テスト用のbot_id いずれの値でも動作する
+    csv_file_path = './fixtures/learning_training_messages/ptna.csv'
+    bot_id = 8  # bot_id = 8 はPTNA
     threshold = 0.5
     learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK)
 
@@ -17,7 +17,7 @@ class PtnaConversationMLPTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']

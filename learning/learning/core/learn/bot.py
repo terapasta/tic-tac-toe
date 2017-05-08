@@ -1,16 +1,12 @@
-from collections import Counter
-
-import MySQLdb
 from sklearn.grid_search import GridSearchCV
 
+from learning.core.datasource import Datasource
 from learning.core.stop_watch import stop_watch
-from learning.core.training_set.training_message_from_csv import TrainingMessageFromCsv
 from learning.log import logger
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.neural_network import MLPClassifier
 from learning.core.evaluator import Evaluator
-from learning.config.config import Config
 from learning.core.training_set.training_message import TrainingMessage
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.persistance import Persistance
@@ -23,10 +19,10 @@ class Bot:
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
 
     @stop_watch
-    def learn(self, csv_file_path=None, csv_file_encoding='UTF-8'):
+    def learn(self, datasource_type='database'):
         logger.debug('start Bot#learn')
 
-        training_set = self.__build_training_set(csv_file_path, csv_file_encoding)
+        training_set = self.__build_training_set(datasource_type)
         estimator = self.__get_estimator(training_set)
         logger.debug('after Bot#__get_estimator')
 
@@ -46,16 +42,13 @@ class Bot:
 
         return evaluator
 
-    def __build_training_set(self, csv_file_path, csv_file_encoding):
-        config = Config()
-        dbconfig = config.get('database')
-        db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
-                             passwd=dbconfig['password'], charset='utf8')
-        if csv_file_path is not None:
-            training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
-        else:
-            logger.debug('Bot after mysql connect')
-            training_set = TrainingMessage(db, self.bot_id, self.learning_parameter)
+    def __build_training_set(self, datasource_type):
+        datasource = Datasource(type=datasource_type)
+
+        # if csv_file_path is not None:
+        #     training_set = TrainingMessageFromCsv(self.bot_id, csv_file_path, self.learning_parameter, encoding=csv_file_encoding)
+        # else:
+        training_set = TrainingMessage(datasource, self.bot_id, self.learning_parameter)
 
         training_set.build()
         logger.debug('Bot#__build_training_set training_set.count_sample_by_y: %s' % training_set.count_sample_by_y())

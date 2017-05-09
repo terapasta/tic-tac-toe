@@ -15,7 +15,7 @@ class BenefitoneConversationTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(csv_file_path=cls.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(datasource_type='csv')
 
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']

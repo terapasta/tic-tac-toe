@@ -15,16 +15,15 @@ class SepteniConvasationTestCase(TestCase):
     bot_id = 9  # bot_id = 9はセプテーニ
     csv_file_path = './fixtures/learning_training_messages/septeni.csv'
 
-    # セプテーニはデータを一度洗い替えしているため、今まで通っているテストケースが通らなくなった
-    # 現在利用休止中のため一旦テストのメンテをストップする
     @classmethod
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
-        # _evaluator = Bot(cls.bot_id, helper.learning_parameter()).learn(datasource_type='csv')
+        cls.learning_parameter = helper.learning_parameter()
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_stop(self):
         questions = ['やめる']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions, datasource_type='csv')
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
 
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
         ok_(result.probability < self.threshold)

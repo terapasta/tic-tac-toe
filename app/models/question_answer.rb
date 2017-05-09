@@ -32,13 +32,13 @@ class QuestionAnswer < ActiveRecord::Base
     end
   }
 
-  scope :count_sentence_synonyms_not_have, -> {
+  scope :not_have_any_sentence_synonyms_count, -> {
     includes(:sentence_synonyms)
       .where(sentence_synonyms: {id: nil})
       .count
   }
 
-  scope :grouping_sentence_synonyms, -> {
+  scope :group_by_sentence_synonyms, -> {
     joins(:sentence_synonyms)
       .group(:training_message_id)
       .count

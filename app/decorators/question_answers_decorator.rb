@@ -12,23 +12,12 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
     }
   end
 
-  def count_and_grouping_sentence_synonyms
-    count_sentence_synonyms_registration_number_of(object.grouping_sentence_synonyms)
-  end
-
-  def count_sentence_synonyms_registration_number_of(grouping_sentence_synonyms)
+  def classify_registered_sentence_synonyms_number
     registration_number = {}
-
-    grouping_sentence_synonyms.each_value{|value|
-      case value
-      when value
-        if registration_number[value].nil?
-          registration_number[value] =+ 1
-        else
-          registration_number[value] += 1
-        end
-      end
+    object.group_by_sentence_synonyms.each_value{|value|
+        registration_number[value] ||= 0
+        registration_number[value] += 1
      }
-     return registration_number
+     return Hash[ registration_number.sort ]
   end
 end

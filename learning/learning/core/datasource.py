@@ -48,6 +48,17 @@ class Datasource:
 
         return data
 
+    def all_learning_training_messages(self):
+        '''
+            利用可能な全Botの学習セットを戻す
+        '''
+        if self._type == 'database':
+            data = pd.read_sql("select * from learning_training_messages;", self._db)
+        elif self._type == 'csv':
+            data = self._learning_training_messages
+
+        return data
+
 
     def question_answers(self, bot_id):
         from learning.core.predict.reply import Reply

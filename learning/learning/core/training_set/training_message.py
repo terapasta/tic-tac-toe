@@ -24,7 +24,12 @@ class TrainingMessage(Base):
         questions = np.append(questions, [''] * self.COUNT_OF_APPEND_BLANK)
         answer_ids = np.append(answer_ids, [Reply.CLASSIFY_FAILED_ANSWER_ID] * self.COUNT_OF_APPEND_BLANK)
 
-        body_array = TextArray(questions)
+        if self.learning_parameter.vectorize_using_all_bots:
+            vectorizer = self.__build_vectorizer_from_all_bots()
+        else:
+            vectorizer = None
+
+        body_array = TextArray(questions, vectorizer=vectorizer)
         body_vec = body_array.to_vec()
 
         # if self.learning_parameter.include_tag_vector:
@@ -36,6 +41,19 @@ class TrainingMessage(Base):
         self._x = body_vec
         self._y = answer_ids
         return self
+
+    def __build_vectorizer_from_all_bots(self):
+        '''
+            利用可能な全Botの学習セットを使用するように指定された場合、
+            全Botの学習セットを使用してVectorizerを生成
+        '''
+        all_learning_training_messages = self._datasource.all_learning_training_messages()
+        all_questions = np.array(all_learning_training_messages['question'])
+        all_body_array = TextArray(all_questions)
+        _ = all_body_array.to_vec()
+        vectorizer = all_body_array.vectorizer
+
+        return vectorizer
 
     @property
     def body_array(self):

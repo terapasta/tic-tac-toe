@@ -8,7 +8,7 @@ from learning.tests import helper
 
 class BenefitoneConversationTestCase(TestCase):
     csv_file_path = 'learning/tests/fixtures/test_benefitone_conversation.csv'
-    bot_id = 11  # テスト用のbot_id いずれの値でも動作する
+    bot_id = 11
     threshold = 0.5
 
     @classmethod

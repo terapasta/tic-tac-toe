@@ -36,14 +36,6 @@ class Conversation::Bot
     reply
   end
 
-  def other_answers
-    [] if @results.blank?
-    @results
-      .select {|data| data['probability'] > 0.001 }
-      .map { |data| @bot.answers.find_by(id: data['answer_id']) || DefinedAnswer.find_by(id: data['answer_id']) }
-      .select { |answer| answer.try(:headline).try(:present?) && @answer.id != answer.id }[0..4]
-  end
-
   def similar_question_answers
     result = @engine.similarity(@message.body)
     result.map do |hash|

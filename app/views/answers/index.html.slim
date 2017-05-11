@@ -1,12 +1,11 @@
 h1 回答一覧
 = search_form_for [:bot, @q], html: { class: 'form-inline' } do |f|
   .form-group
-    = f.search_field :body_or_headline_cont, size:64, class: 'form-control'
+    = f.search_field :body_cont, size:64, class: 'form-control'
     = f.submit class: 'btn btn-default'
 table.table.table-striped
   thead
     tr
-      th 見出し
       th 本文
       th
   tbody
@@ -14,7 +13,6 @@ table.table.table-striped
     - if @answers.any?
       - @answers.each do |answer|
         tr
-          td = answer.headline
           td = simple_format answer.body
           td
             = link_to t('helpers.link.edit'), edit_bot_answer_path(@bot, answer), class: "btn btn-default", data: { event_name: 'Edit answer', answer_id: answer.id, bot_id: @bot.id, bot_name: @bot.name }

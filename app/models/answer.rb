@@ -16,7 +16,6 @@ class Answer < ActiveRecord::Base
   #enum transition_to: { contact: 'contact' }
 
   validates :body, presence: true, length: { maximum: 65535 }
-  validates :headline, length: { maximum: 100 }
   validates :bot_id, presence: true, if: :is_answer?
 
   scope :top_level, -> (bot_id) {

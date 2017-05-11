@@ -102,7 +102,7 @@ class QuestionAnswersController < ApplicationController
   end
 
   def autocomplete_answer_body
-    render json: @bot.answers.search_by(params[:term]).as_json(only: [:id, :body, :headline], methods: [:value])
+    render json: @bot.answers.search_by(params[:term]).as_json(only: [:id, :body], methods: [:value])
   end
 
   private

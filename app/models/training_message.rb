@@ -5,8 +5,6 @@ class TrainingMessage < ActiveRecord::Base
   # acts_as_taggable_on :labels
   acts_as_taggable
 
-  attr_accessor :other_answers
-
   belongs_to :training
   belongs_to :answer
   belongs_to :question_answer

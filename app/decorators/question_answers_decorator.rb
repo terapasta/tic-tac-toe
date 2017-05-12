@@ -11,4 +11,13 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
       result
     }
   end
+
+  def classify_registered_sentence_synonyms_number
+    registration_number = {}
+    object.group_by_sentence_synonyms.each_value{|value|
+        registration_number[value] ||= 0
+        registration_number[value] += 1
+     }
+     return Hash[ registration_number.sort ]
+  end
 end

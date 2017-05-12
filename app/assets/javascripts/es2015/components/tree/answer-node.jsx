@@ -28,7 +28,7 @@ export default class AnswerNode extends BaseNode {
 
     const answer = answersRepo[answerNode.id];
     if (answer == null) { return null; } // Answerが削除された場合
-    const { headline, body } = answer;
+    const { body } = answer;
 
     const decisionBranchNodes = answerNode.decisionBranches;
     const hasDecisionBranches = !isEmpty(decisionBranchNodes);
@@ -44,9 +44,6 @@ export default class AnswerNode extends BaseNode {
       <li className="tree__node">
         <div className={itemClassName} id={`answer-${answerNode.id}`}
           onClick={() => onClickAnswer("answer", answerNode.id)}>
-          {!isEmpty(headline) && (
-            <div className="tree__item-headline">{headline}</div>
-          )}
           <div className="tree__item-body">
             <i className="material-icons" title="質問">chat_bubble_outline</i>
             {body}

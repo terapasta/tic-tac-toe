@@ -3,9 +3,14 @@ class ImportedSentenceSynonymsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
 
+  newrelic_ignore_apdex only: [:new]
+
   def index
     authorize SentenceSynonym
     SentenceSynonymsOperatable::IndexOperator.new(self).tap do |operator|
+      @sentence_synonyms_all = @bot.question_answers.all.count
+      @not_have_sentence_synonyms = @bot.question_answers.not_have_any_sentence_synonyms_count
+      @sentence_synonyms_registration_number = @bot.question_answers.decorate.classify_registered_sentence_synonyms_number
       if operator.need_alert?
         render :index_alert
       else

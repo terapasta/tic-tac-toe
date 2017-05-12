@@ -18,9 +18,7 @@ module HasManySentenceSynonyms
     # botをnilで呼び出す場合があるのでtryを使っています
     def picking_sentence_synonyms(bot, user)
       #botがnilでない且つ、コサイン類似検索を利用している(use_similarity_classificationがtrue)場合
-      if bot.present? && bot.learning_parameter_attributes[:use_similarity_classification] == true
-        return []
-      end
+      return [] if bot&.learning_parameter_attributes&.dig(:use_similarity_classification) == true
 
       messages = begin
         if self == TrainingMessage

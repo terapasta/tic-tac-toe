@@ -66,7 +66,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'show answer and rating' do
-          visit "/embed/#{bot.token}/chats/new_app"
+          visit "/embed/#{bot.token}/chats/new"
           fill_in 'chat-message-body', with: 'サンプルメッセージ'
           click_button '質問'
           sleep 1
@@ -85,7 +85,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'show decision branches' do
-          visit "/embed/#{bot.token}/chats/new_app"
+          visit "/embed/#{bot.token}/chats/new"
 
           has_decision_branch_answer_message.update(chat: Chat.last)
           allow_any_instance_of(Chats::MessagesController).to receive(:receive_and_reply!).and_return([has_decision_branch_answer_message])
@@ -102,7 +102,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'training' do
-          visit "/embed/#{bot.token}/chats/new_app"
+          visit "/embed/#{bot.token}/chats/new"
           fill_in 'chat-message-body', with: 'サンプルメッセージ'
           click_button '質問'
           sleep 1

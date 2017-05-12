@@ -2,6 +2,11 @@ p= link_to '全同義文一覧へ', imported_sentence_synonyms_path, data: { eve
 
 = render 'filter_form'
 
+p 全体数: #{@sentence_synonyms_all}
+p 未着手: #{@not_have_sentence_synonyms}
+- @sentence_synonyms_registration_number.each do |key, value|
+  p 同義文#{key}件登録済: #{value}
+
 table.table.table-striped
   thead
     tr

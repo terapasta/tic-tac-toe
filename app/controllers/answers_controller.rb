@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
     @answers = @q.result(distinct: true).order('id desc').page(params[:page])
     respond_to do |format|
       format.html
-      format.json { render json: @answers.as_json(only: [:id, :headline, :body, :created_at]) }
+      format.json { render json: @answers.as_json(only: [:id, :body, :created_at]) }
     end
   end
 
@@ -85,6 +85,6 @@ class AnswersController < ApplicationController
     end
 
     def answer_params
-      params.require(:answer).permit(:headline, :body)
+      params.require(:answer).permit(:body)
     end
 end

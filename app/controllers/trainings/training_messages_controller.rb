@@ -70,7 +70,6 @@ class Trainings::TrainingMessagesController < ApplicationController
     def message_replace
       answer = @bot.answers.find_or_create_by!(body: training_message_params[:body]) do |a|
         a.context = 'normal'
-        a.headline = training_message_params[:answer_attributes][:headline]
       end
 
       if @training_message.update(answer: answer, body: answer.body)
@@ -114,6 +113,6 @@ class Trainings::TrainingMessagesController < ApplicationController
     end
 
     def training_message_params
-      params.require(:training_message).permit(:answer_id, :body, answer_attributes: [:id, :headline])
+      params.require(:training_message).permit(:answer_id, :body, answer_attributes: [:id])
     end
 end

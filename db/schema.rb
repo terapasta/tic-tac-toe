@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415054829) do
+ActiveRecord::Schema.define(version: 20170425144246) do
 
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 20170415054829) do
     t.string   "context",           limit: 255,   default: "0", null: false
     t.text     "body",              limit: 65535
     t.string   "transition_to",     limit: 255
-    t.string   "headline",          limit: 100
     t.string   "type",              limit: 255
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false

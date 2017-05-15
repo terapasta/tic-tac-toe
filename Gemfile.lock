@@ -315,6 +315,8 @@ GEM
     newrelic_rpm (3.17.1.326)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    non-stupid-digest-assets (1.0.9)
+      sprockets (>= 2.0)
     notiffany (0.1.0)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -612,6 +614,7 @@ DEPENDENCIES
   natto
   nested_form
   newrelic_rpm
+  non-stupid-digest-assets
   poltergeist
   pry-byebug
   pry-doc

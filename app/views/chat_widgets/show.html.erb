@@ -1,0 +1,18 @@
+<h1>Chat Widget</h1>
+
+<textarea class="form-control" rows="16" readonly onclick="this.select()">
+<%= %Q{<script type="text/javascript">
+  (function() {
+    var head = document.querySelector("head");
+    var src = "#{request.scheme}://#{request.host}/assets/embed.js";
+    var isAlreadyLoaded = document.querySelector("[src='" + src + "']");
+    if (isAlreadyLoaded) { return console.warn("[My-ope office] Duplicated loading scripts"); }
+    var js = document.createElement("script");
+    js.src = src;
+    js.async = true;
+    js.id = "MyOpeEmbedScript";
+    head.appendChild(js);
+  }).call(this);
+</script>
+<div id="MyOpeChatWidget" data-token="#{@bot.token}" data-position="right"></div>} -%>
+</textarea>

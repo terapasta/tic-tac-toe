@@ -104,7 +104,7 @@ gem 'toastr-rails'
 gem 'natto'
 gem 'config'
 gem 'active_model_serializers'
-
+gem 'non-stupid-digest-assets'
 gem 'newrelic_rpm'
 
 group :development, :test do

@@ -1,0 +1,3 @@
+NonStupidDigestAssets.whitelist += [
+  "embed.js",
+]

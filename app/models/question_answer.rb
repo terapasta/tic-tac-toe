@@ -32,6 +32,18 @@ class QuestionAnswer < ActiveRecord::Base
     end
   }
 
+  scope :not_have_any_sentence_synonyms_count, -> {
+    includes(:sentence_synonyms)
+      .where(sentence_synonyms: {id: nil})
+      .count
+  }
+
+  scope :group_by_sentence_synonyms, -> {
+    joins(:sentence_synonyms)
+      .group(:training_message_id)
+      .count
+  }
+
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
   end

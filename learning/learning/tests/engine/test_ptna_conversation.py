@@ -8,19 +8,21 @@ from learning.tests import helper
 
 
 class PtnaConversationTestCase(TestCase):
+    learning_parameter = helper.learning_parameter()
 
+    # TODO setUpClassに変更する(毎回学習処理が走ってしまうため)
     def setUp(self):
-        self.csv_file_path = 'learning/tests/fixtures/test_ptna_conversation.csv'
-        self.bot_id = 996  # テスト用のbot_id いずれの値でも動作する
+        self.csv_file_path = './fixtures/learning_training_messages/ptna.csv'
+        self.bot_id = 8  # bot_id = 8 はPTNA
         self.threshold = 0.5
         self.answers = helper.build_answers(self.csv_file_path)
 
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(csv_file_path=self.csv_file_path)
+        # _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(datasource_type='csv')
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '教室の一覧に性別が表示されていますので、そちらをご参照ください。'
@@ -30,7 +32,7 @@ class PtnaConversationTestCase(TestCase):
 
     def test_hello(self):
         questions = ['こんにちは']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'こんにちは'
@@ -40,7 +42,7 @@ class PtnaConversationTestCase(TestCase):
 
     def test_want_to_join(self):
         questions = ['入会したいのですが']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html'
@@ -51,7 +53,7 @@ class PtnaConversationTestCase(TestCase):
     def test_fail_want_to_eat_ramen(self):
         questions = ['おいしいラーメンが食べたいです']
         # questions = ['']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
         # ラベル0(分類失敗)に分類されること
         eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
@@ -59,7 +61,7 @@ class PtnaConversationTestCase(TestCase):
 
     def test_fail_blank(self):
         questions = ['']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
         # ラベル0(分類失敗)に分類されること
         eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)

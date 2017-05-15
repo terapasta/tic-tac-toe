@@ -11,8 +11,6 @@ from learning.core.predict.reply import Reply
 from learning.core.predict.null_reply_result import NullReplyResult
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
-from learning.core.learn.tag import Tag as LearnTag
-from learning.core.predict.tag import Tag as PredictTag
 from learning.core.learn.learning_parameter import LearningParameter
 
 class MyopeServer(RPCServer):
@@ -55,19 +53,6 @@ class MyopeServer(RPCServer):
         result = Similarity(bot_id).question_answers(question)
         logger.debug(result)
         return result
-
-    def learn_tag_model(self):
-        LearnTag().learn()
-        return { 'status_code': self.STATUS_CODE_SUCCESS }
-
-    def predict_tags(self, bodies):
-        result = PredictTag().predict(bodies)
-        logger.debug("result.__class__.__name__: %s" % result.__class__.__name__)
-        return {
-            'status_code': self.STATUS_CODE_SUCCESS,
-            # 'tags': result.tolist()
-            'tags': result
-        }
 
 
 if __name__ == '__main__':

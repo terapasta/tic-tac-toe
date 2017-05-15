@@ -19,7 +19,7 @@ class TrainingsController < ApplicationController
   def autocomplete_answer_body
     term = params[:term]
     render json: @bot.answers.where('body like ?', "%#{term}%").map { |answer|
-      { id: answer.id, label: answer.body, value: answer.body, headline: answer.headline }
+      { id: answer.id, label: answer.body, value: answer.body}
     }
   end
 

@@ -7,21 +7,21 @@ from learning.tests import helper
 
 
 class ToyotsuHumanConversationTestCase(TestCase):
-    csv_file_path = 'learning/tests/fixtures/test_toyotsu_human_conversation.csv'
-    question_answer_csv_file_path = 'learning/tests/fixtures/test_toyotsu_human_question_answers.csv'
-    bot_id = 994  # テスト用のbot_id いずれの値でも動作する  # TODO Botごとに重複しないようにするのが手間なので、指定しないでも動くようにしたい
-    threshold = 0.5
+    csv_file_path = './fixtures/learning_training_messages/toyotsu_human.csv'
+    bot_id = 13  # bot_id = 13 は豊通
+    threshold = 0.49
+
 
     @classmethod
     def setUpClass(cls):
         cls.learning_parameter = helper.learning_parameter(use_similarity_classification=True)
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_jal_mileage(self):
         questions = ['JAL マイレージ']
-        result = Reply(self.bot_id, self.learning_parameter, csv_file_path=self.question_answer_csv_file_path).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -47,7 +47,7 @@ JALマイレージバンクで計上される費用は
         現状の仕組みでは完全に対処しきれないので、壊れてしまった際はあまり力をかけ過ぎずに一旦コメントアウトしてしまってもOK
         '''
         questions = ['海外の出張費の精算の方法は？']
-        result = Reply(self.bot_id, self.learning_parameter, csv_file_path=self.question_answer_csv_file_path).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -62,7 +62,7 @@ JALマイレージバンクで計上される費用は
 
     def test_dont_know_account_item_of_visa(self):
         questions = ['VISAの勘定科目がわからない']
-        result = Reply(self.bot_id, self.learning_parameter, csv_file_path=self.question_answer_csv_file_path).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -74,7 +74,7 @@ JALマイレージバンクで計上される費用は
 
     def test_borned_child(self):
         questions = ['子供が生まれた']
-        result = Reply(self.bot_id, self.learning_parameter, csv_file_path=self.question_answer_csv_file_path).perform(questions)
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養異動届」を委託先のクローバーへ提出して下さい。'

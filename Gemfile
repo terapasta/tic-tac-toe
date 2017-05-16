@@ -78,7 +78,7 @@ gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
 gem 'whenever', require: false
-gem 'carrierwave'
+gem 'carrierwave', '~> 1.1.0'
 gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'

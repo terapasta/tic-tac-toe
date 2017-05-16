@@ -6,6 +6,6 @@ AssetSync.configure do |config|
   config.existing_remote_files = 'delete'
   config.fog_region = 'ap-northeast-1'
   config.gzip_compression = true
-  config.manifest = true
+  config.manifest = false
   config.fail_silently = true
 end

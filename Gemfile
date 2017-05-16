@@ -107,6 +107,7 @@ gem 'active_model_serializers'
 gem 'non-stupid-digest-assets'
 gem 'newrelic_rpm'
 gem 'asset_sync'
+gem 'fog-aws'
 
 group :development, :test do
 

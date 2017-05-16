@@ -4,7 +4,7 @@
 <%= %Q{<script type="text/javascript">
   (function() {
     var head = document.querySelector("head");
-    var src = "#{request.scheme}://#{request.host}/assets/embed.js";
+    var src = "#{Rails.env.development? ? "http://#{request.env['HTTP_HOST']}/assets/embed.js" : asset_path('embed', type: :javascript)}";
     var isAlreadyLoaded = document.querySelector("[src='" + src + "']");
     if (isAlreadyLoaded) { return console.warn("[My-ope office] Duplicated loading scripts"); }
     var js = document.createElement("script");

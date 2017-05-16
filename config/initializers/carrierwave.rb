@@ -1,6 +1,5 @@
 if Rails.env.production? || Rails.env.staging?
   CarrierWave.configure do |config|
-    config.storage = :fog
     config.fog_provider = 'fog/aws'
     config.fog_credentials = {
       provider:              'AWS',
@@ -13,6 +12,8 @@ if Rails.env.production? || Rails.env.staging?
     config.fog_directory  = ENV['AWS_S3_BUCKET_NAME']
     config.fog_public     = true
     config.fog_authenticated_url_expiration = 1.day.to_i
+    config.storage = :fog
+    config.asset_host = "//#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com"
     # config.fog_attributes = { 'Cache-Control' => 'max-age=315576000' }
   end
 elsif Rails.env.development?

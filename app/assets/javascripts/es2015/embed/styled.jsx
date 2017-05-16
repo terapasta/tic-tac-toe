@@ -67,13 +67,21 @@ export const Header = styled.div`
 
 export const Arrow = styled.div`
   position: absolute;
-  top: 7px;
+  top: 12px;
   right: 13px;
 
   transform: rotate(0deg);
 
   &.active {
     transform: rotate(180deg);
+
+    svg {
+      vertical-align: bottom;
+    }
+  }
+
+  svg {
+    vertical-align: top;
   }
 `;
 
@@ -88,6 +96,10 @@ export const Logo = styled.div`
     &.active {
       display: block;
     }
+  }
+
+  svg {
+    vertical-align: top;
   }
 `;
 

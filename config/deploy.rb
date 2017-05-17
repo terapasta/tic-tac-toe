@@ -1,6 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
+set :tty, true
+
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
 

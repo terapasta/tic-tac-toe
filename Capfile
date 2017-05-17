@@ -8,6 +8,7 @@ require 'capistrano/bundler'
 require 'capistrano3/unicorn'
 require 'capistrano/delayed-job'
 require 'whenever/capistrano'
+require 'sshkit/sudo'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :bots, only: [:index, :edit, :update] do
     post :reset, on: :member
+    resource :chat_widget, only: [:show]
     resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :question_answers do
@@ -36,6 +37,11 @@ Rails.application.routes.draw do
       end
     end
     resource :learning, only: [:show, :update]
+    resources :answers, except: [:new] do
+      resources :decision_branches, only: [:index]
+      resources :training_messages, only: [:index], module: :answers
+      resources :question_answers, only: [:index], module: :answers
+    end
     resources :decision_branches, only: [:show, :update, :create, :destroy]
     resource :conversation_tree, only: [:show]
   end

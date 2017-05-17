@@ -1,6 +1,6 @@
 namespace :slappy do
   task :environment do
-    set :slappy_pid "#{shared_path}/tmp/pids/slappy.pid"
+    set :slappy_pid, "#{shared_path}/tmp/pids/slappy.pid"
   end
 
   def start_slappy

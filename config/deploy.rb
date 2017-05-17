@@ -58,14 +58,4 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-
-  desc 'donusagi_botを再起動'
-  task :restart_donusagi_bot do
-    on roles(:app) do
-      within release_path do
-        execute 'lib/bin/slack-bot.sh'
-      end
-    end
-  end
-  after :finished, 'deploy:restart_donusagi_bot'
 end

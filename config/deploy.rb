@@ -3,7 +3,6 @@ lock '3.6.1'
 
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
-
 set :branch, ENV['BRANCH'] || 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
@@ -58,5 +57,5 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-  after :finished, 'slappy:restart'
+  # after :finished, 'slappy:restart'
 end

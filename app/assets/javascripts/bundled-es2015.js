@@ -7598,8 +7598,8 @@ var QuestionAnswerForm = function (_Component) {
       }
 
       return promise.then(function (response) {
-        console.log(response);
-        // jump.to(`/bots/${botId}/question_answers/${id}/edit`);
+        var _id = id == null ? response.data.id : id;
+        _jump2.default.to("/bots/" + botId + "/question_answers/" + _id + "/edit");
       }).catch(function (err) {
         console.error(err);
         _this5.setState({ isProcessing: false });

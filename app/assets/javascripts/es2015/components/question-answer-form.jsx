@@ -37,6 +37,7 @@ export default class QuestionAnswerForm extends Component {
       answerBody: "",
       answerId: null,
       answerMode: AnswerMode.Input,
+      answerFiles: [],
       searchingAnswerQuery: "",
       searchingAnswerPage: 1,
       hasNextPage: true,
@@ -70,6 +71,7 @@ export default class QuestionAnswerForm extends Component {
       answerBody,
       answerId,
       answerMode,
+      answerFiles,
       searchingAnswerQuery,
       searchingAnswerPage,
       hasNextPage,
@@ -198,6 +200,24 @@ export default class QuestionAnswerForm extends Component {
           </div>
         )}
         <div className="form-group">
+          <label>回答添付ファイル</label>
+          <table className="table table-striped"><tbody>
+            {answerFiles.map((answerFile, i) => {
+              return (
+                <tr key={i}>
+                  <td>
+                    <img src={answerFile.file.url} />
+                  </td>
+                  <td>
+                    <a href="#" className="btn btn-danger">削除</a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody></table>
+          <a href="#" className="btn btn-default">回答添付ファイルを追加</a>
+        </div>
+        <div className="form-group">
           <label>Q&amp;Aトピックタグ</label>
           {isEmpty(topicTags) && (
             <p>Q&amp;Aトピックタグはありません</p>
@@ -255,10 +275,11 @@ export default class QuestionAnswerForm extends Component {
       this.setState({ questionBody: questionModel.question });
 
       return questionModel.fetchAnswer().then(() => {
-        const { body, id } = questionModel.answer;
+        const { body, id, answerFiles } = questionModel.answer;
         const selectedTopicTags = questionModel.topicTags.map((t) => [t.id, t.name]);
         this.setState({
           answerBody: body,
+          answerFiles,
           persistedAnswerId: id,
           isProcessing: false,
           selectedTopicTags,

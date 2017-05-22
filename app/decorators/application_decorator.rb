@@ -1,6 +1,8 @@
 class ApplicationDecorator < Draper::Decorator
+  include DeepCamelizeKeys
+
   def as_json(options = nil)
-    object.as_json(options).transform_keys{ |key| key.to_s.camelize(:lower) }
+    deep_camelize_keys(object.as_json(options))
   end
 
   def errors_as_json

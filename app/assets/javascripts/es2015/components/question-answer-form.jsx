@@ -9,6 +9,7 @@ import trim from "lodash/trim";
 import includes from "lodash/includes";
 
 import Panel from "./panel";
+import AnswerFilePreview from "./question-answer-form/answer-file-preview";
 import Question from "../models/question";
 import jump from "../modules/jump";
 
@@ -206,7 +207,9 @@ export default class QuestionAnswerForm extends Component {
               return (
                 <tr key={i}>
                   <td>
-                    <img src={answerFile.file.url} />
+                    <AnswerFilePreview
+                      answerFile={answerFile}
+                    />
                   </td>
                   <td>
                     <a href="#" className="btn btn-danger">削除</a>

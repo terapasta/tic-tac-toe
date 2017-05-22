@@ -55,6 +55,7 @@
     "jest-cli": "^19.0.2",
     "jquery": "^3.1.1",
     "lodash": "^4.17.2",
+    "object-to-formdata": "^1.0.12",
     "promise": "^7.1.1",
     "react": "^15.4.1",
     "react-addons-test-utils": "^15.4.2",

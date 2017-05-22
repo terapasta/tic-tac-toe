@@ -7674,11 +7674,13 @@ var QuestionAnswerForm = function (_Component) {
             file = af.file;
 
         var newAF = {
-          _destroy: isDeleted ? "1" : "0",
-          file: isNew ? file : null
+          _destroy: isDeleted ? "1" : "0"
         };
         if (id != null) {
           newAF.id = id;
+        }
+        if (file != null) {
+          newAF.file = file;
         }
         answerFilesAttributes[i] = newAF;
       });

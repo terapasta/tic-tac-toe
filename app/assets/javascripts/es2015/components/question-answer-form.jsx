@@ -424,9 +424,9 @@ export default class QuestionAnswerForm extends Component {
       const { id, isDeleted, isNew, file } = af;
       let newAF = {
         _destroy: isDeleted ? "1" : "0",
-        file: isNew ? file : null,
       };
       if (id != null) { newAF.id = id; }
+      if (file != null) { newAF.file = file } 
       answerFilesAttributes[i] = newAF;
     });
 

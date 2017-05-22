@@ -46,7 +46,9 @@ export default class LearningButton extends Component {
 
   componentDidMount() {
     this.fetchLearningStatus();
-    setInterval(this.fetchLearningStatus.bind(this), 1000);
+    if (process.env.NODE_ENV == "production") {
+      setInterval(this.fetchLearningStatus.bind(this), 1000);
+    }
   }
 
   render() {

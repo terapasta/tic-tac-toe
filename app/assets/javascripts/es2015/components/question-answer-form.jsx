@@ -7,11 +7,14 @@ import debounce from "lodash/debounce";
 import get from "lodash/get";
 import trim from "lodash/trim";
 import includes from "lodash/includes";
+import forEach from "lodash/forEach";
+import objectToFormData from "object-to-formdata";
 
 import Panel from "./panel";
 import AnswerFilePreview from "./question-answer-form/answer-file-preview";
 import Question from "../models/question";
 import jump from "../modules/jump";
+import authenticityToken from "../modules/authenticity-token";
 
 export const AnswerMode = {
   Input: "input",
@@ -204,21 +207,41 @@ export default class QuestionAnswerForm extends Component {
           <label>回答添付ファイル</label>
           <table className="table table-striped"><tbody>
             {answerFiles.map((answerFile, i) => {
-              return (
-                <tr key={i}>
-                  <td>
-                    <AnswerFilePreview
-                      answerFile={answerFile}
-                    />
-                  </td>
-                  <td>
-                    <a href="#" className="btn btn-danger">削除</a>
-                  </td>
-                </tr>
-              );
+              if (answerFile.isNew) {
+                return (
+                  <tr key={i}>
+                    <td>
+                      <input type="file" onChange={this.onChangeAnswerFile.bind(this, i)} />
+                      {answerFile.file != null && (
+                        <p>選択中：{answerFile.file.name}</p>
+                      )}
+                    </td>
+                    <td>
+                      <a href="#" className="btn btn-danger" onClick={this.onClickDeleteAnswerFile.bind(this, i)}>削除</a>
+                    </td>
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr key={i}>
+                    <td>
+                      <AnswerFilePreview
+                        answerFile={answerFile}
+                      />
+                    </td>
+                    <td>
+                      {!answerFile.isDeleted && (
+                        <a href="#" className="btn btn-danger" onClick={this.onClickDeleteAnswerFile.bind(this, i)}>削除</a>
+                      )}
+                    </td>
+                  </tr>
+                );
+              }
             })}
           </tbody></table>
-          <a href="#" className="btn btn-default">回答添付ファイルを追加</a>
+        <a href="#"
+          className="btn btn-default"
+          onClick={this.onClickAddAnswerFile.bind(this)}>回答添付ファイルを追加</a>
         </div>
         <div className="form-group">
           <label>Q&amp;Aトピックタグ</label>
@@ -326,14 +349,14 @@ export default class QuestionAnswerForm extends Component {
     let promise;
 
     if (isEmpty(id)) {
-      promise = Question.create(botId, payload)
+      promise = axios.post(`/bots/${botId}/question_answers.json`, payload);
     } else {
-      promise = (new Question({ botId, id })).update(payload);
+      promise = axios.put(`/bots/${botId}/question_answers/${id}.json`, payload);
     }
 
     return promise
       .then((questionModel) => {
-        jump.to(questionModel.editPath);
+        jump.to(`/bots/${botId}/question_answers/${id}/edit`);
       }).catch((err) => {
         console.error(err);
         this.setState({ isProcessing: false });
@@ -388,11 +411,23 @@ export default class QuestionAnswerForm extends Component {
     const {
       answerMode,
       answerBody,
+      answerFiles,
       selectedAnswer,
       questionBody,
       persistedAnswerId,
       selectedTopicTags,
     } = this.state;
+
+    let answerFilesAttributes = {};
+    answerFiles.forEach((af, i) => {
+      const { id, isDeleted, isNew, file } = af;
+      let newAF = {
+        _destroy: isDeleted ? "1" : "0",
+        file: isNew ? file : null,
+      };
+      if (id != null) { newAF.id = id; }
+      answerFilesAttributes[i] = newAF;
+    });
 
     let errors = [];
     let payload = {
@@ -428,10 +463,17 @@ export default class QuestionAnswerForm extends Component {
         break;
     }
 
+    payload.answer_attributes.answer_files_attributes = answerFilesAttributes
+
     this.setState({ errors });
 
     if (errors.length === 0) {
-      this.saveQuestionAnswer(payload);
+      const formData = objectToFormData(payload, null, "question_answer");
+      formData.append("authenticity_token", authenticityToken());
+
+      formData.forEach((v, k) => console.log(k, v))
+
+      this.saveQuestionAnswer(formData);
     }
   }
 
@@ -450,5 +492,32 @@ export default class QuestionAnswerForm extends Component {
       newSelectedTopicTags = selectedTopicTags.filter((t) => t[0] != topicTag[0]);
     }
     this.setState({ selectedTopicTags: newSelectedTopicTags });
+  }
+
+  onClickAddAnswerFile(e) {
+    e.preventDefault();
+    const { answerFiles } = this.state;
+    const newAnswerFiles = answerFiles.concat([{ isNew: true }]);
+    this.setState({ answerFiles: newAnswerFiles });
+  }
+
+  onClickDeleteAnswerFile(i, e) {
+    e.preventDefault();
+    if (window.confirm("本当にこのファイルを削除しますか？")) {
+      const { answerFiles } = this.state;
+      if (answerFiles[i].isNew) {
+        answerFiles.splice(i, 1);
+      } else {
+        answerFiles[i].isDeleted = true;
+      }
+      this.setState({ answerFiles });
+    }
+  }
+
+  onChangeAnswerFile(i, e) {
+    const { answerFiles } = this.state;
+    answerFiles[i].file = e.target.files[0];
+    e.target.value = null;
+    this.setState({ answerFiles });
   }
 }

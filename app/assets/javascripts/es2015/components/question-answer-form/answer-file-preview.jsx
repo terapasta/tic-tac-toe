@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import includes from "lodash/includes";
 import last from "lodash/last";
+import merge from "lodash/merge";
 import bytes from "bytes";
 
 const ImageFileTypes = [
@@ -23,10 +24,13 @@ export default class AnswerFilePreview extends Component {
 
   renderImage() {
     const { answerFile } = this.props;
+    const baseStyle = { maxWidth: "320px", maxHeight: "320px" };
+    const opacityStyle = answerFile.isDeleted ? { opacity: "0.4" } : {};
+    const style = merge(baseStyle, opacityStyle);
 
     return (
       <div>
-        <img src={answerFile.file.url} />
+        <img src={answerFile.file.url} style={style} />
       </div>
     );
   }

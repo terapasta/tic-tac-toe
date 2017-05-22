@@ -3,6 +3,6 @@ class AnswerFile < ActiveRecord::Base
 
   validates :answer_id, presence: true
   validates :file, presence: true
-  
+
   mount_uploader :file, AnswerFileUploader
 end

@@ -36,6 +36,7 @@ class QuestionAnswersController < ApplicationController
   end
 
   def create
+    render json: question_answer_params and return
     respond_to do |format|
       @question_answer = @bot.question_answers.build(question_answer_params)
       if @question_answer.save

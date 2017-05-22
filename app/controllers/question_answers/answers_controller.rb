@@ -8,7 +8,7 @@ class QuestionAnswers::AnswersController < ApplicationController
     @answer = @question_answer.answer
     respond_to do |format|
       if @answer.present?
-        format.json { render json: @answer.decorate.as_json, status: :ok }
+        format.json { render json: @answer.decorate.as_json(include: [:answer_files]), status: :ok }
       else
         format.json { render json: {}, status: :not_found }
       end

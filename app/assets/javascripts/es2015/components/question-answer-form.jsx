@@ -355,8 +355,9 @@ export default class QuestionAnswerForm extends Component {
     }
 
     return promise
-      .then((questionModel) => {
-        jump.to(`/bots/${botId}/question_answers/${id}/edit`);
+      .then((response) => {
+        console.log(response)
+        // jump.to(`/bots/${botId}/question_answers/${id}/edit`);
       }).catch((err) => {
         console.error(err);
         this.setState({ isProcessing: false });

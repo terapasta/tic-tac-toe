@@ -41,7 +41,7 @@ class QuestionAnswersController < ApplicationController
       @question_answer = @bot.question_answers.build(question_answer_params)
       if @question_answer.save
         format.html { redirect_to bot_question_answers_path(@bot), notice: '登録しました。' }
-        format.json { render json: @question_answer, status: :created }
+        format.json { render json: @question_answer.decorate.as_json, status: :created }
       else
         format.html do
           flash.now.alert = '登録できませんでした。'

@@ -7597,8 +7597,9 @@ var QuestionAnswerForm = function (_Component) {
         promise = _axios2.default.put("/bots/" + botId + "/question_answers/" + id + ".json", payload);
       }
 
-      return promise.then(function (questionModel) {
-        _jump2.default.to("/bots/" + botId + "/question_answers/" + id + "/edit");
+      return promise.then(function (response) {
+        console.log(response);
+        // jump.to(`/bots/${botId}/question_answers/${id}/edit`);
       }).catch(function (err) {
         console.error(err);
         _this5.setState({ isProcessing: false });

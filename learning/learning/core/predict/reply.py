@@ -52,17 +52,18 @@ class Reply:
         # TODO similarityクラスで共通化する
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        question_answers = datasource.question_answers(self._bot_id)
-        all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
+        data = datasource.learning_training_messages(self._bot_id)
+        all_array = TextArray(data['question'], vectorizer=self.vectorizer)
         question_array = TextArray([question], vectorizer=self.vectorizer)
 
         similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
         similarities = similarities.flatten()
         logger.debug("similarities: %s" % similarities)
 
-        ordered_result = list(map(lambda x: {
-            'question_answer_id': float(x[0]), 'similarity': x[1], 'answer_id': x[2]
-        }, sorted(zip(question_answers['id'], similarities, question_answers['answer_id']), key=lambda x: x[1], reverse=True)))
+        zipped_data = zip(data['id'], similarities, data['answer_id'])
+        sorted_data = sorted(zipped_data, key=lambda x: x[1], reverse=True)
+        map_iter = lambda x: { 'question_answer_id': float(x[0]), 'similarity': x[1], 'answer_id': x[2] }
+        ordered_result = list(map(map_iter, sorted_data))
 
         df = pd.DataFrame.from_dict(ordered_result)
         return df['answer_id'], df['similarity']

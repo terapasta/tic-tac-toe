@@ -14,4 +14,12 @@ module ApplicationHelper
       end
     end
   end
+
+  def embed_js_url
+    if Rails.env.development?
+      "http://#{request.env['HTTP_HOST']}/assets/embed.js"
+    else
+      "#{ActionController::Base.asset_host}/assets/embed.js"
+    end
+  end
 end

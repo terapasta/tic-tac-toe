@@ -3,7 +3,6 @@ lock '3.6.1'
 
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
-
 set :branch, ENV['BRANCH'] || 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
@@ -58,14 +57,5 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-
-  desc 'donusagi_botを再起動'
-  task :restart_donusagi_bot do
-    on roles(:app) do
-      within release_path do
-        execute 'lib/bin/slack-bot.sh'
-      end
-    end
-  end
-  after :finished, 'deploy:restart_donusagi_bot'
+  # after :finished, 'slappy:restart'
 end

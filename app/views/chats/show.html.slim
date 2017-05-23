@@ -6,7 +6,7 @@ span(
 )
 
 / TODO 2017-05-19 を過ぎたら削除する
-- if user_signed_in? && Time.current < Time.zone.parse('2017-05-19 23:59:59')
+- if user_signed_in? && Time.current < Time.zone.parse('2017-05-19 23:59:59') && !Rails.env.test?
   .modal-backdrop.fade.in
   .modal.fade.in tabindex="-1" style="display:block;" data-role="notification-modal"
     .modal-dialog

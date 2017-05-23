@@ -23,6 +23,12 @@ class LearningParameter:
         if self._excluded_labels_for_fitting is None:
             self._excluded_labels_for_fitting = []
 
+        '''
+            学習セットのベクトル構築(TextArray#to_vec)時に、
+            利用可能な全Botの学習セットを使用する
+        '''
+        self._vectorize_using_all_bots = attributes.get('vectorize_using_all_bots', True)
+
     @property
     def include_failed_data(self):
         return self._include_failed_data
@@ -50,3 +56,7 @@ class LearningParameter:
     @property
     def excluded_labels_for_fitting(self):
         return self._excluded_labels_for_fitting
+
+    @property
+    def vectorize_using_all_bots(self):
+        return self._vectorize_using_all_bots

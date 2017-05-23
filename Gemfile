@@ -158,7 +158,6 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
-  gem 'sshkit-sudo'
 end
 
 group :production, :staging do

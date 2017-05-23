@@ -1,6 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
+set :pty, true
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
 set :branch, ENV['BRANCH'] || 'master'
@@ -57,5 +58,5 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-  # after :finished, 'slappy:restart'
+  after :finished, 'slappy:restart'
 end

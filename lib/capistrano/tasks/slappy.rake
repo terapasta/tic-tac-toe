@@ -4,15 +4,15 @@ namespace :slappy do
   end
 
   def start_slappy
-    execute :sudo, :start, :slappy
+    execute :sudo, '/sbin/start', :slappy
   end
 
   def stop_slappy
-    execute :sudo, :stop, :slappy
+    execute :sudo, '/sbin/stop', :slappy
   end
 
   def restart_slappy
-    execute :sudo, :restart, :slappy
+    execute :sudo, '/sbin/restart', :slappy
   end
 
   desc 'Start slappy'

@@ -57,5 +57,5 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-  # after :finished, 'slappy:restart'
+  after :finished, 'slappy:restart'
 end

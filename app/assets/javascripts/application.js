@@ -29,7 +29,11 @@
 
 $(function() {
   var $notificationModal = $('[data-role="notification-modal"]');
-  $notificationModal.find('.close').on('click', () => {
+<<<<<<< HEAD
+  $notificationModal.find('.close').on('click', function(){
+=======
+  $notificationModal.find('.close').on('click', function() {
+>>>>>>> 1dfe52b685b79ef538679d2b1ab5c1cb0b588a22
     $notificationModal.removeAttr("style").hide();
     $('.modal-backdrop').hide();
   });

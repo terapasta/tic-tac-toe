@@ -1,14 +1,10 @@
 module Replyable
   extend ActiveSupport::Concern
 
-  def receive_and_reply!(parent, message, other_answer_id = nil)
-    if other_answer_id.present?
-      answer = parent.bot.answers.find(other_answer_id)
-    else
-      responder = Conversation::Switcher.new.responder(message, session[:states])
-      reply = responder.do_reply
-      answer = reply.answer
-    end
+  def receive_and_reply!(parent, message)
+    responder = Conversation::Switcher.new.responder(message, session[:states])
+    reply = responder.do_reply
+    answer = reply.answer
     # session[:states] = responder.states
 
     reply_messages = [answer].map do |answer|
@@ -28,8 +24,6 @@ module Replyable
         created_at: message.created_at + 1.second,
       )
       if responder.present?
-        message.other_answers = responder.other_answers
-
         if enabled_suggest_question?(reply, parent)
           message.similar_question_answers = responder.similar_question_answers
         end

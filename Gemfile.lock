@@ -64,6 +64,11 @@ GEM
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (6.0.3)
+    asset_sync (2.0.0)
+      activemodel
+      fog-core
+      mime-types
+      unf
     ast (2.2.0)
     autoprefixer-rails (6.3.6.1)
       execjs
@@ -85,7 +90,7 @@ GEM
       railties (>= 3.1)
     bootstrap_form (2.3.0)
     buftok (0.2.0)
-    builder (3.2.2)
+    builder (3.2.3)
     bullet (5.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
@@ -118,10 +123,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
       mime-types (>= 1.16)
     case_transform (0.2)
       activesupport
@@ -197,6 +201,7 @@ GEM
     exception_notification (4.2.1)
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
+    excon (0.55.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
@@ -213,6 +218,21 @@ GEM
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
     ffi (1.9.10)
+    fog-aws (1.3.0)
+      fog-core (~> 1.38)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+      ipaddress (~> 0.8)
+    fog-core (1.44.1)
+      builder
+      excon (~> 0.49)
+      formatador (~> 0.2)
+    fog-json (1.0.2)
+      fog-core (~> 1.0)
+      multi_json (~> 1.10)
+    fog-xml (0.1.3)
+      fog-core
+      nokogiri (>= 1.5.11, < 2.0.0)
     font-awesome-rails (4.6.3.0)
       railties (>= 3.2, < 5.1)
     formatador (0.2.5)
@@ -246,9 +266,10 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
-    i18n (0.8.0)
+    i18n (0.8.1)
     ice_nine (0.11.2)
     inflection (1.0.0)
+    ipaddress (0.8.3)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -296,7 +317,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.0.0)
-    minitest (5.10.1)
+    minitest (5.10.2)
     msgpack (0.5.12)
     msgpack-rpc (0.5.4)
       cool.io (~> 1.4.3)
@@ -315,6 +336,8 @@ GEM
     newrelic_rpm (3.17.1.326)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    non-stupid-digest-assets (1.0.9)
+      sprockets (>= 2.0)
     notiffany (0.1.0)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -498,7 +521,7 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.4)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     tilt (2.0.4)
     toastr-rails (1.0.3)
       railties (>= 3.1.0)
@@ -521,7 +544,7 @@ GEM
       railties (>= 3.1)
     twitter-bootswatch-rails-helpers (3.1.0.0)
       twitter-bootswatch-rails (~> 3.1.0)
-    tzinfo (1.2.2)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
@@ -564,6 +587,7 @@ DEPENDENCIES
   activerecord-import
   acts-as-taggable-on (~> 3.4)
   addressable
+  asset_sync
   autoprefixer-rails
   bcrypt (~> 3.1.7)
   better_errors
@@ -580,7 +604,7 @@ DEPENDENCIES
   capistrano3-delayed-job (~> 1.0)
   capistrano3-unicorn
   capybara
-  carrierwave
+  carrierwave (~> 1.1.0)
   coffee-rails (~> 4.1.0)
   compass
   config
@@ -598,6 +622,7 @@ DEPENDENCIES
   exception_notification
   factory_girl_rails
   faker
+  fog-aws
   font-awesome-rails
   guard
   guard-rspec
@@ -612,6 +637,7 @@ DEPENDENCIES
   natto
   nested_form
   newrelic_rpm
+  non-stupid-digest-assets
   poltergeist
   pry-byebug
   pry-doc

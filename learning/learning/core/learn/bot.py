@@ -31,6 +31,7 @@ class Bot:
             モデルをdumpしない
         '''
         if len(self.learning_parameter.excluded_labels_for_fitting) == 0:
+            Persistance.make_directory(self.bot_id)
             Persistance.dump_model(estimator, self.bot_id)
             Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
         # test_scores_mean = Plotter().plot(estimator, training_set.x, training_set.y)

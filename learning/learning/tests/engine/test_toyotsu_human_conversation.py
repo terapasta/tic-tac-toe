@@ -9,7 +9,7 @@ from learning.tests import helper
 class ToyotsuHumanConversationTestCase(TestCase):
     csv_file_path = './fixtures/learning_training_messages/toyotsu_human.csv'
     bot_id = 13  # bot_id = 13 は豊通
-    threshold = 0.5
+    threshold = 0.49
 
 
     @classmethod

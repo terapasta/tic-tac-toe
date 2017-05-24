@@ -78,7 +78,7 @@ gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
 gem 'whenever', require: false
-gem 'carrierwave'
+gem 'carrierwave', '~> 1.1.0'
 gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
@@ -104,8 +104,10 @@ gem 'toastr-rails'
 gem 'natto'
 gem 'config'
 gem 'active_model_serializers'
-
+gem 'non-stupid-digest-assets'
 gem 'newrelic_rpm'
+gem 'asset_sync'
+gem 'fog-aws'
 
 group :development, :test do
 

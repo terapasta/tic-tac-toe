@@ -7826,8 +7826,7 @@ var AnswerNode = function (_BaseNode) {
       if (answer == null) {
         return null;
       } // Answerが削除された場合
-      var headline = answer.headline,
-          body = answer.body;
+      var body = answer.body;
 
 
       var decisionBranchNodes = answerNode.decisionBranches;
@@ -7849,11 +7848,6 @@ var AnswerNode = function (_BaseNode) {
             onClick: function onClick() {
               return onClickAnswer("answer", answerNode.id);
             } },
-          !(0, _isEmpty2.default)(headline) && _react2.default.createElement(
-            "div",
-            { className: "tree__item-headline" },
-            headline
-          ),
           _react2.default.createElement(
             "div",
             { className: "tree__item-body" },
@@ -8455,11 +8449,6 @@ var Answer = function () {
     key: "body",
     get: function get() {
       return this.attrs.body;
-    }
-  }, {
-    key: "headline",
-    get: function get() {
-      return this.attrs.headline;
     }
   }]);
 

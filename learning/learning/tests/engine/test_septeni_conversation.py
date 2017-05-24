@@ -21,15 +21,15 @@ class SepteniConvasationTestCase(TestCase):
         cls.learning_parameter = helper.learning_parameter()
         _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
-    def test_stop(self):
-        questions = ['やめる']
-        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+    # def test_stop(self):
+    #     questions = ['やめる']
+    #     result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+    #
+    #     answer_body = helper.get_answer_body(self.answers, result.answer_id)
+    #     ok_(result.probability < self.threshold)
 
-        answer_body = helper.get_answer_body(self.answers, result.answer_id)
-        ok_(result.probability < self.threshold)
 
-
-        # def test_can_not_connect_akindo(self):
+    # def test_can_not_connect_akindo(self):
     #     questions = ['akindoに接続出来ない']
     #     results = Reply(self.bot_id, self.learning_parameter).predict(questions)
     #     answer_id = results[0]['answer_id']

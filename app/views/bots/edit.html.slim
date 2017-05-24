@@ -1,8 +1,9 @@
 .panel.panel-default
   .panel-heading: h4
     |チャットウィジェット
-    = space
-    span.label.label-warning NEW
+    - if Time.current <= Time.zone.parse('2017-06-14 23:59:59')
+      = space
+      span.label.label-warning NEW
   .panel-body
     p 以下のコードをWebサイトに貼り付けると、画面の右下に開閉できる小さなウィンドウでチャットをご利用いただけます。
     p= render 'chat_widgets/embed_code'

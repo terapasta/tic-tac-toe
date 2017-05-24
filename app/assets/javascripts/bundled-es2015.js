@@ -3129,7 +3129,8 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 
 
 function pickUp(message) {
-  return (0, _pick2.default)(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers"]);
+  var result = (0, _pick2.default)(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers", "answerFiles"]);
+  return result;
 }
 
 function changeRatingHandler(state, action) {

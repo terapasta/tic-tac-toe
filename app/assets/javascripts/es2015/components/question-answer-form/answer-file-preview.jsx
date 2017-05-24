@@ -4,12 +4,7 @@ import last from "lodash/last";
 import merge from "lodash/merge";
 import bytes from "bytes";
 
-const ImageFileTypes = [
-  "image/jpg",
-  "image/jpeg",
-  "image/png",
-  "image/gif",
-];
+import ImageFileTypes from "../../modules/image-file-types";
 
 export default class AnswerFilePreview extends Component {
   render() {

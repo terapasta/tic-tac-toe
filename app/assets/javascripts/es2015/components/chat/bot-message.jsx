@@ -3,10 +3,15 @@ import Loading from "react-loading";
 import Linkify from "react-linkify";
 import nl2br from "react-nl2br";
 import values from "lodash/values";
+import includes from "lodash/includes";
+import last from "lodash/last";
 import classNames from "classnames";
+import isEmpty from "is-empty";
+import bytes from "bytes";
 import * as c from "./constants";
 
 import MessageRatingButtons from "./message-rating-buttons";
+import ImageFileTypes from "../../modules/image-file-types";
 
 export default class ChatBotMessage extends Component {
   static get propTypes() {
@@ -59,6 +64,7 @@ export default class ChatBotMessage extends Component {
               <Loading type="spin" color="#e3e3e3" height={32} width={32} />
             </div>
           )}
+          {this.renderAnswerFiles()}
         </div>
         <div className="chat-message__rating" key="rating">
           {!isLoading && !isFirst && (
@@ -69,6 +75,35 @@ export default class ChatBotMessage extends Component {
             }} />
           )}
         </div>
+      </div>
+    );
+  }
+
+  renderAnswerFiles() {
+    const { answerFiles } = this.props;
+    if (isEmpty(answerFiles)) { return null; }
+
+    return (
+      <div>
+        {answerFiles.map((answerFile, i) => {
+          const isImage = includes(ImageFileTypes, answerFile.fileType);
+          const fileName = last(answerFile.file.url.split("/"));
+
+          return (
+            <div className="chat-message__file">
+              {isImage && (
+                <a href={answerFile.file.url} target="_blank">
+                  <img src={answerFile.file.url} />
+                </a>
+              )}
+              {!isImage && (
+                <a href={answerFile.file.url} target="_blank">{fileName}</a>
+              )}
+              <br />
+              <small>ファイルタイプ：{answerFile.fileType}, ファイル容量：{bytes(answerFile.fileSize)}</small>
+            </div>
+          );
+        })}
       </div>
     );
   }

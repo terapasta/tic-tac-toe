@@ -1,5 +1,5 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url
+  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files
   has_one :answer
   has_many :similar_question_answers, serializer: QuestionAnswerSerializer
 
@@ -10,5 +10,9 @@ class MessageSerializer < ActiveModel::Serializer
     when 'bot'
       object.chat.bot.image_url(:thumb)
     end
+  end
+
+  def answer_files
+    object.answer&.answer_files.as_json(only: [:file, :file_size, :file_type])
   end
 end

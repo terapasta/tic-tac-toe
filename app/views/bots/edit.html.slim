@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading: h4
+    |チャットウィジェット
+    = space
+    span.label.label-warning NEW
+  .panel-body
+    p 以下のコードをWebサイトに貼り付けると、画面の右下に開閉できる小さなウィンドウでチャットをご利用いただけます。
+    p= render 'chat_widgets/embed_code'
+    = link_to '#', class: 'btn btn-default', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
+      i.material-icons content_copy
+      span クリップボードにコピー
+
+.panel.panel-default
+  .panel-heading
+    h4 Bot管理
+  .panel-body
+    = render 'form'

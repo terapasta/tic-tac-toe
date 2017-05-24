@@ -11,6 +11,7 @@ import QuestionAnswerForm from "./components/question-answer-form";
 import mountComponent, { mountComponentWithRedux } from "./modules/mount-component";
 import Mixpanel from "./analytics/mixpanel";
 import LearningButton from "./components/learning-button";
+import CopyButton from "./components/copy-button";
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -24,6 +25,7 @@ function init() {
   mountComponent(BotResetButton);
   mountComponent(QuestionAnswerForm);
   mountComponent(LearningButton);
+  CopyButton.initialize();
 }
 
 if (document.readyState === "complete") {

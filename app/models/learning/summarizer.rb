@@ -20,6 +20,10 @@ class Learning::Summarizer
         question: question_answer.question,
         answer_id: question_answer.answer_id
       )
+
+      # NOTE Answer廃止でQuestionAnswerに統一したら上のfindする時にquestion_answer_idを使用するけど今はセットしておくだけ
+      learning_training_message.question_answer_id = question_answer.id
+
       unless learning_training_messages.any? {|m| m.question == question_answer.question}
         learning_training_message.answer_body = question_answer.answer.body
         learning_training_messages << learning_training_message

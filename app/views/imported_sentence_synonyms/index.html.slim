@@ -21,7 +21,7 @@ table.table.table-striped
         tr
           td= qa.id
           - if policy(Bot).show?
-            th= link_to "#{ qa.bot.id } #{ qa.bot.name }", edit_bot_path(qa.bot_id)
+            th= link_to "#{ qa&.bot&.id } #{ qa&.bot&.name }", edit_bot_path(qa&.bot_id)
           td= qa.question
           td
             table.table.table-striped: tbody

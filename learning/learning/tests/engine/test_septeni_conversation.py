@@ -7,25 +7,27 @@ from nose.tools import ok_, eq_
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.predict.reply import Reply
+from learning.tests import helper
 
 
 class SepteniConvasationTestCase(TestCase):
-    learning_parameter = LearningParameter({
-        'include_failed_data': False,
-        'include_tag_vector': False,
-        'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
-    })
     threshold = 0.5
-    bot_id = 999  # テスト用のbot_id いずれの値でも動作する
-    csv_file_path = 'learning/tests/fixtures/test_septeni_conversation.csv'
-    answers = None
+    bot_id = 9  # bot_id = 9はセプテーニ
+    csv_file_path = './fixtures/learning_training_messages/septeni.csv'
 
-    # セプテーニはデータを一度洗い替えしているため、今まで通っているテストケースが通らなくなった
-    # 現在利用休止中のため一旦テストのメンテをストップする
-    # @classmethod
-    # def setUpClass(cls):
-    #     cls.answers = cls.__build_answers()
-    #     _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(csv_file_path=cls.csv_file_path)
+    @classmethod
+    def setUpClass(cls):
+        cls.answers = helper.build_answers(cls.csv_file_path)
+        cls.learning_parameter = helper.learning_parameter()
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
+
+    # def test_stop(self):
+    #     questions = ['やめる']
+    #     result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+    #
+    #     answer_body = helper.get_answer_body(self.answers, result.answer_id)
+    #     ok_(result.probability < self.threshold)
+
 
     # def test_can_not_connect_akindo(self):
     #     questions = ['akindoに接続出来ない']
@@ -61,7 +63,3 @@ class SepteniConvasationTestCase(TestCase):
     #     rows = self.answers.query('answer_id == %s' % answer_id)
     #     return rows.iloc[0]['answer_body']
     #
-    # @classmethod
-    # def __build_answers(cls):
-    #     learning_training_messages = pd.read_csv(cls.csv_file_path)
-    #     return learning_training_messages.drop_duplicates(subset=['answer_id'])

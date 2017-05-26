@@ -12,4 +12,4 @@ class PersistanceTestCase(TestCase):
     def test_get_model_path(self):
         bot_id = 1
         path = Persistance.get_model_path(bot_id)
-        eq_(path, 'learning/models/test/1_estimator')
+        eq_(path, 'learning/models/test/1/estimator')

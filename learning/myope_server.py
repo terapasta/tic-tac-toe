@@ -49,8 +49,15 @@ class MyopeServer(RPCServer):
             'f1': evaluator.f1,
         }
 
-    def similarity(self, bot_id, question):
-        result = Similarity(bot_id).question_answers(question)
+    def similarity(self, bot_id, question, learning_parameter_attributes):
+        learning_parameter = LearningParameter(learning_parameter_attributes)
+        similarity = Similarity(bot_id)
+
+        if learning_parameter.use_similarity_classification:
+            result = similarity.learning_training_messages(question)
+        else:
+            result = similarity.question_answers(question)
+
         logger.debug(result)
         return result
 

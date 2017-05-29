@@ -19,19 +19,44 @@ class Similarity:
     def question_answers(self, question, datasource_type='database'):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        datasource = Datasource(type=datasource_type)
-        question_answers = datasource.question_answers_for_suggest(self._bot_id, question)
-        all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
-        question_array = TextArray([question], vectorizer=self.vectorizer)
+        return self.__manipulate("question_answers", question, datasource_type, 'id')
 
+    def learning_training_messages(self, question, datasource_type='database'):
+        """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
+        """
+        return self.__manipulate("learning_training_messages", question, datasource_type, 'question_answer_id')
+
+    def __manipulate(self, data_type, question, datasource_type, use_column):
+        method_name = "%s_for_suggest" % data_type
+        datasource = Datasource(type=datasource_type)
+        data = getattr(datasource, method_name)(self._bot_id, question)
+        similarities = self.__get_similarities(data, question)
+        ordered_result = self.__order_result(data, similarities, use_column)
+        return ordered_result[0:10]
+
+    def __get_similarities(self, data, question):
+        logger.debug("data!!!!: %s" % data)
+        all_array = TextArray(data['question'], vectorizer=self.vectorizer)
+        question_array = TextArray([question], vectorizer=self.vectorizer)
         similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
         similarities = similarities.flatten()
         logger.debug("similarities: %s" % similarities)
+        return similarities
 
-        ordered_result = list(map(lambda x: {
-            'question_answer_id': float(x[0]), 'similarity': x[1]
-        }, sorted(zip(question_answers['id'], similarities), key=lambda x: x[1], reverse=True)))
+    def __order_result(self, data, similarities, use_column):
+        logger.debug("__order_result: \n%s" % data)
+        zipped_data = zip(data[use_column], similarities)
+        sorted_data = sorted(zipped_data, key=lambda x: x[1], reverse=True)
+        map_iter = lambda x: { use_column: float(x[0]), 'similarity': x[1] }
+        ordered_data = list(map(map_iter, sorted_data))
+        filtered_data = list(filter((lambda x: x['similarity'] > 0.1), ordered_data))
 
-        ordered_result = list(filter((lambda x: x['similarity'] > 0.1), ordered_result))
+        target_qa_ids = [fd['question_answer_id'] for fd in filtered_data]
+        data_id_qa = list(zip(data['id'], data[use_column]))
+        target_data = [datum for datum in data_id_qa if datum[1] in target_qa_ids]
 
-        return ordered_result[0:10]
+        # debug_data = [datum for datum in data if datum['question_answer_id'] in filtered_data['question_answer_id']]
+        logger.debug("----------------last debug: \n%s" % target_data)
+        logger.debug("----------------/last debug")
+
+        return filtered_data

@@ -86,3 +86,17 @@ class Datasource:
             data = data[data['question'] != question]
 
         return data
+
+    def learning_training_messages_for_suggest(self, bot_id, question):
+        from learning.core.predict.reply import Reply
+
+        if self._type == 'database':
+            data = pd.read_sql(
+                "select id, question, answer_id, question_answer_id from learning_training_messages where bot_id = %s and question <> '%s' and answer_id <> %s;"
+                % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+        elif self._type == 'csv':
+            data = self._learning_training_messages[self._learning_training_messages['bot_id'] == bot_id]
+            data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
+            data = data[data['question'] != question]
+
+        return data

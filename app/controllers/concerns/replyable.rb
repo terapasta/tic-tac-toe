@@ -2,6 +2,7 @@ module Replyable
   extend ActiveSupport::Concern
 
   def receive_and_reply!(parent, message)
+    # TODO pythonに渡す時だけsynonymをwordに差し替える（UIでも変わるのはNG）
     responder = Conversation::Switcher.new.responder(message, session[:states])
     reply = responder.do_reply
     answer = reply.answer

@@ -39,7 +39,7 @@ class Conversation::Bot
   def similar_question_answers
     result = @engine.similarity(@message.body)
     result.map do |hash|
-      @bot.question_answers.find(hash['question_answer_id'])
+      @bot.question_answers.find(hash['question_answer_id'].to_i)
     end
   end
 

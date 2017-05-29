@@ -1,0 +1,35 @@
+= bootstrap_form_tag url: bot_imports_path(@bot), method: :post, data: { event_name: 'Import learning data' } do |f|
+  p
+    |
+      このインポート機能は、対話データを一括で追加登録する機能です。<br />
+      以前に登録してあるデータと完全一致する質問は更新されます。<br />
+      完全一致しない場合でも以前のデータが削除されることはありません。
+
+  = f.file_field :file, label: 'ファイル'
+
+  .actions
+    = f.submit 'Shift_JISでインポート', class: 'btn btn-success'
+    = f.submit 'UTF-8でインポート', class: 'btn btn-success'
+    p.help-block
+      |※ファイルはCSV形式でインポートして下さい
+      br
+      |※Excelで作成したCSVのエンコードはShift_JISです
+
+  .panel.panel-default style="margin-bottom: 0;"
+    .panel-heading: .panel-title 文字エンコードについて
+    .panel-body
+      p
+        |Excelで作成したCSVファイルに特殊文字が含まれていると、インポート時に文字化けしたり?に変換されたりする可能性がありますのでご注意ください
+      p
+        |例：
+        ul
+          li
+            code 〜
+            span 波線
+          li
+            code ー
+            span ハイフン
+          li
+            code style="font-size:26px;" ①
+            = space
+            span 丸数字

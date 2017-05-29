@@ -44,6 +44,17 @@ class QuestionAnswer < ActiveRecord::Base
       .count
   }
 
+  scope :keyword, -> (kw) {
+    if kw.present?
+      qa = QuestionAnswer.arel_table
+      answers = Answer.arel_table
+      joins(:answer).where(
+        qa[:question].matches("%#{kw}%")
+        .or(answers[:body].matches("%#{kw}%"))
+      )
+    end
+  }
+
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
   end

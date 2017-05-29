@@ -13,7 +13,8 @@ class BotThreadsMessagesDecorator < Draper::CollectionDecorator
       csv << [chat.id, message.id, message.speaker, message.body,
               message.answer_failed? ? '失敗' : '',
               message.nothing? ? '' : message.rating,
-              message.created_at]
+              message.created_at,
+              message.user_agent]
     end
   end
 end

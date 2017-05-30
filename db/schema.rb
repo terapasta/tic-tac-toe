@@ -12,7 +12,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20170616030118) do
-
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
     t.string   "domain",     limit: 255,             null: false
@@ -64,6 +63,7 @@ ActiveRecord::Schema.define(version: 20170616030118) do
     t.string   "learning_status",            limit: 255
     t.datetime "learning_status_changed_at"
     t.boolean  "is_limited",                             default: false
+    t.boolean  "is_initial_display",                     default: false
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
@@ -99,6 +99,14 @@ ActiveRecord::Schema.define(version: 20170616030118) do
   end
 
   add_index "contact_states", ["chat_id"], name: "index_contact_states_on_chat_id", using: :btree
+
+  create_table "contacts", force: :cascade do |t|
+    t.string   "email",      limit: 255,   null: false
+    t.string   "subject",    limit: 255,   null: false
+    t.text     "content",    limit: 65535, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "contexts", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -190,12 +198,13 @@ ActiveRecord::Schema.define(version: 20170616030118) do
   add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 
   create_table "question_answers", force: :cascade do |t|
-    t.integer  "bot_id",     limit: 4
-    t.string   "question",   limit: 255
-    t.integer  "answer_id",  limit: 4
-    t.text     "underlayer", limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "bot_id",             limit: 4
+    t.string   "question",           limit: 255
+    t.integer  "answer_id",          limit: 4
+    t.text     "underlayer",         limit: 65535
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.boolean  "is_initial_display",               default: false
   end
 
   add_index "question_answers", ["answer_id"], name: "index_question_answers_on_answer_id", using: :btree

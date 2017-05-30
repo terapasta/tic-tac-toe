@@ -36,4 +36,4 @@ table.table.table-striped
         td nowrap="nowrap"
           = link_to t('helpers.link.edit'), edit_bot_question_answer_path(@bot, question_answer), class: "btn btn-default", data: { event_name: 'Open edit question answer', bot_id: @bot.id, bot_name: @bot.name }
           = link_to t('helpers.link.destroy'), bot_question_answer_path(@bot, question_answer), data: { confirm: 'Q&Aを削除します。よろしいですか。', method: :delete, event_name: 'Delete question answer', bot_id: @bot.id, bot_name: @bot.name }, class: "btn btn-danger"
-/ = paginate @question_answers
+= paginate @question_answers

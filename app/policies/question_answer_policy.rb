@@ -32,6 +32,10 @@ class QuestionAnswerPolicy < ApplicationPolicy
     user.normal? || user.staff?
   end
 
+  def headless?
+    user.normal? || user.staff?
+  end
+
   def permitted_attributes
     if user.worker?
       [

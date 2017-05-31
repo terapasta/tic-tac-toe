@@ -112,6 +112,9 @@ class QuestionAnswersController < ApplicationController
     render json: @bot.answers.search_by(params[:term]).as_json(only: [:id, :body], methods: [:value])
   end
 
+  def headless
+  end
+
   private
     def set_bot
       @bot = bots.find params[:bot_id]

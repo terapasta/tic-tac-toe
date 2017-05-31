@@ -212,7 +212,6 @@ ja:
         image: 画像
         classify_failed_message: 回答出来なかった場合のメッセージ
         start_message: チャット開始時のメッセージ
-        is_initial_display: Q&A管理で選択した質問をチャット画面にデフォルト表示させる
       answer:
         body: 回答
       question_answer:

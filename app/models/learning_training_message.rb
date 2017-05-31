@@ -22,7 +22,7 @@ class LearningTrainingMessage < ActiveRecord::Base
     def amp_by_sentence_synonyms!(bot)
       arr = bot.learning_training_messages.inject([]) { |res, ltm|
         qa = bot.question_answers.find_by(question: ltm.question)
-        next if qa.blank?
+        next res if qa.blank?
         qa.sentence_synonyms.each do |ss|
           _ltm = ltm.dup
           _ltm.question = ss.body

@@ -6,7 +6,7 @@ class Learning::Summarizer
   end
 
   def summary
-    LearningTrainingMessage.where(bot: @bot).destroy_all
+    LearningTrainingMessage.where(bot: @bot).delete_all
     convert_question_answers!
     convert_decision_branches!
   end

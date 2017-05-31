@@ -89,7 +89,7 @@ export default class LearningButton extends Component {
 
   startLearning() {
     API.start(this.props.botId)
-      .then(console.log)
+      .then(() => {})
       .catch(console.error);
   }
 

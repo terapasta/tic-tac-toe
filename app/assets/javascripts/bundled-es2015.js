@@ -6680,7 +6680,7 @@ var LearningButton = function (_Component) {
   }, {
     key: "startLearning",
     value: function startLearning() {
-      API.start(this.props.botId).then(console.log).catch(console.error);
+      API.start(this.props.botId).then(function () {}).catch(console.error);
     }
   }, {
     key: "onClickButton",

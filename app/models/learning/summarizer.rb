@@ -6,45 +6,53 @@ class Learning::Summarizer
   end
 
   def summary
-    LearningTrainingMessage.where(bot: @bot).destroy_all
+    LearningTrainingMessage.where(bot: @bot).delete_all
     convert_question_answers!
     convert_decision_branches!
   end
 
   def convert_question_answers!
-    learning_training_messages = []
-    @bot.question_answers.find_each do |question_answer|
-      next if question_answer.answer.blank?
+    data = @bot.question_answers.all.inject([]) { |res, qa|
+      next if qa.answer.blank? || res.map(&:question).include?(qa.question)
 
-      learning_training_message = @bot.learning_training_messages.find_or_initialize_by(
-        question: question_answer.question,
-        answer_id: question_answer.answer_id
+      # NOTE @bot.learning_training_messagesを使うと不要なアソシエーションされたモデルが作られるので余計にレコードを保存してしまう
+      ltm = LearningTrainingMessage.find_or_initialize_by(
+        bot_id: @bot.id,
+        question: qa.question,
+        answer_id: qa.answer_id,
       )
 
       # NOTE Answer廃止でQuestionAnswerに統一したら上のfindする時にquestion_answer_idを使用するけど今はセットしておくだけ
-      learning_training_message.question_answer_id = question_answer.id
+      ltm.assign_attributes(
+        question_answer_id: qa.id,
+        answer_body: qa.answer.body
+      )
 
-      unless learning_training_messages.any? {|m| m.question == question_answer.question}
-        learning_training_message.answer_body = question_answer.answer.body
-        learning_training_messages << learning_training_message
-      end
-    end
-    # merge_tag_ids!(learning_training_messages)
-    LearningTrainingMessage.import!(learning_training_messages)
+      res << ltm
+      res
+    }
+    LearningTrainingMessage.import!(data, on_duplicate_key_update: [:id])
   end
 
   def convert_decision_branches!
-    @bot.question_answers.find_each do |question_answer|
-      next if question_answer.answer.blank? || question_answer.underlayer.blank?
+    @bot.question_answers.find_each do |qa|
+      next if qa.answer.blank? || qa.underlayer.blank?
 
-      current_answer = question_answer.answer
-      question_answer.underlayer.each_slice(2) do |decision_branch_body, answer_body|
-        decision_branch = current_answer.decision_branches.find_or_initialize_by(body: decision_branch_body, bot_id: @bot.id)
-        if answer_body.present?
-          current_answer = @bot.answers.find_or_initialize_by(body: answer_body, bot_id: @bot.id)
-          decision_branch.next_answer = current_answer
+      current_answer = qa.answer
+      qa.underlayer.each_slice(2) do |db_body, a_body|
+        db = current_answer.decision_branches.find_or_initialize_by(
+          body: db_body,
+          bot_id: @bot.id
+        )
+        if a_body.present?
+          # NOTE current_answerを更新して次のループに渡す
+          current_answer = @bot.answers.find_or_initialize_by(
+            body: a_body,
+            bot_id: @bot.id
+          )
+          db.next_answer = current_answer
         end
-        decision_branch.save!
+        db.save!
       end
     end
   end

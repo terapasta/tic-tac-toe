@@ -9,7 +9,7 @@ class LearningsController < ApplicationController
 
   def update
     LearnJob.perform_later(@bot.id)
-    @bot.update_learning_status_to_processing
+    @bot.update(learning_status: :processing)
     render_learning_status
   end
 

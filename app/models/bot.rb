@@ -21,7 +21,7 @@ class Bot < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-  before_validation :generate_token
+  before_validation :generate_token, :set_learning_status_changed_at_if_needed
 
   def has_feature?(feature)
     services.where(feature: Service.features[feature], enabled: true).present?
@@ -50,15 +50,14 @@ class Bot < ActiveRecord::Base
     end
   end
 
-  def update_learning_status_to_processing
-    update(
-      learning_status: :processing,
-      learning_status_changed_at: Time.current,
-    )
-  end
-
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?
+    end
+
+    def set_learning_status_changed_at_if_needed
+      if learning_status_changed?
+        self.learning_status_changed_at = Time.current
+      end
     end
 end

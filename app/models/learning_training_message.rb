@@ -6,31 +6,29 @@ class LearningTrainingMessage < ActiveRecord::Base
 
   class << self
     def amp!(bot)
-      arr = []
       amplifier = Learning::Amplifier.new(bot.user)
-      bot.learning_training_messages.each do |learning_training_message|
-        amplifier.amp(learning_training_message.question).each do |sentence|
-          copy_model = learning_training_message.dup
-          copy_model.question = sentence
-          arr << copy_model
+      arr = bot.learning_training_messages.inject([]) { |res, ltm|
+        amplifier.amp(ltm.question).each do |sentence|
+          ltm.question = sentence
+          res << ltm
+          res
         end
-      end
-      LearningTrainingMessage.import!(arr)
+      }
+      LearningTrainingMessage.import!(arr, on_duplicate_key_update: [:id])
     end
 
     # FIXME: QuestionAnswerのみ使えるようにしているが、TrainingMessageも対応する必要がある
     def amp_by_sentence_synonyms!(bot)
-      arr = []
-      bot.learning_training_messages.each do |learning_training_message|
-        question_answer = bot.question_answers.find_by(question: learning_training_message.question)
-        next if question_answer.blank?
-        question_answer.sentence_synonyms.each do |sentence_synonym|
-          copy_model = learning_training_message.dup
-          copy_model.question = sentence_synonym.body
-          arr << copy_model
+      arr = bot.learning_training_messages.inject({}) { |res, ltm|
+        qa = bot.question_answers.find_by(question: ltm.question)
+        next if qa.blank?
+        qa.sentence_synonyms.each do |ss|
+          ltm.question = ss.body
+          res << ltm
+          res
         end
-      end
-      LearningTrainingMessage.import!(arr)
+      }
+      LearningTrainingMessage.import!(arr, on_duplicate_key_update: [:id])
     end
   end
 end

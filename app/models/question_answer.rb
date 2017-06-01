@@ -44,13 +44,14 @@ class QuestionAnswer < ActiveRecord::Base
       .count
   }
 
-  scope :keyword, -> (kw) {
-    if kw.present?
+  scope :keyword, -> (keyword) {
+    if keyword.present?
       qa = QuestionAnswer.arel_table
       answers = Answer.arel_table
+      kw = "%#{keyword}%"
       joins(:answer).where(
-        qa[:question].matches("%#{kw}%")
-        .or(answers[:body].matches("%#{kw}%"))
+        qa[:question].matches(kw)
+        .or(answers[:body].matches(kw))
       )
     end
   }

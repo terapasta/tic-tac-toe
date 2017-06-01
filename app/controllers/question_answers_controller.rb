@@ -113,6 +113,15 @@ class QuestionAnswersController < ApplicationController
   end
 
   def headless
+    @topic_tags = @bot.topic_tags
+    @search_result = params.dig(:topic, :id)
+    @q = @bot.question_answers
+      .topic_tag(params.dig(:topic, :id))
+      .includes(:decision_branches)
+      .order('question')
+      .page(params[:page])
+      .search(params[:q])
+    @question_answers = @q.result
   end
 
   private

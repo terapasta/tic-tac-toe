@@ -1,0 +1,35 @@
+h1 Q&A管理
+.clearfix
+  .pull-left
+    = form_tag bot_question_answers_path(@bot), method: :get, class: 'form-inline' do
+      = collection_select :topic, :id, @topic_tags.all, :id, :name, { prompt: "トピックを選択してください", selected: @search_result }, class: 'form-control'
+      = space
+      = submit_tag '検索', name: "search", class: "btn btn-default"
+      - if params.dig(:topic, :id).present?
+        = space
+        = link_to '✕ トピックタグ検索を解除', bot_question_answers_path(@bot), class: 'btn btn-link'
+
+table.table.table-striped
+  thead
+    tr
+      th 初期表示
+      th トピックタグ
+      th = sort_link(@q, :question, '質問', default_order: :desc)
+      th 回答
+      th = sort_link(@q, :created_at, '作成日時', default_order: :desc)
+      th = sort_link(@q, :updated_at, '更新日時', default_order: :desc)
+      th
+  tbody
+    - @question_answers.each do |question_answer|
+      tr
+        td = check_box_tag :question_answer
+        td
+          - question_answer.topic_tags.each do |topic_tag|
+            span.label.label-primary = topic_tag.name
+            br
+        td = simple_format question_answer.question
+        td = simple_format question_answer&.answer&.body
+        td = l question_answer.created_at, format: :short
+        td = l question_answer.updated_at, format: :short
+        td
+= paginate @question_answers

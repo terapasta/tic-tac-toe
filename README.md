@@ -191,3 +191,32 @@ __logrotate__
   notifempty
 }
 ```
+
+__upstart__
+
+```
+description "slappy"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+chdir /var/www/donusagi-bot/current/slack-bot
+env RAILS_ENV=production
+
+script
+  exec /usr/local/rbenv/shims/bundle exec slappy start
+  exec /bin/chown deploy /var/www/donusagi-bot/releases/*/slack-bot/log/newrelic_agent.log
+  exec /bin/chgrp deploy /var/www/donusagi-bot/releases/*/slack-bot/log/newrelic_agent.log
+end script
+
+post-start script
+  PID=`status slappy | egrep -oi '([0-9]+)$' | head -n1`
+  echo $PID > /var/www/donusagi-bot/shared/tmp/pids/slappy.pid
+end script
+
+post-stop script
+  rm -f /var/www/donusagi-bot/shared/tmp/pids/slappy.pid
+end script
+
+respawn
+```

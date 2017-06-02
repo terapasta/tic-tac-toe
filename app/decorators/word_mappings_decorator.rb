@@ -12,7 +12,8 @@ class WordMappingsDecorator < Draper::CollectionDecorator
   private
     def mappings_hash
       @mappings_hash ||= object.inject({}) { |memo, obj|
-        { obj.synonym => obj.word }
+        memo[obj.synonym] = obj.word
+        memo
       }
     end
 end

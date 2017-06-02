@@ -8,6 +8,7 @@ from learning.core.predict.reply_result import ReplyResult
 from learning.core.persistance import Persistance
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
+from learning.core.predict.similarity import Similarity
 
 
 class Reply:
@@ -49,21 +50,7 @@ class Reply:
         return answer_ids, probabilities[0]
 
     def __search_simiarity(self, datasource, question):
-        # TODO similarityクラスで共通化する
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        data = datasource.learning_training_messages(self._bot_id)
-        all_array = TextArray(data['question'], vectorizer=self.vectorizer)
-        question_array = TextArray([question], vectorizer=self.vectorizer)
-
-        similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
-        similarities = similarities.flatten()
-        logger.debug("similarities: %s" % similarities)
-
-        zipped_data = zip(data['id'], similarities, data['answer_id'])
-        sorted_data = sorted(zipped_data, key=lambda x: x[1], reverse=True)
-        map_iter = lambda x: { 'question_answer_id': float(x[0]), 'similarity': x[1], 'answer_id': x[2] }
-        ordered_result = list(map(map_iter, sorted_data))
-
-        df = pd.DataFrame.from_dict(ordered_result)
-        return df['answer_id'], df['similarity']
+        _, similarities, answer_ids = Similarity(self._bot_id).learning_training_messages(question, is_need_data_frame=True)
+        return answer_ids, similarities

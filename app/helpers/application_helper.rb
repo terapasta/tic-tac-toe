@@ -8,6 +8,7 @@ module ApplicationHelper
   end
 
   def root_container_class
+    return if params[:action] == "headless"
     "container container-main".tap do |result|
       if need_side_nav?
         result << ""

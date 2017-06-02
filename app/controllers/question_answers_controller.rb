@@ -5,6 +5,7 @@ class QuestionAnswersController < ApplicationController
 
   before_action :set_bot
   before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
+  before_action :search_question_answer, only: [:index, :headless]
 
   autocomplete :answer, :body, full: true
 
@@ -113,15 +114,6 @@ class QuestionAnswersController < ApplicationController
   end
 
   def headless
-    @topic_tags = @bot.topic_tags
-    @search_result = params.dig(:topic, :id)
-    @q = @bot.question_answers
-      .topic_tag(params.dig(:topic, :id))
-      .includes(:decision_branches)
-      .order('question')
-      .page(params[:page])
-      .search(params[:q])
-    @question_answers = @q.result
   end
 
   private
@@ -131,6 +123,20 @@ class QuestionAnswersController < ApplicationController
 
     def set_question_answer
       @question_answer = @bot.question_answers.find params[:id]
+    end
+
+    def search_question_answer
+      @topic_tags = @bot.topic_tags
+      @search_result = params.dig(:topic, :id)
+      @keyword = params[:keyword]
+      @q = @bot.question_answers
+        .topic_tag(params.dig(:topic, :id))
+        .includes(:decision_branches)
+        .order('question')
+        .page(params[:page])
+        .keyword(params[:keyword])
+        .search(params[:q])
+      @question_answers = @q.result
     end
 
     def pundit_auth

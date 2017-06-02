@@ -27,4 +27,21 @@ $(function() {
     $notificationModal.removeAttr("style").hide();
     $('.modal-backdrop').hide();
   });
+
+  var selectionCheckBoxies = $('[data-role="select-question-answer"]');
+  selectionCheckBoxies.on('change', function() {
+    var $checkbox = $(this);
+    $url = "/bots/" + $checkbox.data('bot-id') + '/question_answers/' + $checkbox.data('question-answer-id') + '/selections' + '.json'
+    if($checkbox.is(':checked')) {
+      var $type = 'POST'
+    }
+    else {
+      var $type = 'DELETE'
+    };
+    $.ajax({
+      type: $type,
+      url: $url,
+      datatype: 'json',
+    })
+  })
 });

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :question_answers do
+      resource :selections, only: [:create, :destroy], module: :question_answers
       resource :answer, only: [:show], module: :question_answers
       collection do
         get :autocomplete_answer_body

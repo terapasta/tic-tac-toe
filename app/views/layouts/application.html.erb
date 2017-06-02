@@ -21,11 +21,13 @@
     <%= render 'layouts/shared/analytics/google_analytics' %>
   <% end %>
 
-  <% unless chat_page? %>
+  <% unless chat_page? || params[:action] == "headless" %>
     <%= render 'layouts/shared/ui/header' %>
   <% end %>
 
-  <%= render 'layouts/shared/ui/side_nav' %>
+  <% unless params[:action] == "headless" %>
+    <%= render 'layouts/shared/ui/side_nav' %>
+  <% end %>
 
   <% if chat_page? %>
     <%= yield %>

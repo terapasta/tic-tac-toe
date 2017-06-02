@@ -10,12 +10,15 @@ class Conversation::Bot
     @message = message
     @ModelClass = message.class
     @engine = Ml::Engine.new(@bot)
+    @word_mappings = WordMapping.for_user(@bot.user).decorate
+    @question_text = @bot.learning_parameter&.use_similarity_classification ?
+      @word_mappings.replace_synonym(@message.body) : @message.body
   end
 
   def do_reply
-    Rails.logger.debug("Conversation::Bot#reply body: #{@message.body}")
+    Rails.logger.debug("Conversation::Bot#reply body: #{@question_text}")
 
-    result = @engine.reply(@message.body)
+    result = @engine.reply(@question_text)
     @results = result[:results]
 
     answer_id = result[:answer_id]
@@ -37,10 +40,9 @@ class Conversation::Bot
   end
 
   def similar_question_answers
-    result = @engine.similarity(@message.body)
-    result.map do |hash|
-      @bot.question_answers.find(hash['question_answer_id'].to_i)
-    end
+    result = @engine.similarity(@question_text)
+    question_answer_ids = result.map { |hash| hash['question_answer_id'] }
+    @bot.question_answers.where(id: question_answer_ids)
   end
 
   private

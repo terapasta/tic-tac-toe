@@ -35,10 +35,11 @@ class Similarity:
         return ordered_result[0:10]
 
     def __get_similarities(self, data, question):
-        logger.debug("data!!!!: %s" % data)
         all_array = TextArray(data['question'], vectorizer=self.vectorizer)
+        all_vec = all_array.to_vec()
         question_array = TextArray([question], vectorizer=self.vectorizer)
-        similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
+        question_vec = question_array.to_vec()
+        similarities = cosine_similarity(all_vec, question_vec)
         similarities = similarities.flatten()
         logger.debug("similarities: %s" % similarities)
         return similarities
@@ -50,13 +51,4 @@ class Similarity:
         map_iter = lambda x: { use_column: float(x[0]), 'similarity': x[1] }
         ordered_data = list(map(map_iter, sorted_data))
         filtered_data = list(filter((lambda x: x['similarity'] > 0.1), ordered_data))
-
-        target_qa_ids = [fd['question_answer_id'] for fd in filtered_data]
-        data_id_qa = list(zip(data['id'], data[use_column]))
-        target_data = [datum for datum in data_id_qa if datum[1] in target_qa_ids]
-
-        # debug_data = [datum for datum in data if datum['question_answer_id'] in filtered_data['question_answer_id']]
-        logger.debug("----------------last debug: \n%s" % target_data)
-        logger.debug("----------------/last debug")
-
         return filtered_data

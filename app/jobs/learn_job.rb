@@ -5,7 +5,7 @@ class LearnJob < ActiveJob::Base
     bot = Bot.find(bot_id)
     Learning::Summarizer.new(bot).summary
 
-    if bot.learning_parameter.use_similarity_classification?
+    if bot.learning_parameter&.use_similarity_classification?
       Learning::Converter.new(bot).unify_words.save!
     else
       LearningTrainingMessage.amp!(bot)

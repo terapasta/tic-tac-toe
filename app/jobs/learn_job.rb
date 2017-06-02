@@ -3,10 +3,11 @@ class LearnJob < ActiveJob::Base
 
   def perform(bot_id)
     bot = Bot.find(bot_id)
-    Learning::Summarizer.new(bot).summary
+    summarizer = Learning::Summarizer.new(bot)
+    summarizer.summary
 
     if bot.learning_parameter&.use_similarity_classification?
-      Learning::Converter.new(bot).unify_words.save!
+      summarizer.unify_learning_training_message_words!
     else
       LearningTrainingMessage.amp!(bot)
       LearningTrainingMessage.amp_by_sentence_synonyms!(bot)

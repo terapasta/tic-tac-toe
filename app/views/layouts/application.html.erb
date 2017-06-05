@@ -21,7 +21,7 @@
     <%= render 'layouts/shared/analytics/google_analytics' %>
   <% end %>
 
-  <% unless chat_page? || params[:action] == "headless" %>
+  <% if !chat_page? || params[:action] != "headless" %>
     <%= render 'layouts/shared/ui/header' %>
   <% end %>
 

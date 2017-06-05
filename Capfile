@@ -6,7 +6,7 @@ require 'capistrano/rails/migrations'
 require 'capistrano/rbenv'
 require 'capistrano/bundler'
 require 'capistrano3/unicorn'
-require 'capistrano/delayed-job'
+require 'capistrano/delayed_job'
 require 'whenever/capistrano'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined

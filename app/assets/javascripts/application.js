@@ -15,16 +15,10 @@
 //= require jquery-ui
 //= require jquery_nested_form
 //= require autocomplete-rails
-// require lumen/loader
-// require lumen/bootswatch
-//= require cerulean/loader
-//= require cerulean/bootswatch
 //= require bootstrap-sprockets
 //= require bootstrap-tagsinput
-// require turbolinks
 //= require toastr
 //= require base
-// require_tree .
 //= require bundled-es2015
 
 $(function() {

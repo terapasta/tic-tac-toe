@@ -7,9 +7,6 @@
 @import "bootstrap";
 @import "devise_bootstrap_views";
 @import "font-awesome";
-// @import 'jquery-ui/core.css';
-// @import 'jquery-ui/theme.css';
-// @import 'jquery-ui/autocomplete.css';
 
 @import "compass/utilities/general/clearfix";
 @import "common/variables";
@@ -29,8 +26,14 @@ body {
 
 .container-main {
   position: relative;
-  margin-top: 20px;
   width: 100%;
+
+  @media (max-width: $screen-xs) {
+  }
+
+  @media (min-width: $screen-sm-min) {
+    padding: 60px 16px 0 216px !important;
+  }
 }
 
 .container {
@@ -198,6 +201,7 @@ body {
 }
 #sidebar-wrapper {
     position: fixed;
+    z-index: 100;
     height: 100%;
     padding: 0;
     overflow-y: auto;

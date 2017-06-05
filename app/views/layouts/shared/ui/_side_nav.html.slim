@@ -1,5 +1,5 @@
 - if need_side_nav?
-  #sidebar-wrapper.col-sm-2.col-xs-12
+  #sidebar-wrapper
     .sidebar-nav.list-group
       = link_to edit_bot_path(@bot), class: 'bot-profile list-group-item text-center' do
         p= @bot.name

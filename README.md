@@ -110,6 +110,40 @@ $ cap production deploy
 $ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
 ```
 
+## Dockerで開発する場合
+
+```
+$ docker-compose build
+$ docker-compose run app bash
+app$ bundle
+app$ bundle exec rake db:create
+app$ ...etc
+$ docker-compose run client yarn
+$ cp learning/learning/config/config.yml.example learning/learning/config/config.yml
+```
+
+./learning/learning/config/config.yml の以下を修正
+
+```
+default: &default
+  database:
+    endpoint: mysql://root@db/donusagi_bot?charset=utf8
+    host: db
+...
+test:
+  <<: *default
+  database:
+    endpoint: mysql://root@db/donusagi_bot?charset=utf8
+    host: db
+...
+```
+
+起動する
+
+```
+docker-compose up
+```
+
 ## Slack 連携
 ### Slack bot サーバー立ち上げ
 ```

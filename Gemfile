@@ -108,6 +108,7 @@ gem 'non-stupid-digest-assets'
 gem 'newrelic_rpm'
 gem 'asset_sync'
 gem 'fog-aws'
+gem 'silencer'
 
 group :development, :test do
 

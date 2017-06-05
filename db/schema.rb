@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20170616030118) do
     t.string   "learning_status",            limit: 255
     t.datetime "learning_status_changed_at"
     t.boolean  "is_limited",                             default: false
-    t.boolean  "selectable_question",                    default: false
+    t.boolean  "is_selected_for_chat",                   default: false
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
@@ -181,13 +181,13 @@ ActiveRecord::Schema.define(version: 20170616030118) do
   add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 
   create_table "question_answers", force: :cascade do |t|
-    t.integer  "bot_id",              limit: 4
-    t.string   "question",            limit: 255
-    t.integer  "answer_id",           limit: 4
-    t.text     "underlayer",          limit: 65535
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.boolean  "selectable_by_owner",               default: false
+    t.integer  "bot_id",     limit: 4
+    t.string   "question",   limit: 255
+    t.integer  "answer_id",  limit: 4
+    t.text     "underlayer", limit: 65535
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.boolean  "selection",                default: false
   end
 
   add_index "question_answers", ["answer_id"], name: "index_question_answers_on_answer_id", using: :btree

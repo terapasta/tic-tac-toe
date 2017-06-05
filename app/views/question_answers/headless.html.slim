@@ -23,7 +23,7 @@ table.table.table-striped
   tbody
     - @question_answers.each do |question_answer|
       tr
-        td = check_box_tag :selectable_by_owner, 1, question_answer.selectable_by_owner, data: { role: "select-question-answer", bot_id: @bot.id, question_answer_id: question_answer.id }
+        td = check_box_tag :selection, 1, question_answer.selection, data: { role: "select-question-answer", bot_id: @bot.id, question_answer_id: question_answer.id }
         td
           - question_answer.topic_tags.each do |topic_tag|
             span.label.label-primary = topic_tag.name

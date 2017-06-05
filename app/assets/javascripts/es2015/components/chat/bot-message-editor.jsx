@@ -22,9 +22,6 @@ function ChatBotMessageEditor({
     <div className="chat-message">
       <div className="chat-message__icon" style={iconStyle} />
       <div className="chat-message__balloon has-part-label" disabled={true}>
-        <div className="chat-message__part-label">
-          <a href="#">回答</a>
-        </div>
         {body}
       </div>
       <div className="chat-message__textarea has-part-label">

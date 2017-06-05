@@ -59,6 +59,7 @@ __pycache__
 learning/example.log
 learning/learning/example.log
 learning/graph.png
+learning/learning/config/config.yml
 learning/learning/models/**
 !learning/learning/models/production/.keep
 !learning/learning/models/test/.keep

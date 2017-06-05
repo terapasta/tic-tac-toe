@@ -16,9 +16,7 @@ class Learning::Summarizer
     @bot.learning_training_messages.each do |it|
       it.question = @word_mappings.replace_synonym(it.question)
     end
-    ActiveRecord::Base.transaction do
-      @bot.learning_training_messages.each(&:save!)
-    end
+    @bot.learning_training_messages.each(&:save!)
   end
 
   def convert_question_answers!

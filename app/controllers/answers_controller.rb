@@ -9,7 +9,6 @@ class AnswersController < ApplicationController
     @q = @bot.answers.ransack(params[:q])
     @answers = @q.result(distinct: true).order('id desc').page(params[:page])
     respond_to do |format|
-      format.html
       format.json { render json: @answers.as_json(only: [:id, :body, :created_at]) }
     end
   end
@@ -39,13 +38,8 @@ class AnswersController < ApplicationController
   def update
     respond_to do |format|
       if @answer.update answer_params
-        format.html { redirect_to bot_answers_path(@bot), notice: '回答を更新しました。' }
         format.json { render json: @answer.decorate.as_json, status: :ok }
       else
-        format.html do
-          flash.now.alert = '回答を更新できませんでした。'
-          render :edit
-        end
         format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
       end
     end
@@ -53,10 +47,6 @@ class AnswersController < ApplicationController
 
   def destroy
     respond_to do |format|
-      format.html do
-        @answer.destroy!
-        redirect_to bot_answers_path(@bot), notice: '回答を削除しました。'
-      end
       format.json do
         ActiveRecord::Base.transaction do
           @answer.self_and_deep_child_answers.map(&:destroy!)
@@ -66,7 +56,6 @@ class AnswersController < ApplicationController
     end
   rescue => e
     respond_to do |format|
-      format.html { raise e }
       format.json do
         logger.error e.message + e.backtrace.join("\n")
         render json: { error: e.message }, status: :internal_server_error

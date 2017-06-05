@@ -11,6 +11,7 @@ $ cd donusagi-bot
 $ bundle install
 $ rake db:migrate
 $ rake db:seed_fu
+$ cp learning/learning/config/config.yml.example learning/learning/config/config.yml
 ```
 
 ## 開発サーバー起動

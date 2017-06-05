@@ -13,7 +13,7 @@ class Learning::Summarizer
 
   def convert_question_answers!
     data = @bot.question_answers.all.inject([]) { |res, qa|
-      next if qa.answer.blank? || res.map(&:question).include?(qa.question)
+      next res if qa.answer.blank? || res.map(&:question).include?(qa.question)
 
       # NOTE @bot.learning_training_messagesを使うと不要なアソシエーションされたモデルが作られるので余計にレコードを保存してしまう
       ltm = LearningTrainingMessage.find_or_initialize_by(

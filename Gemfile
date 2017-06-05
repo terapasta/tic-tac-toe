@@ -52,7 +52,7 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 
 # admin pages
-gem 'rails_admin'
+gem 'rails_admin', '~> 1.1.1'
 
 # enum with i18n
 gem 'enum_help'
@@ -82,8 +82,8 @@ gem 'carrierwave', '~> 1.1.0'
 gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
-gem 'twitter-bootswatch-rails', '~> 3.1.1'
-gem 'twitter-bootswatch-rails-helpers'
+# gem 'twitter-bootswatch-rails', '~> 3.1.1'
+# gem 'twitter-bootswatch-rails-helpers'
 gem 'slack-api'
 gem 'activerecord-import'
 gem 'exception_notification'
@@ -92,7 +92,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'compass'
-gem 'autoprefixer-rails'
+gem 'autoprefixer-rails', '~> 6.7.7.2'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'bootstrap-tagsinput-rails'
 gem 'draper'
@@ -108,6 +108,8 @@ gem 'non-stupid-digest-assets'
 gem 'newrelic_rpm'
 gem 'asset_sync'
 gem 'fog-aws'
+gem 'silencer'
+gem 'foreman'
 
 group :development, :test do
 

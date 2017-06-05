@@ -42,7 +42,7 @@ class Datasource:
 
     def learning_training_messages(self, bot_id):
         if self._type == 'database':
-            data = pd.read_sql("select * from learning_training_messages where bot_id = %s;" % bot_id, self._db)
+            data = pd.read_sql("select * from learning_training_messages where bot_id = %(bot_id)s;", self._db, params={"bot_id": bot_id})
         elif self._type == 'csv':
             data = self._learning_training_messages[self._learning_training_messages['bot_id'] == bot_id]
 
@@ -65,8 +65,8 @@ class Datasource:
 
         if self._type == 'database':
             data = pd.read_sql(
-                "select id, question, answer_id from question_answers where bot_id = %s and answer_id <> %s;"
-                % (bot_id, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+                "select id, question, answer_id from question_answers where bot_id = %(bot_id)s and answer_id <> %(answer_id)s;",
+                self._db, params={"bot_id": bot_id, "answer_id": Reply.CLASSIFY_FAILED_ANSWER_ID})
         elif self._type == 'csv':
             data = self._question_answers[self._question_answers['bot_id'] == bot_id]
             data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
@@ -78,8 +78,8 @@ class Datasource:
 
         if self._type == 'database':
             data = pd.read_sql(
-                "select id, question from question_answers where bot_id = %s and question <> '%s' and answer_id <> %s;"
-                % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+                "select id, question from question_answers where bot_id = %(bot_id)s and question <> %(question)s and answer_id <> %(answer_id)s;",
+                self._db, params={"bot_id": bot_id, "question": question, "answer_id": Reply.CLASSIFY_FAILED_ANSWER_ID})
         elif self._type == 'csv':
             data = self._question_answers[self._question_answers['bot_id'] == bot_id]
             data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]

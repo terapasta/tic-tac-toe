@@ -109,6 +109,7 @@ gem 'newrelic_rpm'
 gem 'asset_sync'
 gem 'fog-aws'
 gem 'silencer'
+gem 'foreman'
 
 group :development, :test do
 

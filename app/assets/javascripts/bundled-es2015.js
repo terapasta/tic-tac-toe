@@ -1518,15 +1518,6 @@ function ChatBotMessageEditor(_ref) {
     _react2.default.createElement(
       "div",
       { className: "chat-message__balloon has-part-label", disabled: true },
-      _react2.default.createElement(
-        "div",
-        { className: "chat-message__part-label" },
-        _react2.default.createElement(
-          "a",
-          { href: "#" },
-          "\u56DE\u7B54"
-        )
-      ),
       body
     ),
     _react2.default.createElement(

@@ -1,5 +1,7 @@
 class QuestionAnswers::SelectionsController < ApplicationController
-  before_action :set_bot
+  before_action :authenticate_user!
+  before_action :set_question_answer
+
 
   def create
     @question_answer.selectable_by_owner = true
@@ -18,7 +20,7 @@ class QuestionAnswers::SelectionsController < ApplicationController
   end
 
   private
-    def set_bot
+    def set_question_answer
       @question_answer = QuestionAnswer.find(params[:question_answer_id])
     end
 end

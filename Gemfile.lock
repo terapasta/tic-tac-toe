@@ -1,4 +1,4 @@
-gGIT
+GIT
   remote: https://github.com/kozo002/slappy.git
   revision: 51546be37179c698957ddfd05b076677ddb83ce5
   branch: fix_respond

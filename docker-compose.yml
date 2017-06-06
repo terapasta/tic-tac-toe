@@ -24,11 +24,6 @@ services:
     ports: []
     command: bundle exec rake jobs:work
     stdin_open: false
-  spring:
-    <<: *app_base
-    command: bundle exec spring server
-    ports: []
-    stdin_open: false
   test:
     <<: *app_base
     command: bundle exec guard

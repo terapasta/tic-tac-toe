@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from "react";
+import { findDOMNode } from "react-dom";
+import isEmpty from "is-empty";
 
 export default class ChatForm extends Component {
   static get propTypes() {
@@ -17,6 +19,12 @@ export default class ChatForm extends Component {
     };
   }
 
+  componentDidUpdate(prevProps, _) {
+    if (isEmpty(this.props.messageBody)) {
+      findDOMNode(this.refs.input).focus();
+    }
+  }
+
   render() {
     const {
       onSubmit,
@@ -28,28 +36,29 @@ export default class ChatForm extends Component {
       <div className="chat-form">
         <div className="container">
           <div className=".chat-container--no-padding">
-            <div className="form">
+            <form className="form" onSubmit={this.onSubmitForm.bind(this)}>
               <input
+                ref="input"
                 name="chat-message-body"
                 className="chat-form__text-field"
                 type="text"
                 placeholder="質問を入れてください"
                 value={messageBody}
                 onChange={this.onChange.bind(this)}
-                onKeyUp={this.onKeyUp.bind(this)}
                 disabled={isDisabled}
+                autoFocus={true}
               />
-            <button
-              className="chat-form__submit"
-              id="chat-submit"
-              onClick={() => { onSubmit(messageBody) }}
-              disabled={isDisabled}>
+              <button
+                className="chat-form__submit"
+                id="chat-submit"
+                disabled={isDisabled}
+                onClick={() => onSubmit(messageBody)}>
                 <span className="visible-sm visible-md visible-lg">質問</span>
                 <span className="visible-xs">
                   <i className="fa fa-icon fa-paper-plane-o" />
                 </span>
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -61,13 +70,9 @@ export default class ChatForm extends Component {
     this.props.onChange(e);
   }
 
-  onKeyUp(e) {
-    if (e.keyCode === 13) {
-      if (this.state.isInputting) {
-        return this.setState({ isInputting: false });
-      }
-      const { onSubmit, messageBody } = this.props;
-      onSubmit(messageBody);
-    }
+  onSubmitForm(e) {
+    e.preventDefault();
+    const { onSubmit, messageBody } = this.props;
+    onSubmit(messageBody);
   }
 }

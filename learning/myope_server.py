@@ -1,5 +1,6 @@
 import numpy as np
 import time
+import argparse
 from gevent.server import StreamServer
 from mprpc import RPCServer
 from sklearn.externals import joblib
@@ -56,5 +57,9 @@ class MyopeServer(RPCServer):
 
 
 if __name__ == '__main__':
-    server = StreamServer(('127.0.0.1', 6000), MyopeServer())
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', type=str, default='127.0.0.1')
+    parser.add_argument('--port', type=int, default=6000)
+    args = parser.parse_args()
+    server = StreamServer((args.host, args.port), MyopeServer())
     server.serve_forever()

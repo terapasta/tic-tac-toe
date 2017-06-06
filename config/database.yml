@@ -5,6 +5,7 @@
 #   gem 'sqlite3'
 #
 default: &default
+  host: <%= ENV.fetch('DB_HOST'){'127.0.0.1'} %>
   adapter: mysql2
   encoding: utf8
   database: donusagi_bot

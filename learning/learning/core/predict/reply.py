@@ -35,11 +35,11 @@ class Reply:
         count = np.count_nonzero(features.toarray())
 
         if self.learning_parameter.use_similarity_classification:
-            answer_ids, probabilities = self.__search_simiarity(datasource, X[0])
+            answer_ids, probabilities, question_answers = self.__search_simiarity(datasource, X[0])
         else:
             answer_ids, probabilities = self.__predict(features)
 
-        reply_result = ReplyResult(answer_ids, probabilities, X[0], count)
+        reply_result = ReplyResult(answer_ids, probabilities, X[0], count, question_answers)
         reply_result.out_log_of_results()
         return reply_result
 

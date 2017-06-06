@@ -34,6 +34,11 @@ services:
     command: bundle exec guard
     ports: []
     stdin_open: false
+    depends_on:
+      - learning_test
+    environment:
+      - DB_HOST=db
+      - RPC_HOST=learning_test
   db:
     image: mysql
     tty: false
@@ -59,7 +64,7 @@ services:
       - .:/usr/src/app
     volumes_from:
       - app_data
-  learning:
+  learning: &learning_base
     build: ./learning
     tty: true
     command: python ./myope_server.py --host '0.0.0.0'
@@ -69,6 +74,9 @@ services:
       - 6000:6000
     depends_on:
       - db
+  learning_test:
+    <<: *learning_base
+    command: python ./myope_server.py --host '0.0.0.0' test
 
 volumes:
   db:

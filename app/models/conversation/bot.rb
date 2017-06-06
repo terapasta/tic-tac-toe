@@ -41,7 +41,8 @@ class Conversation::Bot
   end
 
   def similar_question_answers_in(question_answer_ids)
-    @bot.question_answers.where(id: question_answer_ids)
+    question_answers = @bot.question_answers.where(id: question_answer_ids)
+    question_answer_ids.map{|id| question_answers.find{|x| id == x.id}}
   end
 
   private

@@ -133,7 +133,7 @@ default: &default
 test:
   <<: *default
   database:
-    endpoint: mysql://root@db/donusagi_bot?charset=utf8
+    endpoint: mysql://root@db/donusagi_bot_test?charset=utf8
     host: db
 ...
 ```

@@ -2072,6 +2072,12 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require("react-dom");
+
+var _isEmpty = require("is-empty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2107,6 +2113,13 @@ var ChatForm = function (_Component) {
   }
 
   _createClass(ChatForm, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, _) {
+      if ((0, _isEmpty2.default)(this.props.messageBody)) {
+        (0, _reactDom.findDOMNode)(this.refs.input).focus();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _props = this.props,
@@ -2125,27 +2138,28 @@ var ChatForm = function (_Component) {
             "div",
             { className: ".chat-container--no-padding" },
             _react2.default.createElement(
-              "div",
-              { className: "form" },
+              "form",
+              { className: "form", onSubmit: this.onSubmitForm.bind(this) },
               _react2.default.createElement("input", {
+                ref: "input",
                 name: "chat-message-body",
                 className: "chat-form__text-field",
                 type: "text",
                 placeholder: "\u8CEA\u554F\u3092\u5165\u308C\u3066\u304F\u3060\u3055\u3044",
                 value: messageBody,
                 onChange: this.onChange.bind(this),
-                onKeyUp: this.onKeyUp.bind(this),
-                disabled: isDisabled
+                disabled: isDisabled,
+                autoFocus: true
               }),
               _react2.default.createElement(
                 "button",
                 {
                   className: "chat-form__submit",
                   id: "chat-submit",
+                  disabled: isDisabled,
                   onClick: function onClick() {
-                    onSubmit(messageBody);
-                  },
-                  disabled: isDisabled },
+                    return onSubmit(messageBody);
+                  } },
                 _react2.default.createElement(
                   "span",
                   { className: "visible-sm visible-md visible-lg" },
@@ -2169,18 +2183,14 @@ var ChatForm = function (_Component) {
       this.props.onChange(e);
     }
   }, {
-    key: "onKeyUp",
-    value: function onKeyUp(e) {
-      if (e.keyCode === 13) {
-        if (this.state.isInputting) {
-          return this.setState({ isInputting: false });
-        }
-        var _props2 = this.props,
-            onSubmit = _props2.onSubmit,
-            messageBody = _props2.messageBody;
+    key: "onSubmitForm",
+    value: function onSubmitForm(e) {
+      e.preventDefault();
+      var _props2 = this.props,
+          onSubmit = _props2.onSubmit,
+          messageBody = _props2.messageBody;
 
-        onSubmit(messageBody);
-      }
+      onSubmit(messageBody);
     }
   }]);
 
@@ -2189,7 +2199,7 @@ var ChatForm = function (_Component) {
 
 exports.default = ChatForm;
 
-},{"react":859}],24:[function(require,module,exports){
+},{"is-empty":444,"react":859,"react-dom":687}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -37,17 +37,19 @@ class Reply:
         if self.learning_parameter.use_similarity_classification:
             answer_ids, probabilities, question_answers = self.__search_simiarity(datasource, X[0])
         else:
-            answer_ids, probabilities = self.__predict(features)
+            answer_ids, probabilities, question_answers = self.__predict(features, X[0])
 
         reply_result = ReplyResult(answer_ids, probabilities, X[0], count, question_answers)
         reply_result.out_log_of_results()
         return reply_result
 
-    def __predict(self, features):
+    def __predict(self, features, question):
+        similarity = Similarity(self._bot_id)
         # answers = self.estimator.predict(features)
         probabilities = self.estimator.predict_proba(features)
         answer_ids = self.estimator.classes_
-        return answer_ids, probabilities[0]
+        question_answers = similarity.question_answers(question).to_data()
+        return answer_ids, probabilities[0], question_answers
 
     def __search_simiarity(self, datasource, question):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する

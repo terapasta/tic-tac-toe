@@ -7537,7 +7537,6 @@ exports.default = Panel;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AnswerMode = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -7610,11 +7609,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AnswerMode = exports.AnswerMode = {
-  Input: "input",
-  Select: "select"
-};
 
 var QuestionAnswerForm = function (_Component) {
   _inherits(QuestionAnswerForm, _Component);
@@ -7736,38 +7730,6 @@ var QuestionAnswerForm = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "form-group" },
-          _react2.default.createElement(
-            _reactRadioGroup.RadioGroup,
-            {
-              id: "answer-mode",
-              name: "answer-mode",
-              selectedValue: answerMode,
-              onChange: this.onChangeAnswerMode.bind(this)
-            },
-            _react2.default.createElement(
-              "label",
-              null,
-              "\u56DE\u7B54"
-            ),
-            _react2.default.createElement(
-              "label",
-              { className: "checkbox-inline" },
-              _react2.default.createElement(_reactRadioGroup.Radio, { value: AnswerMode.Input, disabled: isProcessing }),
-              " ",
-              inputAnswerLabel
-            ),
-            _react2.default.createElement(
-              "label",
-              { className: "checkbox-inline" },
-              _react2.default.createElement(_reactRadioGroup.Radio, { value: AnswerMode.Select, disabled: isProcessing }),
-              " ",
-              "\u65E2\u5B58\u306E\u56DE\u7B54\u3092\u9078\u629E"
-            )
-          )
-        ),
-        answerMode === AnswerMode.Input && _react2.default.createElement(
-          "div",
-          { className: "form-group" },
           _react2.default.createElement(_reactTextareaAutosize2.default, {
             id: "answer-body",
             value: answerBody,
@@ -7778,74 +7740,6 @@ var QuestionAnswerForm = function (_Component) {
             placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
             disabled: isProcessing
           })
-        ),
-        answerMode === AnswerMode.Select && _react2.default.createElement(
-          "div",
-          { className: "form-group" },
-          _react2.default.createElement("input", {
-            type: "search",
-            id: "answer-search",
-            className: "form-control",
-            placeholder: "既存の回答に含まれる文字列を入力してください",
-            value: searchingAnswerQuery,
-            onChange: this.onChangeSearchAnswer.bind(this),
-            disabled: isProcessing
-          }),
-          isProcessing && _react2.default.createElement(
-            "div",
-            { className: "well" },
-            "\u691C\u7D22\u4E2D..."
-          ),
-          !(0, _isEmpty2.default)(candidateAnswers) && _react2.default.createElement(
-            "div",
-            { className: "well", id: "candidate-answers" },
-            candidateAnswers.map(function (a, i) {
-              return _react2.default.createElement(
-                _panel2.default,
-                {
-                  key: i,
-                  isClickable: true,
-                  onClickBody: _this2.onClickCandidateAnswer.bind(_this2, a),
-                  id: "candidate-answer-" + a.id
-                },
-                _this2.renderAnswer(a)
-              );
-            }),
-            hasNextPage && _react2.default.createElement(
-              "div",
-              { className: "form-group" },
-              _react2.default.createElement(
-                "a",
-                { href: "#", id: "load-more", className: "btn btn-default", disabled: isProcessing, onClick: this.onClickLoadMore.bind(this) },
-                isProcessing ? "読み込み中..." : "更に読み込む"
-              )
-            )
-          ),
-          !(0, _isEmpty2.default)(selectedAnswer) && _react2.default.createElement(
-            "div",
-            { className: "well" },
-            _react2.default.createElement(
-              "label",
-              null,
-              "\u9078\u629E\u3057\u305F\u56DE\u7B54",
-              " ",
-              _react2.default.createElement(
-                "a",
-                {
-                  href: "#",
-                  className: "btn btn-warning btn-sm",
-                  onClick: this.onClickRejectAnswer.bind(this),
-                  id: "reject-answer"
-                },
-                "\xD7 \u9078\u629E\u3092\u89E3\u9664"
-              )
-            ),
-            _react2.default.createElement(
-              _panel2.default,
-              null,
-              this.renderAnswer(selectedAnswer)
-            )
-          )
         ),
         _react2.default.createElement(
           "div",
@@ -8101,11 +7995,6 @@ var QuestionAnswerForm = function (_Component) {
       this.setState({ questionBody: e.target.value });
     }
   }, {
-    key: "onChangeAnswerMode",
-    value: function onChangeAnswerMode(answerMode) {
-      this.setState({ answerMode: answerMode });
-    }
-  }, {
     key: "onChangeAnswerBody",
     value: function onChangeAnswerBody(e) {
       this.setState({ answerBody: e.target.value });
@@ -8147,7 +8036,6 @@ var QuestionAnswerForm = function (_Component) {
     value: function onClickSubmitButton() {
       var id = this.props.id;
       var _state3 = this.state,
-          answerMode = _state3.answerMode,
           answerBody = _state3.answerBody,
           answerFiles = _state3.answerFiles,
           selectedAnswer = _state3.selectedAnswer,
@@ -8189,26 +8077,15 @@ var QuestionAnswerForm = function (_Component) {
         errors.push("質問を入力してください");
       }
 
-      switch (answerMode) {
-        case AnswerMode.Input:
-          if ((0, _isEmpty2.default)(answerBody)) {
-            errors.push("回答を入力してください");
-          } else {
-            payload.answer_attributes = {
-              body: answerBody
-            };
-            if (!(0, _isEmpty2.default)(persistedAnswerId)) {
-              payload.answer_attributes.id = persistedAnswerId;
-            }
-          }
-          break;
-        case AnswerMode.Select:
-          if ((0, _isEmpty2.default)(selectedAnswer)) {
-            errors.push("回答を選択してください");
-          } else {
-            payload.answer_id = selectedAnswer.id;
-          }
-          break;
+      if ((0, _isEmpty2.default)(answerBody)) {
+        errors.push("回答を入力してください");
+      } else {
+        payload.answer_attributes = {
+          body: answerBody
+        };
+        if (!(0, _isEmpty2.default)(persistedAnswerId)) {
+          payload.answer_attributes.id = persistedAnswerId;
+        }
       }
 
       payload.answer_attributes = payload.answer_attributes || {};

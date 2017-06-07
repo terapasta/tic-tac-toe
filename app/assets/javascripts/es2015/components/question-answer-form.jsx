@@ -16,11 +16,6 @@ import Question from "../models/question";
 import jump from "../modules/jump";
 import authenticityToken from "../modules/authenticity-token";
 
-export const AnswerMode = {
-  Input: "input",
-  Select: "select",
-};
-
 export default class QuestionAnswerForm extends Component {
   static get componentName() {
     return "QuestionAnswerForm";
@@ -117,92 +112,19 @@ export default class QuestionAnswerForm extends Component {
           />
         </div>
         <div className="form-group">
-          <RadioGroup {...{
-            id: "answer-mode",
-            name: "answer-mode",
-            selectedValue: answerMode,
-            onChange: this.onChangeAnswerMode.bind(this),
-          }}>
-            <label>回答</label>
-            <label className="checkbox-inline">
-              <Radio value={AnswerMode.Input} disabled={isProcessing} />
-              {" "}{inputAnswerLabel}
-            </label>
-            <label className="checkbox-inline">
-              <Radio value={AnswerMode.Select} disabled={isProcessing} />
-              {" "}既存の回答を選択
-            </label>
-          </RadioGroup>
+          <TextArea
+            {...{
+              id: "answer-body",
+              value: answerBody,
+              name: "question_answer[answer_attributes][body]",
+              className: "form-control",
+              rows: 3,
+              onChange: this.onChangeAnswerBody.bind(this),
+              placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
+              disabled: isProcessing,
+            }}
+          />
         </div>
-        {answerMode === AnswerMode.Input && (
-          <div className="form-group">
-            <TextArea
-              {...{
-                id: "answer-body",
-                value: answerBody,
-                name: "question_answer[answer_attributes][body]",
-                className: "form-control",
-                rows: 3,
-                onChange: this.onChangeAnswerBody.bind(this),
-                placeholder: "回答を入力してください（例：カードキーの再発行手続きを行ってください。申込書はこちら http://example.com/...）",
-                disabled: isProcessing,
-              }}
-            />
-          </div>
-        )}
-        {answerMode === AnswerMode.Select && (
-          <div className="form-group">
-            <input
-              {...{
-                type: "search",
-                id: "answer-search",
-                className: "form-control",
-                placeholder: "既存の回答に含まれる文字列を入力してください",
-                value: searchingAnswerQuery,
-                onChange: this.onChangeSearchAnswer.bind(this),
-                disabled: isProcessing,
-              }}
-            />
-          {isProcessing && <div className="well">検索中...</div>}
-          {!isEmpty(candidateAnswers) && (
-            <div className="well" id="candidate-answers">
-              {candidateAnswers.map((a, i) => {
-                return (
-                  <Panel {...{
-                    key: i,
-                    isClickable: true,
-                    onClickBody: this.onClickCandidateAnswer.bind(this, a),
-                    id: `candidate-answer-${a.id}`,
-                  }}>
-                    {this.renderAnswer(a)}
-                  </Panel>
-                );
-              })}
-              {hasNextPage && (
-                <div className="form-group">
-                  <a href="#" id="load-more" className="btn btn-default" disabled={isProcessing} onClick={this.onClickLoadMore.bind(this)}>
-                    {isProcessing ? "読み込み中..." : "更に読み込む"}
-                  </a>
-                </div>
-              )}
-            </div>
-          )}
-          {!isEmpty(selectedAnswer) && (
-            <div className="well">
-              <label>
-                選択した回答{" "}
-                <a {...{
-                  href: "#",
-                  className: "btn btn-warning btn-sm",
-                  onClick: this.onClickRejectAnswer.bind(this),
-                  id: "reject-answer",
-                }}>&times; 選択を解除</a>
-              </label>
-              <Panel>{this.renderAnswer(selectedAnswer)}</Panel>
-            </div>
-          )}
-          </div>
-        )}
         <div className="form-group">
           <label>回答添付ファイル</label>
           <table className="table table-striped"><tbody>
@@ -368,10 +290,6 @@ export default class QuestionAnswerForm extends Component {
     this.setState({ questionBody: e.target.value });
   }
 
-  onChangeAnswerMode(answerMode) {
-    this.setState({ answerMode });
-  }
-
   onChangeAnswerBody(e) {
     this.setState({ answerBody: e.target.value });
   }
@@ -410,7 +328,6 @@ export default class QuestionAnswerForm extends Component {
     } = this.props;
 
     const {
-      answerMode,
       answerBody,
       answerFiles,
       selectedAnswer,
@@ -442,26 +359,15 @@ export default class QuestionAnswerForm extends Component {
       errors.push("質問を入力してください");
     }
 
-    switch(answerMode) {
-      case AnswerMode.Input:
-        if (isEmpty(answerBody)) {
-          errors.push("回答を入力してください");
-        } else {
-          payload.answer_attributes = {
-            body: answerBody,
-          };
-          if (!isEmpty(persistedAnswerId)) {
-            payload.answer_attributes.id = persistedAnswerId;
-          }
-        }
-        break;
-      case AnswerMode.Select:
-        if (isEmpty(selectedAnswer)) {
-          errors.push("回答を選択してください");
-        } else {
-          payload.answer_id = selectedAnswer.id;
-        }
-        break;
+    if (isEmpty(answerBody)) {
+      errors.push("回答を入力してください");
+    } else {
+      payload.answer_attributes = {
+        body: answerBody,
+      };
+      if (!isEmpty(persistedAnswerId)) {
+        payload.answer_attributes.id = persistedAnswerId;
+      }
     }
 
     payload.answer_attributes = payload.answer_attributes || {};

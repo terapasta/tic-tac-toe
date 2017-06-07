@@ -9,12 +9,15 @@ class Chats::MessageRatingController < ApplicationController
 
   def bad
     @message.bad!
+    @task = Task.new
+    @task.set_task(@task, @bot.id, @chat, params[:message_id].to_i, params[:action])
     SendBadRateMailService.new(@message, current_user).send_mail
     render json: @message, adapter: :json
   end
 
   def nothing
     @message.nothing!
+    binding.pry
     render json: @message, adapter: :json
   end
 

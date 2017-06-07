@@ -15,6 +15,7 @@ class Bot < ActiveRecord::Base
   has_many :sentence_synonyms, through: :question_answers
   has_many :allowed_hosts, dependent: :destroy
   has_many :word_mappings, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 

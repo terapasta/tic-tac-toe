@@ -14,7 +14,7 @@ class QuestionAnswersController < ApplicationController
     @keyword = params[:keyword]
     @q = @bot.question_answers
       .topic_tag(params.dig(:topic, :id))
-      .includes(:decision_branches)
+      .includes(:decision_branches, :topic_tags)
       .order('question')
       .page(params[:page])
       .keyword(params[:keyword])

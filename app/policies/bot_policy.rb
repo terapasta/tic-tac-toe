@@ -31,6 +31,10 @@ class BotPolicy < ApplicationPolicy
     update?
   end
 
+  def task?
+    user.normal? || user.staff?
+  end
+
   def permitted_attributes
     [
       :name,

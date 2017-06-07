@@ -17,7 +17,6 @@ class Chats::MessageRatingController < ApplicationController
 
   def nothing
     @message.nothing!
-    binding.pry
     render json: @message, adapter: :json
   end
 

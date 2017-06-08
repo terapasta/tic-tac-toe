@@ -64,7 +64,5 @@ if __name__ == '__main__':
     parser.add_argument('--env', type=str, default='development')
     args = parser.parse_args()
     Config._ENV = args.env
-    config = Config()
-    print(config.env)
     server = StreamServer((args.host, args.port), MyopeServer())
     server.serve_forever()

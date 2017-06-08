@@ -24,7 +24,7 @@ class Ml::Engine
   # end
 
   def similarity(question)
-    @client.call(:similarity, @bot.id, question)
+    @client.call(:similarity, @bot.id, question, @bot.learning_parameter_attributes)
   end
 
   def predict_tags(bodies)

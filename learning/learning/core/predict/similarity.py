@@ -1,4 +1,6 @@
+import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
+
 from learning.core.datasource import Datasource
 from learning.core.persistance import Persistance
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
@@ -15,23 +17,54 @@ class Similarity:
         except IOError:
             raise ModelNotExistsError()
 
-
     def question_answers(self, question, datasource_type='database'):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        datasource = Datasource(type=datasource_type)
-        question_answers = datasource.question_answers_for_suggest(self._bot_id, question)
-        all_array = TextArray(question_answers['question'], vectorizer=self.vectorizer)
-        question_array = TextArray([question], vectorizer=self.vectorizer)
+        self.__manipulate("question_answers", question, datasource_type, 'id')
+        return self
 
-        similarities = cosine_similarity(all_array.to_vec(), question_array.to_vec())
+    def learning_training_messages(self, question, datasource_type='database'):
+        """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
+        """
+        self.__manipulate("learning_training_messages", question, datasource_type, 'question_answer_id')
+        return self
+
+    def to_data_frame(self):
+        df = pd.DataFrame.from_dict(self.ordered_data)
+        return df[self.use_column], df['similarity'], df['answer_id']
+
+    def to_data(self):
+        filter_iter = lambda x: x['similarity'] > 0.1
+        filtered_data = list(filter(filter_iter, self.ordered_data))
+        return filtered_data[0:10]
+
+    def __manipulate(self, data_type, question, datasource_type, use_column):
+        method_name = "%s_for_suggest" % data_type
+        datasource = Datasource(type=datasource_type)
+        data = getattr(datasource, method_name)(self._bot_id, question)
+        similarities = self.__get_similarities(data, question)
+        self.ordered_data = self.__order_result(data, similarities, use_column)
+
+    def __get_similarities(self, data, question):
+        all_array = TextArray(data['question'], vectorizer=self.vectorizer)
+        all_vec = all_array.to_vec()
+        question_array = TextArray([question], vectorizer=self.vectorizer)
+        question_vec = question_array.to_vec()
+        similarities = cosine_similarity(all_vec, question_vec)
         similarities = similarities.flatten()
         logger.debug("similarities: %s" % similarities)
+        return similarities
 
-        ordered_result = list(map(lambda x: {
-            'question_answer_id': float(x[0]), 'similarity': x[1]
-        }, sorted(zip(question_answers['id'], similarities), key=lambda x: x[1], reverse=True)))
-
-        ordered_result = list(filter((lambda x: x['similarity'] > 0.1), ordered_result))
-
-        return ordered_result[0:10]
+    def __order_result(self, data, similarities, use_column):
+        logger.debug("__order_result: \n%s" % data)
+        # NOTE to_data_frameで使うのでインスタンス変数にしておく
+        self.use_column = use_column
+        zipped_data = zip(data[self.use_column], similarities, data['answer_id'])
+        sorted_data = sorted(zipped_data, key=lambda x: x[1], reverse=True)
+        map_iter = (lambda x: {
+            self.use_column: float(x[0]),
+            'similarity': x[1],
+            'answer_id': float(x[2])
+        })
+        ordered_data = list(map(map_iter, sorted_data))
+        return ordered_data

@@ -11,6 +11,14 @@ class Learning::Summarizer
     convert_decision_branches!
   end
 
+  def unify_learning_training_message_words!
+    @word_mappings ||= WordMapping.for_user(@bot.user).decorate
+    @bot.learning_training_messages.each do |it|
+      it.question = @word_mappings.replace_synonym(it.question)
+    end
+    @bot.learning_training_messages.each(&:save!)
+  end
+
   def convert_question_answers!
     data = @bot.question_answers.all.inject([]) { |res, qa|
       next res if qa.answer.blank? || res.map(&:question).include?(qa.question)

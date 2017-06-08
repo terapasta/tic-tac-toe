@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :word_mapping do
-    word "MyString"
-    synonym "MyString"
+    sequence(:word) { |n| "word#{n}" }
+    sequence(:synonym) { |n| "synonym#{n}" }
   end
 end

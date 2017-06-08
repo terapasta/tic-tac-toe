@@ -4,7 +4,8 @@ class QuestionAnswerPolicy < ApplicationPolicy
   end
 
   def show?
-    update?
+    return true if user.staff?
+    user.normal? && record.bot.user == user
   end
 
   def new?

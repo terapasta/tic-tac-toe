@@ -29,10 +29,9 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     subject do
       lambda do
         visit "/bots/#{bot.id}/question_answers/new"
-        fill_in 'question-body', with: 'sample question'
-        fill_in 'answer-body', with: 'sample answer body'
-        click_button '登録'
-        sleep 1
+        fill_in 'question_answer[question]', with: 'sample question'
+        fill_in 'question_answer[answer_attributes][body]', with: 'sample answer body'
+        click_button '登録する'
       end
     end
 
@@ -44,10 +43,9 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     subject do
       lambda do
         visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-        fill_in 'question-body', with: 'update question'
-        fill_in 'answer-body', with: 'update answer'
-        click_button '登録'
-        sleep 1
+        fill_in 'question_answer[question]', with: 'update question'
+        fill_in 'question_answer[answer_attributes][body]', with: 'update answer'
+        click_button '更新する'
         question_answer.reload
         answer.reload
       end

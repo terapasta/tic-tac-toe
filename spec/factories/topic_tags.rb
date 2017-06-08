@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :topic_tag do
-    name 'hogehoge'
-    bot_id 1
+    sequence(:name) { |n| "topic_tags.name #{n}" }
   end
 end

@@ -1,4 +1,4 @@
-class Api::V1::MessagesController < ApplicationController
+class Api::MessagesController < ApplicationController
   include Replyable
   protect_from_forgery with: :null_session
 

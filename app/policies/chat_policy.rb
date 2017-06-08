@@ -35,6 +35,6 @@ class ChatPolicy < ApplicationPolicy
     end
 
     def bot_owner?
-      user.id == record.bot.user.id
+      user.id == record.bot&.user&.id
     end
 end

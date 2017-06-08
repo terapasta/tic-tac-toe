@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   resources :bots, only: [:index, :edit, :update] do
     member do
       post :reset
-      get :task
     end
+    resources :tasks, only: [:index, :update]
     resource :chat_widget, only: [:show]
     resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]

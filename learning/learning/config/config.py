@@ -2,6 +2,7 @@ import yaml
 import sys
 
 class Config:
+    _ENV = None
 
     def __init__(self):
         with open("learning/config/config.yml", 'r') as ymlfile:
@@ -15,15 +16,11 @@ class Config:
     def __set_env(self):
         args = sys.argv
         command = args[0]
-        self._env = 'development'
+        self._env = Config._ENV
 
         if command.endswith('noserunner.py') or command.endswith('nosetests'):
             self._env = 'test'
             return
-
-        if len(args) > 1:
-            if args[1] in ['development', 'production', 'test']:
-                self._env = args[1]
 
     @property
     def env(self):

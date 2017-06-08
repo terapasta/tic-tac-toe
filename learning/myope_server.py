@@ -13,6 +13,7 @@ from learning.core.predict.null_reply_result import NullReplyResult
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
+from learning.config.config import Config
 
 class MyopeServer(RPCServer):
     STATUS_CODE_SUCCESS = 1
@@ -60,7 +61,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='127.0.0.1')
     parser.add_argument('--port', type=int, default=6000)
-    parser.add_argument('env', type=str, default='development')
+    parser.add_argument('--env', type=str, default='development')
     args = parser.parse_args()
+    Config._ENV = args.env
+    config = Config()
+    print(config.env)
     server = StreamServer((args.host, args.port), MyopeServer())
     server.serve_forever()

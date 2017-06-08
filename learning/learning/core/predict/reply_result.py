@@ -1,3 +1,4 @@
+from itertools import zip_longest
 from learning.log import logger
 
 
@@ -41,7 +42,7 @@ class ReplyResult:
     def __sort(self):
         dict = list(map(lambda x: {
             'answer_id': float(x[0]), 'probability': x[1], 'question_answer_id': x[2]
-        }, sorted(zip(self._answer_ids, self._probabilities, self._question_answer_ids), key=lambda x: x[1], reverse=True)))
+        }, sorted(zip_longest(self._answer_ids, self._probabilities, self._question_answer_ids), key=lambda x: x[1], reverse=True)))
         return dict
 
     def __limited_result(self):

@@ -41,11 +41,17 @@ class Similarity:
     def __manipulate(self, data_type, question, datasource_type, use_column, for_suggest=True):
         method_name = data_type + "_for_suggest" if for_suggest else data_type
         datasource = Datasource(type=datasource_type)
+
         method = getattr(datasource, method_name)
         if for_suggest:
             data = method(self._bot_id, question)
         else:
             data = method(self._bot_id)
+
+        if data.empty:
+            self.ordered_data = []
+            return
+
         similarities = self.__get_similarities(data, question)
         self.ordered_data = self.__order_result(data, similarities, use_column)
 

@@ -60,6 +60,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='127.0.0.1')
     parser.add_argument('--port', type=int, default=6000)
+    parser.add_argument('env', type=str, default='development')
     args = parser.parse_args()
     server = StreamServer((args.host, args.port), MyopeServer())
     server.serve_forever()

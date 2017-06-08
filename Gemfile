@@ -111,6 +111,7 @@ gem 'asset_sync'
 gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
+gem 'to_bool'
 
 group :development, :test do
 

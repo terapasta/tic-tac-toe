@@ -1,0 +1,44 @@
+h1 タスク
+
+ul.nav.nav-tabs
+  li class=(params.has_key?(:done) ? '' : 'active')
+    a href=bot_tasks_path(@bot.id) 未対応
+  li  class=(params.has_key?(:done) ? 'active' : '')
+    a href=bot_tasks_path(@bot.id, done: true) 対応済み
+
+.tab-content
+  .tab-pane.active
+    table.table.table-striped.table-bordered
+      thead 
+        tr
+          th フラグ
+          th 質問
+          th 回答
+          th ステータス
+          th
+          th
+      tbody
+      - @tasks.each do |task|
+        tr
+          td
+            - if task.bot_message.blank?
+              i.glyphicon.glyphicon-warning-sign.text-warning
+            - else
+              i.fa.fa-thumbs-down.text-danger
+          td = task.guest_message
+          td
+            - if task.bot_message.blank?
+              span.label.label-default 回答失敗
+            - else
+                = task.bot_message
+          td
+            - if task.is_done?
+              span.label.label-primary 対応済み
+            - else
+              span.label.label-danger 未対応
+          td 
+            = link_to "済みにする", bot_task_path(@bot, task), method: :patch, class: "btn btn-default btn-sm", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name } 
+          td 
+            = link_to "Q&Aを登録する", new_bot_question_answer_path(@bot), class: "btn btn-default btn-sm", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+  
+= paginate @tasks

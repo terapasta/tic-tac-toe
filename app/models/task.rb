@@ -1,6 +1,10 @@
 class Task < ActiveRecord::Base
   belongs_to :bot
 
+  scope :is_done, -> (flag) {
+    where(is_done: flag.to_bool)
+  }
+
   def set_task(task, bot_id, chat, message_id, action)
     task.bot_id = bot_id
     chat.messages.each_with_index do |message, i|
@@ -10,7 +14,6 @@ class Task < ActiveRecord::Base
           task.bot_message   = message.body
         else
           task.guest_message =  message.body
-          task.bot_message   = "回答失敗"
         end
       end
       task.save

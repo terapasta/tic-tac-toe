@@ -51,4 +51,8 @@ module ApplicationHelper
     null_topic_tag = Struct.new(:id, :name).new(-1, 'トピックタグなし')
     [null_topic_tag, *bot.topic_tags]
   end
+
+  def not_compatible_tasks(bot)
+    Task.where(bot_id: bot.id, is_done: false).count
+  end
 end

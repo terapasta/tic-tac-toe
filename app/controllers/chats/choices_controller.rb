@@ -3,10 +3,12 @@ class Chats::ChoicesController < ApplicationController
   before_action :set_bot_chat_decision_branch
 
   def create
-    ActiveRecord::Base.transaction do
-      @message = @chat.messages.create!(guest_message_params)
-      @bot_message = @chat.messages.create!(bot_message_params)
-      @bot_messages = [@bot_message]
+    if @answer.present?
+      ActiveRecord::Base.transaction do
+        @message = @chat.messages.create!(guest_message_params)
+        @bot_message = @chat.messages.create!(bot_message_params)
+        @bot_messages = [@bot_message]
+      end
     end
     respond_to do |format|
       format.js { render 'chats/messages/create' }

@@ -6,9 +6,12 @@ class Answer < ActiveRecord::Base
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
   has_many :training_messages, dependent: :destroy
   has_many :question_answers
+  has_many :answer_files, dependent: :destroy, inverse_of: :answer
 
   accepts_nested_attributes_for :decision_branches, reject_if: :all_blank, allow_destroy: true
   # accepts_nested_attributes_for :parent_decision_branch, reject_if: :all_blank, allow_destroy: true
+
+  accepts_nested_attributes_for :answer_files, allow_destroy: true
 
   NO_CLASSIFIED_ID = 0
 

@@ -55,6 +55,11 @@ class QuestionAnswerPolicy < ApplicationPolicy
           answer_attributes: [
             :id,
             :body,
+            answer_files_attributes: [
+              :id,
+              :file,
+              :_destroy
+            ]
           ],
           topic_taggings_attributes: [
             :id,

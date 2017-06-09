@@ -133,7 +133,16 @@ export default handleActions({
 });
 
 function pickUp(message) {
-  return pick(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers"]);
+  let result = pick(message, [
+    "id",
+    "body",
+    "createdAt",
+    "rating",
+    "iconImageUrl",
+    "similarQuestionAnswers",
+    "answerFiles",
+  ]);
+  return result;
 }
 
 export function changeRatingHandler(state, action) {

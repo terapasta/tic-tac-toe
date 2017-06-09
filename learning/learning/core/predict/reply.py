@@ -52,5 +52,5 @@ class Reply:
     def __search_simiarity(self, datasource, question):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        _, similarities, answer_ids = Similarity(self._bot_id).learning_training_messages(question).to_data_frame()
+        _, similarities, answer_ids = Similarity(self._bot_id).learning_training_messages(question, datasource_type="database", for_suggest=False).to_data_frame()
         return answer_ids, similarities

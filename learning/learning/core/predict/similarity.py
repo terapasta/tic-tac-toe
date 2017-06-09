@@ -23,10 +23,10 @@ class Similarity:
         self.__manipulate("question_answers", question, datasource_type, 'id')
         return self
 
-    def learning_training_messages(self, question, datasource_type='database'):
+    def learning_training_messages(self, question, datasource_type='database', for_suggest=True):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        self.__manipulate("learning_training_messages", question, datasource_type, 'question_answer_id')
+        self.__manipulate("learning_training_messages", question, datasource_type, 'question_answer_id', for_suggest)
         return self
 
     def to_data_frame(self):
@@ -38,10 +38,14 @@ class Similarity:
         filtered_data = list(filter(filter_iter, self.ordered_data))
         return filtered_data[0:10]
 
-    def __manipulate(self, data_type, question, datasource_type, use_column):
-        method_name = "%s_for_suggest" % data_type
+    def __manipulate(self, data_type, question, datasource_type, use_column, for_suggest=True):
+        method_name = data_type + "_for_suggest" if for_suggest else data_type
         datasource = Datasource(type=datasource_type)
-        data = getattr(datasource, method_name)(self._bot_id, question)
+        method = getattr(datasource, method_name)
+        if for_suggest:
+            data = method(self._bot_id, question)
+        else:
+            data = method(self._bot_id)
         similarities = self.__get_similarities(data, question)
         self.ordered_data = self.__order_result(data, similarities, use_column)
 

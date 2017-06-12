@@ -1,9 +1,29 @@
-- data = @question_answer.persisted? ? { event_name: 'Update question answer', question_answer_id: @question_answer.id, bot_id: @bot.id, bot_name: @bot.name } : {}
+.panel.panel-default
+  .panel-heading: .panel-title
+    = @question_answer.persisted? ? 'Q&A編集' : 'Q&A新規登録'
 
-span(
-  data-component="QuestionAnswerForm"
-  data-bot-id=@bot.id
-  data-id=@question_answer.id
-  data-topic-tags=@bot.topic_tags.pluck(:id, :name)
-  data-question-body=@question_answer.question
-)
+  .panel-body
+    = nested_form_for [@bot, @question_answer] do |f|
+      - if @question_answer.errors.any?
+        .form-group.text-danger
+          ul
+            - @question_answer.errors.full_messages.each do |message|
+              li= message
+
+      .form-group
+        = f.label :question
+        = f.text_area :question, class: 'form-control', rows: 5
+
+      .form-group
+        = f.fields_for :answer do |nf|
+          = nf.label :body
+          = nf.text_area :body, class: 'form-control', rows: 5
+
+      span(
+        data-component="QuestionAnswerTagForm"
+        data-question-answer-id=@question_answer.id
+        data-bot-id=@bot.id
+      )
+
+      .form-group
+        = f.submit class: 'btn btn-primary'

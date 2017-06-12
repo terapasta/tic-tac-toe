@@ -8,7 +8,7 @@ class Api::Bots::TopicTagsController < Api::BaseController
   end
 
   def create
-    @topic_tag = @bot.topic_tags.build(permitted_attributes(TopicTag))
+    @topic_tag = @bot.topic_tags.find_or_initialize_by(permitted_attributes(TopicTag))
     authorize @topic_tag
     if @topic_tag.save
       render json: @topic_tag, adapter: :json, status: :created

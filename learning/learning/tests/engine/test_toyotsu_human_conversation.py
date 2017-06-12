@@ -77,7 +77,9 @@ JALマイレージバンクで計上される費用は
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
-        expected_answer = 'TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養異動届」を委託先のクローバーへ提出して下さい。'
+        expected_answer = '''
+TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養異動届」を委託先の弁護士法人クローバーへ提出して下さい。
+'''
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)

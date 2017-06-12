@@ -426,7 +426,7 @@ export default class QuestionAnswerForm extends Component {
         _destroy: isDeleted ? "1" : "0",
       };
       if (id != null) { newAF.id = id; }
-      if (file != null) { newAF.file = file } 
+      if (file != null) { newAF.file = file }
       answerFilesAttributes[i] = newAF;
     });
 
@@ -464,6 +464,7 @@ export default class QuestionAnswerForm extends Component {
         break;
     }
 
+    payload.answer_attributes = payload.answer_attributes || {};
     payload.answer_attributes.answer_files_attributes = answerFilesAttributes
 
     this.setState({ errors });
@@ -471,9 +472,6 @@ export default class QuestionAnswerForm extends Component {
     if (errors.length === 0) {
       const formData = objectToFormData(payload, null, "question_answer");
       formData.append("authenticity_token", authenticityToken());
-
-      formData.forEach((v, k) => console.log(k, v))
-
       this.saveQuestionAnswer(formData);
     }
   }

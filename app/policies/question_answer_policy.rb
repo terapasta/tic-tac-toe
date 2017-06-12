@@ -65,6 +65,7 @@ class QuestionAnswerPolicy < ApplicationPolicy
           topic_taggings_attributes: [
             :id,
             :topic_tag_id,
+            :_destroy
           ]
         }
       ]

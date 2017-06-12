@@ -7619,55 +7619,71 @@ var QuestionAnswerTagFrom = function (_Component) {
           "div",
           { className: "form-group" },
           _react2.default.createElement(
-            "h5",
-            null,
-            "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0"
-          ),
-          topicTags.map(function (t, i) {
-            var tt = (0, _find2.default)(topicTaggings, function (tt) {
-              return tt.topicTagId === t.id;
-            });
-            var baseName = "question_answer[topic_taggings_attributes][" + uniqueKey() + "]";
-            return _react2.default.createElement(
+            "div",
+            { className: "panel panel-default" },
+            _react2.default.createElement(
               "div",
-              { key: i },
+              { className: "panel-heading" },
               _react2.default.createElement(
-                "label",
-                null,
-                (0, _get2.default)(tt, "id") != null && _react2.default.createElement("input", { type: "hidden", name: baseName + "[id]", value: tt.id }),
-                _react2.default.createElement("input", { type: "checkbox", checked: !(0, _isEmpty2.default)(tt), onChange: function onChange(e) {
-                    return _this2.onChangeCheckBox(t, e);
-                  }, name: baseName + "[topic_tag_id]", value: t.id }),
-                " ",
-                _react2.default.createElement(
-                  "span",
-                  { className: "label label-primary" },
-                  t.name
-                )
+                "div",
+                { className: "panel-title" },
+                "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0"
               )
-            );
-          }),
-          (0, _isEmpty2.default)(topicTags) && _react2.default.createElement(
-            "p",
-            null,
-            "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u306F\u3042\u308A\u307E\u305B\u3093"
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "panel-body" },
+              topicTags.map(function (t, i) {
+                var tt = (0, _find2.default)(topicTaggings, function (tt) {
+                  return tt.topicTagId === t.id;
+                });
+                var baseName = "question_answer[topic_taggings_attributes][" + uniqueKey() + "]";
+                return _react2.default.createElement(
+                  "div",
+                  { key: i },
+                  _react2.default.createElement(
+                    "label",
+                    null,
+                    (0, _get2.default)(tt, "id") != null && _react2.default.createElement("input", { type: "hidden", name: baseName + "[id]", value: tt.id }),
+                    _react2.default.createElement("input", { type: "checkbox", checked: !(0, _isEmpty2.default)(tt), onChange: function onChange(e) {
+                        return _this2.onChangeCheckBox(t, e);
+                      }, name: baseName + "[topic_tag_id]", value: t.id }),
+                    " ",
+                    _react2.default.createElement(
+                      "span",
+                      { className: "label label-primary" },
+                      t.name
+                    )
+                  )
+                );
+              }),
+              (0, _isEmpty2.default)(topicTags) && _react2.default.createElement(
+                "p",
+                null,
+                "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u306F\u3042\u308A\u307E\u305B\u3093"
+              ),
+              deletedTopicTaggings.map(function (dtt, i) {
+                var baseName = "question_answer[topic_taggings_attributes][" + uniqueKey() + "]";
+                return _react2.default.createElement(
+                  "span",
+                  { key: i },
+                  _react2.default.createElement("input", { type: "hidden", name: baseName + "[id]", value: dtt.id }),
+                  _react2.default.createElement("input", { type: "hidden", name: baseName + "[_destroy]", value: "1" })
+                );
+              })
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "panel-footer" },
+              _react2.default.createElement(
+                "form",
+                { className: "form-inline", onSubmit: this.onSubmitForm },
+                _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u3092\u8FFD\u52A0", onChange: this.onChangeInputText, value: newTopicTagName }),
+                _react2.default.createElement("input", { type: "submit", className: "btn btn-primary", value: "\u8FFD\u52A0" })
+              )
+            )
           )
-        ),
-        _react2.default.createElement(
-          "form",
-          { className: "form-group form-inline", onSubmit: this.onSubmitForm },
-          _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u3092\u8FFD\u52A0", onChange: this.onChangeInputText, value: newTopicTagName }),
-          _react2.default.createElement("input", { type: "submit", className: "btn btn-primary", value: "\u8FFD\u52A0" })
-        ),
-        deletedTopicTaggings.map(function (dtt, i) {
-          var baseName = "question_answer[topic_taggings_attributes][" + uniqueKey() + "]";
-          return _react2.default.createElement(
-            "span",
-            { key: i },
-            _react2.default.createElement("input", { type: "hidden", name: baseName + "[id]", value: dtt.id }),
-            _react2.default.createElement("input", { type: "hidden", name: baseName + "[_destroy]", value: "1" })
-          );
-        })
+        )
       );
     }
   }, {

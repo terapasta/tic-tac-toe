@@ -19,6 +19,26 @@
           = nf.label :body
           = nf.text_area :body, class: 'form-control', rows: 5
 
+      .form-group
+        .panel.panel-default
+          .panel-heading: .panel-title 回答添付ファイル
+          .panel-body
+            = f.fields_for :answer do |nf|
+              table.table.table-striped.table-bordered: tbody#answer-files
+                = nf.fields_for :answer_files, wrapper: false do |nnf|
+                  tr.fields.form-inline
+                    td
+                      - if nnf.object.file?
+                        - if nnf.object.image?
+                          = link_to image_tag(nnf.object.file_url, width: 200), nnf.object.file_url, target: '_blank'
+                        - else
+                          = link_to nnf.object.read_attribute(:file), nnf.object.file_url, target: '_blank'
+                        p ファイルタイプ：#{nnf.object.file_type} / ファイルサイズ #{nnf.object.file_size}
+                      - else
+                        = nnf.file_field :file
+                    td= nnf.link_to_remove '削除', class: 'btn btn-danger'
+              = nf.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-default', data: { target: '#answer-files' }
+
       span(
         data-component="QuestionAnswerTagForm"
         data-question-answer-id=@question_answer.id

@@ -46,38 +46,46 @@ export default class QuestionAnswerTagFrom extends Component {
     return (
       <div>
         <div className="form-group">
-          <h5>トピックタグ</h5>
-          {topicTags.map((t, i) => {
-            const tt = find(topicTaggings, (tt) => tt.topicTagId === t.id);
-            const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;
-            return (
-              <div key={i}>
-                <label>
-                  {get(tt, "id") != null && <input type="hidden" name={`${baseName}[id]`} value={tt.id} />}
-                  <input type="checkbox" checked={!isEmpty(tt)} onChange={(e) => this.onChangeCheckBox(t, e)} name={`${baseName}[topic_tag_id]`} value={t.id} />
-                  {" "}
-                  <span className="label label-primary">{t.name}</span>
-                </label>
-              </div>
-            );
-          })}
-          {isEmpty(topicTags) && (
-            <p>トピックタグはありません</p>
-          )}
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <div className="panel-title">トピックタグ</div>
+            </div>
+            <div className="panel-body">
+              {topicTags.map((t, i) => {
+                const tt = find(topicTaggings, (tt) => tt.topicTagId === t.id);
+                const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;
+                return (
+                  <div key={i}>
+                    <label>
+                      {get(tt, "id") != null && <input type="hidden" name={`${baseName}[id]`} value={tt.id} />}
+                      <input type="checkbox" checked={!isEmpty(tt)} onChange={(e) => this.onChangeCheckBox(t, e)} name={`${baseName}[topic_tag_id]`} value={t.id} />
+                      {" "}
+                      <span className="label label-primary">{t.name}</span>
+                    </label>
+                  </div>
+                );
+              })}
+              {isEmpty(topicTags) && (
+                <p>トピックタグはありません</p>
+              )}
+              {deletedTopicTaggings.map((dtt, i) => {
+                const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;
+                return (
+                  <span key={i}>
+                    <input type="hidden" name={`${baseName}[id]`} value={dtt.id} />
+                    <input type="hidden" name={`${baseName}[_destroy]`} value="1" />
+                  </span>
+                );
+              })}
+            </div>
+            <div className="panel-footer">
+              <form className="form-inline" onSubmit={this.onSubmitForm}>
+                <input type="text" className="form-control" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
+                <input type="submit" className="btn btn-primary" value="追加" />
+              </form>
+            </div>
+          </div>
         </div>
-        <form className="form-group form-inline" onSubmit={this.onSubmitForm}>
-          <input type="text" className="form-control" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
-          <input type="submit" className="btn btn-primary" value="追加" />
-        </form>
-        {deletedTopicTaggings.map((dtt, i) => {
-          const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;
-          return (
-            <span key={i}>
-              <input type="hidden" name={`${baseName}[id]`} value={dtt.id} />
-              <input type="hidden" name={`${baseName}[_destroy]`} value="1" />
-            </span>
-          );
-        })}
       </div>
     );
   }

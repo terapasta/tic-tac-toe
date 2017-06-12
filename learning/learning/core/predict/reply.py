@@ -35,7 +35,7 @@ class Reply:
         count = np.count_nonzero(features.toarray())
 
         if self.learning_parameter.use_similarity_classification:
-            answer_ids, probabilities, question_answers = self.__search_simiarity(datasource, X[0])
+            answer_ids, probabilities, question_answers = self.__search_simiarity(X[0], datasource_type)
         else:
             answer_ids, probabilities, question_answers = self.__predict(features, X[0])
 
@@ -51,8 +51,8 @@ class Reply:
         question_answers = similarity.question_answers(question).to_data()
         return answer_ids, probabilities[0], question_answers
 
-    def __search_simiarity(self, datasource, question):
+    def __search_simiarity(self, question, datasource_type):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する
         """
-        _, similarities, answer_ids = Similarity(self._bot_id).learning_training_messages(question, datasource_type="database", for_suggest=False).to_data_frame()
-        return answer_ids, similarities
+        question_answer_ids, similarities, answer_ids = Similarity(self._bot_id).learning_training_messages(question, datasource_type="database", for_suggest=False).to_data_frame()
+        return answer_ids, similarities, question_answer_ids

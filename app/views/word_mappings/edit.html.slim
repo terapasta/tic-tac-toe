@@ -1,3 +1,6 @@
 h1 同義語編集
 
-== render 'form'
+= render 'form', { resource: [@word_mapping] }
+
+br
+= link_to '戻る', word_mappings_path, class: 'btn btn-default', data: { event_name: 'Back to word mapping index', word_mapping_id: @word_mapping.id }

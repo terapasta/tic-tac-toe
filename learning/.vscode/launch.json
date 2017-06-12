@@ -22,7 +22,7 @@
         "type": "python",
         "request": "launch",
         "stopOnEntry": false,
-        "pythonPath": "${config.python.pythonPath}",
+        "pythonPath": "${config:python.pythonPath}",
         "program": "${workspaceRoot}/.vscode/noserunner.py",
         "cwd": "${workspaceRoot}",
         "debugOptions": [

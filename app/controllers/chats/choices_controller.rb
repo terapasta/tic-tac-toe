@@ -3,12 +3,10 @@ class Chats::ChoicesController < ApplicationController
   before_action :set_bot_chat_decision_branch
 
   def create
-    if @answer.present?
-      ActiveRecord::Base.transaction do
-        @message = @chat.messages.create!(guest_message_params)
-        @bot_message = @chat.messages.create!(bot_message_params)
-        @bot_messages = [@bot_message]
-      end
+    ActiveRecord::Base.transaction do
+      @message = @chat.messages.create!(guest_message_params)
+      @bot_message = @chat.messages.create!(bot_message_params)
+      @bot_messages = [@bot_message]
     end
     respond_to do |format|
       format.js { render 'chats/messages/create' }
@@ -34,8 +32,8 @@ class Chats::ChoicesController < ApplicationController
     def bot_message_params
       {
         speaker: 'bot',
-        answer_id: @answer.id,
-        body: @answer.body,
+        answer_id: @answer&.id || Answer::NO_CLASSIFIED_ID,
+        body: @answer&.body || @bot.classify_failed_message_with_fallback,
         created_at: @message.created_at + 1.second,
       }
     end

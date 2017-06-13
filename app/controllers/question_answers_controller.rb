@@ -6,7 +6,8 @@ class QuestionAnswersController < ApplicationController
 
   before_action :set_bot
   before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_topic_tags, only: [:index, :headless]
+  before_action :set_search_result, only: [:index, :headless]
   autocomplete :answer, :body, full: true
 
   def index
@@ -114,7 +115,7 @@ class QuestionAnswersController < ApplicationController
   end
 
   def headless
-    search_question_answer
+    @question_answers = search_question_answer(@bot).result
   end
 
   private
@@ -124,6 +125,15 @@ class QuestionAnswersController < ApplicationController
 
     def set_question_answer
       @question_answer = @bot.question_answers.find params[:id]
+    end
+
+    def set_topic_tags
+      @topic_tags = @bot.topic_tags
+    end
+
+    def set_search_result
+      @search_result = params.dig(:topic, :id)
+      @keyword = params[:keyword]
     end
 
     def pundit_auth

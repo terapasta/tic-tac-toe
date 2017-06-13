@@ -15,6 +15,8 @@ import * as c from "./constants";
 import Mixpanel from "../../analytics/mixpanel";
 import snakeCaseKeys from "../../modules/snake-case-keys";
 
+const PollingInterval = 1000 * 60;
+
 export const fetchedMessages = createAction("FETCHED_MESSAGES");
 export const createdMessage = createAction("CREATED_MESSAGE");
 
@@ -247,7 +249,7 @@ export function pollLearningStatus(botId) {
     dispatch(getLearningStatus(botId));
     setInterval(() => {
       dispatch(getLearningStatus(botId));
-    }, 10000);
+    }, PollingInterval);
   };
 }
 

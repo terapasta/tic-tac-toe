@@ -32,8 +32,8 @@ class Chats::ChoicesController < ApplicationController
     def bot_message_params
       {
         speaker: 'bot',
-        answer_id: @answer.id,
-        body: @answer.body,
+        answer_id: @answer&.id || Answer::NO_CLASSIFIED_ID,
+        body: @answer&.body || @bot.classify_failed_message_with_fallback,
         created_at: @message.created_at + 1.second,
       }
     end

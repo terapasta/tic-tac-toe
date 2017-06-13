@@ -50,6 +50,10 @@ class Bot < ActiveRecord::Base
     end
   end
 
+  def classify_failed_message_with_fallback
+    classify_failed_message.presence || DefinedAnswer.classify_failed&.body || ""
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?

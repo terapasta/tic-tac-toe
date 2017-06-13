@@ -1,0 +1,82 @@
+version: '2'
+
+services:
+  app: &app_base
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/usr/src/app
+    volumes_from:
+      - app_data
+    depends_on:
+      - db
+      - learning
+    env_file: .env
+    environment:
+      - DB_HOST=db
+      - RPC_HOST=learning
+  jobs:
+    <<: *app_base
+    ports: []
+    command: bundle exec rake jobs:work
+    stdin_open: false
+  test:
+    <<: *app_base
+    command: bundle exec guard
+    ports: []
+    stdin_open: false
+    depends_on:
+      - learning_test
+    environment:
+      - DB_HOST=db
+      - RPC_HOST=learning_test
+  db:
+    image: mysql
+    tty: false
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes_from:
+      - db_data
+    ports:
+      - 13306:3306
+  db_data:
+    image: busybox
+    volumes:
+      - db:/var/lib/mysql
+  app_data:
+    image: busybox
+    volumes:
+      - bundle:/bundle
+      - node_modules:/usr/src/app/node_modules
+  client:
+    image: node:6-slim
+    command: yarn run watch
+    volumes:
+      - .:/usr/src/app
+    volumes_from:
+      - app_data
+  learning: &learning_base
+    build: ./learning
+    tty: true
+    command: python ./myope_server.py --host '0.0.0.0'
+    volumes:
+      - ./learning:/usr/src/app
+    ports:
+      - 6000:6000
+    depends_on:
+      - db
+  learning_test:
+    <<: *learning_base
+    command: python ./myope_server.py --host '0.0.0.0' test
+
+volumes:
+  db:
+    driver: local
+  bundle:
+    driver: local
+  node_modules:
+    driver: local

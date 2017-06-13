@@ -53,20 +53,17 @@ class Bot < ActiveRecord::Base
     end
   end
 
-
   def classify_failed_message_with_fallback
     classify_failed_message.presence || DefinedAnswer.classify_failed&.body || ""
   end
 
-  def edit_selected_question_answer_ids(bot, question_answer_id, action)
-    if action == "create"
-      bot.selected_question_answer_ids.push(question_answer_id).tap do
-        bot.save
-      end
-    else
-      bot.selected_question_answer_ids.delete(question_answer_id).tap do
-        bot.save
-      end
+  def add_selected_question_answer_ids(question_answer_id)
+    self.selected_question_answer_ids.push(question_answer_id).tap do
+    end
+  end
+
+  def remove_selected_question_answer_ids(question_answer_id)
+    self.selected_question_answer_ids.delete(question_answer_id).tap do
     end
   end
 

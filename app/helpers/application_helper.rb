@@ -52,7 +52,7 @@ module ApplicationHelper
     [null_topic_tag, *bot.topic_tags]
   end
 
-  def not_compatible_tasks(bot)
+  def undigested_tasks_count(bot)
     Task.where(bot_id: bot.id, is_done: false).count
   end
 end

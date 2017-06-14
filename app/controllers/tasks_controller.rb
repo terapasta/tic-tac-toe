@@ -19,6 +19,6 @@ class TasksController < ApplicationController
     end
 
     def set_task
-      @tasks = Task.where(bot_id: params[:bot_id]).is_done(params[:done]).page(params[:page]).per(20).order(:created_at)
+      @tasks = Task.where(bot_id: params[:bot_id]).with_done(params[:done]).page(params[:page]).per(20).order(:created_at)
     end
 end

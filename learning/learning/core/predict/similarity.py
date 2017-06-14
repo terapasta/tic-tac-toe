@@ -50,6 +50,7 @@ class Similarity:
 
         if data.empty:
             self.ordered_data = []
+            self.use_column = use_column
             return
 
         similarities = self.__get_similarities(data, question)

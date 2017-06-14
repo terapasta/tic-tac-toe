@@ -3,7 +3,7 @@ module QuestionAnswerSearchable
 
   private
     def search_question_answer(bot)
-      @q = bot.question_answers
+      q = bot.question_answers
         .topic_tag(params.dig(:topic, :id))
         .includes(:decision_branches)
         .order('question')

@@ -20,7 +20,7 @@ class ToyotsuHumanConversationTestCase(TestCase):
         # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_jal_mileage(self):
-        questions = ['JAL マイレージ']
+        questions = ['JAL マイレージ 内訳']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
@@ -37,9 +37,7 @@ JALマイレージバンクで計上される費用は
 '''
         # HACK 「helper.replace_newline_and_space」の記述が長すぎるのでシンプルな書き方にしたい
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-
-        # TODO: probabilityが低くなってしまう
-        # ok_(result.probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
 #     def test_overseas_business_trip_pay(self):
 #         '''

@@ -23,7 +23,6 @@ module ApplicationHelper
       "#{ActionController::Base.asset_host}/assets/embed.js"
     end
   end
-
   def material_icon(name, options = {})
     klass = options.delete(:class)
     options.merge!(class: "material-icons #{klass}")

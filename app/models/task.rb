@@ -5,6 +5,10 @@ class Task < ActiveRecord::Base
     where(is_done: flag.to_bool)
   }
 
+  scope :unstarted, -> (bot) {
+    where(bot_id: bot.id, is_done: false)
+  }
+
   def set_task(task, bot_id, chat, message_id, action)
     task.bot_id = bot_id
     chat.messages.each_with_index do |message, i|

@@ -17,7 +17,7 @@ class PtnaConversationMLPTestCase(TestCase):
     def setUpClass(cls):
         cls.answers = helper.build_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']

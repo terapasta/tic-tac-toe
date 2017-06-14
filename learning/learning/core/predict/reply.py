@@ -19,6 +19,7 @@ class Reply:
         self._bot_id = bot_id
 
         try:
+            # TODO: コサイン類似の場合estimator不要なので最適化する
             self.estimator = Persistance.load_model(bot_id)
             self.vectorizer = Persistance.load_vectorizer(bot_id)
         except IOError:

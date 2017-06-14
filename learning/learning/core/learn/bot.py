@@ -11,12 +11,25 @@ from learning.core.training_set.training_message import TrainingMessage
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.persistance import Persistance
 
+
 class Bot:
 
     def __init__(self, bot_id, learning_parameter):
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
+
+    def vectorize(self, datasource_type='database'):
+        logger.debug('start Bot#vectorize')
+
+        training_set = self.__build_training_set(datasource_type)
+        # TODO: 学習しないようにする/modelは不要?
+        estimator = self.__get_estimator(training_set)
+        logger.debug('after Bot#__get_estimator')
+
+        Persistance.make_directory(self.bot_id)
+        Persistance.dump_model(estimator, self.bot_id)
+        Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
 
     @stop_watch
     def learn(self, datasource_type='database'):

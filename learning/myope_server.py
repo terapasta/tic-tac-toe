@@ -23,6 +23,7 @@ class MyopeServer(RPCServer):
         learning_parameter = LearningParameter(learning_parameter_attributes)
         X = np.array([body])
 
+        Bot(bot_id, learning_parameter).vectorize()
         try:
             reply_result = Reply(bot_id, learning_parameter).perform(X)
             status_code = self.STATUS_CODE_SUCCESS

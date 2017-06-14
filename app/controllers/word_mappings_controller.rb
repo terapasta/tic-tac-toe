@@ -3,7 +3,7 @@ class WordMappingsController < ApplicationController
   before_action :set_word_mapping, only: [:show, :edit, :update, :destroy]
 
   def index
-    @word_mappings = current_user.word_mappings.order('created_at DESC').page(params[:page]).per(params[:per])
+    @word_mappings = current_user.word_mappings.order(created_at: :DESC).page(params[:page]).per(params[:per])
   end
 
   def new

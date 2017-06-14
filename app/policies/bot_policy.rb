@@ -48,7 +48,7 @@ class BotPolicy < ApplicationPolicy
     ]
   end
 
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       if user.staff?
         scope

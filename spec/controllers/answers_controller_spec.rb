@@ -82,12 +82,12 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'old_answer not has answer_files, decision_branches, training_messages, question_answers and parent_decision_branch' do
         subject.call
-        old_answer.reload
-        expect(old_answer.answer_files).to be_blank
-        expect(old_answer.decision_branches).to be_blank
-        expect(old_answer.training_messages).to be_blank
-        expect(old_answer.question_answers).to be_blank
-        expect(old_answer.parent_decision_branch).to be_nil
+        answer.reload
+        expect(answer.answer_files).to be_blank
+        expect(answer.decision_branches).to be_blank
+        expect(answer.training_messages).to be_blank
+        expect(answer.question_answers).to be_blank
+        expect(answer.parent_decision_branch).to be_nil
       end
     end
   end

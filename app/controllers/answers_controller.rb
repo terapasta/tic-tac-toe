@@ -37,33 +37,14 @@ class AnswersController < ApplicationController
 
   def update
     ActiveRecord::Base.transaction do
-      if @answer.body != answer_params[:body]
-        @old_answer = @answer
-        @answer = @bot.answers.build(answer_params)
-      else
-        @answer.assign_attributes(answer_params)
-      end
-
-      @answer.save!
-
-      if @old_answer.present?
-        %w(answer_files decision_branches training_messages question_answers).each do |resources|
-          @old_answer.send(resources).each do |resource|
-            resource.update!(answer_id: @answer.id)
-          end
-        end
-
-        if @old_answer.parent_decision_branch.present?
-          @old_answer&.parent_decision_branch.update!(next_answer_id: @answer.id)
-        end
-      end
+      @answer = AnswerUpdateService.new(@bot, @answer, answer_params).process!
     end
 
     respond_to do |format|
       format.json { render json: @answer.decorate.as_json, status: :ok }
     end
   rescue => e
-    logger.error e.message + e.backtrace.join("\n")
+    logger.error e.message.tapp + e.backtrace.join("\n")
     respond_to do |format|
       format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
     end

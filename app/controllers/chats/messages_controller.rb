@@ -29,9 +29,7 @@ class Chats::MessagesController < ApplicationController
     end
     respond_to do |format|
       if @bot_messages.first.answer_id == 0
-        @task = Task.new
-        @task.build(@bot.id, @chat, @message.id, is_bad: params[:action])
-        @task.save
+        TaskCreateService.new(@message, @bot).process
       end
       format.js
       format.json { render_collection_json [@message, *@bot_messages], include: included_associations }

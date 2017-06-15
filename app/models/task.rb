@@ -9,7 +9,7 @@ class Task < ActiveRecord::Base
     where(bot_id: bot.id, is_done: false)
   }
 
-  def build(bot_id, chat, message_id, is_bad:)
+  def build_new_record(bot_id, chat, message_id, is_bad:)
     self.bot_id = bot_id
     # bad評価もしくは回答失敗した、guestとbotのメッセージを取得する
     messages = chat.messages.select{ |message, i| message.id == message_id || message.id == message_id + 1 }

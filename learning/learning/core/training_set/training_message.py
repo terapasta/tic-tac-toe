@@ -18,7 +18,7 @@ class TrainingMessage(Base):
         logger.debug('TrainingMessage#build start')
         learning_training_messages = self._datasource.learning_training_messages(self._bot_id)
         questions = np.array(learning_training_messages['question'])
-        answer_ids = np.array(learning_training_messages['answer_id'])
+        answer_ids = np.array(learning_training_messages['answer_id'], dtype=np.int)
 
         # 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
         questions = np.append(questions, [''] * self.COUNT_OF_APPEND_BLANK)

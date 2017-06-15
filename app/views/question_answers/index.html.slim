@@ -1,3 +1,8 @@
+- if params[:headless].present?
+  - content_for :hide_global_header, true
+  - content_for :hide_sidebar, true
+  - content_for :additional_container_main_class, 'container-main--headless'
+
 h1 Q&A管理
 .clearfix
   .pull-left

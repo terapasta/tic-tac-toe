@@ -21,15 +21,16 @@ body
   - if Rails.env.production?
     = render 'layouts/shared/analytics/google_analytics'
 
-  - if !chat_page? || params[:action] != "headless"
-    = render 'layouts/shared/ui/header'
-
-  - unless params[:action] == "headless"
-    = render 'layouts/shared/ui/side_nav'
-
   - if chat_page?
     = yield
+
   - else
+    - if !content_for?(:hide_global_header)
+      = render 'layouts/shared/ui/header'
+
+    - unless content_for?(:hide_sidebar)
+      = render 'layouts/shared/ui/side_nav'
+
     .container.container-main class=content_for(:additional_container_main_class)
       = render "shared/flash"
       = yield

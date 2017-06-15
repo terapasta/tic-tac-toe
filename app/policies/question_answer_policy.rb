@@ -54,7 +54,6 @@ class QuestionAnswerPolicy < ApplicationPolicy
             :created_user_id
           ],
           answer_attributes: [
-            :id,
             :body,
             answer_files_attributes: [
               :id,

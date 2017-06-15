@@ -5930,9 +5930,18 @@ function clearActiveItem() {
 }
 
 function setEditingQuestionModel(questionModel) {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch({ type: t.SET_EDITING_QUESTION_MODEL, questionModel: questionModel });
-    dispatch(setEditingAnswerModel(new _answer2.default()));
+
+    var answer = void 0;
+    if (questionModel.answerId != null) {
+      var _getState15 = getState(),
+          answersRepo = _getState15.answersRepo;
+
+      answer = answersRepo[questionModel.answerId];
+    }
+    var answerModel = new _answer2.default(answer || {});
+    dispatch(setEditingAnswerModel(answerModel));
   };
 }
 
@@ -8982,6 +8991,11 @@ var Question = function () {
     key: "topicTags",
     get: function get() {
       return this.attrs.topicTags;
+    }
+  }, {
+    key: "answerId",
+    get: function get() {
+      return this.attrs.answerId;
     }
   }]);
 

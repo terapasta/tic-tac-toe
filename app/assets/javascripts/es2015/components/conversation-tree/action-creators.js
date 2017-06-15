@@ -457,9 +457,16 @@ export function clearActiveItem() {
 }
 
 export function setEditingQuestionModel(questionModel) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: t.SET_EDITING_QUESTION_MODEL, questionModel });
-    dispatch(setEditingAnswerModel(new Answer));
+
+    let answer;
+    if (questionModel.answerId != null) {
+      const { answersRepo } = getState();
+      answer = answersRepo[questionModel.answerId];
+    }
+    const answerModel = new Answer(answer || {});
+    dispatch(setEditingAnswerModel(answerModel));
   };
 }
 

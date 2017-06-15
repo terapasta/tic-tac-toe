@@ -15,9 +15,12 @@
         = f.text_area :question, class: 'form-control', rows: 5
 
       .form-group
-        = f.fields_for :answer do |nf|
-          = nf.label :body
-          = nf.text_area :body, class: 'form-control', rows: 5
+        span(
+          data-component="AnswerBodyTextArea"
+          data-base-name="question_answer[answer_attributes]"
+          data-default-value=@question_answer.answer&.body
+          data-bot-id=@bot.id
+        )
 
       .form-group
         .panel.panel-default

@@ -12,6 +12,7 @@ import Mixpanel from "./analytics/mixpanel";
 import LearningButton from "./components/learning-button";
 import CopyButton from "./components/copy-button";
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
+import AnswerBodyTextArea from "./components/answer-body-text-area";
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -25,6 +26,7 @@ function init() {
   mountComponent(BotResetButton);
   mountComponent(LearningButton);
   mountComponent(QuestionAnswerTagForm);
+  mountComponent(AnswerBodyTextArea);
   CopyButton.initialize();
 }
 

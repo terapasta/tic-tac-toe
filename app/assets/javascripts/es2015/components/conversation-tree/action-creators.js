@@ -410,13 +410,16 @@ export function updateQuestionModel(questionModel, newAttrs, options = {}) {
 
 export function updateAnswerModel(answerModel, newAttrs, options = {}) {
   return (dispatch, getState) => {
-    const { isProcessing } = getState();
+    const { isProcessing, questionsTree } = getState();
     if (isProcessing) { return; }
     dispatch(onProcessing());
 
     const { questionModel } = options;
 
     answerModel.update(newAttrs).then((newAnswerModel) => {
+      findAnswerFromTree(questionsTree, answerModel.id, (node) => {
+        node.id = newAnswerModel.id;
+      });
       dispatch(setEditingAnswerModel(newAnswerModel));
       dispatch(updateAnswersRepo(newAnswerModel));
       dispatch(offProcessing());

@@ -5874,7 +5874,8 @@ function updateAnswerModel(answerModel, newAttrs) {
 
   return function (dispatch, getState) {
     var _getState13 = getState(),
-        isProcessing = _getState13.isProcessing;
+        isProcessing = _getState13.isProcessing,
+        questionsTree = _getState13.questionsTree;
 
     if (isProcessing) {
       return;
@@ -5885,6 +5886,9 @@ function updateAnswerModel(answerModel, newAttrs) {
 
 
     answerModel.update(newAttrs).then(function (newAnswerModel) {
+      (0, _helpers.findAnswerFromTree)(questionsTree, answerModel.id, function (node) {
+        node.id = newAnswerModel.id;
+      });
       dispatch(setEditingAnswerModel(newAnswerModel));
       dispatch(updateAnswersRepo(newAnswerModel));
       dispatch(offProcessing());

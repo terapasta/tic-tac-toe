@@ -31,17 +31,10 @@ $(function() {
   var selectionCheckBoxies = $('[data-role="select-question-answer"]');
   selectionCheckBoxies.on('change', function() {
     var $checkbox = $(this);
-    $url = "/bots/" + $checkbox.data('bot-id') + '/question_answers/' + $checkbox.data('question-answer-id') + '/selections' + '.json'
-    if($checkbox.is(':checked')) {
-      var $type = 'POST'
-    }
-    else {
-      var $type = 'DELETE'
-    };
-    $.ajax({
-      type: $type,
-      url: $url,
-      datatype: 'json',
-    })
-  })
+    var botId = $checkbox.data('bot-id');
+    var questionAnswerId = $checkbox.data('question-answer-id');
+    var url = '/bots/' + botId + '/question_answers/' + questionAnswerId + '/selections.json';
+    var type = $checkbox.is(':checked') ? 'POST' : 'DELETE';
+    $.ajax({ type: type, url: url, datatype: 'json' });
+  });
 });

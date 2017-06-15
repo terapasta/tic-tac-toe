@@ -1,0 +1,18 @@
+.page-header {
+  position: relative;
+
+  &__title  {
+    margin-right: 200px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  &__controls {
+    position: absolute;
+    right: 0;
+    bottom: 9px;
+    width: 200px;
+    text-align: right;
+  }
+}

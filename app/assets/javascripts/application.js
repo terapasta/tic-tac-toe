@@ -37,4 +37,12 @@ $(function() {
     var type = $checkbox.is(':checked') ? 'POST' : 'DELETE';
     $.ajax({ type: type, url: url, datatype: 'json' });
   });
+
+  $('select[data-role="url-switcher"]').on('change', function() {
+    var $select = $(this);
+    var url = $select.val();
+    if (url != null && url.length > 0) {
+      location.href = url;
+    }
+  });
 });

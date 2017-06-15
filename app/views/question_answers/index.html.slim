@@ -3,11 +3,21 @@
   - content_for :hide_sidebar, true
   - content_for :additional_container_main_class, 'container-main--headless'
 
-h1 Q&A管理
-.clearfix
+- sort = params.dig(:q, :s)
+- pagination = capture do
+  .pagination-container
+    = paginate @question_answers
+    p 全#{@question_answers.total_count}件 #{@question_answers.count}件を表示中
+
+.page-header
+  .page-header__title Q&A管理
+  .page-header__controls
+    = link_to '新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-default', data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+
+.well.clearfix
   .pull-left
-    = form_tag bot_question_answers_path(@bot), method: :get, class: 'form-inline' do
-      = collection_select :topic, :id, @topic_tags.all, :id, :name, { prompt: "トピックを選択してください", selected: @search_result }, class: 'form-control'
+    = form_tag bot_question_answers_path(@bot), method: :get, class: 'form-inline', data: { event_name: 'Search question answer', bot_id: @bot.id, bot_name: @bot.name } do
+      = collection_select :topic, :id, @topic_tags.all, :id, :name, { prompt: "トピックタグで絞込", selected: @search_result }, class: 'form-control'
       = text_field_tag :keyword, '', size: '30%', class: "search-question-answer form-control", placeholder: "検索ワードを入力してください", value: @keyword
       = space
       = submit_tag '検索', name: "search", class: "btn btn-default"
@@ -16,29 +26,65 @@ h1 Q&A管理
         = link_to '✕ トピックタグ検索を解除', bot_question_answers_path(@bot), class: 'btn btn-link'
 
   .pull-right
-    = link_to t('helpers.link.new'), new_bot_question_answer_path(@bot), class: "btn btn-default", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
-table.table.table-striped
-  thead
-    tr
-      th トピックタグ
-      th = sort_link(@q, :question, '質問', default_order: :desc)
-      th 回答
-      th = sort_link(@q, :created_at, '作成日時', default_order: :desc)
-      th = sort_link(@q, :updated_at, '更新日時', default_order: :desc)
-      th
-  tbody
-    - @question_answers.each do |question_answer|
-      tr
-        td
-          - question_answer.topic_tags.each do |topic_tag|
-            span.label.label-primary = topic_tag.name
-            br
-        td = simple_format question_answer.question
-        td = simple_format question_answer&.answer&.body
-        td = l question_answer.created_at, format: :short
-        td = l question_answer.updated_at, format: :short
+    .form-inline
+      span 並べ替え：
+      select.form-control data-role="url-switcher" data-event="Sort question answers" data-bot-id=@bot.id data-bot-name=@bot.name
+        option value=sorting_url('created_at desc') selected=(sort.blank? || sort == "created_at desc")
+          |作成日時の新しい順
+        option value=sorting_url('created_at asc') selected=(sort == "created_at asc")
+          |作成日時の古い順
+        option value=sorting_url('updated_at desc') selected=(sort == "updated_at desc")
+          |更新日時の新しい順
+        option value=sorting_url('updated_at asc') selected=(sort == "updated_at asc")
+          |更新日時の古い順
 
-        td nowrap="nowrap"
-          = link_to t('helpers.link.edit'), edit_bot_question_answer_path(@bot, question_answer), class: "btn btn-default", data: { event_name: 'Open edit question answer', bot_id: @bot.id, bot_name: @bot.name }
-          = link_to t('helpers.link.destroy'), bot_question_answer_path(@bot, question_answer), data: { confirm: 'Q&Aを削除します。よろしいですか。', method: :delete, event_name: 'Delete question answer', bot_id: @bot.id, bot_name: @bot.name }, class: "btn btn-danger"
-= paginate @question_answers
+= pagination
+
+- @question_answers.each do |question_answer|
+  .panel.panel-default
+    .panel-body
+      - if question_answer.topic_tags.any?
+        .row style="padding-bottom:15px;": .col-sm-12
+          - question_answer.topic_tags.each do |topic_tag|
+            span.label.label-primary= topic_tag.name
+            = space 2
+      .row
+        .col-sm-6
+          dl
+            dt: small 質問
+            dd= highlight(nl2br(question_answer.question), params[:keyword])
+        .col-sm-6
+          dl
+            dt: small 回答
+            dd
+              p= highlight(nl2br(question_answer.answer&.body), params[:keyword])
+
+              - if question_answer.answer.answer_files.any?
+                - question_answer.answer.answer_files.each do |answer_file|
+                  .mini-well
+                    - if answer_file.image?
+                      = link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
+                    - else
+                      small.text-muted 添付ファイル
+                      br
+                      = link_to answer_file.read_attribute(:file), answer_file.file_url, target: '_blank'
+    .panel-footer
+      .row
+        .col-sm-8
+          small.text-muted ID：#{question_answer.id}
+          = space 10
+          small.text-muted 作成日時：#{l question_answer.created_at, format: :short}
+          = space 10
+          small.text-muted 更新日時：#{l question_answer.updated_at, format: :short}
+        .col-sm-4.text-right
+          = link_to edit_bot_question_answer_path(@bot, question_answer), class: 'btn btn-default btn-xs', data: { event_name: 'Open edit question answer', bot_id: @bot.id, bot_name: @bot.name } do
+            = material_icon 'edit'
+            = space
+            span 編集
+          = space 3
+          = link_to bot_question_answer_path(@bot, question_answer), class: 'btn btn-danger btn-xs', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete question answer', bot_id: @bot.id, bot_name: @bot.name } do
+            = material_icon 'delete'
+            = space
+            span 削除
+
+= pagination

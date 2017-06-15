@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       resource :answer, only: [:show], module: :question_answers
       collection do
         get :autocomplete_answer_body
-        get :headless
       end
     end
     resources :topic_tags

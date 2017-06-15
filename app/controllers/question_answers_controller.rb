@@ -1,6 +1,5 @@
 class QuestionAnswersController < ApplicationController
   include BotUsable
-  include QuestionAnswerSearchable
   before_action :authenticate_user!
   before_action :pundit_auth
 
@@ -112,10 +111,6 @@ class QuestionAnswersController < ApplicationController
 
   def autocomplete_answer_body
     render json: @bot.answers.search_by(params[:term]).as_json(only: [:id, :body], methods: [:value])
-  end
-
-  def headless
-    @question_answers = search_question_answer(@bot).result
   end
 
   private

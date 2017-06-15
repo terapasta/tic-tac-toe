@@ -54,21 +54,33 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
-    if @question_answer.update(permitted_attributes(@question_answer))
-      respond_to do |format|
-        format.html do
-          redirect_to edit_bot_question_answer_path(@bot, @question_answer), notice: '更新しました。'
+    answer_params = question_answer_params.delete(:answer_attributes)
+
+    ActiveRecord::Base.transaction do
+      @question_answer.update!(question_answer_params)
+      if answer_params.present?
+        if @question_answer.answer.present?
+          AnswerUpdateService.new(@bot, @question_answer.answer, answer_params).process!
+        else
+          @question_answer.update!({ answer_attributes: answer_params })
         end
-        format.json { render json: @question_answer.decorate.as_json, status: :ok }
       end
-    else
-      respond_to do |format|
-        format.html do
-          flash.now.alert = '更新できませんでした。'
-          render :edit
-        end
-        format.json { render json: @question_answer.decorate.errors_as_json, status: :unprocessable_entity }
+    end
+
+    respond_to do |format|
+      format.html do
+        redirect_to edit_bot_question_answer_path(@bot, @question_answer), notice: '更新しました。'
       end
+      format.json { render json: @question_answer.decorate.as_json, status: :ok }
+    end
+  rescue => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.html do
+        flash.now.alert = '更新できませんでした。'
+        render :edit
+      end
+      format.json { render json: @question_answer.decorate.errors_as_json, status: :unprocessable_entity }
     end
   end
 
@@ -114,8 +126,8 @@ class QuestionAnswersController < ApplicationController
     end
 
     def question_answer_params
-      permitted_attributes(@question_answer || QuestionAnswer).tap do |prm|
-        if prm[:answer_attributes].present? && params[:action] == 'create'
+      @question_answer_params ||= permitted_attributes(@question_answer || QuestionAnswer).tap do |prm|
+        if prm[:answer_attributes].present?
           prm[:answer_attributes][:bot_id] = @bot.id
         end
       end

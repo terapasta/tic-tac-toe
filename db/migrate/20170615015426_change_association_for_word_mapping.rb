@@ -4,10 +4,10 @@ class ChangeAssociationForWordMapping < ActiveRecord::Migration
     add_index :word_mappings, :bot_id
 
     ActiveRecord::Base.transaction do
-      word_mappings = WordMapping.all
+      word_mappings = WordMapping.where(user_id: !nil)
       word_mappings.each do |word_mapping|
-        word_mapping.bot_id = word_mapping.user&.bots&.first&.id
-        # バリテーションで落ちる (単語と同意語の組み合わせは既に存在しています)
+        word_mapping.bot_id = word_mapping.user.bots.first.id
+        word_mapping.user_id= nil
         word_mapping.save!
       end
     end

@@ -69,6 +69,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :word_mappings
+  end
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   namespace :api, { format: 'json' } do

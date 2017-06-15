@@ -4,7 +4,7 @@ class ChangeAssociationForWordMapping < ActiveRecord::Migration
     add_index :word_mappings, :bot_id
 
     ActiveRecord::Base.transaction do
-      word_mappings = WordMapping.where(user_id: !nil)
+      word_mappings = WordMapping.where('user_id IS NOT NULL')
       word_mappings.each do |word_mapping|
         word_mapping.bot_id = word_mapping.user.bots.first.id
         word_mapping.user_id= nil
@@ -14,9 +14,7 @@ class ChangeAssociationForWordMapping < ActiveRecord::Migration
   end
 
   def down
-    ActiveRecord::Base.transaction do
-      remove_column :word_mappings, :bot_id
-      remove_index :word_mappings, :bot_id
-    end
+    remove_column :word_mappings, :bot_id
+    remove_index :word_mappings, :bot_id
   end
 end

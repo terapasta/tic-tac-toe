@@ -23,4 +23,14 @@ module ApplicationHelper
       "#{ActionController::Base.asset_host}/assets/embed.js"
     end
   end
+
+  def material_icon(name, options = {})
+    klass = options.delete(:class)
+    options.merge!(class: "material-icons #{klass}")
+    content_tag(:i, name, options)
+  end
+
+  def nl2br(text)
+    sanitize(text).gsub(/\r?\n/, '<br />').html_safe
+  end
 end

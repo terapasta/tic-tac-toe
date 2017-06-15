@@ -2,7 +2,7 @@ class Api::Bots::AnswersController < Api::BaseController
   before_action :set_bot
 
   def index
-    @answers = @bot.answers
+    @answers = @bot.answers.search_by(params[:q])
     render json: @answers, adapter: :json
   end
 

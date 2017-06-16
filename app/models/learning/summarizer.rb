@@ -12,7 +12,7 @@ class Learning::Summarizer
   end
 
   def unify_learning_training_message_words!
-    @word_mappings ||= WordMapping.for_user(@bot.user).decorate
+    @word_mappings ||= WordMapping.for_bot(@bot).decorate
     @bot.learning_training_messages.each do |it|
       it.question = @word_mappings.replace_synonym(it.question)
     end

@@ -6,7 +6,7 @@ class LearningTrainingMessage < ActiveRecord::Base
 
   class << self
     def amp!(bot)
-      amplifier = Learning::Amplifier.new(bot.user)
+      amplifier = Learning::Amplifier.new(bot)
       arr = bot.learning_training_messages.inject([]) { |res, ltm|
         amplifier.amp(ltm.question).each do |sentence|
           _ltm = ltm.dup

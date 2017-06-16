@@ -10,7 +10,9 @@ class WordMapping < ActiveRecord::Base
 
   before_validation :strip_word_and_synonym
 
-  scope :for_user, -> (user) { where "user_id IS NULL OR user_id = :user_id", user_id: user&.id }
+  scope :for_bot, -> (bot) {
+    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
+  }
 
   private
 

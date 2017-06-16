@@ -895,7 +895,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PollingInterval = 1000 * 60;
+var PollingInterval = 1000 * 1;
 
 var fetchedMessages = exports.fetchedMessages = (0, _reduxActions.createAction)("FETCHED_MESSAGES");
 var createdMessage = exports.createdMessage = (0, _reduxActions.createAction)("CREATED_MESSAGE");
@@ -6659,7 +6659,7 @@ var LearningStatus = {
   }
 };
 
-var PollingInterval = 1000 * 60;
+var PollingInterval = 1000 * 10;
 
 var LearningButton = function (_Component) {
   _inherits(LearningButton, _Component);
@@ -6749,7 +6749,11 @@ var LearningButton = function (_Component) {
   }, {
     key: "startLearning",
     value: function startLearning() {
-      API.start(this.props.botId).then(function () {}).catch(console.error);
+      var _this3 = this;
+
+      API.start(this.props.botId).then(function () {
+        return _this3.setState({ status: "processing" });
+      }).catch(console.error);
     }
   }, {
     key: "onClickButton",

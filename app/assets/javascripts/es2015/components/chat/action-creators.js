@@ -15,7 +15,7 @@ import * as c from "./constants";
 import Mixpanel from "../../analytics/mixpanel";
 import snakeCaseKeys from "../../modules/snake-case-keys";
 
-const PollingInterval = 1000 * 60;
+const PollingInterval = 1000 * 1;
 
 export const fetchedMessages = createAction("FETCHED_MESSAGES");
 export const createdMessage = createAction("CREATED_MESSAGE");

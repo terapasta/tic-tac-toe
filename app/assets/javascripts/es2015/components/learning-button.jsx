@@ -25,7 +25,7 @@ const LearningStatus = {
   },
 };
 
-const PollingInterval = 1000 * 60;
+const PollingInterval = 1000 * 10;
 
 export default class LearningButton extends Component {
   static get componentName() {
@@ -91,7 +91,7 @@ export default class LearningButton extends Component {
 
   startLearning() {
     API.start(this.props.botId)
-      .then(() => {})
+      .then(() => this.setState({ status: "processing" }))
       .catch(console.error);
   }
 

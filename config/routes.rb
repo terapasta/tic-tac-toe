@@ -78,6 +78,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :word_mappings
+    resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy]
   end
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

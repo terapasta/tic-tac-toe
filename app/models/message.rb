@@ -54,11 +54,13 @@ class Message < ActiveRecord::Base
   end
 
   def self.find_pair_message_from(message)
+    messages = message.chat.messages
+    index = messages.find_index messages.find(message.id)
     case message.speaker
     when 'bot'
-      return Message.find(message.id - 1).body, message.body
+      return messages[index - 1].body, message.body
     when 'guest'
-      return message.body, Message.find(message.id + 1).body
+      return message.body, messages[index + 1].body
     end
   end
 end

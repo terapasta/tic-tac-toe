@@ -336,8 +336,10 @@ ActiveRecord::Schema.define(version: 20170524054315) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "user_id",    limit: 4
+    t.integer  "bot_id",     limit: 4
   end
 
+  add_index "word_mappings", ["bot_id"], name: "index_word_mappings_on_bot_id", using: :btree
   add_index "word_mappings", ["user_id"], name: "index_word_mappings_on_user_id", using: :btree
 
   add_foreign_key "word_mappings", "users"

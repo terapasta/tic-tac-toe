@@ -25,3 +25,4 @@
       = link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open qestion answers', bot_id: @bot.id, bot_name: @bot.name }
       = link_to "トピックタグ", bot_topic_tags_path(@bot), class: 'list-group-item', data: { event_name: 'Open topic tags', bot_id: @bot.id, bot_name: @bot.name }
       = link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item', data: { event_name: 'Open conversation tree', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "同義語", bot_word_mappings_path(@bot), class: 'list-group-item', data: { event_name: 'Open word mappings', bot_id: @bot.id, bot_name: @bot.name }

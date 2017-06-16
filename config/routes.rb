@@ -44,10 +44,10 @@ Rails.application.routes.draw do
     end
     resources :decision_branches, only: [:show, :update, :create, :destroy]
     resource :conversation_tree, only: [:show]
+    resources :word_mappings
   end
 
   resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
-  resources :word_mappings
 
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do

@@ -28,9 +28,6 @@
             <% if current_user.staff? %>
               <li><%= link_to "システム共通同義語一覧", admin_word_mappings_path, data: { event_name: 'Open admin word mapping index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
-            <% if policy(:word_mapping).index? %>
-              <li><%= link_to "同義語一覧", word_mappings_path, data: { event_name: 'Open word mapping index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
-            <% end %>
             <% if policy(current_user).edit? %>
               <li><%= link_to 'パスワード変更', edit_user_registration_path, data: { event_name: 'Open edit password', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>

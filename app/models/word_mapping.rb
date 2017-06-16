@@ -1,5 +1,6 @@
 class WordMapping < ActiveRecord::Base
   belongs_to :user
+  belongs_to :bot
 
   validates :word, presence: true, length: { maximum: 20 }
   validates :synonym, presence: true, length: { maximum: 20 }

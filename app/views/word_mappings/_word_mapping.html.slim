@@ -2,5 +2,5 @@ tr
   td = word_mapping.word
   td = word_mapping.synonym
   td
-    = link_to '編集', edit_word_mapping_path(word_mapping), class: 'btn btn-default', data: { event_name: 'Open edit word mapping', word_mapping_id: word_mapping.id }
-    = link_to '削除', word_mapping, class: 'btn btn-danger', data: { confirm: '削除します。よろしいですか？', method: :delete, event_name: 'Delete word mapping', word_mapping_id: word_mapping.id }
+    = link_to '編集', edit_bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-default', data: { event_name: 'Open edit word mapping', word_mapping_id: word_mapping.id }
+    = link_to '削除', bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-danger', data: { confirm: '削除します。よろしいですか？', method: :delete, event_name: 'Delete word mapping', word_mapping_id: word_mapping.id }

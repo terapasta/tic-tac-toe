@@ -19,7 +19,7 @@ class WordMappingsController < ApplicationController
     @word_mapping = @bot.word_mappings.build(word_mapping_params.merge(bot_id: @bot.id))
 
     if @word_mapping.save
-      redirect_to edit_bot_word_mapping_path(@bot, @word_mapping), notice: '同義語を登録しました。'
+      redirect_to bot_word_mappings_path(@bot, @word_mapping), notice: '同義語を登録しました。'
     else
       render :new
     end
@@ -27,7 +27,7 @@ class WordMappingsController < ApplicationController
 
   def update
     if @word_mapping.update(word_mapping_params.merge(bot_id: @bot.id))
-      redirect_to edit_bot_word_mapping_path(@bot, @word_mapping), notice: '同義語を更新しました。'
+      redirect_to bot_word_mappings_path(@bot, @word_mapping), notice: '同義語を更新しました。'
     else
       render :edit
     end

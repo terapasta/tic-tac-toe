@@ -5,7 +5,7 @@ from learning.core.learn.learning_parameter import LearningParameter
 from myope_server import MyopeServer
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--bot_id', default=9, type=int)
+parser.add_argument('--bot_id', default=1, type=int)
 parser.add_argument('--env', type=str, default='development')
 args = parser.parse_args()
 Config._ENV = args.env

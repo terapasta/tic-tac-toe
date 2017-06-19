@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Conversation::Bot do
+  let(:bot) { create(:bot) }
+  let(:answer) { create(:answer, bot: bot) }
+  let(:message) { create(:message) }
+  let(:conversation_bot) { Conversation::Bot.new(bot, message) }
+
   describe '#reply' do
-    let(:bot) { create(:bot) }
-    let(:answer) { create(:answer, bot: bot) }
-    let(:message) { create(:message) }
-    let(:conversation_bot) { Conversation::Bot.new(bot, message) }
     subject { conversation_bot.do_reply }
 
     before do
@@ -36,6 +37,23 @@ RSpec.describe Conversation::Bot do
       it 'NullAnswerが返ること' do
         expect(subject.answer).to be_a NullAnswer
       end
+    end
+  end
+
+  describe '#similar_question_answers_in' do
+    let (:ids) { [2, 1] }
+    let (:first_question_answer) {create(:question_answer, id: 1)}
+    let (:second_question_answer) {create(:question_answer, id: 2)}
+    subject { conversation_bot.similar_question_answers_in(ids) }
+
+    before do
+      bot.question_answers << first_question_answer
+      bot.question_answers << second_question_answer
+      bot.save
+    end
+
+    it '引数で指定したidの順番通りに取得できること' do
+      is_expected.to eq [second_question_answer, first_question_answer]
     end
   end
 end

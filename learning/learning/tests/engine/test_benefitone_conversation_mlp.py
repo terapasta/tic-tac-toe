@@ -17,7 +17,7 @@ class BenefitoneConversationMLPTestCase(TestCase):
         csv_file_path = './fixtures/learning_training_messages/benefitone.csv'
         cls.answers = helper.build_answers(csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']

@@ -20,7 +20,7 @@ class ToyotsuHumanConversationTestCase(TestCase):
         # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     def test_jal_mileage(self):
-        questions = ['JAL マイレージ']
+        questions = ['JAL マイレージ 内訳']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
@@ -41,21 +41,15 @@ JALマイレージバンクで計上される費用は
 
 
     def test_overseas_business_trip_pay(self):
-        '''
-        Question:『「医療費精算（海外送金・国内支払）」海外で受診した健康診断結果は、どうしたらいいですか？』あたりと
-        ベクトル表現が近くなってしまうため、ちょっとしたアルゴリズムの変化でテストが壊れる可能性がある。
-        現状の仕組みでは完全に対処しきれないので、壊れてしまった際はあまり力をかけ過ぎずに一旦コメントアウトしてしまってもOK
-        '''
         questions = ['海外の出張費の精算の方法は？']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
-長期出張の場合は、1ヶ月毎の途中精算が原則になっています。
-途中精算する際に通常の出張システムで精算してしまうと帰国したことになってしまうため、SAPの立替精算処理をしてください。
-また、立替精算依頼書には費用計算書と領収書を添付の上、ＴＨＲまでご提出願います。
-なお帰国された際は最終の精算のため、通常通り海外出張システムの精算届を作成します。精算届作成時の出張期間は実際の出発日・帰国日となりますが、日当支給日数は、途中精算した日数を引いてください。
+TTCライブラリーにて掲載しているマニュアルを確認して下さい。
+https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T031295?OpenDocument
 '''
+
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)
 
@@ -77,7 +71,9 @@ JALマイレージバンクで計上される費用は
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
-        expected_answer = 'TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養異動届」を委託先のクローバーへ提出して下さい。'
+        expected_answer = '''
+TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養異動届」を委託先の弁護士法人クローバーへ提出して下さい。
+'''
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)

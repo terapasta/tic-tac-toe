@@ -25,10 +25,11 @@ class Conversation::Bot
     probability = result[:probability]
     question = result[:question]
     question_feature_count = result[:question_feature_count]
+    question_answer_ids = @results.select{|x| x[:probability] > 0.1}.map{|x| x[:question_answer_id].to_i}
     Rails.logger.debug(probability)
 
     @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
-    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, answer: @answer, probability: probability)
+    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, answer: @answer, probability: probability, question_answer_ids: question_answer_ids)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
@@ -39,10 +40,9 @@ class Conversation::Bot
     reply
   end
 
-  def similar_question_answers
-    result = @engine.similarity(@question_text)
-    question_answer_ids = result.map { |hash| hash['question_answer_id'] }
-    @bot.question_answers.where(id: question_answer_ids)
+  def similar_question_answers_in(question_answer_ids)
+    question_answers = @bot.question_answers.where(id: question_answer_ids)
+    question_answer_ids.map{|id| question_answers.find{|x| id == x.id}}
   end
 
   private

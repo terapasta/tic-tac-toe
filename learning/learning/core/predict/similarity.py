@@ -17,8 +17,6 @@ class Similarity:
         try:
             self.vectorizer = Persistance.load_vectorizer(bot_id)
         except IOError:
-            import traceback
-            traceback.print_exc()
             raise ModelNotExistsError()
 
     def make_response(self, X, datasource_type='database'):

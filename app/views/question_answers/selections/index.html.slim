@@ -6,9 +6,10 @@
 - pagination = capture do
   = render 'question_answers/pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
 
-.page-header
-  .page-header__title Q&Aを選択
-  .page-header__controls
+- unless params[:hide_page_header].present?
+  .page-header
+    .page-header__title Q&Aを選択
+    .page-header__controls
 
 = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_selections_path(@bot)
 

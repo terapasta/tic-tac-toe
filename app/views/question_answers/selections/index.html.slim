@@ -1,11 +1,14 @@
+- if params[:headless].present?
+  - content_for :hide_global_header, true
+  - content_for :hide_sidebar, true
+  - content_for :additional_container_main_class, 'container-main--headless'
+
 - pagination = capture do
   = render 'question_answers/pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
 
 .page-header
   .page-header__title Q&Aを選択
   .page-header__controls
-
-.alert.alert-info チャットの最初に表示したい質問にチェックを入れてください
 
 = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_selections_path(@bot)
 
@@ -26,5 +29,13 @@ table.table.table-hover: tbody
 
 = pagination
 
-.main-container-footer
-  p test
+- 3.times do # sticky-footerが被ってしまうので隙間をあける
+  br
+
+.sticky-footer
+  .sticky-footer__title
+    span 選択済のQ&A：
+    strong data-role="select-question-answer-counter"
+      = @bot.selected_question_answer_ids.count
+    = space
+    span ／ 5

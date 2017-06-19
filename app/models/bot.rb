@@ -67,6 +67,10 @@ class Bot < ActiveRecord::Base
     end
   end
 
+  def selected_question_answers
+    question_answers.where(id: selected_question_answer_ids)
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?

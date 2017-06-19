@@ -96,7 +96,10 @@ class Bot:
         else:
             logger.debug('use algorithm: logistic regression')
 
-            C = self.learning_parameter.params_for_algorithm.get('C', None)
+            # TODO ブースティングなしだとクラスあたりのサンプル数が少なすぎてGridSearchでエラーになる
+            # 一旦正則化パラメータCを10で固定にする
+            # C = self.learning_parameter.params_for_algorithm.get('C', None)
+            C = self.learning_parameter.params_for_algorithm.get('C', 10)
             if C is None:
                 logger.debug('learning_parameter has not parameter C')
                 # params = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 140, 200]}

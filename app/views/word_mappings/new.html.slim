@@ -1,3 +1,6 @@
 h1 同義語新規作成
 
-== render 'form'
+= render 'form', { resource: [@bot, @word_mapping] }
+
+br
+= link_to '戻る', bot_word_mappings_path(@bot), class: 'btn btn-default', data: { event_name: 'Back to word mapping index', word_mapping_id: @word_mapping.id }

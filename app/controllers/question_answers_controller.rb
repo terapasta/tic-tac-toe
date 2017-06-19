@@ -1,5 +1,6 @@
 class QuestionAnswersController < ApplicationController
   include BotUsable
+  include QuestionAnswersSearchable
   before_action :authenticate_user!
   before_action :pundit_auth
 
@@ -17,14 +18,14 @@ class QuestionAnswersController < ApplicationController
     @keyword = params[:keyword]
     @current_page = current_page
     @per_page = QuestionAnswer.default_per_page
-    @q = @bot.question_answers
-      .topic_tag(params.dig(:topic, :id))
-      .includes(:decision_branches, :topic_tags)
-      .order(created_at: :desc)
-      .page(params[:page])
-      .per(@per_page)
-      .keyword(params[:keyword])
-      .search(params[:q])
+    @q = search_question_answers(
+      bot: @bot,
+      topic_id: params.dig(:topic, :id),
+      keyword: params[:keyword],
+      q: params[:q],
+      page: @current_page,
+      per_page: @per_page,
+    )
     @question_answers = @q.result
   end
 

@@ -5,6 +5,7 @@ import form from "./reducers/form";
 import learning from "./reducers/learning";
 import learnings from "./reducers/learnings";
 import readMore from "./reducers/read-more";
+import initialQuestions from "./reducers/initial-questions";
 
 function through(state = null) {
   return state;
@@ -19,6 +20,7 @@ const app = combineReducers({
   token: through,
   isManager: through,
   flashMessage: through,
+  initialQuestions,
 });
 
 export default app;

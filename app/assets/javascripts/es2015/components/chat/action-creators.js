@@ -10,6 +10,7 @@ import * as API from "../../api/chat-messages";
 import * as MessageRatingAPI from "../../api/chat-message-rating";
 import * as ChatTrainigsAPI from "../../api/chat-trainings";
 import * as BotLearningAPI from "../../api/bot-learning";
+import * as InitialQuestionsAPI from "../../api/initial-questions";
 import * as c from "./constants";
 
 import Mixpanel from "../../analytics/mixpanel";
@@ -255,3 +256,6 @@ export function pollLearningStatus(botId) {
 
 export const startLearning = createAction("START_LEARNING", BotLearningAPI.start);
 export const getLearningStatus = createAction("GET_LEARNING_STATUS", BotLearningAPI.status);
+
+export const fetchInitialQuestions = createAction("FETCH_INITIAL_QUESTIONS", InitialQuestionsAPI.fetchAll);
+export const setInitialQuestionsToMessages = createAction("SET_INITIAL_QUESTIONS_TO_MESSAGES");

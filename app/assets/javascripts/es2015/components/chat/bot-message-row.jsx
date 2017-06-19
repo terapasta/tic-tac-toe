@@ -8,21 +8,48 @@ import ChatRow from "./row";
 import ChatContainer from "./container";
 import ChatBotMessage from "./bot-message";
 import ChatBotMessageEditor from "./bot-message-editor";
+import ChatInitialQuestion from "./initial-question";
 import { Ratings } from "./constants";
 
-class ChatBotMessageRow extends Component {
+export default class ChatBotMessageRow extends Component {
+  static get propTypes() {
+    return {
+      section: PropTypes.shape({
+        answer: PropTypes.shape({
+          body: PropTypes.string,
+          rating: PropTypes.oneOf(values(Ratings)),
+        }),
+      }),
+      isManager: PropTypes.bool,
+      isFirst: PropTypes.bool,
+      isActive: PropTypes.bool,
+      learnings: PropTypes.arrayOf(PropTypes.shape({
+        questionId: PropTypes.number.isRequired,
+        answerId: PropTypes.number.isRequired,
+        questionBody: PropTypes.string,
+        answerBody: PropTypes.string,
+      })),
+      initialQuestions: PropTypes.array.isRequired,
+      onChangeRatingTo: PropTypes.func.isRequired,
+      onChangeLearning: PropTypes.func.isRequired,
+      onChangeInitialQuestions: PropTypes.func.isRequired,
+    };
+  }
+
   render() {
     const {
       section: { question, answer },
+      isManager,
       isFirst,
       isActive,
       learnings,
+      initialQuestions,
       onChangeRatingTo,
       onChangeLearning,
+      onChangeInitialQuestions,
     } = this.props;
 
     if (answer == null) { return null; }
-
     const learning = find(learnings, {
       questionId: get(question, "id"),
       answerId: get(answer, "id"),
@@ -42,28 +69,13 @@ class ChatBotMessageRow extends Component {
             }, _props)} />
           )}
         </ChatContainer>
+        <ChatInitialQuestion
+          isManager={isManager}
+          isFirst={isFirst}
+          initialQuestions={initialQuestions}
+          onChange={onChangeInitialQuestions}
+        />
       </ChatRow>
     );
   }
 }
-
-ChatBotMessageRow.propTypes = {
-  section: PropTypes.shape({
-    answer: PropTypes.shape({
-      body: PropTypes.string,
-      rating: PropTypes.oneOf(values(Ratings)),
-    }),
-  }),
-  isFirst: PropTypes.bool,
-  isActive: PropTypes.bool,
-  learnings: PropTypes.arrayOf(PropTypes.shape({
-    questionId: PropTypes.number.isRequired,
-    answerId: PropTypes.number.isRequired,
-    questionBody: PropTypes.string,
-    answerBody: PropTypes.string,
-  })),
-  onChangeRatingTo: PropTypes.func.isRequired,
-  onChangeLearning: PropTypes.func.isRequired,
-};
-
-export default ChatBotMessageRow;

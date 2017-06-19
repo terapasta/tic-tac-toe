@@ -4,9 +4,7 @@
   - content_for :additional_container_main_class, 'container-main--headless'
 
 - pagination = capture do
-  .pagination-container
-    = paginate @question_answers
-    p= pagination_items_count(@question_answers, @current_page, @per_page)
+  = render 'pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
 
 .page-header
   .page-header__title Q&A管理

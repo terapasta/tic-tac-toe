@@ -77,3 +77,17 @@ TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)
+
+
+    def test_insurance_card(self):
+        questions = ['保険証をなくした']
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        answer_body = helper.get_answer_body(self.answers, result.answer_id)
+
+        expected_answer = '''
+TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」を確認し、委託先の弁護士法人クローバーへ関係書類を提出して下さい。 
+https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T000818?OpenDocument
+'''
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)

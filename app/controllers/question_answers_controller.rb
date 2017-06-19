@@ -10,17 +10,16 @@ class QuestionAnswersController < ApplicationController
   before_action :set_search_result, only: [:index, :headless]
   autocomplete :answer, :body, full: true
 
-  helper_method :sorting_url
-
   def index
     @topic_tags = @bot.topic_tags
     @search_result = params.dig(:topic, :id)
     @keyword = params[:keyword]
     @current_page = current_page
     @per_page = QuestionAnswer.default_per_page
+    @topic_id = params.dig(:topic, :id)
     @q = search_question_answers(
       bot: @bot,
-      topic_id: params.dig(:topic, :id),
+      topic_id: @topic_id,
       keyword: params[:keyword],
       q: params[:q],
       page: @current_page,
@@ -149,7 +148,7 @@ class QuestionAnswersController < ApplicationController
       end
     end
 
-    def sorting_url(condition)
-        bot_question_answers_path(@bot, request.query_parameters.merge(q: { s: condition }))
+    def index_path_helper_name
+      :bot_question_answers_path
     end
 end

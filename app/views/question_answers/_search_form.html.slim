@@ -1,13 +1,13 @@
 .well.clearfix
   .pull-left
-    = form_tag bot_question_answers_path(bot), method: :get, class: 'form-inline', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
-      = collection_select :topic, :id, bot.topic_tags, :id, :name, { prompt: "トピックタグで絞込", selected: search_result }, class: 'form-control'
-      = text_field_tag :keyword, '', size: '30%', class: "search-question-answer form-control", placeholder: "検索ワードを入力してください", value: keyword
+    = form_tag action_url, method: :get, class: 'form-inline', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
+      = collection_select :topic, :id, bot.topic_tags, :id, :name, { prompt: "トピックタグで絞込", selected: @topic_id.to_i }, class: 'form-control'
+      = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
       = space
       = submit_tag '検索', name: "search", class: "btn btn-default"
-      - if params.dig(:topic, :id).present?
+      - if params.dig(:topic, :id).present? || params[:keyword].present?
         = space
-        = link_to '✕ トピックタグ検索を解除', bot_question_answers_path(@bot), class: 'btn btn-link'
+        = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
 
   .pull-right
     .form-inline

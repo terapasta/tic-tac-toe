@@ -25,7 +25,7 @@ table.table.table-hover: tbody
           span.label class=("label-#{is_selected ? 'success' : 'default'}") data-role="select-question-answer-label" data-question-answer-id=question_answer.id
             = is_selected ? "選択済" : "未選択"
       td
-        = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot
+        = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot, hide_buttons: true
 
 = pagination
 

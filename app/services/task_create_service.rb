@@ -5,7 +5,7 @@ class TaskCreateService
   end
 
   def process
-    guest_message, bot_message = Message.find_pair_message_from(@message)
+    guest_message, bot_message = Message.find_pair_message_bodies_from(@message)
     if guest_message.present?
       Task.create(
         bot_message: (bot_message if @message.answer_failed),

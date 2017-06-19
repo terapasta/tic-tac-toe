@@ -15,7 +15,7 @@ class QuestionAnswersController < ApplicationController
     @topic_tags = @bot.topic_tags
     @search_result = params.dig(:topic, :id)
     @keyword = params[:keyword]
-    @current_page = (params[:page].presence || 1).to_i
+    @current_page = current_page
     @per_page = QuestionAnswer.default_per_page
     @q = @bot.question_answers
       .topic_tag(params.dig(:topic, :id))

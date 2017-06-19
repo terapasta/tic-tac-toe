@@ -15,11 +15,14 @@ class QuestionAnswersController < ApplicationController
     @topic_tags = @bot.topic_tags
     @search_result = params.dig(:topic, :id)
     @keyword = params[:keyword]
+    @current_page = (params[:page].presence || 1).to_i
+    @per_page = 100
     @q = @bot.question_answers
       .topic_tag(params.dig(:topic, :id))
       .includes(:decision_branches, :topic_tags)
       .order(created_at: :desc)
       .page(params[:page])
+      .per(@per_page)
       .keyword(params[:keyword])
       .search(params[:q])
     @question_answers = @q.result

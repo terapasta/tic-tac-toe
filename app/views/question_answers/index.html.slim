@@ -7,7 +7,7 @@
 - pagination = capture do
   .pagination-container
     = paginate @question_answers
-    p 全#{@question_answers.total_count}件 #{@question_answers.count}件を表示中
+    p= pagination_items_count(@question_answers, @current_page, @per_page)
 
 .page-header
   .page-header__title Q&A管理

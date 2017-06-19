@@ -33,4 +33,17 @@ module ApplicationHelper
   def nl2br(text)
     sanitize(text.to_s).gsub(/\r?\n/, '<br />').html_safe
   end
+
+  def pagination_items_count(resources, current_page, per_page)
+    (
+      content_tag(:span, "全#{resources.total_count}件") +
+      content_tag(:span, " | ") +
+      if current_page == 1
+        content_tag(:span, 1)
+      else
+        content_tag(:span, (current_page - 1) * per_page + 1)
+      end +
+      content_tag(:span, "〜#{resources.count}件を表示中")
+    ).html_safe
+  end
 end

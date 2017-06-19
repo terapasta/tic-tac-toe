@@ -11,7 +11,7 @@ from learning.log import logger
 from learning.core.predict.similarity import Similarity
 
 
-# HACK: Replyだと範囲が広すぎるのでPredict等にリネームしたい
+# HACK: Replyだと範囲が広すぎるのでリネームしたい
 class Reply:
     CLASSIFY_FAILED_ANSWER_ID = 0
 

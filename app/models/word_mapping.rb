@@ -1,5 +1,4 @@
 class WordMapping < ActiveRecord::Base
-  belongs_to :user
   belongs_to :bot
 
   validates :word, presence: true, length: { maximum: 20 }
@@ -16,13 +15,13 @@ class WordMapping < ActiveRecord::Base
   private
 
     def unique_pair
-      if WordMapping.exists?(user_id: user_id, word: word, synonym: synonym)
+      if WordMapping.exists?(bot_id: bot_id, word: word, synonym: synonym)
         errors.add :base, '単語と同意語の組み合わせは既に存在しています。'
       end
     end
 
     def word_is_not_in_synonyms
-      if WordMapping.exists?(user_id: user_id, synonym: word)
+      if WordMapping.exists?(bot_id: bot_id, synonym: word)
         errors.add :word, 'は既に同義語として登録されている単語は使用できません'
       end
     end

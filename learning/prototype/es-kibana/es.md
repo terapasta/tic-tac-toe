@@ -26,9 +26,10 @@ http://localhost:8888/tree?token=ceb766ff67e9e2ca4d4ade3af36adb46282d063519545a5
   - インデックスを使いやすくする?
 
 
-類似検索、ランク学習などに関係するようなものはなさそう
+類似検索、ランク学習などに関係するようなものはなさそう。
+結果、ひとまずインストールして自由にプラグインカスタマイズしながら使うのが良さそう。
 
-### インストールして使う
+### ローカルにインストールして使う
 
 プラグイン候補
 - https://github.com/sdauletau/elasticsearch-position-similarity

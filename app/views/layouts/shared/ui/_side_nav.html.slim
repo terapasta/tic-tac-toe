@@ -12,12 +12,7 @@
           data-bot-id=@bot.id
         )
 
-      = link_to new_chats_path(@bot.token), class: 'list-group-item', target: '_blank', data: { event_name: 'Open new chat', bot_id: @bot.id, bot_name: @bot.name } do
-        span チャットする
-        / TODO 2017-05-19 を過ぎたら削除する
-        - if Time.current < Time.zone.parse('2017-05-19 23:59:59')
-          = space
-          span.label.label-warning NEW!!
+      = link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank', data: { event_name: 'Open new chat', bot_id: @bot.id, bot_name: @bot.name }
       = link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item', data: { event_name: 'Open threads', bot_id: @bot.id, bot_name: @bot.name }
       /= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item', data: { event_name: 'Open training', bot_id: @bot.id, bot_name: @bot.name }
       = link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item', data: { event_name: 'Open exporing', bot_id: @bot.id, bot_name: @bot.name }

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 import find from "lodash/find";
 import get from "lodash/get";
+import isArray from "lodash/isArray";
 import classNames from "classnames";
 import isEmpty from "is-empty";
 import getOffset from "../../modules/get-offset";
@@ -68,8 +69,9 @@ export default class ChatSection extends Component {
       answer
     } = section;
     const isDecisionBranch = !isEmpty(decisionBranches);
-    const isSQA = !isEmpty(similarQuestionAnswers);
+    const isSQA = isArray(similarQuestionAnswers);
     if ((isDecisionBranch || isSQA) && isDone) { return null; }
+    if (isSQA && isEmpty(similarQuestionAnswers)) { return null; }
 
     const className = classNames({
       "chat-section": !isManager,

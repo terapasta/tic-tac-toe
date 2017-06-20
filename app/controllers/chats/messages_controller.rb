@@ -7,9 +7,9 @@ class Chats::MessagesController < ApplicationController
   def index
     @messages = @chat.messages.order(created_at: :desc).page(params[:page]).per(20)
 
-    @messages.first.tap do |message|
+    @messages.last.tap do |message|
       message.similar_question_answers = @bot.selected_question_answers
-      @messages[0] = message
+      @messages[@messages.count - 1] = message
     end
 
     respond_to do |format|

@@ -132,11 +132,22 @@ export default handleActions({
   [setInitialQuestionsToMessages]: (state, action) => {
     const data = cloneDeep(state.classifiedData);
     const { payload } = action;
-    const initialQuestionsSection = data[1];
-    if (isArray(initialQuestionsSection.similarQuestionAnswers)) {
+    let initialQuestionsSection = data[1];
+    let sliceIndex = 2;
+
+    if (isEmpty(initialQuestionsSection)) {
+      initialQuestionsSection = { similarQuestionAnswers: payload };
+    } else if (isArray(initialQuestionsSection.similarQuestionAnswers)) {
       initialQuestionsSection.similarQuestionAnswers = payload;
+    } else if (initialQuestionsSection.similarQuestionAnswers == null) {
+      initialQuestionsSection = { similarQuestionAnswers: payload };
+      sliceIndex = 1;
     }
-    return assign({}, state, { classifiedData: data });
+    return assign({}, state, { classifiedData: [
+      data[0],
+      initialQuestionsSection,
+      ...data.slice(sliceIndex),
+    ] });
   },
 }, {
   data: [],
@@ -172,6 +183,7 @@ export function changeRatingHandler(state, action) {
 }
 
 export function doneDecisionBranchesOtherThanLast(classifiedData) {
+  return classifiedData;
   const data = cloneDeep(classifiedData);
   const beforeLastIndex = data.length - 2;
   const lastIndex = data.length - 1;

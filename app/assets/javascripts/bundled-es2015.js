@@ -3973,9 +3973,9 @@ var _constants = require("../constants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var Speaker = {
   Bot: "bot",
@@ -4074,10 +4074,17 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   var payload = action.payload;
 
   var initialQuestionsSection = data[1];
-  if ((0, _isArray2.default)(initialQuestionsSection.similarQuestionAnswers)) {
+  var sliceIndex = 2;
+
+  if ((0, _isEmpty2.default)(initialQuestionsSection)) {
+    initialQuestionsSection = { similarQuestionAnswers: payload };
+  } else if ((0, _isArray2.default)(initialQuestionsSection.similarQuestionAnswers)) {
     initialQuestionsSection.similarQuestionAnswers = payload;
+  } else if (initialQuestionsSection.similarQuestionAnswers == null) {
+    initialQuestionsSection = { similarQuestionAnswers: payload };
+    sliceIndex = 1;
   }
-  return (0, _assign2.default)({}, state, { classifiedData: data });
+  return (0, _assign2.default)({}, state, { classifiedData: [data[0], initialQuestionsSection].concat(_toConsumableArray(data.slice(sliceIndex))) });
 }), _handleActions), {
   data: [],
   classifiedData: [],
@@ -4102,6 +4109,7 @@ function changeRatingHandler(state, action) {
 }
 
 function doneDecisionBranchesOtherThanLast(classifiedData) {
+  return classifiedData;
   var data = (0, _cloneDeep2.default)(classifiedData);
   var beforeLastIndex = data.length - 2;
   var lastIndex = data.length - 1;
@@ -4244,6 +4252,10 @@ var _get2 = require("lodash/get");
 
 var _get3 = _interopRequireDefault(_get2);
 
+var _isArray = require("lodash/isArray");
+
+var _isArray2 = _interopRequireDefault(_isArray);
+
 var _classnames = require("classnames");
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -4310,8 +4322,11 @@ var ChatSection = function (_Component) {
           answer = section.answer;
 
       var isDecisionBranch = !(0, _isEmpty2.default)(decisionBranches);
-      var isSQA = !(0, _isEmpty2.default)(similarQuestionAnswers);
+      var isSQA = (0, _isArray2.default)(similarQuestionAnswers);
       if ((isDecisionBranch || isSQA) && isDone) {
+        return null;
+      }
+      if (isSQA && (0, _isEmpty2.default)(similarQuestionAnswers)) {
         return null;
       }
 
@@ -4438,7 +4453,7 @@ var ChatSection = function (_Component) {
 
 exports.default = ChatSection;
 
-},{"../../modules/get-offset":96,"classnames":130,"is-empty":457,"lodash/find":652,"lodash/get":655,"react":854,"react-dom":705}],45:[function(require,module,exports){
+},{"../../modules/get-offset":96,"classnames":130,"is-empty":457,"lodash/find":652,"lodash/get":655,"lodash/isArray":660,"react":854,"react-dom":705}],45:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

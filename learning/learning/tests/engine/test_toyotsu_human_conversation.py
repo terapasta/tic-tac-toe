@@ -9,7 +9,7 @@ from learning.tests import helper
 class ToyotsuHumanConversationTestCase(TestCase):
     csv_file_path = './fixtures/learning_training_messages/toyotsu_human.csv'
     bot_id = 13  # bot_id = 13 は豊通
-    threshold = 0.49
+    threshold = 0.43
 
 
     @classmethod
@@ -85,7 +85,7 @@ TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
-TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」を確認し、委託先の弁護士法人クローバーへ関係書類を提出して下さい。 
+TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」を確認し、委託先の弁護士法人クローバーへ関係書類を提出して下さい。
 https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T000818?OpenDocument
 '''
 

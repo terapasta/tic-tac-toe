@@ -33,3 +33,16 @@ http://localhost:8888/tree?token=ceb766ff67e9e2ca4d4ade3af36adb46282d063519545a5
 プラグイン候補
 - https://github.com/sdauletau/elasticsearch-position-similarity
 - https://github.com/MLnick/elasticsearch-vector-scoring
+
+
+#### データを取り込む
+
+indexを一から設計して作るのは適当に動かすだけにしても大変そうだ
+
+DBからいい感じに取り込めないか
+
+↓
+
+https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model
+
+これ使ってみる。

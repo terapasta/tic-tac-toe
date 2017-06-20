@@ -3378,6 +3378,14 @@ var ChatInitialQuestion = function (_Component) {
       if (!this.state.isAppearDesc) {
         return null;
       }
+      var imageStyle = {
+        border: "2px solid #ccc",
+        width: "400px",
+        height: "auto",
+        display: "block",
+        margin: "0 auto"
+      };
+
       return _react2.default.createElement(
         _modal2.default,
         { title: "\u521D\u671F\u8CEA\u554F\u30EA\u30B9\u30C8\u3068\u306F",
@@ -3387,12 +3395,12 @@ var ChatInitialQuestion = function (_Component) {
         _react2.default.createElement(
           "p",
           null,
-          "\u30C1\u30E3\u30C3\u30C8\u3092\u958B\u59CB\u5F8C\u3059\u3050\u306E\u753B\u9762\u306B\u3001\u4EFB\u610F\u306E\u8CEA\u554F\u5019\u88DC\u3092\u6700\u5927\u3067\uFF15\u3064\u307E\u3067\u8868\u793A\u3067\u304D\u308B\u6A5F\u80FD\u3067\u3059\u3002"
+          "\u30C1\u30E3\u30C3\u30C8\u3092\u958B\u59CB\u3059\u3050\u306E\u753B\u9762\u306B\u3001\u4EFB\u610F\u306E\u8CEA\u554F\u5019\u88DC\u3092\u6700\u5927\u3067\uFF15\u3064\u307E\u3067\u8868\u793A\u3067\u304D\u308B\u6A5F\u80FD\u3067\u3059\u3002"
         ),
         _react2.default.createElement(
           "p",
           null,
-          "[\u30B9\u30AF\u30B7\u30E7\u304C\u5165\u308B]"
+          _react2.default.createElement("img", { src: window.Images["initial-questions-sample.png"], style: imageStyle })
         ),
         _react2.default.createElement(
           "p",

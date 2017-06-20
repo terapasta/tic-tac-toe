@@ -78,11 +78,19 @@ export default class ChatInitialQuestion extends Component {
 
   renderDesc() {
     if (!this.state.isAppearDesc) { return null; }
+    const imageStyle = {
+      border: "2px solid #ccc",
+      width: "400px",
+      height: "auto",
+      display: "block",
+      margin: "0 auto",
+    };
+
     return (
       <Modal title="初期質問リストとは"
              onClose={() => this.setState({ isAppearDesc: false })}>
-        <p>チャットを開始後すぐの画面に、任意の質問候補を最大で５つまで表示できる機能です。</p>
-        <p>[スクショが入る]</p>
+        <p>チャットを開始すぐの画面に、任意の質問候補を最大で５つまで表示できる機能です。</p>
+        <p><img src={window.Images["initial-questions-sample.png"]} style={imageStyle}/></p>
         <p>時期によって質問内容が予想される場合等に設定しておくと効果的です。</p>
       </Modal>
     );

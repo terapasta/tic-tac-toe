@@ -3236,6 +3236,10 @@ var _isEmpty = require("is-empty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
 var _container = require("./container");
 
 var _container2 = _interopRequireDefault(_container);
@@ -3243,6 +3247,10 @@ var _container2 = _interopRequireDefault(_container);
 var _modal = require("../modal");
 
 var _modal2 = _interopRequireDefault(_modal);
+
+var _mixpanel = require("../../analytics/mixpanel");
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3279,6 +3287,9 @@ var ChatInitialQuestion = function (_Component) {
 
     _this.basePath = "/bots/" + window.currentBot.id + "/question_answers/selections";
     _this.iframePath = _this.basePath + "?headless=true&hide_page_header=true";
+
+    _this.openDesc = _this.openDesc.bind(_this);
+    _this.openSelector = _this.openSelector.bind(_this);
     _this.closeSelector = _this.closeSelector.bind(_this);
     return _this;
   }
@@ -3306,8 +3317,6 @@ var ChatInitialQuestion = function (_Component) {
   }, {
     key: "renderEmptyMessage",
     value: function renderEmptyMessage() {
-      var _this2 = this;
-
       var initialQuestions = this.props.initialQuestions;
 
       var isEmptyInitQs = (0, _isEmpty2.default)(initialQuestions);
@@ -3335,9 +3344,7 @@ var ChatInitialQuestion = function (_Component) {
           _react2.default.createElement(
             "button",
             { className: "btn btn-default",
-              onClick: function onClick() {
-                return _this2.setState({ isAppearSelector: true });
-              } },
+              onClick: this.openSelector },
             _react2.default.createElement(
               "i",
               { className: "material-icons" },
@@ -3356,9 +3363,7 @@ var ChatInitialQuestion = function (_Component) {
           null,
           _react2.default.createElement(
             "a",
-            { href: "#", onClick: function onClick() {
-                _this2.setState({ isAppearDesc: true });
-              } },
+            { href: "#", onClick: this.openDesc },
             _react2.default.createElement(
               "i",
               { className: "material-icons", style: { fontSize: "18px" } },
@@ -3373,7 +3378,7 @@ var ChatInitialQuestion = function (_Component) {
   }, {
     key: "renderDesc",
     value: function renderDesc() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (!this.state.isAppearDesc) {
         return null;
@@ -3390,7 +3395,7 @@ var ChatInitialQuestion = function (_Component) {
         _modal2.default,
         { title: "\u521D\u671F\u8CEA\u554F\u30EA\u30B9\u30C8\u3068\u306F",
           onClose: function onClose() {
-            return _this3.setState({ isAppearDesc: false });
+            return _this2.setState({ isAppearDesc: false });
           } },
         _react2.default.createElement(
           "p",
@@ -3423,6 +3428,24 @@ var ChatInitialQuestion = function (_Component) {
       });
     }
   }, {
+    key: "openSelector",
+    value: function openSelector() {
+      this.setState({ isAppearSelector: true });
+      _mixpanel2.default.sharedInstance.trackEvent("Open initial quesions selector", {
+        bot_id: (0, _get2.default)(window, "currentBot.id"),
+        bot_name: (0, _get2.default)(window, "currentBot.name")
+      });
+    }
+  }, {
+    key: "openDesc",
+    value: function openDesc() {
+      this.setState({ isAppearDesc: true });
+      _mixpanel2.default.sharedInstance.trackEvent("Open initial quesions description", {
+        bot_id: (0, _get2.default)(window, "currentBot.id"),
+        bot_name: (0, _get2.default)(window, "currentBot.name")
+      });
+    }
+  }, {
     key: "closeSelector",
     value: function closeSelector() {
       this.setState({ isAppearSelector: false });
@@ -3435,7 +3458,7 @@ var ChatInitialQuestion = function (_Component) {
 
 exports.default = ChatInitialQuestion;
 
-},{"../modal":81,"./container":24,"is-empty":457,"react":854}],34:[function(require,module,exports){
+},{"../../analytics/mixpanel":4,"../modal":81,"./container":24,"is-empty":457,"lodash/get":655,"react":854}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

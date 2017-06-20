@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import isEmpty from "is-empty";
+import get from "lodash/get";
 
 import ChatContainer from "./container";
 import Modal from "../modal";
+import Mixpanel from "../../analytics/mixpanel";
 
 export default class ChatInitialQuestion extends Component {
   static get propTypes() {
@@ -23,6 +25,9 @@ export default class ChatInitialQuestion extends Component {
 
     this.basePath = `/bots/${window.currentBot.id}/question_answers/selections`;
     this.iframePath = `${this.basePath}?headless=true&hide_page_header=true`;
+
+    this.openDesc = this.openDesc.bind(this);
+    this.openSelector = this.openSelector.bind(this);
     this.closeSelector = this.closeSelector.bind(this);
   }
 
@@ -59,14 +64,14 @@ export default class ChatInitialQuestion extends Component {
         )}
         <p>
           <button className="btn btn-default"
-            onClick={() => this.setState({ isAppearSelector: true })}>
+            onClick={this.openSelector}>
             <i className="material-icons">playlist_add_check</i>
             {" "}
             <span>初期質問リストを選択する</span>
           </button>
         </p>
         <p>
-          <a href="#" onClick={() => { this.setState({ isAppearDesc: true }); }}>
+          <a href="#" onClick={this.openDesc}>
             <i className="material-icons" style={{fontSize:"18px"}}>help</i>
             {" "}
             初期質問リストとは
@@ -106,6 +111,22 @@ export default class ChatInitialQuestion extends Component {
         wide
       />
     );
+  }
+
+  openSelector() {
+    this.setState({ isAppearSelector: true });
+    Mixpanel.sharedInstance.trackEvent("Open initial quesions selector", {
+      bot_id: get(window, "currentBot.id"),
+      bot_name: get(window, "currentBot.name"),
+    });
+  }
+
+  openDesc() {
+    this.setState({ isAppearDesc: true });
+    Mixpanel.sharedInstance.trackEvent("Open initial quesions description", {
+      bot_id: get(window, "currentBot.id"),
+      bot_name: get(window, "currentBot.name"),
+    });
   }
 
   closeSelector() {

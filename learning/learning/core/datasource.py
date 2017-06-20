@@ -78,7 +78,7 @@ class Datasource:
 
         if self._type == 'database':
             data = pd.read_sql(
-                "select id, question from question_answers where bot_id = %(bot_id)s and question <> %(question)s and answer_id <> %(answer_id)s;",
+                "select id, question, answer_id from question_answers where bot_id = %(bot_id)s and question <> %(question)s and answer_id <> %(answer_id)s;",
                 self._db, params={"bot_id": bot_id, "question": question, "answer_id": Reply.CLASSIFY_FAILED_ANSWER_ID})
         elif self._type == 'csv':
             data = self._question_answers[self._question_answers['bot_id'] == bot_id]
@@ -87,10 +87,12 @@ class Datasource:
 
         return data
 
+    # TODO learning_training_messagesと共通化したい(同一のクエスチョンを除外しているだけの違いなので出来るはず)
     def learning_training_messages_for_suggest(self, bot_id, question):
         from learning.core.predict.reply import Reply
 
         if self._type == 'database':
+            # TODO SQLインジェクション対策必要
             data = pd.read_sql(
                 "select id, question, answer_id, question_answer_id from learning_training_messages where bot_id = %s and question <> '%s' and answer_id <> %s;"
                 % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)

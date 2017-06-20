@@ -19,7 +19,7 @@ railsとworkerとBotエンジンを起動する必要があります。
 普通にコンソールを３つ開いてもいいですが、Foremanを使うと比較的楽です
 
 ```
-$ bundle exec forman start
+$ bundle exec foreman start
 ```
 
 ※railsは [localhost:3838](http://localhost:3838) で起動します

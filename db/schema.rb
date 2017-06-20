@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524054315) do
+ActiveRecord::Schema.define(version: 20170616030118) do
 
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
@@ -335,12 +335,9 @@ ActiveRecord::Schema.define(version: 20170524054315) do
     t.string   "synonym",    limit: 20, null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.integer  "user_id",    limit: 4
     t.integer  "bot_id",     limit: 4
   end
 
   add_index "word_mappings", ["bot_id"], name: "index_word_mappings_on_bot_id", using: :btree
-  add_index "word_mappings", ["user_id"], name: "index_word_mappings_on_user_id", using: :btree
 
-  add_foreign_key "word_mappings", "users"
 end

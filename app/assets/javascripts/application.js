@@ -55,6 +55,17 @@ $(function() {
       })
       .always(function() {
         $checkbox.attr({ disabled: false });
+
+        if (window.mixpanel == null) { return; }
+        var options = {
+          bot_id: (window.currentBot || {}).id,
+          bot_name: (window.currentBot || {}).name,
+        };
+        if (isChecked) {
+          mixpanel.track("Select question answer for initial list", options);
+        } else {
+          mixpanel.track("Reject question answer for initial list", options);
+        }
       });
   });
 

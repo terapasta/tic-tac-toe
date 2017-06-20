@@ -29,7 +29,7 @@
               <li><%= link_to "システム共通同義語一覧", admin_word_mappings_path, data: { event_name: 'Open admin word mapping index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
             <% if policy(current_user).edit? %>
-              <li><%= link_to 'パスワード変更', edit_user_registration_path, data: { event_name: 'Open edit password', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
+              <li><%= link_to 'ユーザー情報変更', edit_user_registration_path, data: { event_name: 'Open edit user', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>
             <li><%#= link_to "管理者画面", rails_admin_path %></li>
             <!--<li class="dropdown">

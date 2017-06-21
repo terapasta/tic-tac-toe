@@ -1,8 +1,6 @@
 class Bot < ActiveRecord::Base
   belongs_to :user
   has_many :chats, -> { extending HasManyChatsExtension }
-  has_many :trainings
-  has_many :training_messages, through: :trainings
   has_many :messages, through: :chats
   has_many :learning_training_messages
   has_many :question_answers

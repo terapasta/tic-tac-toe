@@ -4140,7 +4140,7 @@ function changeRatingHandler(state, action) {
 }
 
 function doneDecisionBranchesOtherThanLast(classifiedData) {
-  return classifiedData;
+  // return classifiedData;
   var data = (0, _cloneDeep2.default)(classifiedData);
   var beforeLastIndex = data.length - 2;
   var lastIndex = data.length - 1;

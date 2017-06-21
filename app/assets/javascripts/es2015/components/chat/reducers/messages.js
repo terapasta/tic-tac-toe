@@ -183,7 +183,7 @@ export function changeRatingHandler(state, action) {
 }
 
 export function doneDecisionBranchesOtherThanLast(classifiedData) {
-  return classifiedData;
+  // return classifiedData;
   const data = cloneDeep(classifiedData);
   const beforeLastIndex = data.length - 2;
   const lastIndex = data.length - 1;

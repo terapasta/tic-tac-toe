@@ -1,15 +1,18 @@
 class TaskCreateService
-  def initialize(message, bot)
-    @message = message
+  def initialize(bot_messages, bot)
+    @bot_messages = bot_messages
+    @failed_bot_messagers = @bot_messages.select(&:answer_failed)
     @bot = bot
   end
 
   def process
-    guest_message, bot_message = Message.find_pair_message_bodies_from(@message)
-    if guest_message.present?
+    @failed_bot_messages.each do |bot_message|
+      guest_message = Message.find_pair_message_from(bot_message)
+      next if guest_message.nil?
+
       Task.create(
-        bot_message: (bot_message if @message.answer_failed),
-        guest_message: guest_message,
+        bot_message: (bot_message.body if bot_message.bad?),
+        guest_message: guest_message.body,
         bot_id: @bot.id,
       )
     end

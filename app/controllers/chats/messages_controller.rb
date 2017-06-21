@@ -25,12 +25,12 @@ class Chats::MessagesController < ApplicationController
         m.user_agent = request.env['HTTP_USER_AGENT']
       }
       @bot_messages = receive_and_reply!(@chat, @message)
-      SendAnswerFailedMailService.new(@bot_messages, current_user).send_mail
     end
+
+    SendAnswerFailedMailService.new(@bot_messages, current_user).send_mail
+    TaskCreateService.new(@bot_messages, @bot).process
+
     respond_to do |format|
-      if @bot_messages.first.answer_id == 0
-        TaskCreateService.new(@message, @bot).process
-      end
       format.js
       format.json { render_collection_json [@message, *@bot_messages], include: included_associations }
     end

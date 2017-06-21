@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from "react";
 
-function ChatContainer(props) {
-  const { children } = props;
+class ChatContainer extends Component {
+  render() {
+    const { children } = this.props;
 
-  return (
-    <div className="chat-container">
-      {children}
-    </div>
-  );
+    return (
+      <div className="chat-container">
+        {children}
+      </div>
+    );
+  }
 }
 
 export default ChatContainer;

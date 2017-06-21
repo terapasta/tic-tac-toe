@@ -5,27 +5,31 @@ import ChatRow from "./row";
 import ChatContainer from "./container";
 import ChatDecisionBranches from "./decision-branches";
 
-function ChatSimilarQuestionAnswersRow({
-  section: { similarQuestionAnswers, isDone },
-  onChoose,
-}) {
-  if (isEmpty(similarQuestionAnswers) || isDone) { return null; }
-  const items = similarQuestionAnswers.map((q) => ({
-    body: q.question,
-  }));
+class ChatSimilarQuestionAnswersRow extends Component {
+  render() {
+    const {
+      section: { similarQuestionAnswers, isDone },
+      onChoose,
+    } = this.props;
 
-  return (
-    <ChatRow>
-      <ChatContainer>
-        <ChatDecisionBranches
-          title="こちらの質問ではないですか？"
-          items={items}
-          selectAttribute="body"
-          onChoose={onChoose}
-        />
-      </ChatContainer>
-    </ChatRow>
-  )
+    if (isEmpty(similarQuestionAnswers) || isDone) { return null; }
+    const items = similarQuestionAnswers.map((q) => ({
+      body: q.question,
+    }));
+
+    return (
+      <ChatRow>
+        <ChatContainer>
+          <ChatDecisionBranches
+            title="こちらの質問ではないですか？"
+            items={items}
+            selectAttribute="body"
+            onChoose={onChoose}
+          />
+        </ChatContainer>
+      </ChatRow>
+    );
+  }
 }
 
 ChatSimilarQuestionAnswersRow.propTypes = {

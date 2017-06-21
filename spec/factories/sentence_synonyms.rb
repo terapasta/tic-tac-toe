@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :sentence_synonym do
-    training_message nil
+    question_answer nil
     body "MyText"
   end
 end

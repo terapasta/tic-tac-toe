@@ -33,7 +33,7 @@ export default class ChatApp extends Component {
     a.trackMixpanel("Open new chat");
     const { dispatch, token } = this.props;
     dispatch(a.fetchMessages(token));
-    dispatch(a.pollLearningStatus(window.currentBot.id));
+    // dispatch(a.pollLearningStatus(window.currentBot.id));
   }
 
   componentDidUpdate(prevProps, prevState) {

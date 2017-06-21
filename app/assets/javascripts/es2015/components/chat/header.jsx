@@ -2,10 +2,39 @@ import React, { Component, PropTypes } from "react";
 import values from "lodash/values";
 
 import { LearningStatus } from "./constants";
+import * as LearningAPI from "../../api/bot-learning";
+
+const POLLING_INTERVAL = 1000 * 2;
 
 class ChatHeader extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLearning: false,
+      learningStatus: null,
+    };
+    this.onClickLearning = this.onClickLearning.bind(this);
+  }
+
+  componentDidMount() {
+    this.pollLearningStatus();
+  }
+
+  pollLearningStatus() {
+    setTimeout(() => {
+      LearningAPI.status(window.currentBot.id).then((res) => {
+        this.setState({
+          learningStatus: res.data.learning_status,
+          isLearning: res.data.learning_status === LearningStatus.Processing,
+        });
+        this.pollLearningStatus();
+      }).catch(console.error);
+    }, POLLING_INTERVAL);
+  }
+
   render() {
-    const { botName, isManager, learningStatus, onClickStartLearning } = this.props;
+    const { botName, isManager } = this.props;
+    const { isLearning, learningStatus } = this.state;
 
     const isSucceeded = learningStatus === LearningStatus.Succeeded;
     const isFailed = learningStatus === LearningStatus.Failed;
@@ -21,16 +50,35 @@ class ChatHeader extends Component {
             {isProcessing && <span className="label label-warning">学習中</span>}
             {" "}
             <button className="chat-header__button btn btn-default"
-              disabled={isProcessing}
-              onClick={onClickStartLearning}>
+              disabled={isLearning}
+              onClick={this.onClickLearning}>
               <i className="material-icons">trending_up</i>
               {" "}
-              <span>{isProcessing ? "学習中..." : "学習を実行"}</span>
+              <span>{isLearning ? "学習中..." : "学習を実行"}</span>
             </button>
           </div>
         )}
       </header>
     );
+  }
+
+  onClickLearning() {
+    if (this.state.isLearning) { return; }
+    this.setState({
+      isLearning: true,
+      learningStatus: LearningStatus.Processing,
+    });
+    LearningAPI.start(window.currentBot.id).then((res) => {
+      this.setState({
+        learningStatus: res.data.learning_status,
+      });
+    }).catch((err) => {
+      console.error(err);
+      this.setState({
+        isLearning: false,
+        learningStatus: LearningStatus.Failed,
+      });
+    });
   }
 }
 
@@ -38,7 +86,6 @@ ChatHeader.propTypes = {
   botName: PropTypes.string.isRequired,
   isManager: PropTypes.bool.isRequired,
   learningStatus: PropTypes.oneOf(values(LearningStatus)),
-  onClickStartLearning: PropTypes.func.isRequired,
 };
 
 export default ChatHeader;

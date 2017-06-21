@@ -217,8 +217,6 @@ ja:
       question_answer:
         question: 質問
         answer_id: 回答
-      training_message:
-        body: 本文
       word_mapping:
         word: 単語
         synonym: 同義語

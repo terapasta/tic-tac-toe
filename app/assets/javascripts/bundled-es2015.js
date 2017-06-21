@@ -1297,7 +1297,7 @@ var ChatApp = function (_Component) {
           token = _props.token;
 
       dispatch(a.fetchMessages(token));
-      dispatch(a.pollLearningStatus(window.currentBot.id));
+      // dispatch(a.pollLearningStatus(window.currentBot.id));
     }
   }, {
     key: "componentDidUpdate",
@@ -2736,6 +2736,12 @@ var _values2 = _interopRequireDefault(_values);
 
 var _constants = require("./constants");
 
+var _botLearning = require("../../api/bot-learning");
+
+var LearningAPI = _interopRequireWildcard(_botLearning);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2744,23 +2750,53 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var POLLING_INTERVAL = 1000 * 2;
+
 var ChatHeader = function (_Component) {
   _inherits(ChatHeader, _Component);
 
-  function ChatHeader() {
+  function ChatHeader(props) {
     _classCallCheck(this, ChatHeader);
 
-    return _possibleConstructorReturn(this, (ChatHeader.__proto__ || Object.getPrototypeOf(ChatHeader)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ChatHeader.__proto__ || Object.getPrototypeOf(ChatHeader)).call(this, props));
+
+    _this.state = {
+      isLearning: false,
+      learningStatus: null
+    };
+    _this.onClickLearning = _this.onClickLearning.bind(_this);
+    return _this;
   }
 
   _createClass(ChatHeader, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.pollLearningStatus();
+    }
+  }, {
+    key: "pollLearningStatus",
+    value: function pollLearningStatus() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        LearningAPI.status(window.currentBot.id).then(function (res) {
+          _this2.setState({
+            learningStatus: res.data.learning_status,
+            isLearning: res.data.learning_status === _constants.LearningStatus.Processing
+          });
+          _this2.pollLearningStatus();
+        }).catch(console.error);
+      }, POLLING_INTERVAL);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _props = this.props,
           botName = _props.botName,
-          isManager = _props.isManager,
-          learningStatus = _props.learningStatus,
-          onClickStartLearning = _props.onClickStartLearning;
+          isManager = _props.isManager;
+      var _state = this.state,
+          isLearning = _state.isLearning,
+          learningStatus = _state.learningStatus;
 
 
       var isSucceeded = learningStatus === _constants.LearningStatus.Succeeded;
@@ -2797,8 +2833,8 @@ var ChatHeader = function (_Component) {
           _react2.default.createElement(
             "button",
             { className: "chat-header__button btn btn-default",
-              disabled: isProcessing,
-              onClick: onClickStartLearning },
+              disabled: isLearning,
+              onClick: this.onClickLearning },
             _react2.default.createElement(
               "i",
               { className: "material-icons" },
@@ -2808,11 +2844,35 @@ var ChatHeader = function (_Component) {
             _react2.default.createElement(
               "span",
               null,
-              isProcessing ? "学習中..." : "学習を実行"
+              isLearning ? "学習中..." : "学習を実行"
             )
           )
         )
       );
+    }
+  }, {
+    key: "onClickLearning",
+    value: function onClickLearning() {
+      var _this3 = this;
+
+      if (this.state.isLearning) {
+        return;
+      }
+      this.setState({
+        isLearning: true,
+        learningStatus: _constants.LearningStatus.Processing
+      });
+      LearningAPI.start(window.currentBot.id).then(function (res) {
+        _this3.setState({
+          learningStatus: res.data.learning_status
+        });
+      }).catch(function (err) {
+        console.error(err);
+        _this3.setState({
+          isLearning: false,
+          learningStatus: _constants.LearningStatus.Failed
+        });
+      });
     }
   }]);
 
@@ -2822,13 +2882,12 @@ var ChatHeader = function (_Component) {
 ChatHeader.propTypes = {
   botName: _react.PropTypes.string.isRequired,
   isManager: _react.PropTypes.bool.isRequired,
-  learningStatus: _react.PropTypes.oneOf((0, _values2.default)(_constants.LearningStatus)),
-  onClickStartLearning: _react.PropTypes.func.isRequired
+  learningStatus: _react.PropTypes.oneOf((0, _values2.default)(_constants.LearningStatus))
 };
 
 exports.default = ChatHeader;
 
-},{"./constants":18,"lodash/values":690,"react":852}],28:[function(require,module,exports){
+},{"../../api/bot-learning":6,"./constants":18,"lodash/values":690,"react":852}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

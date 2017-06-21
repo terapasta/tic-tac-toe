@@ -21,13 +21,8 @@ module HasManySentenceSynonyms
       return [] if bot&.learning_parameter&.use_similarity_classification
 
       messages = begin
-        if self == TrainingMessage
-          (bot.try(:training_messages) || TrainingMessage)
-            .guest.includes(:sentence_synonyms)
-        elsif self == QuestionAnswer
-          (bot.try(:question_answers) || QuestionAnswer)
-            .includes(:sentence_synonyms)
-        end
+        (bot.try(:question_answers) || QuestionAnswer)
+          .includes(:sentence_synonyms)
       end
       messages.select {|m|
         m.sentence_synonyms.length < 18 &&

@@ -43,7 +43,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   scope :group_by_sentence_synonyms, -> {
     joins(:sentence_synonyms)
-      .group(:training_message_id)
+      .group(:question_answer_id)
       .count
   }
 

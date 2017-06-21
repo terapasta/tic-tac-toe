@@ -1,0 +1,19 @@
+/ csvインポート画面
+= bootstrap_form_tag url: bot_chat_tests_path(@bot), method: :post do |f|
+  .panel.panel-default
+    .panel-heading 
+      h4 チャットテスト
+      
+    .panel-body
+      p
+        |
+          チャットテスト機能は、csv形式の質問を一括投入することで、<br />
+          対応した回答が得られるかを、ブラウザ上で確認することができます。<br />
+          
+      = f.file_field :file, label: "ファイル"
+      = f.submit 'インポート', class: 'btn btn-success'
+      
+      p.help-block
+        |※ファイルはCSV形式でインポートして下さい
+        br
+        |※Excelで作成したCSVのエンコードはShift_JISです

@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from "react";
 
-function ChatRow(props) {
-  const { children } = props;
+class ChatRow extends Component {
+  render() {
+    const { children } = this.props;
 
-  return (
-    <div className="chat-row">
-      {children}
-    </div>
-  );
+    return (
+      <div className="chat-row">
+        {children}
+      </div>
+    );
+  }
 }
 
 export default ChatRow;

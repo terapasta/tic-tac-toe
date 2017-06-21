@@ -7,31 +7,35 @@ import ChatContainer from "./container";
 import ChatGuestMessage from "./guest-message";
 import ChatGuestMessageEditor from "./guest-message-editor";
 
-function ChatGuestMessageRow({
-  section: { question, answer },
-  isActive,
-  learnings,
-  onChangeLearning,
-}) {
-  if (question == null) { return null; }
+class ChatGuestMessageRow extends Component {
+  render() {
+    const {
+      section: { question, answer },
+      isActive,
+      learnings,
+      onChangeLearning,
+    } = this.props;
 
-  const learning = find(learnings, {
-    questionId: get(question, "id"),
-    answerId: get(answer, "id"),
-  });
+    if (question == null) { return null; }
 
-  return (
-    <ChatRow>
-      <ChatContainer>
-        {!isActive && (
-          <ChatGuestMessage {...question} />
-        )}
-        {isActive && (
-          <ChatGuestMessageEditor {...{ learning, onChangeLearning }} />
-        )}
-      </ChatContainer>
-    </ChatRow>
-  );
+    const learning = find(learnings, {
+      questionId: get(question, "id"),
+      answerId: get(answer, "id"),
+    });
+
+    return (
+      <ChatRow>
+        <ChatContainer>
+          {!isActive && (
+            <ChatGuestMessage {...question} />
+          )}
+          {isActive && (
+            <ChatGuestMessageEditor {...{ learning, onChangeLearning }} />
+          )}
+        </ChatContainer>
+      </ChatRow>
+    );
+  }
 }
 
 ChatGuestMessageRow.propTypes = {

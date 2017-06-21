@@ -10,37 +10,41 @@ import ChatBotMessage from "./bot-message";
 import ChatBotMessageEditor from "./bot-message-editor";
 import { Ratings } from "./constants";
 
-function ChatBotMessageRow({
-  section: { question, answer },
-  isFirst,
-  isActive,
-  learnings,
-  onChangeRatingTo,
-  onChangeLearning,
-}) {
-  if (answer == null) { return null; }
+class ChatBotMessageRow extends Component {
+  render() {
+    const {
+      section: { question, answer },
+      isFirst,
+      isActive,
+      learnings,
+      onChangeRatingTo,
+      onChangeLearning,
+    } = this.props;
 
-  const learning = find(learnings, {
-    questionId: get(question, "id"),
-    answerId: get(answer, "id"),
-  });
-  const _props = assign({ isFirst, onChangeRatingTo }, answer);
+    if (answer == null) { return null; }
 
-  return (
-    <ChatRow>
-      <ChatContainer>
-        {!isActive && (
-          <ChatBotMessage {..._props} />
-        )}
-        {isActive && (
-          <ChatBotMessageEditor {...assign({
-            learning,
-            onChangeLearning
-          }, _props)} />
-        )}
-      </ChatContainer>
-    </ChatRow>
-  );
+    const learning = find(learnings, {
+      questionId: get(question, "id"),
+      answerId: get(answer, "id"),
+    });
+    const _props = assign({ isFirst, onChangeRatingTo }, answer);
+
+    return (
+      <ChatRow>
+        <ChatContainer>
+          {!isActive && (
+            <ChatBotMessage {..._props} />
+          )}
+          {isActive && (
+            <ChatBotMessageEditor {...assign({
+              learning,
+              onChangeLearning
+            }, _props)} />
+          )}
+        </ChatContainer>
+      </ChatRow>
+    );
+  }
 }
 
 ChatBotMessageRow.propTypes = {

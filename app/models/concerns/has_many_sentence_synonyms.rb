@@ -3,7 +3,7 @@ module HasManySentenceSynonyms
 
   included do
     has_many :sentence_synonyms,
-      foreign_key: :training_message_id,
+      foreign_key: :question_answer_id,
       dependent: :destroy
     accepts_nested_attributes_for :sentence_synonyms
 

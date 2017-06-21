@@ -1,4 +1,4 @@
-## Elasticsearch
+## Elasticsearch (以下ES)
 
 ### AWSを使えるかどうか
 
@@ -47,3 +47,22 @@ DBからいい感じに取り込めないか
 https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model
 
 これ使ってみる。
+
+question_answerをESに取り込む
+
+```
+pry$ QuestionAnswer.all.map {|x| x.__elasticsearch__.index_document }
+```
+
+ESに対して以下を実行する (kibanaから実行可能)
+
+```
+GET question_answers/_search
+{
+  "query":{
+    "match_all" : {}
+  }
+}
+```
+
+データが入っていることが確認できた

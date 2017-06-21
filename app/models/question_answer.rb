@@ -1,5 +1,8 @@
+require 'elasticsearch/model'
+
 class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
+  include Elasticsearch::Model
 
   paginates_per 100
   acts_as_taggable

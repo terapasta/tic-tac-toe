@@ -7872,8 +7872,8 @@ var QuestionAnswerTagFrom = function (_Component) {
       newTopicTagName: ""
     };
     _this.onChangeCheckBox = _this.onChangeCheckBox.bind(_this);
-    _this.onSubmitForm = _this.onSubmitForm.bind(_this);
     _this.onChangeInputText = _this.onChangeInputText.bind(_this);
+    _this.onClickButton = _this.onClickButton.bind(_this);
     return _this;
   }
 
@@ -7959,10 +7959,14 @@ var QuestionAnswerTagFrom = function (_Component) {
               "div",
               { className: "panel-footer" },
               _react2.default.createElement(
-                "form",
-                { className: "form-inline", onSubmit: this.onSubmitForm },
+                "div",
+                { className: "form-inline" },
                 _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u3092\u8FFD\u52A0", onChange: this.onChangeInputText, value: newTopicTagName }),
-                _react2.default.createElement("input", { type: "submit", className: "btn btn-primary", value: "\u8FFD\u52A0" })
+                _react2.default.createElement(
+                  "button",
+                  { className: "btn btn-primary", onClick: this.onClickButton },
+                  "\u8FFD\u52A0"
+                )
               )
             )
           )
@@ -8049,12 +8053,10 @@ var QuestionAnswerTagFrom = function (_Component) {
       });
     }
   }, {
-    key: "onSubmitForm",
-    value: function onSubmitForm(e) {
+    key: "createTag",
+    value: function createTag() {
       var _this5 = this;
 
-      e.preventDefault();
-      e.stopPropagation();
       var botId = this.props.botId;
       var _state3 = this.state,
           topicTags = _state3.topicTags,
@@ -8081,6 +8083,13 @@ var QuestionAnswerTagFrom = function (_Component) {
     key: "onChangeInputText",
     value: function onChangeInputText(e) {
       this.setState({ newTopicTagName: e.target.value });
+    }
+  }, {
+    key: "onClickButton",
+    value: function onClickButton(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.createTag();
     }
   }]);
 

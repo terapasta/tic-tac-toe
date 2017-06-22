@@ -31,8 +31,8 @@ export default class QuestionAnswerTagFrom extends Component {
       newTopicTagName: "",
     };
     this.onChangeCheckBox = this.onChangeCheckBox.bind(this);
-    this.onSubmitForm = this.onSubmitForm.bind(this);
     this.onChangeInputText = this.onChangeInputText.bind(this);
+    this.onClickButton = this.onClickButton.bind(this);
   }
 
   componentDidMount() {
@@ -79,10 +79,10 @@ export default class QuestionAnswerTagFrom extends Component {
               })}
             </div>
             <div className="panel-footer">
-              <form className="form-inline" onSubmit={this.onSubmitForm}>
+              <div className="form-inline">
                 <input type="text" className="form-control" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
-                <input type="submit" className="btn btn-primary" value="追加" />
-              </form>
+                <button className="btn btn-primary" onClick={this.onClickButton}>追加</button>
+              </div>
             </div>
           </div>
         </div>
@@ -142,9 +142,7 @@ export default class QuestionAnswerTagFrom extends Component {
     });
   }
 
-  onSubmitForm(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  createTag() {
     const { botId } = this.props;
     const { topicTags, newTopicTagName } = this.state;
 
@@ -162,5 +160,11 @@ export default class QuestionAnswerTagFrom extends Component {
 
   onChangeInputText(e) {
     this.setState({ newTopicTagName: e.target.value });
+  }
+
+  onClickButton(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.createTag();
   }
 }

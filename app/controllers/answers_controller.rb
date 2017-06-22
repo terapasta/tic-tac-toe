@@ -36,12 +36,17 @@ class AnswersController < ApplicationController
   end
 
   def update
+    ActiveRecord::Base.transaction do
+      @answer = AnswerUpdateService.new(@bot, @answer, answer_params).process!
+    end
+
     respond_to do |format|
-      if @answer.update answer_params
-        format.json { render json: @answer.decorate.as_json, status: :ok }
-      else
-        format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
-      end
+      format.json { render json: @answer.decorate.as_json, status: :ok }
+    end
+  rescue => e
+    logger.error e.message.tapp + e.backtrace.join("\n")
+    respond_to do |format|
+      format.json { render json: @answer.decorate.errors_as_json, status: :unprocessable_entity }
     end
   end
 

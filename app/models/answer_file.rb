@@ -9,6 +9,10 @@ class AnswerFile < ActiveRecord::Base
 
   before_validation :set_file_type_and_size_if_needed
 
+  def image?
+    %w(image/jpg image/jpeg image/gif image/png).include?(file_type)
+  end
+
   private
     def set_file_type_and_size_if_needed
       if file.present? && file_changed?

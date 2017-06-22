@@ -1,9 +1,52 @@
-- data = @question_answer.persisted? ? { event_name: 'Update question answer', question_answer_id: @question_answer.id, bot_id: @bot.id, bot_name: @bot.name } : {}
+.panel.panel-default
+  .panel-heading: .panel-title
+    = @question_answer.persisted? ? 'Q&A編集' : 'Q&A新規登録'
 
-span(
-  data-component="QuestionAnswerForm"
-  data-bot-id=@bot.id
-  data-id=@question_answer.id
-  data-topic-tags=@bot.topic_tags.pluck(:id, :name)
-  data-question-body=@question_answer.question
-)
+  .panel-body
+    = nested_form_for [@bot, @question_answer] do |f|
+      - if @question_answer.errors.any?
+        .form-group.text-danger
+          ul
+            - @question_answer.errors.full_messages.each do |message|
+              li= message
+
+      .form-group
+        = f.label :question
+        = f.text_area :question, class: 'form-control', rows: 5
+
+      .form-group
+        span(
+          data-component="AnswerBodyTextArea"
+          data-base-name="question_answer[answer_attributes]"
+          data-default-value=@question_answer.answer&.body
+          data-bot-id=@bot.id
+        )
+
+      .form-group
+        .panel.panel-default
+          .panel-heading: .panel-title 回答添付ファイル
+          .panel-body
+            = f.fields_for :answer do |nf|
+              table.table.table-striped.table-bordered: tbody#answer-files
+                = nf.fields_for :answer_files, wrapper: false do |nnf|
+                  tr.fields.form-inline
+                    td
+                      - if nnf.object.file?
+                        - if nnf.object.image?
+                          = link_to image_tag(nnf.object.file_url, width: 200), nnf.object.file_url, target: '_blank'
+                        - else
+                          = link_to nnf.object.read_attribute(:file), nnf.object.file_url, target: '_blank'
+                        p ファイルタイプ：#{nnf.object.file_type} / ファイルサイズ #{nnf.object.file_size}
+                      - else
+                        = nnf.file_field :file
+                    td= nnf.link_to_remove '削除', class: 'btn btn-danger'
+              = nf.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-default', data: { target: '#answer-files' }
+
+      span(
+        data-component="QuestionAnswerTagForm"
+        data-question-answer-id=@question_answer.id
+        data-bot-id=@bot.id
+      )
+
+      .form-group
+        = f.submit class: 'btn btn-primary'

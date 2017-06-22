@@ -76,8 +76,14 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   namespace :api, { format: 'json' } do
-    namespace :v1 do
-      resources :messages, only: :create
+    resources :messages, only: :create
+    resources :question_answers
+    resources :bots do
+      resources :topic_tags, module: :bots
+      resources :question_answers, module: :bots do
+        resources :topic_taggings, module: :question_answers
+      end
+      resources :answers, module: :bots
     end
   end
 

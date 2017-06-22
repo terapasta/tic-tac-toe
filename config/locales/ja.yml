@@ -213,7 +213,7 @@ ja:
         classify_failed_message: 回答出来なかった場合のメッセージ
         start_message: チャット開始時のメッセージ
       answer:
-        body: 内容
+        body: 回答
       question_answer:
         question: 質問
         answer_id: 回答

@@ -410,13 +410,16 @@ export function updateQuestionModel(questionModel, newAttrs, options = {}) {
 
 export function updateAnswerModel(answerModel, newAttrs, options = {}) {
   return (dispatch, getState) => {
-    const { isProcessing } = getState();
+    const { isProcessing, questionsTree } = getState();
     if (isProcessing) { return; }
     dispatch(onProcessing());
 
     const { questionModel } = options;
 
     answerModel.update(newAttrs).then((newAnswerModel) => {
+      findAnswerFromTree(questionsTree, answerModel.id, (node) => {
+        node.id = newAnswerModel.id;
+      });
       dispatch(setEditingAnswerModel(newAnswerModel));
       dispatch(updateAnswersRepo(newAnswerModel));
       dispatch(offProcessing());
@@ -454,9 +457,16 @@ export function clearActiveItem() {
 }
 
 export function setEditingQuestionModel(questionModel) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: t.SET_EDITING_QUESTION_MODEL, questionModel });
-    dispatch(setEditingAnswerModel(new Answer));
+
+    let answer;
+    if (questionModel.answerId != null) {
+      const { answersRepo } = getState();
+      answer = answersRepo[questionModel.answerId];
+    }
+    const answerModel = new Answer(answer || {});
+    dispatch(setEditingAnswerModel(answerModel));
   };
 }
 

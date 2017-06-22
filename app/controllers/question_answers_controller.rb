@@ -14,7 +14,7 @@ class QuestionAnswersController < ApplicationController
     @keyword = params[:keyword]
     @q = @bot.question_answers
       .topic_tag(params.dig(:topic, :id))
-      .includes(:decision_branches)
+      .includes(:decision_branches, :topic_tags)
       .order('question')
       .page(params[:page])
       .keyword(params[:keyword])
@@ -31,8 +31,10 @@ class QuestionAnswersController < ApplicationController
   end
 
   def new
-    @question_answer = @bot.question_answers.build
-    @question_answer.question = params[:question]
+    @question_answer = @bot.question_answers.build(
+      question: params[:question],
+      answer_attributes: { body: params[:answer] }
+    )
   end
 
   def create
@@ -52,18 +54,24 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
+    answer_params = question_answer_params.delete(:answer_attributes)
+
     ActiveRecord::Base.transaction do
-      @question_answer.topic_taggings.destroy_all
-      @question_answer.update!(permitted_attributes(@question_answer))
+      @question_answer.update!(question_answer_params)
+      if answer_params.present?
+        if @question_answer.answer.present?
+          AnswerUpdateService.new(@bot, @question_answer.answer, answer_params).process!
+        else
+          @question_answer.update!({ answer_attributes: answer_params })
+        end
+      end
     end
+
     respond_to do |format|
       format.html do
-        redirect_to bot_question_answers_path(@bot), notice: '更新しました。'
+        redirect_to edit_bot_question_answer_path(@bot, @question_answer), notice: '更新しました。'
       end
-      format.json do
-        render json: @question_answer.decorate.as_json,
-               status: :ok
-      end
+      format.json { render json: @question_answer.decorate.as_json, status: :ok }
     end
   rescue => e
     logger.error e.message + e.backtrace.join("\n")
@@ -72,10 +80,7 @@ class QuestionAnswersController < ApplicationController
         flash.now.alert = '更新できませんでした。'
         render :edit
       end
-      format.json do
-        render json: @question_answer.decorate.errors_as_json,
-               status: :unprocessable_entity
-      end
+      format.json { render json: @question_answer.decorate.errors_as_json, status: :unprocessable_entity }
     end
   end
 
@@ -121,8 +126,8 @@ class QuestionAnswersController < ApplicationController
     end
 
     def question_answer_params
-      permitted_attributes(@question_answer || QuestionAnswer).tap do |prm|
-        if prm[:answer_attributes].present? && params[:action] == 'create'
+      @question_answer_params ||= permitted_attributes(@question_answer || QuestionAnswer).tap do |prm|
+        if prm[:answer_attributes].present?
           prm[:answer_attributes][:bot_id] = @bot.id
         end
       end

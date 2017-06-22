@@ -35,6 +35,7 @@ export default class Question {
     return `/bots/${this.botId}/question_answers/${this.id}/edit`;
   }
   get topicTags() { return this.attrs.topicTags; }
+  get answerId() { return this.attrs.answerId; }
 
   fetchAnswer() {
     const { id, botId } = this.attrs;

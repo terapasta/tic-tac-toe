@@ -4,7 +4,8 @@ class QuestionAnswerPolicy < ApplicationPolicy
   end
 
   def show?
-    update?
+    return true if user.staff?
+    user.normal? && record.bot.user == user
   end
 
   def new?
@@ -53,7 +54,6 @@ class QuestionAnswerPolicy < ApplicationPolicy
             :created_user_id
           ],
           answer_attributes: [
-            :id,
             :body,
             answer_files_attributes: [
               :id,
@@ -64,6 +64,7 @@ class QuestionAnswerPolicy < ApplicationPolicy
           topic_taggings_attributes: [
             :id,
             :topic_tag_id,
+            :_destroy
           ]
         }
       ]

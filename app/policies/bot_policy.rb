@@ -47,4 +47,14 @@ class BotPolicy < ApplicationPolicy
       },
     ]
   end
+
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      if user.staff?
+        scope
+      else
+        scope.where(user_id: user.id)
+      end
+    end
+  end
 end

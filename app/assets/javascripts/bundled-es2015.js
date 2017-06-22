@@ -5059,7 +5059,8 @@ exports.default = CurrentDecisionBranch;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = DecisionBranchItem;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
@@ -5067,25 +5068,49 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function DecisionBranchItem(props) {
-  var decisionBranchModel = props.decisionBranchModel,
-      onEdit = props.onEdit;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _react2.default.createElement(
-    "li",
-    { className: "list-group-item clearfix", id: "decision-branch-item-" + decisionBranchModel.id },
-    _react2.default.createElement(
-      "span",
-      null,
-      decisionBranchModel.body
-    ),
-    _react2.default.createElement(
-      "span",
-      { className: "btn btn-link", onClick: onEdit },
-      _react2.default.createElement("i", { className: "fa fa-pencil" })
-    )
-  );
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DecisionBranchItem = function (_Component) {
+  _inherits(DecisionBranchItem, _Component);
+
+  function DecisionBranchItem() {
+    _classCallCheck(this, DecisionBranchItem);
+
+    return _possibleConstructorReturn(this, (DecisionBranchItem.__proto__ || Object.getPrototypeOf(DecisionBranchItem)).apply(this, arguments));
+  }
+
+  _createClass(DecisionBranchItem, [{
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          decisionBranchModel = _props.decisionBranchModel,
+          onEdit = _props.onEdit;
+
+      return _react2.default.createElement(
+        "li",
+        { className: "list-group-item clearfix", id: "decision-branch-item-" + decisionBranchModel.id },
+        _react2.default.createElement(
+          "span",
+          null,
+          decisionBranchModel.body
+        ),
+        _react2.default.createElement(
+          "span",
+          { className: "btn btn-link", onClick: onEdit },
+          _react2.default.createElement("i", { className: "fa fa-pencil" })
+        )
+      );
+    }
+  }]);
+
+  return DecisionBranchItem;
+}(_react.Component);
+
+exports.default = DecisionBranchItem;
 
 },{"react":854}],50:[function(require,module,exports){
 "use strict";
@@ -7848,11 +7873,9 @@ exports.default = LearningButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Detail = exports.Master = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-exports.Master = Master;
-exports.Detail = Detail;
 
 var _react = require("react");
 
@@ -7907,25 +7930,56 @@ var MasterDetailPanel = function (_Component) {
 }(_react.Component);
 
 exports.default = MasterDetailPanel;
-function Master(props) {
-  var children = props.children;
 
-  return _react2.default.createElement(
-    "div",
-    { className: "master-detail-panel__master" },
-    children
-  );
-}
+var Master = exports.Master = function (_Component2) {
+  _inherits(Master, _Component2);
 
-function Detail(props) {
-  var children = props.children;
+  function Master() {
+    _classCallCheck(this, Master);
 
-  return _react2.default.createElement(
-    "div",
-    { className: "master-detail-panel__detail" },
-    children
-  );
-}
+    return _possibleConstructorReturn(this, (Master.__proto__ || Object.getPrototypeOf(Master)).apply(this, arguments));
+  }
+
+  _createClass(Master, [{
+    key: "render",
+    value: function render() {
+      var children = this.props.children;
+
+      return _react2.default.createElement(
+        "div",
+        { className: "master-detail-panel__master" },
+        children
+      );
+    }
+  }]);
+
+  return Master;
+}(_react.Component);
+
+var Detail = exports.Detail = function (_Component3) {
+  _inherits(Detail, _Component3);
+
+  function Detail() {
+    _classCallCheck(this, Detail);
+
+    return _possibleConstructorReturn(this, (Detail.__proto__ || Object.getPrototypeOf(Detail)).apply(this, arguments));
+  }
+
+  _createClass(Detail, [{
+    key: "render",
+    value: function render() {
+      var children = this.props.children;
+
+      return _react2.default.createElement(
+        "div",
+        { className: "master-detail-panel__detail" },
+        children
+      );
+    }
+  }]);
+
+  return Detail;
+}(_react.Component);
 
 },{"react":854}],80:[function(require,module,exports){
 "use strict";
@@ -8106,7 +8160,8 @@ exports.default = MessageRatingButtons;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Modal;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
@@ -8118,61 +8173,85 @@ var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Modal(props) {
-  var onClose = props.onClose,
-      title = props.title,
-      children = props.children,
-      iframeUrl = props.iframeUrl,
-      wide = props.wide;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Modal = function (_Component) {
+  _inherits(Modal, _Component);
+
+  function Modal() {
+    _classCallCheck(this, Modal);
+
+    return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).apply(this, arguments));
+  }
+
+  _createClass(Modal, [{
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          onClose = _props.onClose,
+          title = _props.title,
+          children = _props.children,
+          iframeUrl = _props.iframeUrl,
+          wide = _props.wide;
 
 
-  return _react2.default.createElement(
-    "span",
-    null,
-    _react2.default.createElement("div", { className: "modal-backdrop fade in" }),
-    _react2.default.createElement(
-      "div",
-      { className: "modal fade in",
-        style: { display: "block", overflowY: "auto" },
-        onClick: function onClick() {
-          onClose();
-        } },
-      _react2.default.createElement(
-        "div",
-        { className: "modal-dialog" + (wide ? " wide" : ""),
-          onClick: function onClick(e) {
-            e.stopPropagation();
-          } },
+      return _react2.default.createElement(
+        "span",
+        null,
+        _react2.default.createElement("div", { className: "modal-backdrop fade in" }),
         _react2.default.createElement(
           "div",
-          { className: "modal-content" },
+          { className: "modal fade in",
+            style: { display: "block", overflowY: "auto" },
+            onClick: function onClick() {
+              onClose();
+            } },
           _react2.default.createElement(
             "div",
-            { className: "modal-header" },
+            { className: "modal-dialog" + (wide ? " wide" : ""),
+              onClick: function onClick(e) {
+                e.stopPropagation();
+              } },
             _react2.default.createElement(
-              "button",
-              { className: "close", onClick: function onClick() {
-                  onClose();
-                } },
-              "\xD7"
-            ),
-            _react2.default.createElement(
-              "h4",
-              { className: "modal-title" },
-              title
+              "div",
+              { className: "modal-content" },
+              _react2.default.createElement(
+                "div",
+                { className: "modal-header" },
+                _react2.default.createElement(
+                  "button",
+                  { className: "close", onClick: function onClick() {
+                      onClose();
+                    } },
+                  "\xD7"
+                ),
+                _react2.default.createElement(
+                  "h4",
+                  { className: "modal-title" },
+                  title
+                )
+              ),
+              (0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement(
+                "div",
+                { className: "modal-body" },
+                children
+              ),
+              !(0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement("iframe", { className: "modal-iframe", src: iframeUrl })
             )
-          ),
-          (0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement(
-            "div",
-            { className: "modal-body" },
-            children
-          ),
-          !(0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement("iframe", { className: "modal-iframe", src: iframeUrl })
+          )
         )
-      )
-    )
-  );
-}
+      );
+    }
+  }]);
+
+  return Modal;
+}(_react.Component);
+
+exports.default = Modal;
 
 },{"is-empty":457,"react":854}],82:[function(require,module,exports){
 "use strict";
@@ -8180,7 +8259,9 @@ function Modal(props) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PanelHead = PanelHead;
+exports.PanelHead = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
@@ -8196,58 +8277,95 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function PanelHead(props) {
-  var title = props.title;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  if ((0, _isEmpty2.default)(title)) {
-    return null;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PanelHead = exports.PanelHead = function (_Component) {
+  _inherits(PanelHead, _Component);
+
+  function PanelHead() {
+    _classCallCheck(this, PanelHead);
+
+    return _possibleConstructorReturn(this, (PanelHead.__proto__ || Object.getPrototypeOf(PanelHead)).apply(this, arguments));
   }
 
-  return _react2.default.createElement(
-    "div",
-    { className: "panel-heading" },
-    _react2.default.createElement(
-      "div",
-      { className: "panel-title" },
-      title
-    )
-  );
-}
+  _createClass(PanelHead, [{
+    key: "render",
+    value: function render() {
+      var title = this.props.title;
 
-function Panel(props) {
-  var title = props.title,
-      modifier = props.modifier,
-      children = props.children,
-      isClickable = props.isClickable,
-      onClickBody = props.onClickBody,
-      id = props.id;
+      if ((0, _isEmpty2.default)(title)) {
+        return null;
+      }
 
-  var className = (0, _classnames2.default)("panel", {
-    "panel-default": modifier == null || modifier === "default",
-    "panel-danger": modifier === "danger"
-  });
+      return _react2.default.createElement(
+        "div",
+        { className: "panel-heading" },
+        _react2.default.createElement(
+          "div",
+          { className: "panel-title" },
+          title
+        )
+      );
+    }
+  }]);
 
-  return _react2.default.createElement(
-    "div",
-    { className: className, id: id },
-    _react2.default.createElement(PanelHead, { title: title }),
-    isClickable && _react2.default.createElement(
-      "a",
-      {
-        className: "panel-body",
-        href: "#",
-        style: { display: "block" },
-        onClick: onClickBody
-      },
-      children
-    ),
-    !isClickable && _react2.default.createElement(
-      "div",
-      { className: "panel-body" },
-      children
-    )
-  );
-}
+  return PanelHead;
+}(_react.Component);
+
+var Panel = function (_Component2) {
+  _inherits(Panel, _Component2);
+
+  function Panel() {
+    _classCallCheck(this, Panel);
+
+    return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
+  }
+
+  _createClass(Panel, [{
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          title = _props.title,
+          modifier = _props.modifier,
+          children = _props.children,
+          isClickable = _props.isClickable,
+          onClickBody = _props.onClickBody,
+          id = _props.id;
+
+      var className = (0, _classnames2.default)("panel", {
+        "panel-default": modifier == null || modifier === "default",
+        "panel-danger": modifier === "danger"
+      });
+
+      return _react2.default.createElement(
+        "div",
+        { className: className, id: id },
+        _react2.default.createElement(PanelHead, { title: title }),
+        isClickable && _react2.default.createElement(
+          "a",
+          {
+            className: "panel-body",
+            href: "#",
+            style: { display: "block" },
+            onClick: onClickBody
+          },
+          children
+        ),
+        !isClickable && _react2.default.createElement(
+          "div",
+          { className: "panel-body" },
+          children
+        )
+      );
+    }
+  }]);
+
+  return Panel;
+}(_react.Component);
 
 Panel.propTypes = {
   title: _react.PropTypes.string

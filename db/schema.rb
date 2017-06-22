@@ -12,6 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20170616030118) do
+
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
     t.string   "domain",     limit: 255,             null: false
@@ -21,6 +22,15 @@ ActiveRecord::Schema.define(version: 20170616030118) do
   end
 
   add_index "allowed_hosts", ["scheme", "domain", "bot_id"], name: "index_allowed_hosts_on_scheme_and_domain_and_bot_id", unique: true, using: :btree
+
+  create_table "answer_files", force: :cascade do |t|
+    t.integer  "answer_id",  limit: 4,               null: false
+    t.string   "file",       limit: 255,             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "file_type",  limit: 255,             null: false
+    t.integer  "file_size",  limit: 4,   default: 0
+  end
 
   create_table "answers", force: :cascade do |t|
     t.integer  "defined_answer_id", limit: 4

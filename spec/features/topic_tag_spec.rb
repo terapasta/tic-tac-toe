@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Q&Aトピックの検索テスト' do
+RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
   include RequestSpecHelper
 
   let!(:user) do
@@ -19,7 +19,7 @@ feature 'Q&Aトピックの検索テスト' do
     attributes_for(:topic_tag)
   end
 
-  background do
+  before do
     sign_in user
   end
 
@@ -29,11 +29,13 @@ feature 'Q&Aトピックの検索テスト' do
     end
 
     scenario 'Message "登録しました。" is displayed' do
-      visit bot_topic_tags_path(bot)
-      click_on '登録する'
-      fill_in 'topic_tag_name', with: topic_tag_attrs[:name]
-      expect{ click_on '登録する' }.to change(TopicTag, :count).by(1)
-      expect(page).to have_content '登録しました'
+      expect{
+        visit bot_topic_tags_path(bot)
+        click_on '登録する'
+        fill_in 'topic_tag_name', with: topic_tag_attrs[:name]
+        click_on '登録する'
+        expect(page).to have_content '登録しました'
+      }.to change(TopicTag, :count).by(1)
     end
 
     scenario 'Message "登録できませんでした。" is displayed' do

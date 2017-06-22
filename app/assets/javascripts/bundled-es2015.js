@@ -1586,10 +1586,13 @@ var ChatApp = function (_Component) {
       a.trackMixpanel("Open new chat");
       var _props = this.props,
           dispatch = _props.dispatch,
-          token = _props.token;
+          token = _props.token,
+          isManager = _props.isManager;
 
       dispatch(a.fetchMessages(token));
-      dispatch(a.fetchInitialQuestions(window.currentBot.id));
+      if (isManager) {
+        dispatch(a.fetchInitialQuestions(window.currentBot.id));
+      }
     }
   }, {
     key: "componentDidUpdate",

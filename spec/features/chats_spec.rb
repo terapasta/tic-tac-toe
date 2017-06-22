@@ -180,6 +180,7 @@ RSpec.describe 'Chats', type: :features, js: true do
           scenario do
             expect {
               visit "/embed/#{bot.token}/chats/new"
+              sleep 1
               expect(page).to have_content(start_message)
               expect(Chat.last.is_staff).to_not be
             }.to change(Chat, :count).by(1)

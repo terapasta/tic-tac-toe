@@ -34,9 +34,11 @@ export default class ChatApp extends Component {
 
   componentDidMount() {
     a.trackMixpanel("Open new chat");
-    const { dispatch, token } = this.props;
+    const { dispatch, token, isManager } = this.props;
     dispatch(a.fetchMessages(token));
-    dispatch(a.fetchInitialQuestions(window.currentBot.id));
+    if (isManager) {
+      dispatch(a.fetchInitialQuestions(window.currentBot.id));
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {

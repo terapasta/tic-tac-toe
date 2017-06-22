@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe Learning::Amplifier do
 
   describe '#amp' do
-    let(:user) { create :user }
+    let(:bot) { create :bot }
 
     before do
-      create(:word_mapping, word: 'カレー', synonym: 'カリー', user: user)
+      create(:word_mapping, word: 'カレー', synonym: 'カリー', bot: bot)
       create(:word_mapping, word: '食べたい', synonym: '食したい')
     end
 
-    subject { Learning::Amplifier.new(user).amp(sentence) }
+    subject { Learning::Amplifier.new(bot).amp(sentence) }
 
     context '「カレー食べたい」という文章が渡された場合' do
       let(:sentence) { 'カレー食べたい' }

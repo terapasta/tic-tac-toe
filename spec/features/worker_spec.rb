@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'worker作業画面の確認' do
+RSpec.describe 'worker作業画面の確認', type: :feature, js: true do
   include RequestSpecHelper
 
   let!(:user) do
@@ -15,7 +15,7 @@ feature 'worker作業画面の確認' do
     create(:bot, user: user)
   end
 
-  background do
+  before do
     sign_in user
   end
 

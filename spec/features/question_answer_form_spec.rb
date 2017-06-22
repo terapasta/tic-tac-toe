@@ -52,8 +52,8 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     end
 
     it { is_expected.to change(question_answer, :question).to('update question') }
-    it { is_expected.to change(answer, :body).to('update answer') }
+    it { is_expected.not_to change(answer, :body) }
     it { is_expected.not_to change(QuestionAnswer, :count) }
-    it { is_expected.not_to change(Answer, :count) }
+    it { is_expected.to change(Answer, :count).by(1) }
   end
 end

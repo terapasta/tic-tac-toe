@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 import assign from "lodash/assign";
+import sortBy from "lodash/sortBy";
+import isEqual from "lodash/isEqual"
+import includes from "lodash/includes"
 
 import getOffset from "../../modules/get-offset";
 import * as a from "./action-creators";
@@ -33,11 +36,23 @@ export default class ChatApp extends Component {
     a.trackMixpanel("Open new chat");
     const { dispatch, token } = this.props;
     dispatch(a.fetchMessages(token));
-    // dispatch(a.pollLearningStatus(window.currentBot.id));
+    dispatch(a.fetchInitialQuestions(window.currentBot.id));
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { dispatch } = this.props;
     scrollToLastSectionIfNeeded(prevProps, this);
+
+    const prevInitialQuestions = sortBy(prevProps.initialQuestions, (q) => q.id);
+    const initialQuestions = sortBy(this.props.initialQuestions, (q) => q.id);
+    const isUpdated = (
+      prevInitialQuestions.length !== initialQuestions.length ||
+      includes(prevInitialQuestions.map((q, i) => isEqual(q, initialQuestions[i])), false)
+    );
+
+    if (isUpdated) {
+      dispatch(a.setInitialQuestionsToMessages(this.props.initialQuestions));
+    }
   }
 
   render() {
@@ -51,6 +66,7 @@ export default class ChatApp extends Component {
       isManager,
       readMore,
       flashMessage,
+      initialQuestions,
     } = this.props;
 
     const {
@@ -104,14 +120,19 @@ export default class ChatApp extends Component {
                 }} />
                 <ChatBotMessageRow {...{
                   section,
+                  isManager,
                   isFirst,
                   isActive,
                   learnings,
+                  initialQuestions,
                   onChangeRatingTo(type, messageId) {
                     dispatch(a.changeMessageRatingTo(type, token, messageId));
                   },
                   onChangeLearning(payload) {
                     dispatch(a.updateLearning(payload));
+                  },
+                  onChangeInitialQuestions() {
+                    dispatch(a.fetchInitialQuestions(window.currentBot.id));
                   },
                 }} />
                 <ChatDecisionBranchesRow {...{

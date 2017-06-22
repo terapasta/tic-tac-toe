@@ -1,6 +1,7 @@
 class JsImage
   Images = %w(
     silhouette.png
+    initial-questions-sample.png
   )
 
   class << self
@@ -8,7 +9,7 @@ class JsImage
       Images.map{ |image_name|
         {
           name: image_name,
-          url: ActionController::Base.helpers.asset_path(image_name)
+          url: ActionController::Base.helpers.asset_path(image_name, type: :image)
         }
       }
     end

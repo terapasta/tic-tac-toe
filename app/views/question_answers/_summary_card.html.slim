@@ -1,0 +1,46 @@
+.panel.panel-default
+  .panel-body
+    - if question_answer.topic_tags.any?
+      .row style="padding-bottom:15px;": .col-sm-12
+        - question_answer.topic_tags.each do |topic_tag|
+          span.label.label-primary= topic_tag.name
+          = space 2
+    .row
+      .col-sm-6
+        dl
+          dt: small 質問
+          dd= highlight(nl2br(question_answer.question), params[:keyword])
+      .col-sm-6
+        dl
+          dt: small 回答
+          dd
+            p= highlight(nl2br(question_answer.answer&.body), params[:keyword])
+
+            - if question_answer.answer&.answer_files&.any?
+              - question_answer.answer.answer_files.each do |answer_file|
+                .mini-well
+                  - if answer_file.image?
+                    = link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
+                  - else
+                    small.text-muted 添付ファイル
+                    br
+                    = link_to answer_file.read_attribute(:file), answer_file.file_url, target: '_blank'
+  .panel-footer
+    .row
+      .col-sm-8
+        small.text-muted ID：#{question_answer.id}
+        = space 10
+        small.text-muted 作成日時：#{l question_answer.created_at, format: :short}
+        = space 10
+        small.text-muted 更新日時：#{l question_answer.updated_at, format: :short}
+      .col-sm-4.text-right
+        - unless local_assigns[:hide_buttons]
+          = link_to edit_bot_question_answer_path(bot, question_answer), class: 'btn btn-default btn-xs', data: { event_name: 'Open edit question answer', bot_id: bot.id, bot_name: bot.name } do
+            = material_icon 'edit'
+            = space
+            span 編集
+          = space 3
+          = link_to bot_question_answer_path(bot, question_answer), class: 'btn btn-danger btn-xs', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete question answer', bot_id: bot.id, bot_name: bot.name } do
+            = material_icon 'delete'
+            = space
+            span 削除

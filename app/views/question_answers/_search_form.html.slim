@@ -1,0 +1,23 @@
+.well.clearfix
+  .pull-left
+    = form_tag action_url, method: :get, class: 'form-inline', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
+      = collection_select :topic, :id, bot.topic_tags, :id, :name, { prompt: "トピックタグで絞込", selected: @topic_id.to_i }, class: 'form-control'
+      = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
+      = space
+      = submit_tag '検索', name: "search", class: "btn btn-default"
+      - if params.dig(:topic, :id).present? || params[:keyword].present?
+        = space
+        = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
+
+  .pull-right
+    .form-inline
+      span 並べ替え：
+      select.form-control data-role="url-switcher" data-event="Sort question answers" data-bot-id=bot.id data-bot-name=bot.name
+        option value=sorting_url('created_at desc') selected=(sort.blank? || sort == "created_at desc")
+          |作成日時の新しい順
+        option value=sorting_url('created_at asc') selected=(sort == "created_at asc")
+          |作成日時の古い順
+        option value=sorting_url('updated_at desc') selected=(sort == "updated_at desc")
+          |更新日時の新しい順
+        option value=sorting_url('updated_at asc') selected=(sort == "updated_at asc")
+          |更新日時の古い順

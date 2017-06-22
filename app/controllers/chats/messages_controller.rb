@@ -6,8 +6,14 @@ class Chats::MessagesController < ApplicationController
 
   def index
     @messages = @chat.messages.order(created_at: :desc).page(params[:page]).per(20)
+
+    @messages.last.tap do |message|
+      message.similar_question_answers = @bot.selected_question_answers
+      @messages[@messages.count - 1] = message
+    end
+
     respond_to do |format|
-      format.json { render_collection_json @messages, reverse: true, include: 'answer,answer.decision_branches,answer.answer_files' }
+      format.json { render_collection_json @messages, reverse: true, include: included_associations }
     end
   end
 
@@ -23,7 +29,7 @@ class Chats::MessagesController < ApplicationController
     end
     respond_to do |format|
       format.js
-      format.json { render_collection_json [@message, *@bot_messages], include: 'answer,answer.decision_branches,similar_question_answers,answer.answer_files' }
+      format.json { render_collection_json [@message, *@bot_messages], include: included_associations }
     end
   rescue => e
     logger.error e.message + e.backtrace.join("\n")
@@ -40,5 +46,9 @@ class Chats::MessagesController < ApplicationController
 
     def message_params
       params.require(:message).permit(:answer_id, :body)
+    end
+
+    def included_associations
+      'answer,answer.decision_branches,similar_question_answers,answer.answer_files'
     end
 end

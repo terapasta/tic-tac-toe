@@ -25,7 +25,7 @@ module Replyable
       )
       if responder.present?
         if enabled_suggest_question?(reply, parent)
-          message.similar_question_answers = responder.similar_question_answers_in(reply.question_answer_ids)
+          message.similar_question_answers = responder.similar_question_answers_in(reply.question_answer_ids).compact
         end
       end
       message

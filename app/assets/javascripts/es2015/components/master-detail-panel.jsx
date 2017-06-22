@@ -16,20 +16,24 @@ export default class MasterDetailPanel extends Component {
   }
 }
 
-export function Master(props) {
-  const { children } = props;
-  return (
-    <div className="master-detail-panel__master">
-      {children}
-    </div>
-  );
+export class Master extends Component {
+  render() {
+    const { children } = this.props;
+    return (
+      <div className="master-detail-panel__master">
+        {children}
+      </div>
+    );
+  }
 }
 
-export function Detail(props) {
-  const { children } = props;
-  return (
-    <div className="master-detail-panel__detail">
-      {children}
-    </div>
-  );
+export class Detail extends Component {
+  render() {
+    const { children } = this.props;
+    return (
+      <div className="master-detail-panel__detail">
+        {children}
+      </div>
+    );
+  }
 }

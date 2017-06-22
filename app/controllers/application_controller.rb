@@ -40,4 +40,8 @@ class ApplicationController < ActionController::Base
         user_agent: request.user_agent,
       }
     end
+
+    def current_page
+      (params[:page].presence || 1).to_i
+    end
 end

@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    meta name="charset" content="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    title My-ope office - 社内問い合わせ専用AIチャットボット
+
+    link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+    - if Rails.env.production?
+      = render 'layouts/shared/analytics/mixpanel'
+    - if user_signed_in?
+      = render 'layouts/shared/js_vars/current_user'
+    = render 'layouts/shared/js_vars/images'
+    = render 'layouts/shared/js_vars/current_bot'
+
+body
+  - if Rails.env.production?
+    = render 'layouts/shared/analytics/google_analytics'
+
+  - if chat_page?
+    = yield
+
+  - else
+    - if !content_for?(:hide_global_header)
+      = render 'layouts/shared/ui/header'
+
+    - unless content_for?(:hide_sidebar)
+      = render 'layouts/shared/ui/side_nav'
+
+    .container.container-main class=content_for(:additional_container_main_class)
+      = render "shared/flash"
+      = yield

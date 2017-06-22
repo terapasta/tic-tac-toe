@@ -5,6 +5,7 @@ import cloneDeep from "lodash/cloneDeep";
 import last from "lodash/last";
 import pick from "lodash/pick";
 import findIndex from "lodash/findIndex";
+import isArray from "lodash/isArray";
 import isEmpty from "is-empty";
 import Promise from "promise";
 import { handleActions } from "redux-actions";
@@ -20,6 +21,7 @@ import {
   disableSection,
   inactiveSection,
   updateMessage,
+  setInitialQuestionsToMessages,
 } from "../action-creators";
 
 import {
@@ -34,7 +36,7 @@ const Speaker = {
 export function classify(data, messages, isLastPage) {
   let sections = cloneDeep(data);
   if (data.length === 0 && isLastPage) {
-    sections.push({ answer: messages.shift() });
+    sections.push({ answer: messages[0] });
   }
 
   messages.forEach((message) => {
@@ -125,7 +127,28 @@ export default handleActions({
       });
     });
     return assign({}, state, { classifiedData: data });
-  }
+  },
+
+  [setInitialQuestionsToMessages]: (state, action) => {
+    const data = cloneDeep(state.classifiedData);
+    const { payload } = action;
+    let initialQuestionsSection = data[1];
+    let sliceIndex = 2;
+
+    if (isEmpty(initialQuestionsSection)) {
+      initialQuestionsSection = { similarQuestionAnswers: payload };
+    } else if (isArray(initialQuestionsSection.similarQuestionAnswers)) {
+      initialQuestionsSection.similarQuestionAnswers = payload;
+    } else if (initialQuestionsSection.similarQuestionAnswers == null) {
+      initialQuestionsSection = { similarQuestionAnswers: payload };
+      sliceIndex = 1;
+    }
+    return assign({}, state, { classifiedData: [
+      data[0],
+      initialQuestionsSection,
+      ...data.slice(sliceIndex),
+    ] });
+  },
 }, {
   data: [],
   classifiedData: [],
@@ -160,6 +183,7 @@ export function changeRatingHandler(state, action) {
 }
 
 export function doneDecisionBranchesOtherThanLast(classifiedData) {
+  // return classifiedData;
   const data = cloneDeep(classifiedData);
   const beforeLastIndex = data.length - 2;
   const lastIndex = data.length - 1;

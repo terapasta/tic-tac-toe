@@ -18,6 +18,8 @@ class Bot < ActiveRecord::Base
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 
+  serialize :selected_question_answer_ids, Array
+
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 
   mount_uploader :image, ImageUploader
@@ -53,6 +55,20 @@ class Bot < ActiveRecord::Base
 
   def classify_failed_message_with_fallback
     classify_failed_message.presence || DefinedAnswer.classify_failed&.body || ""
+  end
+
+  def add_selected_question_answer_ids(question_answer_id)
+    self.selected_question_answer_ids.push(question_answer_id).tap do
+    end
+  end
+
+  def remove_selected_question_answer_ids(question_answer_id)
+    self.selected_question_answer_ids.delete(question_answer_id).tap do
+    end
+  end
+
+  def selected_question_answers
+    question_answers.where(id: selected_question_answer_ids)
   end
 
   private

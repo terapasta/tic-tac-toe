@@ -1,1 +1,16 @@
-/ csvインポートデータからチャット結果を表示する
+h1 チャットテスト結果
+.pull-right
+  = link_to 'インポート画面に戻る', new_bot_chat_test_path(@bot), class: 'btn btn-default'
+
+table.table.table-striped
+  thead
+    tr
+      th 質問
+      th 回答
+
+  tbody
+    - @chat.messages.each_with_index do |message, i|
+      - next if i % 2 == 1
+      tr
+        td = message.body
+        td = @chat.messages[i + 1].body

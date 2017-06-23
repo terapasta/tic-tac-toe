@@ -1,7 +1,7 @@
 class TaskCreateService
   def initialize(bot_messages, bot)
     @bot_messages = bot_messages
-    @failed_bot_messagers = @bot_messages.select(&:answer_failed)
+    @failed_bot_messages = @bot_messages.select(&:answer_failed)
     @bot = bot
   end
 

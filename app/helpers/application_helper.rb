@@ -46,4 +46,9 @@ module ApplicationHelper
       content_tag(:span, "〜#{resources.count}件を表示中")
     ).html_safe
   end
+
+  def topic_tags_for_select(bot)
+    null_topic_tag = Struct.new(:id, :name).new(-1, 'トピックタグなし')
+    [null_topic_tag, *bot.topic_tags]
+  end
 end

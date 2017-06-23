@@ -28,7 +28,11 @@ class QuestionAnswer < ActiveRecord::Base
 
   scope :topic_tag, -> (topic_tag_id) {
     if topic_tag_id.present?
-      joins(:topic_tags).where(topic_tags: {id: topic_tag_id})
+      if topic_tag_id.to_i == -1
+        where('id NOT IN (SELECT DISTINCT(question_answer_id) FROM topic_taggings)')
+      else
+        joins(:topic_tags).where(topic_tags: {id: topic_tag_id})
+      end
     end
   }
 

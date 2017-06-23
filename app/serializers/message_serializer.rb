@@ -1,5 +1,5 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files
+  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed
   has_one :answer
   has_many :similar_question_answers, serializer: QuestionAnswerSerializer
 

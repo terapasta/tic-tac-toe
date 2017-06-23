@@ -2175,7 +2175,8 @@ var ChatBotMessage = function (_Component) {
         id: _react.PropTypes.number.isRequired,
         body: _react.PropTypes.string.isRequired,
         rating: _react.PropTypes.oneOf((0, _values2.default)(c.Ratings)),
-        onChangeRatingTo: _react.PropTypes.func.isRequired
+        onChangeRatingTo: _react.PropTypes.func.isRequired,
+        answerFailed: _react.PropTypes.bool.isRequired
       };
     }
   }]);
@@ -2210,7 +2211,8 @@ var ChatBotMessage = function (_Component) {
           id = _props.id,
           rating = _props.rating,
           body = _props.body,
-          onChangeRatingTo = _props.onChangeRatingTo;
+          onChangeRatingTo = _props.onChangeRatingTo,
+          answerFailed = _props.answerFailed;
       var isFaded = this.state.isFaded;
 
       var className = (0, _classnames2.default)("chat-message", { "faded": isFaded });
@@ -2225,6 +2227,7 @@ var ChatBotMessage = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "chat-message__balloon", key: "balloon" },
+          answerFailed && _react2.default.createElement("i", { className: "fa fa-exclamation-triangle text-warning", style: { marginRight: "4px" } }),
           !isLoading && _react2.default.createElement(
             _reactLinkify2.default,
             { properties: { target: "_blank" } },
@@ -4155,7 +4158,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 
 
 function pickUp(message) {
-  var result = (0, _pick2.default)(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers", "answerFiles"]);
+  var result = (0, _pick2.default)(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers", "answerFiles", "answerFailed"]);
   return result;
 }
 

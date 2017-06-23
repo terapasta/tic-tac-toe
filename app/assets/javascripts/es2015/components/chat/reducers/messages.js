@@ -164,6 +164,7 @@ function pickUp(message) {
     "iconImageUrl",
     "similarQuestionAnswers",
     "answerFiles",
+    "answerFailed",
   ]);
   return result;
 }

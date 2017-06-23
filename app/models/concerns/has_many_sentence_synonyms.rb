@@ -19,11 +19,7 @@ module HasManySentenceSynonyms
     def picking_sentence_synonyms(bot, user)
       #botがnilでない且つ、コサイン類似検索を利用している(use_similarity_classificationがtrue)場合
       return [] if bot&.learning_parameter&.use_similarity_classification
-
-      messages = begin
-        (bot.try(:question_answers) || QuestionAnswer)
-          .includes(:sentence_synonyms)
-      end
+      
       messages.select {|m|
         m.sentence_synonyms.length < 18 &&
         m.sentence_synonyms.select{ |ss| ss.created_user_id == user.id }.count < 3

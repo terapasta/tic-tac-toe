@@ -60,16 +60,12 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
-    answer_params = question_answer_params.delete(:answer_attributes)
+    answer_params = question_answer_params[:answer_attributes]
 
     ActiveRecord::Base.transaction do
       @question_answer.update!(question_answer_params)
-      if answer_params.present?
-        if @question_answer.answer.present?
-          AnswerUpdateService.new(@bot, @question_answer.answer, answer_params).process!
-        else
-          @question_answer.update!({ answer_attributes: answer_params })
-        end
+      if answer_params.present? && @question_answer.answer.present?
+        AnswerUpdateService.new(@bot, @question_answer.answer, answer_params).process!
       end
     end
 
@@ -80,7 +76,8 @@ class QuestionAnswersController < ApplicationController
       format.json { render json: @question_answer.decorate.as_json, status: :ok }
     end
   rescue => e
-    logger.error e.message + e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
     respond_to do |format|
       format.html do
         flash.now.alert = '更新できませんでした。'

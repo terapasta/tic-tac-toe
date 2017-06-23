@@ -2,7 +2,7 @@ class AnswerUpdateService
   def initialize(bot, answer, params)
     @bot = bot
     @answer = answer
-    @params = params
+    @params = params.except(:answer_files_attributes)
   end
 
   def process!

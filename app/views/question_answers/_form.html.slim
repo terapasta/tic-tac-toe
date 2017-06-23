@@ -27,6 +27,8 @@
           .panel-heading: .panel-title 回答添付ファイル
           .panel-body
             = f.fields_for :answer do |nf|
+              = nf.hidden_field :id
+
               table.table.table-striped.table-bordered: tbody#answer-files
                 = nf.fields_for :answer_files, wrapper: false do |nnf|
                   tr.fields.form-inline

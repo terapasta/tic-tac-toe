@@ -1,0 +1,82 @@
+h1 対話履歴
+
+div
+  ul.nav.nav-pills
+    li role="presentation" class=('active' if params[:normal].blank?)
+      = link_to '通常対話のみ', bot_threads_path(@bot, params: role_filter_params), mixpanel_event_data('Open all threads', @bot)
+
+    li role="presentation" class=('active' if params[:normal].present?)
+      = link_to 'Bot管理者対話のみ', bot_threads_path(@bot, role_filter_params({normal: 1})), mixpanel_event_data('Open normal threads', @bot)
+  br
+  ul.nav.nav-pills
+    li role="presentation" class=('active' if params[:filter].blank? && params[:good].blank? && params[:bad].blank? && params[:answer_marked].blank?)
+      = link_to '全て', bot_threads_path(@bot, params: message_filter_params), mixpanel_event_data('Open all threads', @bot)
+
+    = threads_filter_li :filter do
+      = threads_filter_link :filter, 'Open failed threads', @bot do
+        i.fa.fa-exclamation-triangle.text-warning
+        = space
+        span 回答失敗のみ
+
+    = threads_filter_li :good do
+      = threads_filter_link :good, 'Open good threads', @bot do
+        i.fa.fa-thumbs-up.text-success
+        = space
+        span Goodがある対話
+
+    = threads_filter_li :bad do
+      = threads_filter_link :bad, 'Open bad threads', @bot do
+        i.fa.fa-thumbs-down.text-danger
+        = space
+        span Badがある対話
+
+    = threads_filter_li :answer_marked do
+      = threads_filter_link :answer_marked, 'Open marked threads', @bot do
+        i.fa.fa-flag.text-warning
+        = space
+        span 注意回答がある対話
+
+    li style="float: right"
+      = link_to '対話履歴をエクスポート', bot_threads_path(format: :csv), class: 'btn btn-default'
+
+br.clear
+
+table.table.table-striped.table-bordered
+  thead
+    tr
+      th ID
+      th width=72 フラグ
+      th セット数
+      th 本文
+      th nowrap="nowrap" 最終発言日時
+      th
+
+  tbody
+    - @chats.each do |chat|
+      - chat.messages.order('id desc').tap do |messages|
+        tr
+          td= chat.id
+          td
+            - if chat.has_answer_failed_message?
+              i.fa.fa-exclamation-triangle.text-warning
+            - if chat.has_good_answer?
+              i.fa.fa-thumbs-up.text-success
+            - if chat.has_bad_answer?
+              i.fa.fa-thumbs-down.text-danger
+            - if chat.has_answer_marked_message?
+              i.fa.fa-flag.text-warning
+          td
+            = chat[:exchanging_messages_count]
+          td
+            = '...<br />'.html_safe if messages.count > 3
+            - messages.limit(3).reverse.each do |message|
+              = image_tag message.speaker_image_url, class: 'img-tiny'
+              = message.body
+              br
+          td= messages.last.created_at if messages.present?
+          td
+            = link_to t('helpers.link.show'), bot_thread_messages_path(@bot, chat, index_page: params[:page], filter: params[:filter]), class: "btn btn-default", data: { event_name: 'Open thread messages', bot_id: @bot.id, bot_name: @bot.name, chat_id: chat.id }
+
+= paginate @chats
+
+br

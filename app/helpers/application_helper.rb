@@ -54,4 +54,8 @@ module ApplicationHelper
   def undigested_tasks_count(bot)
     Task.where(bot_id: bot.id, is_done: false).count
   end
+
+  def mixpanel_event_data(event_name, bot)
+    { data: { event_name: event_name, bot_id: bot.id, bot_name: bot.name } }
+  end
 end

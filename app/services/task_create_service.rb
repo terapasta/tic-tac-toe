@@ -1,8 +1,11 @@
 class TaskCreateService
   def initialize(bot_messages_or_message, bot)
     @bot_messages = bot_messages_or_message
-    @bot_messages = [bot_messages_or_message] unless bot_messages_or_message.is_a?(Array)
-    @failed_bot_messages = @bot_messages.select(&:answer_failed)
+    unless bot_messages_or_message.is_a?(Array)
+      @bot_messages = [bot_messages_or_message]
+    end
+    @failed_bot_messages = @bot_messages.select(&:answer_failed).presence ||
+                           @bot_messages.select(&:bad?)
     @bot = bot
   end
 

@@ -4,6 +4,7 @@ import assign from "lodash/assign";
 import sortBy from "lodash/sortBy";
 import isEqual from "lodash/isEqual"
 import includes from "lodash/includes"
+import isEmpty from "is-empty";
 
 import getOffset from "../../modules/get-offset";
 import * as a from "./action-creators";
@@ -34,17 +35,25 @@ export default class ChatApp extends Component {
 
   componentDidMount() {
     a.trackMixpanel("Open new chat");
-    const { dispatch, token, isManager } = this.props;
+    const { dispatch, token } = this.props;
     dispatch(a.fetchMessages(token));
-    if (isManager) {
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    scrollToLastSectionIfNeeded(prevProps, this);
+    this.fetchInitialQuestionsIfNeeded();
+    this.setInitialQuestionsToMessagesIfNeeded(prevProps);
+  }
+
+  fetchInitialQuestionsIfNeeded() {
+    const { dispatch, messages, initialQuestions } = this.props;
+    if (!isEmpty(messages.classifiedData) && isEmpty(initialQuestions)) {
       dispatch(a.fetchInitialQuestions(window.currentBot.id));
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { dispatch } = this.props;
-    scrollToLastSectionIfNeeded(prevProps, this);
-
+  setInitialQuestionsToMessagesIfNeeded(prevProps) {
+    const { dispatch, messages } = this.props;
     const prevInitialQuestions = sortBy(prevProps.initialQuestions, (q) => q.id);
     const initialQuestions = sortBy(this.props.initialQuestions, (q) => q.id);
     const isUpdated = (

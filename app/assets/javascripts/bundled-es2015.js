@@ -1497,6 +1497,10 @@ var _includes = require("lodash/includes");
 
 var _includes2 = _interopRequireDefault(_includes);
 
+var _isEmpty = require("is-empty");
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 var _getOffset = require("../../modules/get-offset");
 
 var _getOffset2 = _interopRequireDefault(_getOffset);
@@ -1586,20 +1590,35 @@ var ChatApp = function (_Component) {
       a.trackMixpanel("Open new chat");
       var _props = this.props,
           dispatch = _props.dispatch,
-          token = _props.token,
-          isManager = _props.isManager;
+          token = _props.token;
 
       dispatch(a.fetchMessages(token));
-      if (isManager) {
-        dispatch(a.fetchInitialQuestions(window.currentBot.id));
-      }
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
-      var dispatch = this.props.dispatch;
-
       scrollToLastSectionIfNeeded(prevProps, this);
+      this.fetchInitialQuestionsIfNeeded();
+      this.setInitialQuestionsToMessagesIfNeeded(prevProps);
+    }
+  }, {
+    key: "fetchInitialQuestionsIfNeeded",
+    value: function fetchInitialQuestionsIfNeeded() {
+      var _props2 = this.props,
+          dispatch = _props2.dispatch,
+          messages = _props2.messages,
+          initialQuestions = _props2.initialQuestions;
+
+      if (!(0, _isEmpty2.default)(messages.classifiedData) && (0, _isEmpty2.default)(initialQuestions)) {
+        dispatch(a.fetchInitialQuestions(window.currentBot.id));
+      }
+    }
+  }, {
+    key: "setInitialQuestionsToMessagesIfNeeded",
+    value: function setInitialQuestionsToMessagesIfNeeded(prevProps) {
+      var _props3 = this.props,
+          dispatch = _props3.dispatch,
+          messages = _props3.messages;
 
       var prevInitialQuestions = (0, _sortBy2.default)(prevProps.initialQuestions, function (q) {
         return q.id;
@@ -1618,17 +1637,17 @@ var ChatApp = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _props2 = this.props,
-          dispatch = _props2.dispatch,
-          token = _props2.token,
-          messages = _props2.messages,
-          form = _props2.form,
-          learning = _props2.learning,
-          learnings = _props2.learnings,
-          isManager = _props2.isManager,
-          readMore = _props2.readMore,
-          flashMessage = _props2.flashMessage,
-          initialQuestions = _props2.initialQuestions;
+      var _props4 = this.props,
+          dispatch = _props4.dispatch,
+          token = _props4.token,
+          messages = _props4.messages,
+          form = _props4.form,
+          learning = _props4.learning,
+          learnings = _props4.learnings,
+          isManager = _props4.isManager,
+          readMore = _props4.readMore,
+          flashMessage = _props4.flashMessage,
+          initialQuestions = _props4.initialQuestions;
       var classifiedData = messages.classifiedData;
 
 
@@ -1768,7 +1787,7 @@ function scrollToLastSectionIfNeeded(prevProps, component) {
   }
 }
 
-},{"../../modules/get-offset":96,"./action-creators":17,"./area":19,"./bot-message-row":21,"./constants":23,"./container":24,"./decision-branches-row":25,"./flash-message":27,"./form":28,"./guest-message":31,"./guest-message-row":30,"./header":32,"./read-more":35,"./row":43,"./section":44,"./similar-question-answers-row":45,"lodash/assign":639,"lodash/includes":658,"lodash/isEqual":664,"lodash/sortBy":685,"react":854,"react-dom":705}],19:[function(require,module,exports){
+},{"../../modules/get-offset":96,"./action-creators":17,"./area":19,"./bot-message-row":21,"./constants":23,"./container":24,"./decision-branches-row":25,"./flash-message":27,"./form":28,"./guest-message":31,"./guest-message-row":30,"./header":32,"./read-more":35,"./row":43,"./section":44,"./similar-question-answers-row":45,"is-empty":457,"lodash/assign":639,"lodash/includes":658,"lodash/isEqual":664,"lodash/sortBy":685,"react":854,"react-dom":705}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

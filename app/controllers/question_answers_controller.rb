@@ -7,12 +7,10 @@ class QuestionAnswersController < ApplicationController
   before_action :set_bot
   before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
   before_action :set_topic_tags, only: [:index, :headless]
-  before_action :set_search_result, only: [:index, :headless]
   autocomplete :answer, :body, full: true
 
   def index
     @topic_tags = @bot.topic_tags
-    @search_result = params.dig(:topic, :id)
     @keyword = params[:keyword]
     @current_page = current_page
     @per_page = QuestionAnswer.default_per_page
@@ -126,11 +124,6 @@ class QuestionAnswersController < ApplicationController
 
     def set_topic_tags
       @topic_tags = @bot.topic_tags
-    end
-
-    def set_search_result
-      @search_result = params.dig(:topic, :id)
-      @keyword = params[:keyword]
     end
 
     def pundit_auth

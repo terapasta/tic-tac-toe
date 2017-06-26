@@ -3,5 +3,10 @@
     &.bg-none {
       background-color: #fff;
     }
+}
+
+.panel-spacious {
+  .panel-body {
+    padding: 30px;
   }
 }

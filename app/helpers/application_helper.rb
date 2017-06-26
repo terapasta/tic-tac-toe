@@ -58,4 +58,12 @@ module ApplicationHelper
   def mixpanel_event_data(event_name, bot)
     { data: { event_name: event_name, bot_id: bot.id, bot_name: bot.name } }
   end
+
+  def unstarted_tasks_count
+    @_unstarted_tasks_count ||= Task.unstarted(@bot).count
+  end
+
+  def done_tasks_count
+    @_done_tasks_count ||= Task.where(bot_id: @bot.id).with_done(true).count
+  end
 end

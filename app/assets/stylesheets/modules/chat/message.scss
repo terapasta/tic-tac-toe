@@ -13,6 +13,11 @@
   &.faded {
     opacity: 0;
   }
+
+  &.full-width {
+    @extend %base-chat-message;
+    width: 100%;
+  }
 }
 
 .chat-message {
@@ -36,6 +41,15 @@
       background-color: $blue;
       color: $white;
       word-break: break-all;
+
+      &.light-bg {
+        background-color: $blue-green-light;
+        color: #000;
+
+        &::before {
+          border-left-color: $blue-green-light;
+        }
+      }
 
       &::before {
         right: auto;

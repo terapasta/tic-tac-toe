@@ -1,44 +1,63 @@
-h1 タスク
+h3= Task.model_name.human
+
+- pagination = capture do
+  = paginate @tasks
 
 ul.nav.nav-tabs
   li class=(params.has_key?(:done) ? '' : 'active')
-    a href=bot_tasks_path(@bot.id) 未対応
+    a href=bot_tasks_path(@bot.id)
+      span 未対応
+      = space
+      span.badge= unstarted_tasks_count
   li  class=(params.has_key?(:done) ? 'active' : '')
-    a href=bot_tasks_path(@bot.id, done: true) 対応済み
+    a href=bot_tasks_path(@bot.id, done: true)
+      span 対応済み
+      = space
+      span.badge= done_tasks_count
+
+= pagination
 
 .tab-content
-  .tab-pane.active
-    table.table.table-striped.table-bordered
-      thead 
-        tr
-          th フラグ
-          th 質問
-          th 回答
-          th ステータス
-          th
-          th
-      tbody
-      - @tasks.each do |task|
-        tr
-          td
-            - if task.bot_message.blank?
-              i.glyphicon.glyphicon-warning-sign.text-warning
-            - else
-              i.fa.fa-thumbs-down.text-danger
-          td = task.guest_message
-          td
-            - if task.bot_message.blank?
-              span.label.label-default 回答失敗
-            - else
-                = task.bot_message
-          td
+  .tab-pane.active style="padding-top:20px"
+    - @tasks.each do |task|
+      .panel.panel-default.mb-40.panel-spacious
+        .panel-body
+          .row
+            .col-sm-6.col-sm-push-6
+              .chat-message--my.full-width
+                .chat-message__icon style=("background-image:url(#{image_path('silhouette.png')});")
+                .chat-message__balloon.light-bg= task.guest_message
+            .col-sm-6.col-sm-pull-6
+              .chat-message.full-width
+                .chat-message__icon style=("background-image:url(#{@bot.image_url});")
+                .chat-message__balloon
+                  - if task.bot_message.blank?
+                    i.fa.fa-exclamation-triangle.text-warning
+                    = space 2
+                    span 回答失敗
+                  - else
+                    i.fa.fa-thumbs-down.text-danger
+                    = space 2
+                    span Bad評価
+                    br
+                    = task.bot_message
+
+        .panel-footer.clearfix
+          .pull-left
+            small.text-muted 日時：#{l task.created_at}
+          .pull-right.text-align
             - if task.is_done?
               span.label.label-primary 対応済み
             - else
-              span.label.label-danger 未対応
-          td 
-            = link_to "済みにする", bot_task_path(@bot, task), method: :patch, class: "btn btn-default btn-sm", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name } 
-          td 
-            = link_to "Q&Aを登録する", new_bot_question_answer_path(@bot), class: "btn btn-default btn-sm", data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
-  
-= paginate @tasks
+              span.label.label-warning 未対応
+              = space 1
+              = link_to "対応済みにする", bot_task_path(@bot, task), mixpanel_event_data('Open new question answer', @bot).merge(method: :patch, class: "btn btn-default btn-xs")
+
+              = space 5
+              - next_to = new_bot_question_answer_path(@bot, question: task.guest_message, answer: task.bot_message)
+              = link_to bot_task_path(@bot, task, next_to: next_to), mixpanel_event_data('Open new question answer', @bot).merge(method: :patch, class: 'btn btn-info btn-xs') do
+                i.fa.fa-arrow-right
+                = space
+                span これを元にQ&Aを登録する
+
+= pagination

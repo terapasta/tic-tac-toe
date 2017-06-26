@@ -58,12 +58,15 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
-    answer_params = question_answer_params[:answer_attributes]
-
     ActiveRecord::Base.transaction do
-      @question_answer.update!(question_answer_params)
-      if answer_params.present? && @question_answer.answer.present?
-        AnswerUpdateService.new(@bot, @question_answer.answer, answer_params).process!
+      if @question_answer.answer.blank?
+        @question_answer.update!(question_answer_params)
+      else
+        answer_params = question_answer_params.delete(:answer_attributes)
+        @question_answer.update!(question_answer_params)
+        if answer_params.present?
+          AnswerUpdateService.new(@bot, @question_answer.answer, answer_params).process!
+        end
       end
     end
 

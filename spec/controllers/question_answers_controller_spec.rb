@@ -17,6 +17,10 @@ RSpec.describe QuestionAnswersController, type: :controller do
     create(:answer, bot: bot)
   end
 
+  let(:sample_image) do
+    Rack::Test::UploadedFile.new Rails.root.join('spec/fixtures/images/sample_naoki.jpg').open
+  end
+
   describe 'PUT #update' do
     subject do
       lambda do
@@ -36,22 +40,38 @@ RSpec.describe QuestionAnswersController, type: :controller do
       context 'when question_answer has answer' do
         context 'when not changed answer body' do
           let(:params) do
-            { answer_attributes: { body: answer.body } }
+            {
+              question: 'updated question',
+              answer_attributes: {
+                body: answer.body,
+                answer_files_attributes: [{
+                  file: sample_image,
+                }],
+              }
+            }
           end
 
           it { is_expected.to_not change(Answer, :count) }
+          it { is_expected.to change(AnswerFile, :count) }
         end
 
         context 'when changed answer body' do
           let(:params) do
-            { answer_attributes: { body: 'updated answer body' } }
+            {
+              answer_attributes: {
+                body: 'updated answer body',
+                answer_files_attributes: [{
+                  file: sample_image
+                }]
+              }
+            }
           end
 
           it { is_expected.to change(Answer, :count).by(1) }
         end
       end
 
-      context 'when question_answer bot has answer' do
+      context 'when question_answer not has answer' do
         before do
           question_answer.answer.destroy
         end

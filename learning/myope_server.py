@@ -1,19 +1,18 @@
 import numpy as np
-import time
 import argparse
 from gevent.server import StreamServer
 from mprpc import RPCServer
-from sklearn.externals import joblib
 
 from learning.core.predict.similarity import Similarity
 from learning.core.stop_watch import stop_watch
-from learning.log import logger
 from learning.core.predict.reply import Reply
 from learning.core.predict.null_reply_result import NullReplyResult
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
+from learning.core.training_set.synonym import Synonym
 from learning.config.config import Config
+
 
 class MyopeServer(RPCServer):
     STATUS_CODE_SUCCESS = 1
@@ -22,6 +21,8 @@ class MyopeServer(RPCServer):
     def reply(self, bot_id, body, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)
         X = np.array([body])
+        synonym = Synonym(bot_id)
+        synonym.unify(body)
 
         try:
             # HACK: similarityを利用する場合learning_parameterを使わないので、

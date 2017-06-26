@@ -2,15 +2,15 @@ class AnswerUpdateService
   def initialize(bot, answer, params)
     @bot = bot
     @answer = answer
-    @params = params.except(:answer_files_attributes)
+    @params = params
   end
 
   def process!
-    if @answer.body != @params[:body]
+    @answer.update!(@params.except(:body))
+
+    if @answer.body != @params[:body] && @params[:body].present?
       @old_answer = @answer
-      @answer = @bot.answers.build(@params)
-    else
-      @answer.assign_attributes(@params)
+      @answer = @bot.answers.build(body: @params[:body])
     end
 
     @answer.save!

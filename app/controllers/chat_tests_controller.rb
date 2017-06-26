@@ -1,39 +1,33 @@
 class ChatTestsController < ApplicationController
   include Replyable
+  include BotUsable
   before_action :set_bot
-  before_action :set_chat, only: [:show]
 
   def new
   end
 
   def create
     if File.extname(params[:file].path) == ".csv"
-      @chat = Chat.build_chat_from_csv_data(@bot)
-      @chat.save
+      ActiveRecord::Base.transaction do
+        @chat = Chat.build_chat_from_csv_data(@bot)
+        @chat.save
 
-      CSV.foreach(params[:file].path) do |csv_data|
-        message = @chat.messages.create!(body: csv_data[0]) {|m|
-          m.speaker = 'guest'
-          m.user_agent = request.env['HTTP_USER_AGENT']
-        }
-        receive_and_reply!(@chat, message)
+        CSV.foreach(params[:file].path) do |csv_data|
+          message = @chat.messages.create!(body: csv_data[0]) {|m|
+            m.speaker = 'guest'
+            m.user_agent = request.env['HTTP_USER_AGENT']
+          }
+          receive_and_reply!(@chat, message)
+        end
+        raise ActiveRecord::Rollback
       end
-
-      redirect_to bot_chat_test_path(@bot, @chat)
     else
       redirect_to new_bot_chat_test_path(@bot), alert: 'csvファイルを選択してください。'
     end
   end
 
-  def show
-  end
-
   private
     def set_bot
-      @bot = Bot.find(params[:bot_id])
-    end
-
-    def set_chat
-      @chat = Chat.find(params[:id].to_i)
+      @bot = bots.find params[:bot_id]
     end
 end

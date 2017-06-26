@@ -17,7 +17,9 @@ class ChatHeader extends Component {
   }
 
   componentDidMount() {
-    this.pollLearningStatus();
+    if (this.props.isManager) {
+      this.pollLearningStatus();
+    }
   }
 
   pollLearningStatus() {

@@ -1575,6 +1575,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var isFetchedInitialQuestions = false;
+
 var ChatApp = function (_Component) {
   _inherits(ChatApp, _Component);
 
@@ -1604,12 +1606,17 @@ var ChatApp = function (_Component) {
   }, {
     key: "fetchInitialQuestionsIfNeeded",
     value: function fetchInitialQuestionsIfNeeded() {
+      if (isFetchedInitialQuestions) {
+        return;
+      }
+      isFetchedInitialQuestions = true;
       var _props2 = this.props,
           dispatch = _props2.dispatch,
           messages = _props2.messages,
-          initialQuestions = _props2.initialQuestions;
+          initialQuestions = _props2.initialQuestions,
+          isManager = _props2.isManager;
 
-      if (!(0, _isEmpty2.default)(messages.classifiedData) && (0, _isEmpty2.default)(initialQuestions)) {
+      if (!(0, _isEmpty2.default)(messages.classifiedData) && (0, _isEmpty2.default)(initialQuestions) && isManager) {
         dispatch(a.fetchInitialQuestions(window.currentBot.id));
       }
     }
@@ -3125,7 +3132,9 @@ var ChatHeader = function (_Component) {
   _createClass(ChatHeader, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.pollLearningStatus();
+      if (this.props.isManager) {
+        this.pollLearningStatus();
+      }
     }
   }, {
     key: "pollLearningStatus",

@@ -30,8 +30,9 @@ header
                 - if current_user.staff?
                   li
                     = link_to "システム共通同義語一覧", admin_word_mappings_path, data: { event_name: 'Open admin word mapping index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
-                  li
-                    = link_to "精度テスト", admin_accuracy_test_cases_path, data: { event_name: 'Open admin accuracy test case index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
+                  - if @bot.present?
+                    li
+                      = link_to "精度テスト", admin_bot_accuracy_test_cases_path(@bot), data: { event_name: 'Open admin accuracy test case index', bot_id: @bot.id, bot_name: @bot.name }
             li
               = link_to "ヘルプ", " https://mofmof.zendesk.com", target: "blank"
             li

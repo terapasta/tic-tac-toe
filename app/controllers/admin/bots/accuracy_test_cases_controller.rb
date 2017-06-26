@@ -1,4 +1,4 @@
-class Admin::AccuracyTestCasesController < Admin::Bots::BaseController
+class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
   before_action :authenticate_user!
 
   def index

@@ -17,7 +17,7 @@ class ChatHeader extends Component {
   }
 
   componentDidMount() {
-    if (this.props.isManager) {
+    if (this.props.enableLearningButton) {
       this.pollLearningStatus();
     }
   }
@@ -35,7 +35,7 @@ class ChatHeader extends Component {
   }
 
   render() {
-    const { botName, isManager } = this.props;
+    const { botName, enableLearningButton } = this.props;
     const { isLearning, learningStatus } = this.state;
 
     const isSucceeded = learningStatus === LearningStatus.Succeeded;
@@ -45,7 +45,7 @@ class ChatHeader extends Component {
     return (
       <header className="chat-header">
         <h1 className="chat-header__title">{botName}</h1>
-        {isManager && (
+        {enableLearningButton && (
           <div className="chat-header__right">
             {isSucceeded && <span className="label label-success">学習済</span>}
             {isFailed && <span className="label label-danger">学習失敗</span>}
@@ -86,7 +86,7 @@ class ChatHeader extends Component {
 
 ChatHeader.propTypes = {
   botName: PropTypes.string.isRequired,
-  isManager: PropTypes.bool.isRequired,
+  enableLearningButton: PropTypes.bool.isRequired,
   learningStatus: PropTypes.oneOf(values(LearningStatus)),
 };
 

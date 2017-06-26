@@ -24,6 +24,8 @@ import ChatGuestMessage from "./guest-message";
 import ChatReadMore from "./read-more";
 import ChatFlashMessage from "./flash-message";
 
+let isFetchedInitialQuestions = false;
+
 export default class ChatApp extends Component {
   static get componentName() {
     return "ChatApp";
@@ -46,8 +48,10 @@ export default class ChatApp extends Component {
   }
 
   fetchInitialQuestionsIfNeeded() {
-    const { dispatch, messages, initialQuestions } = this.props;
-    if (!isEmpty(messages.classifiedData) && isEmpty(initialQuestions)) {
+    if (isFetchedInitialQuestions) { return; }
+    isFetchedInitialQuestions = true;
+    const { dispatch, messages, initialQuestions, isManager } = this.props;
+    if (!isEmpty(messages.classifiedData) && isEmpty(initialQuestions) && isManager) {
       dispatch(a.fetchInitialQuestions(window.currentBot.id));
     }
   }

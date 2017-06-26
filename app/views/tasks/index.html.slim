@@ -54,8 +54,7 @@ ul.nav.nav-tabs
               = link_to "対応済みにする", bot_task_path(@bot, task), mixpanel_event_data('Open new question answer', @bot).merge(method: :patch, class: "btn btn-default btn-xs")
 
               = space 5
-              - next_to = new_bot_question_answer_path(@bot, question: task.guest_message, answer: task.bot_message)
-              = link_to bot_task_path(@bot, task, next_to: next_to), mixpanel_event_data('Open new question answer', @bot).merge(method: :patch, class: 'btn btn-info btn-xs') do
+              = link_to bot_task_path(@bot, task, redirect_to_new_question_answer_form: true), mixpanel_event_data('Open new question answer', @bot).merge(method: :patch, class: 'btn btn-info btn-xs') do
                 i.fa.fa-arrow-right
                 = space
                 span これを元にQ&Aを登録する

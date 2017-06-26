@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::AccuracyTestCasesController, type: :controller do
+RSpec.describe Admin::Bots::AccuracyTestCasesController, type: :controller do
   let!(:bot) do
     create(:bot, user: user)
   end

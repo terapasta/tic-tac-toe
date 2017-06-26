@@ -1,7 +1,6 @@
 import glob
 
 import MySQLdb
-from sqlalchemy import create_engine
 import pandas as pd
 
 from learning.config.config import Config
@@ -23,7 +22,6 @@ class Datasource:
     def __connect_db(self):
         config = Config()
         dbconfig = config.get('database')
-        self.db_engine = create_engine(dbconfig['endpoint'])
         db = MySQLdb.connect(host=dbconfig['host'], db=dbconfig['name'], user=dbconfig['user'],
                              passwd=dbconfig['password'], charset='utf8')
         return db
@@ -104,17 +102,3 @@ class Datasource:
             data = data[data['question'] != question]
 
         return data
-
-    def word_mappings_for_bot(self, bot_id):
-        if self._type == 'database':
-            data = pd.read_sql(
-                "select id, word, synonym from word_mappings where %(bot_id)s IS NULL OR bot_id = %(bot_id)s",
-                self._db, params={"bot_id": bot_id})
-        elif self._type == 'csv':
-            data = []
-
-        return data
-
-    def update_learning_training_messages(self, df):
-        if self._type == 'database':
-            df.to_sql('learning_training_messages', self._db , flavor='mysql', if_exists='replace')

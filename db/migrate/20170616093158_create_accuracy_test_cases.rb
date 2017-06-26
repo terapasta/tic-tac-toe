@@ -4,7 +4,7 @@ class CreateAccuracyTestCases < ActiveRecord::Migration
       t.text :question_text
       t.text :expected_text
       t.boolean :is_expected_suggestion, default: false
-      t.belongs_to :bot, index: true, foreign_key: true
+      t.integer :bot_id, null: false
 
       t.timestamps null: false
     end

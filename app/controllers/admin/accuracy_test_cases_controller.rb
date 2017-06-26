@@ -1,4 +1,7 @@
 class Admin::AccuracyTestCasesController < ApplicationController
+  include BotUsable
+  before_action :authenticate_user!
+
   def index
   end
 
@@ -13,4 +16,9 @@ class Admin::AccuracyTestCasesController < ApplicationController
 
   def destroy
   end
+
+  private
+    def set_bot
+      @bot = bots.find(params[:bot_id])
+    end
 end

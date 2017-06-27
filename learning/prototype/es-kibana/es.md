@@ -91,3 +91,122 @@ GET question_answers/_search
 ```
 
 似ていそうなものが取れている
+
+### プラグイン試す
+- https://github.com/MLnick/elasticsearch-vector-scoring
+
+
+```
+FROM elasticsearch:5.3
+
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends \
+                    git \
+                    maven \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /tmp
+RUN wget https://github.com/MLnick/elasticsearch-vector-scoring/archive/master.zip \
+        -O elasticsearch-vector-scoring.zip \
+    && unzip elasticsearch-vector-scoring.zip \
+    && mvn package
+
+WORKDIR /usr/share/elasticsearch
+RUN elasticsearch-plugin  install --batch x-pack
+RUN elasticsearch-plugin  install analysis-kuromoji
+RUN elasticsearch-plugin  install file:///tmp/elasticsearch-vector-scoring.zip
+```
+
+```
+mvn package -e
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building elasticsearch-vector-scoring 5.3.0
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-resources-plugin:2.3:resources (default-resources) @ elasticsearch-vector-scoring ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ elasticsearch-vector-scoring ---
+[INFO] Compiling 2 source files to /tmp/elasticsearch-vector-scoring-master/target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] Unable to locate the Javac Compiler in:
+  /usr/lib/jvm/java-8-openjdk-amd64/jre/../lib/tools.jar
+Please ensure you are using JDK 1.4 or above and
+not a JRE (the com.sun.tools.javac.Main class is required).
+In most cases you can change the location of your Java
+installation by setting the JAVA_HOME environment variable.
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.567s
+[INFO] Finished at: Tue Jun 27 03:24:22 UTC 2017
+[INFO] Final Memory: 13M/154M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:2.3.2:compile (default-compile) on project elasticsearch-vector-scoring: Compilation failure
+[ERROR] Unable to locate the Javac Compiler in:
+[ERROR] /usr/lib/jvm/java-8-openjdk-amd64/jre/../lib/tools.jar
+[ERROR] Please ensure you are using JDK 1.4 or above and
+[ERROR] not a JRE (the com.sun.tools.javac.Main class is required).
+[ERROR] In most cases you can change the location of your Java
+[ERROR] installation by setting the JAVA_HOME environment variable.
+[ERROR] -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:2.3.2:compile (default-compile) on project elasticsearch-vector-scoring: Compilation failure
+Unable to locate the Javac Compiler in:
+  /usr/lib/jvm/java-8-openjdk-amd64/jre/../lib/tools.jar
+Please ensure you are using JDK 1.4 or above and
+not a JRE (the com.sun.tools.javac.Main class is required).
+In most cases you can change the location of your Java
+installation by setting the JAVA_HOME environment variable.
+
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:213)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:84)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:59)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.singleThreadedBuild(LifecycleStarter.java:183)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:161)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:320)
+	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:156)
+	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:537)
+	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:196)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
+Caused by: org.apache.maven.plugin.CompilationFailureException: Compilation failure
+Unable to locate the Javac Compiler in:
+  /usr/lib/jvm/java-8-openjdk-amd64/jre/../lib/tools.jar
+Please ensure you are using JDK 1.4 or above and
+not a JRE (the com.sun.tools.javac.Main class is required).
+In most cases you can change the location of your Java
+installation by setting the JAVA_HOME environment variable.
+
+	at org.apache.maven.plugin.AbstractCompilerMojo.execute(AbstractCompilerMojo.java:656)
+	at org.apache.maven.plugin.CompilerMojo.execute(CompilerMojo.java:128)
+	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:101)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:209)
+	... 19 more
+[ERROR]
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+```
+
+javacが見つからず...
+mavenのバージョン最新じゃないの関係あるか?
+時間かかりそうなのでとりあえず保留
+

@@ -61,8 +61,21 @@ class QuestionAnswer < ActiveRecord::Base
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
-      indexes :question, term_vector: :yes, index_options: 'offsets'
+      indexes :question, term_vector: :yes, analyzer: 'kuromoji'
     end
+  end
+
+  def more_like_this
+    self.class.__elasticsearch__.search({
+      query: {
+        more_like_this: {
+          fields: %w(question),
+          ids: [id],
+          min_doc_freq: 0,
+          min_term_freq: 0
+        }
+      }
+    })
   end
 
   after_commit on: [:create] do

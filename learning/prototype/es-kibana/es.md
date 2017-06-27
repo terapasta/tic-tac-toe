@@ -66,3 +66,28 @@ GET question_answers/_search
 ```
 
 データが入っていることが確認できた
+
+### QuestionAnswerのレコードから似ているレコードを探す
+
+```
+[24] pry(main)> q.more_like_this.results.map(&:question)
+=> ["オフィスはどこにある？", "会社はどこにある？", "どこから問い合わせすればいい？"]
+[25] pry(main)>
+[26] pry(main)>
+[27] pry(main)> q = QuestionAnswer.first
+  QuestionAnswer Load (1.2ms)  SELECT  `question_answers`.* FROM `question_answers`  ORDER BY `question_answers`.`id` ASC LIMIT 1
+=> #<QuestionAnswer:0x007fad7f2e4cb0
+ id: 1,
+ bot_id: 1,
+ question: "オフィスはどこにあるの？",
+ answer_id: 2,
+ underlayer: nil,
+ created_at: Tue, 27 Jun 2017 08:53:36 JST +09:00,
+ updated_at: Tue, 27 Jun 2017 08:53:36 JST +09:00,
+ selection: false>
+[28] pry(main)> q.more_like_this.results.map(&:question)
+=> ["オフィスはどこにある？", "会社はどこにある？", "どこから問い合わせすればいい？"]
+[29] pry(main)>
+```
+
+似ていそうなものが取れている

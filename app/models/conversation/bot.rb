@@ -13,10 +13,16 @@ class Conversation::Bot
     @word_mappings = WordMapping.for_bot(@bot).decorate
     @question_text = @bot.learning_parameter&.use_similarity_classification ?
       @word_mappings.replace_synonym(@message.body) : @message.body
+    @summarizer = Learning::Summarizer.new(@bot)
   end
 
   def do_reply
     Rails.logger.debug("Conversation::Bot#reply body: #{@question_text}")
+
+    if @bot.learning_parameter&.use_similarity_classification?
+      @summarizer.summary
+      @summarizer.unify_learning_training_message_words!
+    end
 
     result = @engine.reply(@question_text)
     @results = result[:results]

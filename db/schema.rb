@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616030118) do
+ActiveRecord::Schema.define(version: 20170621015626) do
 
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0
@@ -222,9 +222,11 @@ ActiveRecord::Schema.define(version: 20170616030118) do
     t.text     "body",                limit: 65535, null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "question_answer_id",  limit: 4
   end
 
   add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
+  add_index "sentence_synonyms", ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id", using: :btree
   add_index "sentence_synonyms", ["training_message_id"], name: "index_sentence_synonyms_on_training_message_id", using: :btree
 
   create_table "services", force: :cascade do |t|

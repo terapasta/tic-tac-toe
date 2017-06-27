@@ -87,7 +87,10 @@ GET question_answers/_search
  selection: false>
 [28] pry(main)> q.more_like_this.results.map(&:question)
 => ["オフィスはどこにある？", "会社はどこにある？", "どこから問い合わせすればいい？"]
-[29] pry(main)>
+[29] pry(main)> q.more_like_this.results.map{|x| { question: x.question, score: x._score }}
+=> [{:question=>"オフィスはどこにある？", :score=>4.274851},
+ {:question=>"会社はどこにある？", :score=>1.8626721},
+ {:question=>"どこから問い合わせすればいい？", :score=>1.4880419}]
 ```
 
 似ていそうなものが取れている

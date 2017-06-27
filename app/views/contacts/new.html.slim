@@ -4,12 +4,11 @@
     br/
     
     .info-support-form 
-      .breadcrumb
+      .well.well-sm
         p
-          text-left
-            |  
-              My-ope officeご利用にあたってお気づきの点や不具合、<br>
-              及び機能要望などお気軽にお問い合わせください。
+          |  
+            My-ope officeご利用にあたってお気づきの点や不具合、<br>
+            及び機能要望などお気軽にお問い合わせください。
     
     = bootstrap_form_for(:ticket, url: contacts_path, method: "post" ) do |f|
       = f.email_field :email, hide_label: true, placeholder: "メールアドレス      *記載されたメールアドレス宛に返信致します。"

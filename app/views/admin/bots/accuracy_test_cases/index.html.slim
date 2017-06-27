@@ -1,4 +1,77 @@
 - content_for :hide_sidebar, true
 
 .kontainer
-  h4 精度テスト
+  .page-header
+    .page-header__title 精度テスト
+    .page-header__controls
+      = link_to 'テスト実行', '#', class: 'btn btn-primary btn-sm'
+
+  table.table.table-striped
+    thead
+      tr
+        th style="width:40px;" id
+        th style="width:250px;" テスト質問
+        th style="width:250px;" 期待値
+        th style="width:100px;"
+        th style="width:250px;" 結果
+        th.text-center
+    tbody
+      - 5.times do |n|
+        tr
+          td= n
+          td
+            - 5.times do
+              |これはテスト質問です
+          td
+            p
+              - 5.times do
+                |これは期待値です
+            - if n.even?
+              p
+                = material_icon 'check'
+                = space
+                |サジェストを期待
+          td
+            p= link_to '#', class: 'btn btn-default btn-xs' do
+              = material_icon 'edit'
+              = space
+              span 編集
+            p= link_to '#', class: 'btn btn-danger btn-xs', data: { confirm: '本当に削除してよいですか？', method: :delete } do
+              = material_icon 'close'
+              = space
+              span 削除
+          td
+            p
+              - 5.times do
+                |これは回答文です
+            - if n.even?
+              h5 サジェスト
+              ul
+                - 3.times do
+                  li なにかの質問なにかの質問なにかの質問なにかの質問
+          td.text-center
+            - if n.odd?
+              = material_icon 'check_circle', class: 'text-success'
+            - else
+              = material_icon 'close', class: 'text-danger'
+    tfoot
+      tr
+        td colspan=4
+        td: h4.text-center
+          span 2 成功 / 5 total,
+          = space 3
+          span 成功率 50%
+
+  = form_for [:admin, @bot, AccuracyTestCase.new] do |nf|
+    table.table: tbody: tr
+      td style="width:250px;"
+        = nf.text_area :question_text, class: 'form-control', placeholder: 'テスト質問'
+      td style="width:250px;"
+        = nf.text_area :expected_text, class: 'form-control', placeholder: '期待値'
+
+        .help-block: label
+          = nf.check_box :is_expected_suggestion
+          = space
+          span サジェストを期待
+      td
+        = nf.submit class: 'btn btn-success'

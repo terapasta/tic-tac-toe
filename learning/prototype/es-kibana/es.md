@@ -211,3 +211,131 @@ javacが見つからず...
 mavenのバージョン最新じゃないの関係あるか?
 時間かかりそうなのでとりあえず保留
 
+### プラグイン試す
+- https://github.com/sdauletau/elasticsearch-position-similarity
+
+gradleの4.0をインストールしたが、2.13じゃないとだめっぽい
+
+```
+$ git clone git@github.com:sdauletau/elasticsearch-position-similarity.git
+$ cd elasticsearch-position-similarity
+$ wget https://services.gradle.org/distributions/gradle-2.13-bin.zip
+$ unzip gradle-2.13-bin.zip
+$ gradle-2.13/bin/gradle clean assemble
+=======================================
+Elasticsearch Build Hamster says Hello!
+=======================================
+  Gradle Version        : 2.13
+  OS Info               : Linux 4.9.27-moby (amd64)
+  JDK Version           : Oracle Corporation 1.8.0_121 [OpenJDK 64-Bit Server VM 25.121-b13]
+  JAVA_HOME             : /usr/lib/jvm/java-8-openjdk-amd64
+Incremental java compilation is an incubating feature.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'elasticsearch-position-similarity-master'.
+> jps executable not found; ensure that you're running Gradle with the JDK rather than the JRE
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
+
+BUILD FAILED
+
+Total time: 33.819 secs
+root@2b57e0b09659:/tmp/elasticsearch-position-similarity-master# gradle-2.13/bin/gradle clean assemble --stacktrace
+=======================================
+Elasticsearch Build Hamster says Hello!
+=======================================
+  Gradle Version        : 2.13
+  OS Info               : Linux 4.9.27-moby (amd64)
+  JDK Version           : Oracle Corporation 1.8.0_121 [OpenJDK 64-Bit Server VM 25.121-b13]
+  JAVA_HOME             : /usr/lib/jvm/java-8-openjdk-amd64
+Incremental java compilation is an incubating feature.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'elasticsearch-position-similarity-master'.
+> jps executable not found; ensure that you're running Gradle with the JDK rather than the JRE
+
+* Try:
+Run with --info or --debug option to get more log output.
+
+* Exception is:
+org.gradle.api.ProjectConfigurationException: A problem occurred configuring root project 'elasticsearch-position-similarity-master'.
+	at org.gradle.configuration.project.LifecycleProjectEvaluator.addConfigurationFailure(LifecycleProjectEvaluator.java:79)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator.notifyAfterEvaluate(LifecycleProjectEvaluator.java:74)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator.evaluate(LifecycleProjectEvaluator.java:61)
+	at org.gradle.api.internal.project.AbstractProject.evaluate(AbstractProject.java:529)
+	at org.gradle.api.internal.project.AbstractProject.evaluate(AbstractProject.java:90)
+	at org.gradle.execution.TaskPathProjectEvaluator.configureHierarchy(TaskPathProjectEvaluator.java:42)
+	at org.gradle.configuration.DefaultBuildConfigurer.configure(DefaultBuildConfigurer.java:35)
+	at org.gradle.initialization.DefaultGradleLauncher$2.run(DefaultGradleLauncher.java:125)
+	at org.gradle.internal.Factories$1.create(Factories.java:22)
+	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:52)
+	at org.gradle.initialization.DefaultGradleLauncher.doBuildStages(DefaultGradleLauncher.java:122)
+	at org.gradle.initialization.DefaultGradleLauncher.access$200(DefaultGradleLauncher.java:32)
+	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:99)
+	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:93)
+	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:62)
+	at org.gradle.initialization.DefaultGradleLauncher.doBuild(DefaultGradleLauncher.java:93)
+	at org.gradle.initialization.DefaultGradleLauncher.run(DefaultGradleLauncher.java:82)
+	at org.gradle.launcher.exec.InProcessBuildActionExecuter$DefaultBuildController.run(InProcessBuildActionExecuter.java:94)
+	at org.gradle.tooling.internal.provider.ExecuteBuildActionRunner.run(ExecuteBuildActionRunner.java:28)
+	at org.gradle.launcher.exec.ChainingBuildActionRunner.run(ChainingBuildActionRunner.java:35)
+	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:43)
+	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:28)
+	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:81)
+	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:46)
+	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:51)
+	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:28)
+	at org.gradle.launcher.cli.RunBuildAction.run(RunBuildAction.java:43)
+	at org.gradle.internal.Actions$RunnableActionAdapter.execute(Actions.java:173)
+	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:241)
+	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:214)
+	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:35)
+	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:24)
+	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:207)
+	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:169)
+	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:33)
+	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:22)
+	at org.gradle.launcher.Main.doAction(Main.java:33)
+	at org.gradle.launcher.bootstrap.EntryPoint.run(EntryPoint.java:45)
+	at org.gradle.launcher.bootstrap.ProcessBootstrap.runNoExit(ProcessBootstrap.java:55)
+	at org.gradle.launcher.bootstrap.ProcessBootstrap.run(ProcessBootstrap.java:36)
+	at org.gradle.launcher.GradleMain.main(GradleMain.java:23)
+Caused by: org.gradle.api.GradleException: jps executable not found; ensure that you're running Gradle with the JDK rather than the JRE
+	at org.elasticsearch.gradle.test.ClusterFormationTasks$_configureCheckPreviousTask_closure25.doCall(ClusterFormationTasks.groovy:601)
+	at org.gradle.api.internal.ClosureBackedAction.execute(ClosureBackedAction.java:67)
+	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:130)
+	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:110)
+	at org.gradle.api.internal.AbstractTask.configure(AbstractTask.java:488)
+	at org.gradle.api.internal.tasks.DefaultTaskContainer.create(DefaultTaskContainer.java:93)
+	at org.gradle.api.tasks.TaskContainer$create$4.call(Unknown Source)
+	at org.elasticsearch.gradle.test.ClusterFormationTasks.configureCheckPreviousTask(ClusterFormationTasks.groovy:590)
+	at org.elasticsearch.gradle.test.ClusterFormationTasks$configureCheckPreviousTask$3.callStatic(Unknown Source)
+	at org.elasticsearch.gradle.test.ClusterFormationTasks.configureNode(ClusterFormationTasks.groovy:160)
+	at org.elasticsearch.gradle.test.ClusterFormationTasks$configureNode$1.callStatic(Unknown Source)
+	at org.elasticsearch.gradle.test.ClusterFormationTasks.setup(ClusterFormationTasks.groovy:106)
+	at org.elasticsearch.gradle.test.ClusterFormationTasks$setup.call(Unknown Source)
+	at org.elasticsearch.gradle.test.RunTask$_closure1.doCall(RunTask.groovy:21)
+	at org.gradle.listener.ClosureBackedMethodInvocationDispatch.dispatch(ClosureBackedMethodInvocationDispatch.java:40)
+	at org.gradle.listener.ClosureBackedMethodInvocationDispatch.dispatch(ClosureBackedMethodInvocationDispatch.java:25)
+	at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:44)
+	at org.gradle.internal.event.BroadcastDispatch.dispatch(BroadcastDispatch.java:79)
+	at org.gradle.internal.event.BroadcastDispatch.dispatch(BroadcastDispatch.java:30)
+	at org.gradle.messaging.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)
+	at com.sun.proxy.$Proxy11.afterEvaluate(Unknown Source)
+	at org.gradle.configuration.project.LifecycleProjectEvaluator.notifyAfterEvaluate(LifecycleProjectEvaluator.java:67)
+	... 41 more
+
+
+BUILD FAILED
+
+Total time: 13.082 secs
+```
+
+こちらもエラーになる。

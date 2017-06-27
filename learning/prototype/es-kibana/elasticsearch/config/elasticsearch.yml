@@ -9,3 +9,7 @@ xpack.security.enabled: false
 xpack.monitoring.enabled: true
 xpack.graph.enabled: false
 xpack.watcher.enabled: false
+
+# set kuromoji as default Tokenizer
+# index.analysis.analyzer.default.type: custom
+# index.analysis.analyzer.default.tokenizer: kuromoji_tokenizer

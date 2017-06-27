@@ -52,4 +52,15 @@ class Message < ActiveRecord::Base
     )
     save!
   end
+
+  def self.find_pair_message_from(message)
+    messages = message.chat.messages.order(created_at: :asc)
+    index = messages.find_index(message)
+    case message.speaker
+    when 'bot'
+      messages[index - 1]
+    when 'guest'
+      messages[index + 1]
+    end
+  end
 end

@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   end
 
   resources :bots, only: [:index, :edit, :update] do
-    post :reset, on: :member
+    member do
+      post :reset
+    end
+    resources :tasks, only: [:index, :update]
     resource :chat_widget, only: [:show]
     resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]

@@ -1,0 +1,9 @@
+.nav-pills {
+  li {
+    &.active {
+      i.fa {
+        color: #fff !important;
+      }
+    }
+  }
+}

@@ -23,7 +23,6 @@ module ApplicationHelper
       "#{ActionController::Base.asset_host}/assets/embed.js"
     end
   end
-
   def material_icon(name, options = {})
     klass = options.delete(:class)
     options.merge!(class: "material-icons #{klass}")
@@ -50,5 +49,17 @@ module ApplicationHelper
   def topic_tags_for_select(bot)
     null_topic_tag = Struct.new(:id, :name).new(-1, 'トピックタグなし')
     [null_topic_tag, *bot.topic_tags]
+  end
+
+  def mixpanel_event_data(event_name, bot)
+    { data: { event_name: event_name, bot_id: bot.id, bot_name: bot.name } }
+  end
+
+  def unstarted_tasks_count
+    @_unstarted_tasks_count ||= Task.unstarted(@bot).count
+  end
+
+  def done_tasks_count
+    @_done_tasks_count ||= Task.where(bot_id: @bot.id).with_done(true).count
   end
 end

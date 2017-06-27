@@ -23,6 +23,7 @@ export default class ChatBotMessage extends Component {
       body: PropTypes.string.isRequired,
       rating: PropTypes.oneOf(values(c.Ratings)),
       onChangeRatingTo: PropTypes.func.isRequired,
+      answerFailed: PropTypes.bool.isRequired,
     };
   }
 
@@ -46,6 +47,7 @@ export default class ChatBotMessage extends Component {
       rating,
       body,
       onChangeRatingTo,
+      answerFailed,
     } = this.props;
 
     const { isFaded } = this.state;
@@ -58,6 +60,7 @@ export default class ChatBotMessage extends Component {
       <div className={className} id={`message-${id}`}>
         <div className="chat-message__icon" style={iconStyle} key="icon" />
         <div className="chat-message__balloon" key="balloon">
+          {answerFailed && <i className="fa fa-exclamation-triangle text-warning" style={{marginRight: "4px"}} />}
           {!isLoading && <Linkify properties={{ target: "_blank" }}>{nl2br(body)}</Linkify>}
           {isLoading && (
             <div className="chat-message__balloon-loader">

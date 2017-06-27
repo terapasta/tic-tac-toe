@@ -257,6 +257,15 @@ ActiveRecord::Schema.define(version: 20170621015626) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "tasks", force: :cascade do |t|
+    t.text     "guest_message", limit: 65535
+    t.text     "bot_message",   limit: 65535
+    t.boolean  "is_done",                     default: false
+    t.integer  "bot_id",        limit: 4,                     null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
   create_table "topic_taggings", force: :cascade do |t|
     t.integer  "question_answer_id", limit: 4, null: false
     t.integer  "topic_tag_id",       limit: 4, null: false

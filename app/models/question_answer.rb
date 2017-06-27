@@ -61,7 +61,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
-      indexes :question, term_vector: :yes, analyzer: 'kuromoji'
+      indexes :question, term_vector: :yes, analyzer: :kuromoji, type: :text, similarity: :BM25
     end
   end
 

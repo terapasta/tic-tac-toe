@@ -342,3 +342,59 @@ Total time: 13.082 secs
 ```
 
 こちらもエラーになる。
+
+## Elasticsearchを理解する
+
+ESは基本的にはTF/IDFによってベクトルを算出している
+
+**カスタムスコアリングの選択肢**
+
+### Field Value factor
+
+1. 事前にベクトル化したスコアをRailsのDBに格納する
+2. railsのDBからESのindexを生成する
+3. ESがTerm Vectorを生成する(TF/IDFなど) 4の方を優先してスコアリングするようにする必要がある?
+4. ESのField Value factorを使い1の値をもとにスコアリングする
+
+### Script score
+
+1. railsのDBからESのindexを生成する
+2. ESがTerm Vectorを生成する(TF/IDFなど)
+2. ESのScript scoreを使い動的にスコアリングする
+
+**similarity module**
+
+ESではSimilarity moduleをカスタマイズできる
+これを変えるとTerm Vectorが変わるのではないかと思われる
+以下の中から選んでパラメータを調整して、カスタムsimilarityを作成することができる。
+javaで完全オリジナルのsimilarity moduleも作れそう。
+
+- TF/IDF
+  - 出現頻度(クラシック)
+- Okapi BM25
+  - 確率的関連性モデル(現在のデフォルト)
+- DFR
+  - ランダム性から相違を発見する
+- DFI
+  - 独立性から相違を発見する
+- IB
+  - 反復?
+- LM Dirichlet
+  - ベイズ?
+- LM jelinek Mercer
+  - ノイズを残しながら重要なパターンを見つける
+
+
+## 調査結果
+
+Elasticsearchは便利だが、やはりベクトル化は前処理でやることになる
+プラグインが使えればよかったが、すぐに動かなかったのとjavaであるという面倒くささあり
+
+ベクタライズを行ったデータをDBに入れておく運用なら、elasticsearch-railsのお陰でrailsから使いやすいので割りとありだが、
+機械学習とか試すのであればやはりそれはElasticsearchとは実装を分けたほうがよさそうなので、置き換えというよりは追加開発的な形になるかと思う
+
+結論
+
+**Elasticsearch自体の類似検索のカスタマイズが結構可能なので、そちらで色々精度見てみるとかをやってみたい**
+機械学習を試したりもしたいので、もしやるなら移行は見送って並行運用が望ましいかと
+

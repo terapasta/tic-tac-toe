@@ -109,6 +109,7 @@ WORKDIR /tmp
 RUN wget https://github.com/MLnick/elasticsearch-vector-scoring/archive/master.zip \
         -O elasticsearch-vector-scoring.zip \
     && unzip elasticsearch-vector-scoring.zip \
+    && cd elasticsearch-vector-scoring
     && mvn package
 
 WORKDIR /usr/share/elasticsearch

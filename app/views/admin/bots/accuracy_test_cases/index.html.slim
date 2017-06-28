@@ -1,6 +1,6 @@
 - content_for :hide_sidebar, true
 
-.kontainer
+.container
   .page-header
     .page-header__title 精度テスト
     .page-header__controls
@@ -16,44 +16,46 @@
         th style="width:250px;" 結果
         th.text-center
     tbody
-      - 5.times do |n|
+      - @accuracy_test_cases.each do |accuracy_test_case|
         tr
-          td= n
           td
-            - 5.times do
-              |これはテスト質問です
+          td
+            = accuracy_test_case.question_text
           td
             p
-              - 5.times do
-                |これは期待値です
-            - if n.even?
-              p
-                = material_icon 'check'
-                = space
-                |サジェストを期待
+              = accuracy_test_case.expected_text
+              - if accuracy_test_case.is_expected_suggestion?
+                p
+                  = material_icon 'check'
+                  = space
+                  |サジェストを期待
           td
-            p= link_to '#', class: 'btn btn-default btn-xs' do
-              = material_icon 'edit'
-              = space
-              span 編集
-            p= link_to '#', class: 'btn btn-danger btn-xs', data: { confirm: '本当に削除してよいですか？', method: :delete } do
-              = material_icon 'close'
-              = space
-              span 削除
+            p
+              = link_to edit_admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-default btn-xs' do
+                = material_icon 'edit'
+                = space
+                span 編集
+
+            p
+              = link_to admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-danger btn-xs', data: { confirm: '本当に削除してよいですか？', method: :delete } do
+                = material_icon 'close'
+                = space
+                span 削除
           td
             p
               - 5.times do
                 |これは回答文です
-            - if n.even?
               h5 サジェスト
               ul
                 - 3.times do
                   li なにかの質問なにかの質問なにかの質問なにかの質問
+
           td.text-center
-            - if n.odd?
+            - if accuracy_test_case.id.odd?
               = material_icon 'check_circle', class: 'text-success'
             - else
               = material_icon 'close', class: 'text-danger'
+          
     tfoot
       tr
         td colspan=4
@@ -62,16 +64,14 @@
           = space 3
           span 成功率 50%
 
-  = form_for [:admin, @bot, AccuracyTestCase.new] do |nf|
+  = form_for [:admin, @bot, @accuracy_test_case] do |f|
     table.table: tbody: tr
-      td style="width:250px;"
-        = nf.text_area :question_text, class: 'form-control', placeholder: 'テスト質問'
-      td style="width:250px;"
-        = nf.text_area :expected_text, class: 'form-control', placeholder: '期待値'
-
+      td style="width: 250px;"
+        = f.text_area :question_text, class: 'form-control', placeholder: 'テスト質問'
+      td style="width: 250px;"
+        = f.text_area :expected_text, class: 'form-control', placeholder: '期待値'
         .help-block: label
-          = nf.check_box :is_expected_suggestion
-          = space
+          = f.check_box :is_expected_suggestion
           span サジェストを期待
-      td
-        = nf.submit class: 'btn btn-success'
+      td 
+        = f.submit class: 'btn btn-success'

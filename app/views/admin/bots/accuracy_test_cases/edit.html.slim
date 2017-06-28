@@ -1,0 +1,17 @@
+h2 テスト内容編集
+hr
+= form_for [:admin, @bot, @accuracy_test_case] do |f|
+  = f.label :テスト質問
+  = f.text_area :question_text, rows: 3, class: 'form-control'
+  br
+  
+  = f.label :期待値
+  = f.text_area :expected_text, rows: 3, class: 'form-control'
+  br
+  
+  = f.label :サジェストを期待する
+  = f.check_box :is_expected_suggestion 
+  br
+  br
+  
+  = f.submit class: "btn btn-default"

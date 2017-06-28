@@ -1693,6 +1693,7 @@ var ChatApp = function (_Component) {
         { ref: "root" },
         _react2.default.createElement(_header2.default, {
           botName: window.currentBot.name,
+          isManager: isManager,
           learningStatus: learning.status,
           enableLearningButton: isManager && useSimilarityClassification !== true,
           showPath: showPath,
@@ -3323,6 +3324,7 @@ var ChatHeader = function (_Component) {
     value: function render() {
       var _props = this.props,
           botName = _props.botName,
+          isManager = _props.isManager,
           enableLearningButton = _props.enableLearningButton,
           showPath = _props.showPath;
       var _state = this.state,
@@ -3342,47 +3344,47 @@ var ChatHeader = function (_Component) {
           { className: "chat-header__title" },
           botName
         ),
-        enableLearningButton && _react2.default.createElement(
+        _react2.default.createElement(
           "div",
           { className: "chat-header__right" },
-          isSucceeded && _react2.default.createElement(
+          enableLearningButton && _react2.default.createElement(
             "span",
-            { className: "label label-success" },
-            "\u5B66\u7FD2\u6E08"
-          ),
-          isFailed && _react2.default.createElement(
-            "span",
-            { className: "label label-danger" },
-            "\u5B66\u7FD2\u5931\u6557"
-          ),
-          isProcessing && _react2.default.createElement(
-            "span",
-            { className: "label label-warning" },
-            "\u5B66\u7FD2\u4E2D"
-          ),
-          " ",
-          _react2.default.createElement(
-            "button",
-            { className: "chat-header__button btn btn-default",
-              disabled: isLearning,
-              onClick: this.onClickLearning },
-            _react2.default.createElement(
-              "i",
-              { className: "material-icons" },
-              "trending_up"
+            null,
+            isSucceeded && _react2.default.createElement(
+              "span",
+              { className: "label label-success" },
+              "\u5B66\u7FD2\u6E08"
+            ),
+            isFailed && _react2.default.createElement(
+              "span",
+              { className: "label label-danger" },
+              "\u5B66\u7FD2\u5931\u6557"
+            ),
+            isProcessing && _react2.default.createElement(
+              "span",
+              { className: "label label-warning" },
+              "\u5B66\u7FD2\u4E2D"
             ),
             " ",
             _react2.default.createElement(
-              "span",
-              null,
-              isLearning ? "学習中..." : "学習を実行"
+              "button",
+              { className: "chat-header__button btn btn-default",
+                disabled: isLearning,
+                onClick: this.onClickLearning },
+              _react2.default.createElement(
+                "i",
+                { className: "material-icons" },
+                "trending_up"
+              ),
+              " ",
+              _react2.default.createElement(
+                "span",
+                null,
+                isLearning ? "学習中..." : "学習を実行"
+              )
             )
-          )
-        ),
-        !enableLearningButton && _react2.default.createElement(
-          "div",
-          { className: "chat-header__right" },
-          _react2.default.createElement(
+          ),
+          isManager && _react2.default.createElement(
             "a",
             { href: showPath, className: "chat-header__button btn btn-default" },
             _react2.default.createElement(
@@ -3426,6 +3428,7 @@ var ChatHeader = function (_Component) {
 
 ChatHeader.propTypes = {
   botName: _react.PropTypes.string.isRequired,
+  isManager: _react.PropTypes.bool.isRequired,
   enableLearningButton: _react.PropTypes.bool.isRequired,
   learningStatus: _react.PropTypes.oneOf((0, _values2.default)(_constants.LearningStatus)),
   showPath: _react.PropTypes.string.isRequired

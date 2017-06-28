@@ -94,6 +94,7 @@ export default class ChatApp extends Component {
       <div ref="root">
         <ChatHeader {...{
           botName: window.currentBot.name,
+          isManager,
           learningStatus: learning.status,
           enableLearningButton: isManager && useSimilarityClassification !== true,
           showPath,

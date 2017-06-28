@@ -106,7 +106,6 @@ gem 'natto'
 gem 'config'
 gem 'active_model_serializers'
 gem 'non-stupid-digest-assets'
-gem 'newrelic_rpm'
 gem 'asset_sync'
 gem 'fog-aws'
 gem 'silencer'
@@ -169,4 +168,5 @@ group :production, :staging do
   #gem 'pg'
   # ログ保存先変更、静的アセット Heroku 向けに調整
   #gem 'rails_12factor'
+  gem 'newrelic_rpm'
 end

@@ -4,6 +4,22 @@
       background-color: #fff;
     }
   }
+
+  &.stacked-close {
+    margin-bottom: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  a.panel-body {
+    display: block;
+  }
 }
 
 .panel-spacious {

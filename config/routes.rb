@@ -79,7 +79,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :word_mappings
     resources :bots, only: [] do
-      resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots
+      resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
+        get :executions ,on: :collection
+      end
     end
   end
 

@@ -3,7 +3,7 @@ class ImportedSentenceSynonymsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
 
-  newrelic_ignore_apdex only: [:new]
+  newrelic_ignore_apdex only: [:new] if Rails.env.production?
 
   def index
     authorize SentenceSynonym

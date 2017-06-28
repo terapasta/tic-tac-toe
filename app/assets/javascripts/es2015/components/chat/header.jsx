@@ -35,7 +35,7 @@ class ChatHeader extends Component {
   }
 
   render() {
-    const { botName, enableLearningButton } = this.props;
+    const { botName, enableLearningButton, showPath } = this.props;
     const { isLearning, learningStatus } = this.state;
 
     const isSucceeded = learningStatus === LearningStatus.Succeeded;
@@ -58,6 +58,14 @@ class ChatHeader extends Component {
               {" "}
               <span>{isLearning ? "学習中..." : "学習を実行"}</span>
             </button>
+          </div>
+        )}
+        {!enableLearningButton && (
+          <div className="chat-header__right">
+            <a href={showPath} className="chat-header__button btn btn-default">
+              <i className="material-icons">refresh</i>
+              再読込
+            </a>
           </div>
         )}
       </header>
@@ -88,6 +96,7 @@ ChatHeader.propTypes = {
   botName: PropTypes.string.isRequired,
   enableLearningButton: PropTypes.bool.isRequired,
   learningStatus: PropTypes.oneOf(values(LearningStatus)),
+  showPath: PropTypes.string.isRequired,
 };
 
 export default ChatHeader;

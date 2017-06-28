@@ -75,6 +75,7 @@ export default class ChatApp extends Component {
       dispatch,
       token,
       useSimilarityClassification,
+      showPath,
       messages,
       form,
       learning,
@@ -95,6 +96,7 @@ export default class ChatApp extends Component {
           botName: window.currentBot.name,
           learningStatus: learning.status,
           enableLearningButton: isManager && useSimilarityClassification !== true,
+          showPath,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
         <ChatArea>

@@ -21,7 +21,7 @@
         <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to "ヘルプ", " https://mofmof.zendesk.com", target: "blank" %></li>
-            <li><%= link_to "お問い合わせ", new_contacts_path %></li>
+            <li><%= link_to "サポート", new_contacts_path %></li>
             <% if policy(:bot).index? %>
               <li><%= link_to "Bot一覧", bots_path, data: { event_name: 'Open bot index', bot_id: @bot.try(:id), bot_name: @bot.try(:name) } %></li>
             <% end %>

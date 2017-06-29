@@ -4,7 +4,7 @@
   .page-header
     .page-header__title 精度テスト
     .page-header__controls
-      = link_to 'テスト実行', '#', class: 'btn btn-primary btn-sm'
+      = link_to 'テスト実行', executions_admin_bot_accuracy_test_cases_path(@bot), method: :post, class: 'btn btn-primary btn-sm'
 
   table.table.table-striped
     thead

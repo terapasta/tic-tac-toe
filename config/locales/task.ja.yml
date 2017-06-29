@@ -1,4 +1,4 @@
 ja:
   activerecord:
     models:
-      task: うまくいかなかった対話
+      task: 対話タスク

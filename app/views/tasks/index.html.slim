@@ -1,4 +1,10 @@
-h3= Task.model_name.human
+.page-header
+  .page-header__title= Task.model_name.human
+  .page-header__controls= link_to 'test', '#', class: 'btn btn-default'
+p.page-header__desc
+    |対話タスクとは、うまくいかなかった対話（回答失敗かBad評価の付いたもの）の記録をタスク形式で表示する機能です。
+    br
+    |この対話記録を元に新しくQ&Aを作成していただくか、対応済みにすることでタスクを消化できます。
 
 - pagination = capture do
   = paginate @tasks

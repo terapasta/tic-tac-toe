@@ -10,12 +10,12 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
 
   def create
     @accuracy_test_case = @bot.accuracy_test_cases.build(accuracy_test_case_params)
-    if @accuracy_test_case.save
-      redirect_to admin_bot_accuracy_test_cases_path(@bot), notice: "テストの追加に成功しました。"
+    message = if @accuracy_test_case.save
+      { notice: 'テストの追加に成功しました。' }
     else
-      flash[:alert] = "テストの追加に失敗しました。"
-      redirect_to admin_bot_accuracy_test_cases_path(@bot)
+      { alert: 'テストの追加に失敗しました。' }
     end
+    redirect_to admin_bot_accuracy_test_cases_path(@bot), message
   end
 
   def edit
@@ -23,16 +23,15 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
 
   def update
     if @accuracy_test_case.update(accuracy_test_case_params)
-      redirect_to admin_bot_accuracy_test_cases_path(@bot), notice: "テストを編集しました。"
+      redirect_to admin_bot_accuracy_test_cases_path(@bot), notice: 'テストを編集しました。'
     else
-      flash[:alert] = "テストの編集に失敗しました。"
-      redirect_to edit_admin_bot_accuracy_test_case_path(@bot, @accuracy_test_case)
+      redirect_to edit_admin_bot_accuracy_test_case_path(@bot, @accuracy_test_case), alert: 'テストの編集に失敗しました。'
     end
   end
 
   def destroy
     @accuracy_test_case.destroy
-    redirect_to admin_bot_accuracy_test_cases_path(@bot), notice: "テストを削除しました。"
+    redirect_to admin_bot_accuracy_test_cases_path(@bot), notice: 'テストを削除しました。'
   end
 
   private

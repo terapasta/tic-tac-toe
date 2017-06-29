@@ -81,7 +81,7 @@ Rails.application.routes.draw do
     resources :bots, only: [] do
       resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
         collection do
-          resource :execution, only: [:create], module: :accuracy_test_cases
+          resource :execution, only: [:create], module: :accuracy_test_cases, as: :accuracy_test_cases_execution
         end
       end
     end

@@ -78,7 +78,7 @@ TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養
 
     def test_insurance_card(self):
         questions = ['保険証をなくした']
-        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        result = Similarity(self.bot_id).make_response(questions, datasource_type='csv')
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''

@@ -80,7 +80,9 @@ Rails.application.routes.draw do
     resources :word_mappings
     resources :bots, only: [] do
       resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
-        post :executions, to: 'executions#create', on: :collection
+        collection do
+          resource :execution, only: [:create], module: :accuracy_test_cases
+        end
       end
     end
   end

@@ -5,7 +5,6 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
 
   def index
     @accuracy_test_cases = @bot.accuracy_test_cases
-    @accuracy_test_case = AccuracyTestCase.new
   end
 
   def create

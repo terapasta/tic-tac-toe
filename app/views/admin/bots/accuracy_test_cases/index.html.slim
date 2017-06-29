@@ -55,7 +55,7 @@
               = material_icon 'check_circle', class: 'text-success'
             - else
               = material_icon 'close', class: 'text-danger'
-          
+
     tfoot
       tr
         td colspan=4
@@ -64,7 +64,7 @@
           = space 3
           span 成功率 50%
 
-  = form_for [:admin, @bot, @accuracy_test_case] do |f|
+  = form_for [:admin, @bot, @bot.accuracy_test_cases.build] do |f|
     table.table: tbody: tr
       td style="width: 250px;"
         = f.text_area :question_text, class: 'form-control', placeholder: 'テスト質問'
@@ -73,5 +73,5 @@
         .help-block: label
           = f.check_box :is_expected_suggestion
           span サジェストを期待
-      td 
+      td
         = f.submit class: 'btn btn-success'

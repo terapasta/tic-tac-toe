@@ -15,7 +15,7 @@ Answer.seed(:id,
   { id: 5, context: 'normal', body: 'おやすなさい！', bot_id: 4 },
   { id: 6, context: 'normal', body: 'どういたしまして！', bot_id: 4 },
 )
-3
+
 Answer.seed(:id,
   { id: 1001, context: 'normal', body: 'こんにちは！', bot_id: 3 },
 )

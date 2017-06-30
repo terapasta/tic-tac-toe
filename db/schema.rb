@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621015626) do
+ActiveRecord::Schema.define(version: 20170616093158) do
+
+  create_table "accuracy_test_cases", force: :cascade do |t|
+    t.text     "question_text",          limit: 65535
+    t.text     "expected_text",          limit: 65535
+    t.boolean  "is_expected_suggestion",               default: false
+    t.integer  "bot_id",                 limit: 4,                     null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+  end
 
   create_table "allowed_hosts", force: :cascade do |t|
     t.integer  "scheme",     limit: 4,   default: 0

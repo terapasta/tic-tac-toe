@@ -42,7 +42,3 @@ end
 RSpec.describe QuestionAnswer do
   it_behaves_like HasManySentenceSynonyms, :question
 end
-
-RSpec.describe TrainingMessage do
-  it_behaves_like HasManySentenceSynonyms, :body
-end

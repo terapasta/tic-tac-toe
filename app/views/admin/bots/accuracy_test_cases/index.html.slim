@@ -1,0 +1,90 @@
+- content_for :hide_sidebar, true
+
+.container
+  .page-header
+    .page-header__title 精度テスト
+    .page-header__controls
+      = link_to 'テスト実行', admin_bot_accuracy_test_cases_execution_path(@bot), class: 'btn btn-primary btn-sm', data: { method: :post }
+
+  table.table.table-striped
+    thead
+      tr
+        th style="width:40px;" id
+        th style="width:250px;" テスト質問
+        th style="width:250px;" 期待値
+        th style="width:100px;"
+        th style="width:250px;" 結果
+        th.text-center
+    tbody
+      - @accuracy_test_cases.each do |accuracy_test_case|
+        tr
+          td
+          td
+            = accuracy_test_case.question_text
+          td
+            p
+              = accuracy_test_case.expected_text
+              - if accuracy_test_case.is_expected_suggestion?
+                p
+                  = material_icon 'check'
+                  = space
+                  |サジェストを期待
+          td
+            p
+              = link_to edit_admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-default btn-xs' do
+                = material_icon 'edit'
+                = space
+                span 編集
+
+            p
+              = link_to admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-danger btn-xs', data: { confirm: '本当に削除してよいですか？', method: :delete } do
+                = material_icon 'close'
+                = space
+                span 削除
+          td
+            - if @results.present?
+              - @results[accuracy_test_case.id].tap do |bot_messages|
+                - bot_messages.each do |bot_message|
+                  dl style="margin-bottom:16px"
+                    dt 回答
+                    dd
+                      - if bot_message.answer_failed
+                        i.fa.fa-exclamation-triangle.text-warning
+                        = space
+                      = nl2br bot_message.body
+
+                  - if bot_message.similar_question_answers.present?
+                    strong サジェスト
+                    ul
+                      - bot_message.similar_question_answers.each do |qa|
+                        li= qa.question
+
+          td.text-center
+            - if @results.present?
+              - if accuracy_test_case.success_result?(@results[accuracy_test_case.id])
+                = material_icon 'check_circle', class: 'text-success'
+              - else
+                = material_icon 'close', class: 'text-danger'
+
+    - if @results.present?
+      tfoot
+        tr
+          td colspan=4
+          td colspan=2
+            h4.text-center
+              span #{@success_count} 成功 / #{@accuracy_test_cases.count} total,
+              = space 3
+              span 成功率 #{(@success_count.to_f / @accuracy_test_cases.count.to_f * 100).to_i}%
+
+  = form_for [:admin, @bot, @bot.accuracy_test_cases.build] do |f|
+    table.table: tbody: tr
+      td style="width: 250px;"
+        = f.text_area :question_text, class: 'form-control', placeholder: 'テスト質問'
+      td style="width: 250px;"
+        = f.text_area :expected_text, class: 'form-control', placeholder: '期待値'
+        .help-block: label
+          = f.check_box :is_expected_suggestion
+          = space
+          span サジェストを期待
+      td
+        = f.submit class: 'btn btn-success'

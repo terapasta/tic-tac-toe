@@ -5,6 +5,7 @@ class BotsController < ApplicationController
 
   def index
     @bots = bots.all
+    redirect_to edit_bot_path(@bots.first) if @bots.count == 1
   end
 
   def edit

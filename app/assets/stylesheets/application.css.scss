@@ -22,12 +22,16 @@ body {
   //min-height: 2000px;
   // padding-top: 51px;
   min-height: 100%;
-  font-family: helvetica,
-               arial,
-               'hiragino kaku gothic pro',
-               meiryo,
-               'ms pgothic',
-               sans-serif;
+  font-family:
+    'Open Sans',
+    helvetica,
+    arial,
+    'hiragino kaku gothic pro',
+    meiryo,
+    'ms pgothic',
+    sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 .container-main {

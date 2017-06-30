@@ -10,10 +10,9 @@
           対応した回答が得られるかをテストし、結果のcsvファイルをダウンロードできます。<br />
 
       = f.file_field :file, label: "CSVファイル"
-      
-      
-      = f.submit 'Shift_JISでインポート', class: 'btn btn-success'
-      = f.submit 'UTF-8でインポート', class: 'btn btn-success'
+
+        = f.submit 'Shift_JISでインポート', class: 'btn btn-success'
+        = f.submit 'UTF-8でインポート', class: 'btn btn-success'
       .p.help-block
         |※ファイルはCSV形式でインポートして下さい
         br

@@ -54,6 +54,7 @@
     "is-empty": "^1.0.0",
     "jest-cli": "^19.0.2",
     "jquery": "^3.1.1",
+    "json2csv": "^3.7.3",
     "lodash": "^4.17.2",
     "object-to-formdata": "^1.0.12",
     "promise": "^7.1.1",

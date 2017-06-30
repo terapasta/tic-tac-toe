@@ -1,6 +1,15 @@
-h1 テスト結果
-.pull-right
-  = link_to 'アップロード画面に戻る', new_bot_chat_test_path(@bot), class: 'btn btn-default'
+h1 ボットテスト結果
+
+.well.clearfix
+  .pull-left
+    = link_to new_bot_chat_test_path(@bot), class: 'btn btn-default' do
+      i.material-icons arrow_back
+      span アップロード画面に戻る
+  .pull-right
+    span(
+      data-component="DownloadTableDataButton"
+      data-target-selector="#chat-test-results"
+    )
 
 table.table.table-striped
   thead
@@ -8,7 +17,7 @@ table.table.table-striped
       th 質問
       th 回答
 
-  tbody
+  tbody#chat-test-results
     - @chat.messages.each_with_index do |message, i|
       - next if i.odd?
       tr

@@ -11,8 +11,12 @@ import mountComponent, { mountComponentWithRedux } from "./modules/mount-compone
 import Mixpanel from "./analytics/mixpanel";
 import LearningButton from "./components/learning-button";
 import CopyButton from "./components/copy-button";
+<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
 import AnswerBodyTextArea from "./components/answer-body-text-area";
+=======
+import DownloadTableDataButton from "./components/download-table-data-button";
+>>>>>>> Implement DownloadTableDataButton component
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -25,8 +29,12 @@ function init() {
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
   mountComponent(LearningButton);
+<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
   mountComponent(QuestionAnswerTagForm);
   mountComponent(AnswerBodyTextArea);
+=======
+  mountComponent(DownloadTableDataButton);
+>>>>>>> Implement DownloadTableDataButton component
   CopyButton.initialize();
 }
 

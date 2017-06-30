@@ -93,7 +93,7 @@ class Chat < ActiveRecord::Base
     end
   end
 
-  def self.build_chat_from_csv_data(bot)
+  def self.build_with_user_role(bot)
     chat = bot.chats.build(guest_key: SecureRandom.hex(64))
     chat.is_staff = bot.user.staff?
     chat

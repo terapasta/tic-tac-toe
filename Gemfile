@@ -15,6 +15,7 @@ gem 'mysql2', '~> 0.3.20'
 gem 'sass'
 gem 'sass-rails', '~> 5.0'
 gem 'font-awesome-rails'
+gem 'tether-rails'
 
 # easy to write a form
 gem 'bootstrap-sass'

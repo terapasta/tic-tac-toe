@@ -1,0 +1,9 @@
+.table {
+  thead {
+    tr:first-child {
+      th {
+        border-top: 0;
+      }
+    }
+  }
+}

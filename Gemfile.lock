@@ -510,6 +510,8 @@ GEM
     temple (0.7.7)
     termcolor (1.2.2)
       highline (>= 1.5.0)
+    tether-rails (1.4.0)
+      rails (>= 3.1)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -655,6 +657,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   tapp
+  tether-rails
   therubyracer
   to_bool
   toastr-rails

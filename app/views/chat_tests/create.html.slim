@@ -6,16 +6,25 @@ h1 ボットテスト結果
       i.material-icons arrow_back
       span アップロード画面に戻る
   .pull-right
-    span(
-      data-component="DownloadTableDataButton"
-      data-target-selector="#chat-test-results"
-    )
+    i.material-icons file_download
+    = space
+    span 結果CSVファイルを
+    = space 2
+    = form_tag '#', class: 'd-inline-block' do
+      / FIXME
+      = hidden_field_tag :file_data, [].to_json
+      = button_tag 'Shift_JISでダウンロード', class: 'btn btn-success'
+    = space
+    = form_tag '#', class: 'd-inline-block' do
+      / FIXME
+      = hidden_field_tag :file_data, [].to_json
+      = button_tag 'UTF-8でダウンロード', class: 'btn btn-success'
 
 table.table.table-striped
   thead
     tr
-      th 質問
-      th 回答
+      th style="width:200px" テスト質問
+      th 得られた回答
 
   tbody#chat-test-results
     - @chat.messages.each_with_index do |message, i|

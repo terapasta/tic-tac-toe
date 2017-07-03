@@ -11,12 +11,15 @@ import mountComponent, { mountComponentWithRedux } from "./modules/mount-compone
 import Mixpanel from "./analytics/mixpanel";
 import LearningButton from "./components/learning-button";
 import CopyButton from "./components/copy-button";
+<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
 <<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
 import AnswerBodyTextArea from "./components/answer-body-text-area";
 =======
 import DownloadTableDataButton from "./components/download-table-data-button";
 >>>>>>> Implement DownloadTableDataButton component
+=======
+>>>>>>> Delete DownloadTableDataButton component
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -29,12 +32,15 @@ function init() {
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
   mountComponent(BotResetButton);
   mountComponent(LearningButton);
+<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
 <<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
   mountComponent(QuestionAnswerTagForm);
   mountComponent(AnswerBodyTextArea);
 =======
   mountComponent(DownloadTableDataButton);
 >>>>>>> Implement DownloadTableDataButton component
+=======
+>>>>>>> Delete DownloadTableDataButton component
   CopyButton.initialize();
 }
 

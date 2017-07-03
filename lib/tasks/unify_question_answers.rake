@@ -30,7 +30,7 @@ namespace :unify_question_answers do
   desc 'question_answersとqnswersをhas_oneリレーションにするためにレコードを増やす'
   task increase_answers: :environment do
     ActiveRecord::Base.transaction do
-      question_answers = QuestionAnswer.select(:id, :answer_id).all.to_a
+      question_answers = QuestionAnswer.all.to_a
 
       # このような形にする
       # {2=>
@@ -53,6 +53,7 @@ namespace :unify_question_answers do
       duplicated_question_answers.each do |answer_id, qas|
         # 最初のqaは無視
         qas.drop(1).each do |qa|
+          next if qa.answer.blank?
           qa.answer_id = recursive_duplicate_answer!(qa.answer)
           qa.save!
         end

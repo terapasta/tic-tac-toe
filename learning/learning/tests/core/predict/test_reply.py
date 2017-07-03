@@ -11,12 +11,12 @@
 #
 #     # @classmethod
 #     # def setUpClass(cls):
-#     #     _ = Bot(cls.BOT_ID, helper.learning_parameter())\
+#     #     _ = Bot(cls.BOT_ID, helper.learning_parameter(use_similarity_classification=False))\
 #     #         .learn(csv_file_path='learning/tests/fixtures/default.csv')
 #     #
 #     # def test_perform(self):
 #     #     X = ['Windowsにログイン出来ない']
-#     #     reply = Reply(self.BOT_ID, helper.learning_parameter())
+#     #     reply = Reply(self.BOT_ID, helper.learning_parameter(use_similarity_classification=False))
 #     #     reply_result = reply.perform(X)
 #     #
 #     #     # answer_idにいずれかのidがセットされていること

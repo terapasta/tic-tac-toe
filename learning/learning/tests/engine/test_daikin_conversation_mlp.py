@@ -16,6 +16,7 @@
 #     threshold = 0.5
 #     learning_parameter = helper.learning_parameter(
 #         algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK,
+#         use_similarity_classification=False,
 #         params_for_algorithm={'activation': 'identity'}
 #     )
 #

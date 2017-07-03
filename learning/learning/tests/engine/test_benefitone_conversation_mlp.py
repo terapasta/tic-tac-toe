@@ -10,7 +10,7 @@ from learning.tests import helper
 class BenefitoneConversationMLPTestCase(TestCase):
     bot_id = 11
     threshold = 0.5
-    learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK)
+    learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK, use_similarity_classification=False)
 
     @classmethod
     def setUpClass(cls):

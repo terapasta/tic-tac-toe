@@ -1,4 +1,32 @@
 namespace :unify_question_answers do
+  def recursive_duplicate_answer!(answer)
+    # 旧answerをメモして、同じ内容のanswerを作成
+    old_answer = answer
+    answer = Answer.create!(answer.attributes.except('id'))
+
+    # AnswerFileを複製する
+    old_answer.answer_files.each do |answer_file|
+      AnswerFile.create!(answer_id: answer.id, remote_file_url: answer_file.file_url)
+    end
+
+    # DecisionBranchをそれぞれ複製する
+    old_answer.decision_branches.each do |decision_branch|
+      copy_decision_branch = decision_branch.dup
+      copy_decision_branch.answer_id = answer.id
+      copy_decision_branch.save!
+
+      # next_answerを複製する
+      if copy_decision_branch.next_answer.present?
+        # ツリー構造なので再帰して複製
+        copy_decision_branch.next_answer_id = recursive_duplicate_answer!(copy_decision_branch.next_answer)
+        copy_decision_branch.save!
+      end
+    end
+
+    # 親QuestionAnswerかDecisionBranchのanswer_idを更新するために返す
+    answer.id
+  end
+
   desc 'question_answersとqnswersをhas_oneリレーションにするためにレコードを増やす'
   task increase_answers: :environment do
     ActiveRecord::Base.transaction do
@@ -25,25 +53,8 @@ namespace :unify_question_answers do
       duplicated_question_answers.each do |answer_id, qas|
         # 最初のqaは無視
         qas.drop(1).each do |qa|
-          # 旧answerをメモして、同じ内容のanswerを作成
-          old_answer = qa.answer
-          answer = Answer.create!(qa.answer.attributes.except('id'))
-
-          # アソシエーションを旧answerから引き継ぐ
-          %w(
-            answer_files
-            decision_branches
-            training_messages
-            question_answers
-          ).each do |resources|
-            old_answer.send(resources).each do |resource|
-              resource.update!(answer_id: answer.id)
-            end
-          end
-          # 親選択肢も新しいanswerに紐付ける
-          if old_answer.parent_decision_branch.present?
-            old_answer&.parent_decision_branch.update!(next_answer_id: answer.id)
-          end
+          qa.answer_id = recursive_duplicate_answer!(qa.answer)
+          qa.save!
         end
       end
     end

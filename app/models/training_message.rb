@@ -1,5 +1,4 @@
 class TrainingMessage < ActiveRecord::Base
-  include ContextHoldable
   include HasManySentenceSynonyms
 
   # acts_as_taggable_on :labels
@@ -15,7 +14,6 @@ class TrainingMessage < ActiveRecord::Base
   accepts_nested_attributes_for :question_answer
 
   enum speaker: { bot: 'bot', guest: 'guest' }
-  enum context: ContextHoldable::CONTEXTS
 
   validates :body, length: { maximum: 10000 }, presence: true
 

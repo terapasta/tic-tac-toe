@@ -19,10 +19,7 @@ if Rails.env.production? || Rails.env.staging?
 elsif Rails.env.development?
   CarrierWave.configure do |config|
     config.storage = :file
-
-    Rails.application.secrets.asset_host.tap do |asset_host|
-      config.asset_host = asset_host
-    end
+    config.asset_host = 'http://localhost:3000'
   end
 else
   CarrierWave.configure do |config|

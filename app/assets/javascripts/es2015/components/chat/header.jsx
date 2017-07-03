@@ -3,6 +3,7 @@ import values from "lodash/values";
 
 import { LearningStatus } from "./constants";
 import * as LearningAPI from "../../api/bot-learning";
+import Tooltip from "../tooltip";
 
 const POLLING_INTERVAL = 1000 * 2;
 
@@ -62,10 +63,13 @@ class ChatHeader extends Component {
             </span>
           )}
           {isManager && (
-            <a href={showPath} className="chat-header__button btn btn-default">
-              <i className="material-icons">refresh</i>
-              再読込
-            </a>
+            <span>
+              <a href={showPath} className="chat-header__button btn btn-default">
+                <i className="material-icons">refresh</i>
+                再読込
+              </a>
+              <Tooltip content="Q&A、同義語の登録・更新の際は再読込が必要です" placement="left"/>
+            </span>
           )}
         </div>
       </header>

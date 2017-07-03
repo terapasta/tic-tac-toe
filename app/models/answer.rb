@@ -1,6 +1,4 @@
 class Answer < ActiveRecord::Base
-  include ContextHoldable
-
   belongs_to :bot
   has_many :decision_branches, dependent: :destroy
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
@@ -14,9 +12,6 @@ class Answer < ActiveRecord::Base
   accepts_nested_attributes_for :answer_files, allow_destroy: true
 
   NO_CLASSIFIED_ID = 0
-
-  enum context: ContextHoldable::CONTEXTS
-  #enum transition_to: { contact: 'contact' }
 
   validates :body, presence: true, length: { maximum: 65535 }
   validates :bot_id, presence: true, if: :is_answer?

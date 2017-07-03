@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616093158) do
+ActiveRecord::Schema.define(version: 20170621015626) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535

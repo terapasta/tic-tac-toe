@@ -15,7 +15,7 @@ RSpec.shared_examples_for HasManySentenceSynonyms do |target_attr|
 
   let!(:sentence_synonyms) do
     create_list(:sentence_synonym, 3,
-      training_message_id: resource.id,
+      question_answer_id: resource.id,
       created_user_id: 1
     )
   end

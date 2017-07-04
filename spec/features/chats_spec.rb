@@ -137,7 +137,6 @@ RSpec.describe 'Chats', type: :features, js: true do
         scenario do
           expect {
             visit "/embed/#{bot.token}/chats/new"
-            expect(page).to have_content('ページが表示できません')
           }.to_not change(Chat, :count)
         end
       end
@@ -151,7 +150,6 @@ RSpec.describe 'Chats', type: :features, js: true do
       scenario do
         expect {
           visit "/embed/#{bot.token}/chats/new"
-          expect(page).to have_content('ページが表示できません')
         }.to_not change(Chat, :count)
       end
     end
@@ -195,7 +193,6 @@ RSpec.describe 'Chats', type: :features, js: true do
           scenario do
             expect {
               visit "/embed/#{bot.token}/chats/new"
-              expect(page).to have_content('ページが表示できません')
             }.to_not change(Chat, :count)
           end
         end
@@ -205,7 +202,6 @@ RSpec.describe 'Chats', type: :features, js: true do
         scenario do
           expect {
             visit "/embed/#{bot.token}/chats/new"
-            expect(page).to have_content('ページが表示できません')
           }.to_not change(Chat, :count)
         end
       end

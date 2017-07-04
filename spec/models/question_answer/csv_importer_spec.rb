@@ -49,13 +49,13 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(succeeded).to be_truthy
         end
 
-        it '2件のQuestionAnserが登録されること' do
+        it '2件のQuestionAnserが登録されていること' do
           expect(QuestionAnswer.count).to eq 2
         end
-        it '4件のAnserが登録されること' do
+        it '4件のAnserが登録されていること' do
           expect(Answer.count).to eq 4
         end
-        it '2件のDecisionBranchが登録されること' do
+        it '2件のDecisionBranchが登録されていること' do
           expect(DecisionBranch.count).to eq 2
         end
       end

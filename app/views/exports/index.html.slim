@@ -10,3 +10,24 @@
 
     p.help-block ※ファイルはCSV形式でエクスポートされます
     p.help-block ※Excelで開きたい場合はShift_JISでエクスポートしてください
+
+    div style="padding:24px;"
+      h4
+        = material_icon 'notifications', class: 'text-success'
+        = space
+        |エクスポートCSVファイルに質問idが追加されるようになりました
+
+      p 旧CSVフォーマット
+      pre
+        |
+          "好きな食べ物は？","あっさりしているものが好きですね！"
+          "趣味はなんですか？","最近ジョギングを始めました。"
+
+      p 新CSVフォーマット
+      pre
+        |
+          <span class="text-danger">40</span>,"好きな食べ物は？","あっさりしているものが好きですね！"
+          <span class="text-danger">41</span>,"趣味はなんですか？","最近ジョギングを始めました。"
+
+      p
+        |このフォーマットを利用して質問や回答のテキストを書き換えると、そのままインポートに使用できます。

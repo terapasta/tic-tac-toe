@@ -7,7 +7,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
   end
 
   describe '#import' do
-    let(:bot) { create(:bot) }
+    let(:bot) { create(:bot, id: 1) }
 
     subject do
       importer.import
@@ -27,14 +27,14 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(succeeded).to be_truthy
         end
 
-        it '2件のQuestionAnserが登録されること' do
+        it 'QuestionAnserが登録されること' do
           expect(bot.question_answers.count).to eq 2
         end
-        it '4件のAnserが登録されること' do
-          expect(bot.answers.count).to eq 4
+        it 'Answerが登録されること' do
+          expect(bot.answers.count).to eq 6
         end
-        it '2件のDecisionBranchが登録されること' do
-          expect(bot.decision_branches.count).to eq 2
+        it 'DecisionBranchが登録されること' do
+          expect(bot.decision_branches.count).to eq 4
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
       end
 
       context '違うボットがid=1のQuestionAnswerを登録済の場合' do
-        let(:bot2) { create(:bot) }
+        let!(:bot2) { create(:bot, id: 2) }
         let!(:question_answer) do
           create(:question_answer, id: 1, bot_id: bot2.id)
         end
@@ -72,16 +72,15 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(succeeded).to be_truthy
         end
 
-        it '3件のQuestionAnserが登録されていること' do
-          expect(bot.question_answers.count).to eq 2
+        it 'QuestionAnserが登録されていること' do
+          expect(bot.question_answers.count).to eq 5
           expect(bot2.question_answers.count).to eq 1
         end
-        it '4件のAnserが登録されていること' do
-          expect(bot.answers.count).to eq 4
+        it 'Answerが登録されていること' do
+          expect(bot.answers.count).to eq 9
         end
-        it '2件のDecisionBranchが登録されていること' do
-          expect(bot.decision_branches.count).to eq 2
-        end
+        it 'DecisionBranchが登録されていること' do
+          expect(bot.decision_branches.count).to eq 4
       end
     end
 

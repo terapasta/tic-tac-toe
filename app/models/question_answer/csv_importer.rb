@@ -24,10 +24,12 @@ class QuestionAnswer::CsvImporter
         a = sjis_safe(row[2])
         fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || q.blank?
 
-        # 他のbotのquestion_answerに既にidが登録されている場合、buildする
+        # 他のbotのquestion_answerに既にidが登録されている場合、idを使えない
+        # HACK: 混沌
         test_question_answer = QuestionAnswer.find_by(id: id)
         if test_question_answer.present? and test_question_answer.bot_id != @bot.id
-          question_answer = @bot.question_answers.build
+          question_answer = @bot.question_answers.find_by(id: id)
+          question_answer ||= @bot.question_answers.build
         end
         question_answer ||= @bot.question_answers.find_or_initialize_by(id: id)
         question_answer.tap do |qa|

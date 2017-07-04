@@ -3,36 +3,7 @@
     h4 インポート
 
   .panel-body
-    h4
-      = material_icon 'error_outline', class: 'text-warning'
-      = space
-      |現在学習データインポート機能は移行中のため停止中です。
-      |ご迷惑おかけして申し訳ございません。
+    = render 'form'
 
-    div style="padding:24px;"
-      h4
-        = material_icon 'notifications', class: 'text-success'
-        = space
-        |新しいインポート機能は、質問idが追加されます
-
-      p 旧CSVフォーマット
-      pre
-        |
-          "好きな食べ物は？","あっさりしているものが好きですね！"
-          "趣味はなんですか？","最近ジョギングを始めました。"
-
-      p 新CSVフォーマット
-      pre
-        |
-          <span class="text-danger">40</span>,"好きな食べ物は？","あっさりしているものが好きですね！"
-          <span class="text-danger">41</span>,"趣味はなんですか？","最近ジョギングを始めました。"
-          ,"新しい質問","新しい回答"
-
-      p
-        |これにより質問や回答を更新がより安全に行えるようになります。
-        br
-        |また、id欄を空にすることで新しい質問と回答を追加することができます。
-
-    /= render 'form'
-    /- if @error_row.present?
+    - if @error_row.present?
       p.text-danger #{ @error_row }行目でエラーが発生しました

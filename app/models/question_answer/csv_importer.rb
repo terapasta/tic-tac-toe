@@ -19,18 +19,19 @@ class QuestionAnswer::CsvImporter
     ActiveRecord::Base.transaction do
       CSV.new(f).each_with_index do |row, index|
         @current_row = index + 1
-        q = sjis_safe(row[0])
-        a = sjis_safe(row[1])
+        id = sjis_safe(row[0])
+        q = sjis_safe(row[1])
+        a = sjis_safe(row[2])
         fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || q.blank?
 
-        @current_answer = @bot.answers.find_or_create_by!(body: a)
-
-        question_answer = @bot.question_answers.find_or_initialize_by(question: q).tap do |qa|
-          qa.answer = @current_answer
+        question_answer = @bot.question_answers.find_or_initialize_by(id: id).tap do |qa|
+          qa.question = q
+          qa.answer ||= qa.build_answer(bot_id: @bot.id)
+          qa.answer.body = a
           qa.save!
         end
 
-        create_underlayer_records(row)
+        create_underlayer_records(row, question_answer.answer)
       end
     end
     @succeeded = true
@@ -39,17 +40,17 @@ class QuestionAnswer::CsvImporter
     Rails.logger.debug(e.backtrace.join("\n"))
   end
 
-  def create_underlayer_records(row)
-    return if row.compact.count <= 2
-    row[2..-1].compact.each_slice(2) do |decision_branch_body, answer_body|
+  def create_underlayer_records(row, answer)
+    return if row.compact.count <= 3
+    row[3..-1].compact.each_slice(2) do |decision_branch_body, answer_body|
       d = sjis_safe(decision_branch_body)
       a = sjis_safe(answer_body)
 
-      decision_branch = @current_answer.decision_branches.find_or_initialize_by(body: d, bot_id: @bot.id)
+      decision_branch = answer.decision_branches.find_or_initialize_by(body: d, bot_id: @bot.id)
 
       if a.present?
-        @current_answer = @bot.answers.find_or_initialize_by(body: a, bot_id: @bot.id)
-        decision_branch.next_answer = @current_answer
+        decision_branch.next_answer ||= decision_branch.build_next_answer(bot_id: @bot.id)
+        decision_branch.next_answer.body = a
       end
 
       decision_branch.save!

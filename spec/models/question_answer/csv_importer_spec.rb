@@ -28,13 +28,13 @@ RSpec.describe QuestionAnswer::CsvImporter do
         end
 
         it '2件のQuestionAnserが登録されること' do
-          expect(QuestionAnswer.count).to eq 2
+          expect(bot.question_answers.count).to eq 2
         end
         it '4件のAnserが登録されること' do
-          expect(Answer.count).to eq 4
+          expect(bot.answers.count).to eq 4
         end
         it '2件のDecisionBranchが登録されること' do
-          expect(DecisionBranch.count).to eq 2
+          expect(bot.decision_branches.count).to eq 2
         end
       end
 
@@ -50,13 +50,13 @@ RSpec.describe QuestionAnswer::CsvImporter do
         end
 
         it '2件のQuestionAnserが登録されていること' do
-          expect(QuestionAnswer.count).to eq 2
+          expect(bot.question_answers.count).to eq 2
         end
         it '4件のAnserが登録されていること' do
-          expect(Answer.count).to eq 4
+          expect(bot.answers.count).to eq 4
         end
         it '2件のDecisionBranchが登録されていること' do
-          expect(DecisionBranch.count).to eq 2
+          expect(bot.decision_branches.count).to eq 2
         end
       end
 
@@ -77,10 +77,10 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(bot2.question_answers.count).to eq 1
         end
         it '4件のAnserが登録されていること' do
-          expect(Answer.count).to eq 4
+          expect(bot.answers.count).to eq 4
         end
         it '2件のDecisionBranchが登録されていること' do
-          expect(DecisionBranch.count).to eq 2
+          expect(bot.decision_branches.count).to eq 2
         end
       end
     end

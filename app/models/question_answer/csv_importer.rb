@@ -59,6 +59,7 @@ class QuestionAnswer::CsvImporter
       if a.present?
         decision_branch.next_answer ||= decision_branch.build_next_answer(bot_id: @bot.id)
         decision_branch.next_answer.body = a
+        decision_branch.next_answer.save!
       end
 
       decision_branch.save!

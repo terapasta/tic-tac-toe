@@ -8961,7 +8961,7 @@ var Tooltip = function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       // HACK: jquery依存をやめたい
-      $('[data-toggle="popover"]').popover();
+      $(this.refs.tooltip).popover();
     }
   }, {
     key: "render",
@@ -8974,6 +8974,7 @@ var Tooltip = function (_Component) {
       return _react2.default.createElement(
         "a",
         { href: "#",
+          ref: "tooltip",
           "data-toggle": "popover",
           "data-placement": placement,
           "data-container": "body",

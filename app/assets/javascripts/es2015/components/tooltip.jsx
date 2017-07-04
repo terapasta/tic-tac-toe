@@ -3,13 +3,14 @@ import React, { Component } from "react";
 export default class Tooltip extends Component {
   componentDidMount() {
     // HACK: jquery依存をやめたい
-    $('[data-toggle="popover"]').popover()
+    $(this.refs.tooltip).popover()
   }
   render() {
     const { content, placement } = this.props;
 
     return (
       <a href="#"
+        ref="tooltip"
         data-toggle="popover"
         data-placement={placement}
         data-container="body"

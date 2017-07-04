@@ -10,14 +10,12 @@ h1 ボットテスト結果
     = space
     span 結果CSVファイルを
     = space 2
-    = form_tag '#', class: 'd-inline-block' do
-      / FIXME
-      = hidden_field_tag :file_data, [].to_json
+    = form_tag bot_chat_tests_path({format: :csv, encode: "Shift_JIS"}), class: 'd-inline-block' do
+      = hidden_field_tag :file_data, @bot_test_results.to_json
       = button_tag 'Shift_JISでダウンロード', class: 'btn btn-success'
     = space
-    = form_tag '#', class: 'd-inline-block' do
-      / FIXME
-      = hidden_field_tag :file_data, [].to_json
+    = form_tag bot_chat_tests_path({format: :csv, encode: "UTF-8"}), class: 'd-inline-block' do
+      = hidden_field_tag :file_data, @bot_test_results.to_json
       = button_tag 'UTF-8でダウンロード', class: 'btn btn-success'
 
 table.table.table-striped
@@ -26,9 +24,8 @@ table.table.table-striped
       th style="width:200px" テスト質問
       th 得られた回答
 
-  tbody#chat-test-results
-    - @chat.messages.each_with_index do |message, i|
-      - next if i.odd?
-      tr
-        td = message.body
-        td = @chat.messages[i + 1].body
+      tbody#chat-test-results
+        - @bot_test_results.each do |bot_test_result|
+          tr
+            td = bot_test_result[0]
+            td = bot_test_result[1]

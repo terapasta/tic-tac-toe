@@ -62,5 +62,16 @@ class Message < ActiveRecord::Base
     when 'guest'
       messages[index + 1]
     end
+
+  def self.build_for_bot_test(chat)
+    bot_test_results = []
+    chat.messages.each_with_index do |message, i|
+      next if i.odd?
+        messages = []
+        messages.push(message.body)
+        messages.push(chat.messages[i + 1].body)
+        bot_test_results.push(messages)
+    end
+    bot_test_results
   end
 end

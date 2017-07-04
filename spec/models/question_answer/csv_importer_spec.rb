@@ -37,6 +37,30 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(DecisionBranch.count).to eq 2
         end
       end
+
+      context 'id=1のQuestionAnswerが登録済の場合' do
+        let!(:question_answer) do
+          create(:question_answer, id: 1, bot_id: bot.id)
+        end
+
+        let!(:succeeded) { subject.succeeded }
+
+        it '正常終了すること' do
+          expect(succeeded).to be_truthy
+        end
+
+        it '2件のQuestionAnserが登録されること' do
+          expect(QuestionAnswer.count).to eq 2
+        end
+        it '4件のAnserが登録されること' do
+          expect(Answer.count).to eq 4
+        end
+        it '2件のDecisionBranchが登録されること' do
+          expect(DecisionBranch.count).to eq 2
+        end
+      end
     end
+
+
   end
 end

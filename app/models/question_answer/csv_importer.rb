@@ -12,6 +12,7 @@ class QuestionAnswer::CsvImporter
     @current_row = nil
     @current_answer = nil
     @succeeded = false
+    @csv_data = parse
   end
 
   def import
@@ -64,6 +65,38 @@ class QuestionAnswer::CsvImporter
 
       decision_branch.save!
     end
+  end
+
+  def parse
+    f = open(@file.path, @mode_enc, undef: :replace)
+    injected_data = CSV.new(f).inject({}) { |out, row|
+      data = detect_or_initialize_by_row(row)
+      decision_branches = out[data[:key]].try(:fetch, :decision_branches) || []
+      decision_branches.push(data[:decision_branch]) if data[:decision_branch].present?
+      out[data[:key]] = {
+        id: data[:id],
+        question: data[:question],
+        answer: data[:answer],
+        decision_branches: decision_branches,
+      }
+      out
+    }
+    injected_data.keys.map { |key| injected_data[key] }
+  end
+
+  def detect_or_initialize_by_row(row)
+    id = row[0]
+    q = row[1]
+    a = row[2]
+    bot_had = @bot.question_answers.detect {|qa| qa.id == id}.present?
+
+    {
+      key: bot_had ? id : "#{q}-#{a}",
+      id: bot_had ? id : nil,
+      question: q,
+      answer: a,
+      decision_branch: row[3].present? ? { body: row[3], answer: row[4] } : nil,
+    }
   end
 
   private

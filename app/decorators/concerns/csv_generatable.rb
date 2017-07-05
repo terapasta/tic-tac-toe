@@ -2,7 +2,7 @@ module CsvGeneratable
   extend ActiveSupport::Concern
 
   def to_csv(encoding: :utf8, &block)
-    csv = CSV.generate(force_quotes: true, row_sep: "\r\n") { |csv|
+    csv = CSV.generate(force_quotes: false, row_sep: "\r\n") { |csv|
       object.find_each do |item|
         block.call(csv, item)
       end

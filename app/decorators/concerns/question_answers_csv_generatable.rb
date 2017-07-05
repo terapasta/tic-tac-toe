@@ -4,7 +4,7 @@ module QuestionAnswersCsvGeneratable
   include CsvGeneratable
 
   def to_csv(encoding: :utf8)
-    super do |csv, item|
+    super(encoding: encoding.to_sym) do |csv, item|
       recursive_put_rows_to_csv(csv, [item.id, item.question], item.answer)
     end
   end

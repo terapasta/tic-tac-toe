@@ -4,12 +4,26 @@
 
   .panel-body
     p
-      = link_to 'Shift_JISでエクスポート', bot_export_path(@bot, :sjis), class: 'btn btn-default', data: { event_name: 'Export learning data as Shift_JIS', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), mixpanel_event_data('Export learning data as Shift_JIS', @bot).merge(class: 'btn btn-default', method: :post)
       = space
-      = link_to 'UTF-8でエクスポート', bot_export_path(@bot, :utf8), class: 'btn btn-default', data: { event_name: 'Export learninig data as UTF-8', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), mixpanel_event_data('Export learninig data as UTF-8', @bot).merge(class: 'btn btn-default', method: :post)
 
     p.help-block ※ファイルはCSV形式でエクスポートされます
     p.help-block ※Excelで開きたい場合はShift_JISでエクスポートしてください
+
+    - if @exports.any?
+      div style="padding:24px 24px 0 24px;"
+        - @exports.first.tap do |export|
+          h5 最新のエクスポート
+          table.table
+            thead: tr
+              th ダウンロードURL
+              th エンコーディング
+              th 作成日時
+            tbody: tr
+              td= link_to export.file_url, export.file_url
+              td= export.encoding
+              td= l export.created_at
 
     div style="padding:24px;"
       h4
@@ -31,3 +45,19 @@
 
       p
         |このフォーマットを利用して質問や回答のテキストを書き換えると、そのままインポートに使用できます。
+
+- if @exports.count > 1
+  h5 過去のエクスポート
+  table.table.table-striped
+    thead: tr
+      th ダウンロードURL
+      th エンコーディング
+      th 作成日時
+    tbody
+      - @exports.each do |export|
+        tr
+          td= link_to export.file_url, export.file_url
+          td= export.encoding
+          td= l export.created_at
+
+  = paginate @exports

@@ -52,7 +52,7 @@ RSpec.describe QuestionAnswersController, type: :controller do
           end
 
           it { is_expected.to_not change(Answer, :count) }
-          it { is_expected.to_not change(AnswerFile, :count) }
+          it { is_expected.to change(AnswerFile, :count) }
         end
 
         context 'when changed answer body' do

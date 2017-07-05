@@ -19,7 +19,7 @@ class QuestionAnswer::CsvImporter
     ActiveRecord::Base.transaction do
       CSV.new(f).each_with_index do |row, index|
         @current_row = index + 1
-        id = sjis_safe(row[0])
+        id = sjis_safe(row[0]).to_i
         q = sjis_safe(row[1])
         a = sjis_safe(row[2])
         fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || q.blank?

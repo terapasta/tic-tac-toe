@@ -10,7 +10,8 @@ class ChatsController < ApplicationController
 
   def new
     new_action
-    render :show
+    render :show and return if @error.blank?
+    redirect_to root_path and return
   end
 
   def show_old
@@ -53,9 +54,13 @@ class ChatsController < ApplicationController
     def new_action
       iframe_support @bot
       @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
-        authorize chat
-        chat.is_staff = true if current_user.try(:staff?)
-        chat.is_normal = true if current_user.try(:normal?)
+        begin
+          authorize chat
+          chat.is_staff = true if current_user.try(:staff?)
+          chat.is_normal = true if current_user.try(:normal?)
+        rescue => @error
+          logger.error @error.message
+        end
       end
     end
 end

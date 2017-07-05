@@ -4,8 +4,7 @@ class QuestionAnswerPolicy < ApplicationPolicy
   end
 
   def show?
-    return true if user.staff?
-    user.normal? && record.bot.user == user
+    staff_or_owner?
   end
 
   def new?
@@ -13,7 +12,7 @@ class QuestionAnswerPolicy < ApplicationPolicy
   end
 
   def create?
-    user.normal? || user.staff?
+    staff_or_owner?
   end
 
   def edit?
@@ -21,18 +20,14 @@ class QuestionAnswerPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal? || user.staff?
+    staff_or_owner?
   end
 
   def destroy?
-    user.normal? || user.staff?
+    staff_or_owner?
   end
 
   def autocomplete_answer_body?
-    user.normal? || user.staff?
-  end
-
-  def headless?
     user.normal? || user.staff?
   end
 
@@ -75,4 +70,10 @@ class QuestionAnswerPolicy < ApplicationPolicy
       ]
     end
   end
+
+  private
+    def staff_or_owner?
+      return true if user.staff?
+      user.normal? && record.bot.user == user
+    end
 end

@@ -226,13 +226,15 @@ ActiveRecord::Schema.define(version: 20170627101018) do
   add_index "scores", ["bot_id"], name: "index_scores_on_bot_id", using: :btree
 
   create_table "sentence_synonyms", force: :cascade do |t|
-    t.integer  "created_user_id", limit: 4,     null: false
-    t.text     "body",            limit: 65535, null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "created_user_id",    limit: 4,     null: false
+    t.text     "body",               limit: 65535, null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "question_answer_id", limit: 4
   end
 
   add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
+  add_index "sentence_synonyms", ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.integer  "feature",    limit: 4, null: false

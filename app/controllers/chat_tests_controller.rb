@@ -19,7 +19,7 @@ class ChatTestsController < ApplicationController
           @chat.save
           option = params[:commit].include?('UTF-8') ? {} : { encoding: "Shift_JIS:UTF-8" }
           CSV.foreach(params[:file].path, option) do |csv_data|
-            create_message(csv_data)
+            create_message(csv_data[0])
           end
           raise ActiveRecord::Rollback
         end
@@ -45,8 +45,8 @@ class ChatTestsController < ApplicationController
       @bot = bots.find params[:bot_id]
     end
 
-    def create_message(string)
-      message = @chat.messages.create!(body: string[0]) {|m|
+    def create_message(body)
+      message = @chat.messages.create!(body: body) { |m|
         m.speaker = 'guest'
         m.user_agent = request.env['HTTP_USER_AGENT']
       }

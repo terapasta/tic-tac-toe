@@ -1,8 +1,5 @@
-require 'elasticsearch/model'
-
 class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
-  include Elasticsearch::Model
 
   paginates_per 100
   acts_as_taggable
@@ -58,37 +55,6 @@ class QuestionAnswer < ActiveRecord::Base
       )
     end
   }
-
-  settings index: { number_of_shards: 1 } do
-    mappings dynamic: 'false' do
-      indexes :question, term_vector: :yes, analyzer: :kuromoji, type: :text, similarity: :BM25
-    end
-  end
-
-  def more_like_this
-    self.class.__elasticsearch__.search({
-      query: {
-        more_like_this: {
-          fields: %w(question),
-          ids: [id],
-          min_doc_freq: 0,
-          min_term_freq: 0
-        }
-      }
-    })
-  end
-
-  after_commit on: [:create] do
-    __elasticsearch__.index_document
-  end
-
-  after_commit on: [:update] do
-    __elasticsearch__.update_document
-  end
-
-  after_commit on: [:destroy] do
-    __elasticsearch__.delete_document
-  end
 
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)

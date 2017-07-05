@@ -111,7 +111,6 @@ gem 'asset_sync'
 gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
-gem 'elasticsearch-model'
 
 group :development, :test do
 

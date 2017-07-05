@@ -126,8 +126,31 @@ RSpec.describe QuestionAnswer::CsvImporter do
 
     end
 
-    context 'SJISエンコードのid列が文字列であるCSVをインポートする場合' do
-      let(:csv_path) { 'sjis_invalid_question_answers2.csv' }
+    context 'SJISエンコードのアンサーが空であるデータを含むCSVをインポートする場合' do
+      let(:csv_path) { 'sjis_invalid_question_answers.csv' }
+      let(:import_options) do
+        { is_utf8: false }
+      end
+      let!(:succeeded) { subject.succeeded }
+
+      it '正常終了しないこと' do
+        expect(succeeded).to be_falsey
+      end
+
+      it 'QuestionAnserが登録されないこと' do
+        expect(bot.question_answers.count).to eq 0
+      end
+      it 'Answerが登録されないこと' do
+        expect(bot.answers.count).to eq 0
+      end
+      it 'DecisionBranchが登録されないこと' do
+        expect(bot.decision_branches.count).to eq 0
+      end
+
+    end
+
+    context 'SJISエンコードのid列が文字列であるデータを含むCSVをインポートする場合' do
+      let(:csv_path) { 'sjis_invalid-2_question_answers.csv' }
       let(:import_options) do
         { is_utf8: false }
       end

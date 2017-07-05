@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621015626) do
+ActiveRecord::Schema.define(version: 20170627101018) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(version: 20170621015626) do
     t.boolean  "include_failed_data",                         default: false, null: false
     t.boolean  "include_tag_vector",                          default: false, null: false
     t.float    "classify_threshold",            limit: 24,    default: 0.5,   null: false
-    t.boolean  "use_similarity_classification",               default: false, null: false
+    t.boolean  "use_similarity_classification",               default: true,  null: false
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
   end

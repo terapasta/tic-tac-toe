@@ -11,7 +11,7 @@ class PtnaConversationMLPTestCase(TestCase):
     csv_file_path = './fixtures/learning_training_messages/ptna.csv'
     bot_id = 8  # bot_id = 8 はPTNA
     threshold = 0.5
-    learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK)
+    learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK, use_similarity_classification=False)
 
     @classmethod
     def setUpClass(cls):
@@ -21,7 +21,7 @@ class PtnaConversationMLPTestCase(TestCase):
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '教室の一覧に性別が表示されていますので、そちらをご参照ください。'
@@ -31,7 +31,7 @@ class PtnaConversationMLPTestCase(TestCase):
 
     def test_hello(self):
         questions = ['こんにちは']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'こんにちは'
@@ -41,7 +41,7 @@ class PtnaConversationMLPTestCase(TestCase):
 
     def test_want_to_join(self):
         questions = ['入会したいのですが']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html'
@@ -58,7 +58,7 @@ class PtnaConversationMLPTestCase(TestCase):
         '''
         questions = ['おいしいラーメンが食べたいです']
         # questions = ['']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
 
         ok_(result.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
 
@@ -69,7 +69,7 @@ class PtnaConversationMLPTestCase(TestCase):
               ラベル0に分類されるか、probaがしきい値以下
         '''
         questions = ['']
-        result = Reply(self.bot_id, helper.learning_parameter()).perform(questions)
+        result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
 
         ok_(result.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
 

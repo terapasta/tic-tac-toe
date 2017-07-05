@@ -8,7 +8,7 @@ from learning.tests import helper
 
 
 class PtnaConversationTestCase(TestCase):
-    learning_parameter = helper.learning_parameter()
+    learning_parameter = helper.learning_parameter(use_similarity_classification=False)
 
     # TODO setUpClassに変更する(毎回学習処理が走ってしまうため)
     def setUp(self):
@@ -18,7 +18,7 @@ class PtnaConversationTestCase(TestCase):
         self.answers = helper.build_answers(self.csv_file_path)
 
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        _evaluator = Bot(self.bot_id, helper.learning_parameter()).learn(datasource_type='csv')
+        # _evaluator = Bot(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).learn(datasource_type='csv')
 
     def test_hope_female_teacher(self):
         questions = ['女の先生']

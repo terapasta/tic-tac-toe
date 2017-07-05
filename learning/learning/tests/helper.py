@@ -9,7 +9,7 @@ def learning_parameter(
         include_tag_vector=False,
         algorithm=LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
         params_for_algorithm=None,
-        use_similarity_classification=False
+        use_similarity_classification=True
     ):
     return LearningParameter({
         'include_failed_data': include_failed_data,

@@ -14,7 +14,7 @@
 #     csv_file_path = 'learning/tests/fixtures/test_daikin_conversation.csv'
 #     bot_id = 998  # テスト用のbot_id いずれの値でも動作する
 #     threshold = 0.5
-#     learning_parameter = helper.learning_parameter(params_for_algorithm={'C': 200})
+#     learning_parameter = helper.learning_parameter(params_for_algorithm={'C': 200}, use_similarity_classification=False)
 #
 #
 #     @classmethod

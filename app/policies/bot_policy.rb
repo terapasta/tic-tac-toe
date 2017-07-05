@@ -3,6 +3,10 @@ class BotPolicy < ApplicationPolicy
     user.normal? || user.staff?
   end
 
+  def admin_show?
+    user.staff?
+  end
+
   def show?
     update?
   end

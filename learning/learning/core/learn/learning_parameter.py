@@ -8,7 +8,7 @@ class LearningParameter:
     def __init__(self, attributes):
         self._include_failed_data = attributes['include_failed_data']  # TODO 使われていないパラメータなので削除したい
         self._include_tag_vector = attributes.get('include_tag_vector', False)
-        self._use_similarity_classification = attributes.get('use_similarity_classification', False)
+        self._use_similarity_classification = attributes.get('use_similarity_classification', True)
         self._classify_threshold = attributes.get('classify_threshold')
         self._algorithm = attributes.get('algorithm', self.ALGORITHM_LOGISTIC_REGRESSION)
         self._params_for_algorithm = attributes.get('params_for_algorithm', {})

@@ -56,7 +56,7 @@ module HasManySentenceSynonyms
     end
     if send("#{target_attr}_changed?")
       sentence_synonyms.each do |ss|
-        ss.training_message_id = nil
+        ss.question_answer_id = nil
       end
     end
   end

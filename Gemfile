@@ -111,6 +111,7 @@ gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
+gem 'rollbar'
 
 group :development, :test do
 

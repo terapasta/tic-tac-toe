@@ -56,11 +56,11 @@ class ChatsController < ApplicationController
       @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
         begin
           authorize chat
-          chat.is_staff = true if current_user.try(:staff?)
-          chat.is_normal = true if current_user.try(:normal?)
         rescue => @error
-          logger.error @error.message
+          return logger.error @error.message
         end
+        chat.is_staff = true if current_user.try(:staff?)
+        chat.is_normal = true if current_user.try(:normal?)
       end
     end
 end

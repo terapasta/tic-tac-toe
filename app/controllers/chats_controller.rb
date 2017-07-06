@@ -9,8 +9,8 @@ class ChatsController < ApplicationController
   end
 
   def new
-    new_action
-    render :show and return if @error.blank?
+    success = new_action
+    render :show and return if success
     redirect_to root_path and return
   end
 
@@ -56,11 +56,13 @@ class ChatsController < ApplicationController
       @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
         begin
           authorize chat
-        rescue => @error
-          return logger.error @error.message
+        rescue => e
+          logger.error e.message
+          return false
         end
         chat.is_staff = true if current_user.try(:staff?)
         chat.is_normal = true if current_user.try(:normal?)
+        return true
       end
     end
 end

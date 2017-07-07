@@ -18,24 +18,24 @@ html
     = render 'layouts/shared/js_vars/images'
     = render 'layouts/shared/js_vars/current_bot'
 
-body
-  - if Rails.env.production?
-    = render 'layouts/shared/analytics/google_analytics'
+  body
+    - if Rails.env.production?
+      = render 'layouts/shared/analytics/google_analytics'
 
-  - if chat_page?
-    = yield
-
-  - else
-    - if !content_for?(:hide_global_header)
-      = render 'layouts/shared/ui/header'
-
-
-    - if content_for?(:hide_sidebar)
-      .header-space
-      .kontainer= render "shared/flash"
+    - if chat_page?
       = yield
+
     - else
-      = render 'layouts/shared/ui/side_nav'
-      .container.container-main class=content_for(:additional_container_main_class)
-        = render "shared/flash"
+      - if !content_for?(:hide_global_header)
+        = render 'layouts/shared/ui/header'
+
+
+      - if content_for?(:hide_sidebar)
+        .header-space
+        .kontainer= render "shared/flash"
         = yield
+      - else
+        = render 'layouts/shared/ui/side_nav'
+        .container.container-main class=content_for(:additional_container_main_class)
+          = render "shared/flash"
+          = yield

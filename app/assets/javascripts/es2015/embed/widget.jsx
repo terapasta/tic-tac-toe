@@ -1,6 +1,9 @@
 import React, { Component, PropTypes, createElement } from "react";
 import styled from "styled-components";
 import classNames from "classnames";
+import get from "lodash/get";
+
+import * as PublicBotAPI from '../api/public_bot';
 
 import ArrowSVG from "./arrow-svg";
 import LogoSVG from "./logo-svg";
@@ -10,6 +13,9 @@ import {
   LeftWrapper,
   Header,
   Arrow,
+  Avatar,
+  DummyInput,
+  StatusLabel,
   Logo,
   IframeContainer,
   Iframe,
@@ -30,6 +36,16 @@ export default class Widget extends Component {
     };
   }
 
+  componentDidMount() {
+    const { token } = this.props;
+    PublicBotAPI.find(token, { origin: Origin }).then((res) => {
+      this.setState({
+        name: get(res, "data.bot.name"),
+        avatarURL: get(res, "data.bot.image.thumb.url"),
+      });
+    }).catch(console.error);
+  }
+
   render() {
     const {
       position,
@@ -40,6 +56,8 @@ export default class Widget extends Component {
       isActive,
       isLoadingIframe,
       isLoadedIframe,
+      name,
+      avatarURL,
     } = this.state;
 
     const activeClassName = classNames({
@@ -51,6 +69,13 @@ export default class Widget extends Component {
     const result = (
       <span>
         <Header onClick={this.onClickHeader.bind(this)}>
+          <Avatar alt={name} style={{ backgroundImage: `url(${avatarURL})` }} />
+          {!isActive && (
+            <DummyInput>ご質問にお答えします</DummyInput>
+          )}
+          {isActive && (
+            <StatusLabel>AIチャットボットがご対応します</StatusLabel>
+          )}
           <Arrow className={activeClassName}>
             <ArrowSVG />
           </Arrow>

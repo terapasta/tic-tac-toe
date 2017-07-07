@@ -92,6 +92,7 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     resources :messages, only: :create
     resources :question_answers
+    resources :public_bots, param: :token, only: [:show]
     resources :bots do
       resources :topic_tags, module: :bots
       resources :question_answers, module: :bots do

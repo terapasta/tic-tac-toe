@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   rescue_from StandardError, with: :handle_500 if Rails.env.production?
   before_action :inject_request_to_application_policy
   before_action :set_notification
+  before_action :set_environment_variable_for_rollbar
 
   include Pundit
 
@@ -43,5 +44,9 @@ class ApplicationController < ActionController::Base
 
     def current_page
       (params[:page].presence || 1).to_i
+    end
+
+    def set_environment_variable_for_rollbar
+      gon.rollbar_token_client = ENV['ROLLBAR_TOKEN_CLIENT']
     end
 end

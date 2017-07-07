@@ -57,11 +57,11 @@ class ChatsController < ApplicationController
         authorize chat
         chat.is_staff = true if current_user.try(:staff?)
         chat.is_normal = true if current_user.try(:normal?)
-        return true
       end
+      true
     rescue Pundit::NotAuthorizedError => e
       logger.error e.message
       logger.error e.backtrace.join('\n')
-      return false
+      false
     end
 end

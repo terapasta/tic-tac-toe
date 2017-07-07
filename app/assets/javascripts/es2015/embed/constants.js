@@ -1,5 +1,5 @@
-export const Width = 300;
-export const Height = 325;
+export const Width = 350;
+export const Height = 460;
 export const WidthMobileHidden = 37;
 export const Margin = 16;
 export const HeaderHeight = 30;

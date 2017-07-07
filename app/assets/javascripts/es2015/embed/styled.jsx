@@ -37,7 +37,12 @@ export const Wrapper = styled.div`
     width: ${WidthMobileHidden}px;
 
     &.active {
-      width: ${Width}px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -116,6 +121,11 @@ export const Iframe = styled.iframe`
   display: block;
   border: 0;
   height: ${Height - HeaderHeight}px;
+  width: 100%;
+
+  @media (max-width: ${MobileMaxWidth}px) {
+    height: 100%;
+  }
 `;
 
 export const Loading = styled.div`

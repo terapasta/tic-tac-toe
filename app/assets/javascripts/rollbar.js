@@ -1,6 +1,6 @@
 // Rollbarでクライアントサイドのエラーを検知する
 var _rollbarConfig = {
-    accessToken: gon.rollbar_token_client,
+    accessToken: window.rollbarTokenClient,
     captureUncaught: true,
     payload: {
         environment: "production"

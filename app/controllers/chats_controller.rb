@@ -54,15 +54,14 @@ class ChatsController < ApplicationController
     def new_action
       iframe_support @bot
       @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
-        begin
-          authorize chat
-        rescue => e
-          logger.error e.message
-          return false
-        end
+        authorize chat
         chat.is_staff = true if current_user.try(:staff?)
         chat.is_normal = true if current_user.try(:normal?)
         return true
       end
+    rescue Pundit::NotAuthorizedError => e
+      logger.error e.message
+      logger.error e.backtrace.join('\n')
+      return false
     end
 end

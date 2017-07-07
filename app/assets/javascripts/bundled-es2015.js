@@ -8965,6 +8965,10 @@ var Tree = function (_Component) {
       return _react2.default.createElement(
         "ol",
         { className: "tree" },
+        _react2.default.createElement(_addNode2.default, {
+          isAdding: isAddingAnswer,
+          onClick: onCreatingQuestion
+        }),
         questionsTree.map(function (questionNode, index) {
           return _react2.default.createElement(_questionNode2.default, {
             key: index,
@@ -8981,10 +8985,6 @@ var Tree = function (_Component) {
             onClickAnswer: onSelectItem,
             onClickDecisionBranch: onSelectItem
           });
-        }),
-        _react2.default.createElement(_addNode2.default, {
-          isAdding: isAddingAnswer,
-          onClick: onCreatingQuestion
         })
       );
     }

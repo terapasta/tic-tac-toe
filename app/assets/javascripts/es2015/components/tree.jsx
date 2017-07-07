@@ -46,6 +46,10 @@ export default class Tree extends Component {
 
     return (
       <ol className="tree">
+        <AddNode
+          isAdding={isAddingAnswer}
+          onClick={onCreatingQuestion}
+        />
         {questionsTree.map((questionNode, index) => {
           return <QuestionNode
             {...{
@@ -65,10 +69,6 @@ export default class Tree extends Component {
             }}
           />;
         })}
-        <AddNode
-          isAdding={isAddingAnswer}
-          onClick={onCreatingQuestion}
-        />
       </ol>
     );
   }

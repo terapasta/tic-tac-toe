@@ -54,7 +54,7 @@
       th エンコーディング
       th 作成日時
     tbody
-      - @exports.each do |export|
+      - @exports.drop(1).each do |export|
         tr
           td= link_to export.file_url, export.file_url
           td= export.encoding

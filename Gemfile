@@ -112,6 +112,7 @@ gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
 gem 'rollbar'
+gem 'gon'
 
 group :development, :test do
 

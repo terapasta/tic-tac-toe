@@ -1,0 +1,136 @@
+$chat-section-switch-container-width: 66px;
+$chat-section-switch-container-width-xs: 40px;
+$chat-section-switch-size: 36px;
+$chat-section-switch-size-xs: 32px;
+
+%base-chat-section {
+  position: relative;
+
+  &.active {
+    .chat-section__switch {
+      border-color: $blue;
+      color: $blue;
+    }
+    .chat-section__actions {
+      display: block;
+    }
+  }
+}
+
+.chat-section {
+  @extend %base-chat-section;
+
+  &--bordered {
+    @extend %base-chat-section;
+    padding-top: 16px;
+    padding-left: $chat-section-switch-container-width;
+    border-bottom: 1px solid darken($gray-lighter, 10%);
+
+    &:first-child {
+      border-top: 1px solid darken($gray-lighter, 10%);
+    }
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    @include media-breakpoint-down(xs) {
+    // @media (max-width: $screen-xs-max) {
+      padding-left: $chat-section-switch-container-width-xs;
+    }
+
+    .chat-section__switch-container {
+      display: block;
+    }
+  }
+
+  &__switch-container {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $chat-section-switch-container-width;
+
+    @include media-breakpoint-down(xs) {
+    // @media (max-width: $screen-xs-max) {
+      width: $chat-section-switch-container-width-xs;
+    }
+  }
+
+  &__switch {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    width: $chat-section-switch-size;
+    height: $chat-section-switch-size;
+    border: 1px solid darken($gray-lighter, 5%);
+    border-radius: 50%;
+    text-align: center;
+    color: $gray-light;
+
+    &:hover {
+      color: darken($gray-light, 15%);
+      border-color: darken($gray-lighter, 15%);
+
+      .chat-section__tooltip {
+        display: block;
+      }
+    }
+
+    &:focus {
+      color: $gray-light;
+    }
+
+    .material-icons {
+      position: relative;
+      top: -1px;
+      line-height: $chat-section-switch-size;
+    }
+
+    @include media-breakpoint-down(xs) {
+    // @media (max-width: $screen-xs-max) {
+      width: $chat-section-switch-size-xs;
+      height: $chat-section-switch-size-xs;
+
+      .material-icons {
+        line-height: $chat-section-switch-size-xs;
+        font-size: 20px;
+      }
+    }
+  }
+
+  &__tooltip {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 130%;
+    width: 260px;
+    padding: 10px;
+    transform: translateY(-50%);
+    background-color: $white;
+    box-shadow: 0 2px 4px rgba(0,0,0,.5);
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: left;
+    color: $black;
+  }
+
+  &__actions {
+    display: none;
+    padding: 8px 0 16px;
+    text-align: center;
+  }
+
+  &__disable-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 101;
+    background-color: rgba($white, .65);
+  }
+}

@@ -1,0 +1,12 @@
+dl {
+  dt {
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  dd {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

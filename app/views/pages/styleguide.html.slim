@@ -103,13 +103,16 @@ html
               = material_icon 'book', class: 'text-gray-light mi-sm'
               = space
               span 辞書
-          li class="nav-item"
-            a class="nav-link" href="#"
-              = material_icon 'done_all', class: 'text-gray-light mi-sm'
-              = space
-              span ボットテスト
-              = space
-              span.badge.badge-pill.badge-warning 11
+          li class="nav-item dropdown"
+            a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+              span その他
+            .dropdown-menu.dropdown-menu-right
+              a class="dropdown-item" href="#"
+                = material_icon 'done_all', class: 'text-gray-light mi-sm'
+                = space
+                span ボットテスト
+                = space
+                span.badge.badge-warning.badge-pill 11
 
     .pt-4
       .container
@@ -136,14 +139,14 @@ html
       .container
         form.form-inline.mb-4.d-flex.justify-content-between
           div
-            select.form-control
+            select.form-control.form-control-sm
               option -- タグを選択 --
             = space
-            input.form-control type="search" placeholder="キーワード"
+            input.form-control.form-control-sm type="search" placeholder="キーワード"
             = space
-            button.btn.btn-secondary type="submit" 検索
+            button.btn.btn-primary.btn-sm type="submit" 検索
           div
-            select.form-control
+            select.form-control.form-control-sm
               option 作成日の新しい順
 
         nav.d-flex.justify-content-between
@@ -172,6 +175,64 @@ html
                   = material_icon 'edit', class: 'mi-xs'
                   = space
                   span 編集
+
+        - 5.times do
+          .card.mb-4
+            .card-block.d-flex.justify-content-between
+              dl.mr-2.mb-0
+                dt 回答
+                dd 回答文のサンプルです回答文のサンプルです回答文のサンプルです回答文のサンプルです回答文のサンプルです
+              dl.mb-0
+                dt 質問
+                dd 質問文のサンプルです質問文のサンプルです質問文のサンプルです質問文のサンプルです質問文のサンプルです
+            .card-footer.d-flex.justify-content-between
+              div.text-muted
+                span ID 12345
+                = space 10
+                span 作成日時 2017/07/09 23:32
+              div
+                = link_to '#', class: 'btn btn-secondary btn-sm' do
+                  = material_icon 'edit', class: 'mi-xs'
+                  = space
+                  span 編集
+                = space 2
+                = link_to '#', class: 'btn btn-danger btn-sm' do
+                  = material_icon 'delete', class: 'mi-xs'
+                  = space
+                  span 削除
+
+        - 5.times do
+          .card.mb-4
+            .card-block
+              .row
+                .col-6.pt-3
+                  .chat-message.full-width
+                    .chat-message__icon style=("background-image:url(#{image_path('usao001.png')});")
+                    .chat-message__balloon
+                      i.fa.fa-exclamation-triangle.text-warning
+                      = space 2
+                      span 回答失敗
+                .col-6
+                  .chat-message--my.full-width
+                    .chat-message__icon style=("background-image:url(#{image_path('silhouette.png')});")
+                    .chat-message__balloon ゲストメッセージ
+            .card-footer.d-flex.justify-content-between
+              div.text-muted
+                span ID 12345
+                = space 10
+                span 作成日時 2017/07/09 23:32
+              div
+                = link_to '#', class: 'btn btn-secondary btn-sm' do
+                  = material_icon 'edit', class: 'mi-xs'
+                  = space
+                  span 編集
+                = space 2
+                = link_to '#', class: 'btn btn-danger btn-sm' do
+                  = material_icon 'delete', class: 'mi-xs'
+                  = space
+                  span 削除
+
+
 
         nav.d-flex.justify-content-between
           .pagination-desc 全250件中 / 1〜10件表示

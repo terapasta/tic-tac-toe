@@ -3,6 +3,15 @@
     tr:first-child {
       th {
         border-top: 0;
+        font-size: 12px;
+      }
+    }
+  }
+
+  &.table-striped {
+    tbody {
+      tr:nth-of-type(odd) {
+        background-color: $blue-lighter;
       }
     }
   }

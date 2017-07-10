@@ -3,7 +3,6 @@ class ChatsController < ApplicationController
   before_action :set_bot
   before_action :set_guest_key
   before_action :set_warning_message
-  before_action :prepare_learning_data
 
   def show
     show_action
@@ -35,14 +34,6 @@ class ChatsController < ApplicationController
     def set_warning_message
       return false unless @bot.id == 2  # botがハナコさんのときのみデモ情報を表示する
       flash.now[:warning] = "本デモでは以下のオペレーションに対して回答することが出来ます。\n・カードキーなくした\n・パソコンが壊れた、ログインができない\n・今週の予定どうなってますか？\n・総務の山田さんに連絡をとりたい"
-    end
-
-    def prepare_learning_data
-      return if @bot.learning_parameter&.use_similarity_classification? == false
-
-      @summarizer = Learning::Summarizer.new(@bot)
-      @summarizer.summary
-      @summarizer.unify_learning_training_message_words!
     end
 
     def message_params

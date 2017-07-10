@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# HACK: csv_importer_specに統一したい
 RSpec.describe QuestionAnswer do
   describe '.import_csv' do
     let!(:bot) do
@@ -11,7 +12,7 @@ RSpec.describe QuestionAnswer do
     end
 
     let(:file_prefix) do # default
-      'valid'
+      'sjis_valid'
     end
 
     subject(:importing) do
@@ -19,12 +20,12 @@ RSpec.describe QuestionAnswer do
     end
 
     subject(:updated_valid_importing) do
-      -> { QuestionAnswer.import_csv(csv('valid-2'), bot) }
+      -> { QuestionAnswer.import_csv(csv('sjis_valid-2'), bot) }
     end
 
     context 'when invalid csv' do
       let(:file_prefix) do
-        'invalid'
+        'sjis_invalid'
       end
 
       it 'returns a CsvImporter instance that has status and failed row number' do
@@ -82,8 +83,9 @@ RSpec.describe QuestionAnswer do
         expect{updated_valid_importing.call}.to_not change(QuestionAnswer, :count)
       end
 
-      it 'creates new Answer records' do
-        expect{updated_valid_importing.call}.to change(Answer, :count).by(1)
+      it 'not creates new Answer records' do
+        expect{updated_valid_importing.call}.to change { Answer.order(:updated_at).last.body }.to('アンサー1更新済み')
+        expect{updated_valid_importing.call}.to change(Answer, :count).by(0)
       end
     end
   end

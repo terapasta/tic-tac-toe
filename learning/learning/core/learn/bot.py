@@ -11,12 +11,22 @@ from learning.core.training_set.training_message import TrainingMessage
 from learning.core.learn.learning_parameter import LearningParameter
 from learning.core.persistance import Persistance
 
+
 class Bot:
 
     def __init__(self, bot_id, learning_parameter):
         self.bot_id = bot_id
         self.learning_parameter = learning_parameter
         logger.debug('learning_parameter: %s' % vars(learning_parameter))
+
+    # HACK: 言語処理系のクラスに定義したほうがわかりやすい
+    def vectorize(self, datasource_type='database'):
+        logger.debug('start Bot#vectorize')
+
+        training_set = self.__build_training_set(datasource_type)
+
+        Persistance.make_directory(self.bot_id)
+        Persistance.dump_vectorizer(training_set.body_array.vectorizer, self.bot_id)
 
     @stop_watch
     def learn(self, datasource_type='database'):

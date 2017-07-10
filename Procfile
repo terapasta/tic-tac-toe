@@ -1,3 +1,3 @@
-web: bin/rails s -p 3838
+web: bin/rails s -p 3000
 worker: bin/rake jobs:work
 engine: cd learning && python myope_server.py --env development

@@ -9,38 +9,24 @@ class QuestionAnswer::CsvImporter
     @bot = bot
     @options = { is_utf8: false }.merge(options)
     @mode_enc = options[:is_utf8] ? ModeEncForUTF8 : ModeEncForSJIS
-    @current_row = nil
     @current_answer = nil
     @succeeded = false
-    @csv_data = parse
   end
 
   def import
-    f = open(@file.path, @mode_enc, undef: :replace)
+    csv_data = parse
     ActiveRecord::Base.transaction do
-      CSV.new(f).each_with_index do |row, index|
-        @current_row = index + 1
-        id = sjis_safe(row[0]).to_i
-        q = sjis_safe(row[1])
-        a = sjis_safe(row[2])
-        fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || q.blank?
-
-        # 他のbotのquestion_answerに既にidが登録されている場合、idを使えない
-        # HACK: 混沌
-        test_question_answer = QuestionAnswer.find_by(id: id)
-        if test_question_answer.present? and test_question_answer.bot_id != @bot.id
-          question_answer = @bot.question_answers.find_by(id: id)
-          question_answer ||= @bot.question_answers.build
-        end
-        question_answer ||= @bot.question_answers.find_or_initialize_by(id: id)
+      csv_data.each do |import_param|
+        question_answer = @bot.question_answers.where(id: import_param[:question_answer_attributes][:id])
+          .first_or_initialize(import_param[:question_answer_attributes])
+        fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) unless question_answer.valid?
         question_answer.tap do |qa|
-          qa.question = q
           qa.answer ||= qa.build_answer(bot_id: @bot.id)
-          qa.answer.body = a
+          qa.answer.body = import_param[:answer_body]
           qa.save!
         end
 
-        create_underlayer_records(row, question_answer.answer)
+        create_underlayer_records(question_answer.answer, import_param[:decision_branches])
       end
     end
     @succeeded = true
@@ -49,20 +35,14 @@ class QuestionAnswer::CsvImporter
     Rails.logger.debug(e.backtrace.join("\n"))
   end
 
-  def create_underlayer_records(row, answer)
-    return if row.compact.count <= 3
-    row[3..-1].compact.each_slice(2) do |decision_branch_body, answer_body|
-      d = sjis_safe(decision_branch_body)
-      a = sjis_safe(answer_body)
-
-      decision_branch = answer.decision_branches.find_or_initialize_by(body: d, bot_id: @bot.id)
-
-      if a.present?
+  def create_underlayer_records(answer, decision_branches_attrs)
+    decision_branches_attrs.each do |db_attrs|
+      decision_branch = answer.decision_branches.find_or_initialize_by(body: db_attrs[:body], bot_id: @bot.id)
+      if db_attrs[:next_answer_body].present?
         decision_branch.next_answer ||= decision_branch.build_next_answer(bot_id: @bot.id)
-        decision_branch.next_answer.body = a
+        decision_branch.next_answer.body = db_attrs[:next_answer_body]
         decision_branch.next_answer.save!
       end
-
       decision_branch.save!
     end
   end
@@ -74,9 +54,12 @@ class QuestionAnswer::CsvImporter
       decision_branches = out[data[:key]].try(:fetch, :decision_branches) || []
       decision_branches.push(data[:decision_branch]) if data[:decision_branch].present?
       out[data[:key]] = {
-        id: data[:id],
-        question: data[:question],
-        answer: data[:answer],
+        question_answer_attributes: {
+          id: data[:id],
+          bot_id: @bot.id,
+          question: data[:question],
+        },
+        answer_body: data[:answer],
         decision_branches: decision_branches,
       }
       out
@@ -85,9 +68,9 @@ class QuestionAnswer::CsvImporter
   end
 
   def detect_or_initialize_by_row(row)
-    id = row[0]
-    q = row[1]
-    a = row[2]
+    id = sjis_safe(row[0]).to_i
+    q = sjis_safe(row[1])
+    a = sjis_safe(row[2])
     bot_had = @bot.question_answers.detect {|qa| qa.id == id}.present?
 
     {
@@ -95,7 +78,7 @@ class QuestionAnswer::CsvImporter
       id: bot_had ? id : nil,
       question: q,
       answer: a,
-      decision_branch: row[3].present? ? { body: row[3], answer: row[4] } : nil,
+      decision_branch: row[3].present? ? { body: sjis_safe(row[3]), next_answer_body: sjis_safe(row[4]) } : nil,
     }
   end
 

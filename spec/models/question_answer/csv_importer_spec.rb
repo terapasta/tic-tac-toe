@@ -112,11 +112,11 @@ RSpec.describe QuestionAnswer::CsvImporter do
         end
 
         it 'QuestionAnserが登録されていること' do
-          expect(bot.question_answers.count).to eq 5
+          expect(bot.question_answers.count).to eq 2
           expect(bot2.question_answers.count).to eq 1
         end
         it 'Answerが登録されていること' do
-          expect(bot.answers.count).to eq 9
+          expect(bot.answers.count).to eq 6
         end
         it 'DecisionBranchが登録されていること' do
           expect(bot.decision_branches.count).to eq 4

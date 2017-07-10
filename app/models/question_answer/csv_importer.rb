@@ -26,7 +26,7 @@ class QuestionAnswer::CsvImporter
           qa.save!
         end
 
-        create_underlayer_records(question_answer.answer, import_param[:decision_branches])
+        create_underlayer_records(question_answer.answer, import_param[:decision_branches_attributes])
       end
     end
     @succeeded = true
@@ -49,7 +49,7 @@ class QuestionAnswer::CsvImporter
 
   def parse
     f = open(@file.path, @mode_enc, undef: :replace)
-    injected_data = CSV.new(f).inject({}) { |out, row|
+    CSV.new(f).inject({}) { |out, row|
       data = detect_or_initialize_by_row(row)
       decision_branches = out[data[:key]].try(:fetch, :decision_branches) || []
       decision_branches.push(data[:decision_branch]) if data[:decision_branch].present?
@@ -60,17 +60,18 @@ class QuestionAnswer::CsvImporter
           question: data[:question],
         },
         answer_body: data[:answer],
-        decision_branches: decision_branches,
+        decision_branches_attributes: decision_branches,
       }
       out
-    }
-    injected_data.values
+    }.values
   end
 
   def detect_or_initialize_by_row(row)
     id = sjis_safe(row[0]).to_i
     q = sjis_safe(row[1])
     a = sjis_safe(row[2])
+    decision_branch = sjis_safe(row[3])
+    next_answer = sjis_safe(row[4])
     bot_had = @bot.question_answers.detect {|qa| qa.id == id}.present?
 
     {
@@ -78,7 +79,7 @@ class QuestionAnswer::CsvImporter
       id: bot_had ? id : nil,
       question: q,
       answer: a,
-      decision_branch: row[3].present? ? { body: sjis_safe(row[3]), next_answer_body: sjis_safe(row[4]) } : nil,
+      decision_branch: decision_branch.present? ? { body: decision_branch, next_answer_body: next_answer } : nil,
     }
   end
 

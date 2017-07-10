@@ -112,6 +112,7 @@ gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
+gem 'active_link_to'
 
 group :development, :test do
 

@@ -35,6 +35,9 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     active_hash (1.4.1)
       activesupport (>= 2.2.2)
+    active_link_to (1.0.4)
+      actionpack
+      addressable
     active_model_serializers (0.10.5)
       actionpack (>= 4.1, < 6)
       activemodel (>= 4.1, < 6)
@@ -573,6 +576,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
+  active_link_to
   active_model_serializers
   activerecord-import
   acts-as-taggable-on (~> 3.4)

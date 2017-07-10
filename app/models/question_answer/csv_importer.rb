@@ -50,7 +50,7 @@ class QuestionAnswer::CsvImporter
   def parse
     f = open(@file.path, @mode_enc, undef: :replace)
     CSV.new(f).each_with_index.inject({}) { |out, (row, index)|
-      @current_row = index
+      @current_row = index + 1
       data = detect_or_initialize_by_row(row)
       decision_branches = out[data[:key]].try(:fetch, :decision_branches_attributes) || []
       decision_branches.push(data[:decision_branch]) if data[:decision_branch].present?

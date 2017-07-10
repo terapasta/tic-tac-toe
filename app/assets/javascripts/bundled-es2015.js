@@ -47,8 +47,6 @@ var _copyButton = require("./components/copy-button");
 
 var _copyButton2 = _interopRequireDefault(_copyButton);
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 var _questionAnswerTagForm = require("./components/question-answer-tag-form");
 
 var _questionAnswerTagForm2 = _interopRequireDefault(_questionAnswerTagForm);
@@ -56,14 +54,7 @@ var _questionAnswerTagForm2 = _interopRequireDefault(_questionAnswerTagForm);
 var _answerBodyTextArea = require("./components/answer-body-text-area");
 
 var _answerBodyTextArea2 = _interopRequireDefault(_answerBodyTextArea);
-=======
-var _downloadTableDataButton = require("./components/download-table-data-button");
 
-var _downloadTableDataButton2 = _interopRequireDefault(_downloadTableDataButton);
->>>>>>> Implement DownloadTableDataButton component
-
-=======
->>>>>>> Delete DownloadTableDataButton component
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.initMessageRatingButtons = function () {
@@ -77,15 +68,8 @@ function init() {
   (0, _mountComponent.mountComponentWithRedux)(_conversationTree2.default, _reducers4.default);
   (0, _mountComponent2.default)(_botResetButton2.default);
   (0, _mountComponent2.default)(_learningButton2.default);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
   (0, _mountComponent2.default)(_questionAnswerTagForm2.default);
   (0, _mountComponent2.default)(_answerBodyTextArea2.default);
-=======
-  (0, _mountComponent2.default)(_downloadTableDataButton2.default);
->>>>>>> Implement DownloadTableDataButton component
-=======
->>>>>>> Delete DownloadTableDataButton component
   _copyButton2.default.initialize();
 }
 
@@ -95,15 +79,7 @@ if (document.readyState === "complete") {
   document.addEventListener("DOMContentLoaded", init);
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./analytics/mixpanel":4,"./components/answer-body-text-area":15,"./components/bot-reset-button":16,"./components/chat/app":18,"./components/chat/reducers":36,"./components/conversation-tree":55,"./components/conversation-tree/reducers":59,"./components/copy-button":77,"./components/learning-button":78,"./components/message-rating-buttons":80,"./components/question-answer-tag-form":84,"./modules/mount-component":99,"babel-polyfill":129,"redux-promise":873}],2:[function(require,module,exports){
-=======
-},{"./analytics/mixpanel":4,"./components/bot-reset-button":11,"./components/chat/app":13,"./components/chat/reducers":30,"./components/conversation-tree":48,"./components/conversation-tree/reducers":52,"./components/copy-button":70,"./components/download-table-data-button":71,"./components/learning-button":72,"./components/message-rating-buttons":74,"./components/question-answer-form":76,"./modules/mount-component":93,"babel-polyfill":123,"redux-promise":879}],2:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./analytics/mixpanel":4,"./components/bot-reset-button":11,"./components/chat/app":13,"./components/chat/reducers":30,"./components/conversation-tree":48,"./components/conversation-tree/reducers":52,"./components/copy-button":70,"./components/learning-button":71,"./components/message-rating-buttons":73,"./components/question-answer-form":75,"./modules/mount-component":92,"babel-polyfill":122,"redux-promise":869}],2:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -406,8 +382,6 @@ var Trackable = function () {
 
 exports.default = Trackable;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../modules/get-data":96,"uuid/v1":895}],6:[function(require,module,exports){
 "use strict";
 
@@ -437,12 +411,6 @@ function findAll(botId) {
 }
 
 },{"./config":11,"axios":104,"lodash/assign":640}],7:[function(require,module,exports){
-=======
-},{"../modules/get-data":89,"uuid/v1":901}],6:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../modules/get-data":88,"uuid/v1":891}],6:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -471,15 +439,7 @@ function status(botId) {
   return _axios2.default.get(path);
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./config":11,"axios":104}],8:[function(require,module,exports){
-=======
-},{"./config":10,"axios":98}],7:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./config":10,"axios":97}],7:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -516,15 +476,7 @@ function request(token, messageId, resource) {
   return _axios2.default.put(url, {}, (0, _config2.default)());
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./config":11,"axios":104}],9:[function(require,module,exports){
-=======
-},{"./config":10,"axios":98}],8:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./config":10,"axios":97}],8:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -570,15 +522,7 @@ function updateMessage(token, messageId, payload) {
   return _axios2.default.put(path, assign({ message: payload }, (0, _config2.default)()));
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./config":11,"axios":104}],10:[function(require,module,exports){
-=======
-},{"./config":10,"axios":98}],9:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./config":10,"axios":97}],9:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -615,15 +559,7 @@ function create(token, _ref) {
   }, (0, _config2.default)());
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./config":11,"axios":104}],11:[function(require,module,exports){
-=======
-},{"./config":10,"axios":98}],10:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./config":10,"axios":97}],10:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -651,8 +587,6 @@ function config() {
   }, options);
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../modules/authenticity-token":95,"lodash/assign":640}],12:[function(require,module,exports){
 "use strict";
 
@@ -894,12 +828,6 @@ var AnswerBodyTextArea = function (_Component) {
 exports.default = AnswerBodyTextArea;
 
 },{"../api/answer":6,"./panel":82,"is-empty":458,"lodash/debounce":648,"react":856}],16:[function(require,module,exports){
-=======
-},{"../modules/authenticity-token":88,"lodash/assign":641}],11:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../modules/authenticity-token":87,"lodash/assign":632}],11:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1158,15 +1086,7 @@ function makeDummyLink(url) {
   return window.$(a);
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"classnames":131,"react":856,"uuid/v1":895}],17:[function(require,module,exports){
-=======
-},{"classnames":125,"react":862,"uuid/v1":901}],12:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"classnames":124,"react":852,"uuid/v1":891}],12:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1543,18 +1463,10 @@ function pollLearningStatus(botId) {
 var startLearning = exports.startLearning = (0, _reduxActions.createAction)("START_LEARNING", BotLearningAPI.start);
 var getLearningStatus = exports.getLearningStatus = (0, _reduxActions.createAction)("GET_LEARNING_STATUS", BotLearningAPI.status);
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 var fetchInitialQuestions = exports.fetchInitialQuestions = (0, _reduxActions.createAction)("FETCH_INITIAL_QUESTIONS", InitialQuestionsAPI.fetchAll);
 var setInitialQuestionsToMessages = exports.setInitialQuestionsToMessages = (0, _reduxActions.createAction)("SET_INITIAL_QUESTIONS_TO_MESSAGES");
 
 },{"../../analytics/mixpanel":4,"../../api/bot-learning":7,"../../api/chat-message-rating":8,"../../api/chat-messages":9,"../../api/chat-trainings":10,"../../api/initial-questions":12,"../../modules/snake-case-keys":101,"./constants":23,"is-empty":458,"lodash/assign":640,"lodash/find":653,"lodash/findIndex":654,"lodash/get":656,"lodash/trim":694,"redux-actions":865,"toastr":887}],18:[function(require,module,exports){
-=======
-},{"../../analytics/mixpanel":4,"../../api/bot-learning":6,"../../api/chat-message-rating":7,"../../api/chat-messages":8,"../../api/chat-trainings":9,"../../modules/snake-case-keys":95,"./constants":18,"is-empty":454,"lodash/assign":641,"lodash/find":654,"lodash/findIndex":655,"lodash/get":658,"lodash/trim":697,"redux-actions":871,"toastr":893}],13:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../analytics/mixpanel":4,"../../api/bot-learning":6,"../../api/chat-message-rating":7,"../../api/chat-messages":8,"../../api/chat-trainings":9,"../../modules/snake-case-keys":94,"./constants":18,"is-empty":451,"lodash/assign":632,"lodash/find":645,"lodash/findIndex":646,"lodash/get":649,"lodash/trim":688,"redux-actions":861,"toastr":883}],13:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1882,15 +1794,7 @@ function scrollToLastSectionIfNeeded(prevProps, component) {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../modules/get-offset":97,"./action-creators":17,"./area":19,"./bot-message-row":21,"./constants":23,"./container":24,"./decision-branches-row":25,"./flash-message":27,"./form":28,"./guest-message":31,"./guest-message-row":30,"./header":32,"./read-more":35,"./row":43,"./section":44,"./similar-question-answers-row":45,"is-empty":458,"lodash/assign":640,"lodash/includes":659,"lodash/isEqual":665,"lodash/sortBy":687,"react":856,"react-dom":707}],19:[function(require,module,exports){
-=======
-},{"../../modules/get-offset":90,"./action-creators":12,"./area":14,"./bot-message-row":16,"./constants":18,"./container":19,"./decision-branches-row":20,"./flash-message":22,"./form":23,"./guest-message":26,"./guest-message-row":25,"./header":27,"./read-more":29,"./row":36,"./section":37,"./similar-question-answers-row":38,"lodash/assign":641,"react":862,"react-dom":712}],14:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../modules/get-offset":89,"./action-creators":12,"./area":14,"./bot-message-row":16,"./constants":18,"./container":19,"./decision-branches-row":20,"./flash-message":22,"./form":23,"./guest-message":26,"./guest-message-row":25,"./header":27,"./read-more":29,"./row":36,"./section":37,"./similar-question-answers-row":38,"lodash/assign":632,"react":852,"react-dom":702}],14:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1939,15 +1843,7 @@ var ChatArea = function (_Component) {
 
 exports.default = ChatArea;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],20:[function(require,module,exports){
-=======
-},{"react":862}],15:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],15:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2130,15 +2026,7 @@ ChatBotMessageEditor.propTypes = {
 
 exports.default = ChatBotMessageEditor;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../api/answer":6,"../prevent-wheel-scroll-of-parent":83,"classnames":131,"is-empty":458,"lodash/debounce":648,"react":856,"react-dom":707,"react-textarea-autosize":726}],21:[function(require,module,exports){
-=======
-},{"classnames":125,"react":862,"react-textarea-autosize":732}],16:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"classnames":124,"react":852,"react-textarea-autosize":722}],16:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2284,15 +2172,7 @@ var ChatBotMessageRow = function (_Component) {
 
 exports.default = ChatBotMessageRow;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./bot-message":22,"./bot-message-editor":20,"./constants":23,"./container":24,"./initial-question":33,"./row":43,"lodash/assign":640,"lodash/find":653,"lodash/get":656,"lodash/values":696,"react":856}],22:[function(require,module,exports){
-=======
-},{"./bot-message":17,"./bot-message-editor":15,"./constants":18,"./container":19,"./row":36,"lodash/assign":641,"lodash/find":654,"lodash/get":658,"lodash/values":699,"react":862}],17:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./bot-message":17,"./bot-message-editor":15,"./constants":18,"./container":19,"./row":36,"lodash/assign":632,"lodash/find":645,"lodash/get":649,"lodash/values":690,"react":852}],17:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2501,15 +2381,7 @@ var ChatBotMessage = function (_Component) {
 
 exports.default = ChatBotMessage;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../modules/image-file-types":98,"./constants":23,"./message-rating-buttons":34,"bytes":130,"classnames":131,"is-empty":458,"lodash/includes":659,"lodash/last":679,"lodash/values":696,"react":856,"react-linkify":708,"react-loading":709,"react-nl2br":710}],23:[function(require,module,exports){
-=======
-},{"../../modules/image-file-types":91,"./constants":18,"./message-rating-buttons":28,"bytes":124,"classnames":125,"is-empty":454,"lodash/includes":661,"lodash/last":682,"lodash/values":699,"react":862,"react-linkify":713,"react-loading":714,"react-nl2br":715}],18:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../modules/image-file-types":90,"./constants":18,"./message-rating-buttons":28,"bytes":123,"classnames":124,"is-empty":451,"lodash/includes":652,"lodash/last":673,"lodash/values":690,"react":852,"react-linkify":703,"react-loading":704,"react-nl2br":705}],18:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2583,15 +2455,7 @@ var ChatContainer = function (_Component) {
 
 exports.default = ChatContainer;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],25:[function(require,module,exports){
-=======
-},{"react":862}],20:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],20:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2680,15 +2544,7 @@ ChatDecisionBranchesRow.propTypes = {
 
 exports.default = ChatDecisionBranchesRow;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./container":24,"./decision-branches":26,"./row":43,"is-empty":458,"react":856}],26:[function(require,module,exports){
-=======
-},{"./container":19,"./decision-branches":21,"./row":36,"is-empty":454,"react":862}],21:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./container":19,"./decision-branches":21,"./row":36,"is-empty":451,"react":852}],21:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2776,15 +2632,7 @@ var ChatDecisionBranches = function (_Component) {
 
 exports.default = ChatDecisionBranches;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],27:[function(require,module,exports){
-=======
-},{"react":862}],22:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],22:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2865,15 +2713,7 @@ var ChatFlashMessage = function (_Component) {
 
 exports.default = ChatFlashMessage;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./container":24,"./row":43,"is-empty":458,"react":856,"react-nl2br":710}],28:[function(require,module,exports){
-=======
-},{"./container":19,"./row":36,"is-empty":454,"react":862,"react-nl2br":715}],23:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./container":19,"./row":36,"is-empty":451,"react":852,"react-nl2br":705}],23:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3013,15 +2853,7 @@ var ChatForm = function (_Component) {
 
 exports.default = ChatForm;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"is-empty":458,"react":856,"react-dom":707}],29:[function(require,module,exports){
-=======
-},{"is-empty":454,"react":862,"react-dom":712}],24:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"is-empty":451,"react":852,"react-dom":702}],24:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3113,15 +2945,7 @@ ChatGuestMessageEditor.propTypes = {};
 
 exports.default = ChatGuestMessageEditor;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash/find":653,"react":856,"react-textarea-autosize":726}],30:[function(require,module,exports){
-=======
-},{"lodash/find":654,"react":862,"react-textarea-autosize":732}],25:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash/find":645,"react":852,"react-textarea-autosize":722}],25:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3230,15 +3054,7 @@ ChatGuestMessageRow.propTypes = {
 
 exports.default = ChatGuestMessageRow;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./container":24,"./guest-message":31,"./guest-message-editor":29,"./row":43,"lodash/find":653,"lodash/get":656,"react":856}],31:[function(require,module,exports){
-=======
-},{"./container":19,"./guest-message":26,"./guest-message-editor":24,"./row":36,"lodash/find":654,"lodash/get":658,"react":862}],26:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./container":19,"./guest-message":26,"./guest-message-editor":24,"./row":36,"lodash/find":645,"lodash/get":649,"react":852}],26:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3346,15 +3162,7 @@ var ChatGuestMessage = function (_Component) {
 
 exports.default = ChatGuestMessage;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"classnames":131,"react":856,"react-linkify":708,"react-loading":709,"react-nl2br":710}],32:[function(require,module,exports){
-=======
-},{"classnames":125,"react":862,"react-linkify":713,"react-loading":714,"react-nl2br":715}],27:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"classnames":124,"react":852,"react-linkify":703,"react-loading":704,"react-nl2br":705}],27:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3526,8 +3334,6 @@ ChatHeader.propTypes = {
 
 exports.default = ChatHeader;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../api/bot-learning":7,"./constants":23,"lodash/values":696,"react":856}],33:[function(require,module,exports){
 "use strict";
 
@@ -3768,12 +3574,6 @@ var ChatInitialQuestion = function (_Component) {
 exports.default = ChatInitialQuestion;
 
 },{"../../analytics/mixpanel":4,"../modal":81,"./container":24,"is-empty":458,"lodash/get":656,"react":856}],34:[function(require,module,exports){
-=======
-},{"./constants":18,"lodash/values":699,"react":862}],28:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./constants":18,"lodash/values":690,"react":852}],28:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3895,15 +3695,7 @@ var MessageRatingButtons = function (_Component) {
 
 exports.default = MessageRatingButtons;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./constants":23,"classnames":131,"lodash/values":696,"react":856,"react-dom":707}],35:[function(require,module,exports){
-=======
-},{"./constants":18,"classnames":125,"lodash/values":699,"react":862,"react-dom":712}],29:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./constants":18,"classnames":124,"lodash/values":690,"react":852,"react-dom":702}],29:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3996,15 +3788,7 @@ ChatReadMore.propTypes = {};
 
 exports.default = ChatReadMore;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./container":24,"./row":43,"classnames":131,"react":856}],36:[function(require,module,exports){
-=======
-},{"./container":19,"./row":36,"classnames":125,"react":862}],30:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./container":19,"./row":36,"classnames":124,"react":852}],30:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4059,15 +3843,7 @@ var app = (0, _redux.combineReducers)({
 
 exports.default = app;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./reducers/form":37,"./reducers/initial-questions":38,"./reducers/learning":39,"./reducers/learnings":40,"./reducers/messages":41,"./reducers/read-more":42,"redux":880}],37:[function(require,module,exports){
-=======
-},{"./reducers/form":31,"./reducers/learning":32,"./reducers/learnings":33,"./reducers/messages":34,"./reducers/read-more":35,"redux":886}],31:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./reducers/form":31,"./reducers/learning":32,"./reducers/learnings":33,"./reducers/messages":34,"./reducers/read-more":35,"redux":876}],31:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4110,8 +3886,6 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   isDisabled: false
 });
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-creators":17,"lodash/assign":640,"redux-actions":865}],38:[function(require,module,exports){
 "use strict";
 
@@ -4146,12 +3920,6 @@ exports.default = (0, _reduxActions.handleActions)(_defineProperty({}, _actionCr
 }), []);
 
 },{"../action-creators":17,"lodash/get":656,"redux-actions":865}],39:[function(require,module,exports){
-=======
-},{"../action-creators":12,"lodash/assign":641,"redux-actions":871}],32:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-creators":12,"lodash/assign":632,"redux-actions":861}],32:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4193,15 +3961,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   });
 }), _handleActions), { status: null });
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-creators":17,"../constants":23,"lodash/assign":640,"redux-actions":865}],40:[function(require,module,exports){
-=======
-},{"../action-creators":12,"../constants":18,"lodash/assign":641,"redux-actions":871}],33:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-creators":12,"../constants":18,"lodash/assign":632,"redux-actions":861}],33:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4296,15 +4056,7 @@ function switchActivityHandler(manipulator) {
   };
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-creators":17,"lodash/assign":640,"lodash/compact":646,"lodash/find":653,"lodash/findIndex":654,"redux-actions":865}],41:[function(require,module,exports){
-=======
-},{"../action-creators":12,"lodash/assign":641,"lodash/compact":647,"lodash/find":654,"lodash/findIndex":655,"redux-actions":871}],34:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-creators":12,"lodash/assign":632,"lodash/compact":638,"lodash/find":645,"lodash/findIndex":646,"redux-actions":861}],34:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4540,15 +4292,7 @@ function sectionActiveStateHandler(manipulator) {
   };
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-creators":17,"../constants":23,"is-empty":458,"lodash/assign":640,"lodash/chunk":644,"lodash/cloneDeep":645,"lodash/findIndex":654,"lodash/get":656,"lodash/isArray":661,"lodash/last":679,"lodash/pick":682,"promise":699,"redux-actions":865}],42:[function(require,module,exports){
-=======
-},{"../action-creators":12,"../constants":18,"is-empty":454,"lodash/assign":641,"lodash/chunk":645,"lodash/cloneDeep":646,"lodash/findIndex":655,"lodash/get":658,"lodash/last":682,"lodash/pick":686,"promise":704,"redux-actions":871}],35:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-creators":12,"../constants":18,"is-empty":451,"lodash/assign":632,"lodash/chunk":636,"lodash/cloneDeep":637,"lodash/findIndex":646,"lodash/get":649,"lodash/last":673,"lodash/pick":677,"promise":694,"redux-actions":861}],35:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4582,15 +4326,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   isDisabled: false
 });
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-creators":17,"lodash/assign":640,"redux-actions":865}],43:[function(require,module,exports){
-=======
-},{"../action-creators":12,"lodash/assign":641,"redux-actions":871}],36:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-creators":12,"lodash/assign":632,"redux-actions":861}],36:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4639,15 +4375,7 @@ var ChatRow = function (_Component) {
 
 exports.default = ChatRow;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],44:[function(require,module,exports){
-=======
-},{"react":862}],37:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],37:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4871,15 +4599,7 @@ var ChatSection = function (_Component) {
 
 exports.default = ChatSection;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../modules/get-offset":97,"classnames":131,"is-empty":458,"lodash/find":653,"lodash/get":656,"lodash/isArray":661,"react":856,"react-dom":707}],45:[function(require,module,exports){
-=======
-},{"../../modules/get-offset":90,"classnames":125,"is-empty":454,"lodash/find":654,"lodash/get":658,"react":862,"react-dom":712}],38:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../modules/get-offset":89,"classnames":124,"is-empty":451,"lodash/find":645,"lodash/get":649,"react":852,"react-dom":702}],38:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4972,15 +4692,7 @@ ChatSimilarQuestionAnswersRow.propTypes = {
 
 exports.default = ChatSimilarQuestionAnswersRow;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./container":24,"./decision-branches":26,"./row":43,"is-empty":458,"react":856}],46:[function(require,module,exports){
-=======
-},{"./container":19,"./decision-branches":21,"./row":36,"is-empty":454,"react":862}],39:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./container":19,"./decision-branches":21,"./row":36,"is-empty":451,"react":852}],39:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5253,15 +4965,7 @@ var ConversationItemForm = function (_Component) {
 
 exports.default = ConversationItemForm;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./conversation-item-form/answer-form":47,"./conversation-item-form/current-decision-branch":48,"./conversation-item-form/decision-branches":50,"./conversation-item-form/new-decision-branch":52,"./conversation-item-form/question-form":53,"./conversation-item-form/reference-questions":54,"axios":104,"is-empty":458,"lodash/flatten":655,"lodash/get":656,"promise":699,"react":856}],47:[function(require,module,exports){
-=======
-},{"./conversation-item-form/answer-form":40,"./conversation-item-form/current-decision-branch":41,"./conversation-item-form/decision-branches":43,"./conversation-item-form/new-decision-branch":45,"./conversation-item-form/question-form":46,"./conversation-item-form/reference-questions":47,"axios":98,"is-empty":454,"lodash/flatten":656,"lodash/get":658,"promise":704,"react":862}],40:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./conversation-item-form/answer-form":40,"./conversation-item-form/current-decision-branch":41,"./conversation-item-form/decision-branches":43,"./conversation-item-form/new-decision-branch":45,"./conversation-item-form/question-form":46,"./conversation-item-form/reference-questions":47,"axios":97,"is-empty":451,"lodash/flatten":647,"lodash/get":649,"promise":694,"react":852}],40:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5386,15 +5090,7 @@ var AnswerForm = function (_Component) {
 
 exports.default = AnswerForm;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash/get":656,"react":856,"react-textarea-autosize":726}],48:[function(require,module,exports){
-=======
-},{"lodash/get":658,"react":862,"react-textarea-autosize":732}],41:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash/get":649,"react":852,"react-textarea-autosize":722}],41:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5472,15 +5168,7 @@ CurrentDecisionBranch.propTypes = {
 
 exports.default = CurrentDecisionBranch;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../models/decision-branch":93,"lodash/get":656,"react":856}],49:[function(require,module,exports){
-=======
-},{"../../models/decision-branch":86,"lodash/get":658,"react":862}],42:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../models/decision-branch":85,"lodash/get":649,"react":852}],42:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5504,7 +5192,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var DecisionBranchItem = function (_Component) {
   _inherits(DecisionBranchItem, _Component);
 
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
   function DecisionBranchItem() {
     _classCallCheck(this, DecisionBranchItem);
 
@@ -5540,14 +5227,7 @@ var DecisionBranchItem = function (_Component) {
 
 exports.default = DecisionBranchItem;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
 },{"react":856}],50:[function(require,module,exports){
-=======
-},{"react":862}],43:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],43:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5656,15 +5336,7 @@ var DecisionBranches = function (_Component) {
 
 exports.default = DecisionBranches;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./decision-branch-item":49,"./editing-decision-branch-item":51,"react":856}],51:[function(require,module,exports){
-=======
-},{"./decision-branch-item":42,"./editing-decision-branch-item":44,"react":862}],44:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./decision-branch-item":42,"./editing-decision-branch-item":44,"react":852}],44:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5774,15 +5446,7 @@ var EditingDecisionBranchItem = function (_Component) {
 
 exports.default = EditingDecisionBranchItem;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],52:[function(require,module,exports){
-=======
-},{"react":862}],45:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],45:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5921,15 +5585,7 @@ var NewDecisionBranch = function (_Component) {
 
 exports.default = NewDecisionBranch;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash/get":656,"react":856}],53:[function(require,module,exports){
-=======
-},{"lodash/get":658,"react":862}],46:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash/get":649,"react":852}],46:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6075,15 +5731,7 @@ QuestionForm.propTypes = {
 
 exports.default = QuestionForm;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../models/question":94,"react":856,"react-textarea-autosize":726}],54:[function(require,module,exports){
-=======
-},{"../../models/question":87,"react":862,"react-textarea-autosize":732}],47:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../models/question":86,"react":852,"react-textarea-autosize":722}],47:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6168,15 +5816,7 @@ ReferenceQuestions.propTypes = {
 
 exports.default = ReferenceQuestions;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../models/question":94,"is-empty":458,"react":856}],55:[function(require,module,exports){
-=======
-},{"../../models/question":87,"is-empty":454,"react":862}],48:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../models/question":86,"is-empty":451,"react":852}],48:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6399,15 +6039,7 @@ var ConversationTree = function (_Component) {
 
 exports.default = ConversationTree;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../analytics/mixpanel":4,"../modules/get-offset":97,"./conversation-item-form":46,"./conversation-tree/action-creators":56,"./master-detail-panel":79,"./tree":85,"react":856,"react-dom":707}],56:[function(require,module,exports){
-=======
-},{"../analytics/mixpanel":4,"../modules/get-offset":90,"./conversation-item-form":39,"./conversation-tree/action-creators":49,"./master-detail-panel":73,"./tree":78,"react":862,"react-dom":712}],49:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../analytics/mixpanel":4,"../modules/get-offset":89,"./conversation-item-form":39,"./conversation-tree/action-creators":49,"./master-detail-panel":72,"./tree":77,"react":852,"react-dom":702}],49:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7083,15 +6715,7 @@ function clearReferenceQuestionModels() {
   return { type: t.CLEAR_REFERENCE_QUESTION_MODELS };
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../../models/answer":92,"../../models/decision-branch":93,"../../models/question":94,"./action-types":57,"./helpers":58,"lodash/get":656,"lodash/includes":659}],57:[function(require,module,exports){
-=======
-},{"../../models/answer":85,"../../models/decision-branch":86,"../../models/question":87,"./action-types":50,"./helpers":51,"lodash/get":658,"lodash/includes":661}],50:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../models/answer":84,"../../models/decision-branch":85,"../../models/question":86,"./action-types":50,"./helpers":51,"lodash/get":649,"lodash/includes":652}],50:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7274,15 +6898,7 @@ function deleteDecisionBranchFromTree(questionsTree, decisionBranchId) {
   })));
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash/compact":646,"lodash/find":653,"lodash/flatten":655,"lodash/get":656}],59:[function(require,module,exports){
-=======
-},{"lodash/compact":647,"lodash/find":654,"lodash/flatten":656,"lodash/get":658}],52:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash/compact":638,"lodash/find":645,"lodash/flatten":647,"lodash/get":649}],52:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7390,15 +7006,7 @@ var app = (0, _redux.combineReducers)({
 
 exports.default = app;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./reducers/active-item":60,"./reducers/answers-repo":61,"./reducers/answers-tree":62,"./reducers/decision-branches-repo":63,"./reducers/editing-answer-model":64,"./reducers/editing-decision-branch-model":65,"./reducers/editing-decision-branch-models":66,"./reducers/editing-question-model":67,"./reducers/is-adding-answer":68,"./reducers/is-adding-decision-branch":69,"./reducers/is-processing":70,"./reducers/opened-answer-ids":71,"./reducers/opened-decision-branch-ids":72,"./reducers/opened-question-ids":73,"./reducers/questions-repo":74,"./reducers/questions-tree":75,"./reducers/reference-question-models":76,"redux":880}],60:[function(require,module,exports){
-=======
-},{"./reducers/active-item":53,"./reducers/answers-repo":54,"./reducers/answers-tree":55,"./reducers/decision-branches-repo":56,"./reducers/editing-answer-model":57,"./reducers/editing-decision-branch-model":58,"./reducers/editing-decision-branch-models":59,"./reducers/editing-question-model":60,"./reducers/is-adding-answer":61,"./reducers/is-adding-decision-branch":62,"./reducers/is-processing":63,"./reducers/opened-answer-ids":64,"./reducers/opened-decision-branch-ids":65,"./reducers/opened-question-ids":66,"./reducers/questions-repo":67,"./reducers/questions-tree":68,"./reducers/reference-question-models":69,"redux":886}],53:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./reducers/active-item":53,"./reducers/answers-repo":54,"./reducers/answers-tree":55,"./reducers/decision-branches-repo":56,"./reducers/editing-answer-model":57,"./reducers/editing-decision-branch-model":58,"./reducers/editing-decision-branch-models":59,"./reducers/editing-question-model":60,"./reducers/is-adding-answer":61,"./reducers/is-adding-decision-branch":62,"./reducers/is-processing":63,"./reducers/opened-answer-ids":64,"./reducers/opened-decision-branch-ids":65,"./reducers/opened-question-ids":66,"./reducers/questions-repo":67,"./reducers/questions-tree":68,"./reducers/reference-question-models":69,"redux":876}],53:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7472,15 +7080,7 @@ function answersRepo() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/assign":640}],62:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/assign":641}],55:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/assign":632}],55:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7596,15 +7196,7 @@ function decisionBranchesRepo() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/assign":640}],64:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/assign":641}],57:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/assign":632}],57:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7739,15 +7331,7 @@ function editingDecisionBranchModels() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/findIndex":654}],67:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/findIndex":655}],60:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/findIndex":646}],60:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7907,15 +7491,7 @@ function openedAnswerIds() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/filter":652}],72:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/filter":653}],65:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/filter":644}],65:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7954,15 +7530,7 @@ function openedDecisionBranchIds() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/filter":652}],73:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/filter":653}],66:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/filter":644}],66:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8001,15 +7569,7 @@ function openedAnswerIds() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/filter":652}],74:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/filter":653}],67:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/filter":644}],67:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8051,15 +7611,7 @@ function questionsRepo() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"lodash/assign":640}],75:[function(require,module,exports){
-=======
-},{"../action-types":50,"lodash/assign":641}],68:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"lodash/assign":632}],68:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8137,15 +7689,7 @@ function questionsTree() {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../action-types":57,"../helpers":58,"lodash/assign":640,"lodash/cloneDeep":645}],76:[function(require,module,exports){
-=======
-},{"../action-types":50,"../helpers":51,"lodash/assign":641,"lodash/cloneDeep":646}],69:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../action-types":50,"../helpers":51,"lodash/assign":632,"lodash/cloneDeep":637}],69:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8272,144 +7816,7 @@ var CopyButton = function () {
 
 exports.default = CopyButton;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"copy-to-clipboard":132}],78:[function(require,module,exports){
-=======
-},{"copy-to-clipboard":126}],71:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _json2csv = require('json2csv');
-
-var _json2csv2 = _interopRequireDefault(_json2csv);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
-var ContentType = { type: 'text/csv' };
-var Fields = ['question', 'answer'];
-
-var DownloadTableDataButton = function (_Component) {
-  _inherits(DownloadTableDataButton, _Component);
-
-  _createClass(DownloadTableDataButton, null, [{
-    key: 'componentName',
-    get: function get() {
-      return "DownloadTableDataButton";
-    }
-  }, {
-    key: 'propTypes',
-    get: function get() {
-      return {
-        targetSelector: _react.PropTypes.string.isRequired
-      };
-    }
-  }]);
-
-  function DownloadTableDataButton(props) {
-    _classCallCheck(this, DownloadTableDataButton);
-
-    var _this = _possibleConstructorReturn(this, (DownloadTableDataButton.__proto__ || Object.getPrototypeOf(DownloadTableDataButton)).call(this, props));
-
-    _this.state = {
-      data: null
-    };
-    return _this;
-  }
-
-  _createClass(DownloadTableDataButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var targetSelector = this.props.targetSelector;
-
-      var target = document.querySelector(targetSelector);
-      if (target == null) {
-        return;
-      }
-
-      var data = [].map.call(target.children, function (tr) {
-        var row = {};
-        [].forEach.call(tr.children, function (td, i) {
-          return row[Fields[i]] = td.textContent;
-        });
-        return row;
-      });
-      var csv = (0, _json2csv2.default)({ data: data, fields: Fields });
-      var blob = new Blob([BOM, csv], ContentType);
-
-      this.setState({ data: blob });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var data = this.state.data;
-
-
-      return _react2.default.createElement(
-        'a',
-        {
-          href: '#',
-          ref: 'button',
-          className: 'btn btn-success',
-          onClick: this.onClickButton.bind(this)
-        },
-        _react2.default.createElement(
-          'i',
-          { className: 'material-icons' },
-          'file_download'
-        ),
-        ' ',
-        'CSV\u30D5\u30A1\u30A4\u30EB\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9'
-      );
-    }
-  }, {
-    key: 'onClickButton',
-    value: function onClickButton(e) {
-      var data = this.state.data;
-
-      var fileName = 'bot-test-' + new Date().getTime() + '.csv';
-      if (data == null) {
-        return;
-      }
-
-      if (window.navigator.msSaveBlob) {
-        window.navigator.msSaveBlob(data, fileName);
-        // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
-        // window.navigator.msSaveOrOpenBlob(blob, "test.csv");
-      } else {
-        (0, _reactDom.findDOMNode)(this.refs.button).href = window.URL.createObjectURL(data);
-      }
-    }
-  }]);
-
-  return DownloadTableDataButton;
-}(_react.Component);
-
-exports.default = DownloadTableDataButton;
-
-},{"json2csv":456,"react":862,"react-dom":712}],72:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"copy-to-clipboard":125}],71:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8575,15 +7982,7 @@ var LearningButton = function (_Component) {
 
 exports.default = LearningButton;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../api/bot-learning":7,"classnames":131,"react":856}],79:[function(require,module,exports){
-=======
-},{"../api/bot-learning":6,"classnames":125,"react":862}],73:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../api/bot-learning":6,"classnames":124,"react":852}],72:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8681,7 +8080,6 @@ var Detail = exports.Detail = function (_Component3) {
     return _possibleConstructorReturn(this, (Detail.__proto__ || Object.getPrototypeOf(Detail)).apply(this, arguments));
   }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
   _createClass(Detail, [{
     key: "render",
     value: function render() {
@@ -8695,17 +8093,10 @@ var Detail = exports.Detail = function (_Component3) {
     }
   }]);
 
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
   return Detail;
 }(_react.Component);
 
 },{"react":856}],80:[function(require,module,exports){
-=======
-},{"react":862}],74:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],73:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8878,8 +8269,6 @@ var MessageRatingButtons = function (_Component) {
 
 exports.default = MessageRatingButtons;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../api/chat-message-rating":8,"../modules/mount-component":99,"classnames":131,"lodash/values":696,"react":856,"react-dom":707}],81:[function(require,module,exports){
 "use strict";
 
@@ -8980,12 +8369,6 @@ var Modal = function (_Component) {
 exports.default = Modal;
 
 },{"is-empty":458,"react":856}],82:[function(require,module,exports){
-=======
-},{"../api/chat-message-rating":7,"../modules/mount-component":93,"classnames":125,"lodash/values":699,"react":862,"react-dom":712}],75:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../api/chat-message-rating":7,"../modules/mount-component":92,"classnames":124,"lodash/values":690,"react":852,"react-dom":702}],74:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9105,17 +8488,8 @@ Panel.propTypes = {
 
 exports.default = Panel;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"classnames":131,"is-empty":458,"react":856}],83:[function(require,module,exports){
 'use strict';
-=======
-},{"classnames":125,"is-empty":454,"react":862}],76:[function(require,module,exports){
-=======
-},{"classnames":124,"is-empty":451,"react":852}],75:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-"use strict";
->>>>>>> Implement DownloadTableDataButton component
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -9520,129 +8894,7 @@ var QuestionAnswerTagFrom = function (_Component) {
 
 exports.default = QuestionAnswerTagFrom;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../api/topic-tag":13,"../api/topic-tagging":14,"is-empty":458,"lodash/find":653,"lodash/get":656,"react":856}],85:[function(require,module,exports){
-=======
-},{"../models/question":87,"../modules/authenticity-token":88,"../modules/jump":92,"./panel":75,"./question-answer-form/answer-file-preview":77,"axios":98,"is-empty":454,"lodash/debounce":649,"lodash/forEach":657,"lodash/get":658,"lodash/includes":661,"lodash/trim":697,"object-to-formdata":701,"react":862,"react-radio-group":716,"react-textarea-autosize":732}],77:[function(require,module,exports){
-=======
-},{"../models/question":86,"../modules/authenticity-token":87,"../modules/jump":91,"./panel":74,"./question-answer-form/answer-file-preview":76,"axios":97,"is-empty":451,"lodash/debounce":640,"lodash/forEach":648,"lodash/get":649,"lodash/includes":652,"lodash/trim":688,"object-to-formdata":692,"react":852,"react-radio-group":706,"react-textarea-autosize":722}],76:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _includes = require("lodash/includes");
-
-var _includes2 = _interopRequireDefault(_includes);
-
-var _last = require("lodash/last");
-
-var _last2 = _interopRequireDefault(_last);
-
-var _merge = require("lodash/merge");
-
-var _merge2 = _interopRequireDefault(_merge);
-
-var _bytes = require("bytes");
-
-var _bytes2 = _interopRequireDefault(_bytes);
-
-var _imageFileTypes = require("../../modules/image-file-types");
-
-var _imageFileTypes2 = _interopRequireDefault(_imageFileTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AnswerFilePreview = function (_Component) {
-  _inherits(AnswerFilePreview, _Component);
-
-  function AnswerFilePreview() {
-    _classCallCheck(this, AnswerFilePreview);
-
-    return _possibleConstructorReturn(this, (AnswerFilePreview.__proto__ || Object.getPrototypeOf(AnswerFilePreview)).apply(this, arguments));
-  }
-
-  _createClass(AnswerFilePreview, [{
-    key: "render",
-    value: function render() {
-      var answerFile = this.props.answerFile;
-
-
-      if ((0, _includes2.default)(_imageFileTypes2.default, answerFile.fileType)) {
-        return this.renderImage();
-      } else {
-        return this.renderLink();
-      }
-    }
-  }, {
-    key: "renderImage",
-    value: function renderImage() {
-      var answerFile = this.props.answerFile;
-
-      var baseStyle = { maxWidth: "320px", maxHeight: "320px" };
-      var opacityStyle = answerFile.isDeleted ? { opacity: "0.4" } : {};
-      var style = (0, _merge2.default)(baseStyle, opacityStyle);
-
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement("img", { src: answerFile.file.url, style: style })
-      );
-    }
-  }, {
-    key: "renderLink",
-    value: function renderLink() {
-      var answerFile = this.props.answerFile;
-
-      var fileName = (0, _last2.default)(answerFile.file.url.split("/"));
-
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(
-          "a",
-          { href: answerFile.file.url, target: "_blank" },
-          fileName
-        ),
-        _react2.default.createElement("br", null),
-        _react2.default.createElement(
-          "small",
-          null,
-          "\u30D5\u30A1\u30A4\u30EB\u30BF\u30A4\u30D7\uFF1A",
-          answerFile.fileType,
-          ", \u30D5\u30A1\u30A4\u30EB\u30B5\u30A4\u30BA\uFF1A",
-          (0, _bytes2.default)(answerFile.fileSize)
-        )
-      );
-    }
-  }]);
-
-  return AnswerFilePreview;
-}(_react.Component);
-
-exports.default = AnswerFilePreview;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"../../modules/image-file-types":91,"bytes":124,"lodash/includes":661,"lodash/last":682,"lodash/merge":684,"react":862}],78:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../../modules/image-file-types":90,"bytes":123,"lodash/includes":652,"lodash/last":673,"lodash/merge":675,"react":852}],77:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9766,15 +9018,7 @@ var Tree = function (_Component) {
 
 exports.default = Tree;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./tree/add-node":86,"./tree/answer-node":87,"./tree/question-node":91,"lodash/includes":659,"lodash/isFunction":666,"react":856}],86:[function(require,module,exports){
-=======
-},{"./tree/add-node":79,"./tree/answer-node":80,"./tree/question-node":84,"lodash/includes":661,"lodash/isFunction":669,"react":862}],79:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./tree/add-node":78,"./tree/answer-node":79,"./tree/question-node":83,"lodash/includes":652,"lodash/isFunction":660,"react":852}],78:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9859,15 +9103,7 @@ var AddNode = function (_Component) {
 
 exports.default = AddNode;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"classnames":131,"react":856}],87:[function(require,module,exports){
-=======
-},{"classnames":125,"react":862}],80:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"classnames":124,"react":852}],79:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9997,15 +9233,7 @@ var AnswerNode = function (_BaseNode) {
 
 exports.default = AnswerNode;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./base-node":88,"./decision-branch-nodes":90,"classnames":131,"is-empty":458,"lodash/assign":640,"lodash/includes":659,"lodash/isEqual":665,"react":856}],88:[function(require,module,exports){
-=======
-},{"./base-node":81,"./decision-branch-nodes":83,"classnames":125,"is-empty":454,"lodash/assign":641,"lodash/includes":661,"lodash/isEqual":668,"react":862}],81:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./base-node":80,"./decision-branch-nodes":82,"classnames":124,"is-empty":451,"lodash/assign":632,"lodash/includes":652,"lodash/isEqual":659,"react":852}],80:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10062,15 +9290,7 @@ var BaseNode = function (_Component) {
 
 exports.default = BaseNode;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],89:[function(require,module,exports){
-=======
-},{"react":862}],82:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],81:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10209,15 +9429,7 @@ var DecisionBranchNode = function (_BaseNode) {
 
 exports.default = DecisionBranchNode;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./answer-node":87,"./base-node":88,"classnames":131,"is-empty":458,"lodash/assign":640,"lodash/get":656,"lodash/includes":659,"react":856}],90:[function(require,module,exports){
-=======
-},{"./answer-node":80,"./base-node":81,"classnames":125,"is-empty":454,"lodash/assign":641,"lodash/get":658,"lodash/includes":661,"react":862}],83:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./answer-node":79,"./base-node":80,"classnames":124,"is-empty":451,"lodash/assign":632,"lodash/get":649,"lodash/includes":652,"react":852}],82:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10319,15 +9531,7 @@ var DecisionBranchNodes = function (_BaseNode) {
 
 exports.default = DecisionBranchNodes;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./base-node":88,"./decision-branch-node":89,"is-empty":458,"lodash/assign":640,"lodash/includes":659,"react":856}],91:[function(require,module,exports){
-=======
-},{"./base-node":81,"./decision-branch-node":82,"is-empty":454,"lodash/assign":641,"lodash/includes":661,"react":862}],84:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./base-node":80,"./decision-branch-node":81,"is-empty":451,"lodash/assign":632,"lodash/includes":652,"react":852}],83:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10467,15 +9671,7 @@ var QuestionNode = function (_BaseNode) {
 
 exports.default = QuestionNode;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./answer-node":87,"./base-node":88,"classnames":131,"is-empty":458,"lodash/filter":652,"lodash/get":656,"lodash/includes":659,"lodash/isEqual":665,"react":856}],92:[function(require,module,exports){
-=======
-},{"./answer-node":80,"./base-node":81,"classnames":125,"is-empty":454,"lodash/filter":653,"lodash/get":658,"lodash/includes":661,"lodash/isEqual":668,"react":862}],85:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./answer-node":79,"./base-node":80,"classnames":124,"is-empty":451,"lodash/filter":644,"lodash/get":649,"lodash/includes":652,"lodash/isEqual":659,"react":852}],84:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10620,15 +9816,7 @@ var Answer = function () {
 
 exports.default = Answer;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../modules/authenticity-token":95,"../modules/snake-case-keys":101,"./decision-branch":93,"./question":94,"axios":104,"lodash/assign":640}],93:[function(require,module,exports){
-=======
-},{"../modules/authenticity-token":88,"../modules/snake-case-keys":95,"./decision-branch":86,"./question":87,"axios":98,"lodash/assign":641}],86:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../modules/authenticity-token":87,"../modules/snake-case-keys":94,"./decision-branch":85,"./question":86,"axios":97,"lodash/assign":632}],85:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10752,15 +9940,7 @@ var DecisionBranch = function () {
 
 exports.default = DecisionBranch;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../modules/authenticity-token":95,"../modules/snake-case-keys":101,"./answer":92,"axios":104,"lodash/assign":640}],94:[function(require,module,exports){
-=======
-},{"../modules/authenticity-token":88,"../modules/snake-case-keys":95,"./answer":85,"axios":98,"lodash/assign":641}],87:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../modules/authenticity-token":87,"../modules/snake-case-keys":94,"./answer":84,"axios":97,"lodash/assign":632}],86:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10899,15 +10079,7 @@ var Question = function () {
 
 exports.default = Question;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../modules/authenticity-token":95,"../modules/snake-case-keys":101,"./answer":92,"axios":104,"lodash/assign":640}],95:[function(require,module,exports){
-=======
-},{"../modules/authenticity-token":88,"../modules/snake-case-keys":95,"./answer":85,"axios":98,"lodash/assign":641}],88:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../modules/authenticity-token":87,"../modules/snake-case-keys":94,"./answer":84,"axios":97,"lodash/assign":632}],87:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10918,15 +10090,7 @@ function authenticityToken() {
   return (document.querySelector("meta[name='csrf-token']") || {}).content;
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],96:[function(require,module,exports){
-=======
-},{}],89:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],88:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10958,15 +10122,7 @@ function getData(el, ignoreKeyword) {
   return data;
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./parse-json":100,"lodash/camelCase":642}],97:[function(require,module,exports){
-=======
-},{"./parse-json":94,"lodash/camelCase":643}],90:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./parse-json":93,"lodash/camelCase":634}],89:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10993,15 +10149,7 @@ function getOffset(elem) {
   return rect;
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],98:[function(require,module,exports){
-=======
-},{}],91:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],90:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11011,32 +10159,7 @@ var ImageFileTypes = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
 
 exports.default = ImageFileTypes;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],99:[function(require,module,exports){
-=======
-},{}],92:[function(require,module,exports){
-=======
-},{}],91:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function to(url) {
-  window.location.href = url;
-}
-
-var jump = { to: to };
-exports.default = jump;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{}],93:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],92:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11133,15 +10256,7 @@ function getProps(node) {
   return (0, _getData2.default)(node, "component");
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./get-data":96,"react":856,"react-dom":707,"react-redux":720,"redux":880,"redux-logger":872,"redux-thunk":874}],100:[function(require,module,exports){
-=======
-},{"./get-data":89,"react":862,"react-dom":712,"react-redux":726,"redux":886,"redux-logger":878,"redux-thunk":880}],94:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./get-data":88,"react":852,"react-dom":702,"react-redux":716,"redux":876,"redux-logger":868,"redux-thunk":870}],93:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11156,15 +10271,7 @@ function parseJSON(string) {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],101:[function(require,module,exports){
-=======
-},{}],95:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],94:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11189,15 +10296,7 @@ function snakeCaseKeys(object) {
   }, {});
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash/reduce":685,"lodash/snakeCase":686}],102:[function(require,module,exports){
-=======
-},{"lodash/reduce":688,"lodash/snakeCase":689}],96:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash/reduce":679,"lodash/snakeCase":680}],95:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 // rawAsap provides everything we need except exception management.
@@ -11265,15 +10364,7 @@ RawTask.prototype.call = function () {
     }
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./raw":103}],103:[function(require,module,exports){
-=======
-},{"./raw":97}],97:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./raw":96}],96:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (global){
 "use strict";
 
@@ -11500,21 +10591,9 @@ rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
 // https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],104:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":106}],105:[function(require,module,exports){
-=======
-},{}],98:[function(require,module,exports){
-module.exports = require('./lib/axios');
-},{"./lib/axios":100}],99:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],97:[function(require,module,exports){
-module.exports = require('./lib/axios');
-},{"./lib/axios":99}],98:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (process){
 'use strict';
 
@@ -11695,15 +10774,7 @@ module.exports = function xhrAdapter(config) {
 };
 
 }).call(this,require('_process'))
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../core/createError":112,"./../core/settle":115,"./../helpers/btoa":119,"./../helpers/buildURL":120,"./../helpers/cookies":122,"./../helpers/isURLSameOrigin":124,"./../helpers/parseHeaders":126,"./../utils":128,"_process":698}],106:[function(require,module,exports){
-=======
-},{"../core/createError":106,"./../core/settle":109,"./../helpers/btoa":113,"./../helpers/buildURL":114,"./../helpers/cookies":116,"./../helpers/isURLSameOrigin":118,"./../helpers/parseHeaders":120,"./../utils":122,"_process":703}],100:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../core/createError":105,"./../core/settle":108,"./../helpers/btoa":112,"./../helpers/buildURL":113,"./../helpers/cookies":115,"./../helpers/isURLSameOrigin":117,"./../helpers/parseHeaders":119,"./../utils":121,"_process":693}],99:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./utils');
@@ -11757,15 +10828,7 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./cancel/Cancel":107,"./cancel/CancelToken":108,"./cancel/isCancel":109,"./core/Axios":110,"./defaults":117,"./helpers/bind":118,"./helpers/spread":127,"./utils":128}],107:[function(require,module,exports){
-=======
-},{"./cancel/Cancel":101,"./cancel/CancelToken":102,"./cancel/isCancel":103,"./core/Axios":104,"./defaults":111,"./helpers/bind":112,"./helpers/spread":121,"./utils":122}],101:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./cancel/Cancel":100,"./cancel/CancelToken":101,"./cancel/isCancel":102,"./core/Axios":103,"./defaults":110,"./helpers/bind":111,"./helpers/spread":120,"./utils":121}],100:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 /**
@@ -11786,15 +10849,7 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],108:[function(require,module,exports){
-=======
-},{}],102:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],101:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var Cancel = require('./Cancel');
@@ -11853,30 +10908,14 @@ CancelToken.source = function source() {
 
 module.exports = CancelToken;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Cancel":107}],109:[function(require,module,exports){
-=======
-},{"./Cancel":101}],103:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Cancel":100}],102:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],110:[function(require,module,exports){
-=======
-},{}],104:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],103:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var defaults = require('./../defaults');
@@ -11963,15 +11002,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = Axios;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../defaults":117,"./../helpers/combineURLs":121,"./../helpers/isAbsoluteURL":123,"./../utils":128,"./InterceptorManager":111,"./dispatchRequest":113}],111:[function(require,module,exports){
-=======
-},{"./../defaults":111,"./../helpers/combineURLs":115,"./../helpers/isAbsoluteURL":117,"./../utils":122,"./InterceptorManager":105,"./dispatchRequest":107}],105:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../defaults":110,"./../helpers/combineURLs":114,"./../helpers/isAbsoluteURL":116,"./../utils":121,"./InterceptorManager":104,"./dispatchRequest":106}],104:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12025,15 +11056,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../utils":128}],112:[function(require,module,exports){
-=======
-},{"./../utils":122}],106:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../utils":121}],105:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var enhanceError = require('./enhanceError');
@@ -12052,15 +11075,7 @@ module.exports = function createError(message, config, code, response) {
   return enhanceError(error, config, code, response);
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./enhanceError":114}],113:[function(require,module,exports){
-=======
-},{"./enhanceError":108}],107:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./enhanceError":107}],106:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12141,15 +11156,7 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../cancel/isCancel":109,"../defaults":117,"./../utils":128,"./transformData":116}],114:[function(require,module,exports){
-=======
-},{"../cancel/isCancel":103,"../defaults":111,"./../utils":122,"./transformData":110}],108:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../cancel/isCancel":102,"../defaults":110,"./../utils":121,"./transformData":109}],107:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 /**
@@ -12170,15 +11177,7 @@ module.exports = function enhanceError(error, config, code, response) {
   return error;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],115:[function(require,module,exports){
-=======
-},{}],109:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],108:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var createError = require('./createError');
@@ -12205,15 +11204,7 @@ module.exports = function settle(resolve, reject, response) {
   }
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./createError":112}],116:[function(require,module,exports){
-=======
-},{"./createError":106}],110:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./createError":105}],109:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12235,15 +11226,7 @@ module.exports = function transformData(data, headers, fns) {
   return data;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../utils":128}],117:[function(require,module,exports){
-=======
-},{"./../utils":122}],111:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../utils":121}],110:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (process){
 'use strict';
 
@@ -12340,15 +11323,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 }).call(this,require('_process'))
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./adapters/http":105,"./adapters/xhr":105,"./helpers/normalizeHeaderName":125,"./utils":128,"_process":698}],118:[function(require,module,exports){
-=======
-},{"./adapters/http":99,"./adapters/xhr":99,"./helpers/normalizeHeaderName":119,"./utils":122,"_process":703}],112:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./adapters/http":98,"./adapters/xhr":98,"./helpers/normalizeHeaderName":118,"./utils":121,"_process":693}],111:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -12361,15 +11336,7 @@ module.exports = function bind(fn, thisArg) {
   };
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],119:[function(require,module,exports){
-=======
-},{}],113:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],112:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 // btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
@@ -12407,15 +11374,7 @@ function btoa(input) {
 
 module.exports = btoa;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],120:[function(require,module,exports){
-=======
-},{}],114:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],113:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12485,15 +11444,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../utils":128}],121:[function(require,module,exports){
-=======
-},{"./../utils":122}],115:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../utils":121}],114:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 /**
@@ -12507,15 +11458,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
   return baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '');
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],122:[function(require,module,exports){
-=======
-},{}],116:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],115:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12570,15 +11513,7 @@ module.exports = (
   })()
 );
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../utils":128}],123:[function(require,module,exports){
-=======
-},{"./../utils":122}],117:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../utils":121}],116:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 /**
@@ -12594,15 +11529,7 @@ module.exports = function isAbsoluteURL(url) {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],124:[function(require,module,exports){
-=======
-},{}],118:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],117:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12672,15 +11599,7 @@ module.exports = (
   })()
 );
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../utils":128}],125:[function(require,module,exports){
-=======
-},{"./../utils":122}],119:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../utils":121}],118:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('../utils');
@@ -12694,15 +11613,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
   });
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../utils":128}],126:[function(require,module,exports){
-=======
-},{"../utils":122}],120:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../utils":121}],119:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var utils = require('./../utils');
@@ -12741,15 +11652,7 @@ module.exports = function parseHeaders(headers) {
   return parsed;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./../utils":128}],127:[function(require,module,exports){
-=======
-},{"./../utils":122}],121:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./../utils":121}],120:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 /**
@@ -12778,15 +11681,7 @@ module.exports = function spread(callback) {
   };
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],128:[function(require,module,exports){
-=======
-},{}],122:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],121:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var bind = require('./helpers/bind');
@@ -13087,15 +11982,7 @@ module.exports = {
   trim: trim
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./helpers/bind":118}],129:[function(require,module,exports){
-=======
-},{"./helpers/bind":112}],123:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./helpers/bind":111}],122:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (global){
 "use strict";
 
@@ -13126,15 +12013,7 @@ define(String.prototype, "padRight", "".padEnd);
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"core-js/fn/regexp/escape":133,"core-js/shim":426,"regenerator-runtime/runtime":882}],130:[function(require,module,exports){
-=======
-},{"core-js/fn/regexp/escape":127,"core-js/shim":420,"regenerator-runtime/runtime":888}],124:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"core-js/fn/regexp/escape":126,"core-js/shim":419,"regenerator-runtime/runtime":878}],123:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /*!
  * bytes
  * Copyright(c) 2012-2014 TJ Holowaychuk
@@ -13298,15 +12177,7 @@ function parse(val) {
   return Math.floor(map[unit] * floatValue);
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],131:[function(require,module,exports){
-=======
-},{}],125:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],124:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -13356,15 +12227,7 @@ function parse(val) {
 	}
 }());
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],132:[function(require,module,exports){
-=======
-},{}],126:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],125:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var deselectCurrent = require('toggle-selection');
@@ -13444,51 +12307,21 @@ function copy(text, options) {
 
 module.exports = copy;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"toggle-selection":888}],133:[function(require,module,exports){
 require('../../modules/core.regexp.escape');
 module.exports = require('../../modules/_core').RegExp.escape;
 },{"../../modules/_core":154,"../../modules/core.regexp.escape":250}],134:[function(require,module,exports){
-=======
-},{"toggle-selection":894}],127:[function(require,module,exports){
-require('../../modules/core.regexp.escape');
-module.exports = require('../../modules/_core').RegExp.escape;
-},{"../../modules/_core":148,"../../modules/core.regexp.escape":244}],128:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"toggle-selection":884}],126:[function(require,module,exports){
-require('../../modules/core.regexp.escape');
-module.exports = require('../../modules/_core').RegExp.escape;
-},{"../../modules/_core":147,"../../modules/core.regexp.escape":243}],127:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 module.exports = function(it){
   if(typeof it != 'function')throw TypeError(it + ' is not a function!');
   return it;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],135:[function(require,module,exports){
-=======
-},{}],129:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],128:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var cof = require('./_cof');
 module.exports = function(it, msg){
   if(typeof it != 'number' && cof(it) != 'Number')throw TypeError(msg);
   return +it;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149}],136:[function(require,module,exports){
-=======
-},{"./_cof":143}],130:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142}],129:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 22.1.3.31 Array.prototype[@@unscopables]
 var UNSCOPABLES = require('./_wks')('unscopables')
   , ArrayProto  = Array.prototype;
@@ -13496,43 +12329,19 @@ if(ArrayProto[UNSCOPABLES] == undefined)require('./_hide')(ArrayProto, UNSCOPABL
 module.exports = function(key){
   ArrayProto[UNSCOPABLES][key] = true;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_hide":171,"./_wks":248}],137:[function(require,module,exports){
-=======
-},{"./_hide":165,"./_wks":242}],131:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_hide":164,"./_wks":241}],130:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 module.exports = function(it, Constructor, name, forbiddenField){
   if(!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)){
     throw TypeError(name + ': incorrect invocation!');
   } return it;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],138:[function(require,module,exports){
-=======
-},{}],132:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],131:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./_is-object');
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180}],139:[function(require,module,exports){
-=======
-},{"./_is-object":174}],133:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173}],132:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 'use strict';
 var toObject = require('./_to-object')
@@ -13559,15 +12368,7 @@ module.exports = [].copyWithin || function copyWithin(target/*= 0*/, start/*= 0,
     from += inc;
   } return O;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_to-index":236,"./_to-length":239,"./_to-object":240}],140:[function(require,module,exports){
-=======
-},{"./_to-index":230,"./_to-length":233,"./_to-object":234}],134:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_to-index":229,"./_to-length":232,"./_to-object":233}],133:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 'use strict';
 var toObject = require('./_to-object')
@@ -13583,15 +12384,7 @@ module.exports = function fill(value /*, start = 0, end = @length */){
   while(endPos > index)O[index++] = value;
   return O;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_to-index":236,"./_to-length":239,"./_to-object":240}],141:[function(require,module,exports){
-=======
-},{"./_to-index":230,"./_to-length":233,"./_to-object":234}],135:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_to-index":229,"./_to-length":232,"./_to-object":233}],134:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var forOf = require('./_for-of');
 
 module.exports = function(iter, ITERATOR){
@@ -13600,15 +12393,7 @@ module.exports = function(iter, ITERATOR){
   return result;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_for-of":168}],142:[function(require,module,exports){
-=======
-},{"./_for-of":162}],136:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_for-of":161}],135:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = require('./_to-iobject')
@@ -13630,15 +12415,7 @@ module.exports = function(IS_INCLUDES){
     } return !IS_INCLUDES && -1;
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_to-index":236,"./_to-iobject":238,"./_to-length":239}],143:[function(require,module,exports){
-=======
-},{"./_to-index":230,"./_to-iobject":232,"./_to-length":233}],137:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_to-index":229,"./_to-iobject":231,"./_to-length":232}],136:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 0 -> Array#forEach
 // 1 -> Array#map
 // 2 -> Array#filter
@@ -13683,15 +12460,7 @@ module.exports = function(TYPE, $create){
     return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-species-create":146,"./_ctx":156,"./_iobject":176,"./_to-length":239,"./_to-object":240}],144:[function(require,module,exports){
-=======
-},{"./_array-species-create":140,"./_ctx":150,"./_iobject":170,"./_to-length":233,"./_to-object":234}],138:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-species-create":139,"./_ctx":149,"./_iobject":169,"./_to-length":232,"./_to-object":233}],137:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var aFunction = require('./_a-function')
   , toObject  = require('./_to-object')
   , IObject   = require('./_iobject')
@@ -13720,15 +12489,7 @@ module.exports = function(that, callbackfn, aLen, memo, isRight){
   }
   return memo;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_iobject":176,"./_to-length":239,"./_to-object":240}],145:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_iobject":170,"./_to-length":233,"./_to-object":234}],139:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_iobject":169,"./_to-length":232,"./_to-object":233}],138:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./_is-object')
   , isArray  = require('./_is-array')
   , SPECIES  = require('./_wks')('species');
@@ -13745,30 +12506,14 @@ module.exports = function(original){
     }
   } return C === undefined ? Array : C;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-array":178,"./_is-object":180,"./_wks":248}],146:[function(require,module,exports){
-=======
-},{"./_is-array":172,"./_is-object":174,"./_wks":242}],140:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-array":171,"./_is-object":173,"./_wks":241}],139:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
 var speciesConstructor = require('./_array-species-constructor');
 
 module.exports = function(original, length){
   return new (speciesConstructor(original))(length);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-species-constructor":145}],147:[function(require,module,exports){
-=======
-},{"./_array-species-constructor":139}],141:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-species-constructor":138}],140:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var aFunction  = require('./_a-function')
   , isObject   = require('./_is-object')
@@ -13793,15 +12538,7 @@ module.exports = Function.bind || function bind(that /*, args... */){
   if(isObject(fn.prototype))bound.prototype = fn.prototype;
   return bound;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_invoke":175,"./_is-object":180}],148:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_invoke":169,"./_is-object":174}],142:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_invoke":168,"./_is-object":173}],141:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = require('./_cof')
   , TAG = require('./_wks')('toStringTag')
@@ -13825,29 +12562,13 @@ module.exports = function(it){
     // ES3 arguments fallback
     : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_wks":248}],149:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_wks":242}],143:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_wks":241}],142:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],150:[function(require,module,exports){
-=======
-},{}],144:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],143:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var dP          = require('./_object-dp').f
   , create      = require('./_object-create')
@@ -13990,15 +12711,7 @@ module.exports = {
     setSpecies(NAME);
   }
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-instance":137,"./_ctx":156,"./_defined":158,"./_descriptors":159,"./_for-of":168,"./_iter-define":184,"./_iter-step":186,"./_meta":193,"./_object-create":197,"./_object-dp":198,"./_redefine-all":217,"./_set-species":222}],151:[function(require,module,exports){
-=======
-},{"./_an-instance":131,"./_ctx":150,"./_defined":152,"./_descriptors":153,"./_for-of":162,"./_iter-define":178,"./_iter-step":180,"./_meta":187,"./_object-create":191,"./_object-dp":192,"./_redefine-all":211,"./_set-species":216}],145:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-instance":130,"./_ctx":149,"./_defined":151,"./_descriptors":152,"./_for-of":161,"./_iter-define":177,"./_iter-step":179,"./_meta":186,"./_object-create":190,"./_object-dp":191,"./_redefine-all":210,"./_set-species":215}],144:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var classof = require('./_classof')
   , from    = require('./_array-from-iterable');
@@ -14008,15 +12721,7 @@ module.exports = function(NAME){
     return from(this);
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-from-iterable":141,"./_classof":148}],152:[function(require,module,exports){
-=======
-},{"./_array-from-iterable":135,"./_classof":142}],146:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-from-iterable":134,"./_classof":141}],145:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var redefineAll       = require('./_redefine-all')
   , getWeak           = require('./_meta').getWeak
@@ -14100,15 +12805,7 @@ module.exports = {
   },
   ufstore: uncaughtFrozenStore
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-instance":137,"./_an-object":138,"./_array-methods":143,"./_for-of":168,"./_has":170,"./_is-object":180,"./_meta":193,"./_redefine-all":217}],153:[function(require,module,exports){
-=======
-},{"./_an-instance":131,"./_an-object":132,"./_array-methods":137,"./_for-of":162,"./_has":164,"./_is-object":174,"./_meta":187,"./_redefine-all":211}],147:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-instance":130,"./_an-object":131,"./_array-methods":136,"./_for-of":161,"./_has":163,"./_is-object":173,"./_meta":186,"./_redefine-all":210}],146:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var global            = require('./_global')
   , $export           = require('./_export')
@@ -14194,24 +12891,10 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 
   return C;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-instance":137,"./_export":163,"./_fails":165,"./_for-of":168,"./_global":169,"./_inherit-if-required":174,"./_is-object":180,"./_iter-detect":185,"./_meta":193,"./_redefine":218,"./_redefine-all":217,"./_set-to-string-tag":223}],154:[function(require,module,exports){
 var core = module.exports = {version: '2.4.0'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 },{}],155:[function(require,module,exports){
-=======
-},{"./_an-instance":131,"./_export":157,"./_fails":159,"./_for-of":162,"./_global":163,"./_inherit-if-required":168,"./_is-object":174,"./_iter-detect":179,"./_meta":187,"./_redefine":212,"./_redefine-all":211,"./_set-to-string-tag":217}],148:[function(require,module,exports){
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],149:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-instance":130,"./_export":156,"./_fails":158,"./_for-of":161,"./_global":162,"./_inherit-if-required":167,"./_is-object":173,"./_iter-detect":178,"./_meta":186,"./_redefine":211,"./_redefine-all":210,"./_set-to-string-tag":216}],147:[function(require,module,exports){
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],148:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $defineProperty = require('./_object-dp')
   , createDesc      = require('./_property-desc');
@@ -14220,15 +12903,7 @@ module.exports = function(object, index, value){
   if(index in object)$defineProperty.f(object, index, createDesc(0, value));
   else object[index] = value;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-dp":198,"./_property-desc":216}],156:[function(require,module,exports){
-=======
-},{"./_object-dp":192,"./_property-desc":210}],150:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-dp":191,"./_property-desc":209}],149:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // optional / simple context binding
 var aFunction = require('./_a-function');
 module.exports = function(fn, that, length){
@@ -14249,15 +12924,7 @@ module.exports = function(fn, that, length){
     return fn.apply(that, arguments);
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134}],157:[function(require,module,exports){
-=======
-},{"./_a-function":128}],151:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127}],150:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var anObject    = require('./_an-object')
   , toPrimitive = require('./_to-primitive')
@@ -14267,42 +12934,18 @@ module.exports = function(hint){
   if(hint !== 'string' && hint !== NUMBER && hint !== 'default')throw TypeError('Incorrect hint');
   return toPrimitive(anObject(this), hint != NUMBER);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_to-primitive":241}],158:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_to-primitive":235}],152:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_to-primitive":234}],151:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],159:[function(require,module,exports){
-=======
-},{}],153:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],152:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // Thank's IE8 for his funny defineProperty
 module.exports = !require('./_fails')(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fails":165}],160:[function(require,module,exports){
-=======
-},{"./_fails":159}],154:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fails":158}],153:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./_is-object')
   , document = require('./_global').document
   // in old IE typeof document.createElement is 'object'
@@ -14310,28 +12953,12 @@ var isObject = require('./_is-object')
 module.exports = function(it){
   return is ? document.createElement(it) : {};
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169,"./_is-object":180}],161:[function(require,module,exports){
-=======
-},{"./_global":163,"./_is-object":174}],155:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162,"./_is-object":173}],154:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // IE 8- don't enum bug keys
 module.exports = (
   'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
 ).split(',');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],162:[function(require,module,exports){
-=======
-},{}],156:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],155:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // all enumerable object keys, includes symbols
 var getKeys = require('./_object-keys')
   , gOPS    = require('./_object-gops')
@@ -14347,15 +12974,7 @@ module.exports = function(it){
     while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))result.push(key);
   } return result;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-gops":204,"./_object-keys":207,"./_object-pie":208}],163:[function(require,module,exports){
-=======
-},{"./_object-gops":198,"./_object-keys":201,"./_object-pie":202}],157:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-gops":197,"./_object-keys":200,"./_object-pie":201}],156:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global    = require('./_global')
   , core      = require('./_core')
   , hide      = require('./_hide')
@@ -14399,15 +13018,7 @@ $export.W = 32;  // wrap
 $export.U = 64;  // safe
 $export.R = 128; // real proto method for `library` 
 module.exports = $export;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_core":154,"./_ctx":156,"./_global":169,"./_hide":171,"./_redefine":218}],164:[function(require,module,exports){
-=======
-},{"./_core":148,"./_ctx":150,"./_global":163,"./_hide":165,"./_redefine":212}],158:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_core":147,"./_ctx":149,"./_global":162,"./_hide":164,"./_redefine":211}],157:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var MATCH = require('./_wks')('match');
 module.exports = function(KEY){
   var re = /./;
@@ -14420,15 +13031,7 @@ module.exports = function(KEY){
     } catch(f){ /* empty */ }
   } return true;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_wks":248}],165:[function(require,module,exports){
-=======
-},{"./_wks":242}],159:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_wks":241}],158:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 module.exports = function(exec){
   try {
     return !!exec();
@@ -14436,15 +13039,7 @@ module.exports = function(exec){
     return true;
   }
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],166:[function(require,module,exports){
-=======
-},{}],160:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],159:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var hide     = require('./_hide')
   , redefine = require('./_redefine')
@@ -14473,15 +13068,7 @@ module.exports = function(KEY, length, exec){
     );
   }
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_fails":165,"./_hide":171,"./_redefine":218,"./_wks":248}],167:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_fails":159,"./_hide":165,"./_redefine":212,"./_wks":242}],161:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_fails":158,"./_hide":164,"./_redefine":211,"./_wks":241}],160:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 21.2.5.3 get RegExp.prototype.flags
 var anObject = require('./_an-object');
@@ -14495,15 +13082,7 @@ module.exports = function(){
   if(that.sticky)     result += 'y';
   return result;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138}],168:[function(require,module,exports){
-=======
-},{"./_an-object":132}],162:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131}],161:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var ctx         = require('./_ctx')
   , call        = require('./_iter-call')
   , isArrayIter = require('./_is-array-iter')
@@ -14529,41 +13108,17 @@ var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
 };
 exports.BREAK  = BREAK;
 exports.RETURN = RETURN;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_ctx":156,"./_is-array-iter":177,"./_iter-call":182,"./_to-length":239,"./core.get-iterator-method":249}],169:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_ctx":150,"./_is-array-iter":171,"./_iter-call":176,"./_to-length":233,"./core.get-iterator-method":243}],163:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_ctx":149,"./_is-array-iter":170,"./_iter-call":175,"./_to-length":232,"./core.get-iterator-method":242}],162:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],170:[function(require,module,exports){
-=======
-},{}],164:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],163:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var hasOwnProperty = {}.hasOwnProperty;
 module.exports = function(it, key){
   return hasOwnProperty.call(it, key);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],171:[function(require,module,exports){
-=======
-},{}],165:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],164:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var dP         = require('./_object-dp')
   , createDesc = require('./_property-desc');
 module.exports = require('./_descriptors') ? function(object, key, value){
@@ -14572,8 +13127,6 @@ module.exports = require('./_descriptors') ? function(object, key, value){
   object[key] = value;
   return object;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_object-dp":198,"./_property-desc":216}],172:[function(require,module,exports){
 module.exports = require('./_global').document && document.documentElement;
 },{"./_global":169}],173:[function(require,module,exports){
@@ -14581,22 +13134,6 @@ module.exports = !require('./_descriptors') && !require('./_fails')(function(){
   return Object.defineProperty(require('./_dom-create')('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
 },{"./_descriptors":159,"./_dom-create":160,"./_fails":165}],174:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_object-dp":192,"./_property-desc":210}],166:[function(require,module,exports){
-=======
-},{"./_descriptors":152,"./_object-dp":191,"./_property-desc":209}],165:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-module.exports = require('./_global').document && document.documentElement;
-},{"./_global":162}],166:[function(require,module,exports){
-module.exports = !require('./_descriptors') && !require('./_fails')(function(){
-  return Object.defineProperty(require('./_dom-create')('div'), 'a', {get: function(){ return 7; }}).a != 7;
-});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_descriptors":153,"./_dom-create":154,"./_fails":159}],168:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_dom-create":153,"./_fails":158}],167:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject       = require('./_is-object')
   , setPrototypeOf = require('./_set-proto').set;
 module.exports = function(that, target, C){
@@ -14605,15 +13142,7 @@ module.exports = function(that, target, C){
     setPrototypeOf(that, P);
   } return that;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_set-proto":221}],175:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_set-proto":215}],169:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_set-proto":214}],168:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
 module.exports = function(fn, args, that){
   var un = that === undefined;
@@ -14630,29 +13159,13 @@ module.exports = function(fn, args, that){
                       : fn.call(that, args[0], args[1], args[2], args[3]);
   } return              fn.apply(that, args);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],176:[function(require,module,exports){
-=======
-},{}],170:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],169:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = require('./_cof');
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149}],177:[function(require,module,exports){
-=======
-},{"./_cof":143}],171:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142}],170:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // check on default Array iterator
 var Iterators  = require('./_iterators')
   , ITERATOR   = require('./_wks')('iterator')
@@ -14661,56 +13174,24 @@ var Iterators  = require('./_iterators')
 module.exports = function(it){
   return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_iterators":187,"./_wks":248}],178:[function(require,module,exports){
-=======
-},{"./_iterators":181,"./_wks":242}],172:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_iterators":180,"./_wks":241}],171:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.2.2 IsArray(argument)
 var cof = require('./_cof');
 module.exports = Array.isArray || function isArray(arg){
   return cof(arg) == 'Array';
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149}],179:[function(require,module,exports){
-=======
-},{"./_cof":143}],173:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142}],172:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.3 Number.isInteger(number)
 var isObject = require('./_is-object')
   , floor    = Math.floor;
 module.exports = function isInteger(it){
   return !isObject(it) && isFinite(it) && floor(it) === it;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180}],180:[function(require,module,exports){
 module.exports = function(it){
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 },{}],181:[function(require,module,exports){
-=======
-},{"./_is-object":174}],174:[function(require,module,exports){
-module.exports = function(it){
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-},{}],175:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173}],173:[function(require,module,exports){
-module.exports = function(it){
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-},{}],174:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.2.8 IsRegExp(argument)
 var isObject = require('./_is-object')
   , cof      = require('./_cof')
@@ -14719,15 +13200,7 @@ module.exports = function(it){
   var isRegExp;
   return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_is-object":180,"./_wks":248}],182:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_is-object":174,"./_wks":242}],176:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_is-object":173,"./_wks":241}],175:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // call something on iterator step with safe closing on error
 var anObject = require('./_an-object');
 module.exports = function(iterator, fn, value, entries){
@@ -14740,15 +13213,7 @@ module.exports = function(iterator, fn, value, entries){
     throw e;
   }
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138}],183:[function(require,module,exports){
-=======
-},{"./_an-object":132}],177:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131}],176:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var create         = require('./_object-create')
   , descriptor     = require('./_property-desc')
@@ -14762,15 +13227,7 @@ module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
   setToStringTag(Constructor, NAME + ' Iterator');
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_hide":171,"./_object-create":197,"./_property-desc":216,"./_set-to-string-tag":223,"./_wks":248}],184:[function(require,module,exports){
-=======
-},{"./_hide":165,"./_object-create":191,"./_property-desc":210,"./_set-to-string-tag":217,"./_wks":242}],178:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_hide":164,"./_object-create":190,"./_property-desc":209,"./_set-to-string-tag":216,"./_wks":241}],177:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var LIBRARY        = require('./_library')
   , $export        = require('./_export')
@@ -14841,15 +13298,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
   }
   return methods;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_has":170,"./_hide":171,"./_iter-create":183,"./_iterators":187,"./_library":189,"./_object-gpo":205,"./_redefine":218,"./_set-to-string-tag":223,"./_wks":248}],185:[function(require,module,exports){
-=======
-},{"./_export":157,"./_has":164,"./_hide":165,"./_iter-create":177,"./_iterators":181,"./_library":183,"./_object-gpo":199,"./_redefine":212,"./_set-to-string-tag":217,"./_wks":242}],179:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_has":163,"./_hide":164,"./_iter-create":176,"./_iterators":180,"./_library":182,"./_object-gpo":198,"./_redefine":211,"./_set-to-string-tag":216,"./_wks":241}],178:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var ITERATOR     = require('./_wks')('iterator')
   , SAFE_CLOSING = false;
 
@@ -14871,8 +13320,6 @@ module.exports = function(exec, skipClosing){
   } catch(e){ /* empty */ }
   return safe;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_wks":248}],186:[function(require,module,exports){
 module.exports = function(done, value){
   return {value: value, done: !!done};
@@ -14880,22 +13327,6 @@ module.exports = function(done, value){
 },{}],187:[function(require,module,exports){
 module.exports = {};
 },{}],188:[function(require,module,exports){
-=======
-},{"./_wks":242}],180:[function(require,module,exports){
-=======
-},{"./_wks":241}],179:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-module.exports = function(done, value){
-  return {value: value, done: !!done};
-};
-},{}],180:[function(require,module,exports){
-module.exports = {};
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{}],182:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],181:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getKeys   = require('./_object-keys')
   , toIObject = require('./_to-iobject');
 module.exports = function(object, el){
@@ -14906,21 +13337,9 @@ module.exports = function(object, el){
     , key;
   while(length > index)if(O[key = keys[index++]] === el)return key;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-keys":207,"./_to-iobject":238}],189:[function(require,module,exports){
 module.exports = false;
 },{}],190:[function(require,module,exports){
-=======
-},{"./_object-keys":201,"./_to-iobject":232}],183:[function(require,module,exports){
-module.exports = false;
-},{}],184:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-keys":200,"./_to-iobject":231}],182:[function(require,module,exports){
-module.exports = false;
-},{}],183:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.14 Math.expm1(x)
 var $expm1 = Math.expm1;
 module.exports = (!$expm1
@@ -14931,41 +13350,17 @@ module.exports = (!$expm1
 ) ? function expm1(x){
   return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
 } : $expm1;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],191:[function(require,module,exports){
-=======
-},{}],185:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],184:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.20 Math.log1p(x)
 module.exports = Math.log1p || function log1p(x){
   return (x = +x) > -1e-8 && x < 1e-8 ? x - x * x / 2 : Math.log(1 + x);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],192:[function(require,module,exports){
-=======
-},{}],186:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],185:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.28 Math.sign(x)
 module.exports = Math.sign || function sign(x){
   return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],193:[function(require,module,exports){
-=======
-},{}],187:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],186:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var META     = require('./_uid')('meta')
   , isObject = require('./_is-object')
   , has      = require('./_has')
@@ -15019,15 +13414,7 @@ var meta = module.exports = {
   getWeak:  getWeak,
   onFreeze: onFreeze
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fails":165,"./_has":170,"./_is-object":180,"./_object-dp":198,"./_uid":245}],194:[function(require,module,exports){
-=======
-},{"./_fails":159,"./_has":164,"./_is-object":174,"./_object-dp":192,"./_uid":239}],188:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fails":158,"./_has":163,"./_is-object":173,"./_object-dp":191,"./_uid":238}],187:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Map     = require('./es6.map')
   , $export = require('./_export')
   , shared  = require('./_shared')('metadata')
@@ -15079,15 +13466,7 @@ module.exports = {
   key: toMetaKey,
   exp: exp
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_shared":225,"./es6.map":280,"./es6.weak-map":386}],195:[function(require,module,exports){
-=======
-},{"./_export":157,"./_shared":219,"./es6.map":274,"./es6.weak-map":380}],189:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_shared":218,"./es6.map":273,"./es6.weak-map":379}],188:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global    = require('./_global')
   , macrotask = require('./_task').set
   , Observer  = global.MutationObserver || global.WebKitMutationObserver
@@ -15156,15 +13535,7 @@ module.exports = function(){
     } last = task;
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_global":169,"./_task":235}],196:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_global":163,"./_task":229}],190:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_global":162,"./_task":228}],189:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys  = require('./_object-keys')
@@ -15198,15 +13569,7 @@ module.exports = !$assign || require('./_fails')(function(){
     while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
   } return T;
 } : $assign;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fails":165,"./_iobject":176,"./_object-gops":204,"./_object-keys":207,"./_object-pie":208,"./_to-object":240}],197:[function(require,module,exports){
-=======
-},{"./_fails":159,"./_iobject":170,"./_object-gops":198,"./_object-keys":201,"./_object-pie":202,"./_to-object":234}],191:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fails":158,"./_iobject":169,"./_object-gops":197,"./_object-keys":200,"./_object-pie":201,"./_to-object":233}],190:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject    = require('./_an-object')
   , dPs         = require('./_object-dps')
@@ -15249,15 +13612,7 @@ module.exports = Object.create || function create(O, Properties){
   return Properties === undefined ? result : dPs(result, Properties);
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_dom-create":160,"./_enum-bug-keys":161,"./_html":172,"./_object-dps":199,"./_shared-key":224}],198:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_dom-create":154,"./_enum-bug-keys":155,"./_html":166,"./_object-dps":193,"./_shared-key":218}],192:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_dom-create":153,"./_enum-bug-keys":154,"./_html":165,"./_object-dps":192,"./_shared-key":217}],191:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var anObject       = require('./_an-object')
   , IE8_DOM_DEFINE = require('./_ie8-dom-define')
   , toPrimitive    = require('./_to-primitive')
@@ -15274,15 +13629,7 @@ exports.f = require('./_descriptors') ? Object.defineProperty : function defineP
   if('value' in Attributes)O[P] = Attributes.value;
   return O;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_descriptors":159,"./_ie8-dom-define":173,"./_to-primitive":241}],199:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_descriptors":153,"./_ie8-dom-define":167,"./_to-primitive":235}],193:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_descriptors":152,"./_ie8-dom-define":166,"./_to-primitive":234}],192:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var dP       = require('./_object-dp')
   , anObject = require('./_an-object')
   , getKeys  = require('./_object-keys');
@@ -15296,15 +13643,7 @@ module.exports = require('./_descriptors') ? Object.defineProperties : function 
   while(length > i)dP.f(O, P = keys[i++], Properties[P]);
   return O;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_descriptors":159,"./_object-dp":198,"./_object-keys":207}],200:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_descriptors":153,"./_object-dp":192,"./_object-keys":201}],194:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_descriptors":152,"./_object-dp":191,"./_object-keys":200}],193:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // Forced replacement prototype accessors methods
 module.exports = require('./_library')|| !require('./_fails')(function(){
   var K = Math.random();
@@ -15312,15 +13651,7 @@ module.exports = require('./_library')|| !require('./_fails')(function(){
   __defineSetter__.call(null, K, function(){ /* empty */});
   delete require('./_global')[K];
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fails":165,"./_global":169,"./_library":189}],201:[function(require,module,exports){
-=======
-},{"./_fails":159,"./_global":163,"./_library":183}],195:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fails":158,"./_global":162,"./_library":182}],194:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var pIE            = require('./_object-pie')
   , createDesc     = require('./_property-desc')
   , toIObject      = require('./_to-iobject')
@@ -15337,15 +13668,7 @@ exports.f = require('./_descriptors') ? gOPD : function getOwnPropertyDescriptor
   } catch(e){ /* empty */ }
   if(has(O, P))return createDesc(!pIE.f.call(O, P), O[P]);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_has":170,"./_ie8-dom-define":173,"./_object-pie":208,"./_property-desc":216,"./_to-iobject":238,"./_to-primitive":241}],202:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_has":164,"./_ie8-dom-define":167,"./_object-pie":202,"./_property-desc":210,"./_to-iobject":232,"./_to-primitive":235}],196:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_has":163,"./_ie8-dom-define":166,"./_object-pie":201,"./_property-desc":209,"./_to-iobject":231,"./_to-primitive":234}],195:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = require('./_to-iobject')
   , gOPN      = require('./_object-gopn').f
@@ -15366,15 +13689,7 @@ module.exports.f = function getOwnPropertyNames(it){
   return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-gopn":203,"./_to-iobject":238}],203:[function(require,module,exports){
-=======
-},{"./_object-gopn":197,"./_to-iobject":232}],197:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-gopn":196,"./_to-iobject":231}],196:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
 var $keys      = require('./_object-keys-internal')
   , hiddenKeys = require('./_enum-bug-keys').concat('length', 'prototype');
@@ -15382,21 +13697,9 @@ var $keys      = require('./_object-keys-internal')
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
   return $keys(O, hiddenKeys);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_enum-bug-keys":161,"./_object-keys-internal":206}],204:[function(require,module,exports){
 exports.f = Object.getOwnPropertySymbols;
 },{}],205:[function(require,module,exports){
-=======
-},{"./_enum-bug-keys":155,"./_object-keys-internal":200}],198:[function(require,module,exports){
-exports.f = Object.getOwnPropertySymbols;
-},{}],199:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_enum-bug-keys":154,"./_object-keys-internal":199}],197:[function(require,module,exports){
-exports.f = Object.getOwnPropertySymbols;
-},{}],198:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has         = require('./_has')
   , toObject    = require('./_to-object')
@@ -15410,15 +13713,7 @@ module.exports = Object.getPrototypeOf || function(O){
     return O.constructor.prototype;
   } return O instanceof Object ? ObjectProto : null;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_has":170,"./_shared-key":224,"./_to-object":240}],206:[function(require,module,exports){
-=======
-},{"./_has":164,"./_shared-key":218,"./_to-object":234}],200:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_has":163,"./_shared-key":217,"./_to-object":233}],199:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var has          = require('./_has')
   , toIObject    = require('./_to-iobject')
   , arrayIndexOf = require('./_array-includes')(false)
@@ -15436,15 +13731,7 @@ module.exports = function(object, names){
   }
   return result;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-includes":142,"./_has":170,"./_shared-key":224,"./_to-iobject":238}],207:[function(require,module,exports){
-=======
-},{"./_array-includes":136,"./_has":164,"./_shared-key":218,"./_to-iobject":232}],201:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-includes":135,"./_has":163,"./_shared-key":217,"./_to-iobject":231}],200:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
 var $keys       = require('./_object-keys-internal')
   , enumBugKeys = require('./_enum-bug-keys');
@@ -15452,21 +13739,9 @@ var $keys       = require('./_object-keys-internal')
 module.exports = Object.keys || function keys(O){
   return $keys(O, enumBugKeys);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_enum-bug-keys":161,"./_object-keys-internal":206}],208:[function(require,module,exports){
 exports.f = {}.propertyIsEnumerable;
 },{}],209:[function(require,module,exports){
-=======
-},{"./_enum-bug-keys":155,"./_object-keys-internal":200}],202:[function(require,module,exports){
-exports.f = {}.propertyIsEnumerable;
-},{}],203:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_enum-bug-keys":154,"./_object-keys-internal":199}],201:[function(require,module,exports){
-exports.f = {}.propertyIsEnumerable;
-},{}],202:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // most Object methods by ES6 should accept primitives
 var $export = require('./_export')
   , core    = require('./_core')
@@ -15477,15 +13752,7 @@ module.exports = function(KEY, exec){
   exp[KEY] = exec(fn);
   $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_core":154,"./_export":163,"./_fails":165}],210:[function(require,module,exports){
-=======
-},{"./_core":148,"./_export":157,"./_fails":159}],204:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_core":147,"./_export":156,"./_fails":158}],203:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getKeys   = require('./_object-keys')
   , toIObject = require('./_to-iobject')
   , isEnum    = require('./_object-pie').f;
@@ -15502,15 +13769,7 @@ module.exports = function(isEntries){
     } return result;
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-keys":207,"./_object-pie":208,"./_to-iobject":238}],211:[function(require,module,exports){
-=======
-},{"./_object-keys":201,"./_object-pie":202,"./_to-iobject":232}],205:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-keys":200,"./_object-pie":201,"./_to-iobject":231}],204:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // all object keys, includes non-enumerable and symbols
 var gOPN     = require('./_object-gopn')
   , gOPS     = require('./_object-gops')
@@ -15521,15 +13780,7 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it){
     , getSymbols = gOPS.f;
   return getSymbols ? keys.concat(getSymbols(it)) : keys;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_global":169,"./_object-gopn":203,"./_object-gops":204}],212:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_global":163,"./_object-gopn":197,"./_object-gops":198}],206:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_global":162,"./_object-gopn":196,"./_object-gops":197}],205:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $parseFloat = require('./_global').parseFloat
   , $trim       = require('./_string-trim').trim;
 
@@ -15538,15 +13789,7 @@ module.exports = 1 / $parseFloat(require('./_string-ws') + '-0') !== -Infinity ?
     , result = $parseFloat(string);
   return result === 0 && string.charAt(0) == '-' ? -0 : result;
 } : $parseFloat;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169,"./_string-trim":233,"./_string-ws":234}],213:[function(require,module,exports){
-=======
-},{"./_global":163,"./_string-trim":227,"./_string-ws":228}],207:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162,"./_string-trim":226,"./_string-ws":227}],206:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $parseInt = require('./_global').parseInt
   , $trim     = require('./_string-trim').trim
   , ws        = require('./_string-ws')
@@ -15556,15 +13799,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
   var string = $trim(String(str), 3);
   return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
 } : $parseInt;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169,"./_string-trim":233,"./_string-ws":234}],214:[function(require,module,exports){
-=======
-},{"./_global":163,"./_string-trim":227,"./_string-ws":228}],208:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162,"./_string-trim":226,"./_string-ws":227}],207:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var path      = require('./_path')
   , invoke    = require('./_invoke')
@@ -15588,21 +13823,9 @@ module.exports = function(/* ...pargs */){
     return invoke(fn, args, that);
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_invoke":175,"./_path":215}],215:[function(require,module,exports){
 module.exports = require('./_global');
 },{"./_global":169}],216:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_invoke":169,"./_path":209}],209:[function(require,module,exports){
-module.exports = require('./_global');
-},{"./_global":163}],210:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_invoke":168,"./_path":208}],208:[function(require,module,exports){
-module.exports = require('./_global');
-},{"./_global":162}],209:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 module.exports = function(bitmap, value){
   return {
     enumerable  : !(bitmap & 1),
@@ -15611,29 +13834,13 @@ module.exports = function(bitmap, value){
     value       : value
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],217:[function(require,module,exports){
-=======
-},{}],211:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],210:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var redefine = require('./_redefine');
 module.exports = function(target, src, safe){
   for(var key in src)redefine(target, key, src[key], safe);
   return target;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_redefine":218}],218:[function(require,module,exports){
-=======
-},{"./_redefine":212}],212:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_redefine":211}],211:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global    = require('./_global')
   , hide      = require('./_hide')
   , has       = require('./_has')
@@ -15666,15 +13873,7 @@ require('./_core').inspectSource = function(it){
 })(Function.prototype, TO_STRING, function toString(){
   return typeof this == 'function' && this[SRC] || $toString.call(this);
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_core":154,"./_global":169,"./_has":170,"./_hide":171,"./_uid":245}],219:[function(require,module,exports){
-=======
-},{"./_core":148,"./_global":163,"./_has":164,"./_hide":165,"./_uid":239}],213:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_core":147,"./_global":162,"./_has":163,"./_hide":164,"./_uid":238}],212:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 module.exports = function(regExp, replace){
   var replacer = replace === Object(replace) ? function(part){
     return replace[part];
@@ -15683,28 +13882,12 @@ module.exports = function(regExp, replace){
     return String(it).replace(regExp, replacer);
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],220:[function(require,module,exports){
-=======
-},{}],214:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],213:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.2.9 SameValue(x, y)
 module.exports = Object.is || function is(x, y){
   return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],221:[function(require,module,exports){
-=======
-},{}],215:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],214:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var isObject = require('./_is-object')
@@ -15730,15 +13913,7 @@ module.exports = {
     }({}, false) : undefined),
   check: check
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_ctx":156,"./_is-object":180,"./_object-gopd":201}],222:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_ctx":150,"./_is-object":174,"./_object-gopd":195}],216:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_ctx":149,"./_is-object":173,"./_object-gopd":194}],215:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var global      = require('./_global')
   , dP          = require('./_object-dp')
@@ -15752,15 +13927,7 @@ module.exports = function(KEY){
     get: function(){ return this; }
   });
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_global":169,"./_object-dp":198,"./_wks":248}],223:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_global":163,"./_object-dp":192,"./_wks":242}],217:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_global":162,"./_object-dp":191,"./_wks":241}],216:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var def = require('./_object-dp').f
   , has = require('./_has')
   , TAG = require('./_wks')('toStringTag');
@@ -15768,44 +13935,20 @@ var def = require('./_object-dp').f
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_has":170,"./_object-dp":198,"./_wks":248}],224:[function(require,module,exports){
-=======
-},{"./_has":164,"./_object-dp":192,"./_wks":242}],218:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_has":163,"./_object-dp":191,"./_wks":241}],217:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var shared = require('./_shared')('keys')
   , uid    = require('./_uid');
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_shared":225,"./_uid":245}],225:[function(require,module,exports){
-=======
-},{"./_shared":219,"./_uid":239}],219:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_shared":218,"./_uid":238}],218:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global = require('./_global')
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
   return store[key] || (store[key] = {});
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169}],226:[function(require,module,exports){
-=======
-},{"./_global":163}],220:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162}],219:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject  = require('./_an-object')
   , aFunction = require('./_a-function')
@@ -15814,15 +13957,7 @@ module.exports = function(O, D){
   var C = anObject(O).constructor, S;
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_an-object":138,"./_wks":248}],227:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_an-object":132,"./_wks":242}],221:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_an-object":131,"./_wks":241}],220:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var fails = require('./_fails');
 
 module.exports = function(method, arg){
@@ -15830,15 +13965,7 @@ module.exports = function(method, arg){
     arg ? method.call(null, function(){}, 1) : method.call(null);
   });
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fails":165}],228:[function(require,module,exports){
-=======
-},{"./_fails":159}],222:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fails":158}],221:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var toInteger = require('./_to-integer')
   , defined   = require('./_defined');
 // true  -> String#at
@@ -15856,15 +13983,7 @@ module.exports = function(TO_STRING){
       : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
   };
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_to-integer":237}],229:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_to-integer":231}],223:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_to-integer":230}],222:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // helper for String#{startsWith, endsWith, includes}
 var isRegExp = require('./_is-regexp')
   , defined  = require('./_defined');
@@ -15873,15 +13992,7 @@ module.exports = function(that, searchString, NAME){
   if(isRegExp(searchString))throw TypeError('String#' + NAME + " doesn't accept regex!");
   return String(defined(that));
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_is-regexp":181}],230:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_is-regexp":175}],224:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_is-regexp":174}],223:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export = require('./_export')
   , fails   = require('./_fails')
   , defined = require('./_defined')
@@ -15901,15 +14012,7 @@ module.exports = function(NAME, exec){
     return test !== test.toLowerCase() || test.split('"').length > 3;
   }), 'String', O);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_export":163,"./_fails":165}],231:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_export":157,"./_fails":159}],225:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_export":156,"./_fails":158}],224:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/tc39/proposal-string-pad-start-end
 var toLength = require('./_to-length')
   , repeat   = require('./_string-repeat')
@@ -15927,15 +14030,7 @@ module.exports = function(that, maxLength, fillString, left){
   return left ? stringFiller + S : S + stringFiller;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_string-repeat":232,"./_to-length":239}],232:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_string-repeat":226,"./_to-length":233}],226:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_string-repeat":225,"./_to-length":232}],225:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var toInteger = require('./_to-integer')
   , defined   = require('./_defined');
@@ -15948,15 +14043,7 @@ module.exports = function repeat(count){
   for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
   return res;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_to-integer":237}],233:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_to-integer":231}],227:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_to-integer":230}],226:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export = require('./_export')
   , defined = require('./_defined')
   , fails   = require('./_fails')
@@ -15987,24 +14074,10 @@ var trim = exporter.trim = function(string, TYPE){
 };
 
 module.exports = exporter;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_export":163,"./_fails":165,"./_string-ws":234}],234:[function(require,module,exports){
 module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
   '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 },{}],235:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_export":157,"./_fails":159,"./_string-ws":228}],228:[function(require,module,exports){
-module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
-  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-},{}],229:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_export":156,"./_fails":158,"./_string-ws":227}],227:[function(require,module,exports){
-module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
-  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-},{}],228:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var ctx                = require('./_ctx')
   , invoke             = require('./_invoke')
   , html               = require('./_html')
@@ -16080,15 +14153,7 @@ module.exports = {
   set:   setTask,
   clear: clearTask
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_ctx":156,"./_dom-create":160,"./_global":169,"./_html":172,"./_invoke":175}],236:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_ctx":150,"./_dom-create":154,"./_global":163,"./_html":166,"./_invoke":169}],230:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_ctx":149,"./_dom-create":153,"./_global":162,"./_html":165,"./_invoke":168}],229:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var toInteger = require('./_to-integer')
   , max       = Math.max
   , min       = Math.min;
@@ -16096,74 +14161,34 @@ module.exports = function(index, length){
   index = toInteger(index);
   return index < 0 ? max(index + length, 0) : min(index, length);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_to-integer":237}],237:[function(require,module,exports){
-=======
-},{"./_to-integer":231}],231:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_to-integer":230}],230:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.1.4 ToInteger
 var ceil  = Math.ceil
   , floor = Math.floor;
 module.exports = function(it){
   return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],238:[function(require,module,exports){
-=======
-},{}],232:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],231:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./_iobject')
   , defined = require('./_defined');
 module.exports = function(it){
   return IObject(defined(it));
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_iobject":176}],239:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_iobject":170}],233:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_iobject":169}],232:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.1.15 ToLength
 var toInteger = require('./_to-integer')
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_to-integer":237}],240:[function(require,module,exports){
-=======
-},{"./_to-integer":231}],234:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_to-integer":230}],233:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.1.13 ToObject(argument)
 var defined = require('./_defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158}],241:[function(require,module,exports){
-=======
-},{"./_defined":152}],235:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151}],234:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 7.1.1 ToPrimitive(input [, PreferredType])
 var isObject = require('./_is-object');
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
@@ -16176,15 +14201,7 @@ module.exports = function(it, S){
   if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
   throw TypeError("Can't convert object to primitive value");
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180}],242:[function(require,module,exports){
-=======
-},{"./_is-object":174}],236:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173}],235:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 if(require('./_descriptors')){
   var LIBRARY             = require('./_library')
@@ -16664,15 +14681,7 @@ if(require('./_descriptors')){
     if(!LIBRARY && !CORRECT_ITER_NAME)hide(TypedArrayPrototype, ITERATOR, $iterator);
   };
 } else module.exports = function(){ /* empty */ };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-instance":137,"./_array-copy-within":139,"./_array-fill":140,"./_array-includes":142,"./_array-methods":143,"./_classof":148,"./_ctx":156,"./_descriptors":159,"./_export":163,"./_fails":165,"./_global":169,"./_has":170,"./_hide":171,"./_is-array-iter":177,"./_is-object":180,"./_iter-detect":185,"./_iterators":187,"./_library":189,"./_object-create":197,"./_object-dp":198,"./_object-gopd":201,"./_object-gopn":203,"./_object-gpo":205,"./_property-desc":216,"./_redefine-all":217,"./_same-value":220,"./_set-species":222,"./_species-constructor":226,"./_to-index":236,"./_to-integer":237,"./_to-length":239,"./_to-object":240,"./_to-primitive":241,"./_typed":244,"./_typed-buffer":243,"./_uid":245,"./_wks":248,"./core.get-iterator-method":249,"./es6.array.iterator":261}],243:[function(require,module,exports){
-=======
-},{"./_an-instance":131,"./_array-copy-within":133,"./_array-fill":134,"./_array-includes":136,"./_array-methods":137,"./_classof":142,"./_ctx":150,"./_descriptors":153,"./_export":157,"./_fails":159,"./_global":163,"./_has":164,"./_hide":165,"./_is-array-iter":171,"./_is-object":174,"./_iter-detect":179,"./_iterators":181,"./_library":183,"./_object-create":191,"./_object-dp":192,"./_object-gopd":195,"./_object-gopn":197,"./_object-gpo":199,"./_property-desc":210,"./_redefine-all":211,"./_same-value":214,"./_set-species":216,"./_species-constructor":220,"./_to-index":230,"./_to-integer":231,"./_to-length":233,"./_to-object":234,"./_to-primitive":235,"./_typed":238,"./_typed-buffer":237,"./_uid":239,"./_wks":242,"./core.get-iterator-method":243,"./es6.array.iterator":255}],237:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-instance":130,"./_array-copy-within":132,"./_array-fill":133,"./_array-includes":135,"./_array-methods":136,"./_classof":141,"./_ctx":149,"./_descriptors":152,"./_export":156,"./_fails":158,"./_global":162,"./_has":163,"./_hide":164,"./_is-array-iter":170,"./_is-object":173,"./_iter-detect":178,"./_iterators":180,"./_library":182,"./_object-create":190,"./_object-dp":191,"./_object-gopd":194,"./_object-gopn":196,"./_object-gpo":198,"./_property-desc":209,"./_redefine-all":210,"./_same-value":213,"./_set-species":215,"./_species-constructor":219,"./_to-index":229,"./_to-integer":230,"./_to-length":232,"./_to-object":233,"./_to-primitive":234,"./_typed":237,"./_typed-buffer":236,"./_uid":238,"./_wks":241,"./core.get-iterator-method":242,"./es6.array.iterator":254}],236:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var global         = require('./_global')
   , DESCRIPTORS    = require('./_descriptors')
@@ -16946,15 +14955,7 @@ setToStringTag($DataView, DATA_VIEW);
 hide($DataView[PROTOTYPE], $typed.VIEW, true);
 exports[ARRAY_BUFFER] = $ArrayBuffer;
 exports[DATA_VIEW] = $DataView;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-instance":137,"./_array-fill":140,"./_descriptors":159,"./_fails":165,"./_global":169,"./_hide":171,"./_library":189,"./_object-dp":198,"./_object-gopn":203,"./_redefine-all":217,"./_set-to-string-tag":223,"./_to-integer":237,"./_to-length":239,"./_typed":244}],244:[function(require,module,exports){
-=======
-},{"./_an-instance":131,"./_array-fill":134,"./_descriptors":153,"./_fails":159,"./_global":163,"./_hide":165,"./_library":183,"./_object-dp":192,"./_object-gopn":197,"./_redefine-all":211,"./_set-to-string-tag":217,"./_to-integer":231,"./_to-length":233,"./_typed":238}],238:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-instance":130,"./_array-fill":133,"./_descriptors":152,"./_fails":158,"./_global":162,"./_hide":164,"./_library":182,"./_object-dp":191,"./_object-gopn":196,"./_redefine-all":210,"./_set-to-string-tag":216,"./_to-integer":230,"./_to-length":232,"./_typed":237}],237:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global = require('./_global')
   , hide   = require('./_hide')
   , uid    = require('./_uid')
@@ -16981,29 +14982,13 @@ module.exports = {
   TYPED:  TYPED,
   VIEW:   VIEW
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169,"./_hide":171,"./_uid":245}],245:[function(require,module,exports){
-=======
-},{"./_global":163,"./_hide":165,"./_uid":239}],239:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162,"./_hide":164,"./_uid":238}],238:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var id = 0
   , px = Math.random();
 module.exports = function(key){
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],246:[function(require,module,exports){
-=======
-},{}],240:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],239:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global         = require('./_global')
   , core           = require('./_core')
   , LIBRARY        = require('./_library')
@@ -17013,21 +14998,9 @@ module.exports = function(name){
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if(name.charAt(0) != '_' && !(name in $Symbol))defineProperty($Symbol, name, {value: wksExt.f(name)});
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_core":154,"./_global":169,"./_library":189,"./_object-dp":198,"./_wks-ext":247}],247:[function(require,module,exports){
 exports.f = require('./_wks');
 },{"./_wks":248}],248:[function(require,module,exports){
-=======
-},{"./_core":148,"./_global":163,"./_library":183,"./_object-dp":192,"./_wks-ext":241}],241:[function(require,module,exports){
-exports.f = require('./_wks');
-},{"./_wks":242}],242:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_core":147,"./_global":162,"./_library":182,"./_object-dp":191,"./_wks-ext":240}],240:[function(require,module,exports){
-exports.f = require('./_wks');
-},{"./_wks":241}],241:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var store      = require('./_shared')('wks')
   , uid        = require('./_uid')
   , Symbol     = require('./_global').Symbol
@@ -17039,15 +15012,7 @@ var $exports = module.exports = function(name){
 };
 
 $exports.store = store;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169,"./_shared":225,"./_uid":245}],249:[function(require,module,exports){
-=======
-},{"./_global":163,"./_shared":219,"./_uid":239}],243:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162,"./_shared":218,"./_uid":238}],242:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var classof   = require('./_classof')
   , ITERATOR  = require('./_wks')('iterator')
   , Iterators = require('./_iterators');
@@ -17056,45 +15021,21 @@ module.exports = require('./_core').getIteratorMethod = function(it){
     || it['@@iterator']
     || Iterators[classof(it)];
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_classof":148,"./_core":154,"./_iterators":187,"./_wks":248}],250:[function(require,module,exports){
-=======
-},{"./_classof":142,"./_core":148,"./_iterators":181,"./_wks":242}],244:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_classof":141,"./_core":147,"./_iterators":180,"./_wks":241}],243:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/benjamingr/RexExp.escape
 var $export = require('./_export')
   , $re     = require('./_replacer')(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
 $export($export.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_replacer":219}],251:[function(require,module,exports){
-=======
-},{"./_export":157,"./_replacer":213}],245:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_replacer":212}],244:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 var $export = require('./_export');
 
 $export($export.P, 'Array', {copyWithin: require('./_array-copy-within')});
 
 require('./_add-to-unscopables')('copyWithin');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_add-to-unscopables":136,"./_array-copy-within":139,"./_export":163}],252:[function(require,module,exports){
-=======
-},{"./_add-to-unscopables":130,"./_array-copy-within":133,"./_export":157}],246:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_add-to-unscopables":129,"./_array-copy-within":132,"./_export":156}],245:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $every  = require('./_array-methods')(4);
@@ -17105,30 +15046,14 @@ $export($export.P + $export.F * !require('./_strict-method')([].every, true), 'A
     return $every(this, callbackfn, arguments[1]);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-methods":143,"./_export":163,"./_strict-method":227}],253:[function(require,module,exports){
-=======
-},{"./_array-methods":137,"./_export":157,"./_strict-method":221}],247:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-methods":136,"./_export":156,"./_strict-method":220}],246:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 var $export = require('./_export');
 
 $export($export.P, 'Array', {fill: require('./_array-fill')});
 
 require('./_add-to-unscopables')('fill');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_add-to-unscopables":136,"./_array-fill":140,"./_export":163}],254:[function(require,module,exports){
-=======
-},{"./_add-to-unscopables":130,"./_array-fill":134,"./_export":157}],248:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_add-to-unscopables":129,"./_array-fill":133,"./_export":156}],247:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $filter = require('./_array-methods')(2);
@@ -17139,15 +15064,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].filter, true), '
     return $filter(this, callbackfn, arguments[1]);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-methods":143,"./_export":163,"./_strict-method":227}],255:[function(require,module,exports){
-=======
-},{"./_array-methods":137,"./_export":157,"./_strict-method":221}],249:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-methods":136,"./_export":156,"./_strict-method":220}],248:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 var $export = require('./_export')
@@ -17162,15 +15079,7 @@ $export($export.P + $export.F * forced, 'Array', {
   }
 });
 require('./_add-to-unscopables')(KEY);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_add-to-unscopables":136,"./_array-methods":143,"./_export":163}],256:[function(require,module,exports){
-=======
-},{"./_add-to-unscopables":130,"./_array-methods":137,"./_export":157}],250:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_add-to-unscopables":129,"./_array-methods":136,"./_export":156}],249:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 var $export = require('./_export')
@@ -17185,15 +15094,7 @@ $export($export.P + $export.F * forced, 'Array', {
   }
 });
 require('./_add-to-unscopables')(KEY);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_add-to-unscopables":136,"./_array-methods":143,"./_export":163}],257:[function(require,module,exports){
-=======
-},{"./_add-to-unscopables":130,"./_array-methods":137,"./_export":157}],251:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_add-to-unscopables":129,"./_array-methods":136,"./_export":156}],250:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export  = require('./_export')
   , $forEach = require('./_array-methods')(0)
@@ -17205,15 +15106,7 @@ $export($export.P + $export.F * !STRICT, 'Array', {
     return $forEach(this, callbackfn, arguments[1]);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-methods":143,"./_export":163,"./_strict-method":227}],258:[function(require,module,exports){
-=======
-},{"./_array-methods":137,"./_export":157,"./_strict-method":221}],252:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-methods":136,"./_export":156,"./_strict-method":220}],251:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var ctx            = require('./_ctx')
   , $export        = require('./_export')
@@ -17252,15 +15145,7 @@ $export($export.S + $export.F * !require('./_iter-detect')(function(iter){ Array
   }
 });
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_create-property":155,"./_ctx":156,"./_export":163,"./_is-array-iter":177,"./_iter-call":182,"./_iter-detect":185,"./_to-length":239,"./_to-object":240,"./core.get-iterator-method":249}],259:[function(require,module,exports){
-=======
-},{"./_create-property":149,"./_ctx":150,"./_export":157,"./_is-array-iter":171,"./_iter-call":176,"./_iter-detect":179,"./_to-length":233,"./_to-object":234,"./core.get-iterator-method":243}],253:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_create-property":148,"./_ctx":149,"./_export":156,"./_is-array-iter":170,"./_iter-call":175,"./_iter-detect":178,"./_to-length":232,"./_to-object":233,"./core.get-iterator-method":242}],252:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export       = require('./_export')
   , $indexOf      = require('./_array-includes')(false)
@@ -17276,28 +15161,12 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !require('./_strict-method')($
       : $indexOf(this, searchElement, arguments[1]);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-includes":142,"./_export":163,"./_strict-method":227}],260:[function(require,module,exports){
-=======
-},{"./_array-includes":136,"./_export":157,"./_strict-method":221}],254:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-includes":135,"./_export":156,"./_strict-method":220}],253:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
 var $export = require('./_export');
 
 $export($export.S, 'Array', {isArray: require('./_is-array')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_is-array":178}],261:[function(require,module,exports){
-=======
-},{"./_export":157,"./_is-array":172}],255:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_is-array":171}],254:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var addToUnscopables = require('./_add-to-unscopables')
   , step             = require('./_iter-step')
@@ -17332,15 +15201,7 @@ Iterators.Arguments = Iterators.Array;
 addToUnscopables('keys');
 addToUnscopables('values');
 addToUnscopables('entries');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_add-to-unscopables":136,"./_iter-define":184,"./_iter-step":186,"./_iterators":187,"./_to-iobject":238}],262:[function(require,module,exports){
-=======
-},{"./_add-to-unscopables":130,"./_iter-define":178,"./_iter-step":180,"./_iterators":181,"./_to-iobject":232}],256:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_add-to-unscopables":129,"./_iter-define":177,"./_iter-step":179,"./_iterators":180,"./_to-iobject":231}],255:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 22.1.3.13 Array.prototype.join(separator)
 var $export   = require('./_export')
@@ -17353,15 +15214,7 @@ $export($export.P + $export.F * (require('./_iobject') != Object || !require('./
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_iobject":176,"./_strict-method":227,"./_to-iobject":238}],263:[function(require,module,exports){
-=======
-},{"./_export":157,"./_iobject":170,"./_strict-method":221,"./_to-iobject":232}],257:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_iobject":169,"./_strict-method":220,"./_to-iobject":231}],256:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export       = require('./_export')
   , toIObject     = require('./_to-iobject')
@@ -17384,15 +15237,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !require('./_strict-method')($
     return -1;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_strict-method":227,"./_to-integer":237,"./_to-iobject":238,"./_to-length":239}],264:[function(require,module,exports){
-=======
-},{"./_export":157,"./_strict-method":221,"./_to-integer":231,"./_to-iobject":232,"./_to-length":233}],258:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_strict-method":220,"./_to-integer":230,"./_to-iobject":231,"./_to-length":232}],257:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $map    = require('./_array-methods')(1);
@@ -17403,15 +15248,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].map, true), 'Arr
     return $map(this, callbackfn, arguments[1]);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-methods":143,"./_export":163,"./_strict-method":227}],265:[function(require,module,exports){
-=======
-},{"./_array-methods":137,"./_export":157,"./_strict-method":221}],259:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-methods":136,"./_export":156,"./_strict-method":220}],258:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export        = require('./_export')
   , createProperty = require('./_create-property');
@@ -17431,15 +15268,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     return result;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_create-property":155,"./_export":163,"./_fails":165}],266:[function(require,module,exports){
-=======
-},{"./_create-property":149,"./_export":157,"./_fails":159}],260:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_create-property":148,"./_export":156,"./_fails":158}],259:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $reduce = require('./_array-reduce');
@@ -17450,15 +15279,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].reduceRight, tru
     return $reduce(this, callbackfn, arguments.length, arguments[1], true);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-reduce":144,"./_export":163,"./_strict-method":227}],267:[function(require,module,exports){
-=======
-},{"./_array-reduce":138,"./_export":157,"./_strict-method":221}],261:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-reduce":137,"./_export":156,"./_strict-method":220}],260:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $reduce = require('./_array-reduce');
@@ -17469,15 +15290,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].reduce, true), '
     return $reduce(this, callbackfn, arguments.length, arguments[1], false);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-reduce":144,"./_export":163,"./_strict-method":227}],268:[function(require,module,exports){
-=======
-},{"./_array-reduce":138,"./_export":157,"./_strict-method":221}],262:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-reduce":137,"./_export":156,"./_strict-method":220}],261:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export    = require('./_export')
   , html       = require('./_html')
@@ -17506,15 +15319,7 @@ $export($export.P + $export.F * require('./_fails')(function(){
     return cloned;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_export":163,"./_fails":165,"./_html":172,"./_to-index":236,"./_to-length":239}],269:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_export":157,"./_fails":159,"./_html":166,"./_to-index":230,"./_to-length":233}],263:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_export":156,"./_fails":158,"./_html":165,"./_to-index":229,"./_to-length":232}],262:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $some   = require('./_array-methods')(3);
@@ -17525,15 +15330,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].some, true), 'Ar
     return $some(this, callbackfn, arguments[1]);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-methods":143,"./_export":163,"./_strict-method":227}],270:[function(require,module,exports){
-=======
-},{"./_array-methods":137,"./_export":157,"./_strict-method":221}],264:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-methods":136,"./_export":156,"./_strict-method":220}],263:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export   = require('./_export')
   , aFunction = require('./_a-function')
@@ -17557,34 +15354,14 @@ $export($export.P + $export.F * (fails(function(){
       : $sort.call(toObject(this), aFunction(comparefn));
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_export":163,"./_fails":165,"./_strict-method":227,"./_to-object":240}],271:[function(require,module,exports){
 require('./_set-species')('Array');
 },{"./_set-species":222}],272:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_export":157,"./_fails":159,"./_strict-method":221,"./_to-object":234}],265:[function(require,module,exports){
-require('./_set-species')('Array');
-},{"./_set-species":216}],266:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_export":156,"./_fails":158,"./_strict-method":220,"./_to-object":233}],264:[function(require,module,exports){
-require('./_set-species')('Array');
-},{"./_set-species":215}],265:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.3.3.1 / 15.9.4.4 Date.now()
 var $export = require('./_export');
 
 $export($export.S, 'Date', {now: function(){ return new Date().getTime(); }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],273:[function(require,module,exports){
-=======
-},{"./_export":157}],267:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],266:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 var $export = require('./_export')
@@ -17613,15 +15390,7 @@ $export($export.P + $export.F * (fails(function(){
       ':' + lz(d.getUTCSeconds()) + '.' + (m > 99 ? m : '0' + lz(m)) + 'Z';
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails":165}],274:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails":159}],268:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails":158}],267:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export     = require('./_export')
   , toObject    = require('./_to-object')
@@ -17636,28 +15405,12 @@ $export($export.P + $export.F * require('./_fails')(function(){
     return typeof pv == 'number' && !isFinite(pv) ? null : O.toISOString();
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails":165,"./_to-object":240,"./_to-primitive":241}],275:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails":159,"./_to-object":234,"./_to-primitive":235}],269:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails":158,"./_to-object":233,"./_to-primitive":234}],268:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var TO_PRIMITIVE = require('./_wks')('toPrimitive')
   , proto        = Date.prototype;
 
 if(!(TO_PRIMITIVE in proto))require('./_hide')(proto, TO_PRIMITIVE, require('./_date-to-primitive'));
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_date-to-primitive":157,"./_hide":171,"./_wks":248}],276:[function(require,module,exports){
-=======
-},{"./_date-to-primitive":151,"./_hide":165,"./_wks":242}],270:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_date-to-primitive":150,"./_hide":164,"./_wks":241}],269:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var DateProto    = Date.prototype
   , INVALID_DATE = 'Invalid Date'
   , TO_STRING    = 'toString'
@@ -17669,28 +15422,12 @@ if(new Date(NaN) + '' != INVALID_DATE){
     return value === value ? $toString.call(this) : INVALID_DATE;
   });
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_redefine":218}],277:[function(require,module,exports){
-=======
-},{"./_redefine":212}],271:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_redefine":211}],270:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
 var $export = require('./_export');
 
 $export($export.P, 'Function', {bind: require('./_bind')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_bind":147,"./_export":163}],278:[function(require,module,exports){
-=======
-},{"./_bind":141,"./_export":157}],272:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_bind":140,"./_export":156}],271:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var isObject       = require('./_is-object')
   , getPrototypeOf = require('./_object-gpo')
@@ -17704,15 +15441,7 @@ if(!(HAS_INSTANCE in FunctionProto))require('./_object-dp').f(FunctionProto, HAS
   while(O = getPrototypeOf(O))if(this.prototype === O)return true;
   return false;
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_object-dp":198,"./_object-gpo":205,"./_wks":248}],279:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_object-dp":192,"./_object-gpo":199,"./_wks":242}],273:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_object-dp":191,"./_object-gpo":198,"./_wks":241}],272:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var dP         = require('./_object-dp').f
   , createDesc = require('./_property-desc')
   , has        = require('./_has')
@@ -17738,15 +15467,7 @@ NAME in FProto || require('./_descriptors') && dP(FProto, NAME, {
     }
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_has":170,"./_object-dp":198,"./_property-desc":216}],280:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_has":164,"./_object-dp":192,"./_property-desc":210}],274:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_has":163,"./_object-dp":191,"./_property-desc":209}],273:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var strong = require('./_collection-strong');
 
@@ -17764,15 +15485,7 @@ module.exports = require('./_collection')('Map', function(get){
     return strong.def(this, key === 0 ? 0 : key, value);
   }
 }, strong, true);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_collection":153,"./_collection-strong":150}],281:[function(require,module,exports){
-=======
-},{"./_collection":147,"./_collection-strong":144}],275:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_collection":146,"./_collection-strong":143}],274:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.3 Math.acosh(x)
 var $export = require('./_export')
   , log1p   = require('./_math-log1p')
@@ -17791,15 +15504,7 @@ $export($export.S + $export.F * !($acosh
       : log1p(x - 1 + sqrt(x - 1) * sqrt(x + 1));
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-log1p":191}],282:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-log1p":185}],276:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-log1p":184}],275:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.5 Math.asinh(x)
 var $export = require('./_export')
   , $asinh  = Math.asinh;
@@ -17810,15 +15515,7 @@ function asinh(x){
 
 // Tor Browser bug: Math.asinh(0) -> -0 
 $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', {asinh: asinh});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],283:[function(require,module,exports){
-=======
-},{"./_export":157}],277:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],276:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.7 Math.atanh(x)
 var $export = require('./_export')
   , $atanh  = Math.atanh;
@@ -17829,15 +15526,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
     return (x = +x) == 0 ? x : Math.log((1 + x) / (1 - x)) / 2;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],284:[function(require,module,exports){
-=======
-},{"./_export":157}],278:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],277:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.9 Math.cbrt(x)
 var $export = require('./_export')
   , sign    = require('./_math-sign');
@@ -17847,15 +15536,7 @@ $export($export.S, 'Math', {
     return sign(x = +x) * Math.pow(Math.abs(x), 1 / 3);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-sign":192}],285:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-sign":186}],279:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-sign":185}],278:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.11 Math.clz32(x)
 var $export = require('./_export');
 
@@ -17864,15 +15545,7 @@ $export($export.S, 'Math', {
     return (x >>>= 0) ? 31 - Math.floor(Math.log(x + 0.5) * Math.LOG2E) : 32;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],286:[function(require,module,exports){
-=======
-},{"./_export":157}],280:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],279:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.12 Math.cosh(x)
 var $export = require('./_export')
   , exp     = Math.exp;
@@ -17882,29 +15555,13 @@ $export($export.S, 'Math', {
     return (exp(x = +x) + exp(-x)) / 2;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],287:[function(require,module,exports){
-=======
-},{"./_export":157}],281:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],280:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.14 Math.expm1(x)
 var $export = require('./_export')
   , $expm1  = require('./_math-expm1');
 
 $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', {expm1: $expm1});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-expm1":190}],288:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-expm1":184}],282:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-expm1":183}],281:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.16 Math.fround(x)
 var $export   = require('./_export')
   , sign      = require('./_math-sign')
@@ -17931,15 +15588,7 @@ $export($export.S, 'Math', {
     return $sign * result;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-sign":192}],289:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-sign":186}],283:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-sign":185}],282:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
 var $export = require('./_export')
   , abs     = Math.abs;
@@ -17965,15 +15614,7 @@ $export($export.S, 'Math', {
     return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],290:[function(require,module,exports){
-=======
-},{"./_export":157}],284:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],283:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.18 Math.imul(x, y)
 var $export = require('./_export')
   , $imul   = Math.imul;
@@ -17991,15 +15632,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     return 0 | xl * yl + ((UINT16 & xn >>> 16) * yl + xl * (UINT16 & yn >>> 16) << 16 >>> 0);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails":165}],291:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails":159}],285:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails":158}],284:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.21 Math.log10(x)
 var $export = require('./_export');
 
@@ -18008,28 +15641,12 @@ $export($export.S, 'Math', {
     return Math.log(x) / Math.LN10;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],292:[function(require,module,exports){
-=======
-},{"./_export":157}],286:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],285:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.20 Math.log1p(x)
 var $export = require('./_export');
 
 $export($export.S, 'Math', {log1p: require('./_math-log1p')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-log1p":191}],293:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-log1p":185}],287:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-log1p":184}],286:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.22 Math.log2(x)
 var $export = require('./_export');
 
@@ -18038,28 +15655,12 @@ $export($export.S, 'Math', {
     return Math.log(x) / Math.LN2;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],294:[function(require,module,exports){
-=======
-},{"./_export":157}],288:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],287:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.28 Math.sign(x)
 var $export = require('./_export');
 
 $export($export.S, 'Math', {sign: require('./_math-sign')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-sign":192}],295:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-sign":186}],289:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-sign":185}],288:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.30 Math.sinh(x)
 var $export = require('./_export')
   , expm1   = require('./_math-expm1')
@@ -18075,15 +15676,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
       : (exp(x - 1) - exp(-x - 1)) * (Math.E / 2);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails":165,"./_math-expm1":190}],296:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails":159,"./_math-expm1":184}],290:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails":158,"./_math-expm1":183}],289:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.33 Math.tanh(x)
 var $export = require('./_export')
   , expm1   = require('./_math-expm1')
@@ -18096,15 +15689,7 @@ $export($export.S, 'Math', {
     return a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (exp(x) + exp(-x));
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_math-expm1":190}],297:[function(require,module,exports){
-=======
-},{"./_export":157,"./_math-expm1":184}],291:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_math-expm1":183}],290:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.2.2.34 Math.trunc(x)
 var $export = require('./_export');
 
@@ -18113,15 +15698,7 @@ $export($export.S, 'Math', {
     return (it > 0 ? Math.floor : Math.ceil)(it);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],298:[function(require,module,exports){
-=======
-},{"./_export":157}],292:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],291:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var global            = require('./_global')
   , has               = require('./_has')
@@ -18191,28 +15768,12 @@ if(!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')){
   proto.constructor = $Number;
   require('./_redefine')(global, NUMBER, $Number);
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_descriptors":159,"./_fails":165,"./_global":169,"./_has":170,"./_inherit-if-required":174,"./_object-create":197,"./_object-dp":198,"./_object-gopd":201,"./_object-gopn":203,"./_redefine":218,"./_string-trim":233,"./_to-primitive":241}],299:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_descriptors":153,"./_fails":159,"./_global":163,"./_has":164,"./_inherit-if-required":168,"./_object-create":191,"./_object-dp":192,"./_object-gopd":195,"./_object-gopn":197,"./_redefine":212,"./_string-trim":227,"./_to-primitive":235}],293:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_descriptors":152,"./_fails":158,"./_global":162,"./_has":163,"./_inherit-if-required":167,"./_object-create":190,"./_object-dp":191,"./_object-gopd":194,"./_object-gopn":196,"./_redefine":211,"./_string-trim":226,"./_to-primitive":234}],292:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.1 Number.EPSILON
 var $export = require('./_export');
 
 $export($export.S, 'Number', {EPSILON: Math.pow(2, -52)});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],300:[function(require,module,exports){
-=======
-},{"./_export":157}],294:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],293:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.2 Number.isFinite(number)
 var $export   = require('./_export')
   , _isFinite = require('./_global').isFinite;
@@ -18222,28 +15783,12 @@ $export($export.S, 'Number', {
     return typeof it == 'number' && _isFinite(it);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_global":169}],301:[function(require,module,exports){
-=======
-},{"./_export":157,"./_global":163}],295:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_global":162}],294:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.3 Number.isInteger(number)
 var $export = require('./_export');
 
 $export($export.S, 'Number', {isInteger: require('./_is-integer')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_is-integer":179}],302:[function(require,module,exports){
-=======
-},{"./_export":157,"./_is-integer":173}],296:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_is-integer":172}],295:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.4 Number.isNaN(number)
 var $export = require('./_export');
 
@@ -18252,15 +15797,7 @@ $export($export.S, 'Number', {
     return number != number;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],303:[function(require,module,exports){
-=======
-},{"./_export":157}],297:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],296:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.5 Number.isSafeInteger(number)
 var $export   = require('./_export')
   , isInteger = require('./_is-integer')
@@ -18271,67 +15808,27 @@ $export($export.S, 'Number', {
     return isInteger(number) && abs(number) <= 0x1fffffffffffff;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_is-integer":179}],304:[function(require,module,exports){
-=======
-},{"./_export":157,"./_is-integer":173}],298:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_is-integer":172}],297:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
 var $export = require('./_export');
 
 $export($export.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],305:[function(require,module,exports){
-=======
-},{"./_export":157}],299:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],298:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
 var $export = require('./_export');
 
 $export($export.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],306:[function(require,module,exports){
-=======
-},{"./_export":157}],300:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],299:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export     = require('./_export')
   , $parseFloat = require('./_parse-float');
 // 20.1.2.12 Number.parseFloat(string)
 $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', {parseFloat: $parseFloat});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_parse-float":212}],307:[function(require,module,exports){
-=======
-},{"./_export":157,"./_parse-float":206}],301:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_parse-float":205}],300:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export   = require('./_export')
   , $parseInt = require('./_parse-int');
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_parse-int":213}],308:[function(require,module,exports){
-=======
-},{"./_export":157,"./_parse-int":207}],302:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_parse-int":206}],301:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export      = require('./_export')
   , toInteger    = require('./_to-integer')
@@ -18445,15 +15942,7 @@ $export($export.P + $export.F * (!!$toFixed && (
     } return m;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-number-value":135,"./_export":163,"./_fails":165,"./_string-repeat":232,"./_to-integer":237}],309:[function(require,module,exports){
-=======
-},{"./_a-number-value":129,"./_export":157,"./_fails":159,"./_string-repeat":226,"./_to-integer":231}],303:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-number-value":128,"./_export":156,"./_fails":158,"./_string-repeat":225,"./_to-integer":230}],302:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export      = require('./_export')
   , $fails       = require('./_fails')
@@ -18472,21 +15961,11 @@ $export($export.P + $export.F * ($fails(function(){
     return precision === undefined ? $toPrecision.call(that) : $toPrecision.call(that, precision); 
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-number-value":135,"./_export":163,"./_fails":165}],310:[function(require,module,exports){
-=======
-},{"./_a-number-value":129,"./_export":157,"./_fails":159}],304:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-number-value":128,"./_export":156,"./_fails":158}],303:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.3.1 Object.assign(target, source)
 var $export = require('./_export');
 
 $export($export.S + $export.F, 'Object', {assign: require('./_object-assign')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_object-assign":196}],311:[function(require,module,exports){
 var $export = require('./_export')
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
@@ -18500,28 +15979,6 @@ var $export = require('./_export');
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 $export($export.S + $export.F * !require('./_descriptors'), 'Object', {defineProperty: require('./_object-dp').f});
 },{"./_descriptors":159,"./_export":163,"./_object-dp":198}],314:[function(require,module,exports){
-=======
-},{"./_export":157,"./_object-assign":190}],305:[function(require,module,exports){
-=======
-},{"./_export":156,"./_object-assign":189}],304:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var $export = require('./_export')
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', {create: require('./_object-create')});
-},{"./_export":156,"./_object-create":190}],305:[function(require,module,exports){
-var $export = require('./_export');
-// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-$export($export.S + $export.F * !require('./_descriptors'), 'Object', {defineProperties: require('./_object-dps')});
-},{"./_descriptors":152,"./_export":156,"./_object-dps":192}],306:[function(require,module,exports){
-var $export = require('./_export');
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !require('./_descriptors'), 'Object', {defineProperty: require('./_object-dp').f});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_descriptors":153,"./_export":157,"./_object-dp":192}],308:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_export":156,"./_object-dp":191}],307:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.5 Object.freeze(O)
 var isObject = require('./_is-object')
   , meta     = require('./_meta').onFreeze;
@@ -18531,15 +15988,7 @@ require('./_object-sap')('freeze', function($freeze){
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_meta":193,"./_object-sap":209}],315:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_meta":187,"./_object-sap":203}],309:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_meta":186,"./_object-sap":202}],308:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject                 = require('./_to-iobject')
   , $getOwnPropertyDescriptor = require('./_object-gopd').f;
@@ -18549,28 +15998,12 @@ require('./_object-sap')('getOwnPropertyDescriptor', function(){
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-gopd":201,"./_object-sap":209,"./_to-iobject":238}],316:[function(require,module,exports){
-=======
-},{"./_object-gopd":195,"./_object-sap":203,"./_to-iobject":232}],310:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-gopd":194,"./_object-sap":202,"./_to-iobject":231}],309:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.7 Object.getOwnPropertyNames(O)
 require('./_object-sap')('getOwnPropertyNames', function(){
   return require('./_object-gopn-ext').f;
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-gopn-ext":202,"./_object-sap":209}],317:[function(require,module,exports){
-=======
-},{"./_object-gopn-ext":196,"./_object-sap":203}],311:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-gopn-ext":195,"./_object-sap":202}],310:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject        = require('./_to-object')
   , $getPrototypeOf = require('./_object-gpo');
@@ -18580,15 +16013,7 @@ require('./_object-sap')('getPrototypeOf', function(){
     return $getPrototypeOf(toObject(it));
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-gpo":205,"./_object-sap":209,"./_to-object":240}],318:[function(require,module,exports){
-=======
-},{"./_object-gpo":199,"./_object-sap":203,"./_to-object":234}],312:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-gpo":198,"./_object-sap":202,"./_to-object":233}],311:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.11 Object.isExtensible(O)
 var isObject = require('./_is-object');
 
@@ -18597,15 +16022,7 @@ require('./_object-sap')('isExtensible', function($isExtensible){
     return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_object-sap":209}],319:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_object-sap":203}],313:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_object-sap":202}],312:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.12 Object.isFrozen(O)
 var isObject = require('./_is-object');
 
@@ -18614,15 +16031,7 @@ require('./_object-sap')('isFrozen', function($isFrozen){
     return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_object-sap":209}],320:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_object-sap":203}],314:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_object-sap":202}],313:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.13 Object.isSealed(O)
 var isObject = require('./_is-object');
 
@@ -18631,27 +16040,11 @@ require('./_object-sap')('isSealed', function($isSealed){
     return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_object-sap":209}],321:[function(require,module,exports){
 // 19.1.3.10 Object.is(value1, value2)
 var $export = require('./_export');
 $export($export.S, 'Object', {is: require('./_same-value')});
 },{"./_export":163,"./_same-value":220}],322:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_object-sap":203}],315:[function(require,module,exports){
-// 19.1.3.10 Object.is(value1, value2)
-var $export = require('./_export');
-$export($export.S, 'Object', {is: require('./_same-value')});
-},{"./_export":157,"./_same-value":214}],316:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_object-sap":202}],314:[function(require,module,exports){
-// 19.1.3.10 Object.is(value1, value2)
-var $export = require('./_export');
-$export($export.S, 'Object', {is: require('./_same-value')});
-},{"./_export":156,"./_same-value":213}],315:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./_to-object')
   , $keys    = require('./_object-keys');
@@ -18661,15 +16054,7 @@ require('./_object-sap')('keys', function(){
     return $keys(toObject(it));
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_object-keys":207,"./_object-sap":209,"./_to-object":240}],323:[function(require,module,exports){
-=======
-},{"./_object-keys":201,"./_object-sap":203,"./_to-object":234}],317:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_object-keys":200,"./_object-sap":202,"./_to-object":233}],316:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.15 Object.preventExtensions(O)
 var isObject = require('./_is-object')
   , meta     = require('./_meta').onFreeze;
@@ -18679,15 +16064,7 @@ require('./_object-sap')('preventExtensions', function($preventExtensions){
     return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_meta":193,"./_object-sap":209}],324:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_meta":187,"./_object-sap":203}],318:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_meta":186,"./_object-sap":202}],317:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 19.1.2.17 Object.seal(O)
 var isObject = require('./_is-object')
   , meta     = require('./_meta').onFreeze;
@@ -18697,27 +16074,11 @@ require('./_object-sap')('seal', function($seal){
     return $seal && isObject(it) ? $seal(meta(it)) : it;
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_is-object":180,"./_meta":193,"./_object-sap":209}],325:[function(require,module,exports){
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = require('./_export');
 $export($export.S, 'Object', {setPrototypeOf: require('./_set-proto').set});
 },{"./_export":163,"./_set-proto":221}],326:[function(require,module,exports){
-=======
-},{"./_is-object":174,"./_meta":187,"./_object-sap":203}],319:[function(require,module,exports){
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = require('./_export');
-$export($export.S, 'Object', {setPrototypeOf: require('./_set-proto').set});
-},{"./_export":157,"./_set-proto":215}],320:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_is-object":173,"./_meta":186,"./_object-sap":202}],318:[function(require,module,exports){
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = require('./_export');
-$export($export.S, 'Object', {setPrototypeOf: require('./_set-proto').set});
-},{"./_export":156,"./_set-proto":214}],319:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 19.1.3.6 Object.prototype.toString()
 var classof = require('./_classof')
@@ -18728,41 +16089,17 @@ if(test + '' != '[object z]'){
     return '[object ' + classof(this) + ']';
   }, true);
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_classof":148,"./_redefine":218,"./_wks":248}],327:[function(require,module,exports){
-=======
-},{"./_classof":142,"./_redefine":212,"./_wks":242}],321:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_classof":141,"./_redefine":211,"./_wks":241}],320:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export     = require('./_export')
   , $parseFloat = require('./_parse-float');
 // 18.2.4 parseFloat(string)
 $export($export.G + $export.F * (parseFloat != $parseFloat), {parseFloat: $parseFloat});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_parse-float":212}],328:[function(require,module,exports){
-=======
-},{"./_export":157,"./_parse-float":206}],322:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_parse-float":205}],321:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export   = require('./_export')
   , $parseInt = require('./_parse-int');
 // 18.2.5 parseInt(string, radix)
 $export($export.G + $export.F * (parseInt != $parseInt), {parseInt: $parseInt});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_parse-int":213}],329:[function(require,module,exports){
-=======
-},{"./_export":157,"./_parse-int":207}],323:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_parse-int":206}],322:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var LIBRARY            = require('./_library')
   , global             = require('./_global')
@@ -19062,15 +16399,7 @@ $export($export.S + $export.F * !(USE_NATIVE && require('./_iter-detect')(functi
     return capability.promise;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_an-instance":137,"./_classof":148,"./_core":154,"./_ctx":156,"./_export":163,"./_for-of":168,"./_global":169,"./_is-object":180,"./_iter-detect":185,"./_library":189,"./_microtask":195,"./_redefine-all":217,"./_set-species":222,"./_set-to-string-tag":223,"./_species-constructor":226,"./_task":235,"./_wks":248}],330:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_an-instance":131,"./_classof":142,"./_core":148,"./_ctx":150,"./_export":157,"./_for-of":162,"./_global":163,"./_is-object":174,"./_iter-detect":179,"./_library":183,"./_microtask":189,"./_redefine-all":211,"./_set-species":216,"./_set-to-string-tag":217,"./_species-constructor":220,"./_task":229,"./_wks":242}],324:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_an-instance":130,"./_classof":141,"./_core":147,"./_ctx":149,"./_export":156,"./_for-of":161,"./_global":162,"./_is-object":173,"./_iter-detect":178,"./_library":182,"./_microtask":188,"./_redefine-all":210,"./_set-species":215,"./_set-to-string-tag":216,"./_species-constructor":219,"./_task":228,"./_wks":241}],323:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 var $export   = require('./_export')
   , aFunction = require('./_a-function')
@@ -19087,15 +16416,7 @@ $export($export.S + $export.F * !require('./_fails')(function(){
     return rApply ? rApply(T, thisArgument, L) : fApply.call(T, thisArgument, L);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_an-object":138,"./_export":163,"./_fails":165,"./_global":169}],331:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_an-object":132,"./_export":157,"./_fails":159,"./_global":163}],325:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_an-object":131,"./_export":156,"./_fails":158,"./_global":162}],324:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
 var $export    = require('./_export')
   , create     = require('./_object-create')
@@ -19143,15 +16464,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
     return isObject(result) ? result : instance;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_an-object":138,"./_bind":147,"./_export":163,"./_fails":165,"./_global":169,"./_is-object":180,"./_object-create":197}],332:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_an-object":132,"./_bind":141,"./_export":157,"./_fails":159,"./_global":163,"./_is-object":174,"./_object-create":191}],326:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_an-object":131,"./_bind":140,"./_export":156,"./_fails":158,"./_global":162,"./_is-object":173,"./_object-create":190}],325:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
 var dP          = require('./_object-dp')
   , $export     = require('./_export')
@@ -19174,15 +16487,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     }
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_fails":165,"./_object-dp":198,"./_to-primitive":241}],333:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_fails":159,"./_object-dp":192,"./_to-primitive":235}],327:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_fails":158,"./_object-dp":191,"./_to-primitive":234}],326:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
 var $export  = require('./_export')
   , gOPD     = require('./_object-gopd').f
@@ -19194,15 +16499,7 @@ $export($export.S, 'Reflect', {
     return desc && !desc.configurable ? false : delete target[propertyKey];
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_object-gopd":201}],334:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_object-gopd":195}],328:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_object-gopd":194}],327:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 26.1.5 Reflect.enumerate(target)
 var $export  = require('./_export')
@@ -19229,15 +16526,7 @@ $export($export.S, 'Reflect', {
     return new Enumerate(target);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_iter-create":183}],335:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_iter-create":177}],329:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_iter-create":176}],328:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
 var gOPD     = require('./_object-gopd')
   , $export  = require('./_export')
@@ -19248,15 +16537,7 @@ $export($export.S, 'Reflect', {
     return gOPD.f(anObject(target), propertyKey);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_object-gopd":201}],336:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_object-gopd":195}],330:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_object-gopd":194}],329:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.8 Reflect.getPrototypeOf(target)
 var $export  = require('./_export')
   , getProto = require('./_object-gpo')
@@ -19267,15 +16548,7 @@ $export($export.S, 'Reflect', {
     return getProto(anObject(target));
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_object-gpo":205}],337:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_object-gpo":199}],331:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_object-gpo":198}],330:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
 var gOPD           = require('./_object-gopd')
   , getPrototypeOf = require('./_object-gpo')
@@ -19297,15 +16570,7 @@ function get(target, propertyKey/*, receiver*/){
 }
 
 $export($export.S, 'Reflect', {get: get});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_has":170,"./_is-object":180,"./_object-gopd":201,"./_object-gpo":205}],338:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_has":164,"./_is-object":174,"./_object-gopd":195,"./_object-gpo":199}],332:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_has":163,"./_is-object":173,"./_object-gopd":194,"./_object-gpo":198}],331:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.9 Reflect.has(target, propertyKey)
 var $export = require('./_export');
 
@@ -19314,15 +16579,7 @@ $export($export.S, 'Reflect', {
     return propertyKey in target;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],339:[function(require,module,exports){
-=======
-},{"./_export":157}],333:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],332:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.10 Reflect.isExtensible(target)
 var $export       = require('./_export')
   , anObject      = require('./_an-object')
@@ -19334,28 +16591,12 @@ $export($export.S, 'Reflect', {
     return $isExtensible ? $isExtensible(target) : true;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163}],340:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157}],334:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156}],333:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.11 Reflect.ownKeys(target)
 var $export = require('./_export');
 
 $export($export.S, 'Reflect', {ownKeys: require('./_own-keys')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_own-keys":211}],341:[function(require,module,exports){
-=======
-},{"./_export":157,"./_own-keys":205}],335:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_own-keys":204}],334:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.12 Reflect.preventExtensions(target)
 var $export            = require('./_export')
   , anObject           = require('./_an-object')
@@ -19372,15 +16613,7 @@ $export($export.S, 'Reflect', {
     }
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163}],342:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157}],336:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156}],335:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $export  = require('./_export')
   , setProto = require('./_set-proto');
@@ -19396,15 +16629,7 @@ if(setProto)$export($export.S, 'Reflect', {
     }
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_set-proto":221}],343:[function(require,module,exports){
-=======
-},{"./_export":157,"./_set-proto":215}],337:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_set-proto":214}],336:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
 var dP             = require('./_object-dp')
   , gOPD           = require('./_object-gopd')
@@ -19436,15 +16661,7 @@ function set(target, propertyKey, V/*, receiver*/){
 }
 
 $export($export.S, 'Reflect', {set: set});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_has":170,"./_is-object":180,"./_object-dp":198,"./_object-gopd":201,"./_object-gpo":205,"./_property-desc":216}],344:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_has":164,"./_is-object":174,"./_object-dp":192,"./_object-gopd":195,"./_object-gpo":199,"./_property-desc":210}],338:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_has":163,"./_is-object":173,"./_object-dp":191,"./_object-gopd":194,"./_object-gpo":198,"./_property-desc":209}],337:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var global            = require('./_global')
   , inheritIfRequired = require('./_inherit-if-required')
   , dP                = require('./_object-dp').f
@@ -19488,29 +16705,13 @@ if(require('./_descriptors') && (!CORRECT_NEW || require('./_fails')(function(){
 }
 
 require('./_set-species')('RegExp');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_fails":165,"./_flags":167,"./_global":169,"./_inherit-if-required":174,"./_is-regexp":181,"./_object-dp":198,"./_object-gopn":203,"./_redefine":218,"./_set-species":222,"./_wks":248}],345:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_fails":159,"./_flags":161,"./_global":163,"./_inherit-if-required":168,"./_is-regexp":175,"./_object-dp":192,"./_object-gopn":197,"./_redefine":212,"./_set-species":216,"./_wks":242}],339:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_fails":158,"./_flags":160,"./_global":162,"./_inherit-if-required":167,"./_is-regexp":174,"./_object-dp":191,"./_object-gopn":196,"./_redefine":211,"./_set-species":215,"./_wks":241}],338:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 21.2.5.3 get RegExp.prototype.flags()
 if(require('./_descriptors') && /./g.flags != 'g')require('./_object-dp').f(RegExp.prototype, 'flags', {
   configurable: true,
   get: require('./_flags')
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_flags":167,"./_object-dp":198}],346:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_flags":161,"./_object-dp":192}],340:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_flags":160,"./_object-dp":191}],339:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // @@match logic
 require('./_fix-re-wks')('match', 1, function(defined, MATCH, $match){
   // 21.1.3.11 String.prototype.match(regexp)
@@ -19521,15 +16722,7 @@ require('./_fix-re-wks')('match', 1, function(defined, MATCH, $match){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
   }, $match];
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fix-re-wks":166}],347:[function(require,module,exports){
-=======
-},{"./_fix-re-wks":160}],341:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fix-re-wks":159}],340:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // @@replace logic
 require('./_fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
   // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
@@ -19542,15 +16735,7 @@ require('./_fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
       : $replace.call(String(O), searchValue, replaceValue);
   }, $replace];
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fix-re-wks":166}],348:[function(require,module,exports){
-=======
-},{"./_fix-re-wks":160}],342:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fix-re-wks":159}],341:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // @@search logic
 require('./_fix-re-wks')('search', 1, function(defined, SEARCH, $search){
   // 21.1.3.15 String.prototype.search(regexp)
@@ -19561,15 +16746,7 @@ require('./_fix-re-wks')('search', 1, function(defined, SEARCH, $search){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
   }, $search];
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fix-re-wks":166}],349:[function(require,module,exports){
-=======
-},{"./_fix-re-wks":160}],343:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fix-re-wks":159}],342:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // @@split logic
 require('./_fix-re-wks')('split', 2, function(defined, SPLIT, $split){
   'use strict';
@@ -19640,15 +16817,7 @@ require('./_fix-re-wks')('split', 2, function(defined, SPLIT, $split){
     return fn !== undefined ? fn.call(separator, O, limit) : $split.call(String(O), separator, limit);
   }, $split];
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_fix-re-wks":166,"./_is-regexp":181}],350:[function(require,module,exports){
-=======
-},{"./_fix-re-wks":160,"./_is-regexp":175}],344:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_fix-re-wks":159,"./_is-regexp":174}],343:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 require('./es6.regexp.flags');
 var anObject    = require('./_an-object')
@@ -19674,15 +16843,7 @@ if(require('./_fails')(function(){ return $toString.call({source: 'a', flags: 'b
     return $toString.call(this);
   });
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_descriptors":159,"./_fails":165,"./_flags":167,"./_redefine":218,"./es6.regexp.flags":345}],351:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_descriptors":153,"./_fails":159,"./_flags":161,"./_redefine":212,"./es6.regexp.flags":339}],345:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_descriptors":152,"./_fails":158,"./_flags":160,"./_redefine":211,"./es6.regexp.flags":338}],344:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var strong = require('./_collection-strong');
 
@@ -19695,15 +16856,7 @@ module.exports = require('./_collection')('Set', function(get){
     return strong.def(this, value = value === 0 ? 0 : value, value);
   }
 }, strong);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_collection":153,"./_collection-strong":150}],352:[function(require,module,exports){
-=======
-},{"./_collection":147,"./_collection-strong":144}],346:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_collection":146,"./_collection-strong":143}],345:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.2 String.prototype.anchor(name)
 require('./_string-html')('anchor', function(createHTML){
@@ -19711,15 +16864,7 @@ require('./_string-html')('anchor', function(createHTML){
     return createHTML(this, 'a', 'name', name);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],353:[function(require,module,exports){
-=======
-},{"./_string-html":224}],347:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],346:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.3 String.prototype.big()
 require('./_string-html')('big', function(createHTML){
@@ -19727,15 +16872,7 @@ require('./_string-html')('big', function(createHTML){
     return createHTML(this, 'big', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],354:[function(require,module,exports){
-=======
-},{"./_string-html":224}],348:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],347:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.4 String.prototype.blink()
 require('./_string-html')('blink', function(createHTML){
@@ -19743,15 +16880,7 @@ require('./_string-html')('blink', function(createHTML){
     return createHTML(this, 'blink', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],355:[function(require,module,exports){
-=======
-},{"./_string-html":224}],349:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],348:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.5 String.prototype.bold()
 require('./_string-html')('bold', function(createHTML){
@@ -19759,15 +16888,7 @@ require('./_string-html')('bold', function(createHTML){
     return createHTML(this, 'b', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],356:[function(require,module,exports){
-=======
-},{"./_string-html":224}],350:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],349:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export = require('./_export')
   , $at     = require('./_string-at')(false);
@@ -19777,15 +16898,7 @@ $export($export.P, 'String', {
     return $at(this, pos);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_string-at":228}],357:[function(require,module,exports){
-=======
-},{"./_export":157,"./_string-at":222}],351:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_string-at":221}],350:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 21.1.3.6 String.prototype.endsWith(searchString [, endPosition])
 'use strict';
 var $export   = require('./_export')
@@ -19806,15 +16919,7 @@ $export($export.P + $export.F * require('./_fails-is-regexp')(ENDS_WITH), 'Strin
       : that.slice(end - search.length, end) === search;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails-is-regexp":164,"./_string-context":229,"./_to-length":239}],358:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails-is-regexp":158,"./_string-context":223,"./_to-length":233}],352:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails-is-regexp":157,"./_string-context":222,"./_to-length":232}],351:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.6 String.prototype.fixed()
 require('./_string-html')('fixed', function(createHTML){
@@ -19822,15 +16927,7 @@ require('./_string-html')('fixed', function(createHTML){
     return createHTML(this, 'tt', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],359:[function(require,module,exports){
-=======
-},{"./_string-html":224}],353:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],352:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.7 String.prototype.fontcolor(color)
 require('./_string-html')('fontcolor', function(createHTML){
@@ -19838,15 +16935,7 @@ require('./_string-html')('fontcolor', function(createHTML){
     return createHTML(this, 'font', 'color', color);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],360:[function(require,module,exports){
-=======
-},{"./_string-html":224}],354:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],353:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.8 String.prototype.fontsize(size)
 require('./_string-html')('fontsize', function(createHTML){
@@ -19854,15 +16943,7 @@ require('./_string-html')('fontsize', function(createHTML){
     return createHTML(this, 'font', 'size', size);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],361:[function(require,module,exports){
-=======
-},{"./_string-html":224}],355:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],354:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export        = require('./_export')
   , toIndex        = require('./_to-index')
   , fromCharCode   = String.fromCharCode
@@ -19886,15 +16967,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
     } return res.join('');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_to-index":236}],362:[function(require,module,exports){
-=======
-},{"./_export":157,"./_to-index":230}],356:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_to-index":229}],355:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 21.1.3.7 String.prototype.includes(searchString, position = 0)
 'use strict';
 var $export  = require('./_export')
@@ -19907,15 +16980,7 @@ $export($export.P + $export.F * require('./_fails-is-regexp')(INCLUDES), 'String
       .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails-is-regexp":164,"./_string-context":229}],363:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails-is-regexp":158,"./_string-context":223}],357:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails-is-regexp":157,"./_string-context":222}],356:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.9 String.prototype.italics()
 require('./_string-html')('italics', function(createHTML){
@@ -19923,15 +16988,7 @@ require('./_string-html')('italics', function(createHTML){
     return createHTML(this, 'i', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],364:[function(require,module,exports){
-=======
-},{"./_string-html":224}],358:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],357:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $at  = require('./_string-at')(true);
 
@@ -19949,15 +17006,7 @@ require('./_iter-define')(String, 'String', function(iterated){
   this._i += point.length;
   return {value: point, done: false};
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_iter-define":184,"./_string-at":228}],365:[function(require,module,exports){
-=======
-},{"./_iter-define":178,"./_string-at":222}],359:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_iter-define":177,"./_string-at":221}],358:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.10 String.prototype.link(url)
 require('./_string-html')('link', function(createHTML){
@@ -19965,15 +17014,7 @@ require('./_string-html')('link', function(createHTML){
     return createHTML(this, 'a', 'href', url);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],366:[function(require,module,exports){
-=======
-},{"./_string-html":224}],360:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],359:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export   = require('./_export')
   , toIObject = require('./_to-iobject')
   , toLength  = require('./_to-length');
@@ -19992,30 +17033,14 @@ $export($export.S, 'String', {
     } return res.join('');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_to-iobject":238,"./_to-length":239}],367:[function(require,module,exports){
-=======
-},{"./_export":157,"./_to-iobject":232,"./_to-length":233}],361:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_to-iobject":231,"./_to-length":232}],360:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export = require('./_export');
 
 $export($export.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
   repeat: require('./_string-repeat')
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_string-repeat":232}],368:[function(require,module,exports){
-=======
-},{"./_export":157,"./_string-repeat":226}],362:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_string-repeat":225}],361:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.11 String.prototype.small()
 require('./_string-html')('small', function(createHTML){
@@ -20023,15 +17048,7 @@ require('./_string-html')('small', function(createHTML){
     return createHTML(this, 'small', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],369:[function(require,module,exports){
-=======
-},{"./_string-html":224}],363:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],362:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // 21.1.3.18 String.prototype.startsWith(searchString [, position ])
 'use strict';
 var $export     = require('./_export')
@@ -20050,15 +17067,7 @@ $export($export.P + $export.F * require('./_fails-is-regexp')(STARTS_WITH), 'Str
       : that.slice(index, index + search.length) === search;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_fails-is-regexp":164,"./_string-context":229,"./_to-length":239}],370:[function(require,module,exports){
-=======
-},{"./_export":157,"./_fails-is-regexp":158,"./_string-context":223,"./_to-length":233}],364:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_fails-is-regexp":157,"./_string-context":222,"./_to-length":232}],363:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.12 String.prototype.strike()
 require('./_string-html')('strike', function(createHTML){
@@ -20066,15 +17075,7 @@ require('./_string-html')('strike', function(createHTML){
     return createHTML(this, 'strike', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],371:[function(require,module,exports){
-=======
-},{"./_string-html":224}],365:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],364:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.13 String.prototype.sub()
 require('./_string-html')('sub', function(createHTML){
@@ -20082,15 +17083,7 @@ require('./_string-html')('sub', function(createHTML){
     return createHTML(this, 'sub', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],372:[function(require,module,exports){
-=======
-},{"./_string-html":224}],366:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],365:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // B.2.3.14 String.prototype.sup()
 require('./_string-html')('sup', function(createHTML){
@@ -20098,15 +17091,7 @@ require('./_string-html')('sup', function(createHTML){
     return createHTML(this, 'sup', '', '');
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-html":230}],373:[function(require,module,exports){
-=======
-},{"./_string-html":224}],367:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-html":223}],366:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // 21.1.3.25 String.prototype.trim()
 require('./_string-trim')('trim', function($trim){
@@ -20114,15 +17099,7 @@ require('./_string-trim')('trim', function($trim){
     return $trim(this, 3);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-trim":233}],374:[function(require,module,exports){
-=======
-},{"./_string-trim":227}],368:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-trim":226}],367:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // ECMAScript 6 symbols shim
 var global         = require('./_global')
@@ -20358,15 +17335,7 @@ setToStringTag($Symbol, 'Symbol');
 setToStringTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setToStringTag(global.JSON, 'JSON', true);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_descriptors":159,"./_enum-keys":162,"./_export":163,"./_fails":165,"./_global":169,"./_has":170,"./_hide":171,"./_is-array":178,"./_keyof":188,"./_library":189,"./_meta":193,"./_object-create":197,"./_object-dp":198,"./_object-gopd":201,"./_object-gopn":203,"./_object-gopn-ext":202,"./_object-gops":204,"./_object-keys":207,"./_object-pie":208,"./_property-desc":216,"./_redefine":218,"./_set-to-string-tag":223,"./_shared":225,"./_to-iobject":238,"./_to-primitive":241,"./_uid":245,"./_wks":248,"./_wks-define":246,"./_wks-ext":247}],375:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_descriptors":153,"./_enum-keys":156,"./_export":157,"./_fails":159,"./_global":163,"./_has":164,"./_hide":165,"./_is-array":172,"./_keyof":182,"./_library":183,"./_meta":187,"./_object-create":191,"./_object-dp":192,"./_object-gopd":195,"./_object-gopn":197,"./_object-gopn-ext":196,"./_object-gops":198,"./_object-keys":201,"./_object-pie":202,"./_property-desc":210,"./_redefine":212,"./_set-to-string-tag":217,"./_shared":219,"./_to-iobject":232,"./_to-primitive":235,"./_uid":239,"./_wks":242,"./_wks-define":240,"./_wks-ext":241}],369:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_descriptors":152,"./_enum-keys":155,"./_export":156,"./_fails":158,"./_global":162,"./_has":163,"./_hide":164,"./_is-array":171,"./_keyof":181,"./_library":182,"./_meta":186,"./_object-create":190,"./_object-dp":191,"./_object-gopd":194,"./_object-gopn":196,"./_object-gopn-ext":195,"./_object-gops":197,"./_object-keys":200,"./_object-pie":201,"./_property-desc":209,"./_redefine":211,"./_set-to-string-tag":216,"./_shared":218,"./_to-iobject":231,"./_to-primitive":234,"./_uid":238,"./_wks":241,"./_wks-define":239,"./_wks-ext":240}],368:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export      = require('./_export')
   , $typed       = require('./_typed')
@@ -20413,154 +17382,66 @@ $export($export.P + $export.U + $export.F * require('./_fails')(function(){
 });
 
 require('./_set-species')(ARRAY_BUFFER);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_export":163,"./_fails":165,"./_global":169,"./_is-object":180,"./_set-species":222,"./_species-constructor":226,"./_to-index":236,"./_to-length":239,"./_typed":244,"./_typed-buffer":243}],376:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_export":157,"./_fails":159,"./_global":163,"./_is-object":174,"./_set-species":216,"./_species-constructor":220,"./_to-index":230,"./_to-length":233,"./_typed":238,"./_typed-buffer":237}],370:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_export":156,"./_fails":158,"./_global":162,"./_is-object":173,"./_set-species":215,"./_species-constructor":219,"./_to-index":229,"./_to-length":232,"./_typed":237,"./_typed-buffer":236}],369:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export = require('./_export');
 $export($export.G + $export.W + $export.F * !require('./_typed').ABV, {
   DataView: require('./_typed-buffer').DataView
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_typed":244,"./_typed-buffer":243}],377:[function(require,module,exports){
-=======
-},{"./_export":157,"./_typed":238,"./_typed-buffer":237}],371:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_typed":237,"./_typed-buffer":236}],370:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Float32', 4, function(init){
   return function Float32Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],378:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],372:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],371:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Float64', 8, function(init){
   return function Float64Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],379:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],373:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],372:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Int16', 2, function(init){
   return function Int16Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],380:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],374:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],373:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Int32', 4, function(init){
   return function Int32Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],381:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],375:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],374:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Int8', 1, function(init){
   return function Int8Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],382:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],376:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],375:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Uint16', 2, function(init){
   return function Uint16Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],383:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],377:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],376:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Uint32', 4, function(init){
   return function Uint32Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],384:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],378:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],377:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Uint8', 1, function(init){
   return function Uint8Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],385:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],379:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],378:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./_typed-array')('Uint8', 1, function(init){
   return function Uint8ClampedArray(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 }, true);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_typed-array":242}],386:[function(require,module,exports){
-=======
-},{"./_typed-array":236}],380:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_typed-array":235}],379:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var each         = require('./_array-methods')(0)
   , redefine     = require('./_redefine')
@@ -20617,15 +17498,7 @@ if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
     });
   });
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_array-methods":143,"./_collection":153,"./_collection-weak":152,"./_is-object":180,"./_meta":193,"./_object-assign":196,"./_redefine":218}],387:[function(require,module,exports){
-=======
-},{"./_array-methods":137,"./_collection":147,"./_collection-weak":146,"./_is-object":174,"./_meta":187,"./_object-assign":190,"./_redefine":212}],381:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_array-methods":136,"./_collection":146,"./_collection-weak":145,"./_is-object":173,"./_meta":186,"./_object-assign":189,"./_redefine":211}],380:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var weak = require('./_collection-weak');
 
@@ -20638,15 +17511,7 @@ require('./_collection')('WeakSet', function(get){
     return weak.def(this, value, true);
   }
 }, weak, false, true);
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_collection":153,"./_collection-weak":152}],388:[function(require,module,exports){
-=======
-},{"./_collection":147,"./_collection-weak":146}],382:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_collection":146,"./_collection-weak":145}],381:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/tc39/Array.prototype.includes
 var $export   = require('./_export')
@@ -20659,15 +17524,7 @@ $export($export.P, 'Array', {
 });
 
 require('./_add-to-unscopables')('includes');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_add-to-unscopables":136,"./_array-includes":142,"./_export":163}],389:[function(require,module,exports){
-=======
-},{"./_add-to-unscopables":130,"./_array-includes":136,"./_export":157}],383:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_add-to-unscopables":129,"./_array-includes":135,"./_export":156}],382:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export   = require('./_export')
   , microtask = require('./_microtask')()
@@ -20680,15 +17537,7 @@ $export($export.G, {
     microtask(domain ? domain.bind(fn) : fn);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_export":163,"./_global":169,"./_microtask":195}],390:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_export":157,"./_global":163,"./_microtask":189}],384:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_export":156,"./_global":162,"./_microtask":188}],383:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/ljharb/proposal-is-error
 var $export = require('./_export')
   , cof     = require('./_cof');
@@ -20698,28 +17547,12 @@ $export($export.S, 'Error', {
     return cof(it) === 'Error';
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cof":149,"./_export":163}],391:[function(require,module,exports){
-=======
-},{"./_cof":143,"./_export":157}],385:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cof":142,"./_export":156}],384:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export  = require('./_export');
 
 $export($export.P + $export.R, 'Map', {toJSON: require('./_collection-to-json')('Map')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_collection-to-json":151,"./_export":163}],392:[function(require,module,exports){
-=======
-},{"./_collection-to-json":145,"./_export":157}],386:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_collection-to-json":144,"./_export":156}],385:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -20731,15 +17564,7 @@ $export($export.S, 'Math', {
     return $x1 + (y1 >>> 0) + (($x0 & $y0 | ($x0 | $y0) & ~($x0 + $y0 >>> 0)) >>> 31) | 0;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],393:[function(require,module,exports){
-=======
-},{"./_export":157}],387:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],386:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -20756,15 +17581,7 @@ $export($export.S, 'Math', {
     return u1 * v1 + (t >> 16) + ((u0 * v1 >>> 0) + (t & UINT16) >> 16);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],394:[function(require,module,exports){
-=======
-},{"./_export":157}],388:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],387:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -20776,15 +17593,7 @@ $export($export.S, 'Math', {
     return $x1 - (y1 >>> 0) - ((~$x0 & $y0 | ~($x0 ^ $y0) & $x0 - $y0 >>> 0) >>> 31) | 0;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],395:[function(require,module,exports){
-=======
-},{"./_export":157}],389:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],388:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -20801,15 +17610,7 @@ $export($export.S, 'Math', {
     return u1 * v1 + (t >>> 16) + ((u0 * v1 >>> 0) + (t & UINT16) >>> 16);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163}],396:[function(require,module,exports){
-=======
-},{"./_export":157}],390:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156}],389:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export         = require('./_export')
   , toObject        = require('./_to-object')
@@ -20822,15 +17623,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     $defineProperty.f(toObject(this), P, {get: aFunction(getter), enumerable: true, configurable: true});
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_descriptors":159,"./_export":163,"./_object-dp":198,"./_object-forced-pam":200,"./_to-object":240}],397:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_descriptors":153,"./_export":157,"./_object-dp":192,"./_object-forced-pam":194,"./_to-object":234}],391:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_descriptors":152,"./_export":156,"./_object-dp":191,"./_object-forced-pam":193,"./_to-object":233}],390:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export         = require('./_export')
   , toObject        = require('./_to-object')
@@ -20843,15 +17636,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     $defineProperty.f(toObject(this), P, {set: aFunction(setter), enumerable: true, configurable: true});
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_descriptors":159,"./_export":163,"./_object-dp":198,"./_object-forced-pam":200,"./_to-object":240}],398:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_descriptors":153,"./_export":157,"./_object-dp":192,"./_object-forced-pam":194,"./_to-object":234}],392:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_descriptors":152,"./_export":156,"./_object-dp":191,"./_object-forced-pam":193,"./_to-object":233}],391:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/tc39/proposal-object-values-entries
 var $export  = require('./_export')
   , $entries = require('./_object-to-array')(true);
@@ -20861,15 +17646,7 @@ $export($export.S, 'Object', {
     return $entries(it);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_object-to-array":210}],399:[function(require,module,exports){
-=======
-},{"./_export":157,"./_object-to-array":204}],393:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_object-to-array":203}],392:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/tc39/proposal-object-getownpropertydescriptors
 var $export        = require('./_export')
   , ownKeys        = require('./_own-keys')
@@ -20889,15 +17666,7 @@ $export($export.S, 'Object', {
     return result;
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_create-property":155,"./_export":163,"./_object-gopd":201,"./_own-keys":211,"./_to-iobject":238}],400:[function(require,module,exports){
-=======
-},{"./_create-property":149,"./_export":157,"./_object-gopd":195,"./_own-keys":205,"./_to-iobject":232}],394:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_create-property":148,"./_export":156,"./_object-gopd":194,"./_own-keys":204,"./_to-iobject":231}],393:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export                  = require('./_export')
   , toObject                 = require('./_to-object')
@@ -20916,15 +17685,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     } while(O = getPrototypeOf(O));
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_export":163,"./_object-forced-pam":200,"./_object-gopd":201,"./_object-gpo":205,"./_to-object":240,"./_to-primitive":241}],401:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_export":157,"./_object-forced-pam":194,"./_object-gopd":195,"./_object-gpo":199,"./_to-object":234,"./_to-primitive":235}],395:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_export":156,"./_object-forced-pam":193,"./_object-gopd":194,"./_object-gpo":198,"./_to-object":233,"./_to-primitive":234}],394:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 var $export                  = require('./_export')
   , toObject                 = require('./_to-object')
@@ -20943,15 +17704,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     } while(O = getPrototypeOf(O));
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_descriptors":159,"./_export":163,"./_object-forced-pam":200,"./_object-gopd":201,"./_object-gpo":205,"./_to-object":240,"./_to-primitive":241}],402:[function(require,module,exports){
-=======
-},{"./_descriptors":153,"./_export":157,"./_object-forced-pam":194,"./_object-gopd":195,"./_object-gpo":199,"./_to-object":234,"./_to-primitive":235}],396:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_descriptors":152,"./_export":156,"./_object-forced-pam":193,"./_object-gopd":194,"./_object-gpo":198,"./_to-object":233,"./_to-primitive":234}],395:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/tc39/proposal-object-values-entries
 var $export = require('./_export')
   , $values = require('./_object-to-array')(false);
@@ -20961,15 +17714,7 @@ $export($export.S, 'Object', {
     return $values(it);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_object-to-array":210}],403:[function(require,module,exports){
-=======
-},{"./_export":157,"./_object-to-array":204}],397:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_object-to-array":203}],396:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/zenparsing/es-observable
 var $export     = require('./_export')
@@ -21169,15 +17914,7 @@ hide($Observable.prototype, OBSERVABLE, function(){ return this; });
 $export($export.G, {Observable: $Observable});
 
 require('./_set-species')('Observable');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_an-instance":137,"./_an-object":138,"./_core":154,"./_export":163,"./_for-of":168,"./_global":169,"./_hide":171,"./_microtask":195,"./_redefine-all":217,"./_set-species":222,"./_wks":248}],404:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_an-instance":131,"./_an-object":132,"./_core":148,"./_export":157,"./_for-of":162,"./_global":163,"./_hide":165,"./_microtask":189,"./_redefine-all":211,"./_set-species":216,"./_wks":242}],398:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_an-instance":130,"./_an-object":131,"./_core":147,"./_export":156,"./_for-of":161,"./_global":162,"./_hide":164,"./_microtask":188,"./_redefine-all":210,"./_set-species":215,"./_wks":241}],397:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata                  = require('./_metadata')
   , anObject                  = require('./_an-object')
   , toMetaKey                 = metadata.key
@@ -21186,15 +17923,7 @@ var metadata                  = require('./_metadata')
 metadata.exp({defineMetadata: function defineMetadata(metadataKey, metadataValue, target, targetKey){
   ordinaryDefineOwnMetadata(metadataKey, metadataValue, anObject(target), toMetaKey(targetKey));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194}],405:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188}],399:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187}],398:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , toMetaKey              = metadata.key
@@ -21210,15 +17939,7 @@ metadata.exp({deleteMetadata: function deleteMetadata(metadataKey, target /*, ta
   targetMetadata['delete'](targetKey);
   return !!targetMetadata.size || store['delete'](target);
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194}],406:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188}],400:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187}],399:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Set                     = require('./es6.set')
   , from                    = require('./_array-from-iterable')
   , metadata                = require('./_metadata')
@@ -21238,15 +17959,7 @@ var ordinaryMetadataKeys = function(O, P){
 metadata.exp({getMetadataKeys: function getMetadataKeys(target /*, targetKey */){
   return ordinaryMetadataKeys(anObject(target), arguments.length < 2 ? undefined : toMetaKey(arguments[1]));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_array-from-iterable":141,"./_metadata":194,"./_object-gpo":205,"./es6.set":351}],407:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_array-from-iterable":135,"./_metadata":188,"./_object-gpo":199,"./es6.set":345}],401:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_array-from-iterable":134,"./_metadata":187,"./_object-gpo":198,"./es6.set":344}],400:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , getPrototypeOf         = require('./_object-gpo')
@@ -21264,15 +17977,7 @@ var ordinaryGetMetadata = function(MetadataKey, O, P){
 metadata.exp({getMetadata: function getMetadata(metadataKey, target /*, targetKey */){
   return ordinaryGetMetadata(metadataKey, anObject(target), arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194,"./_object-gpo":205}],408:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188,"./_object-gpo":199}],402:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187,"./_object-gpo":198}],401:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata                = require('./_metadata')
   , anObject                = require('./_an-object')
   , ordinaryOwnMetadataKeys = metadata.keys
@@ -21281,15 +17986,7 @@ var metadata                = require('./_metadata')
 metadata.exp({getOwnMetadataKeys: function getOwnMetadataKeys(target /*, targetKey */){
   return ordinaryOwnMetadataKeys(anObject(target), arguments.length < 2 ? undefined : toMetaKey(arguments[1]));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194}],409:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188}],403:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187}],402:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , ordinaryGetOwnMetadata = metadata.get
@@ -21299,15 +17996,7 @@ metadata.exp({getOwnMetadata: function getOwnMetadata(metadataKey, target /*, ta
   return ordinaryGetOwnMetadata(metadataKey, anObject(target)
     , arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194}],410:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188}],404:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187}],403:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , getPrototypeOf         = require('./_object-gpo')
@@ -21324,15 +18013,7 @@ var ordinaryHasMetadata = function(MetadataKey, O, P){
 metadata.exp({hasMetadata: function hasMetadata(metadataKey, target /*, targetKey */){
   return ordinaryHasMetadata(metadataKey, anObject(target), arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194,"./_object-gpo":205}],411:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188,"./_object-gpo":199}],405:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187,"./_object-gpo":198}],404:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , ordinaryHasOwnMetadata = metadata.has
@@ -21342,15 +18023,7 @@ metadata.exp({hasOwnMetadata: function hasOwnMetadata(metadataKey, target /*, ta
   return ordinaryHasOwnMetadata(metadataKey, anObject(target)
     , arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_an-object":138,"./_metadata":194}],412:[function(require,module,exports){
-=======
-},{"./_an-object":132,"./_metadata":188}],406:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_an-object":131,"./_metadata":187}],405:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var metadata                  = require('./_metadata')
   , anObject                  = require('./_an-object')
   , aFunction                 = require('./_a-function')
@@ -21366,28 +18039,12 @@ metadata.exp({metadata: function metadata(metadataKey, metadataValue){
     );
   };
 }});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_a-function":134,"./_an-object":138,"./_metadata":194}],413:[function(require,module,exports){
-=======
-},{"./_a-function":128,"./_an-object":132,"./_metadata":188}],407:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_a-function":127,"./_an-object":131,"./_metadata":187}],406:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export  = require('./_export');
 
 $export($export.P + $export.R, 'Set', {toJSON: require('./_collection-to-json')('Set')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_collection-to-json":151,"./_export":163}],414:[function(require,module,exports){
-=======
-},{"./_collection-to-json":145,"./_export":157}],408:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_collection-to-json":144,"./_export":156}],407:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/mathiasbynens/String.prototype.at
 var $export = require('./_export')
@@ -21398,15 +18055,7 @@ $export($export.P, 'String', {
     return $at(this, pos);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_string-at":228}],415:[function(require,module,exports){
-=======
-},{"./_export":157,"./_string-at":222}],409:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_string-at":221}],408:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://tc39.github.io/String.prototype.matchAll/
 var $export     = require('./_export')
@@ -21437,15 +18086,7 @@ $export($export.P, 'String', {
     return new $RegExpStringIterator(rx, S);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defined":158,"./_export":163,"./_flags":167,"./_is-regexp":181,"./_iter-create":183,"./_to-length":239}],416:[function(require,module,exports){
-=======
-},{"./_defined":152,"./_export":157,"./_flags":161,"./_is-regexp":175,"./_iter-create":177,"./_to-length":233}],410:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defined":151,"./_export":156,"./_flags":160,"./_is-regexp":174,"./_iter-create":176,"./_to-length":232}],409:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = require('./_export')
@@ -21456,15 +18097,7 @@ $export($export.P, 'String', {
     return $pad(this, maxLength, arguments.length > 1 ? arguments[1] : undefined, false);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_string-pad":231}],417:[function(require,module,exports){
-=======
-},{"./_export":157,"./_string-pad":225}],411:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_string-pad":224}],410:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = require('./_export')
@@ -21475,15 +18108,7 @@ $export($export.P, 'String', {
     return $pad(this, maxLength, arguments.length > 1 ? arguments[1] : undefined, true);
   }
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_string-pad":231}],418:[function(require,module,exports){
-=======
-},{"./_export":157,"./_string-pad":225}],412:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_string-pad":224}],411:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 require('./_string-trim')('trimLeft', function($trim){
@@ -21491,15 +18116,7 @@ require('./_string-trim')('trimLeft', function($trim){
     return $trim(this, 1);
   };
 }, 'trimStart');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-trim":233}],419:[function(require,module,exports){
-=======
-},{"./_string-trim":227}],413:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_string-trim":226}],412:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 require('./_string-trim')('trimRight', function($trim){
@@ -21507,40 +18124,16 @@ require('./_string-trim')('trimRight', function($trim){
     return $trim(this, 2);
   };
 }, 'trimEnd');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_string-trim":233}],420:[function(require,module,exports){
 require('./_wks-define')('asyncIterator');
 },{"./_wks-define":246}],421:[function(require,module,exports){
 require('./_wks-define')('observable');
 },{"./_wks-define":246}],422:[function(require,module,exports){
-=======
-},{"./_string-trim":227}],414:[function(require,module,exports){
-=======
-},{"./_string-trim":226}],413:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-require('./_wks-define')('asyncIterator');
-},{"./_wks-define":239}],414:[function(require,module,exports){
-require('./_wks-define')('observable');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_wks-define":240}],416:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_wks-define":239}],415:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // https://github.com/ljharb/proposal-global
 var $export = require('./_export');
 
 $export($export.S, 'System', {global: require('./_global')});
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_global":169}],423:[function(require,module,exports){
-=======
-},{"./_export":157,"./_global":163}],417:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_global":162}],416:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $iterators    = require('./es6.array.iterator')
   , redefine      = require('./_redefine')
   , global        = require('./_global')
@@ -21563,30 +18156,14 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
     for(key in $iterators)if(!proto[key])redefine(proto, key, $iterators[key], true);
   }
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_global":169,"./_hide":171,"./_iterators":187,"./_redefine":218,"./_wks":248,"./es6.array.iterator":261}],424:[function(require,module,exports){
-=======
-},{"./_global":163,"./_hide":165,"./_iterators":181,"./_redefine":212,"./_wks":242,"./es6.array.iterator":255}],418:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_global":162,"./_hide":164,"./_iterators":180,"./_redefine":211,"./_wks":241,"./es6.array.iterator":254}],417:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var $export = require('./_export')
   , $task   = require('./_task');
 $export($export.G + $export.B, {
   setImmediate:   $task.set,
   clearImmediate: $task.clear
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_task":235}],425:[function(require,module,exports){
-=======
-},{"./_export":157,"./_task":229}],419:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_task":228}],418:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // ie9- setTimeout & setInterval additional parameters fix
 var global     = require('./_global')
   , $export    = require('./_export')
@@ -21607,15 +18184,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
   setTimeout:  wrap(global.setTimeout),
   setInterval: wrap(global.setInterval)
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_export":163,"./_global":169,"./_invoke":175,"./_partial":214}],426:[function(require,module,exports){
-=======
-},{"./_export":157,"./_global":163,"./_invoke":169,"./_partial":208}],420:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_export":156,"./_global":162,"./_invoke":168,"./_partial":207}],419:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 require('./modules/es6.symbol');
 require('./modules/es6.object.create');
 require('./modules/es6.object.define-property');
@@ -21792,15 +18361,7 @@ require('./modules/web.timers');
 require('./modules/web.immediate');
 require('./modules/web.dom.iterable');
 module.exports = require('./modules/_core');
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./modules/_core":154,"./modules/es6.array.copy-within":251,"./modules/es6.array.every":252,"./modules/es6.array.fill":253,"./modules/es6.array.filter":254,"./modules/es6.array.find":256,"./modules/es6.array.find-index":255,"./modules/es6.array.for-each":257,"./modules/es6.array.from":258,"./modules/es6.array.index-of":259,"./modules/es6.array.is-array":260,"./modules/es6.array.iterator":261,"./modules/es6.array.join":262,"./modules/es6.array.last-index-of":263,"./modules/es6.array.map":264,"./modules/es6.array.of":265,"./modules/es6.array.reduce":267,"./modules/es6.array.reduce-right":266,"./modules/es6.array.slice":268,"./modules/es6.array.some":269,"./modules/es6.array.sort":270,"./modules/es6.array.species":271,"./modules/es6.date.now":272,"./modules/es6.date.to-iso-string":273,"./modules/es6.date.to-json":274,"./modules/es6.date.to-primitive":275,"./modules/es6.date.to-string":276,"./modules/es6.function.bind":277,"./modules/es6.function.has-instance":278,"./modules/es6.function.name":279,"./modules/es6.map":280,"./modules/es6.math.acosh":281,"./modules/es6.math.asinh":282,"./modules/es6.math.atanh":283,"./modules/es6.math.cbrt":284,"./modules/es6.math.clz32":285,"./modules/es6.math.cosh":286,"./modules/es6.math.expm1":287,"./modules/es6.math.fround":288,"./modules/es6.math.hypot":289,"./modules/es6.math.imul":290,"./modules/es6.math.log10":291,"./modules/es6.math.log1p":292,"./modules/es6.math.log2":293,"./modules/es6.math.sign":294,"./modules/es6.math.sinh":295,"./modules/es6.math.tanh":296,"./modules/es6.math.trunc":297,"./modules/es6.number.constructor":298,"./modules/es6.number.epsilon":299,"./modules/es6.number.is-finite":300,"./modules/es6.number.is-integer":301,"./modules/es6.number.is-nan":302,"./modules/es6.number.is-safe-integer":303,"./modules/es6.number.max-safe-integer":304,"./modules/es6.number.min-safe-integer":305,"./modules/es6.number.parse-float":306,"./modules/es6.number.parse-int":307,"./modules/es6.number.to-fixed":308,"./modules/es6.number.to-precision":309,"./modules/es6.object.assign":310,"./modules/es6.object.create":311,"./modules/es6.object.define-properties":312,"./modules/es6.object.define-property":313,"./modules/es6.object.freeze":314,"./modules/es6.object.get-own-property-descriptor":315,"./modules/es6.object.get-own-property-names":316,"./modules/es6.object.get-prototype-of":317,"./modules/es6.object.is":321,"./modules/es6.object.is-extensible":318,"./modules/es6.object.is-frozen":319,"./modules/es6.object.is-sealed":320,"./modules/es6.object.keys":322,"./modules/es6.object.prevent-extensions":323,"./modules/es6.object.seal":324,"./modules/es6.object.set-prototype-of":325,"./modules/es6.object.to-string":326,"./modules/es6.parse-float":327,"./modules/es6.parse-int":328,"./modules/es6.promise":329,"./modules/es6.reflect.apply":330,"./modules/es6.reflect.construct":331,"./modules/es6.reflect.define-property":332,"./modules/es6.reflect.delete-property":333,"./modules/es6.reflect.enumerate":334,"./modules/es6.reflect.get":337,"./modules/es6.reflect.get-own-property-descriptor":335,"./modules/es6.reflect.get-prototype-of":336,"./modules/es6.reflect.has":338,"./modules/es6.reflect.is-extensible":339,"./modules/es6.reflect.own-keys":340,"./modules/es6.reflect.prevent-extensions":341,"./modules/es6.reflect.set":343,"./modules/es6.reflect.set-prototype-of":342,"./modules/es6.regexp.constructor":344,"./modules/es6.regexp.flags":345,"./modules/es6.regexp.match":346,"./modules/es6.regexp.replace":347,"./modules/es6.regexp.search":348,"./modules/es6.regexp.split":349,"./modules/es6.regexp.to-string":350,"./modules/es6.set":351,"./modules/es6.string.anchor":352,"./modules/es6.string.big":353,"./modules/es6.string.blink":354,"./modules/es6.string.bold":355,"./modules/es6.string.code-point-at":356,"./modules/es6.string.ends-with":357,"./modules/es6.string.fixed":358,"./modules/es6.string.fontcolor":359,"./modules/es6.string.fontsize":360,"./modules/es6.string.from-code-point":361,"./modules/es6.string.includes":362,"./modules/es6.string.italics":363,"./modules/es6.string.iterator":364,"./modules/es6.string.link":365,"./modules/es6.string.raw":366,"./modules/es6.string.repeat":367,"./modules/es6.string.small":368,"./modules/es6.string.starts-with":369,"./modules/es6.string.strike":370,"./modules/es6.string.sub":371,"./modules/es6.string.sup":372,"./modules/es6.string.trim":373,"./modules/es6.symbol":374,"./modules/es6.typed.array-buffer":375,"./modules/es6.typed.data-view":376,"./modules/es6.typed.float32-array":377,"./modules/es6.typed.float64-array":378,"./modules/es6.typed.int16-array":379,"./modules/es6.typed.int32-array":380,"./modules/es6.typed.int8-array":381,"./modules/es6.typed.uint16-array":382,"./modules/es6.typed.uint32-array":383,"./modules/es6.typed.uint8-array":384,"./modules/es6.typed.uint8-clamped-array":385,"./modules/es6.weak-map":386,"./modules/es6.weak-set":387,"./modules/es7.array.includes":388,"./modules/es7.asap":389,"./modules/es7.error.is-error":390,"./modules/es7.map.to-json":391,"./modules/es7.math.iaddh":392,"./modules/es7.math.imulh":393,"./modules/es7.math.isubh":394,"./modules/es7.math.umulh":395,"./modules/es7.object.define-getter":396,"./modules/es7.object.define-setter":397,"./modules/es7.object.entries":398,"./modules/es7.object.get-own-property-descriptors":399,"./modules/es7.object.lookup-getter":400,"./modules/es7.object.lookup-setter":401,"./modules/es7.object.values":402,"./modules/es7.observable":403,"./modules/es7.reflect.define-metadata":404,"./modules/es7.reflect.delete-metadata":405,"./modules/es7.reflect.get-metadata":407,"./modules/es7.reflect.get-metadata-keys":406,"./modules/es7.reflect.get-own-metadata":409,"./modules/es7.reflect.get-own-metadata-keys":408,"./modules/es7.reflect.has-metadata":410,"./modules/es7.reflect.has-own-metadata":411,"./modules/es7.reflect.metadata":412,"./modules/es7.set.to-json":413,"./modules/es7.string.at":414,"./modules/es7.string.match-all":415,"./modules/es7.string.pad-end":416,"./modules/es7.string.pad-start":417,"./modules/es7.string.trim-left":418,"./modules/es7.string.trim-right":419,"./modules/es7.symbol.async-iterator":420,"./modules/es7.symbol.observable":421,"./modules/es7.system.global":422,"./modules/web.dom.iterable":423,"./modules/web.immediate":424,"./modules/web.timers":425}],427:[function(require,module,exports){
-=======
-},{"./modules/_core":148,"./modules/es6.array.copy-within":245,"./modules/es6.array.every":246,"./modules/es6.array.fill":247,"./modules/es6.array.filter":248,"./modules/es6.array.find":250,"./modules/es6.array.find-index":249,"./modules/es6.array.for-each":251,"./modules/es6.array.from":252,"./modules/es6.array.index-of":253,"./modules/es6.array.is-array":254,"./modules/es6.array.iterator":255,"./modules/es6.array.join":256,"./modules/es6.array.last-index-of":257,"./modules/es6.array.map":258,"./modules/es6.array.of":259,"./modules/es6.array.reduce":261,"./modules/es6.array.reduce-right":260,"./modules/es6.array.slice":262,"./modules/es6.array.some":263,"./modules/es6.array.sort":264,"./modules/es6.array.species":265,"./modules/es6.date.now":266,"./modules/es6.date.to-iso-string":267,"./modules/es6.date.to-json":268,"./modules/es6.date.to-primitive":269,"./modules/es6.date.to-string":270,"./modules/es6.function.bind":271,"./modules/es6.function.has-instance":272,"./modules/es6.function.name":273,"./modules/es6.map":274,"./modules/es6.math.acosh":275,"./modules/es6.math.asinh":276,"./modules/es6.math.atanh":277,"./modules/es6.math.cbrt":278,"./modules/es6.math.clz32":279,"./modules/es6.math.cosh":280,"./modules/es6.math.expm1":281,"./modules/es6.math.fround":282,"./modules/es6.math.hypot":283,"./modules/es6.math.imul":284,"./modules/es6.math.log10":285,"./modules/es6.math.log1p":286,"./modules/es6.math.log2":287,"./modules/es6.math.sign":288,"./modules/es6.math.sinh":289,"./modules/es6.math.tanh":290,"./modules/es6.math.trunc":291,"./modules/es6.number.constructor":292,"./modules/es6.number.epsilon":293,"./modules/es6.number.is-finite":294,"./modules/es6.number.is-integer":295,"./modules/es6.number.is-nan":296,"./modules/es6.number.is-safe-integer":297,"./modules/es6.number.max-safe-integer":298,"./modules/es6.number.min-safe-integer":299,"./modules/es6.number.parse-float":300,"./modules/es6.number.parse-int":301,"./modules/es6.number.to-fixed":302,"./modules/es6.number.to-precision":303,"./modules/es6.object.assign":304,"./modules/es6.object.create":305,"./modules/es6.object.define-properties":306,"./modules/es6.object.define-property":307,"./modules/es6.object.freeze":308,"./modules/es6.object.get-own-property-descriptor":309,"./modules/es6.object.get-own-property-names":310,"./modules/es6.object.get-prototype-of":311,"./modules/es6.object.is":315,"./modules/es6.object.is-extensible":312,"./modules/es6.object.is-frozen":313,"./modules/es6.object.is-sealed":314,"./modules/es6.object.keys":316,"./modules/es6.object.prevent-extensions":317,"./modules/es6.object.seal":318,"./modules/es6.object.set-prototype-of":319,"./modules/es6.object.to-string":320,"./modules/es6.parse-float":321,"./modules/es6.parse-int":322,"./modules/es6.promise":323,"./modules/es6.reflect.apply":324,"./modules/es6.reflect.construct":325,"./modules/es6.reflect.define-property":326,"./modules/es6.reflect.delete-property":327,"./modules/es6.reflect.enumerate":328,"./modules/es6.reflect.get":331,"./modules/es6.reflect.get-own-property-descriptor":329,"./modules/es6.reflect.get-prototype-of":330,"./modules/es6.reflect.has":332,"./modules/es6.reflect.is-extensible":333,"./modules/es6.reflect.own-keys":334,"./modules/es6.reflect.prevent-extensions":335,"./modules/es6.reflect.set":337,"./modules/es6.reflect.set-prototype-of":336,"./modules/es6.regexp.constructor":338,"./modules/es6.regexp.flags":339,"./modules/es6.regexp.match":340,"./modules/es6.regexp.replace":341,"./modules/es6.regexp.search":342,"./modules/es6.regexp.split":343,"./modules/es6.regexp.to-string":344,"./modules/es6.set":345,"./modules/es6.string.anchor":346,"./modules/es6.string.big":347,"./modules/es6.string.blink":348,"./modules/es6.string.bold":349,"./modules/es6.string.code-point-at":350,"./modules/es6.string.ends-with":351,"./modules/es6.string.fixed":352,"./modules/es6.string.fontcolor":353,"./modules/es6.string.fontsize":354,"./modules/es6.string.from-code-point":355,"./modules/es6.string.includes":356,"./modules/es6.string.italics":357,"./modules/es6.string.iterator":358,"./modules/es6.string.link":359,"./modules/es6.string.raw":360,"./modules/es6.string.repeat":361,"./modules/es6.string.small":362,"./modules/es6.string.starts-with":363,"./modules/es6.string.strike":364,"./modules/es6.string.sub":365,"./modules/es6.string.sup":366,"./modules/es6.string.trim":367,"./modules/es6.symbol":368,"./modules/es6.typed.array-buffer":369,"./modules/es6.typed.data-view":370,"./modules/es6.typed.float32-array":371,"./modules/es6.typed.float64-array":372,"./modules/es6.typed.int16-array":373,"./modules/es6.typed.int32-array":374,"./modules/es6.typed.int8-array":375,"./modules/es6.typed.uint16-array":376,"./modules/es6.typed.uint32-array":377,"./modules/es6.typed.uint8-array":378,"./modules/es6.typed.uint8-clamped-array":379,"./modules/es6.weak-map":380,"./modules/es6.weak-set":381,"./modules/es7.array.includes":382,"./modules/es7.asap":383,"./modules/es7.error.is-error":384,"./modules/es7.map.to-json":385,"./modules/es7.math.iaddh":386,"./modules/es7.math.imulh":387,"./modules/es7.math.isubh":388,"./modules/es7.math.umulh":389,"./modules/es7.object.define-getter":390,"./modules/es7.object.define-setter":391,"./modules/es7.object.entries":392,"./modules/es7.object.get-own-property-descriptors":393,"./modules/es7.object.lookup-getter":394,"./modules/es7.object.lookup-setter":395,"./modules/es7.object.values":396,"./modules/es7.observable":397,"./modules/es7.reflect.define-metadata":398,"./modules/es7.reflect.delete-metadata":399,"./modules/es7.reflect.get-metadata":401,"./modules/es7.reflect.get-metadata-keys":400,"./modules/es7.reflect.get-own-metadata":403,"./modules/es7.reflect.get-own-metadata-keys":402,"./modules/es7.reflect.has-metadata":404,"./modules/es7.reflect.has-own-metadata":405,"./modules/es7.reflect.metadata":406,"./modules/es7.set.to-json":407,"./modules/es7.string.at":408,"./modules/es7.string.match-all":409,"./modules/es7.string.pad-end":410,"./modules/es7.string.pad-start":411,"./modules/es7.string.trim-left":412,"./modules/es7.string.trim-right":413,"./modules/es7.symbol.async-iterator":414,"./modules/es7.symbol.observable":415,"./modules/es7.system.global":416,"./modules/web.dom.iterable":417,"./modules/web.immediate":418,"./modules/web.timers":419}],421:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./modules/_core":147,"./modules/es6.array.copy-within":244,"./modules/es6.array.every":245,"./modules/es6.array.fill":246,"./modules/es6.array.filter":247,"./modules/es6.array.find":249,"./modules/es6.array.find-index":248,"./modules/es6.array.for-each":250,"./modules/es6.array.from":251,"./modules/es6.array.index-of":252,"./modules/es6.array.is-array":253,"./modules/es6.array.iterator":254,"./modules/es6.array.join":255,"./modules/es6.array.last-index-of":256,"./modules/es6.array.map":257,"./modules/es6.array.of":258,"./modules/es6.array.reduce":260,"./modules/es6.array.reduce-right":259,"./modules/es6.array.slice":261,"./modules/es6.array.some":262,"./modules/es6.array.sort":263,"./modules/es6.array.species":264,"./modules/es6.date.now":265,"./modules/es6.date.to-iso-string":266,"./modules/es6.date.to-json":267,"./modules/es6.date.to-primitive":268,"./modules/es6.date.to-string":269,"./modules/es6.function.bind":270,"./modules/es6.function.has-instance":271,"./modules/es6.function.name":272,"./modules/es6.map":273,"./modules/es6.math.acosh":274,"./modules/es6.math.asinh":275,"./modules/es6.math.atanh":276,"./modules/es6.math.cbrt":277,"./modules/es6.math.clz32":278,"./modules/es6.math.cosh":279,"./modules/es6.math.expm1":280,"./modules/es6.math.fround":281,"./modules/es6.math.hypot":282,"./modules/es6.math.imul":283,"./modules/es6.math.log10":284,"./modules/es6.math.log1p":285,"./modules/es6.math.log2":286,"./modules/es6.math.sign":287,"./modules/es6.math.sinh":288,"./modules/es6.math.tanh":289,"./modules/es6.math.trunc":290,"./modules/es6.number.constructor":291,"./modules/es6.number.epsilon":292,"./modules/es6.number.is-finite":293,"./modules/es6.number.is-integer":294,"./modules/es6.number.is-nan":295,"./modules/es6.number.is-safe-integer":296,"./modules/es6.number.max-safe-integer":297,"./modules/es6.number.min-safe-integer":298,"./modules/es6.number.parse-float":299,"./modules/es6.number.parse-int":300,"./modules/es6.number.to-fixed":301,"./modules/es6.number.to-precision":302,"./modules/es6.object.assign":303,"./modules/es6.object.create":304,"./modules/es6.object.define-properties":305,"./modules/es6.object.define-property":306,"./modules/es6.object.freeze":307,"./modules/es6.object.get-own-property-descriptor":308,"./modules/es6.object.get-own-property-names":309,"./modules/es6.object.get-prototype-of":310,"./modules/es6.object.is":314,"./modules/es6.object.is-extensible":311,"./modules/es6.object.is-frozen":312,"./modules/es6.object.is-sealed":313,"./modules/es6.object.keys":315,"./modules/es6.object.prevent-extensions":316,"./modules/es6.object.seal":317,"./modules/es6.object.set-prototype-of":318,"./modules/es6.object.to-string":319,"./modules/es6.parse-float":320,"./modules/es6.parse-int":321,"./modules/es6.promise":322,"./modules/es6.reflect.apply":323,"./modules/es6.reflect.construct":324,"./modules/es6.reflect.define-property":325,"./modules/es6.reflect.delete-property":326,"./modules/es6.reflect.enumerate":327,"./modules/es6.reflect.get":330,"./modules/es6.reflect.get-own-property-descriptor":328,"./modules/es6.reflect.get-prototype-of":329,"./modules/es6.reflect.has":331,"./modules/es6.reflect.is-extensible":332,"./modules/es6.reflect.own-keys":333,"./modules/es6.reflect.prevent-extensions":334,"./modules/es6.reflect.set":336,"./modules/es6.reflect.set-prototype-of":335,"./modules/es6.regexp.constructor":337,"./modules/es6.regexp.flags":338,"./modules/es6.regexp.match":339,"./modules/es6.regexp.replace":340,"./modules/es6.regexp.search":341,"./modules/es6.regexp.split":342,"./modules/es6.regexp.to-string":343,"./modules/es6.set":344,"./modules/es6.string.anchor":345,"./modules/es6.string.big":346,"./modules/es6.string.blink":347,"./modules/es6.string.bold":348,"./modules/es6.string.code-point-at":349,"./modules/es6.string.ends-with":350,"./modules/es6.string.fixed":351,"./modules/es6.string.fontcolor":352,"./modules/es6.string.fontsize":353,"./modules/es6.string.from-code-point":354,"./modules/es6.string.includes":355,"./modules/es6.string.italics":356,"./modules/es6.string.iterator":357,"./modules/es6.string.link":358,"./modules/es6.string.raw":359,"./modules/es6.string.repeat":360,"./modules/es6.string.small":361,"./modules/es6.string.starts-with":362,"./modules/es6.string.strike":363,"./modules/es6.string.sub":364,"./modules/es6.string.sup":365,"./modules/es6.string.trim":366,"./modules/es6.symbol":367,"./modules/es6.typed.array-buffer":368,"./modules/es6.typed.data-view":369,"./modules/es6.typed.float32-array":370,"./modules/es6.typed.float64-array":371,"./modules/es6.typed.int16-array":372,"./modules/es6.typed.int32-array":373,"./modules/es6.typed.int8-array":374,"./modules/es6.typed.uint16-array":375,"./modules/es6.typed.uint32-array":376,"./modules/es6.typed.uint8-array":377,"./modules/es6.typed.uint8-clamped-array":378,"./modules/es6.weak-map":379,"./modules/es6.weak-set":380,"./modules/es7.array.includes":381,"./modules/es7.asap":382,"./modules/es7.error.is-error":383,"./modules/es7.map.to-json":384,"./modules/es7.math.iaddh":385,"./modules/es7.math.imulh":386,"./modules/es7.math.isubh":387,"./modules/es7.math.umulh":388,"./modules/es7.object.define-getter":389,"./modules/es7.object.define-setter":390,"./modules/es7.object.entries":391,"./modules/es7.object.get-own-property-descriptors":392,"./modules/es7.object.lookup-getter":393,"./modules/es7.object.lookup-setter":394,"./modules/es7.object.values":395,"./modules/es7.observable":396,"./modules/es7.reflect.define-metadata":397,"./modules/es7.reflect.delete-metadata":398,"./modules/es7.reflect.get-metadata":400,"./modules/es7.reflect.get-metadata-keys":399,"./modules/es7.reflect.get-own-metadata":402,"./modules/es7.reflect.get-own-metadata-keys":401,"./modules/es7.reflect.has-metadata":403,"./modules/es7.reflect.has-own-metadata":404,"./modules/es7.reflect.metadata":405,"./modules/es7.set.to-json":406,"./modules/es7.string.at":407,"./modules/es7.string.match-all":408,"./modules/es7.string.pad-end":409,"./modules/es7.string.pad-start":410,"./modules/es7.string.trim-left":411,"./modules/es7.string.trim-right":412,"./modules/es7.symbol.async-iterator":413,"./modules/es7.symbol.observable":414,"./modules/es7.system.global":415,"./modules/web.dom.iterable":416,"./modules/web.immediate":417,"./modules/web.timers":418}],420:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (global){
 /*!
  * deep-diff.
@@ -22226,15 +18787,7 @@ module.exports = require('./modules/_core');
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],428:[function(require,module,exports){
-=======
-},{}],422:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],421:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  *
@@ -22319,15 +18872,7 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./emptyFunction":435}],429:[function(require,module,exports){
-=======
-},{"./emptyFunction":429}],423:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./emptyFunction":428}],422:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22364,15 +18909,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],430:[function(require,module,exports){
-=======
-},{}],424:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],423:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22405,15 +18942,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],431:[function(require,module,exports){
-=======
-},{}],425:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],424:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22454,15 +18983,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./camelize":430}],432:[function(require,module,exports){
-=======
-},{"./camelize":424}],426:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./camelize":423}],425:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22518,15 +19039,7 @@ function containsNode(_x, _x2) {
 }
 
 module.exports = containsNode;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isTextNode":445}],433:[function(require,module,exports){
-=======
-},{"./isTextNode":439}],427:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isTextNode":438}],426:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22612,15 +19125,7 @@ function createArrayFromMixed(obj) {
 }
 
 module.exports = createArrayFromMixed;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./toArray":453}],434:[function(require,module,exports){
-=======
-},{"./toArray":447}],428:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./toArray":446}],427:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22705,15 +19210,7 @@ function createNodesFromMarkup(markup, handleScript) {
 }
 
 module.exports = createNodesFromMarkup;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ExecutionEnvironment":429,"./createArrayFromMixed":433,"./getMarkupWrap":439,"./invariant":443}],435:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":423,"./createArrayFromMixed":427,"./getMarkupWrap":433,"./invariant":437}],429:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ExecutionEnvironment":422,"./createArrayFromMixed":426,"./getMarkupWrap":432,"./invariant":436}],428:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22752,15 +19249,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],436:[function(require,module,exports){
-=======
-},{}],430:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],429:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22781,15 +19270,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = emptyObject;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],437:[function(require,module,exports){
-=======
-},{}],431:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],430:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22816,15 +19297,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],438:[function(require,module,exports){
-=======
-},{}],432:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],431:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22860,15 +19333,7 @@ function getActiveElement() /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],439:[function(require,module,exports){
-=======
-},{}],433:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],432:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22964,15 +19429,7 @@ function getMarkupWrap(nodeName) {
 }
 
 module.exports = getMarkupWrap;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ExecutionEnvironment":429,"./invariant":443}],440:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":423,"./invariant":437}],434:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ExecutionEnvironment":422,"./invariant":436}],433:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23011,15 +19468,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],441:[function(require,module,exports){
-=======
-},{}],435:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],434:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23053,15 +19502,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],442:[function(require,module,exports){
-=======
-},{}],436:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],435:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23101,15 +19542,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./hyphenate":441}],443:[function(require,module,exports){
-=======
-},{"./hyphenate":435}],437:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./hyphenate":434}],436:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23160,15 +19593,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],444:[function(require,module,exports){
-=======
-},{}],438:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],437:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23192,15 +19617,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],445:[function(require,module,exports){
-=======
-},{}],439:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],438:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23226,15 +19643,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isNode":444}],446:[function(require,module,exports){
-=======
-},{"./isNode":438}],440:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isNode":437}],439:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23283,15 +19692,7 @@ var keyMirror = function (obj) {
 };
 
 module.exports = keyMirror;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./invariant":443}],447:[function(require,module,exports){
-=======
-},{"./invariant":437}],441:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./invariant":436}],440:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23327,15 +19728,7 @@ var keyOf = function (oneKeyObj) {
 };
 
 module.exports = keyOf;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],448:[function(require,module,exports){
-=======
-},{}],442:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],441:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23387,15 +19780,7 @@ function mapObject(object, callback, context) {
 }
 
 module.exports = mapObject;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],449:[function(require,module,exports){
-=======
-},{}],443:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],442:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23427,15 +19812,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],450:[function(require,module,exports){
-=======
-},{}],444:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],443:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23459,15 +19836,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ExecutionEnvironment":429}],451:[function(require,module,exports){
-=======
-},{"./ExecutionEnvironment":423}],445:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ExecutionEnvironment":422}],444:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23502,15 +19871,7 @@ if (performance.now) {
 }
 
 module.exports = performanceNow;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./performance":450}],452:[function(require,module,exports){
-=======
-},{"./performance":444}],446:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./performance":443}],445:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23561,15 +19922,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],453:[function(require,module,exports){
-=======
-},{}],447:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],446:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23627,15 +19980,7 @@ function toArray(obj) {
 }
 
 module.exports = toArray;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./invariant":443}],454:[function(require,module,exports){
-=======
-},{"./invariant":437}],448:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./invariant":436}],447:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -23693,122 +20038,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = warning;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./emptyFunction":435}],455:[function(require,module,exports){
-=======
-},{"./emptyFunction":429}],449:[function(require,module,exports){
-var isBuffer = require('is-buffer')
-
-var flat = module.exports = flatten
-flatten.flatten = flatten
-flatten.unflatten = unflatten
-
-function flatten(target, opts) {
-  opts = opts || {}
-
-  var delimiter = opts.delimiter || '.'
-  var maxDepth = opts.maxDepth
-  var output = {}
-
-  function step(object, prev, currentDepth) {
-    currentDepth = currentDepth ? currentDepth : 1
-    Object.keys(object).forEach(function(key) {
-      var value = object[key]
-      var isarray = opts.safe && Array.isArray(value)
-      var type = Object.prototype.toString.call(value)
-      var isbuffer = isBuffer(value)
-      var isobject = (
-        type === "[object Object]" ||
-        type === "[object Array]"
-      )
-
-      var newKey = prev
-        ? prev + delimiter + key
-        : key
-
-      if (!isarray && !isbuffer && isobject && Object.keys(value).length &&
-        (!opts.maxDepth || currentDepth < maxDepth)) {
-        return step(value, newKey, currentDepth + 1)
-      }
-
-      output[newKey] = value
-    })
-  }
-
-  step(target)
-
-  return output
-}
-
-function unflatten(target, opts) {
-  opts = opts || {}
-
-  var delimiter = opts.delimiter || '.'
-  var overwrite = opts.overwrite || false
-  var result = {}
-
-  var isbuffer = isBuffer(target)
-  if (isbuffer || Object.prototype.toString.call(target) !== '[object Object]') {
-    return target
-  }
-
-  // safely ensure that the key is
-  // an integer.
-  function getkey(key) {
-    var parsedKey = Number(key)
-
-    return (
-      isNaN(parsedKey) ||
-      key.indexOf('.') !== -1
-    ) ? key
-      : parsedKey
-  }
-
-  Object.keys(target).forEach(function(key) {
-    var split = key.split(delimiter)
-    var key1 = getkey(split.shift())
-    var key2 = getkey(split[0])
-    var recipient = result
-
-    while (key2 !== undefined) {
-      var type = Object.prototype.toString.call(recipient[key1])
-      var isobject = (
-        type === "[object Object]" ||
-        type === "[object Array]"
-      )
-
-      // do not write over falsey, non-undefined values if overwrite is false
-      if (!overwrite && !isobject && typeof recipient[key1] !== 'undefined') {
-        return
-      }
-
-      if ((overwrite && !isobject) || (!overwrite && recipient[key1] == null)) {
-        recipient[key1] = (
-          typeof key2 === 'number' &&
-          !opts.object ? [] : {}
-        )
-      }
-
-      recipient = recipient[key1]
-      if (split.length > 0) {
-        key1 = getkey(split.shift())
-        key2 = getkey(split[0])
-      }
-    }
-
-    // unflatten again for 'messy objects'
-    recipient[key1] = unflatten(target[key], opts)
-  })
-
-  return result
-}
-
-},{"is-buffer":453}],450:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./emptyFunction":428}],448:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -23834,15 +20064,7 @@ function isFSA(action) {
 function isError(action) {
   return action.error === true;
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash.isplainobject":465}],456:[function(require,module,exports){
-=======
-},{"lodash.isplainobject":465}],451:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash.isplainobject":458}],449:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -23894,15 +20116,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
     return targetComponent;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],457:[function(require,module,exports){
-=======
-},{}],452:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],450:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23955,38 +20169,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],458:[function(require,module,exports){
-=======
-},{}],453:[function(require,module,exports){
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
-},{}],454:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],451:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 
 /**
  * Expose `isEmpty`.
@@ -24018,15 +20201,7 @@ function isEmpty (val) {
   return true;
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],459:[function(require,module,exports){
-=======
-},{}],455:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],452:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /*!
  * jQuery JavaScript Library v3.1.1
  * https://jquery.com/
@@ -34248,319 +30423,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],460:[function(require,module,exports){
-=======
-},{}],456:[function(require,module,exports){
-(function (process){
-/**
- * Module dependencies.
- */
-var os = require('os');
-var lodashGet = require('lodash.get');
-var lodashFlatten = require('lodash.flatten');
-var lodashUniq = require('lodash.uniq');
-var lodashSet = require('lodash.set');
-var lodashCloneDeep = require('lodash.clonedeep');
-var flatten = require('flat');
-
-/**
- * @name Json2CsvParams
- * @typedef {Object}
- * @property {Array} data - array of JSON objects
- * @property {Array} [fields] - see documentation for details
- * @property {String[]} [fieldNames] - names for fields at the same indexes. Must be same length as fields array
- *                                   (Optional. Maintained for backwards compatibility. Use fields config object for more features)
- * @property {String} [del=","] - delimiter of columns
- * @property {String} [defaultValue="<empty>"] - default value to use when missing data
- * @property {String} [quotes='"'] - quotes around cell values and column names
- * @property {String} [doubleQuotes='"""'] - the value to replace double quotes in strings
- * @property {Boolean} [hasCSVColumnTitle=true] - determines whether or not CSV file will contain a title column
- * @property {String} [eol=''] - it gets added to each row of data
- * @property {String} [newLine] - overrides the default OS line ending (\n on Unix \r\n on Windows)
- * @property {Boolean} [flatten=false] - flattens nested JSON using flat (https://www.npmjs.com/package/flat)
- * @property {String} [unwindPath] - similar to MongoDB's $unwind, Deconstructs an array field from the input JSON to output a row for each element
- * @property {Boolean} [excelStrings] - converts string data into normalized Excel style data
- * @property {Boolean} [includeEmptyRows=false] - includes empty rows
- */
-
-/**
- * Main function that converts json to csv.
- *
- * @param {Json2CsvParams} params Function parameters containing data, fields,
- * delimiter (default is ','), hasCSVColumnTitle (default is true)
- * and default value (default is '')
- * @param {Function} [callback] Callback function
- *   if error, returning error in call back.
- *   if csv is created successfully, returning csv output to callback.
- */
-module.exports = function (params, callback) {
-  var hasCallback = typeof callback === 'function';
-  var err;
-
-  try {
-    checkParams(params);
-  } catch (err) {
-    if (hasCallback) {
-      return process.nextTick(function () {
-        callback(err);
-      });
-    } else {
-      throw err;
-    }
-  }
-
-  var titles = createColumnTitles(params);
-  var csv = createColumnContent(params, titles);
-
-  if (hasCallback) {
-    return process.nextTick(function () {
-      callback(null, csv);
-    });
-  } else {
-    return csv;
-  }
-};
-
-
-/**
- * Check passing params.
- *
- * Note that this modifies params.
- *
- * @param {Json2CsvParams} params Function parameters containing data, fields,
- * delimiter, default value, mark quotes and hasCSVColumnTitle
- */
-function checkParams(params) {
-  params.data = params.data || [];
-
-  // if data is an Object, not in array [{}], then just create 1 item array.
-  // So from now all data in array of object format.
-  if (!Array.isArray(params.data)) {
-    params.data = [params.data];
-  }
-
-  if (params.flatten) {
-    params.data = params.data.map(flatten);
-  }
-
-  // Set params.fields default to first data element's keys
-  if (!params.fields && (params.data.length === 0 || typeof params.data[0] !== 'object')) {
-    throw new Error('params should include "fields" and/or non-empty "data" array of objects');
-  }
-
-  if (!params.fields) {
-    var dataFields = params.data.map(function (item) {
-      return Object.keys(item);
-    });
-
-    dataFields = lodashFlatten(dataFields);
-    params.fields = lodashUniq(dataFields);
-  }
-
-
-  //#check fieldNames
-  if (params.fieldNames && params.fieldNames.length !== params.fields.length) {
-    throw new Error('fieldNames and fields should be of the same length, if fieldNames is provided.');
-  }
-
-  // Get fieldNames from fields
-  params.fieldNames = params.fields.map(function (field, i) {
-    if (params.fieldNames && typeof field === 'string') {
-      return params.fieldNames[i];
-    }
-    return (typeof field === 'string') ? field : (field.label || field.value);
-  });
-
-  //#check delimiter
-  params.del = params.del || ',';
-
-  //#check end of line character
-  params.eol = params.eol || '';
-
-  //#check quotation mark
-  params.quotes = typeof params.quotes === 'string' ? params.quotes : '"';
-
-  //#check double quotes
-  params.doubleQuotes = typeof params.doubleQuotes === 'string' ? params.doubleQuotes : Array(3).join(params.quotes);
-
-  //#check default value
-  params.defaultValue = params.defaultValue;
-
-  //#check hasCSVColumnTitle, if it is not explicitly set to false then true.
-  params.hasCSVColumnTitle = params.hasCSVColumnTitle !== false;
-
-  //#check include empty rows, defaults to false
-  params.includeEmptyRows = params.includeEmptyRows || false;
-}
-
-/**
- * Create the title row with all the provided fields as column headings
- *
- * @param {Json2CsvParams} params Function parameters containing data, fields and delimiter
- * @returns {String} titles as a string
- */
-function createColumnTitles(params) {
-  var str = '';
-
-  //if CSV has column title, then create it
-  if (params.hasCSVColumnTitle) {
-    params.fieldNames.forEach(function (element) {
-      if (str !== '') {
-        str += params.del;
-      }
-      str += JSON.stringify(element).replace(/\"/g, params.quotes);
-    });
-  }
-
-  return str;
-}
-
-/**
- * Replace the quotation marks of the field element if needed (can be a not string-like item)
- *
- * @param {string} stringifiedElement The field element after JSON.stringify()
- * @param {string} quotes The params.quotes value. At this point we know that is not equal to double (")
- */
-function replaceQuotationMarks(stringifiedElement, quotes) {
-  var lastCharIndex = stringifiedElement.length - 1;
-
-  //check if it's an string-like element
-  if (stringifiedElement[0] === '"' && stringifiedElement[lastCharIndex] === '"') {
-    //split the stringified field element because Strings are immutable
-    var splitElement = stringifiedElement.split('');
-
-    //replace the quotation marks
-    splitElement[0] = quotes;
-    splitElement[lastCharIndex] = quotes;
-
-    //join again
-    stringifiedElement = splitElement.join('');
-  }
-
-  return stringifiedElement;
-}
-
-/**
- * Create the content column by column and row by row below the title
- *
- * @param {Object} params Function parameters containing data, fields and delimiter
- * @param {String} str Title row as a string
- * @returns {String} csv string
- */
-function createColumnContent(params, str) {
-  var dataRows = createDataRows(params);
-  dataRows.forEach(function (dataElement) {
-    //if null do nothing, if empty object without includeEmptyRows do nothing
-    if (dataElement && (Object.getOwnPropertyNames(dataElement).length > 0 || params.includeEmptyRows)) {
-      var line = '';
-      var eol = params.newLine || os.EOL || '\n';
-
-      params.fields.forEach(function (fieldElement) {
-        var val;
-        var defaultValue = params.defaultValue;
-        if (typeof fieldElement === 'object' && 'default' in fieldElement) {
-          defaultValue = fieldElement.default;
-        }
-
-        if (fieldElement && (typeof fieldElement === 'string' || typeof fieldElement.value === 'string')) {
-          var path = (typeof fieldElement === 'string') ? fieldElement : fieldElement.value;
-          val = lodashGet(dataElement, path, defaultValue);
-        } else if (fieldElement && typeof fieldElement.value === 'function') {
-          var field = {
-            label: fieldElement.label,
-            default: fieldElement.default
-          };
-          val = fieldElement.value(dataElement, field, params.data);
-        }
-
-        if (val === null || val === undefined){
-          val = defaultValue;
-        }
-
-        if (val !== undefined) {
-          var stringifiedElement = JSON.stringify(val);
-
-          if (typeof val === 'object') stringifiedElement = JSON.stringify(stringifiedElement);
-
-          if (params.quotes !== '"') {
-            stringifiedElement = replaceQuotationMarks(stringifiedElement, params.quotes);
-          }
-
-          //JSON.stringify('\\') results in a string with two backslash
-          //characters in it. I.e. '\\\\'.
-          stringifiedElement = stringifiedElement.replace(/\\\\/g, '\\');
-
-          if (params.excelStrings && typeof val === 'string') {
-            stringifiedElement = '"="' + stringifiedElement + '""';
-          }
-
-          line += stringifiedElement;
-        }
-
-        line += params.del;
-      });
-
-      //remove last delimeter
-      line = line.substring(0, line.length - 1);
-      //Replace single quotes with double quotes. Single quotes are preceeded by
-      //a backslash. Be careful not to remove backslash content from the string.
-      line = line.split('\\\\').map(function (portion) {
-        return portion.replace(/\\"/g, params.doubleQuotes);
-      }).join('\\\\');
-      //Remove the final excess backslashes from the stringified value.
-      line = line.replace(/\\\\/g, '\\');
-      //If header exists, add it, otherwise, print only content
-      if (str !== '') {
-        str += eol + line + params.eol;
-      } else {
-        str = line + params.eol;
-      }
-    }
-  });
-
-  return str;
-}
-
-/**
- * Performs the unwind logic if necessary to convert single JSON document into multiple rows
- * @param params
- */
-function createDataRows(params) {
-  var dataRows = params.data;
-  
-  if (params.unwindPath) {
-    dataRows = [];
-    params.data.forEach(function(dataEl) {
-      var unwindArray = lodashGet(dataEl, params.unwindPath);
-      var isArr = Array.isArray(unwindArray);
-      
-      if (isArr && unwindArray.length) {
-        unwindArray.forEach(function(unwindEl) {
-          var dataCopy = lodashCloneDeep(dataEl);
-          lodashSet(dataCopy, params.unwindPath, unwindEl);
-          dataRows.push(dataCopy);
-        });
-      } else if (isArr && !unwindArray.length) {
-        var dataCopy = lodashCloneDeep(dataEl);
-        lodashSet(dataCopy, params.unwindPath, undefined);
-        dataRows.push(dataCopy);
-      } else {
-        dataRows.push(dataEl);
-      }
-    });
-  }
-  
-  return dataRows;
-}
-
-}).call(this,require('_process'))
-},{"_process":703,"flat":449,"lodash.clonedeep":460,"lodash.flatten":461,"lodash.get":462,"lodash.set":467,"lodash.uniq":468,"os":702}],457:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],453:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 
@@ -35188,15 +31051,7 @@ LinkifyIt.prototype.normalize = function normalize(match) {
 
 module.exports = LinkifyIt;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./lib/re":461}],461:[function(require,module,exports){
-=======
-},{"./lib/re":458}],458:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./lib/re":454}],454:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 // Use direct extract instead of `regenerate` to reduse browserified size
@@ -35360,15 +31215,7 @@ exports.tpl_link_no_ip_fuzzy =
     '(^|(?![.:/\\-_@])(?:[$+<=>^`|]|' + src_ZPCc + '))' +
     '((?![$+<=>^`|])' + tpl_host_port_no_ip_fuzzy_strict + src_path + ')';
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"uc.micro/categories/Cc/regex":889,"uc.micro/categories/P/regex":890,"uc.micro/categories/Z/regex":891,"uc.micro/properties/Any/regex":892}],462:[function(require,module,exports){
-=======
-},{"uc.micro/categories/Cc/regex":895,"uc.micro/categories/P/regex":896,"uc.micro/categories/Z/regex":897,"uc.micro/properties/Any/regex":898}],459:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"uc.micro/categories/Cc/regex":885,"uc.micro/categories/P/regex":886,"uc.micro/categories/Z/regex":887,"uc.micro/properties/Any/regex":888}],455:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -35418,3050 +31265,6 @@ function createBaseFor(fromRight) {
 
 module.exports = baseFor;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
-},{}],463:[function(require,module,exports){
-=======
-},{}],460:[function(require,module,exports){
-(function (global){
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as the size to enable large array optimizations. */
-var LARGE_ARRAY_SIZE = 200;
-
-/** Used to stand-in for `undefined` hash values. */
-var HASH_UNDEFINED = '__lodash_hash_undefined__';
-
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]',
-    arrayTag = '[object Array]',
-    boolTag = '[object Boolean]',
-    dateTag = '[object Date]',
-    errorTag = '[object Error]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
-    mapTag = '[object Map]',
-    numberTag = '[object Number]',
-    objectTag = '[object Object]',
-    promiseTag = '[object Promise]',
-    regexpTag = '[object RegExp]',
-    setTag = '[object Set]',
-    stringTag = '[object String]',
-    symbolTag = '[object Symbol]',
-    weakMapTag = '[object WeakMap]';
-
-var arrayBufferTag = '[object ArrayBuffer]',
-    dataViewTag = '[object DataView]',
-    float32Tag = '[object Float32Array]',
-    float64Tag = '[object Float64Array]',
-    int8Tag = '[object Int8Array]',
-    int16Tag = '[object Int16Array]',
-    int32Tag = '[object Int32Array]',
-    uint8Tag = '[object Uint8Array]',
-    uint8ClampedTag = '[object Uint8ClampedArray]',
-    uint16Tag = '[object Uint16Array]',
-    uint32Tag = '[object Uint32Array]';
-
-/**
- * Used to match `RegExp`
- * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
- */
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-
-/** Used to match `RegExp` flags from their coerced string values. */
-var reFlags = /\w*$/;
-
-/** Used to detect host constructors (Safari). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/** Used to identify `toStringTag` values supported by `_.clone`. */
-var cloneableTags = {};
-cloneableTags[argsTag] = cloneableTags[arrayTag] =
-cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
-cloneableTags[boolTag] = cloneableTags[dateTag] =
-cloneableTags[float32Tag] = cloneableTags[float64Tag] =
-cloneableTags[int8Tag] = cloneableTags[int16Tag] =
-cloneableTags[int32Tag] = cloneableTags[mapTag] =
-cloneableTags[numberTag] = cloneableTags[objectTag] =
-cloneableTags[regexpTag] = cloneableTags[setTag] =
-cloneableTags[stringTag] = cloneableTags[symbolTag] =
-cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
-cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
-cloneableTags[errorTag] = cloneableTags[funcTag] =
-cloneableTags[weakMapTag] = false;
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var moduleExports = freeModule && freeModule.exports === freeExports;
-
-/**
- * Adds the key-value `pair` to `map`.
- *
- * @private
- * @param {Object} map The map to modify.
- * @param {Array} pair The key-value pair to add.
- * @returns {Object} Returns `map`.
- */
-function addMapEntry(map, pair) {
-  // Don't return `map.set` because it's not chainable in IE 11.
-  map.set(pair[0], pair[1]);
-  return map;
-}
-
-/**
- * Adds `value` to `set`.
- *
- * @private
- * @param {Object} set The set to modify.
- * @param {*} value The value to add.
- * @returns {Object} Returns `set`.
- */
-function addSetEntry(set, value) {
-  // Don't return `set.add` because it's not chainable in IE 11.
-  set.add(value);
-  return set;
-}
-
-/**
- * A specialized version of `_.forEach` for arrays without support for
- * iteratee shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns `array`.
- */
-function arrayEach(array, iteratee) {
-  var index = -1,
-      length = array ? array.length : 0;
-
-  while (++index < length) {
-    if (iteratee(array[index], index, array) === false) {
-      break;
-    }
-  }
-  return array;
-}
-
-/**
- * Appends the elements of `values` to `array`.
- *
- * @private
- * @param {Array} array The array to modify.
- * @param {Array} values The values to append.
- * @returns {Array} Returns `array`.
- */
-function arrayPush(array, values) {
-  var index = -1,
-      length = values.length,
-      offset = array.length;
-
-  while (++index < length) {
-    array[offset + index] = values[index];
-  }
-  return array;
-}
-
-/**
- * A specialized version of `_.reduce` for arrays without support for
- * iteratee shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @param {*} [accumulator] The initial value.
- * @param {boolean} [initAccum] Specify using the first element of `array` as
- *  the initial value.
- * @returns {*} Returns the accumulated value.
- */
-function arrayReduce(array, iteratee, accumulator, initAccum) {
-  var index = -1,
-      length = array ? array.length : 0;
-
-  if (initAccum && length) {
-    accumulator = array[++index];
-  }
-  while (++index < length) {
-    accumulator = iteratee(accumulator, array[index], index, array);
-  }
-  return accumulator;
-}
-
-/**
- * The base implementation of `_.times` without support for iteratee shorthands
- * or max array length checks.
- *
- * @private
- * @param {number} n The number of times to invoke `iteratee`.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the array of results.
- */
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-
-/**
- * Gets the value at `key` of `object`.
- *
- * @private
- * @param {Object} [object] The object to query.
- * @param {string} key The key of the property to get.
- * @returns {*} Returns the property value.
- */
-function getValue(object, key) {
-  return object == null ? undefined : object[key];
-}
-
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-function isHostObject(value) {
-  // Many host objects are `Object` objects that can coerce to strings
-  // despite having improperly defined `toString` methods.
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-
-/**
- * Converts `map` to its key-value pairs.
- *
- * @private
- * @param {Object} map The map to convert.
- * @returns {Array} Returns the key-value pairs.
- */
-function mapToArray(map) {
-  var index = -1,
-      result = Array(map.size);
-
-  map.forEach(function(value, key) {
-    result[++index] = [key, value];
-  });
-  return result;
-}
-
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-/**
- * Converts `set` to an array of its values.
- *
- * @private
- * @param {Object} set The set to convert.
- * @returns {Array} Returns the values.
- */
-function setToArray(set) {
-  var index = -1,
-      result = Array(set.size);
-
-  set.forEach(function(value) {
-    result[++index] = value;
-  });
-  return result;
-}
-
-/** Used for built-in method references. */
-var arrayProto = Array.prototype,
-    funcProto = Function.prototype,
-    objectProto = Object.prototype;
-
-/** Used to detect overreaching core-js shims. */
-var coreJsData = root['__core-js_shared__'];
-
-/** Used to detect methods masquerading as native. */
-var maskSrcKey = (function() {
-  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-  return uid ? ('Symbol(src)_1.' + uid) : '';
-}());
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString = funcProto.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Used to detect if a method is native. */
-var reIsNative = RegExp('^' +
-  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-
-/** Built-in value references. */
-var Buffer = moduleExports ? root.Buffer : undefined,
-    Symbol = root.Symbol,
-    Uint8Array = root.Uint8Array,
-    getPrototype = overArg(Object.getPrototypeOf, Object),
-    objectCreate = Object.create,
-    propertyIsEnumerable = objectProto.propertyIsEnumerable,
-    splice = arrayProto.splice;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeGetSymbols = Object.getOwnPropertySymbols,
-    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
-    nativeKeys = overArg(Object.keys, Object);
-
-/* Built-in method references that are verified to be native. */
-var DataView = getNative(root, 'DataView'),
-    Map = getNative(root, 'Map'),
-    Promise = getNative(root, 'Promise'),
-    Set = getNative(root, 'Set'),
-    WeakMap = getNative(root, 'WeakMap'),
-    nativeCreate = getNative(Object, 'create');
-
-/** Used to detect maps, sets, and weakmaps. */
-var dataViewCtorString = toSource(DataView),
-    mapCtorString = toSource(Map),
-    promiseCtorString = toSource(Promise),
-    setCtorString = toSource(Set),
-    weakMapCtorString = toSource(WeakMap);
-
-/** Used to convert symbols to primitives and strings. */
-var symbolProto = Symbol ? Symbol.prototype : undefined,
-    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
-
-/**
- * Creates a hash object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function Hash(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the hash.
- *
- * @private
- * @name clear
- * @memberOf Hash
- */
-function hashClear() {
-  this.__data__ = nativeCreate ? nativeCreate(null) : {};
-}
-
-/**
- * Removes `key` and its value from the hash.
- *
- * @private
- * @name delete
- * @memberOf Hash
- * @param {Object} hash The hash to modify.
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function hashDelete(key) {
-  return this.has(key) && delete this.__data__[key];
-}
-
-/**
- * Gets the hash value for `key`.
- *
- * @private
- * @name get
- * @memberOf Hash
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function hashGet(key) {
-  var data = this.__data__;
-  if (nativeCreate) {
-    var result = data[key];
-    return result === HASH_UNDEFINED ? undefined : result;
-  }
-  return hasOwnProperty.call(data, key) ? data[key] : undefined;
-}
-
-/**
- * Checks if a hash value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf Hash
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function hashHas(key) {
-  var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
-}
-
-/**
- * Sets the hash `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf Hash
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the hash instance.
- */
-function hashSet(key, value) {
-  var data = this.__data__;
-  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
-  return this;
-}
-
-// Add methods to `Hash`.
-Hash.prototype.clear = hashClear;
-Hash.prototype['delete'] = hashDelete;
-Hash.prototype.get = hashGet;
-Hash.prototype.has = hashHas;
-Hash.prototype.set = hashSet;
-
-/**
- * Creates an list cache object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function ListCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the list cache.
- *
- * @private
- * @name clear
- * @memberOf ListCache
- */
-function listCacheClear() {
-  this.__data__ = [];
-}
-
-/**
- * Removes `key` and its value from the list cache.
- *
- * @private
- * @name delete
- * @memberOf ListCache
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function listCacheDelete(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  if (index < 0) {
-    return false;
-  }
-  var lastIndex = data.length - 1;
-  if (index == lastIndex) {
-    data.pop();
-  } else {
-    splice.call(data, index, 1);
-  }
-  return true;
-}
-
-/**
- * Gets the list cache value for `key`.
- *
- * @private
- * @name get
- * @memberOf ListCache
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function listCacheGet(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  return index < 0 ? undefined : data[index][1];
-}
-
-/**
- * Checks if a list cache value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf ListCache
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function listCacheHas(key) {
-  return assocIndexOf(this.__data__, key) > -1;
-}
-
-/**
- * Sets the list cache `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf ListCache
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the list cache instance.
- */
-function listCacheSet(key, value) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  if (index < 0) {
-    data.push([key, value]);
-  } else {
-    data[index][1] = value;
-  }
-  return this;
-}
-
-// Add methods to `ListCache`.
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
-
-/**
- * Creates a map cache object to store key-value pairs.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function MapCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the map.
- *
- * @private
- * @name clear
- * @memberOf MapCache
- */
-function mapCacheClear() {
-  this.__data__ = {
-    'hash': new Hash,
-    'map': new (Map || ListCache),
-    'string': new Hash
-  };
-}
-
-/**
- * Removes `key` and its value from the map.
- *
- * @private
- * @name delete
- * @memberOf MapCache
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function mapCacheDelete(key) {
-  return getMapData(this, key)['delete'](key);
-}
-
-/**
- * Gets the map value for `key`.
- *
- * @private
- * @name get
- * @memberOf MapCache
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function mapCacheGet(key) {
-  return getMapData(this, key).get(key);
-}
-
-/**
- * Checks if a map value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf MapCache
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function mapCacheHas(key) {
-  return getMapData(this, key).has(key);
-}
-
-/**
- * Sets the map `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf MapCache
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the map cache instance.
- */
-function mapCacheSet(key, value) {
-  getMapData(this, key).set(key, value);
-  return this;
-}
-
-// Add methods to `MapCache`.
-MapCache.prototype.clear = mapCacheClear;
-MapCache.prototype['delete'] = mapCacheDelete;
-MapCache.prototype.get = mapCacheGet;
-MapCache.prototype.has = mapCacheHas;
-MapCache.prototype.set = mapCacheSet;
-
-/**
- * Creates a stack cache object to store key-value pairs.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function Stack(entries) {
-  this.__data__ = new ListCache(entries);
-}
-
-/**
- * Removes all key-value entries from the stack.
- *
- * @private
- * @name clear
- * @memberOf Stack
- */
-function stackClear() {
-  this.__data__ = new ListCache;
-}
-
-/**
- * Removes `key` and its value from the stack.
- *
- * @private
- * @name delete
- * @memberOf Stack
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function stackDelete(key) {
-  return this.__data__['delete'](key);
-}
-
-/**
- * Gets the stack value for `key`.
- *
- * @private
- * @name get
- * @memberOf Stack
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function stackGet(key) {
-  return this.__data__.get(key);
-}
-
-/**
- * Checks if a stack value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf Stack
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function stackHas(key) {
-  return this.__data__.has(key);
-}
-
-/**
- * Sets the stack `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf Stack
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the stack cache instance.
- */
-function stackSet(key, value) {
-  var cache = this.__data__;
-  if (cache instanceof ListCache) {
-    var pairs = cache.__data__;
-    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
-      pairs.push([key, value]);
-      return this;
-    }
-    cache = this.__data__ = new MapCache(pairs);
-  }
-  cache.set(key, value);
-  return this;
-}
-
-// Add methods to `Stack`.
-Stack.prototype.clear = stackClear;
-Stack.prototype['delete'] = stackDelete;
-Stack.prototype.get = stackGet;
-Stack.prototype.has = stackHas;
-Stack.prototype.set = stackSet;
-
-/**
- * Creates an array of the enumerable property names of the array-like `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @param {boolean} inherited Specify returning inherited property names.
- * @returns {Array} Returns the array of property names.
- */
-function arrayLikeKeys(value, inherited) {
-  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  // Safari 9 makes `arguments.length` enumerable in strict mode.
-  var result = (isArray(value) || isArguments(value))
-    ? baseTimes(value.length, String)
-    : [];
-
-  var length = result.length,
-      skipIndexes = !!length;
-
-  for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) &&
-        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/**
- * Assigns `value` to `key` of `object` if the existing value is not equivalent
- * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * for equality comparisons.
- *
- * @private
- * @param {Object} object The object to modify.
- * @param {string} key The key of the property to assign.
- * @param {*} value The value to assign.
- */
-function assignValue(object, key, value) {
-  var objValue = object[key];
-  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
-      (value === undefined && !(key in object))) {
-    object[key] = value;
-  }
-}
-
-/**
- * Gets the index at which the `key` is found in `array` of key-value pairs.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} key The key to search for.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.assign` without support for multiple sources
- * or `customizer` functions.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @returns {Object} Returns `object`.
- */
-function baseAssign(object, source) {
-  return object && copyObject(source, keys(source), object);
-}
-
-/**
- * The base implementation of `_.clone` and `_.cloneDeep` which tracks
- * traversed objects.
- *
- * @private
- * @param {*} value The value to clone.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @param {boolean} [isFull] Specify a clone including symbols.
- * @param {Function} [customizer] The function to customize cloning.
- * @param {string} [key] The key of `value`.
- * @param {Object} [object] The parent object of `value`.
- * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
- * @returns {*} Returns the cloned value.
- */
-function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
-  var result;
-  if (customizer) {
-    result = object ? customizer(value, key, object, stack) : customizer(value);
-  }
-  if (result !== undefined) {
-    return result;
-  }
-  if (!isObject(value)) {
-    return value;
-  }
-  var isArr = isArray(value);
-  if (isArr) {
-    result = initCloneArray(value);
-    if (!isDeep) {
-      return copyArray(value, result);
-    }
-  } else {
-    var tag = getTag(value),
-        isFunc = tag == funcTag || tag == genTag;
-
-    if (isBuffer(value)) {
-      return cloneBuffer(value, isDeep);
-    }
-    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
-      if (isHostObject(value)) {
-        return object ? value : {};
-      }
-      result = initCloneObject(isFunc ? {} : value);
-      if (!isDeep) {
-        return copySymbols(value, baseAssign(result, value));
-      }
-    } else {
-      if (!cloneableTags[tag]) {
-        return object ? value : {};
-      }
-      result = initCloneByTag(value, tag, baseClone, isDeep);
-    }
-  }
-  // Check for circular references and return its corresponding clone.
-  stack || (stack = new Stack);
-  var stacked = stack.get(value);
-  if (stacked) {
-    return stacked;
-  }
-  stack.set(value, result);
-
-  if (!isArr) {
-    var props = isFull ? getAllKeys(value) : keys(value);
-  }
-  arrayEach(props || value, function(subValue, key) {
-    if (props) {
-      key = subValue;
-      subValue = value[key];
-    }
-    // Recursively populate clone (susceptible to call stack limits).
-    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
-  });
-  return result;
-}
-
-/**
- * The base implementation of `_.create` without support for assigning
- * properties to the created object.
- *
- * @private
- * @param {Object} prototype The object to inherit from.
- * @returns {Object} Returns the new object.
- */
-function baseCreate(proto) {
-  return isObject(proto) ? objectCreate(proto) : {};
-}
-
-/**
- * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
- * `keysFunc` and `symbolsFunc` to get the enumerable property names and
- * symbols of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {Function} keysFunc The function to get the keys of `object`.
- * @param {Function} symbolsFunc The function to get the symbols of `object`.
- * @returns {Array} Returns the array of property names and symbols.
- */
-function baseGetAllKeys(object, keysFunc, symbolsFunc) {
-  var result = keysFunc(object);
-  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
-}
-
-/**
- * The base implementation of `getTag`.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  return objectToString.call(value);
-}
-
-/**
- * The base implementation of `_.isNative` without bad shim checks.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a native function,
- *  else `false`.
- */
-function baseIsNative(value) {
-  if (!isObject(value) || isMasked(value)) {
-    return false;
-  }
-  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
-  return pattern.test(toSource(value));
-}
-
-/**
- * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- */
-function baseKeys(object) {
-  if (!isPrototype(object)) {
-    return nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (hasOwnProperty.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/**
- * Creates a clone of  `buffer`.
- *
- * @private
- * @param {Buffer} buffer The buffer to clone.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Buffer} Returns the cloned buffer.
- */
-function cloneBuffer(buffer, isDeep) {
-  if (isDeep) {
-    return buffer.slice();
-  }
-  var result = new buffer.constructor(buffer.length);
-  buffer.copy(result);
-  return result;
-}
-
-/**
- * Creates a clone of `arrayBuffer`.
- *
- * @private
- * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
- * @returns {ArrayBuffer} Returns the cloned array buffer.
- */
-function cloneArrayBuffer(arrayBuffer) {
-  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
-  return result;
-}
-
-/**
- * Creates a clone of `dataView`.
- *
- * @private
- * @param {Object} dataView The data view to clone.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Object} Returns the cloned data view.
- */
-function cloneDataView(dataView, isDeep) {
-  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
-  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
-}
-
-/**
- * Creates a clone of `map`.
- *
- * @private
- * @param {Object} map The map to clone.
- * @param {Function} cloneFunc The function to clone values.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Object} Returns the cloned map.
- */
-function cloneMap(map, isDeep, cloneFunc) {
-  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
-  return arrayReduce(array, addMapEntry, new map.constructor);
-}
-
-/**
- * Creates a clone of `regexp`.
- *
- * @private
- * @param {Object} regexp The regexp to clone.
- * @returns {Object} Returns the cloned regexp.
- */
-function cloneRegExp(regexp) {
-  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
-  result.lastIndex = regexp.lastIndex;
-  return result;
-}
-
-/**
- * Creates a clone of `set`.
- *
- * @private
- * @param {Object} set The set to clone.
- * @param {Function} cloneFunc The function to clone values.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Object} Returns the cloned set.
- */
-function cloneSet(set, isDeep, cloneFunc) {
-  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
-  return arrayReduce(array, addSetEntry, new set.constructor);
-}
-
-/**
- * Creates a clone of the `symbol` object.
- *
- * @private
- * @param {Object} symbol The symbol object to clone.
- * @returns {Object} Returns the cloned symbol object.
- */
-function cloneSymbol(symbol) {
-  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
-}
-
-/**
- * Creates a clone of `typedArray`.
- *
- * @private
- * @param {Object} typedArray The typed array to clone.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Object} Returns the cloned typed array.
- */
-function cloneTypedArray(typedArray, isDeep) {
-  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-}
-
-/**
- * Copies the values of `source` to `array`.
- *
- * @private
- * @param {Array} source The array to copy values from.
- * @param {Array} [array=[]] The array to copy values to.
- * @returns {Array} Returns `array`.
- */
-function copyArray(source, array) {
-  var index = -1,
-      length = source.length;
-
-  array || (array = Array(length));
-  while (++index < length) {
-    array[index] = source[index];
-  }
-  return array;
-}
-
-/**
- * Copies properties of `source` to `object`.
- *
- * @private
- * @param {Object} source The object to copy properties from.
- * @param {Array} props The property identifiers to copy.
- * @param {Object} [object={}] The object to copy properties to.
- * @param {Function} [customizer] The function to customize copied values.
- * @returns {Object} Returns `object`.
- */
-function copyObject(source, props, object, customizer) {
-  object || (object = {});
-
-  var index = -1,
-      length = props.length;
-
-  while (++index < length) {
-    var key = props[index];
-
-    var newValue = customizer
-      ? customizer(object[key], source[key], key, object, source)
-      : undefined;
-
-    assignValue(object, key, newValue === undefined ? source[key] : newValue);
-  }
-  return object;
-}
-
-/**
- * Copies own symbol properties of `source` to `object`.
- *
- * @private
- * @param {Object} source The object to copy symbols from.
- * @param {Object} [object={}] The object to copy symbols to.
- * @returns {Object} Returns `object`.
- */
-function copySymbols(source, object) {
-  return copyObject(source, getSymbols(source), object);
-}
-
-/**
- * Creates an array of own enumerable property names and symbols of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names and symbols.
- */
-function getAllKeys(object) {
-  return baseGetAllKeys(object, keys, getSymbols);
-}
-
-/**
- * Gets the data for `map`.
- *
- * @private
- * @param {Object} map The map to query.
- * @param {string} key The reference key.
- * @returns {*} Returns the map data.
- */
-function getMapData(map, key) {
-  var data = map.__data__;
-  return isKeyable(key)
-    ? data[typeof key == 'string' ? 'string' : 'hash']
-    : data.map;
-}
-
-/**
- * Gets the native function at `key` of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {string} key The key of the method to get.
- * @returns {*} Returns the function if it's native, else `undefined`.
- */
-function getNative(object, key) {
-  var value = getValue(object, key);
-  return baseIsNative(value) ? value : undefined;
-}
-
-/**
- * Creates an array of the own enumerable symbol properties of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of symbols.
- */
-var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
-
-/**
- * Gets the `toStringTag` of `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-var getTag = baseGetTag;
-
-// Fallback for data views, maps, sets, and weak maps in IE 11,
-// for data views in Edge < 14, and promises in Node.js.
-if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
-    (Map && getTag(new Map) != mapTag) ||
-    (Promise && getTag(Promise.resolve()) != promiseTag) ||
-    (Set && getTag(new Set) != setTag) ||
-    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
-  getTag = function(value) {
-    var result = objectToString.call(value),
-        Ctor = result == objectTag ? value.constructor : undefined,
-        ctorString = Ctor ? toSource(Ctor) : undefined;
-
-    if (ctorString) {
-      switch (ctorString) {
-        case dataViewCtorString: return dataViewTag;
-        case mapCtorString: return mapTag;
-        case promiseCtorString: return promiseTag;
-        case setCtorString: return setTag;
-        case weakMapCtorString: return weakMapTag;
-      }
-    }
-    return result;
-  };
-}
-
-/**
- * Initializes an array clone.
- *
- * @private
- * @param {Array} array The array to clone.
- * @returns {Array} Returns the initialized clone.
- */
-function initCloneArray(array) {
-  var length = array.length,
-      result = array.constructor(length);
-
-  // Add properties assigned by `RegExp#exec`.
-  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
-    result.index = array.index;
-    result.input = array.input;
-  }
-  return result;
-}
-
-/**
- * Initializes an object clone.
- *
- * @private
- * @param {Object} object The object to clone.
- * @returns {Object} Returns the initialized clone.
- */
-function initCloneObject(object) {
-  return (typeof object.constructor == 'function' && !isPrototype(object))
-    ? baseCreate(getPrototype(object))
-    : {};
-}
-
-/**
- * Initializes an object clone based on its `toStringTag`.
- *
- * **Note:** This function only supports cloning values with tags of
- * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
- *
- * @private
- * @param {Object} object The object to clone.
- * @param {string} tag The `toStringTag` of the object to clone.
- * @param {Function} cloneFunc The function to clone values.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Object} Returns the initialized clone.
- */
-function initCloneByTag(object, tag, cloneFunc, isDeep) {
-  var Ctor = object.constructor;
-  switch (tag) {
-    case arrayBufferTag:
-      return cloneArrayBuffer(object);
-
-    case boolTag:
-    case dateTag:
-      return new Ctor(+object);
-
-    case dataViewTag:
-      return cloneDataView(object, isDeep);
-
-    case float32Tag: case float64Tag:
-    case int8Tag: case int16Tag: case int32Tag:
-    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
-      return cloneTypedArray(object, isDeep);
-
-    case mapTag:
-      return cloneMap(object, isDeep, cloneFunc);
-
-    case numberTag:
-    case stringTag:
-      return new Ctor(object);
-
-    case regexpTag:
-      return cloneRegExp(object);
-
-    case setTag:
-      return cloneSet(object, isDeep, cloneFunc);
-
-    case symbolTag:
-      return cloneSymbol(object);
-  }
-}
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-
-/**
- * Checks if `value` is suitable for use as unique object key.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
- */
-function isKeyable(value) {
-  var type = typeof value;
-  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
-    ? (value !== '__proto__')
-    : (value === null);
-}
-
-/**
- * Checks if `func` has its source masked.
- *
- * @private
- * @param {Function} func The function to check.
- * @returns {boolean} Returns `true` if `func` is masked, else `false`.
- */
-function isMasked(func) {
-  return !!maskSrcKey && (maskSrcKey in func);
-}
-
-/**
- * Checks if `value` is likely a prototype object.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
- */
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
-
-  return value === proto;
-}
-
-/**
- * Converts `func` to its source code.
- *
- * @private
- * @param {Function} func The function to process.
- * @returns {string} Returns the source code.
- */
-function toSource(func) {
-  if (func != null) {
-    try {
-      return funcToString.call(func);
-    } catch (e) {}
-    try {
-      return (func + '');
-    } catch (e) {}
-  }
-  return '';
-}
-
-/**
- * This method is like `_.clone` except that it recursively clones `value`.
- *
- * @static
- * @memberOf _
- * @since 1.0.0
- * @category Lang
- * @param {*} value The value to recursively clone.
- * @returns {*} Returns the deep cloned value.
- * @see _.clone
- * @example
- *
- * var objects = [{ 'a': 1 }, { 'b': 2 }];
- *
- * var deep = _.cloneDeep(objects);
- * console.log(deep[0] === objects[0]);
- * // => false
- */
-function cloneDeep(value) {
-  return baseClone(value, true, true);
-}
-
-/**
- * Performs a
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * comparison between two values to determine if they are equivalent.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to compare.
- * @param {*} other The other value to compare.
- * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
- * @example
- *
- * var object = { 'a': 1 };
- * var other = { 'a': 1 };
- *
- * _.eq(object, object);
- * // => true
- *
- * _.eq(object, other);
- * // => false
- *
- * _.eq('a', 'a');
- * // => true
- *
- * _.eq('a', Object('a'));
- * // => false
- *
- * _.eq(NaN, NaN);
- * // => true
- */
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-
-/**
- * Checks if `value` is likely an `arguments` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- *  else `false`.
- * @example
- *
- * _.isArguments(function() { return arguments; }());
- * // => true
- *
- * _.isArguments([1, 2, 3]);
- * // => false
- */
-function isArguments(value) {
-  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
-    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-}
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-
-/**
- * Checks if `value` is a buffer.
- *
- * @static
- * @memberOf _
- * @since 4.3.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
- * @example
- *
- * _.isBuffer(new Buffer(2));
- * // => true
- *
- * _.isBuffer(new Uint8Array(2));
- * // => false
- */
-var isBuffer = nativeIsBuffer || stubFalse;
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-}
-
-/**
- * This method returns a new empty array.
- *
- * @static
- * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {Array} Returns the new empty array.
- * @example
- *
- * var arrays = _.times(2, _.stubArray);
- *
- * console.log(arrays);
- * // => [[], []]
- *
- * console.log(arrays[0] === arrays[1]);
- * // => false
- */
-function stubArray() {
-  return [];
-}
-
-/**
- * This method returns `false`.
- *
- * @static
- * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {boolean} Returns `false`.
- * @example
- *
- * _.times(2, _.stubFalse);
- * // => [false, false]
- */
-function stubFalse() {
-  return false;
-}
-
-module.exports = cloneDeep;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],461:[function(require,module,exports){
-(function (global){
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]';
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/**
- * Appends the elements of `values` to `array`.
- *
- * @private
- * @param {Array} array The array to modify.
- * @param {Array} values The values to append.
- * @returns {Array} Returns `array`.
- */
-function arrayPush(array, values) {
-  var index = -1,
-      length = values.length,
-      offset = array.length;
-
-  while (++index < length) {
-    array[offset + index] = values[index];
-  }
-  return array;
-}
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Built-in value references. */
-var Symbol = root.Symbol,
-    propertyIsEnumerable = objectProto.propertyIsEnumerable,
-    spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
-
-/**
- * The base implementation of `_.flatten` with support for restricting flattening.
- *
- * @private
- * @param {Array} array The array to flatten.
- * @param {number} depth The maximum recursion depth.
- * @param {boolean} [predicate=isFlattenable] The function invoked per iteration.
- * @param {boolean} [isStrict] Restrict to values that pass `predicate` checks.
- * @param {Array} [result=[]] The initial result value.
- * @returns {Array} Returns the new flattened array.
- */
-function baseFlatten(array, depth, predicate, isStrict, result) {
-  var index = -1,
-      length = array.length;
-
-  predicate || (predicate = isFlattenable);
-  result || (result = []);
-
-  while (++index < length) {
-    var value = array[index];
-    if (depth > 0 && predicate(value)) {
-      if (depth > 1) {
-        // Recursively flatten arrays (susceptible to call stack limits).
-        baseFlatten(value, depth - 1, predicate, isStrict, result);
-      } else {
-        arrayPush(result, value);
-      }
-    } else if (!isStrict) {
-      result[result.length] = value;
-    }
-  }
-  return result;
-}
-
-/**
- * Checks if `value` is a flattenable `arguments` object or array.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
- */
-function isFlattenable(value) {
-  return isArray(value) || isArguments(value) ||
-    !!(spreadableSymbol && value && value[spreadableSymbol]);
-}
-
-/**
- * Flattens `array` a single level deep.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Array
- * @param {Array} array The array to flatten.
- * @returns {Array} Returns the new flattened array.
- * @example
- *
- * _.flatten([1, [2, [3, [4]], 5]]);
- * // => [1, 2, [3, [4]], 5]
- */
-function flatten(array) {
-  var length = array ? array.length : 0;
-  return length ? baseFlatten(array, 1) : [];
-}
-
-/**
- * Checks if `value` is likely an `arguments` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- *  else `false`.
- * @example
- *
- * _.isArguments(function() { return arguments; }());
- * // => true
- *
- * _.isArguments([1, 2, 3]);
- * // => false
- */
-function isArguments(value) {
-  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
-    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-}
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-module.exports = flatten;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],462:[function(require,module,exports){
-(function (global){
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as the `TypeError` message for "Functions" methods. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/** Used to stand-in for `undefined` hash values. */
-var HASH_UNDEFINED = '__lodash_hash_undefined__';
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0;
-
-/** `Object#toString` result references. */
-var funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
-    symbolTag = '[object Symbol]';
-
-/** Used to match property names within property paths. */
-var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
-    reIsPlainProp = /^\w*$/,
-    reLeadingDot = /^\./,
-    rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
-
-/**
- * Used to match `RegExp`
- * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
- */
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-
-/** Used to match backslashes in property paths. */
-var reEscapeChar = /\\(\\)?/g;
-
-/** Used to detect host constructors (Safari). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/**
- * Gets the value at `key` of `object`.
- *
- * @private
- * @param {Object} [object] The object to query.
- * @param {string} key The key of the property to get.
- * @returns {*} Returns the property value.
- */
-function getValue(object, key) {
-  return object == null ? undefined : object[key];
-}
-
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-function isHostObject(value) {
-  // Many host objects are `Object` objects that can coerce to strings
-  // despite having improperly defined `toString` methods.
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-
-/** Used for built-in method references. */
-var arrayProto = Array.prototype,
-    funcProto = Function.prototype,
-    objectProto = Object.prototype;
-
-/** Used to detect overreaching core-js shims. */
-var coreJsData = root['__core-js_shared__'];
-
-/** Used to detect methods masquerading as native. */
-var maskSrcKey = (function() {
-  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-  return uid ? ('Symbol(src)_1.' + uid) : '';
-}());
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString = funcProto.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Used to detect if a method is native. */
-var reIsNative = RegExp('^' +
-  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-
-/** Built-in value references. */
-var Symbol = root.Symbol,
-    splice = arrayProto.splice;
-
-/* Built-in method references that are verified to be native. */
-var Map = getNative(root, 'Map'),
-    nativeCreate = getNative(Object, 'create');
-
-/** Used to convert symbols to primitives and strings. */
-var symbolProto = Symbol ? Symbol.prototype : undefined,
-    symbolToString = symbolProto ? symbolProto.toString : undefined;
-
-/**
- * Creates a hash object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function Hash(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the hash.
- *
- * @private
- * @name clear
- * @memberOf Hash
- */
-function hashClear() {
-  this.__data__ = nativeCreate ? nativeCreate(null) : {};
-}
-
-/**
- * Removes `key` and its value from the hash.
- *
- * @private
- * @name delete
- * @memberOf Hash
- * @param {Object} hash The hash to modify.
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function hashDelete(key) {
-  return this.has(key) && delete this.__data__[key];
-}
-
-/**
- * Gets the hash value for `key`.
- *
- * @private
- * @name get
- * @memberOf Hash
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function hashGet(key) {
-  var data = this.__data__;
-  if (nativeCreate) {
-    var result = data[key];
-    return result === HASH_UNDEFINED ? undefined : result;
-  }
-  return hasOwnProperty.call(data, key) ? data[key] : undefined;
-}
-
-/**
- * Checks if a hash value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf Hash
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function hashHas(key) {
-  var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
-}
-
-/**
- * Sets the hash `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf Hash
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the hash instance.
- */
-function hashSet(key, value) {
-  var data = this.__data__;
-  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
-  return this;
-}
-
-// Add methods to `Hash`.
-Hash.prototype.clear = hashClear;
-Hash.prototype['delete'] = hashDelete;
-Hash.prototype.get = hashGet;
-Hash.prototype.has = hashHas;
-Hash.prototype.set = hashSet;
-
-/**
- * Creates an list cache object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function ListCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the list cache.
- *
- * @private
- * @name clear
- * @memberOf ListCache
- */
-function listCacheClear() {
-  this.__data__ = [];
-}
-
-/**
- * Removes `key` and its value from the list cache.
- *
- * @private
- * @name delete
- * @memberOf ListCache
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function listCacheDelete(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  if (index < 0) {
-    return false;
-  }
-  var lastIndex = data.length - 1;
-  if (index == lastIndex) {
-    data.pop();
-  } else {
-    splice.call(data, index, 1);
-  }
-  return true;
-}
-
-/**
- * Gets the list cache value for `key`.
- *
- * @private
- * @name get
- * @memberOf ListCache
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function listCacheGet(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  return index < 0 ? undefined : data[index][1];
-}
-
-/**
- * Checks if a list cache value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf ListCache
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function listCacheHas(key) {
-  return assocIndexOf(this.__data__, key) > -1;
-}
-
-/**
- * Sets the list cache `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf ListCache
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the list cache instance.
- */
-function listCacheSet(key, value) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  if (index < 0) {
-    data.push([key, value]);
-  } else {
-    data[index][1] = value;
-  }
-  return this;
-}
-
-// Add methods to `ListCache`.
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
-
-/**
- * Creates a map cache object to store key-value pairs.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function MapCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the map.
- *
- * @private
- * @name clear
- * @memberOf MapCache
- */
-function mapCacheClear() {
-  this.__data__ = {
-    'hash': new Hash,
-    'map': new (Map || ListCache),
-    'string': new Hash
-  };
-}
-
-/**
- * Removes `key` and its value from the map.
- *
- * @private
- * @name delete
- * @memberOf MapCache
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function mapCacheDelete(key) {
-  return getMapData(this, key)['delete'](key);
-}
-
-/**
- * Gets the map value for `key`.
- *
- * @private
- * @name get
- * @memberOf MapCache
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function mapCacheGet(key) {
-  return getMapData(this, key).get(key);
-}
-
-/**
- * Checks if a map value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf MapCache
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function mapCacheHas(key) {
-  return getMapData(this, key).has(key);
-}
-
-/**
- * Sets the map `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf MapCache
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the map cache instance.
- */
-function mapCacheSet(key, value) {
-  getMapData(this, key).set(key, value);
-  return this;
-}
-
-// Add methods to `MapCache`.
-MapCache.prototype.clear = mapCacheClear;
-MapCache.prototype['delete'] = mapCacheDelete;
-MapCache.prototype.get = mapCacheGet;
-MapCache.prototype.has = mapCacheHas;
-MapCache.prototype.set = mapCacheSet;
-
-/**
- * Gets the index at which the `key` is found in `array` of key-value pairs.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} key The key to search for.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.get` without support for default values.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {Array|string} path The path of the property to get.
- * @returns {*} Returns the resolved value.
- */
-function baseGet(object, path) {
-  path = isKey(path, object) ? [path] : castPath(path);
-
-  var index = 0,
-      length = path.length;
-
-  while (object != null && index < length) {
-    object = object[toKey(path[index++])];
-  }
-  return (index && index == length) ? object : undefined;
-}
-
-/**
- * The base implementation of `_.isNative` without bad shim checks.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a native function,
- *  else `false`.
- */
-function baseIsNative(value) {
-  if (!isObject(value) || isMasked(value)) {
-    return false;
-  }
-  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
-  return pattern.test(toSource(value));
-}
-
-/**
- * The base implementation of `_.toString` which doesn't convert nullish
- * values to empty strings.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  // Exit early for strings to avoid a performance hit in some environments.
-  if (typeof value == 'string') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return symbolToString ? symbolToString.call(value) : '';
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-/**
- * Casts `value` to a path array if it's not one.
- *
- * @private
- * @param {*} value The value to inspect.
- * @returns {Array} Returns the cast property path array.
- */
-function castPath(value) {
-  return isArray(value) ? value : stringToPath(value);
-}
-
-/**
- * Gets the data for `map`.
- *
- * @private
- * @param {Object} map The map to query.
- * @param {string} key The reference key.
- * @returns {*} Returns the map data.
- */
-function getMapData(map, key) {
-  var data = map.__data__;
-  return isKeyable(key)
-    ? data[typeof key == 'string' ? 'string' : 'hash']
-    : data.map;
-}
-
-/**
- * Gets the native function at `key` of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {string} key The key of the method to get.
- * @returns {*} Returns the function if it's native, else `undefined`.
- */
-function getNative(object, key) {
-  var value = getValue(object, key);
-  return baseIsNative(value) ? value : undefined;
-}
-
-/**
- * Checks if `value` is a property name and not a property path.
- *
- * @private
- * @param {*} value The value to check.
- * @param {Object} [object] The object to query keys on.
- * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
- */
-function isKey(value, object) {
-  if (isArray(value)) {
-    return false;
-  }
-  var type = typeof value;
-  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
-      value == null || isSymbol(value)) {
-    return true;
-  }
-  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
-    (object != null && value in Object(object));
-}
-
-/**
- * Checks if `value` is suitable for use as unique object key.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
- */
-function isKeyable(value) {
-  var type = typeof value;
-  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
-    ? (value !== '__proto__')
-    : (value === null);
-}
-
-/**
- * Checks if `func` has its source masked.
- *
- * @private
- * @param {Function} func The function to check.
- * @returns {boolean} Returns `true` if `func` is masked, else `false`.
- */
-function isMasked(func) {
-  return !!maskSrcKey && (maskSrcKey in func);
-}
-
-/**
- * Converts `string` to a property path array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the property path array.
- */
-var stringToPath = memoize(function(string) {
-  string = toString(string);
-
-  var result = [];
-  if (reLeadingDot.test(string)) {
-    result.push('');
-  }
-  string.replace(rePropName, function(match, number, quote, string) {
-    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
-  });
-  return result;
-});
-
-/**
- * Converts `value` to a string key if it's not a string or symbol.
- *
- * @private
- * @param {*} value The value to inspect.
- * @returns {string|symbol} Returns the key.
- */
-function toKey(value) {
-  if (typeof value == 'string' || isSymbol(value)) {
-    return value;
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-/**
- * Converts `func` to its source code.
- *
- * @private
- * @param {Function} func The function to process.
- * @returns {string} Returns the source code.
- */
-function toSource(func) {
-  if (func != null) {
-    try {
-      return funcToString.call(func);
-    } catch (e) {}
-    try {
-      return (func + '');
-    } catch (e) {}
-  }
-  return '';
-}
-
-/**
- * Creates a function that memoizes the result of `func`. If `resolver` is
- * provided, it determines the cache key for storing the result based on the
- * arguments provided to the memoized function. By default, the first argument
- * provided to the memoized function is used as the map cache key. The `func`
- * is invoked with the `this` binding of the memoized function.
- *
- * **Note:** The cache is exposed as the `cache` property on the memoized
- * function. Its creation may be customized by replacing the `_.memoize.Cache`
- * constructor with one whose instances implement the
- * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
- * method interface of `delete`, `get`, `has`, and `set`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to have its output memoized.
- * @param {Function} [resolver] The function to resolve the cache key.
- * @returns {Function} Returns the new memoized function.
- * @example
- *
- * var object = { 'a': 1, 'b': 2 };
- * var other = { 'c': 3, 'd': 4 };
- *
- * var values = _.memoize(_.values);
- * values(object);
- * // => [1, 2]
- *
- * values(other);
- * // => [3, 4]
- *
- * object.a = 2;
- * values(object);
- * // => [1, 2]
- *
- * // Modify the result cache.
- * values.cache.set(object, ['a', 'b']);
- * values(object);
- * // => ['a', 'b']
- *
- * // Replace `_.memoize.Cache`.
- * _.memoize.Cache = WeakMap;
- */
-function memoize(func, resolver) {
-  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  var memoized = function() {
-    var args = arguments,
-        key = resolver ? resolver.apply(this, args) : args[0],
-        cache = memoized.cache;
-
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-    var result = func.apply(this, args);
-    memoized.cache = cache.set(key, result);
-    return result;
-  };
-  memoized.cache = new (memoize.Cache || MapCache);
-  return memoized;
-}
-
-// Assign cache to `_.memoize`.
-memoize.Cache = MapCache;
-
-/**
- * Performs a
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * comparison between two values to determine if they are equivalent.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to compare.
- * @param {*} other The other value to compare.
- * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
- * @example
- *
- * var object = { 'a': 1 };
- * var other = { 'a': 1 };
- *
- * _.eq(object, object);
- * // => true
- *
- * _.eq(object, other);
- * // => false
- *
- * _.eq('a', 'a');
- * // => true
- *
- * _.eq('a', Object('a'));
- * // => false
- *
- * _.eq(NaN, NaN);
- * // => true
- */
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-}
-
-/**
- * Converts `value` to a string. An empty string is returned for `null`
- * and `undefined` values. The sign of `-0` is preserved.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- * @example
- *
- * _.toString(null);
- * // => ''
- *
- * _.toString(-0);
- * // => '-0'
- *
- * _.toString([1, 2, 3]);
- * // => '1,2,3'
- */
-function toString(value) {
-  return value == null ? '' : baseToString(value);
-}
-
-/**
- * Gets the value at `path` of `object`. If the resolved value is
- * `undefined`, the `defaultValue` is returned in its place.
- *
- * @static
- * @memberOf _
- * @since 3.7.0
- * @category Object
- * @param {Object} object The object to query.
- * @param {Array|string} path The path of the property to get.
- * @param {*} [defaultValue] The value returned for `undefined` resolved values.
- * @returns {*} Returns the resolved value.
- * @example
- *
- * var object = { 'a': [{ 'b': { 'c': 3 } }] };
- *
- * _.get(object, 'a[0].b.c');
- * // => 3
- *
- * _.get(object, ['a', '0', 'b', 'c']);
- * // => 3
- *
- * _.get(object, 'a.b.c', 'default');
- * // => 'default'
- */
-function get(object, path, defaultValue) {
-  var result = object == null ? undefined : baseGet(object, path);
-  return result === undefined ? defaultValue : result;
-}
-
-module.exports = get;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],463:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -38956,1863 +31759,6 @@ function baseForIn(object, iteratee) {
  *
  * _.isPlainObject(Object.create(null));
  * // => true
- */
-function isPlainObject(value) {
-  var Ctor;
-
-  // Exit early for non `Object` objects.
-  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isArguments(value)) ||
-      (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
-    return false;
-  }
-  // IE < 9 iterates inherited properties before own properties. If the first
-  // iterated property is an object's own property then there are no inherited
-  // enumerable properties.
-  var result;
-  // In most environments an object's own properties are iterated before
-  // its inherited properties. If the last iterated property is an object's
-  // own property then there are no inherited enumerable properties.
-  baseForIn(value, function(subValue, key) {
-    result = key;
-  });
-  return result === undefined || hasOwnProperty.call(value, result);
-}
-
-module.exports = isPlainObject;
-
-},{"lodash._basefor":459,"lodash.isarguments":463,"lodash.keysin":466}],466:[function(require,module,exports){
-/**
- * lodash 3.0.8 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var isArguments = require('lodash.isarguments'),
-    isArray = require('lodash.isarray');
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^\d+$/;
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
- * of an array-like value.
- */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return value > -1 && value % 1 == 0 && value < length;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- */
-function isLength(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Creates an array of the own and inherited enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects.
- *
- * @static
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keysIn(new Foo);
- * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
- */
-function keysIn(object) {
-  if (object == null) {
-    return [];
-  }
-  if (!isObject(object)) {
-    object = Object(object);
-  }
-  var length = object.length;
-  length = (length && isLength(length) &&
-    (isArray(object) || isArguments(object)) && length) || 0;
-
-  var Ctor = object.constructor,
-      index = -1,
-      isProto = typeof Ctor == 'function' && Ctor.prototype === object,
-      result = Array(length),
-      skipIndexes = length > 0;
-
-  while (++index < length) {
-    result[index] = (index + '');
-  }
-  for (var key in object) {
-    if (!(skipIndexes && isIndex(key, length)) &&
-        !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-module.exports = keysIn;
-
-},{"lodash.isarguments":463,"lodash.isarray":464}],467:[function(require,module,exports){
-(function (global){
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as the `TypeError` message for "Functions" methods. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/** Used to stand-in for `undefined` hash values. */
-var HASH_UNDEFINED = '__lodash_hash_undefined__';
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0,
-    MAX_SAFE_INTEGER = 9007199254740991;
-
-/** `Object#toString` result references. */
-var funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
-    symbolTag = '[object Symbol]';
-
-/** Used to match property names within property paths. */
-var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
-    reIsPlainProp = /^\w*$/,
-    reLeadingDot = /^\./,
-    rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
-
-/**
- * Used to match `RegExp`
- * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
- */
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-
-/** Used to match backslashes in property paths. */
-var reEscapeChar = /\\(\\)?/g;
-
-/** Used to detect host constructors (Safari). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/**
- * Gets the value at `key` of `object`.
- *
- * @private
- * @param {Object} [object] The object to query.
- * @param {string} key The key of the property to get.
- * @returns {*} Returns the property value.
- */
-function getValue(object, key) {
-  return object == null ? undefined : object[key];
-}
-
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-function isHostObject(value) {
-  // Many host objects are `Object` objects that can coerce to strings
-  // despite having improperly defined `toString` methods.
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-
-/** Used for built-in method references. */
-var arrayProto = Array.prototype,
-    funcProto = Function.prototype,
-    objectProto = Object.prototype;
-
-/** Used to detect overreaching core-js shims. */
-var coreJsData = root['__core-js_shared__'];
-
-/** Used to detect methods masquerading as native. */
-var maskSrcKey = (function() {
-  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-  return uid ? ('Symbol(src)_1.' + uid) : '';
-}());
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString = funcProto.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Used to detect if a method is native. */
-var reIsNative = RegExp('^' +
-  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-
-/** Built-in value references. */
-var Symbol = root.Symbol,
-    splice = arrayProto.splice;
-
-/* Built-in method references that are verified to be native. */
-var Map = getNative(root, 'Map'),
-    nativeCreate = getNative(Object, 'create');
-
-/** Used to convert symbols to primitives and strings. */
-var symbolProto = Symbol ? Symbol.prototype : undefined,
-    symbolToString = symbolProto ? symbolProto.toString : undefined;
-
-/**
- * Creates a hash object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function Hash(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the hash.
- *
- * @private
- * @name clear
- * @memberOf Hash
- */
-function hashClear() {
-  this.__data__ = nativeCreate ? nativeCreate(null) : {};
-}
-
-/**
- * Removes `key` and its value from the hash.
- *
- * @private
- * @name delete
- * @memberOf Hash
- * @param {Object} hash The hash to modify.
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function hashDelete(key) {
-  return this.has(key) && delete this.__data__[key];
-}
-
-/**
- * Gets the hash value for `key`.
- *
- * @private
- * @name get
- * @memberOf Hash
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function hashGet(key) {
-  var data = this.__data__;
-  if (nativeCreate) {
-    var result = data[key];
-    return result === HASH_UNDEFINED ? undefined : result;
-  }
-  return hasOwnProperty.call(data, key) ? data[key] : undefined;
-}
-
-/**
- * Checks if a hash value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf Hash
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function hashHas(key) {
-  var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
-}
-
-/**
- * Sets the hash `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf Hash
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the hash instance.
- */
-function hashSet(key, value) {
-  var data = this.__data__;
-  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
-  return this;
-}
-
-// Add methods to `Hash`.
-Hash.prototype.clear = hashClear;
-Hash.prototype['delete'] = hashDelete;
-Hash.prototype.get = hashGet;
-Hash.prototype.has = hashHas;
-Hash.prototype.set = hashSet;
-
-/**
- * Creates an list cache object.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function ListCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the list cache.
- *
- * @private
- * @name clear
- * @memberOf ListCache
- */
-function listCacheClear() {
-  this.__data__ = [];
-}
-
-/**
- * Removes `key` and its value from the list cache.
- *
- * @private
- * @name delete
- * @memberOf ListCache
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function listCacheDelete(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  if (index < 0) {
-    return false;
-  }
-  var lastIndex = data.length - 1;
-  if (index == lastIndex) {
-    data.pop();
-  } else {
-    splice.call(data, index, 1);
-  }
-  return true;
-}
-
-/**
- * Gets the list cache value for `key`.
- *
- * @private
- * @name get
- * @memberOf ListCache
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function listCacheGet(key) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  return index < 0 ? undefined : data[index][1];
-}
-
-/**
- * Checks if a list cache value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf ListCache
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function listCacheHas(key) {
-  return assocIndexOf(this.__data__, key) > -1;
-}
-
-/**
- * Sets the list cache `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf ListCache
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the list cache instance.
- */
-function listCacheSet(key, value) {
-  var data = this.__data__,
-      index = assocIndexOf(data, key);
-
-  if (index < 0) {
-    data.push([key, value]);
-  } else {
-    data[index][1] = value;
-  }
-  return this;
-}
-
-// Add methods to `ListCache`.
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
-
-/**
- * Creates a map cache object to store key-value pairs.
- *
- * @private
- * @constructor
- * @param {Array} [entries] The key-value pairs to cache.
- */
-function MapCache(entries) {
-  var index = -1,
-      length = entries ? entries.length : 0;
-
-  this.clear();
-  while (++index < length) {
-    var entry = entries[index];
-    this.set(entry[0], entry[1]);
-  }
-}
-
-/**
- * Removes all key-value entries from the map.
- *
- * @private
- * @name clear
- * @memberOf MapCache
- */
-function mapCacheClear() {
-  this.__data__ = {
-    'hash': new Hash,
-    'map': new (Map || ListCache),
-    'string': new Hash
-  };
-}
-
-/**
- * Removes `key` and its value from the map.
- *
- * @private
- * @name delete
- * @memberOf MapCache
- * @param {string} key The key of the value to remove.
- * @returns {boolean} Returns `true` if the entry was removed, else `false`.
- */
-function mapCacheDelete(key) {
-  return getMapData(this, key)['delete'](key);
-}
-
-/**
- * Gets the map value for `key`.
- *
- * @private
- * @name get
- * @memberOf MapCache
- * @param {string} key The key of the value to get.
- * @returns {*} Returns the entry value.
- */
-function mapCacheGet(key) {
-  return getMapData(this, key).get(key);
-}
-
-/**
- * Checks if a map value for `key` exists.
- *
- * @private
- * @name has
- * @memberOf MapCache
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function mapCacheHas(key) {
-  return getMapData(this, key).has(key);
-}
-
-/**
- * Sets the map `key` to `value`.
- *
- * @private
- * @name set
- * @memberOf MapCache
- * @param {string} key The key of the value to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns the map cache instance.
- */
-function mapCacheSet(key, value) {
-  getMapData(this, key).set(key, value);
-  return this;
-}
-
-// Add methods to `MapCache`.
-MapCache.prototype.clear = mapCacheClear;
-MapCache.prototype['delete'] = mapCacheDelete;
-MapCache.prototype.get = mapCacheGet;
-MapCache.prototype.has = mapCacheHas;
-MapCache.prototype.set = mapCacheSet;
-
-/**
- * Assigns `value` to `key` of `object` if the existing value is not equivalent
- * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * for equality comparisons.
- *
- * @private
- * @param {Object} object The object to modify.
- * @param {string} key The key of the property to assign.
- * @param {*} value The value to assign.
- */
-function assignValue(object, key, value) {
-  var objValue = object[key];
-  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
-      (value === undefined && !(key in object))) {
-    object[key] = value;
-  }
-}
-
-/**
- * Gets the index at which the `key` is found in `array` of key-value pairs.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} key The key to search for.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function assocIndexOf(array, key) {
-  var length = array.length;
-  while (length--) {
-    if (eq(array[length][0], key)) {
-      return length;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.isNative` without bad shim checks.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a native function,
- *  else `false`.
- */
-function baseIsNative(value) {
-  if (!isObject(value) || isMasked(value)) {
-    return false;
-  }
-  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
-  return pattern.test(toSource(value));
-}
-
-/**
- * The base implementation of `_.set`.
- *
- * @private
- * @param {Object} object The object to modify.
- * @param {Array|string} path The path of the property to set.
- * @param {*} value The value to set.
- * @param {Function} [customizer] The function to customize path creation.
- * @returns {Object} Returns `object`.
- */
-function baseSet(object, path, value, customizer) {
-  if (!isObject(object)) {
-    return object;
-  }
-  path = isKey(path, object) ? [path] : castPath(path);
-
-  var index = -1,
-      length = path.length,
-      lastIndex = length - 1,
-      nested = object;
-
-  while (nested != null && ++index < length) {
-    var key = toKey(path[index]),
-        newValue = value;
-
-    if (index != lastIndex) {
-      var objValue = nested[key];
-      newValue = customizer ? customizer(objValue, key, nested) : undefined;
-      if (newValue === undefined) {
-        newValue = isObject(objValue)
-          ? objValue
-          : (isIndex(path[index + 1]) ? [] : {});
-      }
-    }
-    assignValue(nested, key, newValue);
-    nested = nested[key];
-  }
-  return object;
-}
-
-/**
- * The base implementation of `_.toString` which doesn't convert nullish
- * values to empty strings.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  // Exit early for strings to avoid a performance hit in some environments.
-  if (typeof value == 'string') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return symbolToString ? symbolToString.call(value) : '';
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-/**
- * Casts `value` to a path array if it's not one.
- *
- * @private
- * @param {*} value The value to inspect.
- * @returns {Array} Returns the cast property path array.
- */
-function castPath(value) {
-  return isArray(value) ? value : stringToPath(value);
-}
-
-/**
- * Gets the data for `map`.
- *
- * @private
- * @param {Object} map The map to query.
- * @param {string} key The reference key.
- * @returns {*} Returns the map data.
- */
-function getMapData(map, key) {
-  var data = map.__data__;
-  return isKeyable(key)
-    ? data[typeof key == 'string' ? 'string' : 'hash']
-    : data.map;
-}
-
-/**
- * Gets the native function at `key` of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {string} key The key of the method to get.
- * @returns {*} Returns the function if it's native, else `undefined`.
- */
-function getNative(object, key) {
-  var value = getValue(object, key);
-  return baseIsNative(value) ? value : undefined;
-}
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-
-/**
- * Checks if `value` is a property name and not a property path.
- *
- * @private
- * @param {*} value The value to check.
- * @param {Object} [object] The object to query keys on.
- * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
- */
-function isKey(value, object) {
-  if (isArray(value)) {
-    return false;
-  }
-  var type = typeof value;
-  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
-      value == null || isSymbol(value)) {
-    return true;
-  }
-  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
-    (object != null && value in Object(object));
-}
-
-/**
- * Checks if `value` is suitable for use as unique object key.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
- */
-function isKeyable(value) {
-  var type = typeof value;
-  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
-    ? (value !== '__proto__')
-    : (value === null);
-}
-
-/**
- * Checks if `func` has its source masked.
- *
- * @private
- * @param {Function} func The function to check.
- * @returns {boolean} Returns `true` if `func` is masked, else `false`.
- */
-function isMasked(func) {
-  return !!maskSrcKey && (maskSrcKey in func);
-}
-
-/**
- * Converts `string` to a property path array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the property path array.
- */
-var stringToPath = memoize(function(string) {
-  string = toString(string);
-
-  var result = [];
-  if (reLeadingDot.test(string)) {
-    result.push('');
-  }
-  string.replace(rePropName, function(match, number, quote, string) {
-    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
-  });
-  return result;
-});
-
-/**
- * Converts `value` to a string key if it's not a string or symbol.
- *
- * @private
- * @param {*} value The value to inspect.
- * @returns {string|symbol} Returns the key.
- */
-function toKey(value) {
-  if (typeof value == 'string' || isSymbol(value)) {
-    return value;
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-/**
- * Converts `func` to its source code.
- *
- * @private
- * @param {Function} func The function to process.
- * @returns {string} Returns the source code.
- */
-function toSource(func) {
-  if (func != null) {
-    try {
-      return funcToString.call(func);
-    } catch (e) {}
-    try {
-      return (func + '');
-    } catch (e) {}
-  }
-  return '';
-}
-
-/**
- * Creates a function that memoizes the result of `func`. If `resolver` is
- * provided, it determines the cache key for storing the result based on the
- * arguments provided to the memoized function. By default, the first argument
- * provided to the memoized function is used as the map cache key. The `func`
- * is invoked with the `this` binding of the memoized function.
- *
- * **Note:** The cache is exposed as the `cache` property on the memoized
- * function. Its creation may be customized by replacing the `_.memoize.Cache`
- * constructor with one whose instances implement the
- * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
- * method interface of `delete`, `get`, `has`, and `set`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to have its output memoized.
- * @param {Function} [resolver] The function to resolve the cache key.
- * @returns {Function} Returns the new memoized function.
- * @example
- *
- * var object = { 'a': 1, 'b': 2 };
- * var other = { 'c': 3, 'd': 4 };
- *
- * var values = _.memoize(_.values);
- * values(object);
- * // => [1, 2]
- *
- * values(other);
- * // => [3, 4]
- *
- * object.a = 2;
- * values(object);
- * // => [1, 2]
- *
- * // Modify the result cache.
- * values.cache.set(object, ['a', 'b']);
- * values(object);
- * // => ['a', 'b']
- *
- * // Replace `_.memoize.Cache`.
- * _.memoize.Cache = WeakMap;
- */
-function memoize(func, resolver) {
-  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  var memoized = function() {
-    var args = arguments,
-        key = resolver ? resolver.apply(this, args) : args[0],
-        cache = memoized.cache;
-
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-    var result = func.apply(this, args);
-    memoized.cache = cache.set(key, result);
-    return result;
-  };
-  memoized.cache = new (memoize.Cache || MapCache);
-  return memoized;
-}
-
-// Assign cache to `_.memoize`.
-memoize.Cache = MapCache;
-
-/**
- * Performs a
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * comparison between two values to determine if they are equivalent.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to compare.
- * @param {*} other The other value to compare.
- * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
- * @example
- *
- * var object = { 'a': 1 };
- * var other = { 'a': 1 };
- *
- * _.eq(object, object);
- * // => true
- *
- * _.eq(object, other);
- * // => false
- *
- * _.eq('a', 'a');
- * // => true
- *
- * _.eq('a', Object('a'));
- * // => false
- *
- * _.eq(NaN, NaN);
- * // => true
- */
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-}
-
-/**
- * Converts `value` to a string. An empty string is returned for `null`
- * and `undefined` values. The sign of `-0` is preserved.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- * @example
- *
- * _.toString(null);
- * // => ''
- *
- * _.toString(-0);
- * // => '-0'
- *
- * _.toString([1, 2, 3]);
- * // => '1,2,3'
- */
-function toString(value) {
-  return value == null ? '' : baseToString(value);
-}
-
-/**
- * Sets the value at `path` of `object`. If a portion of `path` doesn't exist,
- * it's created. Arrays are created for missing index properties while objects
- * are created for all other missing properties. Use `_.setWith` to customize
- * `path` creation.
- *
- * **Note:** This method mutates `object`.
- *
- * @static
- * @memberOf _
- * @since 3.7.0
- * @category Object
- * @param {Object} object The object to modify.
- * @param {Array|string} path The path of the property to set.
- * @param {*} value The value to set.
- * @returns {Object} Returns `object`.
- * @example
- *
- * var object = { 'a': [{ 'b': { 'c': 3 } }] };
- *
- * _.set(object, 'a[0].b.c', 4);
- * console.log(object.a[0].b.c);
- * // => 4
- *
- * _.set(object, ['x', '0', 'y', 'z'], 5);
- * console.log(object.x[0].y.z);
- * // => 5
- */
-function set(object, path, value) {
-  return object == null ? object : baseSet(object, path, value);
-}
-
-module.exports = set;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],468:[function(require,module,exports){
-(function (global){
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as the size to enable large array optimizations. */
-var LARGE_ARRAY_SIZE = 200;
-
-/** Used to stand-in for `undefined` hash values. */
-var HASH_UNDEFINED = '__lodash_hash_undefined__';
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0;
-
-/** `Object#toString` result references. */
-var funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]';
-
-/**
- * Used to match `RegExp`
- * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
- */
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-
-/** Used to detect host constructors (Safari). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/**
- * A specialized version of `_.includes` for arrays without support for
- * specifying an index to search from.
- *
- * @private
- * @param {Array} [array] The array to inspect.
- * @param {*} target The value to search for.
- * @returns {boolean} Returns `true` if `target` is found, else `false`.
- */
-function arrayIncludes(array, value) {
-  var length = array ? array.length : 0;
-  return !!length && baseIndexOf(array, value, 0) > -1;
-}
-
-/**
- * This function is like `arrayIncludes` except that it accepts a comparator.
- *
- * @private
- * @param {Array} [array] The array to inspect.
- * @param {*} target The value to search for.
- * @param {Function} comparator The comparator invoked per element.
- * @returns {boolean} Returns `true` if `target` is found, else `false`.
- */
-function arrayIncludesWith(array, value, comparator) {
-  var index = -1,
-      length = array ? array.length : 0;
-
-  while (++index < length) {
-    if (comparator(value, array[index])) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * The base implementation of `_.findIndex` and `_.findLastIndex` without
- * support for iteratee shorthands.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {Function} predicate The function invoked per iteration.
- * @param {number} fromIndex The index to search from.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 1 : -1);
-
-  while ((fromRight ? index-- : ++index < length)) {
-    if (predicate(array[index], index, array)) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseIndexOf(array, value, fromIndex) {
-  if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
-  }
-  var index = fromIndex - 1,
-      length = array.length;
-
-  while (++index < length) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.isNaN` without support for number objects.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
- */
-function baseIsNaN(value) {
-  return value !== value;
-}
-
-/**
- * Checks if a cache value for `key` exists.
- *
- * @private
- * @param {Object} cache The cache to query.
- * @param {string} key The key of the entry to check.
- * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
- */
-function cacheHas(cache, key) {
-  return cache.has(key);
-}
-
-/**
- * Gets the value at `key` of `object`.
- *
- * @private
- * @param {Object} [object] The object to query.
- * @param {string} key The key of the property to get.
- * @returns {*} Returns the property value.
- */
-function getValue(object, key) {
-  return object == null ? undefined : object[key];
-}
-
->>>>>>> Implement DownloadTableDataButton component
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-function isHostObject(value) {
-  // Many host objects are `Object` objects that can coerce to strings
-  // despite having improperly defined `toString` methods.
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-
-=======
-},{}],456:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]';
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Built-in value references. */
-var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-
-/**
- * Checks if `value` is likely an `arguments` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- *  else `false`.
- * @example
- *
- * _.isArguments(function() { return arguments; }());
- * // => true
- *
- * _.isArguments([1, 2, 3]);
- * // => false
- */
-function isArguments(value) {
-  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
-    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-}
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
-},{}],464:[function(require,module,exports){
-=======
->>>>>>> Implement DownloadTableDataButton component
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-module.exports = isArguments;
-
-},{}],457:[function(require,module,exports){
-/**
- * lodash 3.0.4 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/** `Object#toString` result references. */
-var arrayTag = '[object Array]',
-    funcTag = '[object Function]';
-
-/** Used to detect host constructors (Safari > 5). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/**
- * Checks if `value` is object-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/** Used to resolve the decompiled source of functions. */
-var fnToString = Function.prototype.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/** Used to detect if a method is native. */
-var reIsNative = RegExp('^' +
-  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeIsArray = getNative(Array, 'isArray');
-
-/**
- * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
- * of an array-like value.
- */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Gets the native function at `key` of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {string} key The key of the method to get.
- * @returns {*} Returns the function if it's native, else `undefined`.
- */
-function getNative(object, key) {
-  var value = object == null ? undefined : object[key];
-  return isNative(value) ? value : undefined;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- */
-function isLength(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(function() { return arguments; }());
- * // => false
- */
-var isArray = nativeIsArray || function(value) {
-  return isObjectLike(value) && isLength(value.length) && objToString.call(value) == arrayTag;
-};
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in older versions of Chrome and Safari which return 'function' for regexes
-  // and Safari 8 equivalents which return 'object' for typed array constructors.
-  return isObject(value) && objToString.call(value) == funcTag;
-}
-
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
- */
-function isNative(value) {
-  if (value == null) {
-    return false;
-  }
-  if (isFunction(value)) {
-    return reIsNative.test(fnToString.call(value));
-  }
-  return isObjectLike(value) && reIsHostCtor.test(value);
-}
-
-module.exports = isArray;
-
-},{}],465:[function(require,module,exports){
-/**
- * lodash 3.2.0 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var baseFor = require('lodash._basefor'),
-    isArguments = require('lodash.isarguments'),
-    keysIn = require('lodash.keysin');
-
-/** `Object#toString` result references. */
-var objectTag = '[object Object]';
-
-/**
- * Checks if `value` is object-like.
-=======
->>>>>>> Implement DownloadTableDataButton component
-=======
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is a native function.
->>>>>>> Delete DownloadTableDataButton component
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
- * @example
- *
- * _.isNative(Array.prototype.push);
- * // => true
- *
- * _.isNative(_);
- * // => false
- */
-function isNative(value) {
-  if (value == null) {
-    return false;
-  }
-  if (isFunction(value)) {
-    return reIsNative.test(fnToString.call(value));
-  }
-  return isObjectLike(value) && reIsHostCtor.test(value);
-}
-
-module.exports = isArray;
-
-},{}],458:[function(require,module,exports){
-/**
- * lodash 3.2.0 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var baseFor = require('lodash._basefor'),
-    isArguments = require('lodash.isarguments'),
-    keysIn = require('lodash.keysin');
-
-/** `Object#toString` result references. */
-var objectTag = '[object Object]';
-
-/**
- * Checks if `value` is object-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/**
- * The base implementation of `_.forIn` without support for callback
- * shorthands and `this` binding.
- *
- * @private
- * @param {Object} object The object to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Object} Returns `object`.
- */
-function baseForIn(object, iteratee) {
-  return baseFor(object, iteratee, keysIn);
-}
-
-/**
- * Checks if `value` is a plain object, that is, an object created by the
- * `Object` constructor or one with a `[[Prototype]]` of `null`.
- *
- * **Note:** This method assumes objects created by the `Object` constructor
- * have no inherited enumerable properties.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- * @example
- *
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
- * _.isFunction(_);
- * // => true
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
  */
 function isPlainObject(value) {
   var Ctor;
@@ -40880,92 +31826,6 @@ function isIndex(value, length) {
 
 /**
  * Checks if `value` is a valid array-like length.
-=======
->>>>>>> Implement DownloadTableDataButton component
-=======
- * function Foo() {
- *   this.a = 1;
- * }
->>>>>>> Delete DownloadTableDataButton component
- *
- * _.isPlainObject(new Foo);
- * // => false
- *
- * _.isPlainObject([1, 2, 3]);
- * // => false
- *
- * _.isPlainObject({ 'x': 0, 'y': 0 });
- * // => true
- *
- * _.isPlainObject(Object.create(null));
- * // => true
- */
-function isPlainObject(value) {
-  var Ctor;
-
-  // Exit early for non `Object` objects.
-  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isArguments(value)) ||
-      (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
-    return false;
-  }
-  // IE < 9 iterates inherited properties before own properties. If the first
-  // iterated property is an object's own property then there are no inherited
-  // enumerable properties.
-  var result;
-  // In most environments an object's own properties are iterated before
-  // its inherited properties. If the last iterated property is an object's
-  // own property then there are no inherited enumerable properties.
-  baseForIn(value, function(subValue, key) {
-    result = key;
-  });
-  return result === undefined || hasOwnProperty.call(value, result);
-}
-
-module.exports = isPlainObject;
-
-},{"lodash._basefor":455,"lodash.isarguments":456,"lodash.keysin":459}],459:[function(require,module,exports){
-/**
- * lodash 3.0.8 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var isArguments = require('lodash.isarguments'),
-    isArray = require('lodash.isarray');
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^\d+$/;
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
- * of an array-like value.
- */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return value > -1 && value % 1 == 0 && value < length;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
  *
  * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
  *
@@ -41057,16 +31917,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash.isarguments":463,"lodash.isarray":464}],467:[function(require,module,exports){
-=======
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],469:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash.isarguments":456,"lodash.isarray":457}],460:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -41075,15 +31926,7 @@ var DataView = getNative(root, 'DataView');
 
 module.exports = DataView;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576,"./_root":622}],468:[function(require,module,exports){
-=======
-},{"./_getNative":577,"./_root":623}],470:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568,"./_root":614}],461:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var hashClear = require('./_hashClear'),
     hashDelete = require('./_hashDelete'),
     hashGet = require('./_hashGet'),
@@ -41117,15 +31960,7 @@ Hash.prototype.set = hashSet;
 
 module.exports = Hash;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_hashClear":586,"./_hashDelete":587,"./_hashGet":588,"./_hashHas":589,"./_hashSet":590}],469:[function(require,module,exports){
-=======
-},{"./_hashClear":587,"./_hashDelete":588,"./_hashGet":589,"./_hashHas":590,"./_hashSet":591}],471:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_hashClear":578,"./_hashDelete":579,"./_hashGet":580,"./_hashHas":581,"./_hashSet":582}],462:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var listCacheClear = require('./_listCacheClear'),
     listCacheDelete = require('./_listCacheDelete'),
     listCacheGet = require('./_listCacheGet'),
@@ -41159,15 +31994,7 @@ ListCache.prototype.set = listCacheSet;
 
 module.exports = ListCache;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_listCacheClear":602,"./_listCacheDelete":603,"./_listCacheGet":604,"./_listCacheHas":605,"./_listCacheSet":606}],470:[function(require,module,exports){
-=======
-},{"./_listCacheClear":603,"./_listCacheDelete":604,"./_listCacheGet":605,"./_listCacheHas":606,"./_listCacheSet":607}],472:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_listCacheClear":594,"./_listCacheDelete":595,"./_listCacheGet":596,"./_listCacheHas":597,"./_listCacheSet":598}],463:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -41176,15 +32003,7 @@ var Map = getNative(root, 'Map');
 
 module.exports = Map;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576,"./_root":622}],471:[function(require,module,exports){
-=======
-},{"./_getNative":577,"./_root":623}],473:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568,"./_root":614}],464:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var mapCacheClear = require('./_mapCacheClear'),
     mapCacheDelete = require('./_mapCacheDelete'),
     mapCacheGet = require('./_mapCacheGet'),
@@ -41218,15 +32037,7 @@ MapCache.prototype.set = mapCacheSet;
 
 module.exports = MapCache;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_mapCacheClear":607,"./_mapCacheDelete":608,"./_mapCacheGet":609,"./_mapCacheHas":610,"./_mapCacheSet":611}],472:[function(require,module,exports){
-=======
-},{"./_mapCacheClear":608,"./_mapCacheDelete":609,"./_mapCacheGet":610,"./_mapCacheHas":611,"./_mapCacheSet":612}],474:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_mapCacheClear":599,"./_mapCacheDelete":600,"./_mapCacheGet":601,"./_mapCacheHas":602,"./_mapCacheSet":603}],465:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -41235,15 +32046,7 @@ var Promise = getNative(root, 'Promise');
 
 module.exports = Promise;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576,"./_root":622}],473:[function(require,module,exports){
-=======
-},{"./_getNative":577,"./_root":623}],475:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568,"./_root":614}],466:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -41252,15 +32055,7 @@ var Set = getNative(root, 'Set');
 
 module.exports = Set;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576,"./_root":622}],474:[function(require,module,exports){
-=======
-},{"./_getNative":577,"./_root":623}],476:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568,"./_root":614}],467:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var MapCache = require('./_MapCache'),
     setCacheAdd = require('./_setCacheAdd'),
     setCacheHas = require('./_setCacheHas');
@@ -41289,15 +32084,7 @@ SetCache.prototype.has = setCacheHas;
 
 module.exports = SetCache;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_MapCache":471,"./_setCacheAdd":623,"./_setCacheHas":624}],475:[function(require,module,exports){
-=======
-},{"./_MapCache":473,"./_setCacheAdd":624,"./_setCacheHas":625}],477:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_MapCache":464,"./_setCacheAdd":615,"./_setCacheHas":616}],468:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var ListCache = require('./_ListCache'),
     stackClear = require('./_stackClear'),
     stackDelete = require('./_stackDelete'),
@@ -41326,15 +32113,7 @@ Stack.prototype.set = stackSet;
 
 module.exports = Stack;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_ListCache":469,"./_stackClear":628,"./_stackDelete":629,"./_stackGet":630,"./_stackHas":631,"./_stackSet":632}],476:[function(require,module,exports){
-=======
-},{"./_ListCache":471,"./_stackClear":629,"./_stackDelete":630,"./_stackGet":631,"./_stackHas":632,"./_stackSet":633}],478:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_ListCache":462,"./_stackClear":620,"./_stackDelete":621,"./_stackGet":622,"./_stackHas":623,"./_stackSet":624}],469:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -41342,15 +32121,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_root":622}],477:[function(require,module,exports){
-=======
-},{"./_root":623}],479:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_root":614}],470:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -41358,15 +32129,7 @@ var Uint8Array = root.Uint8Array;
 
 module.exports = Uint8Array;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_root":622}],478:[function(require,module,exports){
-=======
-},{"./_root":623}],480:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_root":614}],471:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -41375,15 +32138,7 @@ var WeakMap = getNative(root, 'WeakMap');
 
 module.exports = WeakMap;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576,"./_root":622}],479:[function(require,module,exports){
-=======
-},{"./_getNative":577,"./_root":623}],481:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568,"./_root":614}],472:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Adds the key-value `pair` to `map`.
  *
@@ -41400,15 +32155,7 @@ function addMapEntry(map, pair) {
 
 module.exports = addMapEntry;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],480:[function(require,module,exports){
-=======
-},{}],482:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],473:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Adds `value` to `set`.
  *
@@ -41425,15 +32172,7 @@ function addSetEntry(set, value) {
 
 module.exports = addSetEntry;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],481:[function(require,module,exports){
-=======
-},{}],483:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],474:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A faster alternative to `Function#apply`, this function invokes `func`
  * with the `this` binding of `thisArg` and the arguments of `args`.
@@ -41456,15 +32195,7 @@ function apply(func, thisArg, args) {
 
 module.exports = apply;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],482:[function(require,module,exports){
-=======
-},{}],484:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],475:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `_.forEach` for arrays without support for
  * iteratee shorthands.
@@ -41488,15 +32219,7 @@ function arrayEach(array, iteratee) {
 
 module.exports = arrayEach;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],483:[function(require,module,exports){
-=======
-},{}],485:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],476:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `_.filter` for arrays without support for
  * iteratee shorthands.
@@ -41523,15 +32246,7 @@ function arrayFilter(array, predicate) {
 
 module.exports = arrayFilter;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],484:[function(require,module,exports){
-=======
-},{}],486:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],477:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseTimes = require('./_baseTimes'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray'),
@@ -41582,15 +32297,7 @@ function arrayLikeKeys(value, inherited) {
 
 module.exports = arrayLikeKeys;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseTimes":535,"./_isIndex":595,"./isArguments":660,"./isArray":661,"./isBuffer":663,"./isTypedArray":675}],485:[function(require,module,exports){
-=======
-},{"./_baseTimes":537,"./_isIndex":596,"./isArguments":662,"./isArray":663,"./isBuffer":666,"./isTypedArray":678}],487:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseTimes":528,"./_isIndex":587,"./isArguments":653,"./isArray":654,"./isBuffer":657,"./isTypedArray":669}],478:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `_.map` for arrays without support for iteratee
  * shorthands.
@@ -41613,15 +32320,7 @@ function arrayMap(array, iteratee) {
 
 module.exports = arrayMap;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],486:[function(require,module,exports){
-=======
-},{}],488:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],479:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Appends the elements of `values` to `array`.
  *
@@ -41643,15 +32342,7 @@ function arrayPush(array, values) {
 
 module.exports = arrayPush;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],487:[function(require,module,exports){
-=======
-},{}],489:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],480:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `_.reduce` for arrays without support for
  * iteratee shorthands.
@@ -41679,15 +32370,7 @@ function arrayReduce(array, iteratee, accumulator, initAccum) {
 
 module.exports = arrayReduce;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],488:[function(require,module,exports){
-=======
-},{}],490:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],481:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `_.some` for arrays without support for iteratee
  * shorthands.
@@ -41712,15 +32395,7 @@ function arraySome(array, predicate) {
 
 module.exports = arraySome;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],489:[function(require,module,exports){
-=======
-},{}],491:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],482:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Converts an ASCII `string` to an array.
  *
@@ -41734,15 +32409,7 @@ function asciiToArray(string) {
 
 module.exports = asciiToArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],490:[function(require,module,exports){
-=======
-},{}],492:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],483:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to match words composed of alphanumeric characters. */
 var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
 
@@ -41759,15 +32426,7 @@ function asciiWords(string) {
 
 module.exports = asciiWords;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],491:[function(require,module,exports){
-=======
-},{}],493:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],484:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var eq = require('./eq');
 
 /** Used for built-in method references. */
@@ -41796,41 +32455,7 @@ function assignInDefaults(objValue, srcValue, key, object) {
 
 module.exports = assignInDefaults;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./eq":651}],492:[function(require,module,exports){
-=======
-},{"./eq":652}],494:[function(require,module,exports){
-=======
-},{"./eq":643}],485:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var baseAssignValue = require('./_baseAssignValue'),
-    eq = require('./eq');
-
-/**
- * This function is like `assignValue` except that it doesn't assign
- * `undefined` values.
- *
- * @private
- * @param {Object} object The object to modify.
- * @param {string} key The key of the property to assign.
- * @param {*} value The value to assign.
- */
-function assignMergeValue(object, key, value) {
-  if ((value !== undefined && !eq(object[key], value)) ||
-      (value === undefined && !(key in object))) {
-    baseAssignValue(object, key, value);
-  }
-}
-
-module.exports = assignMergeValue;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_baseAssignValue":499,"./eq":652}],495:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseAssignValue":490,"./eq":643}],486:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseAssignValue = require('./_baseAssignValue'),
     eq = require('./eq');
 
@@ -41860,15 +32485,7 @@ function assignValue(object, key, value) {
 
 module.exports = assignValue;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseAssignValue":496,"./eq":651}],493:[function(require,module,exports){
-=======
-},{"./_baseAssignValue":499,"./eq":652}],496:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseAssignValue":490,"./eq":643}],487:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var eq = require('./eq');
 
 /**
@@ -41891,15 +32508,7 @@ function assocIndexOf(array, key) {
 
 module.exports = assocIndexOf;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./eq":651}],494:[function(require,module,exports){
-=======
-},{"./eq":652}],497:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./eq":643}],488:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var copyObject = require('./_copyObject'),
     keys = require('./keys');
 
@@ -41918,15 +32527,7 @@ function baseAssign(object, source) {
 
 module.exports = baseAssign;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_copyObject":555,"./keys":677}],495:[function(require,module,exports){
-=======
-},{"./_copyObject":556,"./keys":680}],498:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_copyObject":547,"./keys":671}],489:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var copyObject = require('./_copyObject'),
     keysIn = require('./keysIn');
 
@@ -41945,15 +32546,7 @@ function baseAssignIn(object, source) {
 
 module.exports = baseAssignIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_copyObject":555,"./keysIn":678}],496:[function(require,module,exports){
-=======
-},{"./_copyObject":556,"./keysIn":681}],499:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_copyObject":547,"./keysIn":672}],490:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var defineProperty = require('./_defineProperty');
 
 /**
@@ -41980,15 +32573,7 @@ function baseAssignValue(object, key, value) {
 
 module.exports = baseAssignValue;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defineProperty":566}],497:[function(require,module,exports){
-=======
-},{"./_defineProperty":567}],500:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defineProperty":558}],491:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Stack = require('./_Stack'),
     arrayEach = require('./_arrayEach'),
     assignValue = require('./_assignValue'),
@@ -42143,15 +32728,7 @@ function baseClone(value, bitmask, customizer, key, object, stack) {
 
 module.exports = baseClone;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Stack":475,"./_arrayEach":482,"./_assignValue":492,"./_baseAssign":494,"./_baseAssignIn":495,"./_cloneBuffer":545,"./_copyArray":554,"./_copySymbols":556,"./_copySymbolsIn":557,"./_getAllKeys":572,"./_getAllKeysIn":573,"./_getTag":581,"./_initCloneArray":591,"./_initCloneByTag":592,"./_initCloneObject":593,"./isArray":661,"./isBuffer":663,"./isObject":670,"./keys":677}],498:[function(require,module,exports){
-=======
-},{"./_Stack":477,"./_arrayEach":484,"./_assignValue":495,"./_baseAssign":497,"./_baseAssignIn":498,"./_cloneBuffer":548,"./_copyArray":555,"./_copySymbols":557,"./_copySymbolsIn":558,"./_getAllKeys":573,"./_getAllKeysIn":574,"./_getTag":582,"./_initCloneArray":592,"./_initCloneByTag":593,"./_initCloneObject":594,"./isArray":663,"./isBuffer":666,"./isObject":673,"./keys":680}],501:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Stack":468,"./_arrayEach":475,"./_assignValue":486,"./_baseAssign":488,"./_baseAssignIn":489,"./_cloneBuffer":539,"./_copyArray":546,"./_copySymbols":548,"./_copySymbolsIn":549,"./_getAllKeys":564,"./_getAllKeysIn":565,"./_getTag":573,"./_initCloneArray":583,"./_initCloneByTag":584,"./_initCloneObject":585,"./isArray":654,"./isBuffer":657,"./isObject":664,"./keys":671}],492:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./isObject');
 
 /** Built-in value references. */
@@ -42183,15 +32760,7 @@ var baseCreate = (function() {
 
 module.exports = baseCreate;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isObject":670}],499:[function(require,module,exports){
-=======
-},{"./isObject":673}],502:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isObject":664}],493:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseForOwn = require('./_baseForOwn'),
     createBaseEach = require('./_createBaseEach');
 
@@ -42207,15 +32776,7 @@ var baseEach = createBaseEach(baseForOwn);
 
 module.exports = baseEach;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseForOwn":504,"./_createBaseEach":560}],500:[function(require,module,exports){
-=======
-},{"./_baseForOwn":507,"./_createBaseEach":561}],503:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseForOwn":498,"./_createBaseEach":552}],494:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseEach = require('./_baseEach');
 
 /**
@@ -42238,15 +32799,7 @@ function baseFilter(collection, predicate) {
 
 module.exports = baseFilter;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseEach":499}],501:[function(require,module,exports){
-=======
-},{"./_baseEach":502}],504:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseEach":493}],495:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.findIndex` and `_.findLastIndex` without
  * support for iteratee shorthands.
@@ -42272,15 +32825,7 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
 
 module.exports = baseFindIndex;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],502:[function(require,module,exports){
-=======
-},{}],505:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],496:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayPush = require('./_arrayPush'),
     isFlattenable = require('./_isFlattenable');
 
@@ -42320,15 +32865,7 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
 
 module.exports = baseFlatten;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayPush":486,"./_isFlattenable":594}],503:[function(require,module,exports){
-=======
-},{"./_arrayPush":488,"./_isFlattenable":595}],506:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayPush":479,"./_isFlattenable":586}],497:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var createBaseFor = require('./_createBaseFor');
 
 /**
@@ -42346,15 +32883,7 @@ var baseFor = createBaseFor();
 
 module.exports = baseFor;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_createBaseFor":561}],504:[function(require,module,exports){
-=======
-},{"./_createBaseFor":562}],507:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_createBaseFor":553}],498:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseFor = require('./_baseFor'),
     keys = require('./keys');
 
@@ -42372,15 +32901,7 @@ function baseForOwn(object, iteratee) {
 
 module.exports = baseForOwn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseFor":503,"./keys":677}],505:[function(require,module,exports){
-=======
-},{"./_baseFor":506,"./keys":680}],508:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseFor":497,"./keys":671}],499:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var castPath = require('./_castPath'),
     toKey = require('./_toKey');
 
@@ -42406,15 +32927,7 @@ function baseGet(object, path) {
 
 module.exports = baseGet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_castPath":540,"./_toKey":636}],506:[function(require,module,exports){
-=======
-},{"./_castPath":543,"./_toKey":637}],509:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_castPath":534,"./_toKey":628}],500:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayPush = require('./_arrayPush'),
     isArray = require('./isArray');
 
@@ -42436,15 +32949,7 @@ function baseGetAllKeys(object, keysFunc, symbolsFunc) {
 
 module.exports = baseGetAllKeys;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayPush":486,"./isArray":661}],507:[function(require,module,exports){
-=======
-},{"./_arrayPush":488,"./isArray":663}],510:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayPush":479,"./isArray":654}],501:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -42475,15 +32980,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Symbol":476,"./_getRawTag":578,"./_objectToString":619}],508:[function(require,module,exports){
-=======
-},{"./_Symbol":478,"./_getRawTag":579,"./_objectToString":620}],511:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Symbol":469,"./_getRawTag":570,"./_objectToString":611}],502:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.hasIn` without support for deep paths.
  *
@@ -42498,15 +32995,7 @@ function baseHasIn(object, key) {
 
 module.exports = baseHasIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],509:[function(require,module,exports){
-=======
-},{}],512:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],503:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseFindIndex = require('./_baseFindIndex'),
     baseIsNaN = require('./_baseIsNaN'),
     strictIndexOf = require('./_strictIndexOf');
@@ -42528,15 +33017,7 @@ function baseIndexOf(array, value, fromIndex) {
 
 module.exports = baseIndexOf;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseFindIndex":501,"./_baseIsNaN":514,"./_strictIndexOf":633}],510:[function(require,module,exports){
-=======
-},{"./_baseFindIndex":504,"./_baseIsNaN":517,"./_strictIndexOf":634}],513:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseFindIndex":495,"./_baseIsNaN":508,"./_strictIndexOf":625}],504:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetTag = require('./_baseGetTag'),
     isObjectLike = require('./isObjectLike');
 
@@ -42556,15 +33037,7 @@ function baseIsArguments(value) {
 
 module.exports = baseIsArguments;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetTag":507,"./isObjectLike":671}],511:[function(require,module,exports){
-=======
-},{"./_baseGetTag":510,"./isObjectLike":674}],514:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetTag":501,"./isObjectLike":665}],505:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsEqualDeep = require('./_baseIsEqualDeep'),
     isObject = require('./isObject'),
     isObjectLike = require('./isObjectLike');
@@ -42595,15 +33068,7 @@ function baseIsEqual(value, other, bitmask, customizer, stack) {
 
 module.exports = baseIsEqual;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsEqualDeep":512,"./isObject":670,"./isObjectLike":671}],512:[function(require,module,exports){
-=======
-},{"./_baseIsEqualDeep":515,"./isObject":673,"./isObjectLike":674}],515:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIsEqualDeep":506,"./isObject":664,"./isObjectLike":665}],506:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Stack = require('./_Stack'),
     equalArrays = require('./_equalArrays'),
     equalByTag = require('./_equalByTag'),
@@ -42693,15 +33158,7 @@ function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
 
 module.exports = baseIsEqualDeep;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Stack":475,"./_equalArrays":567,"./_equalByTag":568,"./_equalObjects":569,"./_getTag":581,"./isArray":661,"./isBuffer":663,"./isTypedArray":675}],513:[function(require,module,exports){
-=======
-},{"./_Stack":477,"./_equalArrays":568,"./_equalByTag":569,"./_equalObjects":570,"./_getTag":582,"./isArray":663,"./isBuffer":666,"./isTypedArray":678}],516:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Stack":468,"./_equalArrays":559,"./_equalByTag":560,"./_equalObjects":561,"./_getTag":573,"./isArray":654,"./isBuffer":657,"./isTypedArray":669}],507:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Stack = require('./_Stack'),
     baseIsEqual = require('./_baseIsEqual');
 
@@ -42765,15 +33222,7 @@ function baseIsMatch(object, source, matchData, customizer) {
 
 module.exports = baseIsMatch;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Stack":475,"./_baseIsEqual":511}],514:[function(require,module,exports){
-=======
-},{"./_Stack":477,"./_baseIsEqual":514}],517:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Stack":468,"./_baseIsEqual":505}],508:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.isNaN` without support for number objects.
  *
@@ -42787,15 +33236,7 @@ function baseIsNaN(value) {
 
 module.exports = baseIsNaN;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],515:[function(require,module,exports){
-=======
-},{}],518:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],509:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isFunction = require('./isFunction'),
     isMasked = require('./_isMasked'),
     isObject = require('./isObject'),
@@ -42844,15 +33285,7 @@ function baseIsNative(value) {
 
 module.exports = baseIsNative;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isMasked":599,"./_toSource":637,"./isFunction":666,"./isObject":670}],516:[function(require,module,exports){
-=======
-},{"./_isMasked":600,"./_toSource":638,"./isFunction":669,"./isObject":673}],519:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isMasked":591,"./_toSource":629,"./isFunction":660,"./isObject":664}],510:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetTag = require('./_baseGetTag'),
     isLength = require('./isLength'),
     isObjectLike = require('./isObjectLike');
@@ -42914,15 +33347,7 @@ function baseIsTypedArray(value) {
 
 module.exports = baseIsTypedArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetTag":507,"./isLength":667,"./isObjectLike":671}],517:[function(require,module,exports){
-=======
-},{"./_baseGetTag":510,"./isLength":670,"./isObjectLike":674}],520:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetTag":501,"./isLength":661,"./isObjectLike":665}],511:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseMatches = require('./_baseMatches'),
     baseMatchesProperty = require('./_baseMatchesProperty'),
     identity = require('./identity'),
@@ -42955,15 +33380,7 @@ function baseIteratee(value) {
 
 module.exports = baseIteratee;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseMatches":521,"./_baseMatchesProperty":522,"./identity":658,"./isArray":661,"./property":684}],518:[function(require,module,exports){
-=======
-},{"./_baseMatches":523,"./_baseMatchesProperty":524,"./identity":660,"./isArray":663,"./property":687}],521:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseMatches":514,"./_baseMatchesProperty":515,"./identity":651,"./isArray":654,"./property":678}],512:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isPrototype = require('./_isPrototype'),
     nativeKeys = require('./_nativeKeys');
 
@@ -42995,15 +33412,7 @@ function baseKeys(object) {
 
 module.exports = baseKeys;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isPrototype":600,"./_nativeKeys":616}],519:[function(require,module,exports){
-=======
-},{"./_isPrototype":601,"./_nativeKeys":617}],522:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isPrototype":592,"./_nativeKeys":608}],513:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./isObject'),
     isPrototype = require('./_isPrototype'),
     nativeKeysIn = require('./_nativeKeysIn');
@@ -43038,8 +33447,6 @@ function baseKeysIn(object) {
 
 module.exports = baseKeysIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isPrototype":600,"./_nativeKeysIn":617,"./isObject":670}],520:[function(require,module,exports){
 var baseEach = require('./_baseEach'),
     isArrayLike = require('./isArrayLike');
@@ -43065,12 +33472,6 @@ function baseMap(collection, iteratee) {
 module.exports = baseMap;
 
 },{"./_baseEach":499,"./isArrayLike":662}],521:[function(require,module,exports){
-=======
-},{"./_isPrototype":601,"./_nativeKeysIn":618,"./isObject":673}],523:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isPrototype":592,"./_nativeKeysIn":609,"./isObject":664}],514:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsMatch = require('./_baseIsMatch'),
     getMatchData = require('./_getMatchData'),
     matchesStrictComparable = require('./_matchesStrictComparable');
@@ -43094,15 +33495,7 @@ function baseMatches(source) {
 
 module.exports = baseMatches;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsMatch":513,"./_getMatchData":575,"./_matchesStrictComparable":613}],522:[function(require,module,exports){
-=======
-},{"./_baseIsMatch":516,"./_getMatchData":576,"./_matchesStrictComparable":614}],524:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIsMatch":507,"./_getMatchData":567,"./_matchesStrictComparable":605}],515:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsEqual = require('./_baseIsEqual'),
     get = require('./get'),
     hasIn = require('./hasIn'),
@@ -43137,8 +33530,6 @@ function baseMatchesProperty(path, srcValue) {
 
 module.exports = baseMatchesProperty;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsEqual":511,"./_isKey":597,"./_isStrictComparable":601,"./_matchesStrictComparable":613,"./_toKey":636,"./get":656,"./hasIn":657}],523:[function(require,module,exports){
 var arrayMap = require('./_arrayMap'),
     baseIteratee = require('./_baseIteratee'),
@@ -43147,69 +33538,6 @@ var arrayMap = require('./_arrayMap'),
     baseUnary = require('./_baseUnary'),
     compareMultiple = require('./_compareMultiple'),
     identity = require('./identity');
-=======
-},{"./_baseIsEqual":514,"./_isKey":598,"./_isStrictComparable":602,"./_matchesStrictComparable":614,"./_toKey":637,"./get":658,"./hasIn":659}],525:[function(require,module,exports){
-=======
-},{"./_baseIsEqual":505,"./_isKey":589,"./_isStrictComparable":593,"./_matchesStrictComparable":605,"./_toKey":628,"./get":649,"./hasIn":650}],516:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var Stack = require('./_Stack'),
-    assignMergeValue = require('./_assignMergeValue'),
-    baseFor = require('./_baseFor'),
-    baseMergeDeep = require('./_baseMergeDeep'),
-    isObject = require('./isObject'),
-    keysIn = require('./keysIn');
-
-/**
- * The base implementation of `_.merge` without support for multiple sources.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @param {number} srcIndex The index of `source`.
- * @param {Function} [customizer] The function to customize merged values.
- * @param {Object} [stack] Tracks traversed source values and their merged
- *  counterparts.
- */
-function baseMerge(object, source, srcIndex, customizer, stack) {
-  if (object === source) {
-    return;
-  }
-  baseFor(source, function(srcValue, key) {
-    if (isObject(srcValue)) {
-      stack || (stack = new Stack);
-      baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
-    }
-    else {
-      var newValue = customizer
-        ? customizer(object[key], srcValue, (key + ''), object, source, stack)
-        : undefined;
-
-      if (newValue === undefined) {
-        newValue = srcValue;
-      }
-      assignMergeValue(object, key, newValue);
-    }
-  }, keysIn);
-}
-
-module.exports = baseMerge;
-
-},{"./_Stack":468,"./_assignMergeValue":485,"./_baseFor":497,"./_baseMergeDeep":517,"./isObject":664,"./keysIn":672}],517:[function(require,module,exports){
-var assignMergeValue = require('./_assignMergeValue'),
-    cloneBuffer = require('./_cloneBuffer'),
-    cloneTypedArray = require('./_cloneTypedArray'),
-    copyArray = require('./_copyArray'),
-    initCloneObject = require('./_initCloneObject'),
-    isArguments = require('./isArguments'),
-    isArray = require('./isArray'),
-    isArrayLikeObject = require('./isArrayLikeObject'),
-    isBuffer = require('./isBuffer'),
-    isFunction = require('./isFunction'),
-    isObject = require('./isObject'),
-    isPlainObject = require('./isPlainObject'),
-    isTypedArray = require('./isTypedArray'),
-    toPlainObject = require('./toPlainObject');
->>>>>>> Implement DownloadTableDataButton component
 
 /**
  * The base implementation of `_.orderBy` without param guards.
@@ -43238,15 +33566,7 @@ function baseOrderBy(collection, iteratees, orders) {
 
 module.exports = baseOrderBy;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayMap":485,"./_baseIteratee":517,"./_baseMap":520,"./_baseSortBy":534,"./_baseUnary":537,"./_compareMultiple":553,"./identity":658}],524:[function(require,module,exports){
-=======
-},{"./_assignMergeValue":494,"./_cloneBuffer":548,"./_cloneTypedArray":554,"./_copyArray":555,"./_initCloneObject":594,"./isArguments":662,"./isArray":663,"./isArrayLikeObject":665,"./isBuffer":666,"./isFunction":669,"./isObject":673,"./isPlainObject":675,"./isTypedArray":678,"./toPlainObject":695}],527:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assignMergeValue":485,"./_cloneBuffer":539,"./_cloneTypedArray":545,"./_copyArray":546,"./_initCloneObject":585,"./isArguments":653,"./isArray":654,"./isArrayLikeObject":656,"./isBuffer":657,"./isFunction":660,"./isObject":664,"./isPlainObject":666,"./isTypedArray":669,"./toPlainObject":686}],518:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var basePickBy = require('./_basePickBy'),
     hasIn = require('./hasIn');
 
@@ -43268,15 +33588,7 @@ function basePick(object, paths) {
 
 module.exports = basePick;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_basePickBy":525,"./hasIn":657}],525:[function(require,module,exports){
-=======
-},{"./_basePickBy":528,"./hasIn":659}],528:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_basePickBy":519,"./hasIn":650}],519:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGet = require('./_baseGet'),
     baseSet = require('./_baseSet'),
     castPath = require('./_castPath');
@@ -43308,15 +33620,7 @@ function basePickBy(object, paths, predicate) {
 
 module.exports = basePickBy;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGet":505,"./_baseSet":531,"./_castPath":540}],526:[function(require,module,exports){
-=======
-},{"./_baseGet":508,"./_baseSet":534,"./_castPath":543}],529:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGet":499,"./_baseSet":525,"./_castPath":534}],520:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -43332,15 +33636,7 @@ function baseProperty(key) {
 
 module.exports = baseProperty;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],527:[function(require,module,exports){
-=======
-},{}],530:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],521:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGet = require('./_baseGet');
 
 /**
@@ -43358,15 +33654,7 @@ function basePropertyDeep(path) {
 
 module.exports = basePropertyDeep;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGet":505}],528:[function(require,module,exports){
-=======
-},{"./_baseGet":508}],531:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGet":499}],522:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.propertyOf` without support for deep paths.
  *
@@ -43382,15 +33670,7 @@ function basePropertyOf(object) {
 
 module.exports = basePropertyOf;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],529:[function(require,module,exports){
-=======
-},{}],532:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],523:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.reduce` and `_.reduceRight`, without support
  * for iteratee shorthands, which iterates over `collection` using `eachFunc`.
@@ -43415,15 +33695,7 @@ function baseReduce(collection, iteratee, accumulator, initAccum, eachFunc) {
 
 module.exports = baseReduce;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],530:[function(require,module,exports){
-=======
-},{}],533:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],524:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var identity = require('./identity'),
     overRest = require('./_overRest'),
     setToString = require('./_setToString');
@@ -43442,15 +33714,7 @@ function baseRest(func, start) {
 
 module.exports = baseRest;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_overRest":621,"./_setToString":626,"./identity":658}],531:[function(require,module,exports){
-=======
-},{"./_overRest":622,"./_setToString":627,"./identity":660}],534:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_overRest":613,"./_setToString":618,"./identity":651}],525:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assignValue = require('./_assignValue'),
     castPath = require('./_castPath'),
     isIndex = require('./_isIndex'),
@@ -43499,15 +33763,7 @@ function baseSet(object, path, value, customizer) {
 
 module.exports = baseSet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assignValue":492,"./_castPath":540,"./_isIndex":595,"./_toKey":636,"./isObject":670}],532:[function(require,module,exports){
-=======
-},{"./_assignValue":495,"./_castPath":543,"./_isIndex":596,"./_toKey":637,"./isObject":673}],535:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assignValue":486,"./_castPath":534,"./_isIndex":587,"./_toKey":628,"./isObject":664}],526:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var constant = require('./constant'),
     defineProperty = require('./_defineProperty'),
     identity = require('./identity');
@@ -43531,15 +33787,7 @@ var baseSetToString = !defineProperty ? identity : function(func, string) {
 
 module.exports = baseSetToString;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_defineProperty":566,"./constant":647,"./identity":658}],533:[function(require,module,exports){
-=======
-},{"./_defineProperty":567,"./constant":648,"./identity":660}],536:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_defineProperty":558,"./constant":639,"./identity":651}],527:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.slice` without an iteratee call guard.
  *
@@ -43572,8 +33820,6 @@ function baseSlice(array, start, end) {
 
 module.exports = baseSlice;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],534:[function(require,module,exports){
 /**
  * The base implementation of `_.sortBy` which uses `comparer` to define the
@@ -43598,12 +33844,6 @@ function baseSortBy(array, comparer) {
 module.exports = baseSortBy;
 
 },{}],535:[function(require,module,exports){
-=======
-},{}],537:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],528:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.times` without support for iteratee shorthands
  * or max array length checks.
@@ -43625,15 +33865,7 @@ function baseTimes(n, iteratee) {
 
 module.exports = baseTimes;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],536:[function(require,module,exports){
-=======
-},{}],538:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],529:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Symbol = require('./_Symbol'),
     arrayMap = require('./_arrayMap'),
     isArray = require('./isArray'),
@@ -43672,15 +33904,7 @@ function baseToString(value) {
 
 module.exports = baseToString;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Symbol":476,"./_arrayMap":485,"./isArray":661,"./isSymbol":674}],537:[function(require,module,exports){
-=======
-},{"./_Symbol":478,"./_arrayMap":487,"./isArray":663,"./isSymbol":677}],539:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Symbol":469,"./_arrayMap":478,"./isArray":654,"./isSymbol":668}],530:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * The base implementation of `_.unary` without support for storing metadata.
  *
@@ -43696,15 +33920,7 @@ function baseUnary(func) {
 
 module.exports = baseUnary;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],538:[function(require,module,exports){
-=======
-},{}],540:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],531:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayMap = require('./_arrayMap');
 
 /**
@@ -43725,15 +33941,7 @@ function baseValues(object, props) {
 
 module.exports = baseValues;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayMap":485}],539:[function(require,module,exports){
-=======
-},{"./_arrayMap":487}],541:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayMap":478}],532:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if a `cache` value for `key` exists.
  *
@@ -43748,35 +33956,7 @@ function cacheHas(cache, key) {
 
 module.exports = cacheHas;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],540:[function(require,module,exports){
-=======
-},{}],542:[function(require,module,exports){
-=======
-},{}],533:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var identity = require('./identity');
-
-/**
- * Casts `value` to `identity` if it's not a function.
- *
- * @private
- * @param {*} value The value to inspect.
- * @returns {Function} Returns cast function.
- */
-function castFunction(value) {
-  return typeof value == 'function' ? value : identity;
-}
-
-module.exports = castFunction;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./identity":660}],543:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./identity":651}],534:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isArray = require('./isArray'),
     isKey = require('./_isKey'),
     stringToPath = require('./_stringToPath'),
@@ -43799,15 +33979,7 @@ function castPath(value, object) {
 
 module.exports = castPath;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isKey":597,"./_stringToPath":635,"./isArray":661,"./toString":693}],541:[function(require,module,exports){
-=======
-},{"./_isKey":598,"./_stringToPath":636,"./isArray":663,"./toString":696}],544:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isKey":589,"./_stringToPath":627,"./isArray":654,"./toString":687}],535:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseSlice = require('./_baseSlice');
 
 /**
@@ -43827,15 +33999,7 @@ function castSlice(array, start, end) {
 
 module.exports = castSlice;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseSlice":533}],542:[function(require,module,exports){
-=======
-},{"./_baseSlice":536}],545:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseSlice":527}],536:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIndexOf = require('./_baseIndexOf');
 
 /**
@@ -43856,15 +34020,7 @@ function charsEndIndex(strSymbols, chrSymbols) {
 
 module.exports = charsEndIndex;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIndexOf":509}],543:[function(require,module,exports){
-=======
-},{"./_baseIndexOf":512}],546:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIndexOf":503}],537:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIndexOf = require('./_baseIndexOf');
 
 /**
@@ -43886,15 +34042,7 @@ function charsStartIndex(strSymbols, chrSymbols) {
 
 module.exports = charsStartIndex;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIndexOf":509}],544:[function(require,module,exports){
-=======
-},{"./_baseIndexOf":512}],547:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIndexOf":503}],538:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Uint8Array = require('./_Uint8Array');
 
 /**
@@ -43912,15 +34060,7 @@ function cloneArrayBuffer(arrayBuffer) {
 
 module.exports = cloneArrayBuffer;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Uint8Array":477}],545:[function(require,module,exports){
-=======
-},{"./_Uint8Array":479}],548:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Uint8Array":470}],539:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var root = require('./_root');
 
 /** Detect free variable `exports`. */
@@ -43957,15 +34097,7 @@ function cloneBuffer(buffer, isDeep) {
 
 module.exports = cloneBuffer;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_root":622}],546:[function(require,module,exports){
-=======
-},{"./_root":623}],549:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_root":614}],540:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var cloneArrayBuffer = require('./_cloneArrayBuffer');
 
 /**
@@ -43983,15 +34115,7 @@ function cloneDataView(dataView, isDeep) {
 
 module.exports = cloneDataView;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cloneArrayBuffer":544}],547:[function(require,module,exports){
-=======
-},{"./_cloneArrayBuffer":547}],550:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cloneArrayBuffer":538}],541:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var addMapEntry = require('./_addMapEntry'),
     arrayReduce = require('./_arrayReduce'),
     mapToArray = require('./_mapToArray');
@@ -44015,15 +34139,7 @@ function cloneMap(map, isDeep, cloneFunc) {
 
 module.exports = cloneMap;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_addMapEntry":479,"./_arrayReduce":487,"./_mapToArray":612}],548:[function(require,module,exports){
-=======
-},{"./_addMapEntry":481,"./_arrayReduce":489,"./_mapToArray":613}],551:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_addMapEntry":472,"./_arrayReduce":480,"./_mapToArray":604}],542:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to match `RegExp` flags from their coerced string values. */
 var reFlags = /\w*$/;
 
@@ -44042,15 +34158,7 @@ function cloneRegExp(regexp) {
 
 module.exports = cloneRegExp;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],549:[function(require,module,exports){
-=======
-},{}],552:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],543:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var addSetEntry = require('./_addSetEntry'),
     arrayReduce = require('./_arrayReduce'),
     setToArray = require('./_setToArray');
@@ -44074,15 +34182,7 @@ function cloneSet(set, isDeep, cloneFunc) {
 
 module.exports = cloneSet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_addSetEntry":480,"./_arrayReduce":487,"./_setToArray":625}],550:[function(require,module,exports){
-=======
-},{"./_addSetEntry":482,"./_arrayReduce":489,"./_setToArray":626}],553:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_addSetEntry":473,"./_arrayReduce":480,"./_setToArray":617}],544:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Symbol = require('./_Symbol');
 
 /** Used to convert symbols to primitives and strings. */
@@ -44102,15 +34202,7 @@ function cloneSymbol(symbol) {
 
 module.exports = cloneSymbol;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Symbol":476}],551:[function(require,module,exports){
-=======
-},{"./_Symbol":478}],554:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Symbol":469}],545:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var cloneArrayBuffer = require('./_cloneArrayBuffer');
 
 /**
@@ -44128,8 +34220,6 @@ function cloneTypedArray(typedArray, isDeep) {
 
 module.exports = cloneTypedArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cloneArrayBuffer":544}],552:[function(require,module,exports){
 var isSymbol = require('./isSymbol');
 
@@ -44220,12 +34310,6 @@ function compareMultiple(object, other, orders) {
 module.exports = compareMultiple;
 
 },{"./_compareAscending":552}],554:[function(require,module,exports){
-=======
-},{"./_cloneArrayBuffer":547}],555:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cloneArrayBuffer":538}],546:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copies the values of `source` to `array`.
  *
@@ -44247,15 +34331,7 @@ function copyArray(source, array) {
 
 module.exports = copyArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],555:[function(require,module,exports){
-=======
-},{}],556:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],547:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assignValue = require('./_assignValue'),
     baseAssignValue = require('./_baseAssignValue');
 
@@ -44297,15 +34373,7 @@ function copyObject(source, props, object, customizer) {
 
 module.exports = copyObject;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assignValue":492,"./_baseAssignValue":496}],556:[function(require,module,exports){
-=======
-},{"./_assignValue":495,"./_baseAssignValue":499}],557:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assignValue":486,"./_baseAssignValue":490}],548:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var copyObject = require('./_copyObject'),
     getSymbols = require('./_getSymbols');
 
@@ -44323,15 +34391,7 @@ function copySymbols(source, object) {
 
 module.exports = copySymbols;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_copyObject":555,"./_getSymbols":579}],557:[function(require,module,exports){
-=======
-},{"./_copyObject":556,"./_getSymbols":580}],558:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_copyObject":547,"./_getSymbols":571}],549:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var copyObject = require('./_copyObject'),
     getSymbolsIn = require('./_getSymbolsIn');
 
@@ -44349,15 +34409,7 @@ function copySymbolsIn(source, object) {
 
 module.exports = copySymbolsIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_copyObject":555,"./_getSymbolsIn":580}],558:[function(require,module,exports){
-=======
-},{"./_copyObject":556,"./_getSymbolsIn":581}],559:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_copyObject":547,"./_getSymbolsIn":572}],550:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var root = require('./_root');
 
 /** Used to detect overreaching core-js shims. */
@@ -44365,15 +34417,7 @@ var coreJsData = root['__core-js_shared__'];
 
 module.exports = coreJsData;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_root":622}],559:[function(require,module,exports){
-=======
-},{"./_root":623}],560:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_root":614}],551:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseRest = require('./_baseRest'),
     isIterateeCall = require('./_isIterateeCall');
 
@@ -44412,15 +34456,7 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseRest":530,"./_isIterateeCall":596}],560:[function(require,module,exports){
-=======
-},{"./_baseRest":533,"./_isIterateeCall":597}],561:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseRest":524,"./_isIterateeCall":588}],552:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isArrayLike = require('./isArrayLike');
 
 /**
@@ -44454,15 +34490,7 @@ function createBaseEach(eachFunc, fromRight) {
 
 module.exports = createBaseEach;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isArrayLike":662}],561:[function(require,module,exports){
-=======
-},{"./isArrayLike":664}],562:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isArrayLike":655}],553:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Creates a base function for methods like `_.forIn` and `_.forOwn`.
  *
@@ -44489,15 +34517,7 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],562:[function(require,module,exports){
-=======
-},{}],563:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],554:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var castSlice = require('./_castSlice'),
     hasUnicode = require('./_hasUnicode'),
     stringToArray = require('./_stringToArray'),
@@ -44532,15 +34552,7 @@ function createCaseFirst(methodName) {
 
 module.exports = createCaseFirst;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_castSlice":541,"./_hasUnicode":584,"./_stringToArray":634,"./toString":693}],563:[function(require,module,exports){
-=======
-},{"./_castSlice":544,"./_hasUnicode":585,"./_stringToArray":635,"./toString":696}],564:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_castSlice":535,"./_hasUnicode":576,"./_stringToArray":626,"./toString":687}],555:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayReduce = require('./_arrayReduce'),
     deburr = require('./deburr'),
     words = require('./words');
@@ -44566,15 +34578,7 @@ function createCompounder(callback) {
 
 module.exports = createCompounder;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayReduce":487,"./deburr":649,"./words":697}],564:[function(require,module,exports){
-=======
-},{"./_arrayReduce":489,"./deburr":650,"./words":700}],565:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayReduce":480,"./deburr":641,"./words":691}],556:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIteratee = require('./_baseIteratee'),
     isArrayLike = require('./isArrayLike'),
     keys = require('./keys');
@@ -44601,15 +34605,7 @@ function createFind(findIndexFunc) {
 
 module.exports = createFind;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIteratee":517,"./isArrayLike":662,"./keys":677}],565:[function(require,module,exports){
-=======
-},{"./_baseIteratee":520,"./isArrayLike":664,"./keys":680}],566:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIteratee":511,"./isArrayLike":655,"./keys":671}],557:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var basePropertyOf = require('./_basePropertyOf');
 
 /** Used to map Latin Unicode letters to basic Latin letters. */
@@ -44682,15 +34678,7 @@ var deburrLetter = basePropertyOf(deburredLetters);
 
 module.exports = deburrLetter;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_basePropertyOf":528}],566:[function(require,module,exports){
-=======
-},{"./_basePropertyOf":531}],567:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_basePropertyOf":522}],558:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative');
 
 var defineProperty = (function() {
@@ -44703,15 +34691,7 @@ var defineProperty = (function() {
 
 module.exports = defineProperty;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576}],567:[function(require,module,exports){
-=======
-},{"./_getNative":577}],568:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568}],559:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var SetCache = require('./_SetCache'),
     arraySome = require('./_arraySome'),
     cacheHas = require('./_cacheHas');
@@ -44796,15 +34776,7 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
 
 module.exports = equalArrays;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_SetCache":474,"./_arraySome":488,"./_cacheHas":539}],568:[function(require,module,exports){
-=======
-},{"./_SetCache":476,"./_arraySome":490,"./_cacheHas":541}],569:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_SetCache":467,"./_arraySome":481,"./_cacheHas":532}],560:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Symbol = require('./_Symbol'),
     Uint8Array = require('./_Uint8Array'),
     eq = require('./eq'),
@@ -44918,15 +34890,7 @@ function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
 
 module.exports = equalByTag;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Symbol":476,"./_Uint8Array":477,"./_equalArrays":567,"./_mapToArray":612,"./_setToArray":625,"./eq":651}],569:[function(require,module,exports){
-=======
-},{"./_Symbol":478,"./_Uint8Array":479,"./_equalArrays":568,"./_mapToArray":613,"./_setToArray":626,"./eq":652}],570:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Symbol":469,"./_Uint8Array":470,"./_equalArrays":559,"./_mapToArray":604,"./_setToArray":617,"./eq":643}],561:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var keys = require('./keys');
 
 /** Used to compose bitmasks for value comparisons. */
@@ -45017,15 +34981,7 @@ function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
 
 module.exports = equalObjects;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./keys":677}],570:[function(require,module,exports){
-=======
-},{"./keys":680}],571:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./keys":671}],562:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var flatten = require('./flatten'),
     overRest = require('./_overRest'),
     setToString = require('./_setToString');
@@ -45043,15 +34999,7 @@ function flatRest(func) {
 
 module.exports = flatRest;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_overRest":621,"./_setToString":626,"./flatten":655}],571:[function(require,module,exports){
-=======
-},{"./_overRest":622,"./_setToString":627,"./flatten":656}],572:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_overRest":613,"./_setToString":618,"./flatten":647}],563:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -45059,15 +35007,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],572:[function(require,module,exports){
-=======
-},{}],573:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],564:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetAllKeys = require('./_baseGetAllKeys'),
     getSymbols = require('./_getSymbols'),
     keys = require('./keys');
@@ -45085,15 +35025,7 @@ function getAllKeys(object) {
 
 module.exports = getAllKeys;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetAllKeys":506,"./_getSymbols":579,"./keys":677}],573:[function(require,module,exports){
-=======
-},{"./_baseGetAllKeys":509,"./_getSymbols":580,"./keys":680}],574:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetAllKeys":500,"./_getSymbols":571,"./keys":671}],565:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetAllKeys = require('./_baseGetAllKeys'),
     getSymbolsIn = require('./_getSymbolsIn'),
     keysIn = require('./keysIn');
@@ -45112,15 +35044,7 @@ function getAllKeysIn(object) {
 
 module.exports = getAllKeysIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetAllKeys":506,"./_getSymbolsIn":580,"./keysIn":678}],574:[function(require,module,exports){
-=======
-},{"./_baseGetAllKeys":509,"./_getSymbolsIn":581,"./keysIn":681}],575:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetAllKeys":500,"./_getSymbolsIn":572,"./keysIn":672}],566:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isKeyable = require('./_isKeyable');
 
 /**
@@ -45140,15 +35064,7 @@ function getMapData(map, key) {
 
 module.exports = getMapData;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isKeyable":598}],575:[function(require,module,exports){
-=======
-},{"./_isKeyable":599}],576:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isKeyable":590}],567:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isStrictComparable = require('./_isStrictComparable'),
     keys = require('./keys');
 
@@ -45174,15 +35090,7 @@ function getMatchData(object) {
 
 module.exports = getMatchData;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isStrictComparable":601,"./keys":677}],576:[function(require,module,exports){
-=======
-},{"./_isStrictComparable":602,"./keys":680}],577:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isStrictComparable":593,"./keys":671}],568:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsNative = require('./_baseIsNative'),
     getValue = require('./_getValue');
 
@@ -45201,15 +35109,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsNative":515,"./_getValue":582}],577:[function(require,module,exports){
-=======
-},{"./_baseIsNative":518,"./_getValue":583}],578:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIsNative":509,"./_getValue":574}],569:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var overArg = require('./_overArg');
 
 /** Built-in value references. */
@@ -45217,15 +35117,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
 
 module.exports = getPrototype;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_overArg":620}],578:[function(require,module,exports){
-=======
-},{"./_overArg":621}],579:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_overArg":612}],570:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -45273,15 +35165,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Symbol":476}],579:[function(require,module,exports){
-=======
-},{"./_Symbol":478}],580:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Symbol":469}],571:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var overArg = require('./_overArg'),
     stubArray = require('./stubArray');
 
@@ -45299,15 +35183,7 @@ var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArra
 
 module.exports = getSymbols;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_overArg":620,"./stubArray":688}],580:[function(require,module,exports){
-=======
-},{"./_overArg":621,"./stubArray":690}],581:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_overArg":612,"./stubArray":681}],572:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayPush = require('./_arrayPush'),
     getPrototype = require('./_getPrototype'),
     getSymbols = require('./_getSymbols'),
@@ -45334,15 +35210,7 @@ var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
 
 module.exports = getSymbolsIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayPush":486,"./_getPrototype":577,"./_getSymbols":579,"./stubArray":688}],581:[function(require,module,exports){
-=======
-},{"./_arrayPush":488,"./_getPrototype":578,"./_getSymbols":580,"./stubArray":690}],582:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayPush":479,"./_getPrototype":569,"./_getSymbols":571,"./stubArray":681}],573:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var DataView = require('./_DataView'),
     Map = require('./_Map'),
     Promise = require('./_Promise'),
@@ -45402,15 +35270,7 @@ if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
 
 module.exports = getTag;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_DataView":467,"./_Map":470,"./_Promise":472,"./_Set":473,"./_WeakMap":478,"./_baseGetTag":507,"./_toSource":637}],582:[function(require,module,exports){
-=======
-},{"./_DataView":469,"./_Map":472,"./_Promise":474,"./_Set":475,"./_WeakMap":480,"./_baseGetTag":510,"./_toSource":638}],583:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_DataView":460,"./_Map":463,"./_Promise":465,"./_Set":466,"./_WeakMap":471,"./_baseGetTag":501,"./_toSource":629}],574:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Gets the value at `key` of `object`.
  *
@@ -45425,15 +35285,7 @@ function getValue(object, key) {
 
 module.exports = getValue;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],583:[function(require,module,exports){
-=======
-},{}],584:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],575:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var castPath = require('./_castPath'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray'),
@@ -45474,15 +35326,7 @@ function hasPath(object, path, hasFunc) {
 
 module.exports = hasPath;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_castPath":540,"./_isIndex":595,"./_toKey":636,"./isArguments":660,"./isArray":661,"./isLength":667}],584:[function(require,module,exports){
-=======
-},{"./_castPath":543,"./_isIndex":596,"./_toKey":637,"./isArguments":662,"./isArray":663,"./isLength":670}],585:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_castPath":534,"./_isIndex":587,"./_toKey":628,"./isArguments":653,"./isArray":654,"./isLength":661}],576:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to compose unicode character classes. */
 var rsAstralRange = '\\ud800-\\udfff',
     rsComboMarksRange = '\\u0300-\\u036f',
@@ -45510,15 +35354,7 @@ function hasUnicode(string) {
 
 module.exports = hasUnicode;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],585:[function(require,module,exports){
-=======
-},{}],586:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],577:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to detect strings that need a more robust regexp to match words. */
 var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 
@@ -45535,15 +35371,7 @@ function hasUnicodeWord(string) {
 
 module.exports = hasUnicodeWord;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],586:[function(require,module,exports){
-=======
-},{}],587:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],578:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var nativeCreate = require('./_nativeCreate');
 
 /**
@@ -45560,15 +35388,7 @@ function hashClear() {
 
 module.exports = hashClear;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_nativeCreate":615}],587:[function(require,module,exports){
-=======
-},{"./_nativeCreate":616}],588:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_nativeCreate":607}],579:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Removes `key` and its value from the hash.
  *
@@ -45587,15 +35407,7 @@ function hashDelete(key) {
 
 module.exports = hashDelete;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],588:[function(require,module,exports){
-=======
-},{}],589:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],580:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var nativeCreate = require('./_nativeCreate');
 
 /** Used to stand-in for `undefined` hash values. */
@@ -45627,15 +35439,7 @@ function hashGet(key) {
 
 module.exports = hashGet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_nativeCreate":615}],589:[function(require,module,exports){
-=======
-},{"./_nativeCreate":616}],590:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_nativeCreate":607}],581:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var nativeCreate = require('./_nativeCreate');
 
 /** Used for built-in method references. */
@@ -45660,15 +35464,7 @@ function hashHas(key) {
 
 module.exports = hashHas;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_nativeCreate":615}],590:[function(require,module,exports){
-=======
-},{"./_nativeCreate":616}],591:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_nativeCreate":607}],582:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var nativeCreate = require('./_nativeCreate');
 
 /** Used to stand-in for `undefined` hash values. */
@@ -45693,15 +35489,7 @@ function hashSet(key, value) {
 
 module.exports = hashSet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_nativeCreate":615}],591:[function(require,module,exports){
-=======
-},{"./_nativeCreate":616}],592:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_nativeCreate":607}],583:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -45729,15 +35517,7 @@ function initCloneArray(array) {
 
 module.exports = initCloneArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],592:[function(require,module,exports){
-=======
-},{}],593:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],584:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var cloneArrayBuffer = require('./_cloneArrayBuffer'),
     cloneDataView = require('./_cloneDataView'),
     cloneMap = require('./_cloneMap'),
@@ -45819,15 +35599,7 @@ function initCloneByTag(object, tag, cloneFunc, isDeep) {
 
 module.exports = initCloneByTag;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_cloneArrayBuffer":544,"./_cloneDataView":546,"./_cloneMap":547,"./_cloneRegExp":548,"./_cloneSet":549,"./_cloneSymbol":550,"./_cloneTypedArray":551}],593:[function(require,module,exports){
-=======
-},{"./_cloneArrayBuffer":547,"./_cloneDataView":549,"./_cloneMap":550,"./_cloneRegExp":551,"./_cloneSet":552,"./_cloneSymbol":553,"./_cloneTypedArray":554}],594:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_cloneArrayBuffer":538,"./_cloneDataView":540,"./_cloneMap":541,"./_cloneRegExp":542,"./_cloneSet":543,"./_cloneSymbol":544,"./_cloneTypedArray":545}],585:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseCreate = require('./_baseCreate'),
     getPrototype = require('./_getPrototype'),
     isPrototype = require('./_isPrototype');
@@ -45847,15 +35619,7 @@ function initCloneObject(object) {
 
 module.exports = initCloneObject;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseCreate":498,"./_getPrototype":577,"./_isPrototype":600}],594:[function(require,module,exports){
-=======
-},{"./_baseCreate":501,"./_getPrototype":578,"./_isPrototype":601}],595:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseCreate":492,"./_getPrototype":569,"./_isPrototype":592}],586:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Symbol = require('./_Symbol'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray');
@@ -45877,15 +35641,7 @@ function isFlattenable(value) {
 
 module.exports = isFlattenable;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Symbol":476,"./isArguments":660,"./isArray":661}],595:[function(require,module,exports){
-=======
-},{"./_Symbol":478,"./isArguments":662,"./isArray":663}],596:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Symbol":469,"./isArguments":653,"./isArray":654}],587:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
 
@@ -45909,15 +35665,7 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],596:[function(require,module,exports){
-=======
-},{}],597:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],588:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var eq = require('./eq'),
     isArrayLike = require('./isArrayLike'),
     isIndex = require('./_isIndex'),
@@ -45949,15 +35697,7 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_isIndex":595,"./eq":651,"./isArrayLike":662,"./isObject":670}],597:[function(require,module,exports){
-=======
-},{"./_isIndex":596,"./eq":652,"./isArrayLike":664,"./isObject":673}],598:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_isIndex":587,"./eq":643,"./isArrayLike":655,"./isObject":664}],589:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isArray = require('./isArray'),
     isSymbol = require('./isSymbol');
 
@@ -45988,15 +35728,7 @@ function isKey(value, object) {
 
 module.exports = isKey;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isArray":661,"./isSymbol":674}],598:[function(require,module,exports){
-=======
-},{"./isArray":663,"./isSymbol":677}],599:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isArray":654,"./isSymbol":668}],590:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is suitable for use as unique object key.
  *
@@ -46013,15 +35745,7 @@ function isKeyable(value) {
 
 module.exports = isKeyable;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],599:[function(require,module,exports){
-=======
-},{}],600:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],591:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var coreJsData = require('./_coreJsData');
 
 /** Used to detect methods masquerading as native. */
@@ -46043,15 +35767,7 @@ function isMasked(func) {
 
 module.exports = isMasked;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_coreJsData":558}],600:[function(require,module,exports){
-=======
-},{"./_coreJsData":559}],601:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_coreJsData":550}],592:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -46071,15 +35787,7 @@ function isPrototype(value) {
 
 module.exports = isPrototype;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],601:[function(require,module,exports){
-=======
-},{}],602:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],593:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./isObject');
 
 /**
@@ -46096,15 +35804,7 @@ function isStrictComparable(value) {
 
 module.exports = isStrictComparable;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isObject":670}],602:[function(require,module,exports){
-=======
-},{"./isObject":673}],603:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isObject":664}],594:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Removes all key-value entries from the list cache.
  *
@@ -46119,15 +35819,7 @@ function listCacheClear() {
 
 module.exports = listCacheClear;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],603:[function(require,module,exports){
-=======
-},{}],604:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],595:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assocIndexOf = require('./_assocIndexOf');
 
 /** Used for built-in method references. */
@@ -46164,15 +35856,7 @@ function listCacheDelete(key) {
 
 module.exports = listCacheDelete;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assocIndexOf":493}],604:[function(require,module,exports){
-=======
-},{"./_assocIndexOf":496}],605:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assocIndexOf":487}],596:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -46193,15 +35877,7 @@ function listCacheGet(key) {
 
 module.exports = listCacheGet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assocIndexOf":493}],605:[function(require,module,exports){
-=======
-},{"./_assocIndexOf":496}],606:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assocIndexOf":487}],597:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -46219,15 +35895,7 @@ function listCacheHas(key) {
 
 module.exports = listCacheHas;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assocIndexOf":493}],606:[function(require,module,exports){
-=======
-},{"./_assocIndexOf":496}],607:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assocIndexOf":487}],598:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -46255,15 +35923,7 @@ function listCacheSet(key, value) {
 
 module.exports = listCacheSet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assocIndexOf":493}],607:[function(require,module,exports){
-=======
-},{"./_assocIndexOf":496}],608:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assocIndexOf":487}],599:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var Hash = require('./_Hash'),
     ListCache = require('./_ListCache'),
     Map = require('./_Map');
@@ -46286,15 +35946,7 @@ function mapCacheClear() {
 
 module.exports = mapCacheClear;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_Hash":468,"./_ListCache":469,"./_Map":470}],608:[function(require,module,exports){
-=======
-},{"./_Hash":470,"./_ListCache":471,"./_Map":472}],609:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_Hash":461,"./_ListCache":462,"./_Map":463}],600:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getMapData = require('./_getMapData');
 
 /**
@@ -46314,15 +35966,7 @@ function mapCacheDelete(key) {
 
 module.exports = mapCacheDelete;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getMapData":574}],609:[function(require,module,exports){
-=======
-},{"./_getMapData":575}],610:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getMapData":566}],601:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getMapData = require('./_getMapData');
 
 /**
@@ -46340,15 +35984,7 @@ function mapCacheGet(key) {
 
 module.exports = mapCacheGet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getMapData":574}],610:[function(require,module,exports){
-=======
-},{"./_getMapData":575}],611:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getMapData":566}],602:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getMapData = require('./_getMapData');
 
 /**
@@ -46366,15 +36002,7 @@ function mapCacheHas(key) {
 
 module.exports = mapCacheHas;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getMapData":574}],611:[function(require,module,exports){
-=======
-},{"./_getMapData":575}],612:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getMapData":566}],603:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getMapData = require('./_getMapData');
 
 /**
@@ -46398,15 +36026,7 @@ function mapCacheSet(key, value) {
 
 module.exports = mapCacheSet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getMapData":574}],612:[function(require,module,exports){
-=======
-},{"./_getMapData":575}],613:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getMapData":566}],604:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Converts `map` to its key-value pairs.
  *
@@ -46426,15 +36046,7 @@ function mapToArray(map) {
 
 module.exports = mapToArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],613:[function(require,module,exports){
-=======
-},{}],614:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],605:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `matchesProperty` for source values suitable
  * for strict equality comparisons, i.e. `===`.
@@ -46456,15 +36068,7 @@ function matchesStrictComparable(key, srcValue) {
 
 module.exports = matchesStrictComparable;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],614:[function(require,module,exports){
-=======
-},{}],615:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],606:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var memoize = require('./memoize');
 
 /** Used as the maximum memoize cache size. */
@@ -46492,15 +36096,7 @@ function memoizeCapped(func) {
 
 module.exports = memoizeCapped;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./memoize":680}],615:[function(require,module,exports){
-=======
-},{"./memoize":683}],616:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./memoize":674}],607:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var getNative = require('./_getNative');
 
 /* Built-in method references that are verified to be native. */
@@ -46508,15 +36104,7 @@ var nativeCreate = getNative(Object, 'create');
 
 module.exports = nativeCreate;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_getNative":576}],616:[function(require,module,exports){
-=======
-},{"./_getNative":577}],617:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_getNative":568}],608:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var overArg = require('./_overArg');
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -46524,15 +36112,7 @@ var nativeKeys = overArg(Object.keys, Object);
 
 module.exports = nativeKeys;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_overArg":620}],617:[function(require,module,exports){
-=======
-},{"./_overArg":621}],618:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_overArg":612}],609:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * This function is like
  * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
@@ -46554,15 +36134,7 @@ function nativeKeysIn(object) {
 
 module.exports = nativeKeysIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],618:[function(require,module,exports){
-=======
-},{}],619:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],610:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `exports`. */
@@ -46586,15 +36158,7 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_freeGlobal":571}],619:[function(require,module,exports){
-=======
-},{"./_freeGlobal":572}],620:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_freeGlobal":563}],611:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -46618,15 +36182,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],620:[function(require,module,exports){
-=======
-},{}],621:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],612:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -46643,15 +36199,7 @@ function overArg(func, transform) {
 
 module.exports = overArg;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],621:[function(require,module,exports){
-=======
-},{}],622:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],613:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var apply = require('./_apply');
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -46689,15 +36237,7 @@ function overRest(func, start, transform) {
 
 module.exports = overRest;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_apply":481}],622:[function(require,module,exports){
-=======
-},{"./_apply":483}],623:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_apply":474}],614:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -46708,15 +36248,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_freeGlobal":571}],623:[function(require,module,exports){
-=======
-},{"./_freeGlobal":572}],624:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_freeGlobal":563}],615:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
 
@@ -46737,15 +36269,7 @@ function setCacheAdd(value) {
 
 module.exports = setCacheAdd;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],624:[function(require,module,exports){
-=======
-},{}],625:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],616:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is in the array cache.
  *
@@ -46761,15 +36285,7 @@ function setCacheHas(value) {
 
 module.exports = setCacheHas;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],625:[function(require,module,exports){
-=======
-},{}],626:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],617:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Converts `set` to an array of its values.
  *
@@ -46789,15 +36305,7 @@ function setToArray(set) {
 
 module.exports = setToArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],626:[function(require,module,exports){
-=======
-},{}],627:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],618:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseSetToString = require('./_baseSetToString'),
     shortOut = require('./_shortOut');
 
@@ -46813,15 +36321,7 @@ var setToString = shortOut(baseSetToString);
 
 module.exports = setToString;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseSetToString":532,"./_shortOut":627}],627:[function(require,module,exports){
-=======
-},{"./_baseSetToString":535,"./_shortOut":628}],628:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseSetToString":526,"./_shortOut":619}],619:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
 var HOT_COUNT = 800,
     HOT_SPAN = 16;
@@ -46860,15 +36360,7 @@ function shortOut(func) {
 
 module.exports = shortOut;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],628:[function(require,module,exports){
-=======
-},{}],629:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],620:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var ListCache = require('./_ListCache');
 
 /**
@@ -46885,15 +36377,7 @@ function stackClear() {
 
 module.exports = stackClear;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_ListCache":469}],629:[function(require,module,exports){
-=======
-},{"./_ListCache":471}],630:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_ListCache":462}],621:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Removes `key` and its value from the stack.
  *
@@ -46913,15 +36397,7 @@ function stackDelete(key) {
 
 module.exports = stackDelete;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],630:[function(require,module,exports){
-=======
-},{}],631:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],622:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Gets the stack value for `key`.
  *
@@ -46937,15 +36413,7 @@ function stackGet(key) {
 
 module.exports = stackGet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],631:[function(require,module,exports){
-=======
-},{}],632:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],623:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if a stack value for `key` exists.
  *
@@ -46961,15 +36429,7 @@ function stackHas(key) {
 
 module.exports = stackHas;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],632:[function(require,module,exports){
-=======
-},{}],633:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],624:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var ListCache = require('./_ListCache'),
     Map = require('./_Map'),
     MapCache = require('./_MapCache');
@@ -47005,15 +36465,7 @@ function stackSet(key, value) {
 
 module.exports = stackSet;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_ListCache":469,"./_Map":470,"./_MapCache":471}],633:[function(require,module,exports){
-=======
-},{"./_ListCache":471,"./_Map":472,"./_MapCache":473}],634:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_ListCache":462,"./_Map":463,"./_MapCache":464}],625:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * A specialized version of `_.indexOf` which performs strict equality
  * comparisons of values, i.e. `===`.
@@ -47038,15 +36490,7 @@ function strictIndexOf(array, value, fromIndex) {
 
 module.exports = strictIndexOf;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],634:[function(require,module,exports){
-=======
-},{}],635:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],626:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var asciiToArray = require('./_asciiToArray'),
     hasUnicode = require('./_hasUnicode'),
     unicodeToArray = require('./_unicodeToArray');
@@ -47066,15 +36510,7 @@ function stringToArray(string) {
 
 module.exports = stringToArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_asciiToArray":489,"./_hasUnicode":584,"./_unicodeToArray":638}],635:[function(require,module,exports){
-=======
-},{"./_asciiToArray":491,"./_hasUnicode":585,"./_unicodeToArray":639}],636:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_asciiToArray":482,"./_hasUnicode":576,"./_unicodeToArray":630}],627:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var memoizeCapped = require('./_memoizeCapped');
 
 /** Used to match property names within property paths. */
@@ -47104,15 +36540,7 @@ var stringToPath = memoizeCapped(function(string) {
 
 module.exports = stringToPath;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_memoizeCapped":614}],636:[function(require,module,exports){
-=======
-},{"./_memoizeCapped":615}],637:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_memoizeCapped":606}],628:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isSymbol = require('./isSymbol');
 
 /** Used as references for various `Number` constants. */
@@ -47135,15 +36563,7 @@ function toKey(value) {
 
 module.exports = toKey;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isSymbol":674}],637:[function(require,module,exports){
-=======
-},{"./isSymbol":677}],638:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isSymbol":668}],629:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used for built-in method references. */
 var funcProto = Function.prototype;
 
@@ -47171,15 +36591,7 @@ function toSource(func) {
 
 module.exports = toSource;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],638:[function(require,module,exports){
-=======
-},{}],639:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],630:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to compose unicode character classes. */
 var rsAstralRange = '\\ud800-\\udfff',
     rsComboMarksRange = '\\u0300-\\u036f',
@@ -47221,15 +36633,7 @@ function unicodeToArray(string) {
 
 module.exports = unicodeToArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],639:[function(require,module,exports){
-=======
-},{}],640:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],631:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used to compose unicode character classes. */
 var rsAstralRange = '\\ud800-\\udfff',
     rsComboMarksRange = '\\u0300-\\u036f',
@@ -47300,15 +36704,7 @@ function unicodeWords(string) {
 
 module.exports = unicodeWords;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],640:[function(require,module,exports){
-=======
-},{}],641:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],632:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var assignValue = require('./_assignValue'),
     copyObject = require('./_copyObject'),
     createAssigner = require('./_createAssigner'),
@@ -47368,15 +36764,7 @@ var assign = createAssigner(function(object, source) {
 
 module.exports = assign;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_assignValue":492,"./_copyObject":555,"./_createAssigner":559,"./_isPrototype":600,"./isArrayLike":662,"./keys":677}],641:[function(require,module,exports){
-=======
-},{"./_assignValue":495,"./_copyObject":556,"./_createAssigner":560,"./_isPrototype":601,"./isArrayLike":664,"./keys":680}],642:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_assignValue":486,"./_copyObject":547,"./_createAssigner":551,"./_isPrototype":592,"./isArrayLike":655,"./keys":671}],633:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var copyObject = require('./_copyObject'),
     createAssigner = require('./_createAssigner'),
     keysIn = require('./keysIn');
@@ -47416,15 +36804,7 @@ var assignInWith = createAssigner(function(object, source, srcIndex, customizer)
 
 module.exports = assignInWith;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_copyObject":555,"./_createAssigner":559,"./keysIn":678}],642:[function(require,module,exports){
-=======
-},{"./_copyObject":556,"./_createAssigner":560,"./keysIn":681}],643:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_copyObject":547,"./_createAssigner":551,"./keysIn":672}],634:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var capitalize = require('./capitalize'),
     createCompounder = require('./_createCompounder');
 
@@ -47455,15 +36835,7 @@ var camelCase = createCompounder(function(result, word, index) {
 
 module.exports = camelCase;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_createCompounder":563,"./capitalize":643}],643:[function(require,module,exports){
-=======
-},{"./_createCompounder":564,"./capitalize":644}],644:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_createCompounder":555,"./capitalize":635}],635:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var toString = require('./toString'),
     upperFirst = require('./upperFirst');
 
@@ -47488,15 +36860,7 @@ function capitalize(string) {
 
 module.exports = capitalize;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./toString":693,"./upperFirst":695}],644:[function(require,module,exports){
-=======
-},{"./toString":696,"./upperFirst":698}],645:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./toString":687,"./upperFirst":689}],636:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseSlice = require('./_baseSlice'),
     isIterateeCall = require('./_isIterateeCall'),
     toInteger = require('./toInteger');
@@ -47548,15 +36912,7 @@ function chunk(array, size, guard) {
 
 module.exports = chunk;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseSlice":533,"./_isIterateeCall":596,"./toInteger":691}],645:[function(require,module,exports){
-=======
-},{"./_baseSlice":536,"./_isIterateeCall":597,"./toInteger":693}],646:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseSlice":527,"./_isIterateeCall":588,"./toInteger":684}],637:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseClone = require('./_baseClone');
 
 /** Used to compose bitmasks for cloning. */
@@ -47587,15 +36943,7 @@ function cloneDeep(value) {
 
 module.exports = cloneDeep;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseClone":497}],646:[function(require,module,exports){
-=======
-},{"./_baseClone":500}],647:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseClone":491}],638:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Creates an array with all falsey values removed. The values `false`, `null`,
  * `0`, `""`, `undefined`, and `NaN` are falsey.
@@ -47628,15 +36976,7 @@ function compact(array) {
 
 module.exports = compact;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],647:[function(require,module,exports){
-=======
-},{}],648:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],639:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Creates a function that returns `value`.
  *
@@ -47664,15 +37004,7 @@ function constant(value) {
 
 module.exports = constant;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],648:[function(require,module,exports){
-=======
-},{}],649:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],640:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./isObject'),
     now = require('./now'),
     toNumber = require('./toNumber');
@@ -47862,15 +37194,7 @@ function debounce(func, wait, options) {
 
 module.exports = debounce;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isObject":670,"./now":681,"./toNumber":692}],649:[function(require,module,exports){
-=======
-},{"./isObject":673,"./now":685,"./toNumber":694}],650:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isObject":664,"./now":676,"./toNumber":685}],641:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var deburrLetter = require('./_deburrLetter'),
     toString = require('./toString');
 
@@ -47917,15 +37241,7 @@ function deburr(string) {
 
 module.exports = deburr;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_deburrLetter":565,"./toString":693}],650:[function(require,module,exports){
-=======
-},{"./_deburrLetter":566,"./toString":696}],651:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_deburrLetter":557,"./toString":687}],642:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var apply = require('./_apply'),
     assignInDefaults = require('./_assignInDefaults'),
     assignInWith = require('./assignInWith'),
@@ -47959,15 +37275,7 @@ var defaults = baseRest(function(args) {
 
 module.exports = defaults;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_apply":481,"./_assignInDefaults":491,"./_baseRest":530,"./assignInWith":641}],651:[function(require,module,exports){
-=======
-},{"./_apply":483,"./_assignInDefaults":493,"./_baseRest":533,"./assignInWith":642}],652:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_apply":474,"./_assignInDefaults":484,"./_baseRest":524,"./assignInWith":633}],643:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Performs a
  * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
@@ -48006,15 +37314,7 @@ function eq(value, other) {
 
 module.exports = eq;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],652:[function(require,module,exports){
-=======
-},{}],653:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],644:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayFilter = require('./_arrayFilter'),
     baseFilter = require('./_baseFilter'),
     baseIteratee = require('./_baseIteratee'),
@@ -48064,15 +37364,7 @@ function filter(collection, predicate) {
 
 module.exports = filter;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayFilter":483,"./_baseFilter":500,"./_baseIteratee":517,"./isArray":661}],653:[function(require,module,exports){
-=======
-},{"./_arrayFilter":485,"./_baseFilter":503,"./_baseIteratee":520,"./isArray":663}],654:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayFilter":476,"./_baseFilter":494,"./_baseIteratee":511,"./isArray":654}],645:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var createFind = require('./_createFind'),
     findIndex = require('./findIndex');
 
@@ -48116,15 +37408,7 @@ var find = createFind(findIndex);
 
 module.exports = find;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_createFind":564,"./findIndex":654}],654:[function(require,module,exports){
-=======
-},{"./_createFind":565,"./findIndex":655}],655:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_createFind":556,"./findIndex":646}],646:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseFindIndex = require('./_baseFindIndex'),
     baseIteratee = require('./_baseIteratee'),
     toInteger = require('./toInteger');
@@ -48181,15 +37465,7 @@ function findIndex(array, predicate, fromIndex) {
 
 module.exports = findIndex;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseFindIndex":501,"./_baseIteratee":517,"./toInteger":691}],655:[function(require,module,exports){
-=======
-},{"./_baseFindIndex":504,"./_baseIteratee":520,"./toInteger":693}],656:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseFindIndex":495,"./_baseIteratee":511,"./toInteger":684}],647:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseFlatten = require('./_baseFlatten');
 
 /**
@@ -48213,62 +37489,7 @@ function flatten(array) {
 
 module.exports = flatten;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseFlatten":502}],656:[function(require,module,exports){
-=======
-},{"./_baseFlatten":505}],657:[function(require,module,exports){
-=======
-},{"./_baseFlatten":496}],648:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var arrayEach = require('./_arrayEach'),
-    baseEach = require('./_baseEach'),
-    castFunction = require('./_castFunction'),
-    isArray = require('./isArray');
-
-/**
- * Iterates over elements of `collection` and invokes `iteratee` for each element.
- * The iteratee is invoked with three arguments: (value, index|key, collection).
- * Iteratee functions may exit iteration early by explicitly returning `false`.
- *
- * **Note:** As with other "Collections" methods, objects with a "length"
- * property are iterated like arrays. To avoid this behavior use `_.forIn`
- * or `_.forOwn` for object iteration.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @alias each
- * @category Collection
- * @param {Array|Object} collection The collection to iterate over.
- * @param {Function} [iteratee=_.identity] The function invoked per iteration.
- * @returns {Array|Object} Returns `collection`.
- * @see _.forEachRight
- * @example
- *
- * _.forEach([1, 2], function(value) {
- *   console.log(value);
- * });
- * // => Logs `1` then `2`.
- *
- * _.forEach({ 'a': 1, 'b': 2 }, function(value, key) {
- *   console.log(key);
- * });
- * // => Logs 'a' then 'b' (iteration order is not guaranteed).
- */
-function forEach(collection, iteratee) {
-  var func = isArray(collection) ? arrayEach : baseEach;
-  return func(collection, castFunction(iteratee));
-}
-
-module.exports = forEach;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_arrayEach":484,"./_baseEach":502,"./_castFunction":542,"./isArray":663}],658:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayEach":475,"./_baseEach":493,"./_castFunction":533,"./isArray":654}],649:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGet = require('./_baseGet');
 
 /**
@@ -48303,15 +37524,7 @@ function get(object, path, defaultValue) {
 
 module.exports = get;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGet":505}],657:[function(require,module,exports){
-=======
-},{"./_baseGet":508}],659:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGet":499}],650:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseHasIn = require('./_baseHasIn'),
     hasPath = require('./_hasPath');
 
@@ -48347,15 +37560,7 @@ function hasIn(object, path) {
 
 module.exports = hasIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseHasIn":508,"./_hasPath":583}],658:[function(require,module,exports){
-=======
-},{"./_baseHasIn":511,"./_hasPath":584}],660:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseHasIn":502,"./_hasPath":575}],651:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * This method returns the first argument it receives.
  *
@@ -48378,15 +37583,7 @@ function identity(value) {
 
 module.exports = identity;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],659:[function(require,module,exports){
-=======
-},{}],661:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],652:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIndexOf = require('./_baseIndexOf'),
     isArrayLike = require('./isArrayLike'),
     isString = require('./isString'),
@@ -48441,15 +37638,7 @@ function includes(collection, value, fromIndex, guard) {
 
 module.exports = includes;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIndexOf":509,"./isArrayLike":662,"./isString":673,"./toInteger":691,"./values":696}],660:[function(require,module,exports){
-=======
-},{"./_baseIndexOf":512,"./isArrayLike":664,"./isString":676,"./toInteger":693,"./values":699}],662:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIndexOf":503,"./isArrayLike":655,"./isString":667,"./toInteger":684,"./values":690}],653:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsArguments = require('./_baseIsArguments'),
     isObjectLike = require('./isObjectLike');
 
@@ -48487,15 +37676,7 @@ var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsAr
 
 module.exports = isArguments;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsArguments":510,"./isObjectLike":671}],661:[function(require,module,exports){
-=======
-},{"./_baseIsArguments":513,"./isObjectLike":674}],663:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIsArguments":504,"./isObjectLike":665}],654:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is classified as an `Array` object.
  *
@@ -48523,15 +37704,7 @@ var isArray = Array.isArray;
 
 module.exports = isArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],662:[function(require,module,exports){
-=======
-},{}],664:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],655:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isFunction = require('./isFunction'),
     isLength = require('./isLength');
 
@@ -48566,54 +37739,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isFunction":666,"./isLength":667}],663:[function(require,module,exports){
-=======
-},{"./isFunction":669,"./isLength":670}],665:[function(require,module,exports){
-=======
-},{"./isFunction":660,"./isLength":661}],656:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var isArrayLike = require('./isArrayLike'),
-    isObjectLike = require('./isObjectLike');
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-
-module.exports = isArrayLikeObject;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./isArrayLike":664,"./isObjectLike":674}],666:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./isArrayLike":655,"./isObjectLike":665}],657:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var root = require('./_root'),
     stubFalse = require('./stubFalse');
 
@@ -48653,15 +37779,7 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_root":622,"./stubFalse":689}],664:[function(require,module,exports){
-=======
-},{"./_root":623,"./stubFalse":691}],667:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_root":614,"./stubFalse":682}],658:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseKeys = require('./_baseKeys'),
     getTag = require('./_getTag'),
     isArguments = require('./isArguments'),
@@ -48740,15 +37858,7 @@ function isEmpty(value) {
 
 module.exports = isEmpty;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseKeys":518,"./_getTag":581,"./_isPrototype":600,"./isArguments":660,"./isArray":661,"./isArrayLike":662,"./isBuffer":663,"./isTypedArray":675}],665:[function(require,module,exports){
-=======
-},{"./_baseKeys":521,"./_getTag":582,"./_isPrototype":601,"./isArguments":662,"./isArray":663,"./isArrayLike":664,"./isBuffer":666,"./isTypedArray":678}],668:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseKeys":512,"./_getTag":573,"./_isPrototype":592,"./isArguments":653,"./isArray":654,"./isArrayLike":655,"./isBuffer":657,"./isTypedArray":669}],659:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsEqual = require('./_baseIsEqual');
 
 /**
@@ -48785,15 +37895,7 @@ function isEqual(value, other) {
 
 module.exports = isEqual;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsEqual":511}],666:[function(require,module,exports){
-=======
-},{"./_baseIsEqual":514}],669:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIsEqual":505}],660:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetTag = require('./_baseGetTag'),
     isObject = require('./isObject');
 
@@ -48832,15 +37934,7 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetTag":507,"./isObject":670}],667:[function(require,module,exports){
-=======
-},{"./_baseGetTag":510,"./isObject":673}],670:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetTag":501,"./isObject":664}],661:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
 
@@ -48877,15 +37971,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],668:[function(require,module,exports){
-=======
-},{}],671:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],662:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is `null` or `undefined`.
  *
@@ -48912,15 +37998,7 @@ function isNil(value) {
 
 module.exports = isNil;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],669:[function(require,module,exports){
-=======
-},{}],672:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],663:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is `null`.
  *
@@ -48944,15 +38022,7 @@ function isNull(value) {
 
 module.exports = isNull;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],670:[function(require,module,exports){
-=======
-},{}],673:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],664:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is the
  * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
@@ -48985,15 +38055,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],671:[function(require,module,exports){
-=======
-},{}],674:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],665:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -49024,15 +38086,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],672:[function(require,module,exports){
-=======
-},{}],675:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],666:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetTag = require('./_baseGetTag'),
     getPrototype = require('./_getPrototype'),
     isObjectLike = require('./isObjectLike');
@@ -49096,15 +38150,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetTag":507,"./_getPrototype":577,"./isObjectLike":671}],673:[function(require,module,exports){
-=======
-},{"./_baseGetTag":510,"./_getPrototype":578,"./isObjectLike":674}],676:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetTag":501,"./_getPrototype":569,"./isObjectLike":665}],667:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetTag = require('./_baseGetTag'),
     isArray = require('./isArray'),
     isObjectLike = require('./isObjectLike');
@@ -49136,15 +38182,7 @@ function isString(value) {
 
 module.exports = isString;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetTag":507,"./isArray":661,"./isObjectLike":671}],674:[function(require,module,exports){
-=======
-},{"./_baseGetTag":510,"./isArray":663,"./isObjectLike":674}],677:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetTag":501,"./isArray":654,"./isObjectLike":665}],668:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseGetTag = require('./_baseGetTag'),
     isObjectLike = require('./isObjectLike');
 
@@ -49175,15 +38213,7 @@ function isSymbol(value) {
 
 module.exports = isSymbol;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseGetTag":507,"./isObjectLike":671}],675:[function(require,module,exports){
-=======
-},{"./_baseGetTag":510,"./isObjectLike":674}],678:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseGetTag":501,"./isObjectLike":665}],669:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseIsTypedArray = require('./_baseIsTypedArray'),
     baseUnary = require('./_baseUnary'),
     nodeUtil = require('./_nodeUtil');
@@ -49212,15 +38242,7 @@ var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedA
 
 module.exports = isTypedArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseIsTypedArray":516,"./_baseUnary":537,"./_nodeUtil":618}],676:[function(require,module,exports){
-=======
-},{"./_baseIsTypedArray":519,"./_baseUnary":539,"./_nodeUtil":619}],679:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseIsTypedArray":510,"./_baseUnary":530,"./_nodeUtil":610}],670:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Checks if `value` is `undefined`.
  *
@@ -49244,15 +38266,7 @@ function isUndefined(value) {
 
 module.exports = isUndefined;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],677:[function(require,module,exports){
-=======
-},{}],680:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],671:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayLikeKeys = require('./_arrayLikeKeys'),
     baseKeys = require('./_baseKeys'),
     isArrayLike = require('./isArrayLike');
@@ -49291,15 +38305,7 @@ function keys(object) {
 
 module.exports = keys;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayLikeKeys":484,"./_baseKeys":518,"./isArrayLike":662}],678:[function(require,module,exports){
-=======
-},{"./_arrayLikeKeys":486,"./_baseKeys":521,"./isArrayLike":664}],681:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayLikeKeys":477,"./_baseKeys":512,"./isArrayLike":655}],672:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayLikeKeys = require('./_arrayLikeKeys'),
     baseKeysIn = require('./_baseKeysIn'),
     isArrayLike = require('./isArrayLike');
@@ -49333,15 +38339,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayLikeKeys":484,"./_baseKeysIn":519,"./isArrayLike":662}],679:[function(require,module,exports){
-=======
-},{"./_arrayLikeKeys":486,"./_baseKeysIn":522,"./isArrayLike":664}],682:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayLikeKeys":477,"./_baseKeysIn":513,"./isArrayLike":655}],673:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Gets the last element of `array`.
  *
@@ -49363,15 +38361,7 @@ function last(array) {
 
 module.exports = last;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],680:[function(require,module,exports){
-=======
-},{}],683:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],674:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var MapCache = require('./_MapCache');
 
 /** Error message constants. */
@@ -49446,60 +38436,7 @@ memoize.Cache = MapCache;
 
 module.exports = memoize;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_MapCache":471}],681:[function(require,module,exports){
-=======
-},{"./_MapCache":473}],684:[function(require,module,exports){
-=======
-},{"./_MapCache":464}],675:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var baseMerge = require('./_baseMerge'),
-    createAssigner = require('./_createAssigner');
-
-/**
- * This method is like `_.assign` except that it recursively merges own and
- * inherited enumerable string keyed properties of source objects into the
- * destination object. Source properties that resolve to `undefined` are
- * skipped if a destination value exists. Array and plain object properties
- * are merged recursively. Other objects and value types are overridden by
- * assignment. Source objects are applied from left to right. Subsequent
- * sources overwrite property assignments of previous sources.
- *
- * **Note:** This method mutates `object`.
- *
- * @static
- * @memberOf _
- * @since 0.5.0
- * @category Object
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @returns {Object} Returns `object`.
- * @example
- *
- * var object = {
- *   'a': [{ 'b': 2 }, { 'd': 4 }]
- * };
- *
- * var other = {
- *   'a': [{ 'c': 3 }, { 'e': 5 }]
- * };
- *
- * _.merge(object, other);
- * // => { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
- */
-var merge = createAssigner(function(object, source, srcIndex) {
-  baseMerge(object, source, srcIndex);
-});
-
-module.exports = merge;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_baseMerge":525,"./_createAssigner":560}],685:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseMerge":516,"./_createAssigner":551}],676:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var root = require('./_root');
 
 /**
@@ -49524,15 +38461,7 @@ var now = function() {
 
 module.exports = now;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_root":622}],682:[function(require,module,exports){
-=======
-},{"./_root":623}],686:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_root":614}],677:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var basePick = require('./_basePick'),
     flatRest = require('./_flatRest');
 
@@ -49559,8 +38488,6 @@ var pick = flatRest(function(object, paths) {
 
 module.exports = pick;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_basePick":524,"./_flatRest":570}],683:[function(require,module,exports){
 var arrayMap = require('./_arrayMap'),
     baseIteratee = require('./_baseIteratee'),
@@ -49601,12 +38528,6 @@ function pickBy(object, predicate) {
 module.exports = pickBy;
 
 },{"./_arrayMap":485,"./_baseIteratee":517,"./_basePickBy":525,"./_getAllKeysIn":573}],684:[function(require,module,exports){
-=======
-},{"./_basePick":527,"./_flatRest":571}],687:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_basePick":518,"./_flatRest":562}],678:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseProperty = require('./_baseProperty'),
     basePropertyDeep = require('./_basePropertyDeep'),
     isKey = require('./_isKey'),
@@ -49640,15 +38561,7 @@ function property(path) {
 
 module.exports = property;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseProperty":526,"./_basePropertyDeep":527,"./_isKey":597,"./_toKey":636}],685:[function(require,module,exports){
-=======
-},{"./_baseProperty":529,"./_basePropertyDeep":530,"./_isKey":598,"./_toKey":637}],688:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseProperty":520,"./_basePropertyDeep":521,"./_isKey":589,"./_toKey":628}],679:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var arrayReduce = require('./_arrayReduce'),
     baseEach = require('./_baseEach'),
     baseIteratee = require('./_baseIteratee'),
@@ -49701,15 +38614,7 @@ function reduce(collection, iteratee, accumulator) {
 
 module.exports = reduce;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_arrayReduce":487,"./_baseEach":499,"./_baseIteratee":517,"./_baseReduce":529,"./isArray":661}],686:[function(require,module,exports){
-=======
-},{"./_arrayReduce":489,"./_baseEach":502,"./_baseIteratee":520,"./_baseReduce":532,"./isArray":663}],689:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_arrayReduce":480,"./_baseEach":493,"./_baseIteratee":511,"./_baseReduce":523,"./isArray":654}],680:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var createCompounder = require('./_createCompounder');
 
 /**
@@ -49739,8 +38644,6 @@ var snakeCase = createCompounder(function(result, word, index) {
 
 module.exports = snakeCase;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_createCompounder":563}],687:[function(require,module,exports){
 var baseFlatten = require('./_baseFlatten'),
     baseOrderBy = require('./_baseOrderBy'),
@@ -49792,12 +38695,6 @@ var sortBy = baseRest(function(collection, iteratees) {
 module.exports = sortBy;
 
 },{"./_baseFlatten":502,"./_baseOrderBy":523,"./_baseRest":530,"./_isIterateeCall":596}],688:[function(require,module,exports){
-=======
-},{"./_createCompounder":564}],690:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_createCompounder":555}],681:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * This method returns a new empty array.
  *
@@ -49822,15 +38719,7 @@ function stubArray() {
 
 module.exports = stubArray;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],689:[function(require,module,exports){
-=======
-},{}],691:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],682:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * This method returns `false`.
  *
@@ -49850,15 +38739,7 @@ function stubFalse() {
 
 module.exports = stubFalse;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],690:[function(require,module,exports){
-=======
-},{}],692:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],683:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var toNumber = require('./toNumber');
 
 /** Used as references for various `Number` constants. */
@@ -49902,15 +38783,7 @@ function toFinite(value) {
 
 module.exports = toFinite;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./toNumber":692}],691:[function(require,module,exports){
-=======
-},{"./toNumber":694}],693:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./toNumber":685}],684:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var toFinite = require('./toFinite');
 
 /**
@@ -49948,15 +38821,7 @@ function toInteger(value) {
 
 module.exports = toInteger;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./toFinite":690}],692:[function(require,module,exports){
-=======
-},{"./toFinite":692}],694:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./toFinite":683}],685:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var isObject = require('./isObject'),
     isSymbol = require('./isSymbol');
 
@@ -50024,53 +38889,7 @@ function toNumber(value) {
 
 module.exports = toNumber;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./isObject":670,"./isSymbol":674}],693:[function(require,module,exports){
-=======
-},{"./isObject":673,"./isSymbol":677}],695:[function(require,module,exports){
-=======
-},{"./isObject":664,"./isSymbol":668}],686:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-var copyObject = require('./_copyObject'),
-    keysIn = require('./keysIn');
-
-/**
- * Converts `value` to a plain object flattening inherited enumerable string
- * keyed properties of `value` to own properties of the plain object.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {Object} Returns the converted plain object.
- * @example
- *
- * function Foo() {
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.assign({ 'a': 1 }, new Foo);
- * // => { 'a': 1, 'b': 2 }
- *
- * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
- * // => { 'a': 1, 'b': 2, 'c': 3 }
- */
-function toPlainObject(value) {
-  return copyObject(value, keysIn(value));
-}
-
-module.exports = toPlainObject;
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"./_copyObject":556,"./keysIn":681}],696:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_copyObject":547,"./keysIn":672}],687:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseToString = require('./_baseToString');
 
 /**
@@ -50100,15 +38919,7 @@ function toString(value) {
 
 module.exports = toString;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseToString":536}],694:[function(require,module,exports){
-=======
-},{"./_baseToString":538}],697:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseToString":529}],688:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseToString = require('./_baseToString'),
     castSlice = require('./_castSlice'),
     charsEndIndex = require('./_charsEndIndex'),
@@ -50159,15 +38970,7 @@ function trim(string, chars, guard) {
 
 module.exports = trim;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseToString":536,"./_castSlice":541,"./_charsEndIndex":542,"./_charsStartIndex":543,"./_stringToArray":634,"./toString":693}],695:[function(require,module,exports){
-=======
-},{"./_baseToString":538,"./_castSlice":544,"./_charsEndIndex":545,"./_charsStartIndex":546,"./_stringToArray":635,"./toString":696}],698:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseToString":529,"./_castSlice":535,"./_charsEndIndex":536,"./_charsStartIndex":537,"./_stringToArray":626,"./toString":687}],689:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var createCaseFirst = require('./_createCaseFirst');
 
 /**
@@ -50191,15 +38994,7 @@ var upperFirst = createCaseFirst('toUpperCase');
 
 module.exports = upperFirst;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_createCaseFirst":562}],696:[function(require,module,exports){
-=======
-},{"./_createCaseFirst":563}],699:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_createCaseFirst":554}],690:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var baseValues = require('./_baseValues'),
     keys = require('./keys');
 
@@ -50235,15 +39030,7 @@ function values(object) {
 
 module.exports = values;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_baseValues":538,"./keys":677}],697:[function(require,module,exports){
-=======
-},{"./_baseValues":540,"./keys":680}],700:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./_baseValues":531,"./keys":671}],691:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 var asciiWords = require('./_asciiWords'),
     hasUnicodeWord = require('./_hasUnicodeWord'),
     toString = require('./toString'),
@@ -50280,117 +39067,7 @@ function words(string, pattern, guard) {
 
 module.exports = words;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./_asciiWords":490,"./_hasUnicodeWord":585,"./_unicodeWords":639,"./toString":693}],698:[function(require,module,exports){
-=======
-},{"./_asciiWords":492,"./_hasUnicodeWord":586,"./_unicodeWords":640,"./toString":696}],701:[function(require,module,exports){
-=======
-},{"./_asciiWords":483,"./_hasUnicodeWord":577,"./_unicodeWords":631,"./toString":687}],692:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-'use strict'
-
-function isObject (value) {
-  return value === Object(value)
-}
-
-function isArray (value) {
-  return Array.isArray(value)
-}
-
-function isFile (value) {
-  return value instanceof File
-}
-
-function makeArrayKey (key) {
-  if (key.length > 2 && key.lastIndexOf('[]') === key.length - 2) {
-    return key
-  } else {
-    return key + '[]'
-  }
-}
-
-function objectToFormData (obj, fd, pre) {
-  fd = fd || new FormData()
-
-  Object.keys(obj).forEach(function (prop) {
-    var key = pre ? (pre + '[' + prop + ']') : prop
-
-    if (isObject(obj[prop]) && !isArray(obj[prop]) && !isFile(obj[prop])) {
-      objectToFormData(obj[prop], fd, key)
-    } else if (isArray(obj[prop])) {
-      obj[prop].forEach(function (value) {
-        var arrayKey = makeArrayKey(key)
-
-        if (isObject(value) && !isFile(value)) {
-          objectToFormData(value, fd, arrayKey)
-        } else {
-          fd.append(arrayKey, value)
-        }
-      })
-    } else {
-      fd.append(key, obj[prop])
-    }
-  })
-
-  return fd
-}
-
-module.exports = objectToFormData
-
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{}],702:[function(require,module,exports){
-exports.endianness = function () { return 'LE' };
-
-exports.hostname = function () {
-    if (typeof location !== 'undefined') {
-        return location.hostname
-    }
-    else return '';
-};
-
-exports.loadavg = function () { return [] };
-
-exports.uptime = function () { return 0 };
-
-exports.freemem = function () {
-    return Number.MAX_VALUE;
-};
-
-exports.totalmem = function () {
-    return Number.MAX_VALUE;
-};
-
-exports.cpus = function () { return [] };
-
-exports.type = function () { return 'Browser' };
-
-exports.release = function () {
-    if (typeof navigator !== 'undefined') {
-        return navigator.appVersion;
-    }
-    return '';
-};
-
-exports.networkInterfaces
-= exports.getNetworkInterfaces
-= function () { return {} };
-
-exports.arch = function () { return 'javascript' };
-
-exports.platform = function () { return 'browser' };
-
-exports.tmpdir = exports.tmpDir = function () {
-    return '/tmp';
-};
-
-exports.EOL = '\n';
-
-},{}],703:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],693:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -50572,28 +39249,12 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],699:[function(require,module,exports){
-=======
-},{}],704:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],694:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 module.exports = require('./lib')
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./lib":704}],700:[function(require,module,exports){
-=======
-},{"./lib":709}],705:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./lib":699}],695:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var asap = require('asap/raw');
@@ -50808,15 +39469,7 @@ function doResolve(fn, promise) {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"asap/raw":103}],701:[function(require,module,exports){
-=======
-},{"asap/raw":97}],706:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"asap/raw":96}],696:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var Promise = require('./core.js');
@@ -50831,15 +39484,7 @@ Promise.prototype.done = function (onFulfilled, onRejected) {
   });
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core.js":700}],702:[function(require,module,exports){
-=======
-},{"./core.js":705}],707:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core.js":695}],697:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 //This file contains the ES6 extensions to the core Promises/A+ API
@@ -50948,15 +39593,7 @@ Promise.prototype['catch'] = function (onRejected) {
   return this.then(null, onRejected);
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core.js":700}],703:[function(require,module,exports){
-=======
-},{"./core.js":705}],708:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core.js":695}],698:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var Promise = require('./core.js');
@@ -50974,15 +39611,7 @@ Promise.prototype['finally'] = function (f) {
   });
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core.js":700}],704:[function(require,module,exports){
-=======
-},{"./core.js":705}],709:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core.js":695}],699:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 module.exports = require('./core.js');
@@ -50992,15 +39621,7 @@ require('./es6-extensions.js');
 require('./node-extensions.js');
 require('./synchronous.js');
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core.js":700,"./done.js":701,"./es6-extensions.js":702,"./finally.js":703,"./node-extensions.js":705,"./synchronous.js":706}],705:[function(require,module,exports){
-=======
-},{"./core.js":705,"./done.js":706,"./es6-extensions.js":707,"./finally.js":708,"./node-extensions.js":710,"./synchronous.js":711}],710:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core.js":695,"./done.js":696,"./es6-extensions.js":697,"./finally.js":698,"./node-extensions.js":700,"./synchronous.js":701}],700:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 // This file contains then/promise specific extensions that are only useful
@@ -51132,15 +39753,7 @@ Promise.prototype.nodeify = function (callback, ctx) {
   });
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core.js":700,"asap":102}],706:[function(require,module,exports){
-=======
-},{"./core.js":705,"asap":96}],711:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core.js":695,"asap":95}],701:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var Promise = require('./core.js');
@@ -51204,28 +39817,12 @@ Promise.disableSynchronous = function() {
   Promise.prototype.getState = undefined;
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core.js":700}],707:[function(require,module,exports){
-=======
-},{"./core.js":705}],712:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core.js":695}],702:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react/lib/ReactDOM":762}],708:[function(require,module,exports){
-=======
-},{"react/lib/ReactDOM":768}],713:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react/lib/ReactDOM":758}],703:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51372,15 +39969,7 @@ Linkify.defaultProps = {
 };
 exports.default = Linkify;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"linkify-it":460,"react":856,"tlds":886}],709:[function(require,module,exports){
-=======
-},{"linkify-it":457,"react":862,"tlds":892}],714:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"linkify-it":453,"react":852,"tlds":882}],704:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"));
@@ -51645,15 +40234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],710:[function(require,module,exports){
-=======
-},{"react":862}],715:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],705:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var React = require('react');
@@ -51675,117 +40256,7 @@ module.exports = function(str) {
   });
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],711:[function(require,module,exports){
-=======
-},{"react":862}],716:[function(require,module,exports){
-=======
-},{"react":852}],706:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var Radio = _react2['default'].createClass({
-  displayName: 'Radio',
-
-  contextTypes: {
-    radioGroup: _react2['default'].PropTypes.object
-  },
-
-  render: function render() {
-    var _context$radioGroup = this.context.radioGroup;
-    var name = _context$radioGroup.name;
-    var selectedValue = _context$radioGroup.selectedValue;
-    var onChange = _context$radioGroup.onChange;
-
-    var optional = {};
-    if (selectedValue !== undefined) {
-      optional.checked = this.props.value === selectedValue;
-    }
-    if (typeof onChange === 'function') {
-      optional.onChange = onChange.bind(null, this.props.value);
-    }
-
-    return _react2['default'].createElement('input', _extends({}, this.props, {
-      type: 'radio',
-      name: name
-    }, optional));
-  }
-});
-
-exports.Radio = Radio;
-var RadioGroup = _react2['default'].createClass({
-  displayName: 'RadioGroup',
-
-  propTypes: {
-    name: _react.PropTypes.string,
-    selectedValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.bool]),
-    onChange: _react.PropTypes.func,
-    children: _react.PropTypes.node.isRequired,
-    Component: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func, _react.PropTypes.object])
-  },
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      Component: "div"
-    };
-  },
-
-  childContextTypes: {
-    radioGroup: _react2['default'].PropTypes.object
-  },
-
-  getChildContext: function getChildContext() {
-    var _props = this.props;
-    var name = _props.name;
-    var selectedValue = _props.selectedValue;
-    var onChange = _props.onChange;
-
-    return {
-      radioGroup: {
-        name: name, selectedValue: selectedValue, onChange: onChange
-      }
-    };
-  },
-
-  render: function render() {
-    var _props2 = this.props;
-    var Component = _props2.Component;
-    var name = _props2.name;
-    var selectedValue = _props2.selectedValue;
-    var onChange = _props2.onChange;
-    var children = _props2.children;
-
-    var rest = _objectWithoutProperties(_props2, ['Component', 'name', 'selectedValue', 'onChange', 'children']);
-
-    return _react2['default'].createElement(
-      Component,
-      rest,
-      children
-    );
-  }
-});
-exports.RadioGroup = RadioGroup;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{"react":862}],717:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],707:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -51865,15 +40336,7 @@ Provider.childContextTypes = {
   store: _storeShape2.default.isRequired
 };
 Provider.displayName = 'Provider';
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../utils/storeShape":723,"../utils/warning":725,"react":856}],712:[function(require,module,exports){
-=======
-},{"../utils/storeShape":729,"../utils/warning":731,"react":862}],718:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../utils/storeShape":719,"../utils/warning":721,"react":852}],708:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52150,15 +40613,7 @@ selectorFactory) {
     return (0, _hoistNonReactStatics2.default)(Connect, WrappedComponent);
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../utils/Subscription":721,"../utils/storeShape":723,"hoist-non-react-statics":456,"invariant":457,"react":856}],713:[function(require,module,exports){
-=======
-},{"../utils/Subscription":727,"../utils/storeShape":729,"hoist-non-react-statics":451,"invariant":452,"react":862}],719:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../utils/Subscription":717,"../utils/storeShape":719,"hoist-non-react-statics":449,"invariant":450,"react":852}],709:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52287,15 +40742,7 @@ function createConnect() {
 }
 
 exports.default = createConnect();
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../components/connectAdvanced":712,"../utils/shallowEqual":722,"./mapDispatchToProps":714,"./mapStateToProps":715,"./mergeProps":716,"./selectorFactory":717}],714:[function(require,module,exports){
-=======
-},{"../components/connectAdvanced":718,"../utils/shallowEqual":728,"./mapDispatchToProps":720,"./mapStateToProps":721,"./mergeProps":722,"./selectorFactory":723}],720:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../components/connectAdvanced":708,"../utils/shallowEqual":718,"./mapDispatchToProps":710,"./mapStateToProps":711,"./mergeProps":712,"./selectorFactory":713}],710:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52324,15 +40771,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 }
 
 exports.default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./wrapMapToProps":719,"redux":880}],715:[function(require,module,exports){
-=======
-},{"./wrapMapToProps":725,"redux":886}],721:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./wrapMapToProps":715,"redux":876}],711:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52352,15 +40791,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 }
 
 exports.default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./wrapMapToProps":719}],716:[function(require,module,exports){
-=======
-},{"./wrapMapToProps":725}],722:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./wrapMapToProps":715}],712:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52419,15 +40850,7 @@ function whenMergePropsIsOmitted(mergeProps) {
 }
 
 exports.default = [whenMergePropsIsFunction, whenMergePropsIsOmitted];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../utils/verifyPlainObject":724}],717:[function(require,module,exports){
-=======
-},{"../utils/verifyPlainObject":730}],723:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../utils/verifyPlainObject":720}],713:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52541,15 +40964,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
 
   return selectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./verifySubselectors":718}],718:[function(require,module,exports){
-=======
-},{"./verifySubselectors":724}],724:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./verifySubselectors":714}],714:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52576,15 +40991,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
   verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
   verify(mergeProps, 'mergeProps', displayName);
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../utils/warning":725}],719:[function(require,module,exports){
-=======
-},{"../utils/warning":731}],725:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../utils/warning":721}],715:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52661,15 +41068,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
     return proxy;
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"../utils/verifyPlainObject":724}],720:[function(require,module,exports){
-=======
-},{"../utils/verifyPlainObject":730}],726:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"../utils/verifyPlainObject":720}],716:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52692,15 +41091,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.Provider = _Provider2.default;
 exports.connectAdvanced = _connectAdvanced2.default;
 exports.connect = _connect2.default;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./components/Provider":711,"./components/connectAdvanced":712,"./connect/connect":713}],721:[function(require,module,exports){
-=======
-},{"./components/Provider":717,"./components/connectAdvanced":718,"./connect/connect":719}],727:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./components/Provider":707,"./components/connectAdvanced":708,"./connect/connect":709}],717:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 exports.__esModule = true;
@@ -52794,15 +41185,7 @@ var Subscription = function () {
 }();
 
 exports.default = Subscription;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],722:[function(require,module,exports){
-=======
-},{}],728:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],718:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 exports.__esModule = true;
@@ -52826,15 +41209,7 @@ function shallowEqual(a, b) {
 
   return countA === countB;
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],723:[function(require,module,exports){
-=======
-},{}],729:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],719:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52846,15 +41221,7 @@ exports.default = _react.PropTypes.shape({
   dispatch: _react.PropTypes.func.isRequired,
   getState: _react.PropTypes.func.isRequired
 });
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"react":856}],724:[function(require,module,exports){
-=======
-},{"react":862}],730:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"react":852}],720:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52875,15 +41242,7 @@ function verifyPlainObject(value, displayName, methodName) {
     (0, _warning2.default)(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./warning":725,"lodash/isPlainObject":672}],725:[function(require,module,exports){
-=======
-},{"./warning":731,"lodash/isPlainObject":675}],731:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./warning":721,"lodash/isPlainObject":666}],721:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -52909,15 +41268,7 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],726:[function(require,module,exports){
-=======
-},{}],732:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],722:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53204,15 +41555,7 @@ function clearNextFrameAction(nextFrameId) {
   }
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./calculateNodeHeight":727,"react":856}],727:[function(require,module,exports){
-=======
-},{"./calculateNodeHeight":733,"react":862}],733:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./calculateNodeHeight":723,"react":852}],723:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53326,15 +41669,7 @@ function calculateNodeStyling(node) {
   return nodeInfo;
 }
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],728:[function(require,module,exports){
-=======
-},{}],734:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],724:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -53371,15 +41706,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactMount":792,"./findDOMNode":835,"fbjs/lib/focusNode":437}],729:[function(require,module,exports){
-=======
-},{"./ReactMount":798,"./findDOMNode":841,"fbjs/lib/focusNode":431}],735:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactMount":788,"./findDOMNode":831,"fbjs/lib/focusNode":430}],725:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -53785,15 +42112,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPropagators":745,"./FallbackCompositionState":746,"./SyntheticCompositionEvent":817,"./SyntheticInputEvent":821,"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/keyOf":447}],730:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPropagators":751,"./FallbackCompositionState":752,"./SyntheticCompositionEvent":823,"./SyntheticInputEvent":827,"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/keyOf":441}],736:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPropagators":741,"./FallbackCompositionState":742,"./SyntheticCompositionEvent":813,"./SyntheticInputEvent":817,"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/keyOf":440}],726:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -53933,15 +42252,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],731:[function(require,module,exports){
-=======
-},{}],737:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],727:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54117,15 +42428,7 @@ ReactPerf.measureMethods(CSSPropertyOperations, 'CSSPropertyOperations', {
 });
 
 module.exports = CSSPropertyOperations;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./CSSProperty":730,"./ReactPerf":798,"./dangerousStyleValue":832,"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/camelizeStyleName":431,"fbjs/lib/hyphenateStyleName":442,"fbjs/lib/memoizeStringOnly":449,"fbjs/lib/warning":454}],732:[function(require,module,exports){
-=======
-},{"./CSSProperty":736,"./ReactPerf":804,"./dangerousStyleValue":838,"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/camelizeStyleName":425,"fbjs/lib/hyphenateStyleName":436,"fbjs/lib/memoizeStringOnly":443,"fbjs/lib/warning":448}],738:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./CSSProperty":726,"./ReactPerf":794,"./dangerousStyleValue":828,"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/camelizeStyleName":424,"fbjs/lib/hyphenateStyleName":435,"fbjs/lib/memoizeStringOnly":442,"fbjs/lib/warning":447}],728:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54219,15 +42522,7 @@ assign(CallbackQueue.prototype, {
 PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./PooledClass":750,"fbjs/lib/invariant":443}],733:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./PooledClass":756,"fbjs/lib/invariant":437}],739:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./PooledClass":746,"fbjs/lib/invariant":436}],729:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54549,15 +42844,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPluginHub":742,"./EventPropagators":745,"./ReactUpdates":810,"./SyntheticEvent":819,"./getEventTarget":841,"./isEventSupported":846,"./isTextInputElement":847,"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/keyOf":447}],734:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPluginHub":748,"./EventPropagators":751,"./ReactUpdates":816,"./SyntheticEvent":825,"./getEventTarget":847,"./isEventSupported":852,"./isTextInputElement":853,"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/keyOf":441}],740:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPluginHub":738,"./EventPropagators":741,"./ReactUpdates":806,"./SyntheticEvent":815,"./getEventTarget":837,"./isEventSupported":842,"./isTextInputElement":843,"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/keyOf":440}],730:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54581,15 +42868,7 @@ var ClientReactRootIndex = {
 };
 
 module.exports = ClientReactRootIndex;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],735:[function(require,module,exports){
-=======
-},{}],741:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],731:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54719,15 +42998,7 @@ ReactPerf.measureMethods(DOMChildrenOperations, 'DOMChildrenOperations', {
 });
 
 module.exports = DOMChildrenOperations;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Danger":738,"./ReactMultiChildUpdateTypes":794,"./ReactPerf":798,"./setInnerHTML":851,"./setTextContent":852,"fbjs/lib/invariant":443}],736:[function(require,module,exports){
-=======
-},{"./Danger":744,"./ReactMultiChildUpdateTypes":800,"./ReactPerf":804,"./setInnerHTML":857,"./setTextContent":858,"fbjs/lib/invariant":437}],742:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Danger":734,"./ReactMultiChildUpdateTypes":790,"./ReactPerf":794,"./setInnerHTML":847,"./setTextContent":848,"fbjs/lib/invariant":436}],732:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54962,15 +43233,7 @@ var DOMProperty = {
 };
 
 module.exports = DOMProperty;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],737:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],743:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],733:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55196,15 +43459,7 @@ ReactPerf.measureMethods(DOMPropertyOperations, 'DOMPropertyOperations', {
 });
 
 module.exports = DOMPropertyOperations;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMProperty":736,"./ReactPerf":798,"./quoteAttributeValueForBrowser":849,"fbjs/lib/warning":454}],738:[function(require,module,exports){
-=======
-},{"./DOMProperty":742,"./ReactPerf":804,"./quoteAttributeValueForBrowser":855,"fbjs/lib/warning":448}],744:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMProperty":732,"./ReactPerf":794,"./quoteAttributeValueForBrowser":845,"fbjs/lib/warning":447}],734:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55350,15 +43605,7 @@ var Danger = {
 };
 
 module.exports = Danger;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/createNodesFromMarkup":434,"fbjs/lib/emptyFunction":435,"fbjs/lib/getMarkupWrap":439,"fbjs/lib/invariant":443}],739:[function(require,module,exports){
-=======
-},{"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/createNodesFromMarkup":428,"fbjs/lib/emptyFunction":429,"fbjs/lib/getMarkupWrap":433,"fbjs/lib/invariant":437}],745:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/createNodesFromMarkup":427,"fbjs/lib/emptyFunction":428,"fbjs/lib/getMarkupWrap":432,"fbjs/lib/invariant":436}],735:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55386,15 +43633,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/keyOf":447}],740:[function(require,module,exports){
-=======
-},{"fbjs/lib/keyOf":441}],746:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/keyOf":440}],736:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55519,15 +43758,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPropagators":745,"./ReactMount":792,"./SyntheticMouseEvent":823,"fbjs/lib/keyOf":447}],741:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPropagators":751,"./ReactMount":798,"./SyntheticMouseEvent":829,"fbjs/lib/keyOf":441}],747:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPropagators":741,"./ReactMount":788,"./SyntheticMouseEvent":819,"fbjs/lib/keyOf":440}],737:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55620,15 +43851,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/keyMirror":446}],742:[function(require,module,exports){
-=======
-},{"fbjs/lib/keyMirror":440}],748:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/keyMirror":439}],738:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55908,15 +44131,7 @@ var EventPluginHub = {
 };
 
 module.exports = EventPluginHub;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventPluginRegistry":743,"./EventPluginUtils":744,"./ReactErrorUtils":783,"./accumulateInto":829,"./forEachAccumulated":837,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],743:[function(require,module,exports){
-=======
-},{"./EventPluginRegistry":749,"./EventPluginUtils":750,"./ReactErrorUtils":789,"./accumulateInto":835,"./forEachAccumulated":843,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],749:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventPluginRegistry":739,"./EventPluginUtils":740,"./ReactErrorUtils":779,"./accumulateInto":825,"./forEachAccumulated":833,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],739:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56137,15 +44352,7 @@ var EventPluginRegistry = {
 };
 
 module.exports = EventPluginRegistry;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],744:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],750:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],740:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56348,15 +44555,7 @@ var EventPluginUtils = {
 };
 
 module.exports = EventPluginUtils;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./ReactErrorUtils":783,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],745:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./ReactErrorUtils":789,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],751:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./ReactErrorUtils":779,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],741:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56492,15 +44691,7 @@ var EventPropagators = {
 };
 
 module.exports = EventPropagators;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPluginHub":742,"./accumulateInto":829,"./forEachAccumulated":837,"fbjs/lib/warning":454}],746:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPluginHub":748,"./accumulateInto":835,"./forEachAccumulated":843,"fbjs/lib/warning":448}],752:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPluginHub":738,"./accumulateInto":825,"./forEachAccumulated":833,"fbjs/lib/warning":447}],742:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56596,15 +44787,7 @@ assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./PooledClass":750,"./getTextContentAccessor":844}],747:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./PooledClass":756,"./getTextContentAccessor":850}],753:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./PooledClass":746,"./getTextContentAccessor":840}],743:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56835,15 +45018,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMProperty":736,"fbjs/lib/ExecutionEnvironment":429}],748:[function(require,module,exports){
-=======
-},{"./DOMProperty":742,"fbjs/lib/ExecutionEnvironment":423}],754:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMProperty":732,"fbjs/lib/ExecutionEnvironment":422}],744:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56978,15 +45153,7 @@ var LinkedValueUtils = {
 };
 
 module.exports = LinkedValueUtils;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactPropTypeLocations":800,"./ReactPropTypes":801,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],749:[function(require,module,exports){
-=======
-},{"./ReactPropTypeLocations":806,"./ReactPropTypes":807,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],755:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactPropTypeLocations":796,"./ReactPropTypes":797,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],745:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -57034,15 +45201,7 @@ function assign(target, sources) {
 }
 
 module.exports = assign;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],750:[function(require,module,exports){
-=======
-},{}],756:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],746:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57162,15 +45321,7 @@ var PooledClass = {
 };
 
 module.exports = PooledClass;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],751:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],757:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],747:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57211,15 +45362,7 @@ React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
 React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 
 module.exports = React;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactDOM":762,"./ReactDOMServer":772,"./ReactIsomorphic":790,"./deprecated":833}],752:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactDOM":768,"./ReactDOMServer":778,"./ReactIsomorphic":796,"./deprecated":839}],758:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactDOM":758,"./ReactDOMServer":768,"./ReactIsomorphic":786,"./deprecated":829}],748:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57256,15 +45399,7 @@ var ReactBrowserComponentMixin = {
 };
 
 module.exports = ReactBrowserComponentMixin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactInstanceMap":789,"./findDOMNode":835,"fbjs/lib/warning":454}],753:[function(require,module,exports){
-=======
-},{"./ReactInstanceMap":795,"./findDOMNode":841,"fbjs/lib/warning":448}],759:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactInstanceMap":785,"./findDOMNode":831,"fbjs/lib/warning":447}],749:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57589,15 +45724,7 @@ ReactPerf.measureMethods(ReactBrowserEventEmitter, 'ReactBrowserEventEmitter', {
 });
 
 module.exports = ReactBrowserEventEmitter;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPluginHub":742,"./EventPluginRegistry":743,"./Object.assign":749,"./ReactEventEmitterMixin":784,"./ReactPerf":798,"./ViewportMetrics":828,"./isEventSupported":846}],754:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPluginHub":748,"./EventPluginRegistry":749,"./Object.assign":755,"./ReactEventEmitterMixin":790,"./ReactPerf":804,"./ViewportMetrics":834,"./isEventSupported":852}],760:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPluginHub":738,"./EventPluginRegistry":739,"./Object.assign":745,"./ReactEventEmitterMixin":780,"./ReactPerf":794,"./ViewportMetrics":824,"./isEventSupported":842}],750:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -57720,15 +45847,7 @@ var ReactChildReconciler = {
 };
 
 module.exports = ReactChildReconciler;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactReconciler":803,"./instantiateReactComponent":845,"./shouldUpdateReactComponent":853,"./traverseAllChildren":854,"fbjs/lib/warning":454}],755:[function(require,module,exports){
-=======
-},{"./ReactReconciler":809,"./instantiateReactComponent":851,"./shouldUpdateReactComponent":859,"./traverseAllChildren":860,"fbjs/lib/warning":448}],761:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactReconciler":799,"./instantiateReactComponent":841,"./shouldUpdateReactComponent":849,"./traverseAllChildren":850,"fbjs/lib/warning":447}],751:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57911,15 +46030,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./PooledClass":750,"./ReactElement":779,"./traverseAllChildren":854,"fbjs/lib/emptyFunction":435}],756:[function(require,module,exports){
-=======
-},{"./PooledClass":756,"./ReactElement":785,"./traverseAllChildren":860,"fbjs/lib/emptyFunction":429}],762:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./PooledClass":746,"./ReactElement":775,"./traverseAllChildren":850,"fbjs/lib/emptyFunction":428}],752:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58691,15 +46802,7 @@ var ReactClass = {
 };
 
 module.exports = ReactClass;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactComponent":757,"./ReactElement":779,"./ReactNoopUpdateQueue":796,"./ReactPropTypeLocationNames":799,"./ReactPropTypeLocations":800,"fbjs/lib/emptyObject":436,"fbjs/lib/invariant":443,"fbjs/lib/keyMirror":446,"fbjs/lib/keyOf":447,"fbjs/lib/warning":454}],757:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactComponent":763,"./ReactElement":785,"./ReactNoopUpdateQueue":802,"./ReactPropTypeLocationNames":805,"./ReactPropTypeLocations":806,"fbjs/lib/emptyObject":430,"fbjs/lib/invariant":437,"fbjs/lib/keyMirror":440,"fbjs/lib/keyOf":441,"fbjs/lib/warning":448}],763:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactComponent":753,"./ReactElement":775,"./ReactNoopUpdateQueue":792,"./ReactPropTypeLocationNames":795,"./ReactPropTypeLocations":796,"fbjs/lib/emptyObject":429,"fbjs/lib/invariant":436,"fbjs/lib/keyMirror":439,"fbjs/lib/keyOf":440,"fbjs/lib/warning":447}],753:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58822,15 +46925,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactNoopUpdateQueue":796,"./canDefineProperty":831,"fbjs/lib/emptyObject":436,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],758:[function(require,module,exports){
-=======
-},{"./ReactNoopUpdateQueue":802,"./canDefineProperty":837,"fbjs/lib/emptyObject":430,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],764:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactNoopUpdateQueue":792,"./canDefineProperty":827,"fbjs/lib/emptyObject":429,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],754:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58872,15 +46967,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactDOMIDOperations":767,"./ReactMount":792}],759:[function(require,module,exports){
-=======
-},{"./ReactDOMIDOperations":773,"./ReactMount":798}],765:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactDOMIDOperations":763,"./ReactMount":788}],755:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -58932,15 +47019,7 @@ var ReactComponentEnvironment = {
 };
 
 module.exports = ReactComponentEnvironment;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],760:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],766:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],756:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59635,15 +47714,7 @@ var ReactCompositeComponent = {
 };
 
 module.exports = ReactCompositeComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactComponentEnvironment":759,"./ReactCurrentOwner":761,"./ReactElement":779,"./ReactInstanceMap":789,"./ReactPerf":798,"./ReactPropTypeLocationNames":799,"./ReactPropTypeLocations":800,"./ReactReconciler":803,"./ReactUpdateQueue":809,"./shouldUpdateReactComponent":853,"fbjs/lib/emptyObject":436,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],761:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactComponentEnvironment":765,"./ReactCurrentOwner":767,"./ReactElement":785,"./ReactInstanceMap":795,"./ReactPerf":804,"./ReactPropTypeLocationNames":805,"./ReactPropTypeLocations":806,"./ReactReconciler":809,"./ReactUpdateQueue":815,"./shouldUpdateReactComponent":859,"fbjs/lib/emptyObject":430,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],767:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactComponentEnvironment":755,"./ReactCurrentOwner":757,"./ReactElement":775,"./ReactInstanceMap":785,"./ReactPerf":794,"./ReactPropTypeLocationNames":795,"./ReactPropTypeLocations":796,"./ReactReconciler":799,"./ReactUpdateQueue":805,"./shouldUpdateReactComponent":849,"fbjs/lib/emptyObject":429,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],757:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59674,15 +47745,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],762:[function(require,module,exports){
-=======
-},{}],768:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],758:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59775,15 +47838,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = React;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactCurrentOwner":761,"./ReactDOMTextComponent":773,"./ReactDefaultInjection":776,"./ReactInstanceHandles":788,"./ReactMount":792,"./ReactPerf":798,"./ReactReconciler":803,"./ReactUpdates":810,"./ReactVersion":811,"./findDOMNode":835,"./renderSubtreeIntoContainer":850,"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/warning":454}],763:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":767,"./ReactDOMTextComponent":779,"./ReactDefaultInjection":782,"./ReactInstanceHandles":794,"./ReactMount":798,"./ReactPerf":804,"./ReactReconciler":809,"./ReactUpdates":816,"./ReactVersion":817,"./findDOMNode":841,"./renderSubtreeIntoContainer":856,"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/warning":448}],769:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactCurrentOwner":757,"./ReactDOMTextComponent":769,"./ReactDefaultInjection":772,"./ReactInstanceHandles":784,"./ReactMount":788,"./ReactPerf":794,"./ReactReconciler":799,"./ReactUpdates":806,"./ReactVersion":807,"./findDOMNode":831,"./renderSubtreeIntoContainer":846,"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/warning":447}],759:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59834,15 +47889,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],764:[function(require,module,exports){
-=======
-},{}],770:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],760:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60805,15 +48852,7 @@ ReactPerf.measureMethods(ReactDOMComponent, 'ReactDOMComponent', {
 assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mixin);
 
 module.exports = ReactDOMComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./AutoFocusUtils":728,"./CSSPropertyOperations":731,"./DOMProperty":736,"./DOMPropertyOperations":737,"./EventConstants":741,"./Object.assign":749,"./ReactBrowserEventEmitter":753,"./ReactComponentBrowserEnvironment":758,"./ReactDOMButton":763,"./ReactDOMInput":768,"./ReactDOMOption":769,"./ReactDOMSelect":770,"./ReactDOMTextarea":774,"./ReactMount":792,"./ReactMultiChild":793,"./ReactPerf":798,"./ReactUpdateQueue":809,"./canDefineProperty":831,"./escapeTextContentForBrowser":834,"./isEventSupported":846,"./setInnerHTML":851,"./setTextContent":852,"./validateDOMNesting":855,"fbjs/lib/invariant":443,"fbjs/lib/keyOf":447,"fbjs/lib/shallowEqual":452,"fbjs/lib/warning":454}],765:[function(require,module,exports){
-=======
-},{"./AutoFocusUtils":734,"./CSSPropertyOperations":737,"./DOMProperty":742,"./DOMPropertyOperations":743,"./EventConstants":747,"./Object.assign":755,"./ReactBrowserEventEmitter":759,"./ReactComponentBrowserEnvironment":764,"./ReactDOMButton":769,"./ReactDOMInput":774,"./ReactDOMOption":775,"./ReactDOMSelect":776,"./ReactDOMTextarea":780,"./ReactMount":798,"./ReactMultiChild":799,"./ReactPerf":804,"./ReactUpdateQueue":815,"./canDefineProperty":837,"./escapeTextContentForBrowser":840,"./isEventSupported":852,"./setInnerHTML":857,"./setTextContent":858,"./validateDOMNesting":861,"fbjs/lib/invariant":437,"fbjs/lib/keyOf":441,"fbjs/lib/shallowEqual":446,"fbjs/lib/warning":448}],771:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./AutoFocusUtils":724,"./CSSPropertyOperations":727,"./DOMProperty":732,"./DOMPropertyOperations":733,"./EventConstants":737,"./Object.assign":745,"./ReactBrowserEventEmitter":749,"./ReactComponentBrowserEnvironment":754,"./ReactDOMButton":759,"./ReactDOMInput":764,"./ReactDOMOption":765,"./ReactDOMSelect":766,"./ReactDOMTextarea":770,"./ReactMount":788,"./ReactMultiChild":789,"./ReactPerf":794,"./ReactUpdateQueue":805,"./canDefineProperty":827,"./escapeTextContentForBrowser":830,"./isEventSupported":842,"./setInnerHTML":847,"./setTextContent":848,"./validateDOMNesting":851,"fbjs/lib/invariant":436,"fbjs/lib/keyOf":440,"fbjs/lib/shallowEqual":445,"fbjs/lib/warning":447}],761:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60991,15 +49030,7 @@ var ReactDOMFactories = mapObject({
 }, createDOMFactory);
 
 module.exports = ReactDOMFactories;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactElement":779,"./ReactElementValidator":780,"fbjs/lib/mapObject":448}],766:[function(require,module,exports){
-=======
-},{"./ReactElement":785,"./ReactElementValidator":786,"fbjs/lib/mapObject":442}],772:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactElement":775,"./ReactElementValidator":776,"fbjs/lib/mapObject":441}],762:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61018,15 +49049,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],767:[function(require,module,exports){
-=======
-},{}],773:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],763:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61121,15 +49144,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 });
 
 module.exports = ReactDOMIDOperations;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMChildrenOperations":735,"./DOMPropertyOperations":737,"./ReactMount":792,"./ReactPerf":798,"fbjs/lib/invariant":443}],768:[function(require,module,exports){
-=======
-},{"./DOMChildrenOperations":741,"./DOMPropertyOperations":743,"./ReactMount":798,"./ReactPerf":804,"fbjs/lib/invariant":437}],774:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMChildrenOperations":731,"./DOMPropertyOperations":733,"./ReactMount":788,"./ReactPerf":794,"fbjs/lib/invariant":436}],764:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61283,15 +49298,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMInput;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./LinkedValueUtils":748,"./Object.assign":749,"./ReactDOMIDOperations":767,"./ReactMount":792,"./ReactUpdates":810,"fbjs/lib/invariant":443}],769:[function(require,module,exports){
-=======
-},{"./LinkedValueUtils":754,"./Object.assign":755,"./ReactDOMIDOperations":773,"./ReactMount":798,"./ReactUpdates":816,"fbjs/lib/invariant":437}],775:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./LinkedValueUtils":744,"./Object.assign":745,"./ReactDOMIDOperations":763,"./ReactMount":788,"./ReactUpdates":806,"fbjs/lib/invariant":436}],765:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61381,15 +49388,7 @@ var ReactDOMOption = {
 };
 
 module.exports = ReactDOMOption;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactChildren":755,"./ReactDOMSelect":770,"fbjs/lib/warning":454}],770:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactChildren":761,"./ReactDOMSelect":776,"fbjs/lib/warning":448}],776:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactChildren":751,"./ReactDOMSelect":766,"fbjs/lib/warning":447}],766:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61578,15 +49577,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMSelect;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./LinkedValueUtils":748,"./Object.assign":749,"./ReactMount":792,"./ReactUpdates":810,"fbjs/lib/warning":454}],771:[function(require,module,exports){
-=======
-},{"./LinkedValueUtils":754,"./Object.assign":755,"./ReactMount":798,"./ReactUpdates":816,"fbjs/lib/warning":448}],777:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./LinkedValueUtils":744,"./Object.assign":745,"./ReactMount":788,"./ReactUpdates":806,"fbjs/lib/warning":447}],767:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61799,15 +49790,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./getNodeForCharacterOffset":843,"./getTextContentAccessor":844,"fbjs/lib/ExecutionEnvironment":429}],772:[function(require,module,exports){
-=======
-},{"./getNodeForCharacterOffset":849,"./getTextContentAccessor":850,"fbjs/lib/ExecutionEnvironment":423}],778:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./getNodeForCharacterOffset":839,"./getTextContentAccessor":840,"fbjs/lib/ExecutionEnvironment":422}],768:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61834,15 +49817,7 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactDefaultInjection":776,"./ReactServerRendering":807,"./ReactVersion":811}],773:[function(require,module,exports){
-=======
-},{"./ReactDefaultInjection":782,"./ReactServerRendering":813,"./ReactVersion":817}],779:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactDefaultInjection":772,"./ReactServerRendering":803,"./ReactVersion":807}],769:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61970,15 +49945,7 @@ assign(ReactDOMTextComponent.prototype, {
 });
 
 module.exports = ReactDOMTextComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMChildrenOperations":735,"./DOMPropertyOperations":737,"./Object.assign":749,"./ReactComponentBrowserEnvironment":758,"./ReactMount":792,"./escapeTextContentForBrowser":834,"./setTextContent":852,"./validateDOMNesting":855}],774:[function(require,module,exports){
-=======
-},{"./DOMChildrenOperations":741,"./DOMPropertyOperations":743,"./Object.assign":755,"./ReactComponentBrowserEnvironment":764,"./ReactMount":798,"./escapeTextContentForBrowser":840,"./setTextContent":858,"./validateDOMNesting":861}],780:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMChildrenOperations":731,"./DOMPropertyOperations":733,"./Object.assign":745,"./ReactComponentBrowserEnvironment":754,"./ReactMount":788,"./escapeTextContentForBrowser":830,"./setTextContent":848,"./validateDOMNesting":851}],770:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62092,15 +50059,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMTextarea;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./LinkedValueUtils":748,"./Object.assign":749,"./ReactDOMIDOperations":767,"./ReactUpdates":810,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],775:[function(require,module,exports){
-=======
-},{"./LinkedValueUtils":754,"./Object.assign":755,"./ReactDOMIDOperations":773,"./ReactUpdates":816,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],781:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./LinkedValueUtils":744,"./Object.assign":745,"./ReactDOMIDOperations":763,"./ReactUpdates":806,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],771:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62168,15 +50127,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactUpdates":810,"./Transaction":827,"fbjs/lib/emptyFunction":435}],776:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactUpdates":816,"./Transaction":833,"fbjs/lib/emptyFunction":429}],782:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactUpdates":806,"./Transaction":823,"fbjs/lib/emptyFunction":428}],772:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62274,15 +50225,7 @@ function inject() {
 module.exports = {
   inject: inject
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./BeforeInputEventPlugin":729,"./ChangeEventPlugin":733,"./ClientReactRootIndex":734,"./DefaultEventPluginOrder":739,"./EnterLeaveEventPlugin":740,"./HTMLDOMPropertyConfig":747,"./ReactBrowserComponentMixin":752,"./ReactComponentBrowserEnvironment":758,"./ReactDOMComponent":764,"./ReactDOMTextComponent":773,"./ReactDefaultBatchingStrategy":775,"./ReactDefaultPerf":777,"./ReactEventListener":785,"./ReactInjection":786,"./ReactInstanceHandles":788,"./ReactMount":792,"./ReactReconcileTransaction":802,"./SVGDOMPropertyConfig":812,"./SelectEventPlugin":813,"./ServerReactRootIndex":814,"./SimpleEventPlugin":815,"fbjs/lib/ExecutionEnvironment":429}],777:[function(require,module,exports){
-=======
-},{"./BeforeInputEventPlugin":735,"./ChangeEventPlugin":739,"./ClientReactRootIndex":740,"./DefaultEventPluginOrder":745,"./EnterLeaveEventPlugin":746,"./HTMLDOMPropertyConfig":753,"./ReactBrowserComponentMixin":758,"./ReactComponentBrowserEnvironment":764,"./ReactDOMComponent":770,"./ReactDOMTextComponent":779,"./ReactDefaultBatchingStrategy":781,"./ReactDefaultPerf":783,"./ReactEventListener":791,"./ReactInjection":792,"./ReactInstanceHandles":794,"./ReactMount":798,"./ReactReconcileTransaction":808,"./SVGDOMPropertyConfig":818,"./SelectEventPlugin":819,"./ServerReactRootIndex":820,"./SimpleEventPlugin":821,"fbjs/lib/ExecutionEnvironment":423}],783:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./BeforeInputEventPlugin":725,"./ChangeEventPlugin":729,"./ClientReactRootIndex":730,"./DefaultEventPluginOrder":735,"./EnterLeaveEventPlugin":736,"./HTMLDOMPropertyConfig":743,"./ReactBrowserComponentMixin":748,"./ReactComponentBrowserEnvironment":754,"./ReactDOMComponent":760,"./ReactDOMTextComponent":769,"./ReactDefaultBatchingStrategy":771,"./ReactDefaultPerf":773,"./ReactEventListener":781,"./ReactInjection":782,"./ReactInstanceHandles":784,"./ReactMount":788,"./ReactReconcileTransaction":798,"./SVGDOMPropertyConfig":808,"./SelectEventPlugin":809,"./ServerReactRootIndex":810,"./SimpleEventPlugin":811,"fbjs/lib/ExecutionEnvironment":422}],773:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62520,15 +50463,7 @@ var ReactDefaultPerf = {
 };
 
 module.exports = ReactDefaultPerf;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMProperty":736,"./ReactDefaultPerfAnalysis":778,"./ReactMount":792,"./ReactPerf":798,"fbjs/lib/performanceNow":451}],778:[function(require,module,exports){
-=======
-},{"./DOMProperty":742,"./ReactDefaultPerfAnalysis":784,"./ReactMount":798,"./ReactPerf":804,"fbjs/lib/performanceNow":445}],784:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMProperty":732,"./ReactDefaultPerfAnalysis":774,"./ReactMount":788,"./ReactPerf":794,"fbjs/lib/performanceNow":444}],774:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62730,15 +50665,7 @@ var ReactDefaultPerfAnalysis = {
 };
 
 module.exports = ReactDefaultPerfAnalysis;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749}],779:[function(require,module,exports){
-=======
-},{"./Object.assign":755}],785:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745}],775:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -62986,15 +50913,7 @@ ReactElement.isValidElement = function (object) {
 };
 
 module.exports = ReactElement;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactCurrentOwner":761,"./canDefineProperty":831}],780:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactCurrentOwner":767,"./canDefineProperty":837}],786:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactCurrentOwner":757,"./canDefineProperty":827}],776:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -63276,15 +51195,7 @@ var ReactElementValidator = {
 };
 
 module.exports = ReactElementValidator;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactCurrentOwner":761,"./ReactElement":779,"./ReactPropTypeLocationNames":799,"./ReactPropTypeLocations":800,"./canDefineProperty":831,"./getIteratorFn":842,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],781:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":767,"./ReactElement":785,"./ReactPropTypeLocationNames":805,"./ReactPropTypeLocations":806,"./canDefineProperty":837,"./getIteratorFn":848,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],787:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactCurrentOwner":757,"./ReactElement":775,"./ReactPropTypeLocationNames":795,"./ReactPropTypeLocations":796,"./canDefineProperty":827,"./getIteratorFn":838,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],777:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -63340,15 +51251,7 @@ assign(ReactEmptyComponent.prototype, {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactElement":779,"./ReactEmptyComponentRegistry":782,"./ReactReconciler":803}],782:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactElement":785,"./ReactEmptyComponentRegistry":788,"./ReactReconciler":809}],788:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactElement":775,"./ReactEmptyComponentRegistry":778,"./ReactReconciler":799}],778:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -63397,15 +51300,7 @@ var ReactEmptyComponentRegistry = {
 };
 
 module.exports = ReactEmptyComponentRegistry;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],783:[function(require,module,exports){
-=======
-},{}],789:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],779:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63483,15 +51378,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactErrorUtils;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],784:[function(require,module,exports){
-=======
-},{}],790:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],780:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63530,15 +51417,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventPluginHub":742}],785:[function(require,module,exports){
-=======
-},{"./EventPluginHub":748}],791:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventPluginHub":738}],781:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63750,15 +51629,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./PooledClass":750,"./ReactInstanceHandles":788,"./ReactMount":792,"./ReactUpdates":810,"./getEventTarget":841,"fbjs/lib/EventListener":428,"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/getUnboundedScrollPosition":440}],786:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./PooledClass":756,"./ReactInstanceHandles":794,"./ReactMount":798,"./ReactUpdates":816,"./getEventTarget":847,"fbjs/lib/EventListener":422,"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/getUnboundedScrollPosition":434}],792:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./PooledClass":746,"./ReactInstanceHandles":784,"./ReactMount":788,"./ReactUpdates":806,"./getEventTarget":837,"fbjs/lib/EventListener":421,"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/getUnboundedScrollPosition":433}],782:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63797,15 +51668,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMProperty":736,"./EventPluginHub":742,"./ReactBrowserEventEmitter":753,"./ReactClass":756,"./ReactComponentEnvironment":759,"./ReactEmptyComponent":781,"./ReactNativeComponent":795,"./ReactPerf":798,"./ReactRootIndex":805,"./ReactUpdates":810}],787:[function(require,module,exports){
-=======
-},{"./DOMProperty":742,"./EventPluginHub":748,"./ReactBrowserEventEmitter":759,"./ReactClass":762,"./ReactComponentEnvironment":765,"./ReactEmptyComponent":787,"./ReactNativeComponent":801,"./ReactPerf":804,"./ReactRootIndex":811,"./ReactUpdates":816}],793:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMProperty":732,"./EventPluginHub":738,"./ReactBrowserEventEmitter":749,"./ReactClass":752,"./ReactComponentEnvironment":755,"./ReactEmptyComponent":777,"./ReactNativeComponent":791,"./ReactPerf":794,"./ReactRootIndex":801,"./ReactUpdates":806}],783:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63930,15 +51793,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactDOMSelection":771,"fbjs/lib/containsNode":432,"fbjs/lib/focusNode":437,"fbjs/lib/getActiveElement":438}],788:[function(require,module,exports){
-=======
-},{"./ReactDOMSelection":777,"fbjs/lib/containsNode":426,"fbjs/lib/focusNode":431,"fbjs/lib/getActiveElement":432}],794:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactDOMSelection":767,"fbjs/lib/containsNode":425,"fbjs/lib/focusNode":430,"fbjs/lib/getActiveElement":431}],784:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64241,15 +52096,7 @@ var ReactInstanceHandles = {
 };
 
 module.exports = ReactInstanceHandles;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactRootIndex":805,"fbjs/lib/invariant":443}],789:[function(require,module,exports){
-=======
-},{"./ReactRootIndex":811,"fbjs/lib/invariant":437}],795:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactRootIndex":801,"fbjs/lib/invariant":436}],785:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64297,15 +52144,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],790:[function(require,module,exports){
-=======
-},{}],796:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],786:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64380,15 +52219,7 @@ var React = {
 };
 
 module.exports = React;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactChildren":755,"./ReactClass":756,"./ReactComponent":757,"./ReactDOMFactories":765,"./ReactElement":779,"./ReactElementValidator":780,"./ReactPropTypes":801,"./ReactVersion":811,"./onlyChild":848}],791:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactChildren":761,"./ReactClass":762,"./ReactComponent":763,"./ReactDOMFactories":771,"./ReactElement":785,"./ReactElementValidator":786,"./ReactPropTypes":807,"./ReactVersion":817,"./onlyChild":854}],797:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactChildren":751,"./ReactClass":752,"./ReactComponent":753,"./ReactDOMFactories":761,"./ReactElement":775,"./ReactElementValidator":776,"./ReactPropTypes":797,"./ReactVersion":807,"./onlyChild":844}],787:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64434,15 +52265,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./adler32":830}],792:[function(require,module,exports){
-=======
-},{"./adler32":836}],798:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./adler32":826}],788:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -65293,15 +53116,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 });
 
 module.exports = ReactMount;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMProperty":736,"./Object.assign":749,"./ReactBrowserEventEmitter":753,"./ReactCurrentOwner":761,"./ReactDOMFeatureFlags":766,"./ReactElement":779,"./ReactEmptyComponentRegistry":782,"./ReactInstanceHandles":788,"./ReactInstanceMap":789,"./ReactMarkupChecksum":791,"./ReactPerf":798,"./ReactReconciler":803,"./ReactUpdateQueue":809,"./ReactUpdates":810,"./instantiateReactComponent":845,"./setInnerHTML":851,"./shouldUpdateReactComponent":853,"./validateDOMNesting":855,"fbjs/lib/containsNode":432,"fbjs/lib/emptyObject":436,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],793:[function(require,module,exports){
-=======
-},{"./DOMProperty":742,"./Object.assign":755,"./ReactBrowserEventEmitter":759,"./ReactCurrentOwner":767,"./ReactDOMFeatureFlags":772,"./ReactElement":785,"./ReactEmptyComponentRegistry":788,"./ReactInstanceHandles":794,"./ReactInstanceMap":795,"./ReactMarkupChecksum":797,"./ReactPerf":804,"./ReactReconciler":809,"./ReactUpdateQueue":815,"./ReactUpdates":816,"./instantiateReactComponent":851,"./setInnerHTML":857,"./shouldUpdateReactComponent":859,"./validateDOMNesting":861,"fbjs/lib/containsNode":426,"fbjs/lib/emptyObject":430,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],799:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMProperty":732,"./Object.assign":745,"./ReactBrowserEventEmitter":749,"./ReactCurrentOwner":757,"./ReactDOMFeatureFlags":762,"./ReactElement":775,"./ReactEmptyComponentRegistry":778,"./ReactInstanceHandles":784,"./ReactInstanceMap":785,"./ReactMarkupChecksum":787,"./ReactPerf":794,"./ReactReconciler":799,"./ReactUpdateQueue":805,"./ReactUpdates":806,"./instantiateReactComponent":841,"./setInnerHTML":847,"./shouldUpdateReactComponent":849,"./validateDOMNesting":851,"fbjs/lib/containsNode":425,"fbjs/lib/emptyObject":429,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],789:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -65798,15 +53613,7 @@ var ReactMultiChild = {
 };
 
 module.exports = ReactMultiChild;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactChildReconciler":754,"./ReactComponentEnvironment":759,"./ReactCurrentOwner":761,"./ReactMultiChildUpdateTypes":794,"./ReactReconciler":803,"./flattenChildren":836}],794:[function(require,module,exports){
-=======
-},{"./ReactChildReconciler":760,"./ReactComponentEnvironment":765,"./ReactCurrentOwner":767,"./ReactMultiChildUpdateTypes":800,"./ReactReconciler":809,"./flattenChildren":842}],800:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactChildReconciler":750,"./ReactComponentEnvironment":755,"./ReactCurrentOwner":757,"./ReactMultiChildUpdateTypes":790,"./ReactReconciler":799,"./flattenChildren":832}],790:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -65839,15 +53646,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/keyMirror":446}],795:[function(require,module,exports){
-=======
-},{"fbjs/lib/keyMirror":440}],801:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/keyMirror":439}],791:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -65942,15 +53741,7 @@ var ReactNativeComponent = {
 };
 
 module.exports = ReactNativeComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"fbjs/lib/invariant":443}],796:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"fbjs/lib/invariant":437}],802:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"fbjs/lib/invariant":436}],792:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -66069,15 +53860,7 @@ var ReactNoopUpdateQueue = {
 };
 
 module.exports = ReactNoopUpdateQueue;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/warning":454}],797:[function(require,module,exports){
-=======
-},{"fbjs/lib/warning":448}],803:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/warning":447}],793:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66169,15 +53952,7 @@ var ReactOwner = {
 };
 
 module.exports = ReactOwner;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],798:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],804:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],794:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66274,15 +54049,7 @@ function _noMeasure(objName, fnName, func) {
 }
 
 module.exports = ReactPerf;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],799:[function(require,module,exports){
-=======
-},{}],805:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],795:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66307,15 +54074,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactPropTypeLocationNames;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],800:[function(require,module,exports){
-=======
-},{}],806:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],796:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66338,15 +54097,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/keyMirror":446}],801:[function(require,module,exports){
-=======
-},{"fbjs/lib/keyMirror":440}],807:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/keyMirror":439}],797:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66703,15 +54454,7 @@ function getClassName(propValue) {
 }
 
 module.exports = ReactPropTypes;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactElement":779,"./ReactPropTypeLocationNames":799,"./getIteratorFn":842,"fbjs/lib/emptyFunction":435}],802:[function(require,module,exports){
-=======
-},{"./ReactElement":785,"./ReactPropTypeLocationNames":805,"./getIteratorFn":848,"fbjs/lib/emptyFunction":429}],808:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactElement":775,"./ReactPropTypeLocationNames":795,"./getIteratorFn":838,"fbjs/lib/emptyFunction":428}],798:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66863,15 +54606,7 @@ assign(ReactReconcileTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./CallbackQueue":732,"./Object.assign":749,"./PooledClass":750,"./ReactBrowserEventEmitter":753,"./ReactDOMFeatureFlags":766,"./ReactInputSelection":787,"./Transaction":827}],803:[function(require,module,exports){
-=======
-},{"./CallbackQueue":738,"./Object.assign":755,"./PooledClass":756,"./ReactBrowserEventEmitter":759,"./ReactDOMFeatureFlags":772,"./ReactInputSelection":793,"./Transaction":833}],809:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./CallbackQueue":728,"./Object.assign":745,"./PooledClass":746,"./ReactBrowserEventEmitter":749,"./ReactDOMFeatureFlags":762,"./ReactInputSelection":783,"./Transaction":823}],799:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66979,15 +54714,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactRef":804}],804:[function(require,module,exports){
-=======
-},{"./ReactRef":810}],810:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactRef":800}],800:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -67066,15 +54793,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactOwner":797}],805:[function(require,module,exports){
-=======
-},{"./ReactOwner":803}],811:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactOwner":793}],801:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -67104,15 +54823,7 @@ var ReactRootIndex = {
 };
 
 module.exports = ReactRootIndex;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],806:[function(require,module,exports){
-=======
-},{}],812:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],802:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -67136,15 +54847,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],807:[function(require,module,exports){
-=======
-},{}],813:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],803:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -67228,15 +54931,7 @@ module.exports = {
   renderToString: renderToString,
   renderToStaticMarkup: renderToStaticMarkup
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactDefaultBatchingStrategy":775,"./ReactElement":779,"./ReactInstanceHandles":788,"./ReactMarkupChecksum":791,"./ReactServerBatchingStrategy":806,"./ReactServerRenderingTransaction":808,"./ReactUpdates":810,"./instantiateReactComponent":845,"fbjs/lib/emptyObject":436,"fbjs/lib/invariant":443}],808:[function(require,module,exports){
-=======
-},{"./ReactDefaultBatchingStrategy":781,"./ReactElement":785,"./ReactInstanceHandles":794,"./ReactMarkupChecksum":797,"./ReactServerBatchingStrategy":812,"./ReactServerRenderingTransaction":814,"./ReactUpdates":816,"./instantiateReactComponent":851,"fbjs/lib/emptyObject":430,"fbjs/lib/invariant":437}],814:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactDefaultBatchingStrategy":771,"./ReactElement":775,"./ReactInstanceHandles":784,"./ReactMarkupChecksum":787,"./ReactServerBatchingStrategy":802,"./ReactServerRenderingTransaction":804,"./ReactUpdates":806,"./instantiateReactComponent":841,"fbjs/lib/emptyObject":429,"fbjs/lib/invariant":436}],804:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -67324,15 +55019,7 @@ assign(ReactServerRenderingTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./CallbackQueue":732,"./Object.assign":749,"./PooledClass":750,"./Transaction":827,"fbjs/lib/emptyFunction":435}],809:[function(require,module,exports){
-=======
-},{"./CallbackQueue":738,"./Object.assign":755,"./PooledClass":756,"./Transaction":833,"fbjs/lib/emptyFunction":429}],815:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./CallbackQueue":728,"./Object.assign":745,"./PooledClass":746,"./Transaction":823,"fbjs/lib/emptyFunction":428}],805:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -67590,15 +55277,7 @@ var ReactUpdateQueue = {
 };
 
 module.exports = ReactUpdateQueue;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactCurrentOwner":761,"./ReactElement":779,"./ReactInstanceMap":789,"./ReactUpdates":810,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],810:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactCurrentOwner":767,"./ReactElement":785,"./ReactInstanceMap":795,"./ReactUpdates":816,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],816:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactCurrentOwner":757,"./ReactElement":775,"./ReactInstanceMap":785,"./ReactUpdates":806,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],806:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -67822,15 +55501,7 @@ var ReactUpdates = {
 };
 
 module.exports = ReactUpdates;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./CallbackQueue":732,"./Object.assign":749,"./PooledClass":750,"./ReactPerf":798,"./ReactReconciler":803,"./Transaction":827,"fbjs/lib/invariant":443}],811:[function(require,module,exports){
-=======
-},{"./CallbackQueue":738,"./Object.assign":755,"./PooledClass":756,"./ReactPerf":804,"./ReactReconciler":809,"./Transaction":833,"fbjs/lib/invariant":437}],817:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./CallbackQueue":728,"./Object.assign":745,"./PooledClass":746,"./ReactPerf":794,"./ReactReconciler":799,"./Transaction":823,"fbjs/lib/invariant":436}],807:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -67845,15 +55516,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '0.14.8';
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],812:[function(require,module,exports){
-=======
-},{}],818:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],808:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -67981,15 +55644,7 @@ var SVGDOMPropertyConfig = {
 };
 
 module.exports = SVGDOMPropertyConfig;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./DOMProperty":736}],813:[function(require,module,exports){
-=======
-},{"./DOMProperty":742}],819:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./DOMProperty":732}],809:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -68191,15 +55846,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPropagators":745,"./ReactInputSelection":787,"./SyntheticEvent":819,"./isTextInputElement":847,"fbjs/lib/ExecutionEnvironment":429,"fbjs/lib/getActiveElement":438,"fbjs/lib/keyOf":447,"fbjs/lib/shallowEqual":452}],814:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPropagators":751,"./ReactInputSelection":793,"./SyntheticEvent":825,"./isTextInputElement":853,"fbjs/lib/ExecutionEnvironment":423,"fbjs/lib/getActiveElement":432,"fbjs/lib/keyOf":441,"fbjs/lib/shallowEqual":446}],820:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPropagators":741,"./ReactInputSelection":783,"./SyntheticEvent":815,"./isTextInputElement":843,"fbjs/lib/ExecutionEnvironment":422,"fbjs/lib/getActiveElement":431,"fbjs/lib/keyOf":440,"fbjs/lib/shallowEqual":445}],810:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -68229,15 +55876,7 @@ var ServerReactRootIndex = {
 };
 
 module.exports = ServerReactRootIndex;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],815:[function(require,module,exports){
-=======
-},{}],821:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],811:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -68825,15 +56464,7 @@ var SimpleEventPlugin = {
 };
 
 module.exports = SimpleEventPlugin;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./EventConstants":741,"./EventPropagators":745,"./ReactMount":792,"./SyntheticClipboardEvent":816,"./SyntheticDragEvent":818,"./SyntheticEvent":819,"./SyntheticFocusEvent":820,"./SyntheticKeyboardEvent":822,"./SyntheticMouseEvent":823,"./SyntheticTouchEvent":824,"./SyntheticUIEvent":825,"./SyntheticWheelEvent":826,"./getEventCharCode":838,"fbjs/lib/EventListener":428,"fbjs/lib/emptyFunction":435,"fbjs/lib/invariant":443,"fbjs/lib/keyOf":447}],816:[function(require,module,exports){
-=======
-},{"./EventConstants":747,"./EventPropagators":751,"./ReactMount":798,"./SyntheticClipboardEvent":822,"./SyntheticDragEvent":824,"./SyntheticEvent":825,"./SyntheticFocusEvent":826,"./SyntheticKeyboardEvent":828,"./SyntheticMouseEvent":829,"./SyntheticTouchEvent":830,"./SyntheticUIEvent":831,"./SyntheticWheelEvent":832,"./getEventCharCode":844,"fbjs/lib/EventListener":422,"fbjs/lib/emptyFunction":429,"fbjs/lib/invariant":437,"fbjs/lib/keyOf":441}],822:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./EventConstants":737,"./EventPropagators":741,"./ReactMount":788,"./SyntheticClipboardEvent":812,"./SyntheticDragEvent":814,"./SyntheticEvent":815,"./SyntheticFocusEvent":816,"./SyntheticKeyboardEvent":818,"./SyntheticMouseEvent":819,"./SyntheticTouchEvent":820,"./SyntheticUIEvent":821,"./SyntheticWheelEvent":822,"./getEventCharCode":834,"fbjs/lib/EventListener":421,"fbjs/lib/emptyFunction":428,"fbjs/lib/invariant":436,"fbjs/lib/keyOf":440}],812:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -68873,15 +56504,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticEvent":819}],817:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":825}],823:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticEvent":815}],813:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -68919,15 +56542,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticEvent":819}],818:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":825}],824:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticEvent":815}],814:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -68965,15 +56580,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticMouseEvent":823}],819:[function(require,module,exports){
-=======
-},{"./SyntheticMouseEvent":829}],825:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticMouseEvent":819}],815:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69154,15 +56761,7 @@ SyntheticEvent.augmentClass = function (Class, Interface) {
 PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 module.exports = SyntheticEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./PooledClass":750,"fbjs/lib/emptyFunction":435,"fbjs/lib/warning":454}],820:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./PooledClass":756,"fbjs/lib/emptyFunction":429,"fbjs/lib/warning":448}],826:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./PooledClass":746,"fbjs/lib/emptyFunction":428,"fbjs/lib/warning":447}],816:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69200,15 +56799,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticUIEvent":825}],821:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":831}],827:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticUIEvent":821}],817:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69247,15 +56838,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticEvent":819}],822:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":825}],828:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticEvent":815}],818:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69341,15 +56924,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticUIEvent":825,"./getEventCharCode":838,"./getEventKey":839,"./getEventModifierState":840}],823:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":831,"./getEventCharCode":844,"./getEventKey":845,"./getEventModifierState":846}],829:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticUIEvent":821,"./getEventCharCode":834,"./getEventKey":835,"./getEventModifierState":836}],819:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69423,15 +56998,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticUIEvent":825,"./ViewportMetrics":828,"./getEventModifierState":840}],824:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":831,"./ViewportMetrics":834,"./getEventModifierState":846}],830:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticUIEvent":821,"./ViewportMetrics":824,"./getEventModifierState":836}],820:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69478,15 +57045,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticUIEvent":825,"./getEventModifierState":840}],825:[function(require,module,exports){
-=======
-},{"./SyntheticUIEvent":831,"./getEventModifierState":846}],831:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticUIEvent":821,"./getEventModifierState":836}],821:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69547,15 +57106,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticEvent":819,"./getEventTarget":841}],826:[function(require,module,exports){
-=======
-},{"./SyntheticEvent":825,"./getEventTarget":847}],832:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticEvent":815,"./getEventTarget":837}],822:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69611,15 +57162,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./SyntheticMouseEvent":823}],827:[function(require,module,exports){
-=======
-},{"./SyntheticMouseEvent":829}],833:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./SyntheticMouseEvent":819}],823:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69851,15 +57394,7 @@ var Transaction = {
 };
 
 module.exports = Transaction;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],828:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],834:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],824:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -69887,15 +57422,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],829:[function(require,module,exports){
-=======
-},{}],835:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],825:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -69955,15 +57482,7 @@ function accumulateInto(current, next) {
 }
 
 module.exports = accumulateInto;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/invariant":443}],830:[function(require,module,exports){
-=======
-},{"fbjs/lib/invariant":437}],836:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/invariant":436}],826:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70006,15 +57525,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],831:[function(require,module,exports){
-=======
-},{}],837:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],827:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70039,15 +57550,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = canDefineProperty;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],832:[function(require,module,exports){
-=======
-},{}],838:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],828:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70103,15 +57606,7 @@ function dangerousStyleValue(name, value) {
 }
 
 module.exports = dangerousStyleValue;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./CSSProperty":730}],833:[function(require,module,exports){
-=======
-},{"./CSSProperty":736}],839:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./CSSProperty":726}],829:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70160,15 +57655,7 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
 }
 
 module.exports = deprecated;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"fbjs/lib/warning":454}],834:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"fbjs/lib/warning":448}],840:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"fbjs/lib/warning":447}],830:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70207,15 +57694,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],835:[function(require,module,exports){
-=======
-},{}],841:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],831:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70265,15 +57744,7 @@ function findDOMNode(componentOrElement) {
 }
 
 module.exports = findDOMNode;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactCurrentOwner":761,"./ReactInstanceMap":789,"./ReactMount":792,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],836:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":767,"./ReactInstanceMap":795,"./ReactMount":798,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],842:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactCurrentOwner":757,"./ReactInstanceMap":785,"./ReactMount":788,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],832:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70322,15 +57793,7 @@ function flattenChildren(children) {
 }
 
 module.exports = flattenChildren;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./traverseAllChildren":854,"fbjs/lib/warning":454}],837:[function(require,module,exports){
-=======
-},{"./traverseAllChildren":860,"fbjs/lib/warning":448}],843:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./traverseAllChildren":850,"fbjs/lib/warning":447}],833:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70360,15 +57823,7 @@ var forEachAccumulated = function (arr, cb, scope) {
 };
 
 module.exports = forEachAccumulated;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],838:[function(require,module,exports){
-=======
-},{}],844:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],834:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70419,15 +57874,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],839:[function(require,module,exports){
-=======
-},{}],845:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],835:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70531,15 +57978,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./getEventCharCode":838}],840:[function(require,module,exports){
-=======
-},{"./getEventCharCode":844}],846:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./getEventCharCode":834}],836:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70584,15 +58023,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],841:[function(require,module,exports){
-=======
-},{}],847:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],837:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70622,15 +58053,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],842:[function(require,module,exports){
-=======
-},{}],848:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],838:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70671,15 +58094,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],843:[function(require,module,exports){
-=======
-},{}],849:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],839:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70753,15 +58168,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],844:[function(require,module,exports){
-=======
-},{}],850:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],840:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70795,15 +58202,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/ExecutionEnvironment":429}],845:[function(require,module,exports){
-=======
-},{"fbjs/lib/ExecutionEnvironment":423}],851:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/ExecutionEnvironment":422}],841:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70916,15 +58315,7 @@ function instantiateReactComponent(node) {
 }
 
 module.exports = instantiateReactComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"./ReactCompositeComponent":760,"./ReactEmptyComponent":781,"./ReactNativeComponent":795,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],846:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"./ReactCompositeComponent":766,"./ReactEmptyComponent":787,"./ReactNativeComponent":801,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],852:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"./ReactCompositeComponent":756,"./ReactEmptyComponent":777,"./ReactNativeComponent":791,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],842:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -70985,15 +58376,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/ExecutionEnvironment":429}],847:[function(require,module,exports){
-=======
-},{"fbjs/lib/ExecutionEnvironment":423}],853:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/ExecutionEnvironment":422}],843:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71034,15 +58417,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],848:[function(require,module,exports){
-=======
-},{}],854:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],844:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71076,15 +58451,7 @@ function onlyChild(children) {
 }
 
 module.exports = onlyChild;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactElement":779,"fbjs/lib/invariant":443}],849:[function(require,module,exports){
-=======
-},{"./ReactElement":785,"fbjs/lib/invariant":437}],855:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactElement":775,"fbjs/lib/invariant":436}],845:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71111,15 +58478,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./escapeTextContentForBrowser":834}],850:[function(require,module,exports){
-=======
-},{"./escapeTextContentForBrowser":840}],856:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./escapeTextContentForBrowser":830}],846:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71136,15 +58495,7 @@ module.exports = quoteAttributeValueForBrowser;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactMount":792}],851:[function(require,module,exports){
-=======
-},{"./ReactMount":798}],857:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactMount":788}],847:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71235,15 +58586,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"fbjs/lib/ExecutionEnvironment":429}],852:[function(require,module,exports){
-=======
-},{"fbjs/lib/ExecutionEnvironment":423}],858:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"fbjs/lib/ExecutionEnvironment":422}],848:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71284,15 +58627,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./escapeTextContentForBrowser":834,"./setInnerHTML":851,"fbjs/lib/ExecutionEnvironment":429}],853:[function(require,module,exports){
-=======
-},{"./escapeTextContentForBrowser":840,"./setInnerHTML":857,"fbjs/lib/ExecutionEnvironment":423}],859:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./escapeTextContentForBrowser":830,"./setInnerHTML":847,"fbjs/lib/ExecutionEnvironment":422}],849:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71336,15 +58671,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],854:[function(require,module,exports){
-=======
-},{}],860:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],850:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -71534,15 +58861,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 }
 
 module.exports = traverseAllChildren;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ReactCurrentOwner":761,"./ReactElement":779,"./ReactInstanceHandles":788,"./getIteratorFn":842,"fbjs/lib/invariant":443,"fbjs/lib/warning":454}],855:[function(require,module,exports){
-=======
-},{"./ReactCurrentOwner":767,"./ReactElement":785,"./ReactInstanceHandles":794,"./getIteratorFn":848,"fbjs/lib/invariant":437,"fbjs/lib/warning":448}],861:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ReactCurrentOwner":757,"./ReactElement":775,"./ReactInstanceHandles":784,"./getIteratorFn":838,"fbjs/lib/invariant":436,"fbjs/lib/warning":447}],851:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -71906,28 +59225,12 @@ if ("production" !== 'production') {
 }
 
 module.exports = validateDOMNesting;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./Object.assign":749,"fbjs/lib/emptyFunction":435,"fbjs/lib/warning":454}],856:[function(require,module,exports){
-=======
-},{"./Object.assign":755,"fbjs/lib/emptyFunction":429,"fbjs/lib/warning":448}],862:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./Object.assign":745,"fbjs/lib/emptyFunction":428,"fbjs/lib/warning":447}],852:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 module.exports = require('./lib/React');
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./lib/React":751}],857:[function(require,module,exports){
-=======
-},{"./lib/React":757}],863:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./lib/React":747}],853:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 exports.__esModule = true;
@@ -71946,15 +59249,7 @@ function reduceReducers() {
 }
 
 module.exports = exports["default"];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],858:[function(require,module,exports){
-=======
-},{}],864:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],854:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -71966,15 +59261,7 @@ exports.default = function (array, callback) {
     return callback(partialObject, element);
   }, {});
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],859:[function(require,module,exports){
-=======
-},{}],865:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],855:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71994,15 +59281,7 @@ function camelCase(string) {
 exports.default = function (type) {
   return type.split(namespacer).map(camelCase).join(namespacer);
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],860:[function(require,module,exports){
-=======
-},{}],866:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],856:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72061,15 +59340,7 @@ function combineActions() {
       return combinedActionType;
     } };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"invariant":457,"lodash/isEmpty":664,"lodash/isFunction":666,"lodash/isString":673,"lodash/isSymbol":674,"lodash/toString":693}],861:[function(require,module,exports){
-=======
-},{"invariant":452,"lodash/isEmpty":667,"lodash/isFunction":669,"lodash/isString":676,"lodash/isSymbol":677,"lodash/toString":696}],867:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"invariant":450,"lodash/isEmpty":658,"lodash/isFunction":660,"lodash/isString":667,"lodash/isSymbol":668,"lodash/toString":687}],857:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72137,15 +59408,7 @@ function createAction(type) {
 
   return actionCreator;
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"invariant":457,"lodash/identity":658,"lodash/isFunction":666,"lodash/isNull":669,"lodash/isUndefined":676}],862:[function(require,module,exports){
-=======
-},{"invariant":452,"lodash/identity":660,"lodash/isFunction":669,"lodash/isNull":672,"lodash/isUndefined":679}],868:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"invariant":450,"lodash/identity":651,"lodash/isFunction":660,"lodash/isNull":663,"lodash/isUndefined":670}],858:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72270,15 +59533,7 @@ function actionCreatorsFromIdentityActions(identityActions) {
     return _extends({}, partialActionCreators, _defineProperty({}, (0, _camelCase2.default)(type), actionCreators[type]));
   });
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./arrayToObject":858,"./camelCase":859,"./createAction":861,"./namespaceActions":866,"invariant":457,"lodash/defaults":650,"lodash/identity":658,"lodash/isArray":661,"lodash/isFunction":666,"lodash/isPlainObject":672,"lodash/isString":673,"lodash/last":679}],863:[function(require,module,exports){
-=======
-},{"./arrayToObject":864,"./camelCase":865,"./createAction":867,"./namespaceActions":872,"invariant":452,"lodash/defaults":651,"lodash/identity":660,"lodash/isArray":663,"lodash/isFunction":669,"lodash/isPlainObject":675,"lodash/isString":676,"lodash/last":682}],869:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./arrayToObject":854,"./camelCase":855,"./createAction":857,"./namespaceActions":862,"invariant":450,"lodash/defaults":642,"lodash/identity":651,"lodash/isArray":654,"lodash/isFunction":660,"lodash/isPlainObject":666,"lodash/isString":667,"lodash/last":673}],859:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72351,15 +59606,7 @@ function handleAction(type) {
     return (action.error === true ? throwReducer : nextReducer)(state, action);
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./combineActions":860,"invariant":457,"lodash/identity":658,"lodash/includes":659,"lodash/isFunction":666,"lodash/isNil":668,"lodash/isPlainObject":672,"lodash/isUndefined":676}],864:[function(require,module,exports){
-=======
-},{"./combineActions":866,"invariant":452,"lodash/identity":660,"lodash/includes":661,"lodash/isFunction":669,"lodash/isNil":671,"lodash/isPlainObject":675,"lodash/isUndefined":679}],870:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./combineActions":856,"invariant":450,"lodash/identity":651,"lodash/includes":652,"lodash/isFunction":660,"lodash/isNil":662,"lodash/isPlainObject":666,"lodash/isUndefined":670}],860:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72392,15 +59639,7 @@ function handleActions(handlers, defaultState) {
     return reducer(state, action);
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./handleAction":863,"./ownKeys":867,"reduce-reducers":857}],865:[function(require,module,exports){
-=======
-},{"./handleAction":869,"./ownKeys":873,"reduce-reducers":863}],871:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./handleAction":859,"./ownKeys":863,"reduce-reducers":853}],861:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72435,15 +59674,7 @@ exports.createActions = _createActions2.default;
 exports.handleAction = _handleAction2.default;
 exports.handleActions = _handleActions2.default;
 exports.combineActions = _combineActions2.default;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./combineActions":860,"./createAction":861,"./createActions":862,"./handleAction":863,"./handleActions":864}],866:[function(require,module,exports){
-=======
-},{"./combineActions":866,"./createAction":867,"./createActions":868,"./handleAction":869,"./handleActions":870}],872:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./combineActions":856,"./createAction":857,"./createActions":858,"./handleAction":859,"./handleActions":860}],862:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72513,15 +59744,7 @@ function unflattenActionCreators(flatActionCreators) {
 exports.flattenActionMap = flattenActionMap;
 exports.unflattenActionCreators = unflattenActionCreators;
 exports.defaultNamespace = defaultNamespace;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./camelCase":859,"lodash/isPlainObject":672}],867:[function(require,module,exports){
-=======
-},{"./camelCase":865,"lodash/isPlainObject":675}],873:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./camelCase":855,"lodash/isPlainObject":666}],863:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72541,15 +59764,7 @@ function ownKeys(object) {
 
   return keys;
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],868:[function(require,module,exports){
-=======
-},{}],874:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],864:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72686,15 +59901,7 @@ function printBuffer(buffer, options) {
     }
   });
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./diff":870,"./helpers":871}],869:[function(require,module,exports){
-=======
-},{"./diff":876,"./helpers":877}],875:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./diff":866,"./helpers":867}],865:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72741,15 +59948,7 @@ exports.default = {
   transformer: undefined
 };
 module.exports = exports['default'];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],870:[function(require,module,exports){
-=======
-},{}],876:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],866:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72841,15 +60040,7 @@ function diffLogger(prevState, newState, logger, isCollapsed) {
   }
 }
 module.exports = exports['default'];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"deep-diff":427}],871:[function(require,module,exports){
-=======
-},{"deep-diff":421}],877:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"deep-diff":420}],867:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72869,15 +60060,7 @@ var formatTime = exports.formatTime = function formatTime(time) {
 
 // Use performance API if it's available in order to get better precision
 var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],872:[function(require,module,exports){
-=======
-},{}],878:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],868:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -72991,15 +60174,7 @@ function createLogger() {
 
 exports.default = createLogger;
 module.exports = exports['default'];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./core":868,"./defaults":869,"./helpers":871}],873:[function(require,module,exports){
-=======
-},{"./core":874,"./defaults":875,"./helpers":877}],879:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./core":864,"./defaults":865,"./helpers":867}],869:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73033,15 +60208,7 @@ function promiseMiddleware(_ref) {
 }
 
 module.exports = exports['default'];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"flux-standard-action":455}],874:[function(require,module,exports){
-=======
-},{"flux-standard-action":450}],880:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"flux-standard-action":448}],870:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73065,15 +60232,7 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
 exports['default'] = thunk;
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],875:[function(require,module,exports){
-=======
-},{}],881:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],871:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73132,15 +60291,7 @@ function applyMiddleware() {
     };
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./compose":878}],876:[function(require,module,exports){
-=======
-},{"./compose":884}],882:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./compose":874}],872:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73192,15 +60343,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators;
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],877:[function(require,module,exports){
-=======
-},{}],883:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],873:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73343,15 +60486,7 @@ function combineReducers(reducers) {
     return hasChanged ? nextState : state;
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./createStore":879,"./utils/warning":881,"lodash/isPlainObject":672}],878:[function(require,module,exports){
-=======
-},{"./createStore":885,"./utils/warning":887,"lodash/isPlainObject":675}],884:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./createStore":875,"./utils/warning":877,"lodash/isPlainObject":666}],874:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 "use strict";
 
 exports.__esModule = true;
@@ -73390,15 +60525,7 @@ function compose() {
     }, last.apply(undefined, arguments));
   };
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],879:[function(require,module,exports){
-=======
-},{}],885:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],875:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73660,15 +60787,7 @@ function createStore(reducer, preloadedState, enhancer) {
     replaceReducer: replaceReducer
   }, _ref2[_symbolObservable2['default']] = observable, _ref2;
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"lodash/isPlainObject":672,"symbol-observable":883}],880:[function(require,module,exports){
-=======
-},{"lodash/isPlainObject":675,"symbol-observable":889}],886:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"lodash/isPlainObject":666,"symbol-observable":879}],876:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73715,15 +60834,7 @@ exports.combineReducers = _combineReducers2['default'];
 exports.bindActionCreators = _bindActionCreators2['default'];
 exports.applyMiddleware = _applyMiddleware2['default'];
 exports.compose = _compose2['default'];
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./applyMiddleware":875,"./bindActionCreators":876,"./combineReducers":877,"./compose":878,"./createStore":879,"./utils/warning":881}],881:[function(require,module,exports){
-=======
-},{"./applyMiddleware":881,"./bindActionCreators":882,"./combineReducers":883,"./compose":884,"./createStore":885,"./utils/warning":887}],887:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./applyMiddleware":871,"./bindActionCreators":872,"./combineReducers":873,"./compose":874,"./createStore":875,"./utils/warning":877}],877:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 exports.__esModule = true;
@@ -73749,15 +60860,7 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],882:[function(require,module,exports){
-=======
-},{}],888:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],878:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (process,global){
 /**
  * Copyright (c) 2014, Facebook, Inc.
@@ -74444,24 +61547,10 @@ function warning(message) {
 );
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"_process":698}],883:[function(require,module,exports){
 module.exports = require('./lib/index');
 
 },{"./lib/index":884}],884:[function(require,module,exports){
-=======
-},{"_process":703}],889:[function(require,module,exports){
-module.exports = require('./lib/index');
-
-},{"./lib/index":890}],890:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"_process":693}],879:[function(require,module,exports){
-module.exports = require('./lib/index');
-
-},{"./lib/index":880}],880:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (global){
 'use strict';
 
@@ -74493,15 +61582,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./ponyfill":885}],885:[function(require,module,exports){
-=======
-},{"./ponyfill":891}],891:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./ponyfill":881}],881:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74525,15 +61606,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],886:[function(require,module,exports){
-=======
-},{}],892:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],882:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 module.exports = [
   "aaa",
   "aarp",
@@ -76067,15 +63140,7 @@ module.exports = [
   "zw"
 ];
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],887:[function(require,module,exports){
-=======
-},{}],893:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],883:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /*
  * Toastr
  * Copyright 2012-2015
@@ -76512,15 +63577,7 @@ module.exports = [
     }
 }));
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"jquery":459}],888:[function(require,module,exports){
-=======
-},{"jquery":455}],894:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"jquery":452}],884:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 
 module.exports = function () {
   var selection = document.getSelection();
@@ -76561,8 +63618,6 @@ module.exports = function () {
   };
 };
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],889:[function(require,module,exports){
 module.exports=/[\0-\x1F\x7F-\x9F]/
 },{}],890:[function(require,module,exports){
@@ -76572,24 +63627,6 @@ module.exports=/[ \xA0\u1680\u2000-\u200A\u202F\u205F\u3000]/
 },{}],892:[function(require,module,exports){
 module.exports=/[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/
 },{}],893:[function(require,module,exports){
-=======
-},{}],895:[function(require,module,exports){
-=======
-},{}],885:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
-module.exports=/[\0-\x1F\x7F-\x9F]/
-},{}],886:[function(require,module,exports){
-module.exports=/[!-#%-\*,-/:;\?@\[-\]_\{\}\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E44\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]|\uD800[\uDD00-\uDD02\uDF9F\uDFD0]|\uD801\uDD6F|\uD802[\uDC57\uDD1F\uDD3F\uDE50-\uDE58\uDE7F\uDEF0-\uDEF6\uDF39-\uDF3F\uDF99-\uDF9C]|\uD804[\uDC47-\uDC4D\uDCBB\uDCBC\uDCBE-\uDCC1\uDD40-\uDD43\uDD74\uDD75\uDDC5-\uDDC9\uDDCD\uDDDB\uDDDD-\uDDDF\uDE38-\uDE3D\uDEA9]|\uD805[\uDC4B-\uDC4F\uDC5B\uDC5D\uDCC6\uDDC1-\uDDD7\uDE41-\uDE43\uDE60-\uDE6C\uDF3C-\uDF3E]|\uD807[\uDC41-\uDC45\uDC70\uDC71]|\uD809[\uDC70-\uDC74]|\uD81A[\uDE6E\uDE6F\uDEF5\uDF37-\uDF3B\uDF44]|\uD82F\uDC9F|\uD836[\uDE87-\uDE8B]|\uD83A[\uDD5E\uDD5F]/
-},{}],887:[function(require,module,exports){
-module.exports=/[ \xA0\u1680\u2000-\u200A\u202F\u205F\u3000]/
-},{}],888:[function(require,module,exports){
-module.exports=/[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-},{}],899:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],889:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -76614,15 +63651,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],894:[function(require,module,exports){
-=======
-},{}],900:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],890:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 (function (global){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
@@ -76659,15 +63688,7 @@ if (!rng) {
 module.exports = rng;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{}],895:[function(require,module,exports){
-=======
-},{}],901:[function(require,module,exports){
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{}],891:[function(require,module,exports){
->>>>>>> Delete DownloadTableDataButton component
 // Unique ID creation requires a high quality random # generator.  We feature
 // detect to determine the best RNG source, normalizing to a function that
 // returns 128-bits of randomness, since that's what's usually required
@@ -76772,12 +63793,4 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-<<<<<<< 5bc4bcedf9f288ed6444b83788f289f7b433f51f
-<<<<<<< dbc3fa1b0e9a9af1b50fab6126bf7cab1c4fd4cb
 },{"./lib/bytesToUuid":893,"./lib/rng":894}]},{},[1]);
-=======
-},{"./lib/bytesToUuid":899,"./lib/rng":900}]},{},[1]);
->>>>>>> Implement DownloadTableDataButton component
-=======
-},{"./lib/bytesToUuid":889,"./lib/rng":890}]},{},[1]);
->>>>>>> Delete DownloadTableDataButton component

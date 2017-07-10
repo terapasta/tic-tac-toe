@@ -51,7 +51,7 @@ class QuestionAnswer::CsvImporter
     f = open(@file.path, @mode_enc, undef: :replace)
     CSV.new(f).inject({}) { |out, row|
       data = detect_or_initialize_by_row(row)
-      decision_branches = out[data[:key]].try(:fetch, :decision_branches) || []
+      decision_branches = out[data[:key]].try(:fetch, :decision_branches_attributes) || []
       decision_branches.push(data[:decision_branch]) if data[:decision_branch].present?
       out[data[:key]] = {
         question_answer_attributes: {

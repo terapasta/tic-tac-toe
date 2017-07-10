@@ -35,6 +35,7 @@ class BotPolicy < ApplicationPolicy
     [
       :name,
       :image,
+      :remove_image,
       :classify_failed_message,
       :start_message,
       {

@@ -64,7 +64,7 @@ class QuestionAnswer::CsvImporter
       }
       out
     }
-    injected_data.keys.map { |key| injected_data[key] }
+    injected_data.values
   end
 
   def detect_or_initialize_by_row(row)

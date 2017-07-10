@@ -10,6 +10,7 @@ class QuestionAnswer::CsvImporter
     @options = { is_utf8: false }.merge(options)
     @mode_enc = options[:is_utf8] ? ModeEncForUTF8 : ModeEncForSJIS
     @current_answer = nil
+    @current_row = nil
     @succeeded = false
   end
 
@@ -19,7 +20,6 @@ class QuestionAnswer::CsvImporter
       csv_data.each do |import_param|
         question_answer = @bot.question_answers.where(id: import_param[:question_answer_attributes][:id])
           .first_or_initialize(import_param[:question_answer_attributes])
-        fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) unless question_answer.valid?
         question_answer.tap do |qa|
           qa.answer ||= qa.build_answer(bot_id: @bot.id)
           qa.answer.body = import_param[:answer_body]
@@ -49,7 +49,8 @@ class QuestionAnswer::CsvImporter
 
   def parse
     f = open(@file.path, @mode_enc, undef: :replace)
-    CSV.new(f).inject({}) { |out, row|
+    CSV.new(f).each_with_index.inject({}) { |out, (row, index)|
+      @current_row = index
       data = detect_or_initialize_by_row(row)
       decision_branches = out[data[:key]].try(:fetch, :decision_branches_attributes) || []
       decision_branches.push(data[:decision_branch]) if data[:decision_branch].present?
@@ -73,6 +74,7 @@ class QuestionAnswer::CsvImporter
     decision_branch = sjis_safe(row[3])
     next_answer = sjis_safe(row[4])
     bot_had = @bot.question_answers.detect {|qa| qa.id == id}.present?
+    fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || a.blank?
 
     {
       key: bot_had ? id : "#{q}-#{a}",

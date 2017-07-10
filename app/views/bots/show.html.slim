@@ -17,20 +17,60 @@
         = space
         i.material-icons keyboard_arrow_right
 
-  .card.mb-4
-    .card-header チャットウィジェット
-    .card-block
-      p 以下のコードをWebサイトに貼り付けると、画面の右下に開閉できる小さなウィンドウでチャットをご利用いただけます。
-      p= render 'chat_widgets/embed_code'
-      = link_to '#', class: 'btn btn-default', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
-        i.material-icons content_copy
-        span クリップボードにコピー
+  .row.py-5
+    .col-6.text-center
+      h5 チャットウィジェット
+      = image_tag 'chat-widget.png', alt: 'チャットウィジェット', class: 'img-fluid'
+      p
+        |ウィンドウの右下に常にくっついている形でご利用いただけます。
+        br
+        |初期状態では閉じているので質問をしたい時だけ開くことができます。
+      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-widget-desc"
+        = material_icon 'code', class: 'mi-xs'
+        = space
+        span コードを取得する
 
-  .card.mb-4
-    .card-header チャット埋め込み
-    .card-block
-      |高さ:
-      = text_field_tag :width, 500, class: 'form-control'
-      |幅:
-      = text_field_tag :height, 500, class: 'form-control'
-    = text_field_tag :embed, bot_embed_code(@bot), class: 'form-control', readonly: true
+    .col-6.text-center
+      h5 チャット埋め込み
+      = image_tag 'chat-embedding.png', alt: 'チャット埋め込み', class: 'img-fluid'
+      p
+        |ページ内の一部分にチャットのエリアを作る形でご利用いただけます。
+        br
+        |アクセスと同時に必ずチャットをスタートさせることができます。
+      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-embedding-desc"
+        = material_icon 'code', class: 'mi-xs'
+        = space
+        span コードを取得する
+
+  .modal.fade#chat-widget-desc tabindex="-1" role="dialog"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title チャットウィジェット
+          button.close type="button" data-dismiss="modal" &times;
+        .modal-body
+          p= render 'chat_widgets/embed_code'
+          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
+            i.material-icons content_copy
+            span クリップボードにコピー
+
+  .modal.fade#chat-embedding-desc tabindex="-1" role="dialog"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title チャット埋め込み
+          button.close type="button" data-dismiss="modal" &times;
+        .modal-body
+          .form-group
+            label 高さ
+            input.form-control type="number" name="height" value=750
+          .form-group
+            label 横幅
+            input.form-control type="number" name="width" value=500
+          .form-group
+            label 埋め込みコード
+            textarea#chat-embedding-code.form-control name="embed" readonly=true rows=4 onfocus="this.select()"
+              = bot_embed_code(@bot, width: 750, height: 500)
+          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-embedding-code' } do
+            i.material-icons content_copy
+            span クリップボードにコピー

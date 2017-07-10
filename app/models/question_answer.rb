@@ -6,7 +6,6 @@ class QuestionAnswer < ActiveRecord::Base
 
   belongs_to :bot
   belongs_to :answer
-  has_many :training_messages, dependent: :nullify
   has_many :decision_branches, through: :answer
   has_many :topic_taggings, dependent: :destroy, inverse_of: :question_answer
   has_many :topic_tags, through: :topic_taggings
@@ -44,7 +43,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   scope :group_by_sentence_synonyms, -> {
     joins(:sentence_synonyms)
-      .group(:training_message_id)
+      .group(:question_answer_id)
       .count
   }
 

@@ -236,17 +236,15 @@ ActiveRecord::Schema.define(version: 20170704033830) do
   add_index "scores", ["bot_id"], name: "index_scores_on_bot_id", using: :btree
 
   create_table "sentence_synonyms", force: :cascade do |t|
-    t.integer  "training_message_id", limit: 4
-    t.integer  "created_user_id",     limit: 4,     null: false
-    t.text     "body",                limit: 65535, null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "question_answer_id",  limit: 4
+    t.integer  "created_user_id",    limit: 4,     null: false
+    t.text     "body",               limit: 65535, null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "question_answer_id", limit: 4
   end
 
   add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
   add_index "sentence_synonyms", ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id", using: :btree
-  add_index "sentence_synonyms", ["training_message_id"], name: "index_sentence_synonyms_on_training_message_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.integer  "feature",    limit: 4, null: false
@@ -303,32 +301,10 @@ ActiveRecord::Schema.define(version: 20170704033830) do
 
   add_index "topic_tags", ["name", "bot_id"], name: "index_topic_tags_on_name_and_bot_id", unique: true, using: :btree
 
-  create_table "training_messages", force: :cascade do |t|
-    t.integer  "training_id",        limit: 4,                     null: false
-    t.integer  "answer_id",          limit: 4
-    t.integer  "question_answer_id", limit: 4
-    t.string   "speaker",            limit: 255,                   null: false
-    t.text     "body",               limit: 65535
-    t.boolean  "learn_enabled",                    default: true,  null: false
-    t.boolean  "answer_failed",                    default: false, null: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-  end
-
-  add_index "training_messages", ["question_answer_id"], name: "index_training_messages_on_question_answer_id", using: :btree
-  add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree
-
   create_table "training_texts", force: :cascade do |t|
     t.text     "body",       limit: 65535, null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-  end
-
-  create_table "trainings", force: :cascade do |t|
-    t.string   "context",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "bot_id",     limit: 4,   null: false
   end
 
   create_table "twitter_replies", force: :cascade do |t|

@@ -2,7 +2,6 @@ class Answer < ActiveRecord::Base
   belongs_to :bot
   has_many :decision_branches, dependent: :destroy
   has_one :parent_decision_branch, class_name: 'DecisionBranch', foreign_key: :next_answer_id
-  has_many :training_messages, dependent: :destroy
   has_many :question_answers
   has_many :answer_files, dependent: :destroy, inverse_of: :answer
 

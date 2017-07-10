@@ -16,7 +16,7 @@ class AnswerUpdateService
     @answer.save!
 
     if @old_answer.present?
-      %w(answer_files decision_branches training_messages question_answers).each do |resources|
+      %w(answer_files decision_branches question_answers).each do |resources|
         @old_answer.send(resources).each do |resource|
           resource.update!(answer_id: @answer.id)
         end

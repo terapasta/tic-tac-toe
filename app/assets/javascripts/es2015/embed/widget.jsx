@@ -26,6 +26,7 @@ export default class Widget extends Component {
     this.state = {
       isActive: false,
       isLoadingIframe: false,
+      isLoadedIframe: false
     };
   }
 
@@ -38,6 +39,7 @@ export default class Widget extends Component {
     const {
       isActive,
       isLoadingIframe,
+      isLoadedIframe,
     } = this.state;
 
     const activeClassName = classNames({
@@ -57,10 +59,10 @@ export default class Widget extends Component {
           </Logo>
         </Header>
         <IframeContainer>
-          {isActive && (
+          {(isLoadingIframe || isLoadedIframe) && (
             <Iframe src={chatURL} onLoad={this.onLoadIframe.bind(this)} />
           )}
-          {isLoadingIframe && (
+          {isLoadingIframe && !isLoadedIframe && (
             <Loading>
               <LoadingMessage>読み込み中。少々お待ち下さい...</LoadingMessage>
             </Loading>
@@ -83,6 +85,6 @@ export default class Widget extends Component {
   }
 
   onLoadIframe() {
-    this.setState({ isLoadingIframe: false });
+    this.setState({ isLoadingIframe: false, isLoadedIframe: true });
   }
 }

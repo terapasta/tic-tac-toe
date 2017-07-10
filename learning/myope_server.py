@@ -24,14 +24,7 @@ class MyopeServer(RPCServer):
         X = np.array([body])
 
         try:
-            # HACK: similarityを利用する場合learning_parameterを使わないので、
-            #       RPCサーバーの口から分けてしまったほうがスッキリする
-            if learning_parameter.use_similarity_classification:
-                Bot(bot_id, learning_parameter).vectorize()
-                reply_result = Similarity(bot_id).make_response(X)
-            else:
-                reply_result = Reply(bot_id, learning_parameter).perform(X)
-
+            reply_result = Reply(bot_id, learning_parameter).perform(X)
             status_code = self.STATUS_CODE_SUCCESS
         except ModelNotExistsError:
             reply_result = NullReplyResult()

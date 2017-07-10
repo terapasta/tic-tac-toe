@@ -38,7 +38,7 @@ class ChatsController < ApplicationController
     end
 
     def prepare_learning_data
-      return unless @bot.learning_parameter&.use_similarity_classification?
+      return if @bot.learning_parameter&.use_similarity_classification? == false
 
       @summarizer = Learning::Summarizer.new(@bot)
       @summarizer.summary

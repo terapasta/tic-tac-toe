@@ -6,12 +6,8 @@ class LearnJob < ActiveJob::Base
     summarizer = Learning::Summarizer.new(bot)
     summarizer.summary
 
-    if bot.learning_parameter&.use_similarity_classification?
-      summarizer.unify_learning_training_message_words!
-    else
-      LearningTrainingMessage.amp!(bot)
-      LearningTrainingMessage.amp_by_sentence_synonyms!(bot)
-    end
+    LearningTrainingMessage.amp!(bot)
+    LearningTrainingMessage.amp_by_sentence_synonyms!(bot)
 
     scores = Ml::Engine.new(bot).learn
     bot.build_score if bot.score.nil?

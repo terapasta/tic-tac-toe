@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -6,6 +7,7 @@ from learning.core.persistance import Persistance
 from learning.core.predict.model_not_exists_error import ModelNotExistsError
 from learning.core.training_set.text_array import TextArray
 from learning.log import logger
+from learning.core.predict.reply_result import ReplyResult
 
 
 class Similarity:
@@ -16,6 +18,21 @@ class Similarity:
             self.vectorizer = Persistance.load_vectorizer(bot_id)
         except IOError:
             raise ModelNotExistsError()
+
+    def make_response(self, X, datasource_type='database'):
+        datasource = Datasource(datasource_type)
+
+        text_array = TextArray(X, vectorizer=self.vectorizer)
+        logger.debug('Similarity#make_response text_array.separated_sentences: %s' % text_array.separated_sentences)
+        features = text_array.to_vec()
+        logger.debug('Similarity#make_response features: %s' % features)
+        count = np.count_nonzero(features.toarray())
+
+        question_answer_ids, probabilities, answer_ids = self.learning_training_messages(X[0], datasource_type=datasource_type, for_suggest=False).to_data_frame()
+
+        reply_result = ReplyResult(answer_ids, probabilities, X[0], count, question_answer_ids)
+        reply_result.out_log_of_results()
+        return reply_result
 
     def question_answers(self, question, datasource_type='database'):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する

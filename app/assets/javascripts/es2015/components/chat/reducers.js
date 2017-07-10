@@ -21,6 +21,8 @@ const app = combineReducers({
   isManager: through,
   flashMessage: through,
   initialQuestions,
+  useSimilarityClassification: through,
+  showPath: through,
 });
 
 export default app;

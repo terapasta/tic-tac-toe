@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# HACK: csv_importer_specに統一したい
 RSpec.describe QuestionAnswer do
   describe '.import_csv' do
     let!(:bot) do

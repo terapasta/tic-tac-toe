@@ -1,17 +1,3 @@
-.panel.panel-default
-  .panel-body
-    h4
-      - if Time.current < Time.zone.parse('2017-07-07 23:59:59')
-        small: span.label.label-warning NEW
-        = space
-      span 初期質問リスト機能が使えるようになりました
-    p 初期質問リストとは：<br />チャットを開始すぐの画面に、任意の質問候補を最大で５つまで表示できる機能です。
-    p= image_tag 'initial-questions-sample.png', style: "border:2px solid #ccc; width: 400px; height:auto; display:block; margin:0 auto;"
-    p 時期によって質問内容が予想される場合等に設定しておくと効果的です。
-    p= link_to new_chats_path(@bot.token), class: 'btn btn-default', target: '_blank' do
-      span チャット画面で設定する
-      = space
-      i.material-icons keyboard_arrow_right
 
 .panel.panel-default
   .panel-heading

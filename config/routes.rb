@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', as: 'user_registration'
   end
 
-  resources :bots, only: [:index, :edit, :update] do
+  resources :bots, only: [:show, :index, :edit, :update] do
     member do
       post :reset
     end

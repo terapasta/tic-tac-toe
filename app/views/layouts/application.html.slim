@@ -29,12 +29,14 @@ body
       = render 'layouts/shared/ui/header'
 
 
-    - if content_for?(:hide_sidebar)
-      .header-space
-      .kontainer= render "shared/flash"
-      = yield
-    - else
-      = render 'layouts/shared/ui/side_nav'
-      .container.container-main class=content_for(:additional_container_main_class)
-        = render "shared/flash"
+    = yield
+    /
+      - if content_for?(:hide_sidebar)
+        .header-space
+        .kontainer= render "shared/flash"
         = yield
+      - else
+        = render 'layouts/shared/ui/side_nav'
+        .container.container-main class=content_for(:additional_container_main_class)
+          = render "shared/flash"
+          = yield

@@ -1,0 +1,77 @@
+.bot-header.bg-gray-light.pt-3
+  .container
+    .bot-header__title.d-flex.justify-content-between
+      h4.d-inline-block
+        = link_to image_tag(@bot.image_url(:thumb), width: 56, height: 56, class: 'img-circle img-thumbnail'), @bot.image_url, target: '_blank'
+        = space
+        = @bot.name
+        = space 2
+        = link_to chats_path(@bot.token), class: 'btn btn-outline-success btn-sm' do
+          = material_icon 'chat', class: 'mi-xs'
+          = space
+          span チャットする
+      div.pt-3
+        = link_to '#', class: 'btn btn-outline-warning btn-sm' do
+          = material_icon 'trending_up', class: 'mi-xs'
+          = space
+          span 学習を実行
+        = space 2
+        = link_to edit_bot_path(@bot), class: 'btn btn-outline-gray btn-sm' do
+          = material_icon 'settings', class: 'mi-xs'
+          = space
+          span 設定
+
+  .nav.nav-tabs.nav-global.bg-gray-light.pt-3
+    .container
+      ul.d-flex.justify-content-start
+        li.nav-item
+          a class="nav-link active" href="#"
+            = material_icon 'dashboard', class: 'text-gray-light mi-sm'
+            = space
+            span ダッシュボード
+        li class="nav-item"
+          a class="nav-link" href="#"
+            = material_icon 'history', class: 'text-gray-light mi-sm'
+            = space
+            span 対話履歴
+        li class="nav-item"
+          a class="nav-link" href="#"
+            = material_icon 'playlist_add_check', class: 'text-gray-light mi-sm'
+            = space
+            span 対話タスク
+            = space
+            span.badge.badge-pill.badge-warning 11
+        li class="nav-item"
+          a class="nav-link" href="#"
+            = material_icon 'view_list', class: 'text-gray-light mi-sm'
+            = space
+            span 学習データ
+        li class="nav-item"
+          a class="nav-link" href="#"
+            = material_icon 'question_answer', class: 'text-gray-light mi-sm'
+            = space
+            span Q&A
+        li class="nav-item"
+          a class="nav-link" href="#"
+            = material_icon 'clear_all', class: 'text-gray-light mi-sm flip-horizontal'
+            = space
+            span 会話ツリー
+        li class="nav-item"
+          a class="nav-link" href="#"
+            = material_icon 'book', class: 'text-gray-light mi-sm'
+            = space
+            span 辞書
+        li class="nav-item dropdown"
+          a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+            span その他
+          .dropdown-menu.dropdown-menu-right
+            a class="dropdown-item" href="#"
+              = material_icon 'done_all', class: 'text-gray-light mi-sm'
+              = space
+              span ボットテスト
+              = space
+              span.badge.badge-warning.badge-pill 11
+
+.pt-4
+  .container
+    = yield

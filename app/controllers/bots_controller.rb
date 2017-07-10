@@ -1,7 +1,7 @@
 class BotsController < ApplicationController
   include BotUsable
   before_action :authenticate_user!
-  before_action :set_bot, only: [:edit, :update, :reset]
+  before_action :set_bot, only: [:show, :edit, :update, :reset]
 
   def index
     @bots = bots.all

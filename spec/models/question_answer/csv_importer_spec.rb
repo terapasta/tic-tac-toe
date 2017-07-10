@@ -15,7 +15,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
     end
 
     context 'SJISエンコードの正しいCSVをインポートする場合' do
-      let(:csv_path) { 'sjis_valid_question_answers.csv' }
+      let(:csv_path) { 'sjis_valid-3_question_answers.csv' }
       let(:import_options) do
         { is_utf8: false }
       end
@@ -127,7 +127,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
     end
 
     context 'SJISエンコードのアンサーが空であるデータを含むCSVをインポートする場合' do
-      let(:csv_path) { 'sjis_invalid_question_answers.csv' }
+      let(:csv_path) { 'sjis_invalid-2_question_answers.csv' }
       let(:import_options) do
         { is_utf8: false }
       end
@@ -150,7 +150,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
     end
 
     context 'SJISエンコードのid列が文字列であるデータを含むCSVをインポートする場合' do
-      let(:csv_path) { 'sjis_invalid-2_question_answers.csv' }
+      let(:csv_path) { 'sjis_invalid-3_question_answers.csv' }
       let(:import_options) do
         { is_utf8: false }
       end

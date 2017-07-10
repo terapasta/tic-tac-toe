@@ -32,7 +32,7 @@ export default class BotResetButton extends Component {
     } = this.state;
 
     const modalClassName = classNames("modal fade", {
-      in: isOpenedModal,
+      show: isOpenedModal,
     });
     const modalStyle = { display: isOpenedModal ? "block" : "none" };
 
@@ -43,7 +43,7 @@ export default class BotResetButton extends Component {
           学習データリセット
         </a>
 
-        {isOpenedModal && <div className="modal-backdrop fade in" />}
+        {isOpenedModal && <div className="modal-backdrop fade show" />}
 
         <div className={modalClassName}
           style={modalStyle}
@@ -51,8 +51,8 @@ export default class BotResetButton extends Component {
           <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-content">
               <div className="modal-header">
-                <a href="#" className="close" onClick={this.onClickModalClose.bind(this)}>&times;</a>
                 <h5 className="modal-title">学習データリセットの確認</h5>
+                <a href="#" className="close" onClick={this.onClickModalClose.bind(this)}>&times;</a>
               </div>
               <div className="modal-body">
                 <p>学習データをリセットすると以下のデータが全て削除されます</p>

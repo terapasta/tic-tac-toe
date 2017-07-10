@@ -62,6 +62,7 @@ class Message < ActiveRecord::Base
     when 'guest'
       messages[index + 1]
     end
+  end
 
   def self.build_for_bot_test(chat)
     bot_test_results = []

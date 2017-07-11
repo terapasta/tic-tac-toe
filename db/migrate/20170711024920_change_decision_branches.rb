@@ -2,7 +2,7 @@ class ChangeDecisionBranches < ActiveRecord::Migration
   def change
     add_column :decision_branches, :question_answer_id, :integer
     add_column :decision_branches, :answer, :text
-    add_column :decision_branches, :next_decision_branch_id, :integer
-    add_index :decision_branches, [:question_answer_id, :next_decision_branch_id], name: :main_decision_branches_index
+    add_column :decision_branches, :parent_decision_branch_id, :integer
+    add_index :decision_branches, [:question_answer_id, :parent_decision_branch_id], name: :main_decision_branches_index
   end
 end

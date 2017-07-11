@@ -121,20 +121,20 @@ ActiveRecord::Schema.define(version: 20170711024920) do
   end
 
   create_table "decision_branches", force: :cascade do |t|
-    t.integer  "answer_id",               limit: 4,                  null: false
-    t.string   "body",                    limit: 255,   default: "", null: false
-    t.integer  "next_answer_id",          limit: 4
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.integer  "bot_id",                  limit: 4,                  null: false
-    t.integer  "question_answer_id",      limit: 4
-    t.text     "answer",                  limit: 65535
-    t.integer  "next_decision_branch_id", limit: 4
+    t.integer  "answer_id",                 limit: 4,                  null: false
+    t.string   "body",                      limit: 255,   default: "", null: false
+    t.integer  "next_answer_id",            limit: 4
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "bot_id",                    limit: 4,                  null: false
+    t.integer  "question_answer_id",        limit: 4
+    t.text     "answer",                    limit: 65535
+    t.integer  "parent_decision_branch_id", limit: 4
   end
 
   add_index "decision_branches", ["answer_id"], name: "index_decision_branches_on_answer_id", using: :btree
   add_index "decision_branches", ["bot_id"], name: "index_decision_branches_on_bot_id", using: :btree
-  add_index "decision_branches", ["question_answer_id", "next_decision_branch_id"], name: "main_decision_branches_index", using: :btree
+  add_index "decision_branches", ["question_answer_id", "parent_decision_branch_id"], name: "main_decision_branches_index", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false

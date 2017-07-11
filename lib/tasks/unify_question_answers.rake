@@ -61,13 +61,15 @@ namespace :unify_question_answers do
     end
   end
 
-  def recursive_hoge(answer_data)
-    answer_data.decision_branches.each do |decision_branch|
-      if decision_branch.next_answer.present?
-        decision_branch.answer = decision_branch.next_answer.body
-        recursive_hoge(decision_branch.next_answer)
+  def recursive_unify_decision_branches(decision_branch)
+    if decision_branch.next_answer.present?
+      decision_branch.answer = decision_branch.next_answer.body
+      decision_branch.next_answer.decision_branches.each do |db|
+        db.parent_decision_branch_id = decision_branch.id
+        recursive_unify_decision_branches(db)
       end
     end
+    decision_branch.save!
   end
 
   desc 'answerテーブルをquestion_answersに統合する'
@@ -80,6 +82,10 @@ namespace :unify_question_answers do
         question_answer.answer_data.answer_files.each do |answer_file|
           answer_file.question_answer_id = question_answer.id
           answer_file.save!
+        end
+        question_answer.answer_data.decision_branches.each do |db|
+          db.question_answer_id = question_answer.id
+          recursive_unify_decision_branches(db)
         end
         question_answer.save!
       end

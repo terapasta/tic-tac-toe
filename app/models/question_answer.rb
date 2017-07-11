@@ -6,7 +6,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   belongs_to :bot
   belongs_to :answer_data, class_name: 'Answer', foreign_key: :answer_id
-  has_many :decision_branches, through: :answer
+  has_many :decision_branches
   has_many :topic_taggings, dependent: :destroy, inverse_of: :question_answer
   has_many :topic_tags, through: :topic_taggings
   has_many :answer_files, dependent: :destroy, inverse_of: :answer

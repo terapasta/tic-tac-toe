@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711023141) do
+ActiveRecord::Schema.define(version: 20170711023441) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -33,13 +33,16 @@ ActiveRecord::Schema.define(version: 20170711023141) do
   add_index "allowed_hosts", ["scheme", "domain", "bot_id"], name: "index_allowed_hosts_on_scheme_and_domain_and_bot_id", unique: true, using: :btree
 
   create_table "answer_files", force: :cascade do |t|
-    t.integer  "answer_id",  limit: 4,               null: false
-    t.string   "file",       limit: 255,             null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "file_type",  limit: 255,             null: false
-    t.integer  "file_size",  limit: 4,   default: 0
+    t.integer  "answer_id",          limit: 4,               null: false
+    t.string   "file",               limit: 255,             null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "file_type",          limit: 255,             null: false
+    t.integer  "file_size",          limit: 4,   default: 0
+    t.integer  "question_answer_id", limit: 4
   end
+
+  add_index "answer_files", ["question_answer_id"], name: "index_answer_files_on_question_answer_id", using: :btree
 
   create_table "answers", force: :cascade do |t|
     t.integer  "defined_answer_id", limit: 4

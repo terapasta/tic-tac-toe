@@ -20,6 +20,7 @@
 //= require toastr
 //= require base
 //= require bundled-es2015
+//= require rollbar
 
 $(function() {
   var $notificationModal = $('[data-role="notification-modal"]');

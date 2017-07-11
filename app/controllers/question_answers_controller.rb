@@ -10,7 +10,7 @@ class QuestionAnswersController < ApplicationController
 
   def index
     authorize QuestionAnswer
-    session[:url] = request.url
+    session[:question_answers_queries] = request.query_parameters
     @topic_tags = @bot.topic_tags
     @keyword = params[:keyword]
     @current_page = current_page

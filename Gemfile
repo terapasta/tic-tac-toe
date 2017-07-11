@@ -111,7 +111,6 @@ gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
-gem 'rollbar'
 
 group :development, :test do
 
@@ -170,4 +169,5 @@ group :production, :staging do
   # ログ保存先変更、静的アセット Heroku 向けに調整
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
+  gem 'rollbar'
 end

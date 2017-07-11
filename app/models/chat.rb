@@ -92,4 +92,10 @@ class Chat < ActiveRecord::Base
       chat
     end
   end
+
+  def self.build_with_user_role(bot)
+    chat = bot.chats.build(guest_key: SecureRandom.hex(64))
+    chat.is_staff = bot.user.staff?
+    chat
+  end
 end

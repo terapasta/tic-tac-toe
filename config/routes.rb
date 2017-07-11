@@ -23,7 +23,8 @@ Rails.application.routes.draw do
     end
     resources :topic_tags
     resource :imports, only: [:new, :create]
-    resources :exports, only: [:index, :create]
+    resources :exports, only: [:index, :show], param: :encoding
+    resources :chat_tests, only: [:new, :create, :show]
     resources :threads, only: :index do
       resources :messages, only: [:index] do
         resource :answer_marked, only: [:create, :destroy], controller: :answer_marked

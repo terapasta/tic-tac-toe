@@ -60,4 +60,29 @@ namespace :unify_question_answers do
       end
     end
   end
+
+  def recursive_hoge(answer_data)
+    answer_data.decision_branches.each do |decision_branch|
+      if decision_branch.next_answer.present?
+        decision_branch.answer = decision_branch.next_answer.body
+        recursive_hoge(decision_branch.next_answer)
+      end
+    end
+  end
+
+  desc 'answerテーブルをquestion_answersに統合する'
+  task merge_answers: :environment do
+    ActiveRecord::Base.transaction do
+      QuestionAnswer.find_each do |question_answer|
+        next if question_answer.answer_data.blank?
+
+        question_answer.answer = question_answer.answer_data.body
+        question_answer.answer_data.answer_files.each do |answer_file|
+          answer_file.question_answer_id = question_answer.id
+          answer_file.save!
+        end
+        question_answer.save!
+      end
+    end
+  end
 end

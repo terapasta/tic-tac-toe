@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170704033830) do
+ActiveRecord::Schema.define(version: 20170711023141) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 20170704033830) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.boolean  "selection",                default: false
+    t.text     "answer",     limit: 65535
   end
 
   add_index "question_answers", ["answer_id"], name: "index_question_answers_on_answer_id", using: :btree

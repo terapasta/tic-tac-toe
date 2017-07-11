@@ -4,6 +4,6 @@ class ChangeDataTypeQuestionFromQuestionAnswers < ActiveRecord::Migration
   end
 
   def down
-    change_column :question_answers, :question, :string, limit: 255
+    change_column :question_answers, :question, :string
   end
 end

@@ -21,15 +21,17 @@ class Conversation::Bot
     result = @engine.reply(@question_text)
     @results = result[:results]
 
-    answer_id = result[:answer_id]
+    question_answer_id = result[:question_answer_id]
     probability = result[:probability]
     question = result[:question]
     question_feature_count = result[:question_feature_count]
     question_answer_ids = @results.select{|x| x[:probability] > 0.1}.map{|x| x[:question_answer_id].to_i}
     Rails.logger.debug(probability)
 
-    @answer = Answer.find_or_null_answer(answer_id, @bot, probability, classify_threshold)
-    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, answer: @answer, probability: probability, question_answer_ids: question_answer_ids)
+    # TODO: classify_thresholdの判定とnull question answerの作成
+    @question_answer = QuestionAnswer.find_by(id: question_answer_id, bot_id: @bot.id)
+    
+    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, question_answer: @question_answer, probability: probability, question_answer_ids: question_answer_ids)
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト

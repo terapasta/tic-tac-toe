@@ -11,7 +11,7 @@ class ChatsController < ApplicationController
   def new
     success = new_action
     render :show and return if success
-    redirect_to root_path and return
+    render file: 'public/404.html', status: :not_found, layout: false
   end
 
   def show_old

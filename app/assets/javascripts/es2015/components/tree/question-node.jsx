@@ -27,8 +27,8 @@ export default class QuestionNode extends BaseNode {
 
     const {
       id,
-      answer,
     } = questionNode;
+    const answer = get(questionsRepo[id], "answer");
 
     const q = questionsRepo[questionNode.id];
     if (q == null) { return null; }
@@ -37,8 +37,8 @@ export default class QuestionNode extends BaseNode {
     const isOpened = includes(openedQuestionIds, questionNode.id);
     const style = { display: (isOpened ? "block" : "none") };
     const itemClassName = classNames({
-      "tree__item": answer != null,
-      "tree__item--no-children": answer == null,
+      "tree__item": !isEmpty(answer),
+      "tree__item--no-children": isEmpty(answer),
       "tree__item--opened": isOpened,
       "active": isEqual(activeItem, { dataType: "question", id: questionNode.id }),
     });
@@ -56,8 +56,9 @@ export default class QuestionNode extends BaseNode {
           <ol className="tree" style={style}>
             <AnswerNode
               {...{
-                answerNode: answer,
+                questionNode,
                 answersRepo,
+                questionsRepo,
                 decisionBranchesRepo,
                 openedAnswerIDs,
                 openedDecisionBranchIDs,

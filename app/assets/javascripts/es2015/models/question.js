@@ -1,8 +1,6 @@
 import axios from "axios";
 import assign from "lodash/assign";
 
-import Answer from "./answer";
-
 import authenticityToken from "../modules/authenticity-token";
 import snakeCaseKeys from "../modules/snake-case-keys";
 
@@ -30,20 +28,12 @@ export default class Question {
 
   get id() { return this.attrs.id; }
   get question() { return this.attrs.question; }
+  get answer() { return this.attrs.answer; }
   get botId() { return this.attrs.botId; }
   get editPath() {
     return `/bots/${this.botId}/question_answers/${this.id}/edit`;
   }
   get topicTags() { return this.attrs.topicTags; }
-  get answerId() { return this.attrs.answerId; }
-
-  fetchAnswer() {
-    const { id, botId } = this.attrs;
-    return axios.get(`/bots/${botId}/question_answers/${id}/answer.json`)
-      .then((res) => {
-        this.answer = new Answer(assign({ botId }, res.data));
-      });
-  }
 
   update(attrs) {
     const newAttrs = snakeCaseKeys(assign({}, this.attrs, attrs));

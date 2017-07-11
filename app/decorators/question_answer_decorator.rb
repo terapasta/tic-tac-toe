@@ -4,7 +4,7 @@ class QuestionAnswerDecorator < ApplicationDecorator
   def as_tree_node_json
     {
       id: object.id,
-      answer: object.answer&.decorate&.as_tree_node_json
+      decisionBranches: object.decision_branches&.decorate&.as_tree_json
     }
   end
 end

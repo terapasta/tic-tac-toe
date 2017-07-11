@@ -37,8 +37,7 @@ class Reply:
         if self.learning_parameter.use_similarity_classification:
             question_answers_ids, probabilities = self.__search_simiarity(X[0], datasource_type)
         else:
-            # TODO: answerをquestion_answerに置き換える
-            answer_ids, probabilities, question_answers_ids = self.__predict(features, X[0])
+            question_answers_ids, probabilities = self.__predict(features, X[0])
 
         reply_result = ReplyResult(question_answers_ids, probabilities, X[0], count)
         reply_result.out_log_of_results()
@@ -48,9 +47,8 @@ class Reply:
         similarity = Similarity(self._bot_id)
         # answers = self.estimator.predict(features)
         probabilities = self.estimator.predict_proba(features)
-        answer_ids = self.estimator.classes_
-        question_answers_ids = similarity.question_answers(question).to_data()
-        return answer_ids, probabilities[0], question_answers_ids
+        question_answer_ids = self.estimator.classes_
+        return question_answer_ids, probabilities[0]
 
     def __search_simiarity(self, question, datasource_type):
         """質問文間でコサイン類似度を算出して、近い質問文の候補を取得する

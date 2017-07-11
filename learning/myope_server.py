@@ -15,9 +15,10 @@ from learning.config.config import Config
 
 
 class MyopeServer(RPCServer):
+    # HACK: status_code使っていないと思われるので整理したい
     STATUS_CODE_SUCCESS = 1
     STATUS_CODE_MODEL_NOT_EXISTS = 101
-    STATUS_CODE_UNKNOWN_ERROR = 500
+    STATUS_CODE_UNKNOWN_ERROR = 999
 
     def reply(self, bot_id, body, learning_parameter_attributes):
         learning_parameter = LearningParameter(learning_parameter_attributes)

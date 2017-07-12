@@ -28,7 +28,9 @@ class ChatsController < ApplicationController
     end
 
     def set_guest_key
-      session[:guest_key] ||= SecureRandom.hex(64)
+      if session[:guest_key].blank?
+        session[:guest_key] = SecureRandom.hex(64)
+      end
     end
 
     def set_warning_message

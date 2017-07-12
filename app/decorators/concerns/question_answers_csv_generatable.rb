@@ -11,6 +11,15 @@ module QuestionAnswersCsvGeneratable
 
   private
     def recursive_put_rows_to_csv(csv, base, decision_branches)
+      topic_taggings = QuestionAnswer.find(base[0]).topic_taggings
+      if topic_taggings.present?
+        topic_tag = []
+        topic_taggings.each do |topic_tagging|
+          topic_tag.push(topic_tagging.topic_tag.name)
+        end
+        tag = topic_tag.join('/')
+        base.insert(1, tag)
+      end
       row = base.dup
       if decision_branches.any?
         decision_branches.each do |decision_branch|

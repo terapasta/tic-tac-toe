@@ -18,7 +18,7 @@ class TrainingMessageFromCsv(Base):
 
         self._body_array = body_array
         self._x = x
-        self._y = learning_training_messages['answer_id']
+        self._y = learning_training_messages['question_answer_id']
         return self
 
     @property

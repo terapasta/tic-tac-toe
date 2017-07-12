@@ -66,6 +66,7 @@ class ToyotsuHumanConversationMlpTestCase(TestCase):
         questions = ['']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
+        # TODO: answer_idの使用をやめテストを通す
         ok_(result.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
 
     # TODO

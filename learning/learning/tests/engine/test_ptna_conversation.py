@@ -23,6 +23,7 @@ class PtnaConversationTestCase(TestCase):
     def test_hope_female_teacher(self):
         questions = ['女の先生']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '教室の一覧に性別が表示されていますので、そちらをご参照ください。'
@@ -33,6 +34,7 @@ class PtnaConversationTestCase(TestCase):
     def test_hello(self):
         questions = ['こんにちは']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'こんにちは'
@@ -43,6 +45,7 @@ class PtnaConversationTestCase(TestCase):
     def test_want_to_join(self):
         questions = ['入会したいのですが']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html'
@@ -56,6 +59,7 @@ class PtnaConversationTestCase(TestCase):
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
         # ラベル0(分類失敗)に分類されること
+        # TODO: answer_idの使用をやめテストを通す
         eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
         ok_(result.probability > self.threshold)
 
@@ -64,5 +68,6 @@ class PtnaConversationTestCase(TestCase):
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
         # ラベル0(分類失敗)に分類されること
+        # TODO: answer_idの使用をやめテストを通す
         eq_(result.answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
         ok_(result.probability > self.threshold)

@@ -65,11 +65,11 @@ class Datasource:
 
         if self._type == 'database':
             data = pd.read_sql(
-                "select id, question, answer_id from question_answers where bot_id = %(bot_id)s and answer_id <> %(answer_id)s;",
-                self._db, params={"bot_id": bot_id, "answer_id": Reply.CLASSIFY_FAILED_ANSWER_ID})
+                "select id, question, from question_answers where bot_id = %(bot_id)s and id <> %(id)s;",
+                self._db, params={"bot_id": bot_id, "id": Reply.CLASSIFY_FAILED_ANSWER_ID})
         elif self._type == 'csv':
             data = self._question_answers[self._question_answers['bot_id'] == bot_id]
-            data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
+            data = data[data['id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
 
         return data
 
@@ -78,11 +78,11 @@ class Datasource:
 
         if self._type == 'database':
             data = pd.read_sql(
-                "select id, question, answer_id from question_answers where bot_id = %(bot_id)s and question <> %(question)s and answer_id <> %(answer_id)s;",
-                self._db, params={"bot_id": bot_id, "question": question, "answer_id": Reply.CLASSIFY_FAILED_ANSWER_ID})
+                "select id, question from question_answers where bot_id = %(bot_id)s and question <> %(question)s and id <> %(id)s;",
+                self._db, params={"bot_id": bot_id, "question": question, "id": Reply.CLASSIFY_FAILED_ANSWER_ID})
         elif self._type == 'csv':
             data = self._question_answers[self._question_answers['bot_id'] == bot_id]
-            data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
+            data = data[data['id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
             data = data[data['question'] != question]
 
         return data
@@ -94,11 +94,11 @@ class Datasource:
         if self._type == 'database':
             # TODO SQLインジェクション対策必要
             data = pd.read_sql(
-                "select id, question, answer_id, question_answer_id from learning_training_messages where bot_id = %s and question <> '%s' and answer_id <> %s;"
+                "select id, question, question_answer_id from learning_training_messages where bot_id = %s and question <> '%s' and question_answer_id <> %s;"
                 % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
         elif self._type == 'csv':
             data = self._learning_training_messages[self._learning_training_messages['bot_id'] == bot_id]
-            data = data[data['answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
+            data = data[data['question_answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]
             data = data[data['question'] != question]
 
         return data

@@ -22,6 +22,7 @@ class ToyotsuHumanConversationTestCase(TestCase):
     def test_jal_mileage(self):
         questions = ['JAL マイレージ 内訳']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -43,6 +44,7 @@ JALマイレージバンクで計上される費用は
     def test_overseas_business_trip_pay(self):
         questions = ['海外の出張費の精算の方法は？']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -57,6 +59,7 @@ https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T031295?O
     def test_dont_know_account_item_of_visa(self):
         questions = ['VISAの勘定科目がわからない']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -69,6 +72,7 @@ https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T031295?O
     def test_borned_child(self):
         questions = ['子供が生まれた']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''
@@ -82,6 +86,7 @@ TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」→「扶養」で検索のうえ、「扶養
     def test_insurance_card(self):
         questions = ['保険証をなくした']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '''

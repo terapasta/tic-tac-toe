@@ -81,6 +81,7 @@ class LDATestDataGenerator():
         csvPath = os.path.join(csvDir, csvFile)
 
         csvTemp = pandas.read_csv(csvPath, encoding='Shift_JIS')
+        # TODO: answer_idの使用をやめる
         csvData = csvTemp.drop_duplicates(subset=['answer_id'])
 
         testData = csvData.ix[0:n_samples-1, ['question', 'answer_body']]

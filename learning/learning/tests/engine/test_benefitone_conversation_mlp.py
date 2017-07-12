@@ -22,6 +22,7 @@ class BenefitoneConversationMLPTestCase(TestCase):
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '保管されている契約書ですか？'
@@ -31,6 +32,7 @@ class BenefitoneConversationMLPTestCase(TestCase):
     def test_please_rent_excard(self):
         questions = ['EXカードを貸してください']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'レンタカー利用ですね。初めて利用しますか？'
@@ -47,6 +49,7 @@ class BenefitoneConversationMLPTestCase(TestCase):
         questions = ['']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
+        # TODO: answer_idの使用をやめテストを通す
         ok_(result.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
 
     # TODO

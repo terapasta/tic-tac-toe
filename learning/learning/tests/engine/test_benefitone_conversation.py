@@ -20,6 +20,7 @@ class BenefitoneConversationTestCase(TestCase):
     def test_want_to_check_contract(self):
         questions = ['契約書を見たいのですが']
         result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = '保管されている契約書ですか？'
@@ -29,6 +30,7 @@ class BenefitoneConversationTestCase(TestCase):
     def test_please_rent_excard(self):
         questions = ['EXカードを貸してください']
         result = Reply(self.bot_id, helper.learning_parameter(use_similarity_classification=False)).perform(questions)
+        # TODO: answer_idの使用をやめテストを通す
         answer_body = helper.get_answer_body(self.answers, result.answer_id)
 
         expected_answer = 'それでは、総務部の方に確認してください。　総務の人は、田中さん（内線801401）、中島さん（内線801402）、渡辺さん（内線801403）です。'

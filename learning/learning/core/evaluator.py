@@ -83,6 +83,7 @@ class Evaluator:
     def indexes_of_failed(self, estimator, X, y):
         y_pred = estimator.predict(X)
         indexes = []
+        # TODO: answer_idの使用をやめる
         for i, answer_id in enumerate(y):
             if y[i] != y_pred[i]:
                 indexes.append(i)

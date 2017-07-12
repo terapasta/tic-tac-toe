@@ -21,8 +21,10 @@ def learning_parameter(
 
 def build_answers(csv_file_path, encoding='UTF-8'):
     learning_training_messages = pd.read_csv(csv_file_path, encoding=encoding)
+    # TODO: answer_idの使用をやめテストを通す
     return learning_training_messages.drop_duplicates(subset=['answer_id'])
 
+# TODO: answer_idの使用をやめテストを通す
 def get_answer_body(answers, answer_id):
     rows = answers.query('answer_id == %s' % answer_id)
     if rows.empty:

@@ -40,7 +40,7 @@ class ReplyResult:
 
     def __sort(self):
         dict = list(map(lambda x: {
-            'question_answer_id': x[0], 'probability': x[1],
+            'question_answer_id': int(x[0]), 'probability': x[1],
         }, sorted(zip_longest(self._question_answer_ids, self._probabilities), key=lambda x: x[1], reverse=True)))
         return dict
 

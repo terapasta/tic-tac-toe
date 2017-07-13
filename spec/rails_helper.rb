@@ -60,7 +60,7 @@ RSpec.configure do |config|
     Warden.test_mode!
     DatabaseCleaner.strategy = :truncation
     fixture_paths = ["#{Rails.root}/db/fixtures", "#{Rails.root}/db/fixtures/test"]
-    filter = /defined_answers|word_mappings|training_texts/
+    filter = /defined_answers|word_mappings/
     SeedFu.seed(fixture_paths, filter)
   end
 

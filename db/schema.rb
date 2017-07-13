@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< d1f0eacbfa9835d04b1bad7185aa2a4f133558ed
-<<<<<<< 5cf6560893502c3a893b21c4c286fa35bda0bc55
-ActiveRecord::Schema.define(version: 20170710071727) do
-=======
-ActiveRecord::Schema.define(version: 20170710063046) do
->>>>>>> question_answersテーブルのquestionカラムのデータ型を変更
-=======
 ActiveRecord::Schema.define(version: 20170713012507) do
->>>>>>> decision_branchesテーブルのbodyをtext型に変更
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535

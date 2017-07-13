@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710063046) do
+ActiveRecord::Schema.define(version: 20170713012507) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -118,12 +118,12 @@ ActiveRecord::Schema.define(version: 20170710063046) do
   end
 
   create_table "decision_branches", force: :cascade do |t|
-    t.integer  "answer_id",      limit: 4,                null: false
-    t.string   "body",           limit: 255, default: "", null: false
+    t.integer  "answer_id",      limit: 4,     null: false
+    t.text     "body",           limit: 65535, null: false
     t.integer  "next_answer_id", limit: 4
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "bot_id",         limit: 4,                null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "bot_id",         limit: 4,     null: false
   end
 
   add_index "decision_branches", ["answer_id"], name: "index_decision_branches_on_answer_id", using: :btree

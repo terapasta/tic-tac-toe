@@ -13,21 +13,30 @@
       = space
       i.material-icons keyboard_arrow_right
 
-.panel.panel-default
-  .panel-heading
-    h4 Bot管理
-  .panel-body
-    = render 'form'
+ul.nav.nav-tabs
+  li.nav-item.active
+    a href="#bot" data-toggle="tab" Bot管理
+  li.nav-item
+    a href="#widget" data-toggle="tab" チャットウェジェット
 
-.panel.panel-default
-  .panel-heading: h4
-    |チャットウィジェット
-    - if Time.current <= Time.zone.parse('2017-06-14 23:59:59')
-      = space
-      span.label.label-warning NEW
-  .panel-body
-    p 以下のコードをWebサイトに貼り付けると、画面の右下に開閉できる小さなウィンドウでチャットをご利用いただけます。
-    p= render 'chat_widgets/embed_code'
-    = link_to '#', class: 'btn btn-default', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
-      i.material-icons content_copy
-      span クリップボードにコピー
+.tab-content
+  .tab-pane.active id="bot"
+    .panel.panel-default
+      .panel-heading
+        h4 Bot管理
+      .panel-body
+        = render 'form'
+        
+  .tab-pane id="widget"
+    .panel.panel-default
+      .panel-heading: h4
+        |チャットウィジェット
+        - if Time.current <= Time.zone.parse('2017-06-14 23:59:59')
+          = space
+          span.label.label-warning NEW
+      .panel-body
+        p 以下のコードをWebサイトに貼り付けると、画面の右下に開閉できる小さなウィンドウでチャットをご利用いただけます。
+        p= render 'chat_widgets/embed_code'
+        = link_to '#', class: 'btn btn-default', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
+          i.material-icons content_copy
+          span クリップボードにコピー

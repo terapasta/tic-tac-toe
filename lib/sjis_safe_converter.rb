@@ -9,6 +9,7 @@ class SjisSafeConverter
       ["00AC", "FFE2"], # not in boolean algebra
       ["2014", "2015"], # hyphen
       ["2016", "2225"], # double vertical lines
+      ["FF0F", "002f"], # slash
     ].inject(str) do |s, (before, after)|
       s.gsub(
         before.to_i(16).chr('UTF-8'),

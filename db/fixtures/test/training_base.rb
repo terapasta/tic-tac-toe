@@ -19,13 +19,3 @@ Answer.seed(:id,
 Answer.seed(:id,
   { id: 1001, context: 'normal', body: 'こんにちは！', bot_id: 3 },
 )
-
-Training.seed(:id,
-  { id: 1, bot_id: 4},
-  { id: 1001, bot_id: 3},
-)
-
-TrainingMessage.seed(:id,
-  { id: 1001, training_id: 1001, answer_id: nil, speaker: 'guest', body: 'こんにちは' },
-  { id: 1002, training_id: 1001, answer_id: 1001, speaker: 'bot', body: 'こんにちは！' },
-)

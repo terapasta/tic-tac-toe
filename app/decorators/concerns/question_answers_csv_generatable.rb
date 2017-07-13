@@ -19,6 +19,8 @@ module QuestionAnswersCsvGeneratable
         end
         tag = topic_tag.join('/')
         base.insert(1, tag)
+      else
+        base.insert(1, '')
       end
       row = base.dup
       if decision_branches.any?

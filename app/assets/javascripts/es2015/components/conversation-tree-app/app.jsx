@@ -1,11 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 
-import getOffset from '../../modules/get-offset';
-import MasterDetailPanel, { Master, Detail } from '../master-detail-panel';
+import {
+  decisionBranchTreePropType,
+  questionNodeKey,
+  answerNodeKey,
+  decisionBranchNodeKey,
+  decisionBranchAnswerNodeKey,
+} from './helpers';
 
+import getOffset from '../../modules/get-offset';
 import * as a from './action-creators';
-import { decisionBranchTreePropType } from './helpers';
+
+import MasterDetailPanel, { Master, Detail } from '../master-detail-panel';
 import Tree from './components/tree';
 import QuestionNode from './components/question-node';
 
@@ -42,9 +49,26 @@ class ConversationTree extends Component {
                   questionsRepo={questionsRepo}
                   decisionBranchesRepo={decisionBranchesRepo}
                   openedNodes={openedNodes}
-                  onClickQuestionNode={(id) => dispatch(a.toggleQuestionNode({ id }))}
-                  onClickAnswerNode={(id) => dispatch(a.toggleAnswerNode({ id }))}
-                  onClickDecisionBranchNode={(id) => dispatch(a.toggleDecisionBranchNode({ id }))}
+                  onClickQuestionNode={(id) => {
+                    dispatch(a.toggleNode({
+                      nodeKey: questionNodeKey(id),
+                    }));
+                  }}
+                  onClickAnswerNode={(id) => {
+                    dispatch(a.toggleNode({
+                      nodeKey: answerNodeKey(id),
+                    }));
+                  }}
+                  onClickDecisionBranchNode={(id) => {
+                    dispatch(a.toggleNode({
+                      nodeKey: decisionBranchNodeKey(id),
+                    }));
+                  }}
+                  onClickDecisionBranchAnswerNode={(id) => {
+                    dispatch(a.toggleNode({
+                      nodeKey: decisionBranchAnswerNodeKey(id),
+                    }));
+                  }}
                 />
               );
             })}
@@ -58,7 +82,7 @@ class ConversationTree extends Component {
   }
 }
 
-ConversationTree.componentName = "ConversationTree";
+ConversationTree.componentName = 'ConversationTree';
 
 ConversationTree.propTypes = {
   botId: PropTypes.number.isRequired,

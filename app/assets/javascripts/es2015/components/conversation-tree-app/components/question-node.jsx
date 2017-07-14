@@ -3,7 +3,12 @@ import classnames from 'classnames';
 import isEmpty from 'is-empty';
 import includes from 'lodash/includes';
 
-import { decisionBranchTreePropType, openedNodesType } from '../helpers';
+import {
+  decisionBranchTreePropType,
+  openedNodesType,
+  questionNodeKey,
+} from '../helpers';
+
 import Tree from './tree';
 import AnswerNode from './answer-node';
 
@@ -30,10 +35,11 @@ class QuestionNode extends Component {
       openedNodes,
       onClickAnswerNode,
       onClickDecisionBranchNode,
+      onClickDecisionBranchAnswerNode,
     } = this.props;
 
     const { question, answer } = questionsRepo[node.id];
-    const isOpened = includes(openedNodes.questionIds, node.id);
+    const isOpened = includes(openedNodes, questionNodeKey(node.id));
     const itemClassName = classnames('tree__item', {
       'tree__item--no-children': isEmpty(answer),
       'tree__item--opened': isOpened,
@@ -60,6 +66,7 @@ class QuestionNode extends Component {
             openedNodes={openedNodes}
             onClickAnswerNode={onClickAnswerNode}
             onClickDecisionBranchNode={onClickDecisionBranchNode}
+            onClickDecisionBranchAnswerNode={onClickDecisionBranchAnswerNode}
           />
         </Tree>
       </li>
@@ -78,6 +85,7 @@ QuestionNode.propTypes = {
   onClickQuestionNode: PropTypes.func.isRequired,
   onClickAnswerNode: PropTypes.func.isRequired,
   onClickDecisionBranchNode: PropTypes.func.isRequired,
+  onClickDecisionBranchAnswerNode: PropTypes.func.isRequired,
 };
 
 QuestionNode.defaultProps = {

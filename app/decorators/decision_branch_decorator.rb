@@ -4,7 +4,7 @@ class DecisionBranchDecorator < ApplicationDecorator
   def as_tree_node_json
     {
       id: object.id,
-      decisionBranches: object.child_decision_branches&.decorate&.as_tree_json
+      childDecisionBranches: object.child_decision_branches&.decorate&.as_tree_json
     }
   end
 end

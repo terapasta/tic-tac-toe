@@ -23,13 +23,10 @@ class QuestionAnswer::CsvImporter
         question_answer.tap do |qa|
           qa.answer = import_param[:answer_body]
           qa.save!
-          topic_tags = import_param[:topic_tag].split("/")
-          topic_tags.each do |topic_tag|
-            @bot.topic_tags.each do |bot_topic_tag|
-              if topic_tag == bot_topic_tag.name
-                qa.topic_taggings.create(topic_tag_id: bot_topic_tag.id)
-              end
-            end
+          if import_param[:topic_tag_names].present?
+            topic_tag_names = import_param[:topic_tag_names].split("/")
+            target_topic_tags = @bot.topic_tags.where(name: topic_tag_names)
+            qa.topic_taggings.create(target_topic_tags.map{ |t| { topic_tag_id: t.id } })
           end
         end
 
@@ -69,7 +66,7 @@ class QuestionAnswer::CsvImporter
         },
         answer_body: data[:answer],
         decision_branches_attributes: decision_branches,
-        topic_tag: data[:topic_tag],
+        topic_tag_names: data[:topic_tag_names],
       }
       out
     }.values
@@ -77,7 +74,7 @@ class QuestionAnswer::CsvImporter
 
   def detect_or_initialize_by_row(row)
     id = sjis_safe(row[0]).to_i
-    tag = sjis_safe(row[1])
+    topic_tag_names = sjis_safe(row[1]).gsub('／', '/')
     q = sjis_safe(row[2])
     a = sjis_safe(row[3])
     decision_branch = sjis_safe(row[4])
@@ -88,7 +85,7 @@ class QuestionAnswer::CsvImporter
     {
       key: bot_had ? id : "#{q}-#{a}",
       id: bot_had ? id : nil,
-      topic_tag: tag,
+      topic_tag_names: topic_tag_names,
       question: q,
       answer: a,
       decision_branch: decision_branch.present? ? { body: decision_branch, next_answer_body: next_answer } : nil,

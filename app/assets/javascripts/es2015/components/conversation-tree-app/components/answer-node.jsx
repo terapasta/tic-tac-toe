@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import includes from 'lodash/includes';
 import isEmpty from 'is-empty';
@@ -32,6 +33,7 @@ class AnswerNode extends Component {
       questionsRepo,
       decisionBranchesRepo,
       openedNodes,
+      activeItem,
       onClickAnswerNode,
       onClickDecisionBranchNode,
       onClickDecisionBranchAnswerNode,
@@ -42,7 +44,7 @@ class AnswerNode extends Component {
     const itemClassName = classnames('tree__item', {
       'tree__item--no-children': isEmpty(node.decisionBranches),
       'tree__item--opened': isOpened,
-      'active': false,
+      'active': activeItem.nodeKey === answerNodeKey(node.id),
     });
 
     return (
@@ -63,6 +65,7 @@ class AnswerNode extends Component {
               nodes={node.decisionBranches}
               decisionBranchesRepo={decisionBranchesRepo}
               openedNodes={openedNodes}
+              activeItem={activeItem}
               onClickAnswerNode={onClickAnswerNode}
               onClickDecisionBranchNode={onClickDecisionBranchNode}
               onClickDecisionBranchAnswerNode={onClickDecisionBranchAnswerNode}
@@ -82,6 +85,9 @@ AnswerNode.propTypes = {
   questionsRepo: PropTypes.object.isRequired, // FIXME より詳細に
   decisionBranchesRepo: PropTypes.object.isRequired, // FIXME より詳細に
   openedNodes: openedNodesType.isRequired,
+  activeItem: PropTypes.shape({
+    nodeKey: PropTypes.string,
+  }).isRequired,
   onClickAnswerNode: PropTypes.func.isRequired,
   onClickDecisionBranchNode: PropTypes.func.isRequired,
 };

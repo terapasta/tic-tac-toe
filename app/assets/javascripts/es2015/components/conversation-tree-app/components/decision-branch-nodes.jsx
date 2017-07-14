@@ -27,13 +27,14 @@ class DecisionBranchNodes extends Component {
   }
 
   renderDecisionBranchNode(node) {
-    const { decisionBranchesRepo, openedNodes } = this.props;
+    const { decisionBranchesRepo, openedNodes, activeItem } = this.props;
     const { body, answer } = decisionBranchesRepo[node.id];
 
     const isOpened = includes(openedNodes, decisionBranchNodeKey(node.id));
     const itemClassName = classnames('tree__item', {
       'tree__item--no-children': isEmpty(answer),
       'tree__item--opened': isOpened,
+      'active': activeItem.nodeKey === decisionBranchNodeKey(node.id),
     });
 
     return (
@@ -58,14 +59,14 @@ class DecisionBranchNodes extends Component {
   }
 
   renderAnswerNode(node) {
-    const { openedNodes, decisionBranchesRepo } = this.props;
+    const { openedNodes, decisionBranchesRepo, activeItem } = this.props;
     const { childDecisionBranches } = node;
     const { answer } = decisionBranchesRepo[node.id];
     const isOpened = includes(openedNodes, decisionBranchAnswerNodeKey(node.id));
     const itemClassName = classnames('tree__item', {
       'tree__item--no-children': isEmpty(childDecisionBranches),
       'tree__item--opened': isOpened,
-      'active': false,
+      'active': activeItem.nodeKey === decisionBranchAnswerNodeKey(node.id),
     });
 
     return (
@@ -102,6 +103,9 @@ class DecisionBranchNodes extends Component {
 DecisionBranchNodes.propTypes = {
   nodes: decisionBranchTreePropType,
   openedNodes: openedNodesType,
+  activeItem: PropTypes.shape({
+    nodeKey: PropTypes.string,
+  }).isRequired,
   onClickAnswerNode: PropTypes.func.isRequired,
   onClickDecisionBranchNode: PropTypes.func.isRequired,
   onClickDecisionBranchAnswerNode: PropTypes.func.isRequired,

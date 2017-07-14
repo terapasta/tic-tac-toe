@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 
 import {
@@ -29,13 +30,20 @@ class ConversationTree extends Component {
     adjustHeight(this.refs.masterDetailPanel);
   }
 
+  onClickNode(nodeKey) {
+    const { dispatch } = this.props;
+    const payload = { nodeKey };
+    dispatch(a.setActiveItem(payload));
+    dispatch(a.toggleNode(payload));
+  }
+
   render() {
     const {
-      dispatch,
       questionsTree,
       questionsRepo,
       decisionBranchesRepo,
       openedNodes,
+      activeItem,
     } = this.props;
 
     return (
@@ -49,26 +57,11 @@ class ConversationTree extends Component {
                   questionsRepo={questionsRepo}
                   decisionBranchesRepo={decisionBranchesRepo}
                   openedNodes={openedNodes}
-                  onClickQuestionNode={(id) => {
-                    dispatch(a.toggleNode({
-                      nodeKey: questionNodeKey(id),
-                    }));
-                  }}
-                  onClickAnswerNode={(id) => {
-                    dispatch(a.toggleNode({
-                      nodeKey: answerNodeKey(id),
-                    }));
-                  }}
-                  onClickDecisionBranchNode={(id) => {
-                    dispatch(a.toggleNode({
-                      nodeKey: decisionBranchNodeKey(id),
-                    }));
-                  }}
-                  onClickDecisionBranchAnswerNode={(id) => {
-                    dispatch(a.toggleNode({
-                      nodeKey: decisionBranchAnswerNodeKey(id),
-                    }));
-                  }}
+                  activeItem={activeItem}
+                  onClickQuestionNode={id => this.onClickNode(questionNodeKey(id))}
+                  onClickAnswerNode={id => this.onClickNode(answerNodeKey(id))}
+                  onClickDecisionBranchNode={id => this.onClickNode(decisionBranchNodeKey(id))}
+                  onClickDecisionBranchAnswerNode={id => this.onClickNode(decisionBranchAnswerNodeKey(id))}
                 />
               );
             })}
@@ -85,11 +78,26 @@ class ConversationTree extends Component {
 ConversationTree.componentName = 'ConversationTree';
 
 ConversationTree.propTypes = {
-  botId: PropTypes.number.isRequired,
   questionsTree: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     decisionBranches: decisionBranchTreePropType,
-  })),
+  })).isRequired,
+  questionsRepo: PropTypes.shape({
+    [PropTypes.number]: PropTypes.shape({
+      question: PropTypes.string,
+      answer: PropTypes.string,
+    }),
+  }).isRequired,
+  decisionBranchesRepo: PropTypes.shape({
+    [PropTypes.number]: PropTypes.shape({
+      body: PropTypes.string,
+      answer: PropTypes.string,
+    }),
+  }).isRequired,
+  openedNodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeItem: PropTypes.shape({
+    nodeKey: PropTypes.string,
+  }).isRequired,
 };
 
 export default ConversationTree;

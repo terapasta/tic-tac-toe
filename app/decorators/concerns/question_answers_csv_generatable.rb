@@ -5,7 +5,15 @@ module QuestionAnswersCsvGeneratable
 
   def to_csv(encoding: :utf8)
     super(encoding: encoding.to_sym) do |csv, item|
-      recursive_put_rows_to_csv(csv, [item.id, item.question, item.answer], item.decision_branches)
+      recursive_put_rows_to_csv(csv,
+        [
+          item.id,
+          item.topic_tags.map(&:name).join('/').presence,
+          item.question,
+          item.answer,
+        ],
+        item.decision_branches,
+      )
     end
   end
 

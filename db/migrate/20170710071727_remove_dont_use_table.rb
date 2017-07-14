@@ -7,5 +7,6 @@ class RemoveDontUseTable < ActiveRecord::Migration
     drop_table :contact_states
     drop_table :contact_answers
     drop_table :auto_tweets
+    drop_table :favorite_words
   end
 end

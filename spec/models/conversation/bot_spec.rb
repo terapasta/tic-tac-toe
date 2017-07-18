@@ -37,6 +37,7 @@ RSpec.describe Conversation::Bot do
       end
 
       it 'NullAnswerが返ること' do
+        # TODO: NullQuestionAnswerに置き換える
         expect(subject.answer).to be_a NullAnswer
       end
     end

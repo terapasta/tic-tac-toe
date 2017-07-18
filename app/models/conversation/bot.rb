@@ -28,8 +28,7 @@ class Conversation::Bot
     question_answer_ids = @results.select{|x| x[:probability] > 0.1}.map{|x| x[:question_answer_id].to_i}
     Rails.logger.debug(probability)
 
-    # TODO: classify_thresholdの判定とnull question answerの作成
-    @question_answer = QuestionAnswer.find_by(id: question_answer_id, bot_id: @bot.id)
+    @question_answer = QuestionAnswer.find_or_null_question_answer(question_answer_id, @bot, probability, classify_threshold)
     
     reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, question_answer: @question_answer, probability: probability, question_answer_ids: question_answer_ids)
 

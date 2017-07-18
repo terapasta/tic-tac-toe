@@ -44,7 +44,6 @@ class Reply:
         return reply_result
 
     def __predict(self, features, question):
-        similarity = Similarity(self._bot_id)
         # answers = self.estimator.predict(features)
         probabilities = self.estimator.predict_proba(features)
         question_answer_ids = self.estimator.classes_

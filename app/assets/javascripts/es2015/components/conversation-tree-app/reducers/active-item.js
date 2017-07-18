@@ -1,10 +1,11 @@
-import { handleActions } from "redux-actions";
+import { handleActions } from 'redux-actions';
+import assign from 'lodash/assign';
 import { setActiveItem } from '../action-creators';
 
-const initialState = { nodeKey: null };
+const initialState = { type: null, nodeKey: null, node: {} };
 
 export default handleActions({
   [setActiveItem]: (state, action) => {
-    return { nodeKey: action.payload.nodeKey };
+    return assign({}, state, action.payload);
   },
 }, initialState);

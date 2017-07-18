@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import includes from 'lodash/includes';
 import isEmpty from 'is-empty';
@@ -7,6 +6,9 @@ import isEmpty from 'is-empty';
 import {
   decisionBranchTreePropType,
   openedNodesType,
+} from '../types';
+
+import {
   answerNodeKey,
 } from '../helpers';
 
@@ -23,8 +25,7 @@ class AnswerNode extends Component {
   onClickAnswerNode(e) {
     e.stopPropagation();
     const { node, onClickAnswerNode } = this.props;
-    if (isEmpty(node.decisionBranches)) { return; }
-    onClickAnswerNode(node.id);
+    onClickAnswerNode(node);
   }
 
   render() {

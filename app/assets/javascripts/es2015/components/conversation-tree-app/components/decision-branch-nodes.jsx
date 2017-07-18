@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import isEmpty from 'is-empty';
 import includes from 'lodash/includes';
 import classnames from 'classnames';
 
 import {
   decisionBranchTreePropType,
+  activeItemType,
   openedNodesType,
+} from '../types';
+
+import {
   decisionBranchAnswerNodeKey,
   decisionBranchNodeKey,
 } from '../helpers';
@@ -16,14 +19,12 @@ import Tree from './tree';
 class DecisionBranchNodes extends Component {
   onClickDecisionBranchNode(node, e) {
     e.stopPropagation();
-    console.log('db', node.id)
-    this.props.onClickDecisionBranchNode(node.id);
+    this.props.onClickDecisionBranchNode(node);
   }
 
   onClickAnswerNode(node, e) {
     e.stopPropagation();
-    console.log('a', node.id)
-    this.props.onClickDecisionBranchAnswerNode(node.id);
+    this.props.onClickDecisionBranchAnswerNode(node);
   }
 
   renderDecisionBranchNode(node) {
@@ -101,11 +102,10 @@ class DecisionBranchNodes extends Component {
 }
 
 DecisionBranchNodes.propTypes = {
-  nodes: decisionBranchTreePropType,
-  openedNodes: openedNodesType,
-  activeItem: PropTypes.shape({
-    nodeKey: PropTypes.string,
-  }).isRequired,
+  nodes: decisionBranchTreePropType.isRequired,
+  openedNodes: openedNodesType.isRequired,
+  activeItem: activeItemType.isRequired,
+
   onClickAnswerNode: PropTypes.func.isRequired,
   onClickDecisionBranchNode: PropTypes.func.isRequired,
   onClickDecisionBranchAnswerNode: PropTypes.func.isRequired,

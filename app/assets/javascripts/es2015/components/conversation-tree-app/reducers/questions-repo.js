@@ -24,7 +24,8 @@ export default handleActions({
   },
 
   [succeedUpdateQuestion]: (state, action) => {
-    return state;
+    const { questionAnswer } = action.payload;
+    return assign({}, state, { [questionAnswer.id]: questionAnswer });
   },
   [failedUpdateQuestion]: (state, action) => {
     return state;

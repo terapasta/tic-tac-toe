@@ -4814,10 +4814,8 @@ var updateQuestion = exports.updateQuestion = function updateQuestion(id, questi
         botId = _getState2.botId;
 
     return QuestionAnswerAPI.update(botId, id, question, answer).then(function (res) {
-      console.log(res);
       dispatch(succeedUpdateQuestion(res.data));
     }).catch(function (res) {
-      console.log(res);
       dispatch(failedUpdateQuestion(res.data));
     });
   };
@@ -6412,13 +6410,8 @@ var QuestionNode = function (_Component) {
       e.stopPropagation();
       var _props = this.props,
           node = _props.node,
-          questionsRepo = _props.questionsRepo,
           onClickQuestionNode = _props.onClickQuestionNode;
-      var answer = questionsRepo[node.id].answer;
 
-      if ((0, _isEmpty2.default)(answer)) {
-        return;
-      }
       onClickQuestionNode(node);
     }
   }, {
@@ -6714,9 +6707,9 @@ var _handleActions;
 
 var _reduxActions = require('redux-actions');
 
-var _assign2 = require('lodash/assign');
+var _assign3 = require('lodash/assign');
 
-var _assign3 = _interopRequireDefault(_assign2);
+var _assign4 = _interopRequireDefault(_assign3);
 
 var _question = require('../action-creators/question');
 
@@ -6729,11 +6722,13 @@ var initialState = {};
 exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _defineProperty(_handleActions, _question.succeedCreateQuestion, function (state, action) {
   var questionAnswer = action.payload.questionAnswer;
 
-  return (0, _assign3.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
+  return (0, _assign4.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
 }), _defineProperty(_handleActions, _question.failedCreateQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _question.succeedUpdateQuestion, function (state, action) {
-  return state;
+  var questionAnswer = action.payload.questionAnswer;
+
+  return (0, _assign4.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
 }), _defineProperty(_handleActions, _question.failedUpdateQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _question.succeedDeleteQuestion, function (state, action) {

@@ -27,9 +27,7 @@ class QuestionNode extends Component {
 
   onClickQuestionNode(e) {
     e.stopPropagation();
-    const { node, questionsRepo, onClickQuestionNode } = this.props
-    const { answer } = questionsRepo[node.id];
-    if (isEmpty(answer)) { return; }
+    const { node, onClickQuestionNode } = this.props
     onClickQuestionNode(node)
   }
 

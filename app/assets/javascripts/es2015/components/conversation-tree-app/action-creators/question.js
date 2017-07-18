@@ -36,10 +36,8 @@ export const updateQuestion = (id, question, answer) => (
   (dispatch, getState) => {
     const { botId } = getState();
     return QuestionAnswerAPI.update(botId, id, question, answer).then((res) => {
-      console.log(res);
       dispatch(succeedUpdateQuestion(res.data));
     }).catch((res) => {
-      console.log(res)
       dispatch(failedUpdateQuestion(res.data));
     });
   }

@@ -104,7 +104,7 @@ class DecisionBranchNodes extends Component {
 }
 
 DecisionBranchNodes.propTypes = {
-  nodes: decisionBranchTreePropType.isRequired,
+  nodes: decisionBranchTreePropType,
   openedNodes: openedNodesType.isRequired,
   activeItem: activeItemType.isRequired,
 

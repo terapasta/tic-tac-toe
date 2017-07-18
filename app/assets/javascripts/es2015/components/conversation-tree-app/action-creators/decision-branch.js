@@ -22,10 +22,10 @@ export const createDecisionBranch = (answerId, body) => (
   }
 );
 
-export const updateDecisionBranch = (answerId, id, body) => (
+export const updateDecisionBranch = (answerId, id, body, answer = null) => (
   (dispatch, getState) => {
     const { botId } = getState();
-    return DecisionBranchAPI.update(botId, answerId, id, body).then((res) => {
+    return DecisionBranchAPI.update(botId, answerId, id, body, answer).then((res) => {
       dispatch(succeedUpdateDecisionBranch(res.data));
     }).catch((res) => {
       dispatch(failedUpdateDecisionBranch(res.data));

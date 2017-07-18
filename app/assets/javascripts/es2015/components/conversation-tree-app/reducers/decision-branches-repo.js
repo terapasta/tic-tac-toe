@@ -13,7 +13,6 @@ import {
 } from '../action-creators/decision-branch';
 
 const initialState = {};
-console.log(succeedCreateDecisionBranch)
 
 export default handleActions({
   [succeedCreateDecisionBranch]: (state, action) => {

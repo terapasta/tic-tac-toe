@@ -127,7 +127,14 @@ class ConversationTree extends Component {
           {activeItem.type === 'decisionBranch' && (
             <DecisionBranchForm
               activeItem={activeItem}
+              questionsTree={questionsTree}
               decisionBranchesRepo={decisionBranchesRepo}
+              onUpdate={(answerId, id, body, answer) => dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer))}
+              onDelete={(answerId, id) => {
+                dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id)).then(() => {
+                  dispatch(actions.rejectActiveItem());
+                });
+              }}
             />
           )}
           {activeItem.type === 'decisionBranchAnswer' && (

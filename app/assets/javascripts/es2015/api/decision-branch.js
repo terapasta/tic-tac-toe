@@ -7,10 +7,12 @@ export const create = (botId, questionAnswerId, body) => {
   }, config());
 };
 
-export const update = (botId, questionAnswerId, id, body) => {
-  return axios.put(`/api/bots/${botId}/question_answers/${questionAnswerId}/decision_branches/${id}.json`, {
-    decision_branch: { body }
-  }, config());
+export const update = (botId, questionAnswerId, id, body, answer = null) => {
+  const path = `/api/bots/${botId}/question_answers/${questionAnswerId}/decision_branches/${id}.json`;
+  const params = { body };
+  if (answer) { params.answer = answer };
+
+  return axios.put(path, { decision_branch: params }, config());
 };
 
 export const destroy = (botId, questionAnswerId, id) => {

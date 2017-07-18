@@ -13,7 +13,6 @@ class BaseAnswerForm extends Component {
     this.state = {
       answer,
       decisionBranches,
-      isAddingDecisionBranch: false,
       editingDecisionBranchIndex: null,
     };
   }
@@ -24,7 +23,7 @@ class BaseAnswerForm extends Component {
   }
 
   onCreateDecisionBranch(body) {
-    console.log('create db', body);
+    return this.constructor.onCreateDecisionBranch(this.props, body);
   }
 
   onUpdateDecisionBranch(id, body) {
@@ -43,6 +42,7 @@ class BaseAnswerForm extends Component {
       <div className="form-group">
         <ul className="list-group margin-bottom-8">
           {decisionBranches.map((db, i) => {
+            if (db == null) { return null; }
             if (editingDecisionBranchIndex === i) {
               return (
                 <EditingDecisionBranchForm

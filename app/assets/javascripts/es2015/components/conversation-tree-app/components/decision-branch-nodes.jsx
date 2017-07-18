@@ -29,7 +29,9 @@ class DecisionBranchNodes extends Component {
 
   renderDecisionBranchNode(node) {
     const { decisionBranchesRepo, openedNodes, activeItem } = this.props;
-    const { body, answer } = decisionBranchesRepo[node.id];
+    const decisionBranch = decisionBranchesRepo[node.id];
+    if (decisionBranch == null) { return null; }
+    const { body, answer } = decisionBranch;
 
     const isOpened = includes(openedNodes, decisionBranchNodeKey(node.id));
     const itemClassName = classnames('tree__item', {

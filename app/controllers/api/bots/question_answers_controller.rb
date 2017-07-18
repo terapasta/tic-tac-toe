@@ -36,7 +36,7 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
   private
     def set_bot
       @bot = Bot.find(params[:bot_id])
-      authorize @bot
+      authorize @bot, :show?
     end
 
     def set_question_answer

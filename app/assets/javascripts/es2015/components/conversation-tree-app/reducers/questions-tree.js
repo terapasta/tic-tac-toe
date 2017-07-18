@@ -11,7 +11,18 @@ import {
   failedDeleteQuestion,
 } from '../action-creators/question';
 
-const initialState = {};
+import {
+  succeedCreateDecisionBranch,
+  failedCreateDecisionBranch,
+
+  succeedUpdateDecisionBranch,
+  failedUpdateDecisionBranch,
+
+  succeedDeleteDecisionBranch,
+  failedDeleteDecisionBranch,
+} from '../action-creators/decision-branch';
+
+const initialState = [];
 
 export default handleActions({
   [succeedCreateQuestion]: (state, action) => {
@@ -34,6 +45,40 @@ export default handleActions({
     return state;
   },
   [failedDeleteQuestion]: (state, action) => {
+    return state;
+  },
+
+  // --------
+
+  [succeedCreateDecisionBranch]: (state, action) => {
+    const { decisionBranch } = action.payload;
+    const { id, questionAnswerId } = decisionBranch;
+    const newState = state.concat();
+    newState.forEach((node) => {
+      if (node.id === questionAnswerId) {
+        node.decisionBranches.push({
+          id,
+          childDecisionBranches: [],
+        });
+      }
+    });
+    return newState;
+  },
+  [failedCreateDecisionBranch]: (state, action) => {
+    return state;
+  },
+
+  [succeedUpdateDecisionBranch]: (state, action) => {
+    return state;
+  },
+  [failedUpdateDecisionBranch]: (state, action) => {
+    return state;
+  },
+
+  [succeedDeleteDecisionBranch]: (state, action) => {
+    return state;
+  },
+  [failedDeleteDecisionBranch]: (state, action) => {
     return state;
   },
 }, initialState);

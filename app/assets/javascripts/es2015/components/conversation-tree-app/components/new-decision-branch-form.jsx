@@ -7,6 +7,17 @@ class NewDecisionBranchForm extends Component {
       body: '',
       isAdding: false,
     };
+
+    this.onClickSave = this.onClickSave.bind(this);
+  }
+
+  onClickSave() {
+    this.props.onSave(this.state.body).then(() => {
+      this.setState({
+        body: '',
+        isAdding: false,
+      });
+    });
   }
 
   renderForm() {
@@ -36,7 +47,7 @@ class NewDecisionBranchForm extends Component {
             <span
               className="btn btn-primary"
               disabled={false}
-              onClick={() => {}}>
+              onClick={this.onClickSave}>
               追加
             </span>
           </div>

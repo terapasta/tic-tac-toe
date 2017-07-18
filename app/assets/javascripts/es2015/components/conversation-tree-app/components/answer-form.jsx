@@ -1,3 +1,5 @@
+import isEmpty from 'is-empty';
+
 import {
   activeItemType,
   questionsRepoType,
@@ -15,6 +17,12 @@ AnswerForm.getAnswerAndDecisionBranches = (props) => {
     decisionBranchesRepo[db.id]
   ));
   return { answer, decisionBranches };
+};
+
+AnswerForm.onCreateDecisionBranch = (props, body) => {
+  if (isEmpty(body)) { return; }
+  const { activeItem, onCreateDecisionBranch } = props;
+  return onCreateDecisionBranch(activeItem.node.id, body);
 };
 
 AnswerForm.propTypes = {

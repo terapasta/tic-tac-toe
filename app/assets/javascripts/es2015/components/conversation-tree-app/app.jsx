@@ -20,6 +20,7 @@ import {
 import getOffset from '../../modules/get-offset';
 import * as actions from './action-creators';
 import * as questionActions from './action-creators/question';
+import * as decisionBranchActions from './action-creators/decision-branch';
 
 import MasterDetailPanel, { Master, Detail } from '../master-detail-panel';
 import Tree from './components/tree';
@@ -117,6 +118,9 @@ class ConversationTree extends Component {
               activeItem={activeItem}
               questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
+              onCreateDecisionBranch={(answerId, body) => dispatch(decisionBranchActions.createDecisionBranch(answerId, body))}
+              onUpdateDecisionBranch={(id, body) => console.log('update db', id, body)}
+              onDeleteDecisionBranch={(id) => console.log('delete db', id)}
             />
           )}
           {activeItem.type === 'decisionBranch' && (
@@ -129,6 +133,9 @@ class ConversationTree extends Component {
             <DecisionBranchAnswerForm
               activeItem={activeItem}
               decisionBranchesRepo={decisionBranchesRepo}
+              onCreateDecisionBranch={(answerId, body) => console.log('create db', answerId, body)}
+              onUpdateDecisionBranch={(id, body) => console.log('update db', id, body)}
+              onDeleteDecisionBranch={(id) => console.log('delete db', id)}
             />
           )}
         </Detail>

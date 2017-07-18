@@ -29,7 +29,9 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
   end
 
   def destroy
-    @question_answer.destroy!
+    ActiveRecord::Base.transaction do
+      Array(@question_answer.self_and_deep_child_decision_branches).map(&:destroy!)
+    end
     render json: {}, status: :no_content
   end
 

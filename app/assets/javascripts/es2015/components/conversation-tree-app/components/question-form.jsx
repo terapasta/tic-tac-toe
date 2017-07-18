@@ -8,6 +8,8 @@ class QuestionForm extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+
     const { activeItem, questionsRepo } = props;
     if (isEmpty(activeItem.node)) {
       this.state = { question: '', answer: '' };
@@ -27,6 +29,7 @@ class QuestionForm extends Component {
       return;
     }
     const question = questionsRepo[activeItem.node.id];
+    if (question == null) { return; }
     this.setState({
       question: question.question,
       answer: question.answer,
@@ -43,7 +46,15 @@ class QuestionForm extends Component {
     }
   }
 
+  onDelete() {
+    const { activeItem, onDelete } = this.props;
+    if (window.confirm('本当に削除してよろしいですか？')) {
+      onDelete(activeItem.node.id);
+    }
+  }
+
   render() {
+    const { activeItem } = this.props;
     const { question, answer } = this.state;
 
     return (
@@ -77,7 +88,20 @@ class QuestionForm extends Component {
               id="save-answer-button"
               href="#"
               onClick={this.onSubmit}
-              disabled={false}>保存</a>
+              disabled={false}
+            >保存</a>
+
+            {activeItem.node !== null && (
+              <span>
+                &nbsp;&nbsp;
+                <a className="btn btn-danger"
+                  id="delete-answer-button"
+                  href="#"
+                  onClick={this.onDelete}
+                  disabled={false}
+                >削除</a>
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -90,6 +114,7 @@ QuestionForm.propTypes = {
   questionsRepo: questionsRepoType.isRequired,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default QuestionForm;

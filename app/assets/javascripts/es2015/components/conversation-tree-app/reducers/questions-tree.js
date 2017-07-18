@@ -42,7 +42,9 @@ export default handleActions({
   },
 
   [succeedDeleteQuestion]: (state, action) => {
-    return state;
+    const { id } = action.payload;
+    const newState = state.filter(node => node.id !== id);
+    return newState;
   },
   [failedDeleteQuestion]: (state, action) => {
     return state;

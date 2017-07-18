@@ -64,4 +64,18 @@ class QuestionAnswer < ActiveRecord::Base
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
   end
+
+  def self_and_deep_child_decision_branches
+    all = [self, *decision_branches]
+    tails = decision_branches
+    next_tails = nil
+    get_next_dbs = -> (dbs) {
+      dbs.map(&:child_decision_branches).flatten.compact
+    }
+    begin
+      all += tails = next_tails || get_next_dbs.call(tails)
+      next_tails = get_next_dbs.call(tails)
+    end while next_tails.count > 0
+    all
+  end
 end

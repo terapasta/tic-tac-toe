@@ -47,10 +47,9 @@ export const deleteQuestion = (id) => (
   (dispatch, getState) => {
     const { botId } = getState();
     return QuestionAnswerAPI.destroy(botId, id).then((res) => {
-      console.log(res);
-      dispatch(succeedDeleteQuestion(res.data));
+      dispatch(succeedDeleteQuestion({ id }));
+      dispatch(setActiveItem({ type: null, nodeKey: null, node: null }))
     }).catch((res) => {
-      console.log(res)
       dispatch(failedDeleteQuestion(res.data));
     });
   }

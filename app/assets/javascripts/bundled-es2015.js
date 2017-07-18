@@ -4925,10 +4925,9 @@ var deleteQuestion = exports.deleteQuestion = function deleteQuestion(id) {
         botId = _getState3.botId;
 
     return QuestionAnswerAPI.destroy(botId, id).then(function (res) {
-      console.log(res);
-      dispatch(succeedDeleteQuestion(res.data));
+      dispatch(succeedDeleteQuestion({ id: id }));
+      dispatch((0, _actionCreators.setActiveItem)({ type: null, nodeKey: null, node: null }));
     }).catch(function (res) {
-      console.log(res);
       dispatch(failedDeleteQuestion(res.data));
     });
   };
@@ -5130,6 +5129,9 @@ var ConversationTree = function (_Component) {
             },
             onUpdate: function onUpdate(id, question, answer) {
               return dispatch(questionActions.updateQuestion(id, question, answer));
+            },
+            onDelete: function onDelete(id) {
+              return dispatch(questionActions.deleteQuestion(id));
             }
           }),
           activeItem.type === 'answer' && _react2.default.createElement(_answerForm2.default, {
@@ -6378,6 +6380,8 @@ var QuestionForm = function (_Component) {
     var _this = _possibleConstructorReturn(this, (QuestionForm.__proto__ || Object.getPrototypeOf(QuestionForm)).call(this, props));
 
     _this.onSubmit = _this.onSubmit.bind(_this);
+    _this.onDelete = _this.onDelete.bind(_this);
+
     var activeItem = props.activeItem,
         questionsRepo = props.questionsRepo;
 
@@ -6404,6 +6408,9 @@ var QuestionForm = function (_Component) {
         return;
       }
       var question = questionsRepo[activeItem.node.id];
+      if (question == null) {
+        return;
+      }
       this.setState({
         question: question.question,
         answer: question.answer
@@ -6427,10 +6434,22 @@ var QuestionForm = function (_Component) {
       }
     }
   }, {
+    key: 'onDelete',
+    value: function onDelete() {
+      var _props2 = this.props,
+          activeItem = _props2.activeItem,
+          onDelete = _props2.onDelete;
+
+      if (window.confirm('本当に削除してよろしいですか？')) {
+        onDelete(activeItem.node.id);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var activeItem = this.props.activeItem;
       var _state2 = this.state,
           question = _state2.question,
           answer = _state2.answer;
@@ -6500,8 +6519,24 @@ var QuestionForm = function (_Component) {
                 id: 'save-answer-button',
                 href: '#',
                 onClick: this.onSubmit,
-                disabled: false },
+                disabled: false
+              },
               '\u4FDD\u5B58'
+            ),
+            activeItem.node !== null && _react2.default.createElement(
+              'span',
+              null,
+              '\xA0\xA0',
+              _react2.default.createElement(
+                'a',
+                { className: 'btn btn-danger',
+                  id: 'delete-answer-button',
+                  href: '#',
+                  onClick: this.onDelete,
+                  disabled: false
+                },
+                '\u524A\u9664'
+              )
             )
           )
         )
@@ -6516,7 +6551,8 @@ QuestionForm.propTypes = {
   activeItem: _types.activeItemType,
   questionsRepo: _types.questionsRepoType.isRequired,
   onCreate: _react.PropTypes.func.isRequired,
-  onUpdate: _react.PropTypes.func.isRequired
+  onUpdate: _react.PropTypes.func.isRequired,
+  onDelete: _react.PropTypes.func.isRequired
 };
 
 exports.default = QuestionForm;
@@ -6956,6 +6992,9 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 }), _defineProperty(_handleActions, _question.failedUpdateQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _question.succeedDeleteQuestion, function (state, action) {
+  var id = action.payload.id;
+
+  delete state[id];
   return state;
 }), _defineProperty(_handleActions, _question.failedDeleteQuestion, function (state, action) {
   return state;
@@ -6994,7 +7033,12 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 }), _defineProperty(_handleActions, _question.failedUpdateQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _question.succeedDeleteQuestion, function (state, action) {
-  return state;
+  var id = action.payload.id;
+
+  var newState = state.filter(function (node) {
+    return node.id !== id;
+  });
+  return newState;
 }), _defineProperty(_handleActions, _question.failedDeleteQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedCreateDecisionBranch, function (state, action) {

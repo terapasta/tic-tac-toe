@@ -111,6 +111,7 @@ class ConversationTree extends Component {
               questionsRepo={questionsRepo}
               onCreate={(question, answer) => dispatch(questionActions.createQuestion(question, answer))}
               onUpdate={(id, question, answer) => dispatch(questionActions.updateQuestion(id, question, answer))}
+              onDelete={(id) => dispatch(questionActions.deleteQuestion(id))}
             />
           )}
           {activeItem.type === 'answer' && (

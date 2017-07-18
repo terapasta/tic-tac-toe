@@ -32,6 +32,8 @@ export default handleActions({
   },
 
   [succeedDeleteQuestion]: (state, action) => {
+    const { id } = action.payload;
+    delete state[id];
     return state;
   },
   [failedDeleteQuestion]: (state, action) => {

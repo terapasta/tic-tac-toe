@@ -4,6 +4,7 @@ import includes from 'lodash/includes';
 import find from 'lodash/find';
 import map from 'lodash/map';
 import isEmpty from 'is-empty';
+import Promise from 'promise';
 
 import {
   activeItemType,
@@ -11,39 +12,34 @@ import {
   decisionBranchesRepoType,
 } from '../types';
 
-const getBodyAndAnswer = (props) => {
-  const { activeItem, decisionBranchesRepo } = props;
-  const decisionBranch = decisionBranchesRepo[activeItem.node.id];
-  if (decisionBranch == null) { return {}; }
-  const { body, answer } = decisionBranch;
-  return { body, answer: (answer || '') };
-};
+const getBodyAndAnswer = (props) => (
+  new Promise((resolve, reject) => {
+    const { activeItem, decisionBranchesRepo } = props;
+    const decisionBranch = decisionBranchesRepo[activeItem.node.id];
+    if (decisionBranch == null) { return reject(); }
+    const { body, answer } = decisionBranch;
+    resolve({ body, answer: answer || '' });
+  })
+);
 
 class DecisionBranchForm extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.state = { body: '', answer: '', disabled: false };
 
-    const { body, answer } = getBodyAndAnswer(props);
-    if (isEmpty(body) || isEmpty(answer)) {
-      this.state = { body: '', answer: '', disabled: false };
-      return;
-    }
-    this.state = {
-      body,
-      answer,
-      disabled: false,
-    };
+    getBodyAndAnswer(props).then(({ body, answer }) => {
+      this.setState({ body, answer, disabled: false });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { body, answer } = getBodyAndAnswer(nextProps);
-    if (isEmpty(body) || isEmpty(answer)) {
-      this.state = { body: '', answer: '', disabled: false };
-      return;
-    }
-    this.setState({ body, answer });
+    getBodyAndAnswer(nextProps).then(({ body, answer }) => {
+      this.setState({ body, answer });
+    }).catch(() => {
+      this.setState({ body: '', answer: '', disabled: false });
+    });
   }
 
   onSubmit() {

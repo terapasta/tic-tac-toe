@@ -5775,6 +5775,10 @@ var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _promise = require('promise');
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _types = require('../types');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5786,17 +5790,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var getBodyAndAnswer = function getBodyAndAnswer(props) {
-  var activeItem = props.activeItem,
-      decisionBranchesRepo = props.decisionBranchesRepo;
+  return new _promise2.default(function (resolve, reject) {
+    var activeItem = props.activeItem,
+        decisionBranchesRepo = props.decisionBranchesRepo;
 
-  var decisionBranch = decisionBranchesRepo[activeItem.node.id];
-  if (decisionBranch == null) {
-    return {};
-  }
-  var body = decisionBranch.body,
-      answer = decisionBranch.answer;
+    var decisionBranch = decisionBranchesRepo[activeItem.node.id];
+    if (decisionBranch == null) {
+      return reject();
+    }
+    var body = decisionBranch.body,
+        answer = decisionBranch.answer;
 
-  return { body: body, answer: answer || '' };
+    resolve({ body: body, answer: answer || '' });
+  });
 };
 
 var DecisionBranchForm = function (_Component) {
@@ -5809,40 +5815,35 @@ var DecisionBranchForm = function (_Component) {
 
     _this.onSubmit = _this.onSubmit.bind(_this);
     _this.onDelete = _this.onDelete.bind(_this);
+    _this.state = { body: '', answer: '', disabled: false };
 
-    var _getBodyAndAnswer = getBodyAndAnswer(props),
-        body = _getBodyAndAnswer.body,
-        answer = _getBodyAndAnswer.answer;
+    getBodyAndAnswer(props).then(function (_ref) {
+      var body = _ref.body,
+          answer = _ref.answer;
 
-    if ((0, _isEmpty2.default)(body) || (0, _isEmpty2.default)(answer)) {
-      _this.state = { body: '', answer: '', disabled: false };
-      return _possibleConstructorReturn(_this);
-    }
-    _this.state = {
-      body: body,
-      answer: answer,
-      disabled: false
-    };
+      _this.setState({ body: body, answer: answer, disabled: false });
+    });
     return _this;
   }
 
   _createClass(DecisionBranchForm, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      var _getBodyAndAnswer2 = getBodyAndAnswer(nextProps),
-          body = _getBodyAndAnswer2.body,
-          answer = _getBodyAndAnswer2.answer;
+      var _this2 = this;
 
-      if ((0, _isEmpty2.default)(body) || (0, _isEmpty2.default)(answer)) {
-        this.state = { body: '', answer: '', disabled: false };
-        return;
-      }
-      this.setState({ body: body, answer: answer });
+      getBodyAndAnswer(nextProps).then(function (_ref2) {
+        var body = _ref2.body,
+            answer = _ref2.answer;
+
+        _this2.setState({ body: body, answer: answer });
+      }).catch(function () {
+        _this2.setState({ body: '', answer: '', disabled: false });
+      });
     }
   }, {
     key: 'onSubmit',
     value: function onSubmit() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.disabled) {
         return;
@@ -5862,7 +5863,7 @@ var DecisionBranchForm = function (_Component) {
         return (0, _includes2.default)((0, _map2.default)(node.decisionBranches, 'id'), id);
       });
       onUpdate(question.id, id, body, answer).then(function () {
-        _this2.setState({ disabled: false });
+        _this3.setState({ disabled: false });
       });
     }
   }, {
@@ -5887,7 +5888,7 @@ var DecisionBranchForm = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _state2 = this.state,
           answer = _state2.answer,
@@ -5910,7 +5911,7 @@ var DecisionBranchForm = function (_Component) {
             className: 'form-control',
             value: body,
             onChange: function onChange(e) {
-              return _this3.setState({ body: e.target.value });
+              return _this4.setState({ body: e.target.value });
             }
           })
         ),
@@ -5931,7 +5932,7 @@ var DecisionBranchForm = function (_Component) {
             className: 'form-control',
             value: answer,
             onChange: function onChange(e) {
-              return _this3.setState({ answer: e.target.value });
+              return _this4.setState({ answer: e.target.value });
             },
             rows: 3
           })
@@ -5979,7 +5980,7 @@ DecisionBranchForm.propTypes = {
 
 exports.default = DecisionBranchForm;
 
-},{"../types":72,"is-empty":444,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
+},{"../types":72,"is-empty":444,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"promise":717,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

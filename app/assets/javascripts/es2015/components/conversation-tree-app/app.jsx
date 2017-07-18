@@ -17,12 +17,9 @@ import {
   decisionBranchAnswerNodeKey,
 } from './helpers';
 
-import {
-  decisionBranchTreePropType,
-} from './types';
-
 import getOffset from '../../modules/get-offset';
-import * as a from './action-creators';
+import * as actions from './action-creators';
+import * as questionActions from './action-creators/question';
 
 import MasterDetailPanel, { Master, Detail } from '../master-detail-panel';
 import Tree from './components/tree';
@@ -64,12 +61,13 @@ class ConversationTree extends Component {
         break;
       default: break;
     }
-    dispatch(a.setActiveItem({ type, nodeKey, node }));
-    dispatch(a.toggleNode({ nodeKey }));
+    dispatch(actions.setActiveItem({ type, nodeKey, node }));
+    dispatch(actions.toggleNode({ nodeKey }));
   }
 
   render() {
     const {
+      dispatch,
       questionsTree,
       questionsRepo,
       decisionBranchesRepo,
@@ -81,7 +79,10 @@ class ConversationTree extends Component {
       <MasterDetailPanel title="会話ツリー" ref="masterDetailPanel">
         <Master>
           <Tree>
-            <AddingNode onClick={() => { console.log('add'); }} />
+            <AddingNode
+              activeItem={activeItem}
+              onClick={() => dispatch(actions.setActiveItem({ type: 'question', nodeKey: null, node: null }))}
+            />
             {questionsTree.map((node) => {
               return (
                 <QuestionNode key={node.id}
@@ -100,13 +101,15 @@ class ConversationTree extends Component {
           </Tree>
         </Master>
         <Detail>
-          {isEmpty(activeItem.nodeKey) && (
+          {isEmpty(activeItem.type) && (
             <p className="text-muted">左のツリーから「＋追加」を押すか編集したいアイテムを選択して下さい</p>
           )}
           {activeItem.type === 'question' && (
             <QuestionForm
               activeItem={activeItem}
               questionsRepo={questionsRepo}
+              onCreate={(question, answer) => dispatch(questionActions.createQuestion(question, answer))}
+              onUpdate={(id, question, answer) => dispatch(questionActions.updateQuestion(id, question, answer))}
             />
           )}
           {activeItem.type === 'answer' && (

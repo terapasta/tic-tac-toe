@@ -65,18 +65,20 @@ class QuestionNode extends Component {
             {question}
           </div>
         </div>
-        <Tree isOpened={isOpened}>
-          <AnswerNode
-            node={node}
-            questionsRepo={questionsRepo}
-            decisionBranchesRepo={decisionBranchesRepo}
-            openedNodes={openedNodes}
-            activeItem={activeItem}
-            onClickAnswerNode={onClickAnswerNode}
-            onClickDecisionBranchNode={onClickDecisionBranchNode}
-            onClickDecisionBranchAnswerNode={onClickDecisionBranchAnswerNode}
-          />
-        </Tree>
+        {!isEmpty(answer) && (
+          <Tree isOpened={isOpened}>
+            <AnswerNode
+              node={node}
+              questionsRepo={questionsRepo}
+              decisionBranchesRepo={decisionBranchesRepo}
+              openedNodes={openedNodes}
+              activeItem={activeItem}
+              onClickAnswerNode={onClickAnswerNode}
+              onClickDecisionBranchNode={onClickDecisionBranchNode}
+              onClickDecisionBranchAnswerNode={onClickDecisionBranchAnswerNode}
+            />
+          </Tree>
+        )}
       </li>
     );
   }

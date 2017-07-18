@@ -2,6 +2,8 @@ import { combineReducers } from "redux";
 
 import openedNodes from './reducers/opened-nodes';
 import activeItem from './reducers/active-item';
+import questionsTree from './reducers/questions-tree';
+import questionsRepo from './reducers/questions-repo';
 
 function through(state = null) {
   return state;
@@ -9,8 +11,8 @@ function through(state = null) {
 
 const app = combineReducers({
   botId: through,
-  questionsTree: through,
-  questionsRepo: through,
+  questionsTree,
+  questionsRepo,
   decisionBranchesRepo: through,
   openedNodes,
   activeItem,

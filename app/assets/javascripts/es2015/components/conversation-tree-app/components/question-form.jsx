@@ -1,12 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import TextArea from "react-textarea-autosize";
+import TextArea from 'react-textarea-autosize';
+import isEmpty from 'is-empty';
 
 import { activeItemType, questionsRepoType } from '../types';
 
 class QuestionForm extends Component {
   constructor(props) {
     super(props);
+    this.onSubmit = this.onSubmit.bind(this);
     const { activeItem, questionsRepo } = props;
+    if (isEmpty(activeItem.node)) {
+      this.state = { question: '', answer: '' };
+      return;
+    }
     const question = questionsRepo[activeItem.node.id];
     this.state = {
       question: question.question,
@@ -16,11 +22,25 @@ class QuestionForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { activeItem, questionsRepo } = nextProps;
+    if (isEmpty(activeItem.node)) {
+      this.state = { question: '', answer: '' };
+      return;
+    }
     const question = questionsRepo[activeItem.node.id];
     this.setState({
       question: question.question,
       answer: question.answer,
     });
+  }
+
+  onSubmit() {
+    const { activeItem, onCreate, onUpdate } = this.props;
+    const { question, answer } = this.state;
+    if (isEmpty(activeItem.node)) {
+      onCreate(question, answer);
+    } else {
+      onUpdate(activeItem.node.id, question, answer);
+    }
   }
 
   render() {
@@ -56,7 +76,7 @@ class QuestionForm extends Component {
             <a className="btn btn-success"
               id="save-answer-button"
               href="#"
-              onClick={() => {}}
+              onClick={this.onSubmit}
               disabled={false}>保存</a>
           </div>
         </div>
@@ -68,6 +88,8 @@ class QuestionForm extends Component {
 QuestionForm.propTypes = {
   activeItem: activeItemType,
   questionsRepo: questionsRepoType.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default QuestionForm;

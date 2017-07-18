@@ -1,11 +1,18 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames';
+
+import { activeItemType } from '../types';
+
+const className = props => classnames('tree__item--no-children', {
+  active: props.activeItem.nodeKey === null && props.activeItem.type === 'question',
+});
 
 const AddingNode = (props) => (
   <li
     className="tree__node"
     onClick={props.onClick}
   >
-    <div className="tree__item--no-children">
+    <div className={className(props)}>
       <div className="tree__item-body">
         ＋追加
       </div>
@@ -14,6 +21,7 @@ const AddingNode = (props) => (
 );
 
 AddingNode.propTypes = {
+  activeItem: activeItemType.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

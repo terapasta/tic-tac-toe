@@ -46,6 +46,7 @@ class QuestionAnswerPolicy < ApplicationPolicy
       [
         :id,
         :question,
+        :answer,
         :answer_id,
         {
           sentence_synonyms_attributes: [

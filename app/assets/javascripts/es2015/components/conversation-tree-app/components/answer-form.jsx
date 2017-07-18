@@ -25,6 +25,12 @@ AnswerForm.onCreateDecisionBranch = (props, body) => {
   return onCreateDecisionBranch(activeItem.node.id, body);
 };
 
+AnswerForm.onUpdateDecisionBranch = (props, id, body) => {
+  if (isEmpty(body)) { return; }
+  const { activeItem, onUpdateDecisionBranch } = props;
+  return onUpdateDecisionBranch(activeItem.node.id, id, body);
+};
+
 AnswerForm.propTypes = {
   activeItem: activeItemType.isRequired,
   questionsRepo: questionsRepoType.isRequired,

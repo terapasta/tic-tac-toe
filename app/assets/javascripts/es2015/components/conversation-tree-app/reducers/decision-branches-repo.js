@@ -17,7 +17,6 @@ console.log(succeedCreateDecisionBranch)
 
 export default handleActions({
   [succeedCreateDecisionBranch]: (state, action) => {
-    console.log('decision-branch-repo');
     const { decisionBranch } = action.payload;
     return assign({}, state, {
       [decisionBranch.id]: decisionBranch
@@ -28,7 +27,10 @@ export default handleActions({
   },
 
   [succeedUpdateDecisionBranch]: (state, action) => {
-    return state;
+    const { decisionBranch } = action.payload
+    return assign({}, state, {
+      [decisionBranch.id]: decisionBranch
+    });
   },
   [failedUpdateDecisionBranch]: (state, action) => {
     return state;

@@ -3,7 +3,6 @@ import { createAction } from 'redux-actions';
 import * as DecisionBranchAPI from '../../../api/decision-branch';
 
 export const succeedCreateDecisionBranch = createAction('SUCCEED_CREATE_DECISION_BRANCH');
-export const succeedCreateDecisionBranchForRepo = createAction('SUCCEED_CREATE_DECISION_BRANCH_FOR_REPO');
 export const failedCreateDecisionBranch = createAction('FAILED_CREATE_DECISION_BRANCH');
 
 export const succeedUpdateDecisionBranch = createAction('SUCCEED_UPDATE_DECISION_BRANCH');
@@ -17,9 +16,19 @@ export const createDecisionBranch = (answerId, body) => (
     const { botId } = getState();
     return DecisionBranchAPI.create(botId, answerId, body).then((res) => {
       dispatch(succeedCreateDecisionBranch(res.data));
-      dispatch(succeedCreateDecisionBranchForRepo(res.data));
     }).catch((res) => {
       dispatch(failedCreateDecisionBranch(res.data));
+    });
+  }
+);
+
+export const updateDecisionBranch = (answerId, id, body) => (
+  (dispatch, getState) => {
+    const { botId } = getState();
+    return DecisionBranchAPI.update(botId, answerId, id, body).then((res) => {
+      dispatch(succeedUpdateDecisionBranch(res.data));
+    }).catch((res) => {
+      dispatch(failedUpdateDecisionBranch(res.data));
     });
   }
 );

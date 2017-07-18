@@ -27,7 +27,7 @@ class BaseAnswerForm extends Component {
   }
 
   onUpdateDecisionBranch(id, body) {
-    console.log('update db', id, body);
+    return this.constructor.onUpdateDecisionBranch(this.props, id, body);
   }
 
   onDeleteDeicsionBranch(id) {
@@ -48,7 +48,11 @@ class BaseAnswerForm extends Component {
                 <EditingDecisionBranchForm
                   key={db.id}
                   decisionBranch={db}
-                  onSave={(body) => this.onUpdateDecisionBranch(db.id, body)}
+                  onSave={(body) => {
+                    this.onUpdateDecisionBranch(db.id, body).then(() => {
+                      this.setState({ editingDecisionBranchIndex: null });
+                    });
+                  }}
                   onDelete={() => this.onDeleteDeicsionBranch(db.id)}
                 />
               );

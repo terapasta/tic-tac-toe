@@ -4795,7 +4795,7 @@ var setActiveItem = exports.setActiveItem = (0, _reduxActions.createAction)('SET
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranchForRepo = exports.succeedCreateDecisionBranch = undefined;
+exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
 
 var _reduxActions = require('redux-actions');
 
@@ -4806,7 +4806,6 @@ var DecisionBranchAPI = _interopRequireWildcard(_decisionBranch);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var succeedCreateDecisionBranch = exports.succeedCreateDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_CREATE_DECISION_BRANCH');
-var succeedCreateDecisionBranchForRepo = exports.succeedCreateDecisionBranchForRepo = (0, _reduxActions.createAction)('SUCCEED_CREATE_DECISION_BRANCH_FOR_REPO');
 var failedCreateDecisionBranch = exports.failedCreateDecisionBranch = (0, _reduxActions.createAction)('FAILED_CREATE_DECISION_BRANCH');
 
 var succeedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_UPDATE_DECISION_BRANCH');
@@ -4822,9 +4821,21 @@ var createDecisionBranch = exports.createDecisionBranch = function createDecisio
 
     return DecisionBranchAPI.create(botId, answerId, body).then(function (res) {
       dispatch(succeedCreateDecisionBranch(res.data));
-      dispatch(succeedCreateDecisionBranchForRepo(res.data));
     }).catch(function (res) {
       dispatch(failedCreateDecisionBranch(res.data));
+    });
+  };
+};
+
+var updateDecisionBranch = exports.updateDecisionBranch = function updateDecisionBranch(answerId, id, body) {
+  return function (dispatch, getState) {
+    var _getState2 = getState(),
+        botId = _getState2.botId;
+
+    return DecisionBranchAPI.update(botId, answerId, id, body).then(function (res) {
+      dispatch(succeedUpdateDecisionBranch(res.data));
+    }).catch(function (res) {
+      dispatch(failedUpdateDecisionBranch(res.data));
     });
   };
 };
@@ -5115,8 +5126,8 @@ var ConversationTree = function (_Component) {
             onCreateDecisionBranch: function onCreateDecisionBranch(answerId, body) {
               return dispatch(decisionBranchActions.createDecisionBranch(answerId, body));
             },
-            onUpdateDecisionBranch: function onUpdateDecisionBranch(id, body) {
-              return console.log('update db', id, body);
+            onUpdateDecisionBranch: function onUpdateDecisionBranch(answerId, id, body) {
+              return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body));
             },
             onDeleteDecisionBranch: function onDeleteDecisionBranch(id) {
               return console.log('delete db', id);
@@ -5267,6 +5278,16 @@ AnswerForm.onCreateDecisionBranch = function (props, body) {
       onCreateDecisionBranch = props.onCreateDecisionBranch;
 
   return onCreateDecisionBranch(activeItem.node.id, body);
+};
+
+AnswerForm.onUpdateDecisionBranch = function (props, id, body) {
+  if ((0, _isEmpty2.default)(body)) {
+    return;
+  }
+  var activeItem = props.activeItem,
+      onUpdateDecisionBranch = props.onUpdateDecisionBranch;
+
+  return onUpdateDecisionBranch(activeItem.node.id, id, body);
 };
 
 AnswerForm.propTypes = {
@@ -5502,7 +5523,7 @@ var BaseAnswerForm = function (_Component) {
   }, {
     key: 'onUpdateDecisionBranch',
     value: function onUpdateDecisionBranch(id, body) {
-      console.log('update db', id, body);
+      return this.constructor.onUpdateDecisionBranch(this.props, id, body);
     }
   }, {
     key: 'onDeleteDeicsionBranch',
@@ -5537,7 +5558,9 @@ var BaseAnswerForm = function (_Component) {
                 key: db.id,
                 decisionBranch: db,
                 onSave: function onSave(body) {
-                  return _this2.onUpdateDecisionBranch(db.id, body);
+                  _this2.onUpdateDecisionBranch(db.id, body).then(function () {
+                    _this2.setState({ editingDecisionBranchIndex: null });
+                  });
                 },
                 onDelete: function onDelete() {
                   return _this2.onDeleteDeicsionBranch(db.id);
@@ -6792,9 +6815,9 @@ var _handleActions;
 
 var _reduxActions = require('redux-actions');
 
-var _assign2 = require('lodash/assign');
+var _assign3 = require('lodash/assign');
 
-var _assign3 = _interopRequireDefault(_assign2);
+var _assign4 = _interopRequireDefault(_assign3);
 
 var _decisionBranch = require('../action-creators/decision-branch');
 
@@ -6806,14 +6829,15 @@ var initialState = {};
 console.log(_decisionBranch.succeedCreateDecisionBranch);
 
 exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _defineProperty(_handleActions, _decisionBranch.succeedCreateDecisionBranch, function (state, action) {
-  console.log('decision-branch-repo');
   var decisionBranch = action.payload.decisionBranch;
 
-  return (0, _assign3.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
+  return (0, _assign4.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
 }), _defineProperty(_handleActions, _decisionBranch.failedCreateDecisionBranch, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedUpdateDecisionBranch, function (state, action) {
-  return state;
+  var decisionBranch = action.payload.decisionBranch;
+
+  return (0, _assign4.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
 }), _defineProperty(_handleActions, _decisionBranch.failedUpdateDecisionBranch, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedDeleteDecisionBranch, function (state, action) {

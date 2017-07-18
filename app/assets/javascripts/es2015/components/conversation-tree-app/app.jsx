@@ -119,7 +119,7 @@ class ConversationTree extends Component {
               questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
               onCreateDecisionBranch={(answerId, body) => dispatch(decisionBranchActions.createDecisionBranch(answerId, body))}
-              onUpdateDecisionBranch={(id, body) => console.log('update db', id, body)}
+              onUpdateDecisionBranch={(answerId, id, body) => dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body))}
               onDeleteDecisionBranch={(id) => console.log('delete db', id)}
             />
           )}

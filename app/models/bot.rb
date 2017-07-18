@@ -16,6 +16,7 @@ class Bot < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
   has_many :accuracy_test_cases, dependent: :destroy
   has_many :exports, dependent: :destroy
+  has_many :ip_addresses, dependent: :destroy
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 

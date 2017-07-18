@@ -30,6 +30,6 @@ class QuestionAnserTrainingSet(Base):
 
     # HACK: datasourceに書きたい
     def __question_answers(self):
-        data = pd.read_sql("select id, question from question_answers where bot_id = %s;" % self.bot_id, self.db)
+        data = pd.read_sql("select id, question from question_answers where bot_id = %(bot_id)s;", self.db, params={"bot_id": self.bot_id})
         logger.debug('QuestionAnswerTrainingSet#__question_answers question_answers count: %s' % data['id'].count())
         return data

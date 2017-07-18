@@ -92,10 +92,9 @@ class Datasource:
         from learning.core.predict.reply import Reply
 
         if self._type == 'database':
-            # TODO SQLインジェクション対策必要
             data = pd.read_sql(
-                "select id, question, question_answer_id from learning_training_messages where bot_id = %s and question <> '%s' and question_answer_id <> %s;"
-                % (bot_id, question, Reply.CLASSIFY_FAILED_ANSWER_ID), self._db)
+                "select id, question, question_answer_id from learning_training_messages where bot_id = %(bot_id)s and question <> %(question)s and question_answer_id <> %(question_answer_id)s;",
+                self._db, params={"bot_id": bot_id, "question": question, "question_answer_id": Reply.CLASSIFY_FAILED_ANSWER_ID})
         elif self._type == 'csv':
             data = self._learning_training_messages[self._learning_training_messages['bot_id'] == bot_id]
             data = data[data['question_answer_id'] != Reply.CLASSIFY_FAILED_ANSWER_ID]

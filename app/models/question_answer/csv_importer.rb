@@ -24,9 +24,10 @@ class QuestionAnswer::CsvImporter
           qa.answer = import_param[:answer_body]
           qa.save!
           if import_param[:topic_tag_names].present?
-            topic_tag_names = import_param[:topic_tag_names].split("/")
+            topic_tag_names = import_param[:topic_tag_names]
             target_topic_tags = @bot.topic_tags.where(name: topic_tag_names)
-            qa.topic_taggings.create(target_topic_tags.map{ |t| { topic_tag_id: t.id } })
+            new_topic_tags = target_topic_tags - question_answer.topic_tags
+            qa.topic_taggings.create(new_topic_tags.map{ |t| { topic_tag_id: t.id } })
           end
         end
 
@@ -74,7 +75,7 @@ class QuestionAnswer::CsvImporter
 
   def detect_or_initialize_by_row(row)
     id = sjis_safe(row[0]).to_i
-    topic_tag_names = sjis_safe(row[1]).gsub('／', '/')
+    topic_tag_names = sjis_safe(row[1]).gsub('／', '/').split("/")
     q = sjis_safe(row[2])
     a = sjis_safe(row[3])
     decision_branch = sjis_safe(row[4])

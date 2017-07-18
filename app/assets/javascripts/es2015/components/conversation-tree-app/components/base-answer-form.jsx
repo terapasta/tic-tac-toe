@@ -31,7 +31,7 @@ class BaseAnswerForm extends Component {
   }
 
   onDeleteDeicsionBranch(id) {
-    console.log('delete db', id);
+    return this.constructor.onDeleteDecisionBranch(this.props, id);
   }
 
   renderDecisionBranches() {

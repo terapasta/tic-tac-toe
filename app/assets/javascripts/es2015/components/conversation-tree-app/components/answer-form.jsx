@@ -31,6 +31,13 @@ AnswerForm.onUpdateDecisionBranch = (props, id, body) => {
   return onUpdateDecisionBranch(activeItem.node.id, id, body);
 };
 
+AnswerForm.onDeleteDecisionBranch = (props, id) => {
+  if (window.confirm('本当に削除してよろしいですか？')) {
+    const { activeItem, onDeleteDecisionBranch } = props;
+    return onDeleteDecisionBranch(activeItem.node.id, id);
+  }
+};
+
 AnswerForm.propTypes = {
   activeItem: activeItemType.isRequired,
   questionsRepo: questionsRepoType.isRequired,

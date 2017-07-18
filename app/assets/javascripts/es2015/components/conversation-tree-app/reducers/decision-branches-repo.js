@@ -37,6 +37,8 @@ export default handleActions({
   },
 
   [succeedDeleteDecisionBranch]: (state, action) => {
+    const { id } = action.payload;
+    delete state[id];
     return state;
   },
   [failedDeleteDecisionBranch]: (state, action) => {

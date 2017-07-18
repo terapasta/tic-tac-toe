@@ -76,7 +76,14 @@ export default handleActions({
   },
 
   [succeedDeleteDecisionBranch]: (state, action) => {
-    return state;
+    const newState = state.concat();
+    const { questionId, id } = action.payload;
+    newState.forEach((node) => {
+      if (node.id === questionId) {
+        node.decisionBranches = node.decisionBranches.filter(db => db.id !== id);
+      }
+    });
+    return newState;
   },
   [failedDeleteDecisionBranch]: (state, action) => {
     return state;

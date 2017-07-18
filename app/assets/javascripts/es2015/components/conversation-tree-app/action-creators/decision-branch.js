@@ -32,3 +32,14 @@ export const updateDecisionBranch = (answerId, id, body) => (
     });
   }
 );
+
+export const deleteDecisionBranch = (answerId, id) => (
+  (dispatch, getState) => {
+    const { botId } = getState();
+    return DecisionBranchAPI.destroy(botId, answerId, id).then((res) => {
+      dispatch(succeedDeleteDecisionBranch({ questionId: answerId, id }));
+    }).catch((res) => {
+      dispatch(failedDeleteDecisionBranch(res.data));
+    });
+  }
+);

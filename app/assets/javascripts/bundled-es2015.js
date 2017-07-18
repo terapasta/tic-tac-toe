@@ -4795,7 +4795,7 @@ var setActiveItem = exports.setActiveItem = (0, _reduxActions.createAction)('SET
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
+exports.deleteDecisionBranch = exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
 
 var _reduxActions = require('redux-actions');
 
@@ -4836,6 +4836,19 @@ var updateDecisionBranch = exports.updateDecisionBranch = function updateDecisio
       dispatch(succeedUpdateDecisionBranch(res.data));
     }).catch(function (res) {
       dispatch(failedUpdateDecisionBranch(res.data));
+    });
+  };
+};
+
+var deleteDecisionBranch = exports.deleteDecisionBranch = function deleteDecisionBranch(answerId, id) {
+  return function (dispatch, getState) {
+    var _getState3 = getState(),
+        botId = _getState3.botId;
+
+    return DecisionBranchAPI.destroy(botId, answerId, id).then(function (res) {
+      dispatch(succeedDeleteDecisionBranch({ questionId: answerId, id: id }));
+    }).catch(function (res) {
+      dispatch(failedDeleteDecisionBranch(res.data));
     });
   };
 };
@@ -5129,8 +5142,8 @@ var ConversationTree = function (_Component) {
             onUpdateDecisionBranch: function onUpdateDecisionBranch(answerId, id, body) {
               return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body));
             },
-            onDeleteDecisionBranch: function onDeleteDecisionBranch(id) {
-              return console.log('delete db', id);
+            onDeleteDecisionBranch: function onDeleteDecisionBranch(answerId, id) {
+              return dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id));
             }
           }),
           activeItem.type === 'decisionBranch' && _react2.default.createElement(_decisionBranchForm2.default, {
@@ -5288,6 +5301,15 @@ AnswerForm.onUpdateDecisionBranch = function (props, id, body) {
       onUpdateDecisionBranch = props.onUpdateDecisionBranch;
 
   return onUpdateDecisionBranch(activeItem.node.id, id, body);
+};
+
+AnswerForm.onDeleteDecisionBranch = function (props, id) {
+  if (window.confirm('本当に削除してよろしいですか？')) {
+    var activeItem = props.activeItem,
+        onDeleteDecisionBranch = props.onDeleteDecisionBranch;
+
+    return onDeleteDecisionBranch(activeItem.node.id, id);
+  }
 };
 
 AnswerForm.propTypes = {
@@ -5528,7 +5550,7 @@ var BaseAnswerForm = function (_Component) {
   }, {
     key: 'onDeleteDeicsionBranch',
     value: function onDeleteDeicsionBranch(id) {
-      console.log('delete db', id);
+      return this.constructor.onDeleteDecisionBranch(this.props, id);
     }
   }, {
     key: 'renderDecisionBranches',
@@ -6841,6 +6863,9 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 }), _defineProperty(_handleActions, _decisionBranch.failedUpdateDecisionBranch, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedDeleteDecisionBranch, function (state, action) {
+  var id = action.payload.id;
+
+  delete state[id];
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.failedDeleteDecisionBranch, function (state, action) {
   return state;
@@ -6994,7 +7019,19 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 }), _defineProperty(_handleActions, _decisionBranch.failedUpdateDecisionBranch, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedDeleteDecisionBranch, function (state, action) {
-  return state;
+  var newState = state.concat();
+  var _action$payload = action.payload,
+      questionId = _action$payload.questionId,
+      id = _action$payload.id;
+
+  newState.forEach(function (node) {
+    if (node.id === questionId) {
+      node.decisionBranches = node.decisionBranches.filter(function (db) {
+        return db.id !== id;
+      });
+    }
+  });
+  return newState;
 }), _defineProperty(_handleActions, _decisionBranch.failedDeleteDecisionBranch, function (state, action) {
   return state;
 }), _handleActions), initialState);

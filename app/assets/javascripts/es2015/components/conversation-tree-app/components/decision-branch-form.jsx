@@ -3,6 +3,7 @@ import TextArea from 'react-textarea-autosize';
 import includes from 'lodash/includes';
 import find from 'lodash/find';
 import map from 'lodash/map';
+import isEmpty from 'is-empty';
 
 import {
   activeItemType,
@@ -31,14 +32,14 @@ class DecisionBranchForm extends Component {
     this.onDelete = this.onDelete.bind(this);
     getBodyAndAnswer(props, {
       exists: (body, answer) => this.state = { body, answer, disabled: false },
-      exmpty: () => this.state = { body: '', answer: '', disabled: false },
+      empty: () => this.state = { body: '', answer: '', disabled: false },
     });
   }
 
   componentWillReceiveProps(nextProps) {
     getBodyAndAnswer(nextProps, {
       exists: (body, answer) => this.setState({ body, answer }),
-      exmpty: () => this.setState({ body: '', answer: '', disabled: false }),
+      empty: () => this.setState({ body: '', answer: '', disabled: false }),
     });
   }
 
@@ -47,22 +48,45 @@ class DecisionBranchForm extends Component {
     this.setState({ disabled: true });
 
     const { body, answer } = this.state;
-    const { activeItem, questionsTree, onUpdate } = this.props;
+    const {
+      activeItem,
+      questionsTree,
+      onUpdate,
+      onNestedUpdate,
+      decisionBranchesRepo,
+    } = this.props;
     const { id } = activeItem.node;
     const question = findParentQuestion(questionsTree, id);
-    onUpdate(question.id, id, body, answer).then(() => {
-      this.setState({ disabled: false });
-    });
+    const decisionBranch = decisionBranchesRepo[id];
+    const doneHandler = () => this.setState({ disabled: false });
+
+    if (isEmpty(decisionBranch.parentDecisionBranchId)) {
+      onUpdate(question.id, id, body, answer).then(doneHandler);
+    } else {
+      onNestedUpdate(id, body, answer).then(doneHandler);
+    }
   }
 
   onDelete() {
     if (this.state.disabled) { return; }
     this.setState({ disabled: true });
 
-    const { activeItem, questionsTree, onDelete } = this.props;
+    const {
+      activeItem,
+      questionsTree,
+      onDelete,
+      onNestedDelete,
+      decisionBranchesRepo,
+    } = this.props;
     const { id } = activeItem.node;
     const question = findParentQuestion(questionsTree, id);
-    return onDelete(question.id, id);
+    const { parentDecisionBranchId } = decisionBranchesRepo[id];
+
+    if (isEmpty(parentDecisionBranchId)) {
+      return onDelete(question.id, id);
+    } else {
+      return onNestedDelete(parentDecisionBranchId, id);
+    }
   }
 
   render() {
@@ -116,6 +140,8 @@ DecisionBranchForm.propTypes = {
   decisionBranchesRepo: decisionBranchesRepoType.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onNestedUpdate: PropTypes.func.isRequired,
+  onNestedDelete: PropTypes.func.isRequired,
 };
 
 export default DecisionBranchForm;

@@ -80,4 +80,7 @@ export default handleActions({
     delete state[id];
     return state;
   },
+  [failedDeleteNestedDecisionBranch]: (state, action) => {
+    return state;
+  },
 }, initialState);

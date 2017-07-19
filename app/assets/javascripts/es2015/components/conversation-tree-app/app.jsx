@@ -130,11 +130,13 @@ class ConversationTree extends Component {
               questionsTree={questionsTree}
               decisionBranchesRepo={decisionBranchesRepo}
               onUpdate={(answerId, id, body, answer) => dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer))}
+              onNestedUpdate={(id, body, answer) => dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer))}
               onDelete={(answerId, id) => {
                 dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id)).then(() => {
                   dispatch(actions.rejectActiveItem());
                 });
               }}
+              onNestedDelete={(parentId, id) => dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id))}
             />
           )}
           {activeItem.type === 'decisionBranchAnswer' && (

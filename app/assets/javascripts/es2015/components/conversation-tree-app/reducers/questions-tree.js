@@ -122,6 +122,9 @@ export default handleActions({
     });
     return newState;
   },
+  [failedDeleteNestedDecisionBranch]: (state, action) => {
+    return state;
+  },
 }, initialState);
 
 function findDecisionBranchFromTree(questionsTree, decisionBranchId, foundCallback) {

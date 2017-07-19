@@ -4887,14 +4887,14 @@ var deleteDecisionBranch = exports.deleteDecisionBranch = function deleteDecisio
   };
 };
 
-var succeedCreateNestedDecisionBranch = exports.succeedCreateNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_CREATE_DECISION_BRANCH');
-var failedCreateNestedDecisionBranch = exports.failedCreateNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_CREATE_DECISION_BRANCH');
+var succeedCreateNestedDecisionBranch = exports.succeedCreateNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_CREATE_NESTED_DECISION_BRANCH');
+var failedCreateNestedDecisionBranch = exports.failedCreateNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_CREATE_NESTED_DECISION_BRANCH');
 
-var succeedUpdateNestedDecisionBranch = exports.succeedUpdateNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_UPDATE_DECISION_BRANCH');
-var failedUpdateNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_UPDATE_DECISION_BRANCH');
+var succeedUpdateNestedDecisionBranch = exports.succeedUpdateNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_UPDATE_NESTED_DECISION_BRANCH');
+var failedUpdateNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_UPDATE_NESTED_DECISION_BRANCH');
 
-var succeedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_DELETE_DECISION_BRANCH');
-var failedDeleteNestedDecisionBranch = exports.failedDeleteNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_DELETE_DECISION_BRANCH');
+var succeedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_DELETE_NESTED_DECISION_BRANCH');
+var failedDeleteNestedDecisionBranch = exports.failedDeleteNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_DELETE_NESTED_DECISION_BRANCH');
 
 var createNestedDecisionBracnh = exports.createNestedDecisionBracnh = function createNestedDecisionBracnh(parentId, body) {
   return function (dispatch, getState) {
@@ -5238,10 +5238,16 @@ var ConversationTree = function (_Component) {
             onUpdate: function onUpdate(answerId, id, body, answer) {
               return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer));
             },
+            onNestedUpdate: function onNestedUpdate(id, body, answer) {
+              return dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer));
+            },
             onDelete: function onDelete(answerId, id) {
               dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id)).then(function () {
                 dispatch(actions.rejectActiveItem());
               });
+            },
+            onNestedDelete: function onNestedDelete(parentId, id) {
+              return dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id));
             }
           }),
           activeItem.type === 'decisionBranchAnswer' && _react2.default.createElement(_decisionBranchAnswerForm2.default, {
@@ -5879,6 +5885,10 @@ var _map = require('lodash/map');
 
 var _map2 = _interopRequireDefault(_map);
 
+var _isEmpty = require('is-empty');
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
 var _types = require('../types');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5925,7 +5935,7 @@ var DecisionBranchForm = function (_Component) {
       exists: function exists(body, answer) {
         return _this.state = { body: body, answer: answer, disabled: false };
       },
-      exmpty: function exmpty() {
+      empty: function empty() {
         return _this.state = { body: '', answer: '', disabled: false };
       }
     });
@@ -5941,7 +5951,7 @@ var DecisionBranchForm = function (_Component) {
         exists: function exists(body, answer) {
           return _this2.setState({ body: body, answer: answer });
         },
-        exmpty: function exmpty() {
+        empty: function empty() {
           return _this2.setState({ body: '', answer: '', disabled: false });
         }
       });
@@ -5962,13 +5972,22 @@ var DecisionBranchForm = function (_Component) {
       var _props = this.props,
           activeItem = _props.activeItem,
           questionsTree = _props.questionsTree,
-          onUpdate = _props.onUpdate;
+          onUpdate = _props.onUpdate,
+          onNestedUpdate = _props.onNestedUpdate,
+          decisionBranchesRepo = _props.decisionBranchesRepo;
       var id = activeItem.node.id;
 
       var question = findParentQuestion(questionsTree, id);
-      onUpdate(question.id, id, body, answer).then(function () {
-        _this3.setState({ disabled: false });
-      });
+      var decisionBranch = decisionBranchesRepo[id];
+      var doneHandler = function doneHandler() {
+        return _this3.setState({ disabled: false });
+      };
+
+      if ((0, _isEmpty2.default)(decisionBranch.parentDecisionBranchId)) {
+        onUpdate(question.id, id, body, answer).then(doneHandler);
+      } else {
+        onNestedUpdate(id, body, answer).then(doneHandler);
+      }
     }
   }, {
     key: 'onDelete',
@@ -5981,11 +6000,20 @@ var DecisionBranchForm = function (_Component) {
       var _props2 = this.props,
           activeItem = _props2.activeItem,
           questionsTree = _props2.questionsTree,
-          onDelete = _props2.onDelete;
+          onDelete = _props2.onDelete,
+          onNestedDelete = _props2.onNestedDelete,
+          decisionBranchesRepo = _props2.decisionBranchesRepo;
       var id = activeItem.node.id;
 
       var question = findParentQuestion(questionsTree, id);
-      return onDelete(question.id, id);
+      var parentDecisionBranchId = decisionBranchesRepo[id].parentDecisionBranchId;
+
+
+      if ((0, _isEmpty2.default)(parentDecisionBranchId)) {
+        return onDelete(question.id, id);
+      } else {
+        return onNestedDelete(parentDecisionBranchId, id);
+      }
     }
   }, {
     key: 'render',
@@ -6078,12 +6106,14 @@ DecisionBranchForm.propTypes = {
   questionsTree: _types.questionsTreeType.isRequired,
   decisionBranchesRepo: _types.decisionBranchesRepoType.isRequired,
   onUpdate: _react.PropTypes.func.isRequired,
-  onDelete: _react.PropTypes.func.isRequired
+  onDelete: _react.PropTypes.func.isRequired,
+  onNestedUpdate: _react.PropTypes.func.isRequired,
+  onNestedDelete: _react.PropTypes.func.isRequired
 };
 
 exports.default = DecisionBranchForm;
 
-},{"../types":72,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
+},{"../types":72,"is-empty":444,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7187,6 +7217,8 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 
   delete state[id];
   return state;
+}), _defineProperty(_handleActions, _decisionBranch.failedDeleteNestedDecisionBranch, function (state, action) {
+  return state;
 }), _handleActions), initialState);
 
 },{"../action-creators/decision-branch":49,"lodash/assign":654,"redux-actions":883}],69:[function(require,module,exports){
@@ -7392,6 +7424,8 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
     });
   });
   return newState;
+}), _defineProperty(_handleActions, _decisionBranch.failedDeleteNestedDecisionBranch, function (state, action) {
+  return state;
 }), _handleActions), initialState);
 
 

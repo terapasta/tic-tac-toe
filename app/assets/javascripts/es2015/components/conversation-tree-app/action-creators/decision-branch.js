@@ -44,14 +44,14 @@ export const deleteDecisionBranch = (answerId, id) => (
   }
 );
 
-export const succeedCreateNestedDecisionBranch = createAction('SUCCEED_CREATE_DECISION_BRANCH');
-export const failedCreateNestedDecisionBranch = createAction('FAILED_CREATE_DECISION_BRANCH');
+export const succeedCreateNestedDecisionBranch = createAction('SUCCEED_CREATE_NESTED_DECISION_BRANCH');
+export const failedCreateNestedDecisionBranch = createAction('FAILED_CREATE_NESTED_DECISION_BRANCH');
 
-export const succeedUpdateNestedDecisionBranch = createAction('SUCCEED_UPDATE_DECISION_BRANCH');
-export const failedUpdateNestedDecisionBranch = createAction('FAILED_UPDATE_DECISION_BRANCH');
+export const succeedUpdateNestedDecisionBranch = createAction('SUCCEED_UPDATE_NESTED_DECISION_BRANCH');
+export const failedUpdateNestedDecisionBranch = createAction('FAILED_UPDATE_NESTED_DECISION_BRANCH');
 
-export const succeedDeleteNestedDecisionBranch = createAction('SUCCEED_DELETE_DECISION_BRANCH');
-export const failedDeleteNestedDecisionBranch = createAction('FAILED_DELETE_DECISION_BRANCH');
+export const succeedDeleteNestedDecisionBranch = createAction('SUCCEED_DELETE_NESTED_DECISION_BRANCH');
+export const failedDeleteNestedDecisionBranch = createAction('FAILED_DELETE_NESTED_DECISION_BRANCH');
 
 export const createNestedDecisionBracnh = (parentId, body) => (
   (dispatch, getState) => {

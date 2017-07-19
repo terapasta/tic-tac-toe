@@ -75,7 +75,7 @@ class QuestionAnswer::CsvImporter
 
   def detect_or_initialize_by_row(row)
     id = sjis_safe(row[0]).to_i
-    topic_tag_names = sjis_safe(row[1]).gsub('／', '/').split("/")
+    topic_tag_names = sjis_safe(row[1]).gsub('／', '/').split("/").map{ |topic_tag_name| topic_tag_name.strip }
     q = sjis_safe(row[2])
     a = sjis_safe(row[3])
     decision_branch = sjis_safe(row[4])

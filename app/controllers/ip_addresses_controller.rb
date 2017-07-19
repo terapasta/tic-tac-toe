@@ -50,6 +50,6 @@ class IpAddressesController < ApplicationController
     end
 
     def ip_address_params
-      params.require(:ip_address).permit(:ip_address)
+      params.require(:ip_address).permit(:permission)
     end
 end

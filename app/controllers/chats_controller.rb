@@ -54,7 +54,7 @@ class ChatsController < ApplicationController
     end
 
     def new_action
-      return false if @bot.ip_addresses.present? && @bot.ip_addresses.detect { |ip| ip.ip_address == request.ip }.blank?
+      return false if @bot.ip_addresses.present? && @bot.ip_addresses.detect { |ip| ip.permission == request.ip }.blank?
       iframe_support @bot
       @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
         authorize chat

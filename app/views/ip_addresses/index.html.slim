@@ -27,7 +27,7 @@ table.table.table-striped
   tbody
     - @ip_addresses.each do |ip_address|
       tr
-        td = simple_format ip_address.ip_address
+        td = simple_format ip_address.permission
 
         td nowrap="nowrap"
           = link_to "編集", edit_bot_ip_address_path(@bot, ip_address), class: "btn btn-default"

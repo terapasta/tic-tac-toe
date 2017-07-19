@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20170718012601) do
   end
 
   create_table "ip_addresses", force: :cascade do |t|
-    t.string   "ip_address", limit: 255, null: false
+    t.string   "permission", limit: 255, null: false
     t.integer  "bot_id",     limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false

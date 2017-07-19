@@ -70,6 +70,7 @@ class DecisionBranchForm extends Component {
   onDelete() {
     if (this.state.disabled) { return; }
     this.setState({ disabled: true });
+    if (!window.confirm('本当に削除してよろしいですか？')) { return; }
 
     const {
       activeItem,
@@ -122,11 +123,11 @@ class DecisionBranchForm extends Component {
             >保存</a>
 
             &nbsp;&nbsp;
-            <a className="btn btn-danger"
+            <a className="btn btn-link"
               id="delete-answer-button"
               href="#"
               onClick={this.onDelete}
-            >削除</a>
+            ><span className="text-danger">削除</span></a>
           </div>
         </div>
       </div>

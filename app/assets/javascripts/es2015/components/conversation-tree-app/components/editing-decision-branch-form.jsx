@@ -27,9 +27,9 @@ class EditingDecisionBranchForm extends Component {
             >保存</button>
             {" "}
             <button
-              className="btn btn-danger"
+              className="btn btn-default"
               onClick={onDelete}
-            >削除</button>
+            ><span className="text-danger">削除</span></button>
           </span>
         </div>
       </li>

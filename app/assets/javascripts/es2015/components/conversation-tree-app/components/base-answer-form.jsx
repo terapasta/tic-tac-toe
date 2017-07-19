@@ -108,7 +108,8 @@ class BaseAnswerForm extends Component {
               id="delete-answer-button"
               href="#"
               onClick={() => this.onDeleteAnswer(answer)}
-              disabled={false}>削除</a>
+              disabled={false}
+            ><span className="text-danger">削除</span></a>
           </div>
         </div>
 

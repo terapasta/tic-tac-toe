@@ -5857,8 +5857,13 @@ var BaseAnswerForm = function (_Component) {
                 onClick: function onClick() {
                   return _this3.onDeleteAnswer(answer);
                 },
-                disabled: false },
-              '\u524A\u9664'
+                disabled: false
+              },
+              _react2.default.createElement(
+                'span',
+                { className: 'text-danger' },
+                '\u524A\u9664'
+              )
             )
           )
         ),
@@ -6130,6 +6135,9 @@ var DecisionBranchForm = function (_Component) {
         return;
       }
       this.setState({ disabled: true });
+      if (!window.confirm('本当に削除してよろしいですか？')) {
+        return;
+      }
 
       var _props2 = this.props,
           activeItem = _props2.activeItem,
@@ -6219,12 +6227,16 @@ var DecisionBranchForm = function (_Component) {
             '\xA0\xA0',
             _react2.default.createElement(
               'a',
-              { className: 'btn btn-danger',
+              { className: 'btn btn-link',
                 id: 'delete-answer-button',
                 href: '#',
                 onClick: this.onDelete
               },
-              '\u524A\u9664'
+              _react2.default.createElement(
+                'span',
+                { className: 'text-danger' },
+                '\u524A\u9664'
+              )
             )
           )
         )
@@ -6590,10 +6602,14 @@ var EditingDecisionBranchForm = function (_Component) {
             _react2.default.createElement(
               "button",
               {
-                className: "btn btn-danger",
+                className: "btn btn-default",
                 onClick: onDelete
               },
-              "\u524A\u9664"
+              _react2.default.createElement(
+                "span",
+                { className: "text-danger" },
+                "\u524A\u9664"
+              )
             )
           )
         )
@@ -6955,13 +6971,17 @@ var QuestionForm = function (_Component) {
               '\xA0\xA0',
               _react2.default.createElement(
                 'a',
-                { className: 'btn btn-danger',
+                { className: 'btn btn-link',
                   id: 'delete-answer-button',
                   href: '#',
                   onClick: this.onDelete,
                   disabled: false
                 },
-                '\u524A\u9664'
+                _react2.default.createElement(
+                  'span',
+                  { className: 'text-danger' },
+                  '\u524A\u9664'
+                )
               )
             )
           )

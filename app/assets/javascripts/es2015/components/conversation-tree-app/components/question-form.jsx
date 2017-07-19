@@ -94,12 +94,12 @@ class QuestionForm extends Component {
             {activeItem.node !== null && (
               <span>
                 &nbsp;&nbsp;
-                <a className="btn btn-danger"
+                <a className="btn btn-link"
                   id="delete-answer-button"
                   href="#"
                   onClick={this.onDelete}
                   disabled={false}
-                >削除</a>
+                ><span className="text-danger">削除</span></a>
               </span>
             )}
           </div>

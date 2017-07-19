@@ -64,8 +64,7 @@ class QuestionAnswer < ActiveRecord::Base
   }
 
   def no_classified?
-    return true if bot.nil?
-    false
+    bot.nil?
   end
 
   def self.import_csv(file, bot, options = {})

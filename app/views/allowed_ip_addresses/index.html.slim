@@ -18,17 +18,17 @@ h1 許可IPアドレス
         = request.remote_ip
 
 .text-right
-  = link_to "登録する", new_bot_ip_address_path(@bot), class: "btn btn-default"
+  = link_to "登録する", new_bot_allowed_ip_address_path(@bot), class: "btn btn-default"
 table.table.table-striped
   thead
     tr
       th IPアドレス
 
   tbody
-    - @ip_addresses.each do |ip_address|
+    - @allowed_ip_addresses.each do |allowed_ip_address|
       tr
-        td = simple_format ip_address.permission
+        td = simple_format allowed_ip_address.value
 
         td nowrap="nowrap"
-          = link_to "編集", edit_bot_ip_address_path(@bot, ip_address), class: "btn btn-default"
-          = link_to "削除", bot_ip_address_path(@bot, ip_address), method: :delete , data: { confirm: 'IPアドレスを削除します。よろしいですか。'}, class: "btn btn-danger"
+          = link_to "編集", edit_bot_allowed_ip_address_path(@bot, allowed_ip_address), class: "btn btn-default"
+          = link_to "削除", bot_allowed_ip_address_path(@bot, allowed_ip_address), method: :delete , data: { confirm: 'IPアドレスを削除します。よろしいですか。'}, class: "btn btn-danger"

@@ -17,6 +17,11 @@ class ChatPolicy < ApplicationPolicy
     new?
   end
 
+  def ip_address_authorization?(bot)
+    return true if bot.allowed_ip_addresses.present? && bot.allowed_ip_addresses.detect { |ip| ip.value == request.ip }.blank?
+    false
+  end
+
   private
     def referer_is_allowed_origin?
       ref = URI.parse(request.referer)

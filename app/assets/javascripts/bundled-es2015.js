@@ -5221,6 +5221,9 @@ var ConversationTree = function (_Component) {
             activeItem: activeItem,
             questionsRepo: questionsRepo,
             decisionBranchesRepo: decisionBranchesRepo,
+            onUpdateAnswer: function onUpdateAnswer(id, question, answer) {
+              return dispatch(questionActions.updateQuestion(id, question, answer));
+            },
             onCreateDecisionBranch: function onCreateDecisionBranch(answerId, body) {
               return dispatch(decisionBranchActions.createDecisionBranch(answerId, body));
             },
@@ -5625,6 +5628,7 @@ var BaseAnswerForm = function (_Component) {
       decisionBranches: decisionBranches,
       editingDecisionBranchIndex: null
     };
+    _this.onUpdateAnswer = _this.onUpdateAnswer.bind(_this);
     return _this;
   }
 
@@ -5636,6 +5640,18 @@ var BaseAnswerForm = function (_Component) {
           decisionBranches = _constructor$getAnswe.decisionBranches;
 
       this.setState({ answer: answer, decisionBranches: decisionBranches });
+    }
+  }, {
+    key: 'onUpdateAnswer',
+    value: function onUpdateAnswer() {
+      var answer = this.state.answer;
+      var _props = this.props,
+          activeItem = _props.activeItem,
+          questionsRepo = _props.questionsRepo,
+          onUpdateAnswer = _props.onUpdateAnswer;
+      var question = questionsRepo[activeItem.node.id].question;
+
+      onUpdateAnswer(activeItem.node.id, question, answer);
     }
   }, {
     key: 'onCreateDecisionBranch',
@@ -5747,7 +5763,7 @@ var BaseAnswerForm = function (_Component) {
               { className: 'btn btn-success',
                 id: 'save-answer-button',
                 href: '#',
-                onClick: function onClick() {},
+                onClick: this.onUpdateAnswer,
                 disabled: false },
               '\u4FDD\u5B58'
             )

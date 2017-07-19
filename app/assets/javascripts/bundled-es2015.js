@@ -5775,10 +5775,6 @@ var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
-var _promise = require('promise');
-
-var _promise2 = _interopRequireDefault(_promise);
-
 var _types = require('../types');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5789,20 +5785,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var getBodyAndAnswer = function getBodyAndAnswer(props) {
-  return new _promise2.default(function (resolve, reject) {
-    var activeItem = props.activeItem,
-        decisionBranchesRepo = props.decisionBranchesRepo;
+var getBodyAndAnswer = function getBodyAndAnswer(props, _ref) {
+  var exists = _ref.exists,
+      empty = _ref.empty;
+  var activeItem = props.activeItem,
+      decisionBranchesRepo = props.decisionBranchesRepo;
 
-    var decisionBranch = decisionBranchesRepo[activeItem.node.id];
-    if (decisionBranch == null) {
-      return reject();
-    }
-    var body = decisionBranch.body,
-        answer = decisionBranch.answer;
+  var decisionBranch = decisionBranchesRepo[activeItem.node.id];
+  if (decisionBranch == null) {
+    return empty();
+  }
+  var body = decisionBranch.body,
+      answer = decisionBranch.answer;
 
-    resolve({ body: body, answer: answer || '' });
-  });
+  exists(body, answer || '');
 };
 
 var DecisionBranchForm = function (_Component) {
@@ -5815,13 +5811,13 @@ var DecisionBranchForm = function (_Component) {
 
     _this.onSubmit = _this.onSubmit.bind(_this);
     _this.onDelete = _this.onDelete.bind(_this);
-    _this.state = { body: '', answer: '', disabled: false };
-
-    getBodyAndAnswer(props).then(function (_ref) {
-      var body = _ref.body,
-          answer = _ref.answer;
-
-      _this.setState({ body: body, answer: answer, disabled: false });
+    getBodyAndAnswer(props, {
+      exists: function exists(body, answer) {
+        return _this.state = { body: body, answer: answer, disabled: false };
+      },
+      exmpty: function exmpty() {
+        return _this.state = { body: '', answer: '', disabled: false };
+      }
     });
     return _this;
   }
@@ -5831,13 +5827,13 @@ var DecisionBranchForm = function (_Component) {
     value: function componentWillReceiveProps(nextProps) {
       var _this2 = this;
 
-      getBodyAndAnswer(nextProps).then(function (_ref2) {
-        var body = _ref2.body,
-            answer = _ref2.answer;
-
-        _this2.setState({ body: body, answer: answer });
-      }).catch(function () {
-        _this2.setState({ body: '', answer: '', disabled: false });
+      getBodyAndAnswer(nextProps, {
+        exists: function exists(body, answer) {
+          return _this2.setState({ body: body, answer: answer });
+        },
+        exmpty: function exmpty() {
+          return _this2.setState({ body: '', answer: '', disabled: false });
+        }
       });
     }
   }, {
@@ -5980,7 +5976,7 @@ DecisionBranchForm.propTypes = {
 
 exports.default = DecisionBranchForm;
 
-},{"../types":72,"is-empty":444,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"promise":717,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
+},{"../types":72,"is-empty":444,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

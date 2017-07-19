@@ -4,7 +4,6 @@ import includes from 'lodash/includes';
 import find from 'lodash/find';
 import map from 'lodash/map';
 import isEmpty from 'is-empty';
-import Promise from 'promise';
 
 import {
   activeItemType,
@@ -12,33 +11,29 @@ import {
   decisionBranchesRepoType,
 } from '../types';
 
-const getBodyAndAnswer = (props) => (
-  new Promise((resolve, reject) => {
-    const { activeItem, decisionBranchesRepo } = props;
-    const decisionBranch = decisionBranchesRepo[activeItem.node.id];
-    if (decisionBranch == null) { return reject(); }
-    const { body, answer } = decisionBranch;
-    resolve({ body, answer: answer || '' });
-  })
-);
+const getBodyAndAnswer = (props, { exists, empty }) => {
+  const { activeItem, decisionBranchesRepo } = props;
+  const decisionBranch = decisionBranchesRepo[activeItem.node.id];
+  if (decisionBranch == null) { return empty(); }
+  const { body, answer } = decisionBranch;
+  exists(body, answer || '');
+};
 
 class DecisionBranchForm extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.state = { body: '', answer: '', disabled: false };
-
-    getBodyAndAnswer(props).then(({ body, answer }) => {
-      this.setState({ body, answer, disabled: false });
+    getBodyAndAnswer(props, {
+      exists: (body, answer) => this.state = { body, answer, disabled: false },
+      exmpty: () => this.state = { body: '', answer: '', disabled: false },
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    getBodyAndAnswer(nextProps).then(({ body, answer }) => {
-      this.setState({ body, answer });
-    }).catch(() => {
-      this.setState({ body: '', answer: '', disabled: false });
+    getBodyAndAnswer(nextProps, {
+      exists: (body, answer) => this.setState({ body, answer }),
+      exmpty: () => this.setState({ body: '', answer: '', disabled: false }),
     });
   }
 

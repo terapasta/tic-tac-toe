@@ -3,7 +3,6 @@ import TextArea from 'react-textarea-autosize';
 import includes from 'lodash/includes';
 import find from 'lodash/find';
 import map from 'lodash/map';
-import isEmpty from 'is-empty';
 
 import {
   activeItemType,
@@ -18,6 +17,12 @@ const getBodyAndAnswer = (props, { exists, empty }) => {
   const { body, answer } = decisionBranch;
   exists(body, answer || '');
 };
+
+const findParentQuestion = (questionsTree, dbId) => (
+  find(questionsTree, node => (
+    includes(map(node.decisionBranches, 'id'), dbId))
+  )
+);
 
 class DecisionBranchForm extends Component {
   constructor(props) {
@@ -44,9 +49,7 @@ class DecisionBranchForm extends Component {
     const { body, answer } = this.state;
     const { activeItem, questionsTree, onUpdate } = this.props;
     const { id } = activeItem.node;
-    const question = find(questionsTree, node => (
-      includes(map(node.decisionBranches, 'id'), id))
-    );
+    const question = findParentQuestion(questionsTree, id);
     onUpdate(question.id, id, body, answer).then(() => {
       this.setState({ disabled: false });
     });
@@ -58,9 +61,7 @@ class DecisionBranchForm extends Component {
 
     const { activeItem, questionsTree, onDelete } = this.props;
     const { id } = activeItem.node;
-    const question = find(questionsTree, node => (
-      includes(map(node.decisionBranches, 'id'), id))
-    );
+    const question = findParentQuestion(questionsTree, id);
     return onDelete(question.id, id);
   }
 
@@ -114,6 +115,7 @@ DecisionBranchForm.propTypes = {
   questionsTree: questionsTreeType.isRequired,
   decisionBranchesRepo: decisionBranchesRepoType.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default DecisionBranchForm;

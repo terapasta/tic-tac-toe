@@ -5771,10 +5771,6 @@ var _map = require('lodash/map');
 
 var _map2 = _interopRequireDefault(_map);
 
-var _isEmpty = require('is-empty');
-
-var _isEmpty2 = _interopRequireDefault(_isEmpty);
-
 var _types = require('../types');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5799,6 +5795,12 @@ var getBodyAndAnswer = function getBodyAndAnswer(props, _ref) {
       answer = decisionBranch.answer;
 
   exists(body, answer || '');
+};
+
+var findParentQuestion = function findParentQuestion(questionsTree, dbId) {
+  return (0, _find2.default)(questionsTree, function (node) {
+    return (0, _includes2.default)((0, _map2.default)(node.decisionBranches, 'id'), dbId);
+  });
 };
 
 var DecisionBranchForm = function (_Component) {
@@ -5855,9 +5857,7 @@ var DecisionBranchForm = function (_Component) {
           onUpdate = _props.onUpdate;
       var id = activeItem.node.id;
 
-      var question = (0, _find2.default)(questionsTree, function (node) {
-        return (0, _includes2.default)((0, _map2.default)(node.decisionBranches, 'id'), id);
-      });
+      var question = findParentQuestion(questionsTree, id);
       onUpdate(question.id, id, body, answer).then(function () {
         _this3.setState({ disabled: false });
       });
@@ -5876,9 +5876,7 @@ var DecisionBranchForm = function (_Component) {
           onDelete = _props2.onDelete;
       var id = activeItem.node.id;
 
-      var question = (0, _find2.default)(questionsTree, function (node) {
-        return (0, _includes2.default)((0, _map2.default)(node.decisionBranches, 'id'), id);
-      });
+      var question = findParentQuestion(questionsTree, id);
       return onDelete(question.id, id);
     }
   }, {
@@ -5971,12 +5969,13 @@ DecisionBranchForm.propTypes = {
   activeItem: _types.activeItemType.isRequired,
   questionsTree: _types.questionsTreeType.isRequired,
   decisionBranchesRepo: _types.decisionBranchesRepoType.isRequired,
-  onUpdate: _react.PropTypes.func.isRequired
+  onUpdate: _react.PropTypes.func.isRequired,
+  onDelete: _react.PropTypes.func.isRequired
 };
 
 exports.default = DecisionBranchForm;
 
-},{"../types":72,"is-empty":444,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
+},{"../types":72,"lodash/find":668,"lodash/includes":674,"lodash/map":695,"react":874,"react-textarea-autosize":744}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

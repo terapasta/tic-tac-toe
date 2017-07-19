@@ -1,3 +1,5 @@
+import isEmpty from 'is-empty';
+
 import {
   activeItemType,
   decisionBranchesRepoType,
@@ -14,6 +16,25 @@ DecisionBranchAnswerForm.getAnswerAndDecisionBranches = (props) => {
     decisionBranchesRepo[db.id]
   ));
   return { answer, decisionBranches };
+};
+
+DecisionBranchAnswerForm.onCreateDecisionBranch = (props, body) => {
+  if (isEmpty(body)) { return; }
+  const { activeItem, onCreateDecisionBranch } = props;
+  return onCreateDecisionBranch(activeItem.node.id, body);
+};
+
+DecisionBranchAnswerForm.onUpdateDecisionBranch = (props, id, body) => {
+  if (isEmpty(body)) { return; }
+  const { activeItem, onUpdateDecisionBranch } = props;
+  return onUpdateDecisionBranch(activeItem.node.id, id, body);
+};
+
+DecisionBranchAnswerForm.onDeleteDecisionBranch = (props, id) => {
+  if (window.confirm('本当に削除してよろしいですか？')) {
+    const { activeItem, onDeleteDecisionBranch } = props;
+    return onDeleteDecisionBranch(activeItem.node.id, id);
+  }
 };
 
 DecisionBranchAnswerForm.propTypes = {

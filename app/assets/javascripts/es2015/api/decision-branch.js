@@ -18,3 +18,12 @@ export const update = (botId, questionAnswerId, id, body, answer = null) => {
 export const destroy = (botId, questionAnswerId, id) => {
   return axios.delete(`/api/bots/${botId}/question_answers/${questionAnswerId}/decision_branches/${id}.json`, config());
 };
+
+export const nestedCreate = (botId, decisionBranchId, body) => {
+  return axios.post(`/api/bots/${botId}/decision_branches.json`, {
+    decision_branch: {
+      body,
+      parent_decision_branch_id: decisionBranchId,
+    }
+  }, config());
+}

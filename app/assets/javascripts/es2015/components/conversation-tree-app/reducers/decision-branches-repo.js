@@ -10,6 +10,9 @@ import {
 
   succeedDeleteDecisionBranch,
   failedDeleteDecisionBranch,
+
+  succeedCreateNestedDecisionBranch,
+  failedCreateNestedDecisionBranch,
 } from '../action-creators/decision-branch';
 
 const initialState = {};
@@ -41,6 +44,16 @@ export default handleActions({
     return state;
   },
   [failedDeleteDecisionBranch]: (state, action) => {
+    return state;
+  },
+
+  [succeedCreateNestedDecisionBranch]: (state, action) => {
+    const { decisionBranch } = action.payload;
+    return assign({}, state, {
+      [decisionBranch.id]: decisionBranch,
+    });
+  },
+  [failedCreateNestedDecisionBranch]: (state, action) => {
     return state;
   },
 }, initialState);

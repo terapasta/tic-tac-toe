@@ -1,4 +1,8 @@
 import { handleActions } from 'redux-actions';
+import map from 'lodash/map';
+import flatten from 'lodash/flatten';
+import find from 'lodash/find';
+import compact from 'lodash/compact';
 
 import {
   succeedCreateQuestion,
@@ -20,6 +24,9 @@ import {
 
   succeedDeleteDecisionBranch,
   failedDeleteDecisionBranch,
+
+  succeedCreateNestedDecisionBranch,
+  failedCreateNestedDecisionBranch,
 } from '../action-creators/decision-branch';
 
 const initialState = [];
@@ -90,4 +97,31 @@ export default handleActions({
   [failedDeleteDecisionBranch]: (state, action) => {
     return state;
   },
+
+  [succeedCreateNestedDecisionBranch]: (state, action) => {
+    const { decisionBranch } = action.payload;
+    const { parentDecisionBranchId } = decisionBranch;
+    const newState = state.concat();
+    findDecisionBranchFromTree(newState, parentDecisionBranchId, (db) => {
+      db.childDecisionBranches.push({
+        id: decisionBranch.id,
+        childDecisionBranches: [],
+      });
+    });
+    return newState;
+  },
 }, initialState);
+
+function findDecisionBranchFromTree(questionsTree, decisionBranchId, foundCallback) {
+  const handler = (decisionBranchNodes) => {
+    decisionBranchNodes.forEach((decisionBranchNode) => {
+      if (decisionBranchNode.id === decisionBranchId) {
+        foundCallback(decisionBranchNode);
+      } else {
+        handler(decisionBranchNode.childDecisionBranches);
+      }
+    });
+  };
+  const decisionBranchNodes = flatten(questionsTree.map((n) => n.decisionBranches));
+  handler(decisionBranchNodes);
+}

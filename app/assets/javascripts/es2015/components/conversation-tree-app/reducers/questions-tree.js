@@ -1,8 +1,5 @@
 import { handleActions } from 'redux-actions';
-import map from 'lodash/map';
 import flatten from 'lodash/flatten';
-import find from 'lodash/find';
-import compact from 'lodash/compact';
 
 import {
   succeedCreateQuestion,
@@ -109,6 +106,9 @@ export default handleActions({
       });
     });
     return newState;
+  },
+  [failedCreateNestedDecisionBranch]: (state, action) => {
+    return state;
   },
 }, initialState);
 

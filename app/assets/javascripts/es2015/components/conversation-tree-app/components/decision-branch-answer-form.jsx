@@ -26,8 +26,8 @@ DecisionBranchAnswerForm.onCreateDecisionBranch = (props, body) => {
 
 DecisionBranchAnswerForm.onUpdateDecisionBranch = (props, id, body) => {
   if (isEmpty(body)) { return; }
-  const { activeItem, onUpdateDecisionBranch } = props;
-  return onUpdateDecisionBranch(activeItem.node.id, id, body);
+  const { onUpdateDecisionBranch } = props;
+  return onUpdateDecisionBranch(id, body);
 };
 
 DecisionBranchAnswerForm.onDeleteDecisionBranch = (props, id) => {

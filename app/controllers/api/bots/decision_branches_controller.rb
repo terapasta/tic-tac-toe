@@ -31,7 +31,7 @@ class Api::Bots::DecisionBranchesController < Api::BaseController
     end
 
     def set_decision_branch
-      @decision_branch = @bot.decision_branch.find(params[:id])
+      @decision_branch = @bot.decision_branches.find(params[:id])
       authorize @decision_branch
     end
 end

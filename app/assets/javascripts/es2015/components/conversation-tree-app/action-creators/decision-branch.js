@@ -63,3 +63,14 @@ export const createNestedDecisionBracnh = (dbId, body) => (
     });
   }
 );
+
+export const updateNestedDecisionBracnh = (id, body, answer = null) => (
+  (dispatch, getState) => {
+    const { botId } = getState();
+    return DecisionBranchAPI.nestedUpdate(botId, id, body, answer).then((res) => {
+      dispatch(succeedUpdateNestedDecisionBranch(res.data));
+    }).catch((res) => {
+      dispatch(failedUpdateNestedDecisionBranch(res.data));
+    });
+  }
+);

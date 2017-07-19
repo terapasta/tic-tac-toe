@@ -593,7 +593,7 @@ function config() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nestedCreate = exports.destroy = exports.update = exports.create = undefined;
+exports.nestedUpdate = exports.nestedCreate = exports.destroy = exports.update = exports.create = undefined;
 
 var _axios = require('axios');
 
@@ -618,7 +618,7 @@ var update = exports.update = function update(botId, questionAnswerId, id, body)
   var params = { body: body };
   if (answer) {
     params.answer = answer;
-  };
+  }
 
   return _axios2.default.put(path, { decision_branch: params }, (0, _config2.default)());
 };
@@ -627,12 +627,25 @@ var destroy = exports.destroy = function destroy(botId, questionAnswerId, id) {
   return _axios2.default.delete('/api/bots/' + botId + '/question_answers/' + questionAnswerId + '/decision_branches/' + id + '.json', (0, _config2.default)());
 };
 
-var nestedCreate = exports.nestedCreate = function nestedCreate(botId, decisionBranchId, body) {
+var nestedCreate = exports.nestedCreate = function nestedCreate(botId, parentDecisionBranchId, body) {
   return _axios2.default.post('/api/bots/' + botId + '/decision_branches.json', {
     decision_branch: {
       body: body,
-      parent_decision_branch_id: decisionBranchId
+      parent_decision_branch_id: parentDecisionBranchId
     }
+  }, (0, _config2.default)());
+};
+
+var nestedUpdate = exports.nestedUpdate = function nestedUpdate(botId, id, body) {
+  var answer = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+  var params = { body: body };
+  if (answer) {
+    params.answer = answer;
+  }
+
+  return _axios2.default.put('/api/bots/' + botId + '/decision_branches/' + id + '.json', {
+    decision_branch: params
   }, (0, _config2.default)());
 };
 
@@ -4811,7 +4824,7 @@ var rejectActiveItem = exports.rejectActiveItem = (0, _reduxActions.createAction
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createNestedDecisionBracnh = exports.failedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch = exports.succeedUpdateNestedDecisionBranch = exports.failedCreateNestedDecisionBranch = exports.succeedCreateNestedDecisionBranch = exports.deleteDecisionBranch = exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
+exports.updateNestedDecisionBracnh = exports.createNestedDecisionBracnh = exports.failedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch = exports.succeedUpdateNestedDecisionBranch = exports.failedCreateNestedDecisionBranch = exports.succeedCreateNestedDecisionBranch = exports.deleteDecisionBranch = exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
 
 var _reduxActions = require('redux-actions');
 
@@ -4888,6 +4901,20 @@ var createNestedDecisionBracnh = exports.createNestedDecisionBracnh = function c
       dispatch(succeedCreateNestedDecisionBranch(res.data));
     }).catch(function (res) {
       dispatch(failedCreateNestedDecisionBranch(res.data));
+    });
+  };
+};
+
+var updateNestedDecisionBracnh = exports.updateNestedDecisionBracnh = function updateNestedDecisionBracnh(id, body) {
+  var answer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  return function (dispatch, getState) {
+    var _getState5 = getState(),
+        botId = _getState5.botId;
+
+    return DecisionBranchAPI.nestedUpdate(botId, id, body, answer).then(function (res) {
+      dispatch(succeedUpdateNestedDecisionBranch(res.data));
+    }).catch(function (res) {
+      dispatch(failedUpdateNestedDecisionBranch(res.data));
     });
   };
 };
@@ -5207,7 +5234,7 @@ var ConversationTree = function (_Component) {
               return dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body));
             },
             onUpdateDecisionBranch: function onUpdateDecisionBranch(id, body) {
-              return console.log('update db', id, body);
+              return dispatch(decisionBranchActions.updateNestedDecisionBracnh(id, body));
             },
             onDeleteDecisionBranch: function onDeleteDecisionBranch(id) {
               return console.log('delete db', id);
@@ -5784,10 +5811,9 @@ DecisionBranchAnswerForm.onUpdateDecisionBranch = function (props, id, body) {
   if ((0, _isEmpty2.default)(body)) {
     return;
   }
-  var activeItem = props.activeItem,
-      onUpdateDecisionBranch = props.onUpdateDecisionBranch;
+  var onUpdateDecisionBranch = props.onUpdateDecisionBranch;
 
-  return onUpdateDecisionBranch(activeItem.node.id, id, body);
+  return onUpdateDecisionBranch(id, body);
 };
 
 DecisionBranchAnswerForm.onDeleteDecisionBranch = function (props, id) {
@@ -7095,9 +7121,9 @@ var _handleActions;
 
 var _reduxActions = require('redux-actions');
 
-var _assign4 = require('lodash/assign');
+var _assign5 = require('lodash/assign');
 
-var _assign5 = _interopRequireDefault(_assign4);
+var _assign6 = _interopRequireDefault(_assign5);
 
 var _decisionBranch = require('../action-creators/decision-branch');
 
@@ -7110,13 +7136,13 @@ var initialState = {};
 exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _defineProperty(_handleActions, _decisionBranch.succeedCreateDecisionBranch, function (state, action) {
   var decisionBranch = action.payload.decisionBranch;
 
-  return (0, _assign5.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
+  return (0, _assign6.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
 }), _defineProperty(_handleActions, _decisionBranch.failedCreateDecisionBranch, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedUpdateDecisionBranch, function (state, action) {
   var decisionBranch = action.payload.decisionBranch;
 
-  return (0, _assign5.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
+  return (0, _assign6.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
 }), _defineProperty(_handleActions, _decisionBranch.failedUpdateDecisionBranch, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _decisionBranch.succeedDeleteDecisionBranch, function (state, action) {
@@ -7129,8 +7155,14 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 }), _defineProperty(_handleActions, _decisionBranch.succeedCreateNestedDecisionBranch, function (state, action) {
   var decisionBranch = action.payload.decisionBranch;
 
-  return (0, _assign5.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
+  return (0, _assign6.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
 }), _defineProperty(_handleActions, _decisionBranch.failedCreateNestedDecisionBranch, function (state, action) {
+  return state;
+}), _defineProperty(_handleActions, _decisionBranch.succeedUpdateNestedDecisionBranch, function (state, action) {
+  var decisionBranch = action.payload.decisionBranch;
+
+  return (0, _assign6.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
+}), _defineProperty(_handleActions, _decisionBranch.failedUpdateNestedDecisionBranch, function (state, action) {
   return state;
 }), _handleActions), initialState);
 
@@ -7238,21 +7270,9 @@ var _handleActions;
 
 var _reduxActions = require('redux-actions');
 
-var _map = require('lodash/map');
-
-var _map2 = _interopRequireDefault(_map);
-
 var _flatten = require('lodash/flatten');
 
 var _flatten2 = _interopRequireDefault(_flatten);
-
-var _find = require('lodash/find');
-
-var _find2 = _interopRequireDefault(_find);
-
-var _compact = require('lodash/compact');
-
-var _compact2 = _interopRequireDefault(_compact);
 
 var _question = require('../action-creators/question');
 
@@ -7335,6 +7355,8 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
     });
   });
   return newState;
+}), _defineProperty(_handleActions, _decisionBranch.failedCreateNestedDecisionBranch, function (state, action) {
+  return state;
 }), _handleActions), initialState);
 
 
@@ -7354,7 +7376,7 @@ function findDecisionBranchFromTree(questionsTree, decisionBranchId, foundCallba
   handler(decisionBranchNodes);
 }
 
-},{"../action-creators/decision-branch":49,"../action-creators/question":50,"lodash/compact":662,"lodash/find":668,"lodash/flatten":670,"lodash/map":695,"redux-actions":883}],72:[function(require,module,exports){
+},{"../action-creators/decision-branch":49,"../action-creators/question":50,"lodash/flatten":670,"redux-actions":883}],72:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

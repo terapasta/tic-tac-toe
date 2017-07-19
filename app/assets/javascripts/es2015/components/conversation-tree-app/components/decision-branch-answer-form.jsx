@@ -32,8 +32,9 @@ DecisionBranchAnswerForm.onUpdateDecisionBranch = (props, id, body) => {
 
 DecisionBranchAnswerForm.onDeleteDecisionBranch = (props, id) => {
   if (window.confirm('本当に削除してよろしいですか？')) {
-    const { activeItem, onDeleteDecisionBranch } = props;
-    return onDeleteDecisionBranch(activeItem.node.id, id);
+    const { decisionBranchesRepo, onDeleteDecisionBranch } = props;
+    const { parentDecisionBranchId } = decisionBranchesRepo[id];
+    return onDeleteDecisionBranch(parentDecisionBranchId, id);
   }
 };
 

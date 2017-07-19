@@ -36,3 +36,7 @@ export const nestedUpdate = (botId, id, body, answer = null) => {
     decision_branch: params
   }, config());
 }
+
+export const nestedDelete = (botId, id) => {
+  return axios.delete(`/api/bots/${botId}/decision_branches/${id}.json`, config());
+};

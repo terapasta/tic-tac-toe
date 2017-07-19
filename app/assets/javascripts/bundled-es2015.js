@@ -593,7 +593,7 @@ function config() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nestedUpdate = exports.nestedCreate = exports.destroy = exports.update = exports.create = undefined;
+exports.nestedDelete = exports.nestedUpdate = exports.nestedCreate = exports.destroy = exports.update = exports.create = undefined;
 
 var _axios = require('axios');
 
@@ -647,6 +647,10 @@ var nestedUpdate = exports.nestedUpdate = function nestedUpdate(botId, id, body)
   return _axios2.default.put('/api/bots/' + botId + '/decision_branches/' + id + '.json', {
     decision_branch: params
   }, (0, _config2.default)());
+};
+
+var nestedDelete = exports.nestedDelete = function nestedDelete(botId, id) {
+  return _axios2.default.delete('/api/bots/' + botId + '/decision_branches/' + id + '.json', (0, _config2.default)());
 };
 
 },{"./config":11,"axios":90}],13:[function(require,module,exports){
@@ -4824,7 +4828,7 @@ var rejectActiveItem = exports.rejectActiveItem = (0, _reduxActions.createAction
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateNestedDecisionBracnh = exports.createNestedDecisionBracnh = exports.failedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch = exports.succeedUpdateNestedDecisionBranch = exports.failedCreateNestedDecisionBranch = exports.succeedCreateNestedDecisionBranch = exports.deleteDecisionBranch = exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
+exports.deleteNestedDecisionBranch = exports.updateNestedDecisionBranch = exports.createNestedDecisionBracnh = exports.failedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch = exports.succeedUpdateNestedDecisionBranch = exports.failedCreateNestedDecisionBranch = exports.succeedCreateNestedDecisionBranch = exports.deleteDecisionBranch = exports.updateDecisionBranch = exports.createDecisionBranch = exports.failedDeleteDecisionBranch = exports.succeedDeleteDecisionBranch = exports.failedUpdateDecisionBranch = exports.succeedUpdateDecisionBranch = exports.failedCreateDecisionBranch = exports.succeedCreateDecisionBranch = undefined;
 
 var _reduxActions = require('redux-actions');
 
@@ -4892,12 +4896,12 @@ var failedUpdateNestedDecisionBranch = exports.failedUpdateNestedDecisionBranch 
 var succeedDeleteNestedDecisionBranch = exports.succeedDeleteNestedDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_DELETE_DECISION_BRANCH');
 var failedDeleteNestedDecisionBranch = exports.failedDeleteNestedDecisionBranch = (0, _reduxActions.createAction)('FAILED_DELETE_DECISION_BRANCH');
 
-var createNestedDecisionBracnh = exports.createNestedDecisionBracnh = function createNestedDecisionBracnh(dbId, body) {
+var createNestedDecisionBracnh = exports.createNestedDecisionBracnh = function createNestedDecisionBracnh(parentId, body) {
   return function (dispatch, getState) {
     var _getState4 = getState(),
         botId = _getState4.botId;
 
-    return DecisionBranchAPI.nestedCreate(botId, dbId, body).then(function (res) {
+    return DecisionBranchAPI.nestedCreate(botId, parentId, body).then(function (res) {
       dispatch(succeedCreateNestedDecisionBranch(res.data));
     }).catch(function (res) {
       dispatch(failedCreateNestedDecisionBranch(res.data));
@@ -4905,7 +4909,7 @@ var createNestedDecisionBracnh = exports.createNestedDecisionBracnh = function c
   };
 };
 
-var updateNestedDecisionBracnh = exports.updateNestedDecisionBracnh = function updateNestedDecisionBracnh(id, body) {
+var updateNestedDecisionBranch = exports.updateNestedDecisionBranch = function updateNestedDecisionBranch(id, body) {
   var answer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   return function (dispatch, getState) {
     var _getState5 = getState(),
@@ -4915,6 +4919,19 @@ var updateNestedDecisionBracnh = exports.updateNestedDecisionBracnh = function u
       dispatch(succeedUpdateNestedDecisionBranch(res.data));
     }).catch(function (res) {
       dispatch(failedUpdateNestedDecisionBranch(res.data));
+    });
+  };
+};
+
+var deleteNestedDecisionBranch = exports.deleteNestedDecisionBranch = function deleteNestedDecisionBranch(parentId, id) {
+  return function (dispatch, getState) {
+    var _getState6 = getState(),
+        botId = _getState6.botId;
+
+    return DecisionBranchAPI.nestedDelete(botId, id).then(function (res) {
+      dispatch(succeedDeleteNestedDecisionBranch({ parentId: parentId, id: id }));
+    }).catch(function (res) {
+      dispatch(failedDeleteNestedDecisionBranch(res.data));
     });
   };
 };
@@ -5234,10 +5251,10 @@ var ConversationTree = function (_Component) {
               return dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body));
             },
             onUpdateDecisionBranch: function onUpdateDecisionBranch(id, body) {
-              return dispatch(decisionBranchActions.updateNestedDecisionBracnh(id, body));
+              return dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body));
             },
-            onDeleteDecisionBranch: function onDeleteDecisionBranch(id) {
-              return console.log('delete db', id);
+            onDeleteDecisionBranch: function onDeleteDecisionBranch(parentId, id) {
+              return dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id));
             }
           })
         )
@@ -5818,10 +5835,11 @@ DecisionBranchAnswerForm.onUpdateDecisionBranch = function (props, id, body) {
 
 DecisionBranchAnswerForm.onDeleteDecisionBranch = function (props, id) {
   if (window.confirm('本当に削除してよろしいですか？')) {
-    var activeItem = props.activeItem,
+    var decisionBranchesRepo = props.decisionBranchesRepo,
         onDeleteDecisionBranch = props.onDeleteDecisionBranch;
+    var parentDecisionBranchId = decisionBranchesRepo[id].parentDecisionBranchId;
 
-    return onDeleteDecisionBranch(activeItem.node.id, id);
+    return onDeleteDecisionBranch(parentDecisionBranchId, id);
   }
 };
 
@@ -7164,6 +7182,11 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   return (0, _assign6.default)({}, state, _defineProperty({}, decisionBranch.id, decisionBranch));
 }), _defineProperty(_handleActions, _decisionBranch.failedUpdateNestedDecisionBranch, function (state, action) {
   return state;
+}), _defineProperty(_handleActions, _decisionBranch.succeedDeleteNestedDecisionBranch, function (state, action) {
+  var id = action.payload.id;
+
+  delete state[id];
+  return state;
 }), _handleActions), initialState);
 
 },{"../action-creators/decision-branch":49,"lodash/assign":654,"redux-actions":883}],69:[function(require,module,exports){
@@ -7357,6 +7380,18 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   return newState;
 }), _defineProperty(_handleActions, _decisionBranch.failedCreateNestedDecisionBranch, function (state, action) {
   return state;
+}), _defineProperty(_handleActions, _decisionBranch.succeedDeleteNestedDecisionBranch, function (state, action) {
+  var _action$payload2 = action.payload,
+      parentId = _action$payload2.parentId,
+      id = _action$payload2.id;
+
+  var newState = state.concat();
+  findDecisionBranchFromTree(newState, parentId, function (db) {
+    db.childDecisionBranches = db.childDecisionBranches.filter(function (cdb) {
+      return cdb.id !== id;
+    });
+  });
+  return newState;
 }), _handleActions), initialState);
 
 

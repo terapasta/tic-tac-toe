@@ -142,8 +142,8 @@ class ConversationTree extends Component {
               activeItem={activeItem}
               decisionBranchesRepo={decisionBranchesRepo}
               onCreateDecisionBranch={(dbId, body) => dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body))}
-              onUpdateDecisionBranch={(id, body) => dispatch(decisionBranchActions.updateNestedDecisionBracnh(id, body))}
-              onDeleteDecisionBranch={(id) => console.log('delete db', id)}
+              onUpdateDecisionBranch={(id, body) => dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body))}
+              onDeleteDecisionBranch={(parentId, id) => dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id))}
             />
           )}
         </Detail>

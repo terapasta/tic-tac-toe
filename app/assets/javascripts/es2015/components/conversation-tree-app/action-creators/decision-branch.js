@@ -53,10 +53,10 @@ export const failedUpdateNestedDecisionBranch = createAction('FAILED_UPDATE_DECI
 export const succeedDeleteNestedDecisionBranch = createAction('SUCCEED_DELETE_DECISION_BRANCH');
 export const failedDeleteNestedDecisionBranch = createAction('FAILED_DELETE_DECISION_BRANCH');
 
-export const createNestedDecisionBracnh = (dbId, body) => (
+export const createNestedDecisionBracnh = (parentId, body) => (
   (dispatch, getState) => {
     const { botId } = getState();
-    return DecisionBranchAPI.nestedCreate(botId, dbId, body).then((res) => {
+    return DecisionBranchAPI.nestedCreate(botId, parentId, body).then((res) => {
       dispatch(succeedCreateNestedDecisionBranch(res.data));
     }).catch((res) => {
       dispatch(failedCreateNestedDecisionBranch(res.data));
@@ -64,13 +64,24 @@ export const createNestedDecisionBracnh = (dbId, body) => (
   }
 );
 
-export const updateNestedDecisionBracnh = (id, body, answer = null) => (
+export const updateNestedDecisionBranch = (id, body, answer = null) => (
   (dispatch, getState) => {
     const { botId } = getState();
     return DecisionBranchAPI.nestedUpdate(botId, id, body, answer).then((res) => {
       dispatch(succeedUpdateNestedDecisionBranch(res.data));
     }).catch((res) => {
       dispatch(failedUpdateNestedDecisionBranch(res.data));
+    });
+  }
+);
+
+export const deleteNestedDecisionBranch = (parentId, id) => (
+  (dispatch, getState) => {
+    const { botId } = getState();
+    return DecisionBranchAPI.nestedDelete(botId, id).then((res) => {
+      dispatch(succeedDeleteNestedDecisionBranch({ parentId, id }));
+    }).catch((res) => {
+      dispatch(failedDeleteNestedDecisionBranch(res.data));
     });
   }
 );

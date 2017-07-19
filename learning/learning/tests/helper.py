@@ -22,7 +22,6 @@ def learning_parameter(
 def build_question_answers(csv_file_path, encoding='UTF-8'):
     return pd.read_csv(csv_file_path, encoding=encoding)
 
-# TODO: answer_idの使用をやめテストを通す
 def get_answer(question_answers, id):
     rows = question_answers.query('question_answer_id == %s' % id)
     if rows.empty:

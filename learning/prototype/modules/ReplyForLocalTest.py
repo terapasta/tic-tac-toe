@@ -38,7 +38,6 @@ class Reply:
             print('answer: %s' % answer)
             print('proba: %s \n' % max(probabilities2))
 
-        # TODO: answer_idの使用をやめテストを通す
         results_ordered_by_probability = list(map(lambda x: {
             'question_answer_id': int(x[0]), 'probability': x[1]
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))

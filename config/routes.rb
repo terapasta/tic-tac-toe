@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     resources :decision_branches, only: [:show, :update, :create, :destroy]
     resource :conversation_tree, only: [:show]
     resources :word_mappings
-    resources :ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]

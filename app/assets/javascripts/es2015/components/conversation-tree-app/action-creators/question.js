@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 
 import * as QuestionAnswerAPI from '../../../api/question-answer';
-import { setActiveItem, openNode } from '../action-creators';
+import { setActiveItem, openNode, rejectActiveItem } from '../action-creators';
 import { questionNodeKey } from '../helpers';
 
 export const succeedCreateQuestion = createAction('SUCCEED_CREATE_QUESTION');
@@ -12,6 +12,8 @@ export const failedUpdateQuestion = createAction('FAILED_UPDATE_QUESTION');
 
 export const succeedDeleteQuestion = createAction('SUCCEED_DELETE_QUESTION');
 export const failedDeleteQuestion = createAction('FAILED_DELETE_QUESTION');
+
+export const succeedDeleteAnswer = createAction('SUCCEED_DELETE_ANSWER');
 
 export const createQuestion = (question, answer) => (
   (dispatch, getState) => {
@@ -48,9 +50,23 @@ export const deleteQuestion = (id) => (
     const { botId } = getState();
     return QuestionAnswerAPI.destroy(botId, id).then((res) => {
       dispatch(succeedDeleteQuestion({ id }));
-      dispatch(setActiveItem({ type: null, nodeKey: null, node: null }))
+      dispatch(rejectActiveItem());
     }).catch((res) => {
       dispatch(failedDeleteQuestion(res.data));
     });
+  }
+);
+
+export const deleteAnswer = (id, question) => (
+  (dispatch, getState) => {
+    const { botId } = getState();
+    return QuestionAnswerAPI.update(botId, id, question, '').then((res) => {
+      QuestionAnswerAPI.deleteChildDecisionBranches(botId, id).then((res2) => {
+        dispatch(succeedDeleteAnswer(res.data));
+        dispatch(rejectActiveItem());
+      });
+    }).catch((res) => {
+      dispatch(failedUpdateQuestion(res.data));
+    })
   }
 );

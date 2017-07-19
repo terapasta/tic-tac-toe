@@ -31,8 +31,9 @@ AnswerForm.onUpdateAnswer = (props, answer) => {
 
 AnswerForm.onDeleteAnswer = (props) => {
   if (window.confirm('本当に削除してよろしいですか？')) {
-    const { activeItem, onDeleteAnswer } = props;
-    return onDeleteAnswer(activeItem.node.id);
+    const { activeItem, questionsRepo, onDeleteAnswer } = props;
+    const { question } = questionsRepo[activeItem.node.id];
+    return onDeleteAnswer(activeItem.node.id, question);
   }
 };
 

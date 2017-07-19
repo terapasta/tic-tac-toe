@@ -26,3 +26,7 @@ export function update(botId, id, question, answer) {
 export function destroy(botId, id) {
   return axios.delete(`/api/bots/${botId}/question_answers/${id}.json`, config());
 }
+
+export function deleteChildDecisionBranches(botId, id) {
+  return axios.delete(`/api/bots/${botId}/question_answers/${id}/child_decision_branches.json`, config());
+}

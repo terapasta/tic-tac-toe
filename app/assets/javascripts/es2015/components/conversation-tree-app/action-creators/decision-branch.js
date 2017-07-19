@@ -96,6 +96,7 @@ export const deleteNestedDecisionBranchAnswer = (id, body) => (
     return DecisionBranchAPI.nestedUpdate(botId, id, body, '').then((res) => {
       return DecisionBranchAPI.deleteChildren(botId, id).then((res2) => {
         dispatch(succeedDeleteNestedDecisionBranchAnswer(res.data));
+        dispatch(rejectActiveItem());
       });
     }).catch((res) => {
       dispatch(failedUpdateNestedDecisionBranch(res.data));

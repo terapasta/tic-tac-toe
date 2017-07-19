@@ -689,6 +689,7 @@ exports.find = find;
 exports.create = create;
 exports.update = update;
 exports.destroy = destroy;
+exports.deleteChildDecisionBranches = deleteChildDecisionBranches;
 
 var _axios = require("axios");
 
@@ -724,6 +725,10 @@ function update(botId, id, question, answer) {
 
 function destroy(botId, id) {
   return _axios2.default.delete("/api/bots/" + botId + "/question_answers/" + id + ".json", (0, _config2.default)());
+}
+
+function deleteChildDecisionBranches(botId, id) {
+  return _axios2.default.delete("/api/bots/" + botId + "/question_answers/" + id + "/child_decision_branches.json", (0, _config2.default)());
 }
 
 },{"./config":11,"axios":90}],15:[function(require,module,exports){
@@ -4953,6 +4958,7 @@ var deleteNestedDecisionBranchAnswer = exports.deleteNestedDecisionBranchAnswer 
     return DecisionBranchAPI.nestedUpdate(botId, id, body, '').then(function (res) {
       return DecisionBranchAPI.deleteChildren(botId, id).then(function (res2) {
         dispatch(succeedDeleteNestedDecisionBranchAnswer(res.data));
+        dispatch((0, _actionCreators.rejectActiveItem)());
       });
     }).catch(function (res) {
       dispatch(failedUpdateNestedDecisionBranch(res.data));
@@ -4966,7 +4972,7 @@ var deleteNestedDecisionBranchAnswer = exports.deleteNestedDecisionBranchAnswer 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteQuestion = exports.updateQuestion = exports.createQuestion = exports.failedDeleteQuestion = exports.succeedDeleteQuestion = exports.failedUpdateQuestion = exports.succeedUpdateQuestion = exports.failedCreateQuestion = exports.succeedCreateQuestion = undefined;
+exports.deleteAnswer = exports.deleteQuestion = exports.updateQuestion = exports.createQuestion = exports.succeedDeleteAnswer = exports.failedDeleteQuestion = exports.succeedDeleteQuestion = exports.failedUpdateQuestion = exports.succeedUpdateQuestion = exports.failedCreateQuestion = exports.succeedCreateQuestion = undefined;
 
 var _reduxActions = require('redux-actions');
 
@@ -4988,6 +4994,8 @@ var failedUpdateQuestion = exports.failedUpdateQuestion = (0, _reduxActions.crea
 
 var succeedDeleteQuestion = exports.succeedDeleteQuestion = (0, _reduxActions.createAction)('SUCCEED_DELETE_QUESTION');
 var failedDeleteQuestion = exports.failedDeleteQuestion = (0, _reduxActions.createAction)('FAILED_DELETE_QUESTION');
+
+var succeedDeleteAnswer = exports.succeedDeleteAnswer = (0, _reduxActions.createAction)('SUCCEED_DELETE_ANSWER');
 
 var createQuestion = exports.createQuestion = function createQuestion(question, answer) {
   return function (dispatch, getState) {
@@ -5033,9 +5041,25 @@ var deleteQuestion = exports.deleteQuestion = function deleteQuestion(id) {
 
     return QuestionAnswerAPI.destroy(botId, id).then(function (res) {
       dispatch(succeedDeleteQuestion({ id: id }));
-      dispatch((0, _actionCreators.setActiveItem)({ type: null, nodeKey: null, node: null }));
+      dispatch((0, _actionCreators.rejectActiveItem)());
     }).catch(function (res) {
       dispatch(failedDeleteQuestion(res.data));
+    });
+  };
+};
+
+var deleteAnswer = exports.deleteAnswer = function deleteAnswer(id, question) {
+  return function (dispatch, getState) {
+    var _getState4 = getState(),
+        botId = _getState4.botId;
+
+    return QuestionAnswerAPI.update(botId, id, question, '').then(function (res) {
+      QuestionAnswerAPI.deleteChildDecisionBranches(botId, id).then(function (res2) {
+        dispatch(succeedDeleteAnswer(res.data));
+        dispatch((0, _actionCreators.rejectActiveItem)());
+      });
+    }).catch(function (res) {
+      dispatch(failedUpdateQuestion(res.data));
     });
   };
 };
@@ -5248,8 +5272,8 @@ var ConversationTree = function (_Component) {
             onUpdateAnswer: function onUpdateAnswer(id, question, answer) {
               return dispatch(questionActions.updateQuestion(id, question, answer));
             },
-            onDeleteAnswer: function onDeleteAnswer(id) {
-              return dispatch(questionActions.deleteQuestion(id));
+            onDeleteAnswer: function onDeleteAnswer(id, question) {
+              return dispatch(questionActions.deleteAnswer(id, question));
             },
             onCreateDecisionBranch: function onCreateDecisionBranch(answerId, body) {
               return dispatch(decisionBranchActions.createDecisionBranch(answerId, body));
@@ -5436,9 +5460,11 @@ AnswerForm.onUpdateAnswer = function (props, answer) {
 AnswerForm.onDeleteAnswer = function (props) {
   if (window.confirm('本当に削除してよろしいですか？')) {
     var activeItem = props.activeItem,
+        questionsRepo = props.questionsRepo,
         onDeleteAnswer = props.onDeleteAnswer;
+    var question = questionsRepo[activeItem.node.id].question;
 
-    return onDeleteAnswer(activeItem.node.id);
+    return onDeleteAnswer(activeItem.node.id, question);
   }
 };
 
@@ -7393,9 +7419,9 @@ var _handleActions;
 
 var _reduxActions = require('redux-actions');
 
-var _assign3 = require('lodash/assign');
+var _assign4 = require('lodash/assign');
 
-var _assign4 = _interopRequireDefault(_assign3);
+var _assign5 = _interopRequireDefault(_assign4);
 
 var _question = require('../action-creators/question');
 
@@ -7408,13 +7434,13 @@ var initialState = {};
 exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _defineProperty(_handleActions, _question.succeedCreateQuestion, function (state, action) {
   var questionAnswer = action.payload.questionAnswer;
 
-  return (0, _assign4.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
+  return (0, _assign5.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
 }), _defineProperty(_handleActions, _question.failedCreateQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _question.succeedUpdateQuestion, function (state, action) {
   var questionAnswer = action.payload.questionAnswer;
 
-  return (0, _assign4.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
+  return (0, _assign5.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
 }), _defineProperty(_handleActions, _question.failedUpdateQuestion, function (state, action) {
   return state;
 }), _defineProperty(_handleActions, _question.succeedDeleteQuestion, function (state, action) {
@@ -7424,6 +7450,10 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   return state;
 }), _defineProperty(_handleActions, _question.failedDeleteQuestion, function (state, action) {
   return state;
+}), _defineProperty(_handleActions, _question.succeedDeleteAnswer, function (state, action) {
+  var questionAnswer = action.payload.questionAnswer;
+
+  return (0, _assign5.default)({}, state, _defineProperty({}, questionAnswer.id, questionAnswer));
 }), _handleActions), initialState);
 
 },{"../action-creators/question":50,"lodash/assign":654,"redux-actions":883}],71:[function(require,module,exports){
@@ -7544,6 +7574,16 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
   var newState = state.concat();
   findDecisionBranchFromTree(newState, decisionBranch.id, function (db) {
     db.childDecisionBranches = [];
+  });
+  return newState;
+}), _defineProperty(_handleActions, _question.succeedDeleteAnswer, function (state, action) {
+  var questionAnswer = action.payload.questionAnswer;
+
+  var newState = state.concat();
+  newState.forEach(function (node) {
+    if (node.id === questionAnswer.id) {
+      node.decisionBranches = [];
+    }
   });
   return newState;
 }), _handleActions), initialState);

@@ -10,6 +10,8 @@ import {
 
   succeedDeleteQuestion,
   failedDeleteQuestion,
+
+  succeedDeleteAnswer,
 } from '../action-creators/question';
 
 const initialState = {};
@@ -38,5 +40,12 @@ export default handleActions({
   },
   [failedDeleteQuestion]: (state, action) => {
     return state;
+  },
+
+  [succeedDeleteAnswer]: (state, action) => {
+    const { questionAnswer } = action.payload;
+    return assign({}, state, {
+      [questionAnswer.id]: questionAnswer,
+    });
   },
 }, initialState);

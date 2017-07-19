@@ -120,7 +120,7 @@ class ConversationTree extends Component {
               questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
               onUpdateAnswer={(id, question, answer) => dispatch(questionActions.updateQuestion(id, question, answer))}
-              onDeleteAnswer={(id) => dispatch(questionActions.deleteQuestion(id))}
+              onDeleteAnswer={(id, question) => dispatch(questionActions.deleteAnswer(id, question))}
               onCreateDecisionBranch={(answerId, body) => dispatch(decisionBranchActions.createDecisionBranch(answerId, body))}
               onUpdateDecisionBranch={(answerId, id, body) => dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body))}
               onDeleteDecisionBranch={(answerId, id) => dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id))}

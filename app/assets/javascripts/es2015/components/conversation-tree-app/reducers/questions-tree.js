@@ -10,6 +10,8 @@ import {
 
   succeedDeleteQuestion,
   failedDeleteQuestion,
+
+  succeedDeleteAnswer,
 } from '../action-creators/question';
 
 import {
@@ -133,6 +135,17 @@ export default handleActions({
     const newState = state.concat();
     findDecisionBranchFromTree(newState, decisionBranch.id, (db) => {
       db.childDecisionBranches = [];
+    });
+    return newState;
+  },
+
+  [succeedDeleteAnswer]: (state, action) => {
+    const { questionAnswer } = action.payload;
+    const newState = state.concat();
+    newState.forEach((node) => {
+      if (node.id === questionAnswer.id) {
+        node.decisionBranches = [];
+      }
     });
     return newState;
   },

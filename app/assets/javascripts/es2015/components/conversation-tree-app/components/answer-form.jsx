@@ -19,6 +19,12 @@ AnswerForm.getAnswerAndDecisionBranches = (props) => {
   return { answer, decisionBranches };
 };
 
+AnswerForm.onUpdateAnswer = (props, answer) => {
+  const { activeItem, questionsRepo, onUpdateAnswer } = props;
+  const { question } = questionsRepo[activeItem.node.id];
+  return onUpdateAnswer(activeItem.node.id, question, answer);
+};
+
 AnswerForm.onCreateDecisionBranch = (props, body) => {
   if (isEmpty(body)) { return; }
   const { activeItem, onCreateDecisionBranch } = props;

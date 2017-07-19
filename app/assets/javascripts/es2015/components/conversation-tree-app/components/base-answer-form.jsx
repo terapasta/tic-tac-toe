@@ -15,7 +15,6 @@ class BaseAnswerForm extends Component {
       decisionBranches,
       editingDecisionBranchIndex: null,
     };
-    this.onUpdateAnswer = this.onUpdateAnswer.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,11 +22,8 @@ class BaseAnswerForm extends Component {
     this.setState({ answer, decisionBranches });
   }
 
-  onUpdateAnswer() {
-    const { answer } = this.state;
-    const { activeItem, questionsRepo, onUpdateAnswer } = this.props;
-    const { question } = questionsRepo[activeItem.node.id];
-    onUpdateAnswer(activeItem.node.id, question, answer);
+  onUpdateAnswer(answer) {
+    return this.constructor.onUpdateAnswer(this.props, answer);
   }
 
   onCreateDecisionBranch(body) {
@@ -100,7 +96,7 @@ class BaseAnswerForm extends Component {
             <a className="btn btn-success"
               id="save-answer-button"
               href="#"
-              onClick={this.onUpdateAnswer}
+              onClick={() => this.onUpdateAnswer(answer)}
               disabled={false}>保存</a>
           </div>
         </div>

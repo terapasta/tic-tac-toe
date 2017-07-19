@@ -5256,6 +5256,9 @@ var ConversationTree = function (_Component) {
           activeItem.type === 'decisionBranchAnswer' && _react2.default.createElement(_decisionBranchAnswerForm2.default, {
             activeItem: activeItem,
             decisionBranchesRepo: decisionBranchesRepo,
+            onUpdateAnswer: function onUpdateAnswer(id, body, answer) {
+              return dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer));
+            },
             onCreateDecisionBranch: function onCreateDecisionBranch(dbId, body) {
               return dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body));
             },
@@ -5384,6 +5387,15 @@ AnswerForm.getAnswerAndDecisionBranches = function (props) {
     return decisionBranchesRepo[db.id];
   });
   return { answer: answer, decisionBranches: decisionBranches };
+};
+
+AnswerForm.onUpdateAnswer = function (props, answer) {
+  var activeItem = props.activeItem,
+      questionsRepo = props.questionsRepo,
+      onUpdateAnswer = props.onUpdateAnswer;
+  var question = questionsRepo[activeItem.node.id].question;
+
+  return onUpdateAnswer(activeItem.node.id, question, answer);
 };
 
 AnswerForm.onCreateDecisionBranch = function (props, body) {
@@ -5628,7 +5640,6 @@ var BaseAnswerForm = function (_Component) {
       decisionBranches: decisionBranches,
       editingDecisionBranchIndex: null
     };
-    _this.onUpdateAnswer = _this.onUpdateAnswer.bind(_this);
     return _this;
   }
 
@@ -5643,15 +5654,8 @@ var BaseAnswerForm = function (_Component) {
     }
   }, {
     key: 'onUpdateAnswer',
-    value: function onUpdateAnswer() {
-      var answer = this.state.answer;
-      var _props = this.props,
-          activeItem = _props.activeItem,
-          questionsRepo = _props.questionsRepo,
-          onUpdateAnswer = _props.onUpdateAnswer;
-      var question = questionsRepo[activeItem.node.id].question;
-
-      onUpdateAnswer(activeItem.node.id, question, answer);
+    value: function onUpdateAnswer(answer) {
+      return this.constructor.onUpdateAnswer(this.props, answer);
     }
   }, {
     key: 'onCreateDecisionBranch',
@@ -5763,7 +5767,9 @@ var BaseAnswerForm = function (_Component) {
               { className: 'btn btn-success',
                 id: 'save-answer-button',
                 href: '#',
-                onClick: this.onUpdateAnswer,
+                onClick: function onClick() {
+                  return _this3.onUpdateAnswer(answer);
+                },
                 disabled: false },
               '\u4FDD\u5B58'
             )
@@ -5834,6 +5840,15 @@ DecisionBranchAnswerForm.getAnswerAndDecisionBranches = function (props) {
     return decisionBranchesRepo[db.id];
   });
   return { answer: answer, decisionBranches: decisionBranches };
+};
+
+DecisionBranchAnswerForm.onUpdateAnswer = function (props, answer) {
+  var activeItem = props.activeItem,
+      decisionBranchesRepo = props.decisionBranchesRepo,
+      onUpdateAnswer = props.onUpdateAnswer;
+  var body = decisionBranchesRepo[activeItem.node.id].body;
+
+  return onUpdateAnswer(activeItem.node.id, body, answer);
 };
 
 DecisionBranchAnswerForm.onCreateDecisionBranch = function (props, body) {

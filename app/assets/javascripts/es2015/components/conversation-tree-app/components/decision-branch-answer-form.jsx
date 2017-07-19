@@ -18,6 +18,12 @@ DecisionBranchAnswerForm.getAnswerAndDecisionBranches = (props) => {
   return { answer, decisionBranches };
 };
 
+DecisionBranchAnswerForm.onUpdateAnswer = (props, answer) => {
+  const { activeItem, decisionBranchesRepo, onUpdateAnswer } = props;
+  const { body } = decisionBranchesRepo[activeItem.node.id];
+  return onUpdateAnswer(activeItem.node.id, body, answer);
+};
+
 DecisionBranchAnswerForm.onCreateDecisionBranch = (props, body) => {
   if (isEmpty(body)) { return; }
   const { activeItem, onCreateDecisionBranch } = props;

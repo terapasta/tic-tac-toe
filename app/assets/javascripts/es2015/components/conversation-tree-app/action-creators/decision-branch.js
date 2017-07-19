@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 
 import * as DecisionBranchAPI from '../../../api/decision-branch';
+import { rejectActiveItem } from '../action-creators';
 
 export const succeedCreateDecisionBranch = createAction('SUCCEED_CREATE_DECISION_BRANCH');
 export const failedCreateDecisionBranch = createAction('FAILED_CREATE_DECISION_BRANCH');
@@ -80,6 +81,7 @@ export const deleteNestedDecisionBranch = (parentId, id) => (
     const { botId } = getState();
     return DecisionBranchAPI.nestedDelete(botId, id).then((res) => {
       dispatch(succeedDeleteNestedDecisionBranch({ parentId, id }));
+      dispatch(rejectActiveItem());
     }).catch((res) => {
       dispatch(failedDeleteNestedDecisionBranch(res.data));
     });

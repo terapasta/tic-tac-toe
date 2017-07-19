@@ -4836,6 +4836,8 @@ var _decisionBranch = require('../../../api/decision-branch');
 
 var DecisionBranchAPI = _interopRequireWildcard(_decisionBranch);
 
+var _actionCreators = require('../action-creators');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var succeedCreateDecisionBranch = exports.succeedCreateDecisionBranch = (0, _reduxActions.createAction)('SUCCEED_CREATE_DECISION_BRANCH');
@@ -4930,13 +4932,14 @@ var deleteNestedDecisionBranch = exports.deleteNestedDecisionBranch = function d
 
     return DecisionBranchAPI.nestedDelete(botId, id).then(function (res) {
       dispatch(succeedDeleteNestedDecisionBranch({ parentId: parentId, id: id }));
+      dispatch((0, _actionCreators.rejectActiveItem)());
     }).catch(function (res) {
       dispatch(failedDeleteNestedDecisionBranch(res.data));
     });
   };
 };
 
-},{"../../../api/decision-branch":12,"redux-actions":883}],50:[function(require,module,exports){
+},{"../../../api/decision-branch":12,"../action-creators":48,"redux-actions":883}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5224,6 +5227,9 @@ var ConversationTree = function (_Component) {
             onUpdateAnswer: function onUpdateAnswer(id, question, answer) {
               return dispatch(questionActions.updateQuestion(id, question, answer));
             },
+            onDeleteAnswer: function onDeleteAnswer(id) {
+              return dispatch(questionActions.deleteQuestion(id));
+            },
             onCreateDecisionBranch: function onCreateDecisionBranch(answerId, body) {
               return dispatch(decisionBranchActions.createDecisionBranch(answerId, body));
             },
@@ -5258,6 +5264,9 @@ var ConversationTree = function (_Component) {
             decisionBranchesRepo: decisionBranchesRepo,
             onUpdateAnswer: function onUpdateAnswer(id, body, answer) {
               return dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer));
+            },
+            onDeleteAnswer: function onDeleteAnswer(parentId, id) {
+              return dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id));
             },
             onCreateDecisionBranch: function onCreateDecisionBranch(dbId, body) {
               return dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body));
@@ -5381,7 +5390,12 @@ AnswerForm.getAnswerAndDecisionBranches = function (props) {
   var activeItem = props.activeItem,
       questionsRepo = props.questionsRepo,
       decisionBranchesRepo = props.decisionBranchesRepo;
-  var answer = questionsRepo[activeItem.node.id].answer;
+
+  var question = questionsRepo[activeItem.node.id];
+  if (question == null) {
+    return { answer: '', decisionBranches: [] };
+  }
+  var answer = question.answer;
 
   var decisionBranches = activeItem.node.decisionBranches.map(function (db) {
     return decisionBranchesRepo[db.id];
@@ -5396,6 +5410,15 @@ AnswerForm.onUpdateAnswer = function (props, answer) {
   var question = questionsRepo[activeItem.node.id].question;
 
   return onUpdateAnswer(activeItem.node.id, question, answer);
+};
+
+AnswerForm.onDeleteAnswer = function (props) {
+  if (window.confirm('本当に削除してよろしいですか？')) {
+    var activeItem = props.activeItem,
+        onDeleteAnswer = props.onDeleteAnswer;
+
+    return onDeleteAnswer(activeItem.node.id);
+  }
 };
 
 AnswerForm.onCreateDecisionBranch = function (props, body) {
@@ -5658,6 +5681,11 @@ var BaseAnswerForm = function (_Component) {
       return this.constructor.onUpdateAnswer(this.props, answer);
     }
   }, {
+    key: 'onDeleteAnswer',
+    value: function onDeleteAnswer() {
+      return this.constructor.onDeleteAnswer(this.props);
+    }
+  }, {
     key: 'onCreateDecisionBranch',
     value: function onCreateDecisionBranch(body) {
       return this.constructor.onCreateDecisionBranch(this.props, body);
@@ -5772,6 +5800,18 @@ var BaseAnswerForm = function (_Component) {
                 },
                 disabled: false },
               '\u4FDD\u5B58'
+            ),
+            '\xA0\xA0',
+            _react2.default.createElement(
+              'a',
+              { className: 'btn btn-link',
+                id: 'delete-answer-button',
+                href: '#',
+                onClick: function onClick() {
+                  return _this3.onDeleteAnswer(answer);
+                },
+                disabled: false },
+              '\u524A\u9664'
             )
           )
         ),
@@ -5834,7 +5874,12 @@ var DecisionBranchAnswerForm = function (_BaseAnswerForm) {
 DecisionBranchAnswerForm.getAnswerAndDecisionBranches = function (props) {
   var activeItem = props.activeItem,
       decisionBranchesRepo = props.decisionBranchesRepo;
-  var answer = decisionBranchesRepo[activeItem.node.id].answer;
+
+  var decisionBranch = decisionBranchesRepo[activeItem.node.id];
+  if (decisionBranch == null) {
+    return { answer: '', decisionBranches: [] };
+  }
+  var answer = decisionBranch.answer;
 
   var decisionBranches = activeItem.node.childDecisionBranches.map(function (db) {
     return decisionBranchesRepo[db.id];
@@ -5849,6 +5894,17 @@ DecisionBranchAnswerForm.onUpdateAnswer = function (props, answer) {
   var body = decisionBranchesRepo[activeItem.node.id].body;
 
   return onUpdateAnswer(activeItem.node.id, body, answer);
+};
+
+DecisionBranchAnswerForm.onDeleteAnswer = function (props) {
+  if (window.confirm('本当に削除してよろしいですか？')) {
+    var activeItem = props.activeItem,
+        decisionBranchesRepo = props.decisionBranchesRepo,
+        onDeleteAnswer = props.onDeleteAnswer;
+    var parentDecisionBranchId = decisionBranchesRepo[activeItem.node.id].parentDecisionBranchId;
+
+    return onDeleteAnswer(parentDecisionBranchId, activeItem.node.id);
+  }
 };
 
 DecisionBranchAnswerForm.onCreateDecisionBranch = function (props, body) {

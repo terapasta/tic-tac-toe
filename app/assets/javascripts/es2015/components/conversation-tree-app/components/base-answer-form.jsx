@@ -26,6 +26,10 @@ class BaseAnswerForm extends Component {
     return this.constructor.onUpdateAnswer(this.props, answer);
   }
 
+  onDeleteAnswer() {
+    return this.constructor.onDeleteAnswer(this.props);
+  }
+
   onCreateDecisionBranch(body) {
     return this.constructor.onCreateDecisionBranch(this.props, body);
   }
@@ -98,6 +102,13 @@ class BaseAnswerForm extends Component {
               href="#"
               onClick={() => this.onUpdateAnswer(answer)}
               disabled={false}>保存</a>
+
+            &nbsp;&nbsp;
+            <a className="btn btn-link"
+              id="delete-answer-button"
+              href="#"
+              onClick={() => this.onDeleteAnswer(answer)}
+              disabled={false}>削除</a>
           </div>
         </div>
 

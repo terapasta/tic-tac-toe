@@ -120,6 +120,7 @@ class ConversationTree extends Component {
               questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
               onUpdateAnswer={(id, question, answer) => dispatch(questionActions.updateQuestion(id, question, answer))}
+              onDeleteAnswer={(id) => dispatch(questionActions.deleteQuestion(id))}
               onCreateDecisionBranch={(answerId, body) => dispatch(decisionBranchActions.createDecisionBranch(answerId, body))}
               onUpdateDecisionBranch={(answerId, id, body) => dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body))}
               onDeleteDecisionBranch={(answerId, id) => dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id))}
@@ -145,6 +146,7 @@ class ConversationTree extends Component {
               activeItem={activeItem}
               decisionBranchesRepo={decisionBranchesRepo}
               onUpdateAnswer={(id, body, answer) => dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer))}
+              onDeleteAnswer={(parentId, id) => dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id))}
               onCreateDecisionBranch={(dbId, body) => dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body))}
               onUpdateDecisionBranch={(id, body) => dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body))}
               onDeleteDecisionBranch={(parentId, id) => dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id))}

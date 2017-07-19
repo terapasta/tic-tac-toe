@@ -2,7 +2,6 @@ class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
 
   paginates_per 100
-  acts_as_taggable
 
   belongs_to :bot
   belongs_to :answer_data, class_name: 'Answer', foreign_key: :answer_id

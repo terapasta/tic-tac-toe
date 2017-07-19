@@ -11,7 +11,11 @@ class DecisionBranchAnswerForm extends BaseAnswerForm {}
 
 DecisionBranchAnswerForm.getAnswerAndDecisionBranches = (props) => {
   const { activeItem, decisionBranchesRepo } = props;
-  const { answer } = decisionBranchesRepo[activeItem.node.id];
+  const decisionBranch = decisionBranchesRepo[activeItem.node.id];
+  if (decisionBranch == null) {
+    return { answer: '', decisionBranches: [] };
+  }
+  const { answer } = decisionBranch;
   const decisionBranches = activeItem.node.childDecisionBranches.map(db => (
     decisionBranchesRepo[db.id]
   ));
@@ -22,6 +26,14 @@ DecisionBranchAnswerForm.onUpdateAnswer = (props, answer) => {
   const { activeItem, decisionBranchesRepo, onUpdateAnswer } = props;
   const { body } = decisionBranchesRepo[activeItem.node.id];
   return onUpdateAnswer(activeItem.node.id, body, answer);
+};
+
+DecisionBranchAnswerForm.onDeleteAnswer = (props) => {
+  if (window.confirm('本当に削除してよろしいですか？')) {
+    const { activeItem, decisionBranchesRepo, onDeleteAnswer } = props;
+    const { parentDecisionBranchId } = decisionBranchesRepo[activeItem.node.id];
+    return onDeleteAnswer(parentDecisionBranchId, activeItem.node.id);
+  }
 };
 
 DecisionBranchAnswerForm.onCreateDecisionBranch = (props, body) => {

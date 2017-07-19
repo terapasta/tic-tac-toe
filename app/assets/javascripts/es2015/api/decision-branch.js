@@ -10,7 +10,7 @@ export const create = (botId, questionAnswerId, body) => {
 export const update = (botId, questionAnswerId, id, body, answer = null) => {
   const path = `/api/bots/${botId}/question_answers/${questionAnswerId}/decision_branches/${id}.json`;
   const params = { body };
-  if (answer) { params.answer = answer; }
+  if (answer != null) { params.answer = answer; }
 
   return axios.put(path, { decision_branch: params }, config());
 };
@@ -30,7 +30,7 @@ export const nestedCreate = (botId, parentDecisionBranchId, body) => {
 
 export const nestedUpdate = (botId, id, body, answer = null) => {
   const params = { body };
-  if (answer) { params.answer = answer; }
+  if (answer != null) { params.answer = answer; }
 
   return axios.put(`/api/bots/${botId}/decision_branches/${id}.json`, {
     decision_branch: params
@@ -40,3 +40,7 @@ export const nestedUpdate = (botId, id, body, answer = null) => {
 export const nestedDelete = (botId, id) => {
   return axios.delete(`/api/bots/${botId}/decision_branches/${id}.json`, config());
 };
+
+export const deleteChildren = (botId, id) => {
+  return axios.delete(`/api/bots/${botId}/decision_branches/${id}/child_decision_branches.json`, config());
+}

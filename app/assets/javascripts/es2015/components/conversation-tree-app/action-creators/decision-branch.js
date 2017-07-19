@@ -54,6 +54,8 @@ export const failedUpdateNestedDecisionBranch = createAction('FAILED_UPDATE_NEST
 export const succeedDeleteNestedDecisionBranch = createAction('SUCCEED_DELETE_NESTED_DECISION_BRANCH');
 export const failedDeleteNestedDecisionBranch = createAction('FAILED_DELETE_NESTED_DECISION_BRANCH');
 
+export const succeedDeleteNestedDecisionBranchAnswer = createAction('SUCCEED_DELETE_NESTED_DECISION_BRANCH_ANSWER');
+
 export const createNestedDecisionBracnh = (parentId, body) => (
   (dispatch, getState) => {
     const { botId } = getState();
@@ -84,6 +86,19 @@ export const deleteNestedDecisionBranch = (parentId, id) => (
       dispatch(rejectActiveItem());
     }).catch((res) => {
       dispatch(failedDeleteNestedDecisionBranch(res.data));
+    });
+  }
+);
+
+export const deleteNestedDecisionBranchAnswer = (id, body) => (
+  (dispatch, getState) => {
+    const { botId } = getState();
+    return DecisionBranchAPI.nestedUpdate(botId, id, body, '').then((res) => {
+      return DecisionBranchAPI.deleteChildren(botId, id).then((res2) => {
+        dispatch(succeedDeleteNestedDecisionBranchAnswer(res.data));
+      });
+    }).catch((res) => {
+      dispatch(failedUpdateNestedDecisionBranch(res.data));
     });
   }
 );

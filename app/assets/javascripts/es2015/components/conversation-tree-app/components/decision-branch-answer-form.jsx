@@ -28,11 +28,11 @@ DecisionBranchAnswerForm.onUpdateAnswer = (props, answer) => {
   return onUpdateAnswer(activeItem.node.id, body, answer);
 };
 
-DecisionBranchAnswerForm.onDeleteAnswer = (props) => {
+DecisionBranchAnswerForm.onDeleteAnswer = (props, body) => {
   if (window.confirm('本当に削除してよろしいですか？')) {
     const { activeItem, decisionBranchesRepo, onDeleteAnswer } = props;
-    const { parentDecisionBranchId } = decisionBranchesRepo[activeItem.node.id];
-    return onDeleteAnswer(parentDecisionBranchId, activeItem.node.id);
+    const { body } = decisionBranchesRepo[activeItem.node.id];
+    return onDeleteAnswer(activeItem.node.id, body);
   }
 };
 

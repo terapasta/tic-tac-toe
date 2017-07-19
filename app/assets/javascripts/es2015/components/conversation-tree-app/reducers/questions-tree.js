@@ -27,6 +27,8 @@ import {
 
   succeedDeleteNestedDecisionBranch,
   failedDeleteNestedDecisionBranch,
+
+  succeedDeleteNestedDecisionBranchAnswer,
 } from '../action-creators/decision-branch';
 
 const initialState = [];
@@ -124,6 +126,15 @@ export default handleActions({
   },
   [failedDeleteNestedDecisionBranch]: (state, action) => {
     return state;
+  },
+
+  [succeedDeleteNestedDecisionBranchAnswer]: (state, action) => {
+    const { decisionBranch } = action.payload;
+    const newState = state.concat();
+    findDecisionBranchFromTree(newState, decisionBranch.id, (db) => {
+      db.childDecisionBranches = [];
+    });
+    return newState;
   },
 }, initialState);
 

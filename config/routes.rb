@@ -87,7 +87,9 @@ Rails.application.routes.draw do
         resources :topic_taggings, module: :question_answers
         resources :decision_branches, module: :question_answers
       end
-      resources :decision_branches, module: :bots
+      resources :decision_branches, module: :bots do
+        resource :child_decision_branches, only: [:destroy], module: :decision_branches
+      end
       resources :answers, module: :bots
     end
   end

@@ -21,4 +21,8 @@ class Api::BaseController < ApplicationController
       logger.error e.backtrace.join("\n")
       render json: { error: 'Internal Server Error' }, status: :internal_server_error
     end
+
+    def render_unprocessable_entity_error_json(resource)
+      render json: { errors: resource.errors.full_messages }, adapter: :json, status: :unprocessable_entity
+    end
 end

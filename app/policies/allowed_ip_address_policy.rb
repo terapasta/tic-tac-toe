@@ -4,11 +4,11 @@ class AllowedIpAddressPolicy < ApplicationPolicy
   end
 
   def new?
-    user.normal? || user.staff?
+    create?
   end
 
   def create?
-    user.normal? || user.staff?
+    staff_or_owner?
   end
 
   def edit?
@@ -16,14 +16,20 @@ class AllowedIpAddressPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal? || user.staff?
+    staff_or_owner?
   end
 
   def destroy?
-    user.normal? || user.staff?
+    staff_or_owner?
   end
 
   def permitted_attributes
     [:value]
   end
+
+  private
+    def staff_or_owner?
+      return true if user.staff?
+      user.normal? && record.bot.user == user
+    end
 end

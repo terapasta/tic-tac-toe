@@ -10,8 +10,8 @@ class AllowedIpAddressesController < ApplicationController
   end
 
   def new
-    authorize AllowedIpAddress
     @allowed_ip_address = @bot.allowed_ip_addresses.build
+    authorize @allowed_ip_address
   end
 
   def create

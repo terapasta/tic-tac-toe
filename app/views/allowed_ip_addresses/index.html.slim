@@ -1,21 +1,7 @@
 h1 許可IPアドレス
-<br />
+br
 
-.panel.panel-default
-  .panel-heading
-    h4 許可IPアドレスとは?
-
-  .panel-body
-    p
-      |
-        事前に登録したIPアドレスからのみ、チャットを利用することができます。<br />
-        未登録の場合は、全てのIPアドレスからアクセス可能です。<br />
-    
-    p 
-      |
-        あなたの現在のIPアドレス :  
-      code
-        = request.remote_ip
+= render layout: 'description' do
 
 .text-right
   = link_to "登録する", new_bot_allowed_ip_address_path(@bot), class: "btn btn-default"

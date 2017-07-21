@@ -5,9 +5,9 @@ import isEmpty from "is-empty";
 import * as AnswerAPI from "../api/answer";
 import Panel from "./panel";
 
-export default class AnswerBodyTextArea extends Component {
+export default class AnswerTextArea extends Component {
   static get componentName() {
-    return "AnswerBodyTextArea";
+    return "AnswerTextArea";
   }
 
   static get propTypes() {
@@ -40,9 +40,9 @@ export default class AnswerBodyTextArea extends Component {
           rows={5}
           onChange={this.onChangeTextArea}
           value={text}
-          name={`${baseName}[body]`}
+          name={`${baseName}[answer]`}
         />
-        {!isEmpty(text) && <input type="hidden" name={`${baseName}[bot_id]`} value={botId} />} 
+        {!isEmpty(text) && <input type="hidden" name={`${baseName}[bot_id]`} value={botId} />}
         {!isEmpty(answers) && (
           <div className="well">
             <h4>回答の候補</h4>

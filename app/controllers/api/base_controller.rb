@@ -3,9 +3,9 @@ class Api::BaseController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :authenticate_user!
 
+  rescue_from StandardError, with: :render_internal_server_error_json
   rescue_from Pundit::NotAuthorizedError, with: :render_forbidden_json
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_json
-  rescue_from StandardError, with: :render_internal_server_error_json
 
   private
     def render_forbidden_json

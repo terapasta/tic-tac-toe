@@ -5,7 +5,7 @@ class QuestionAnswer < ActiveRecord::Base
 
   belongs_to :bot
   belongs_to :answer_data, class_name: 'Answer', foreign_key: :answer_id
-  has_many :decision_branches
+  has_many :decision_branches, dependent: :destroy
   has_many :topic_taggings, dependent: :destroy, inverse_of: :question_answer
   has_many :topic_tags, through: :topic_taggings
   has_many :answer_files, dependent: :destroy, inverse_of: :answer
@@ -50,13 +50,8 @@ class QuestionAnswer < ActiveRecord::Base
 
   scope :keyword, -> (_keyword) {
     if _keyword.present?
-      qa = QuestionAnswer.arel_table
-      answers = Answer.arel_table
-      kw = "%#{_keyword}%"
-      joins(:answer).where(
-        qa[:question].matches(kw)
-        .or(answers[:body].matches(kw))
-      )
+      _kw = "%#{_keyword}%"
+      where('question LIKE ? OR answer LIKE ?', _kw, _kw)
     end
   }
 

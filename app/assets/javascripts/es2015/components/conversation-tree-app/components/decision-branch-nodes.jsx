@@ -45,6 +45,7 @@ class DecisionBranchNodes extends Component {
         className="tree__node"
         onClick={e => this.onClickDecisionBranchNode(node, e)}
         key={node.id}
+        id={`decision-branch-${node.id}`}
       >
         <div className={itemClassName}>
           <div className="tree__item-body">
@@ -76,6 +77,7 @@ class DecisionBranchNodes extends Component {
       <li
         className="tree__node"
         onClick={e => this.onClickAnswerNode(node, e)}
+        id={`decision-branch-answer-${node.id}`}
       >
         <div className={itemClassName}>
           <div className="tree__item-body">

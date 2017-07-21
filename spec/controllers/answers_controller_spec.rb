@@ -9,16 +9,16 @@ RSpec.describe AnswersController, type: :controller do
     create(:user, :staff)
   end
 
-  let!(:answer) do
-    create(:answer, bot: bot)
-  end
+  # let!(:answer) do
+  #   create(:answer, bot: bot)
+  # end
 
   let!(:answer_file) do
-    answer.answer_files.create(file: sample_image)
+    question_answer.answer_files.create(file: sample_image)
   end
 
   let!(:descision_branch) do
-    create(:decision_branch, answer: answer, bot: bot)
+    create(:decision_branch, question_answer: question_answer, bot: bot)
   end
 
   let!(:parent_decision_branch) do

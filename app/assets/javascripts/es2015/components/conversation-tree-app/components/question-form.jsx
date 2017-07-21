@@ -63,6 +63,7 @@ class QuestionForm extends Component {
           <label><i className="material-icons valign-middle">comment</i>{" "}質問</label>
           <TextArea
             id="question"
+            name="question-question"
             className="form-control"
             rows={3}
             placeholder="質問を入力してください（例：カードキー無くしてしまったのですが、どうすればいいですか）"
@@ -75,7 +76,7 @@ class QuestionForm extends Component {
           <label><i className="material-icons valign-middle">chat_bubble_outline</i>{" "}回答</label>
           <TextArea className="form-control"
             id="answer-body"
-            name="answer-body"
+            name="question-answer"
             rows={3}
             onChange={e => this.setState({ answer: e.target.value })}
             value={answer}

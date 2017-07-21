@@ -9,11 +9,14 @@ class EditingDecisionBranchForm extends Component {
   }
 
   render() {
-    const { onSave, onDelete } = this.props;
+    const { onSave, onDelete, decisionBranch } = this.props;
     const { body } = this.state;
 
     return (
-      <li className="list-group-item clearfix">
+      <li
+        id={`decision-branch-item-${decisionBranch.id}`}
+        className="list-group-item clearfix"
+      >
         <div className="input-group">
           <input className="form-control" type="text"
             value={body}

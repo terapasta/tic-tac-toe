@@ -11,6 +11,7 @@ const AddingNode = (props) => (
   <li
     className="tree__node"
     onClick={props.onClick}
+    id="adding"
   >
     <div className={className(props)}>
       <div className="tree__item-body">

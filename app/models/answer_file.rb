@@ -1,7 +1,8 @@
 class AnswerFile < ActiveRecord::Base
   belongs_to :answer
+  belongs_to :question_answer
 
-  validates :answer, presence: true
+  # validates :answer, presence: true
   validates :file, presence: true
   validates :file_type, presence: true
 

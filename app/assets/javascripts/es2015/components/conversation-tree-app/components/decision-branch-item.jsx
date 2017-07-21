@@ -7,7 +7,11 @@ class DecisionBranchItem extends Component {
     const { decisionBranch, onClick } = this.props;
 
     return (
-      <li className="list-group-item clearfix" key={decisionBranch.id}>
+      <li
+        className="list-group-item clearfix"
+        key={decisionBranch.id}
+        id={`decision-branch-item-${decisionBranch.id}`}
+      >
         <span>{decisionBranch.body}</span>
         <span
           className="btn btn-link"

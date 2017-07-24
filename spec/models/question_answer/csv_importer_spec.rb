@@ -46,7 +46,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
         context 'next_answerの無いDecisionBranchが登録済の場合' do
           before do
             answer = create(:answer, bot_id: bot.id)
-            create(:decision_branch, bot_id: bot.id, answer_id: answer.id, body: 'それ以降1-1')
+            create(:decision_branch, bot_id: bot.id, question_answer_id: question_answer.id, answer_id: answer.id, body: 'それ以降1-1')
             question_answer.answer = answer
             question_answer.save
           end
@@ -66,7 +66,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
             expect(bot.decision_branches.count).to eq 4
           end
           it 'next_answerが登録されていること' do
-            expect(question_answer.decision_branches.first.next_answer.body).to eq 'それ以降1-2'
+            expect(question_answer.decision_branches.first.answer).to eq 'それ以降1-2'
           end
         end
 
@@ -74,7 +74,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
           let(:next_answer) { create(:answer, bot_id: bot.id, body: 'ほげほげ') }
           before do
             answer = create(:answer, bot_id: bot.id)
-            create(:decision_branch, bot_id: bot.id, answer_id: answer.id, next_answer_id: next_answer.id, body: 'それ以降2-1')
+            @decision_branch = create(:decision_branch, bot_id: bot.id, question_answer_id: question_answer.id, answer_id: answer.id, next_answer_id: next_answer.id, body: 'それ以降2-1', answer: 'ほげほげ')
             question_answer.answer = answer
             question_answer.save
           end
@@ -94,7 +94,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
             expect(bot.decision_branches.count).to eq 4
           end
           it 'next_answerが更新されていること' do
-            expect(next_answer.reload.body).to eq 'それ以降2-2'
+            expect(@decision_branch.reload.answer).to eq 'それ以降2-2'
           end
         end
       end

@@ -3,7 +3,7 @@ class NullQuestionAnswer
 
   def initialize(bot)
     @bot = bot
-    @answer = bot.classify_failed_message.presence || DefinedAnswer.classify_failed.body
+    @answer = bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text
   end
 
   def id

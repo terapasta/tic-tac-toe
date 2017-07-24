@@ -20,14 +20,6 @@ RSpec.describe Conversation::Bot do
     it { expect(subject.answer).to eq answer }
 
     context '#replyの結果のanswer_idが0の場合' do
-      # FIXME DatabaseCleanerでdefined_answerがテストケースごとに削除されてしまうための対処
-      # defined_answerはマスタデータなので削除されないようにしたい
-      let!(:defined_answer) do
-        if DefinedAnswer.find_by(id: DefinedAnswer::CLASSIFY_FAILED_ID).blank?
-          create(:defined_answer, defined_answer_id: DefinedAnswer::CLASSIFY_FAILED_ID, body: 'hogehoge')
-        end
-      end
-
       before do
         allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
           answer_id: Answer::NO_CLASSIFIED_ID,

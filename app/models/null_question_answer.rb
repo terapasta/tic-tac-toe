@@ -7,7 +7,7 @@ class NullQuestionAnswer
   end
 
   def id
-    0
+    QuestionAnswer::NO_CLASSIFIED_ID
   end
 
   def no_classified?

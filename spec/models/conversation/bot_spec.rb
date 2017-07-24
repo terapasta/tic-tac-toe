@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Conversation::Bot do
   let(:bot) { create(:bot) }
-  let(:answer) { create(:answer, bot: bot) }
+  let(:question_answer) { create(:question_answer, bot: bot) }
   let(:message) { create(:message) }
   let(:conversation_bot) { Conversation::Bot.new(bot, message) }
 
@@ -11,13 +11,13 @@ RSpec.describe Conversation::Bot do
 
     before do
       allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
-        answer_id: answer.id,
+        question_answer_id: question_answer.id,
         probability: 0.999,
         results: []
       })
     end
 
-    it { expect(subject.answer).to eq answer }
+    it { expect(subject.question_answer).to eq question_answer }
 
     context '#replyの結果のanswer_idが0の場合' do
       before do
@@ -30,7 +30,7 @@ RSpec.describe Conversation::Bot do
 
       it 'NullAnswerが返ること' do
         # TODO: NullQuestionAnswerに置き換える
-        expect(subject.answer).to be_a NullAnswer
+        expect(subject.question_answer).to be_a NullQuestionAnswer
       end
     end
   end

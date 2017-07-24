@@ -21,12 +21,11 @@ class QuestionAnswer::CsvImporter
         question_answer = @bot.question_answers.where(id: import_param[:question_answer_attributes][:id])
           .first_or_initialize(import_param[:question_answer_attributes])
         question_answer.tap do |qa|
-          qa.answer ||= qa.build_answer(bot_id: @bot.id)
-          qa.answer.body = import_param[:answer_body]
+          qa.answer = import_param[:answer_body]
           qa.save!
         end
 
-        create_underlayer_records(question_answer.answer, import_param[:decision_branches_attributes])
+        create_underlayer_records(question_answer, import_param[:decision_branches_attributes])
       end
     end
     @succeeded = true
@@ -35,15 +34,15 @@ class QuestionAnswer::CsvImporter
     Rails.logger.debug(e.backtrace.join("\n"))
   end
 
-  def create_underlayer_records(answer, decision_branches_attrs)
+  def create_underlayer_records(question_answer, decision_branches_attrs)
     decision_branches_attrs.each do |db_attrs|
-      decision_branch = answer.decision_branches.find_or_initialize_by(body: db_attrs[:body], bot_id: @bot.id)
-      if db_attrs[:next_answer_body].present?
-        decision_branch.next_answer ||= decision_branch.build_next_answer(bot_id: @bot.id)
-        decision_branch.next_answer.body = db_attrs[:next_answer_body]
-        decision_branch.next_answer.save!
+      decision_branch = question_answer.decision_branches.find_or_initialize_by(body: db_attrs[:body], bot_id: @bot.id)
+      decision_branch.tap do |x|
+        x.answer_id = 0 # TODO: 必須なので0を代入しているがあとで消す
+        x.answer = db_attrs[:next_answer_body]
+        x.question_answer = question_answer
+        x.save!
       end
-      decision_branch.save!
     end
   end
 

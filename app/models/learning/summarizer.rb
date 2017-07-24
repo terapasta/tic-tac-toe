@@ -33,7 +33,7 @@ class Learning::Summarizer
       # NOTE Answer廃止でQuestionAnswerに統一したら上のfindする時にquestion_answer_idを使用するけど今はセットしておくだけ
       ltm.assign_attributes(
         question_answer_id: qa.id,
-        answer_body: qa.answer.body
+        answer_body: qa.answer
       )
 
       res << ltm

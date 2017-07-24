@@ -8,12 +8,4 @@ class DecisionBranch < ActiveRecord::Base
     class_name: 'DecisionBranch',
     foreign_key: :parent_decision_branch_id,
     dependent: :destroy
-
-  # validates :question_answer_id,
-  #   presence: true,
-  #   if: 'parent_decision_branch_id.nil?'
-  #
-  # validates :parent_decision_branch_id,
-  #   presence: true,
-  #   if: 'question_answer_id.nil?'
 end

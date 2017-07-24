@@ -14,6 +14,8 @@ class QuestionAnswer < ActiveRecord::Base
   accepts_nested_attributes_for :topic_taggings, allow_destroy: true
   accepts_nested_attributes_for :answer_files, allow_destroy: true
 
+  NO_CLASSIFIED_ID = 0
+
   serialize :underlayer
 
   validates :question, presence: true
@@ -55,6 +57,10 @@ class QuestionAnswer < ActiveRecord::Base
     end
   }
 
+  def no_classified?
+    bot.nil?
+  end
+
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
   end
@@ -71,5 +77,13 @@ class QuestionAnswer < ActiveRecord::Base
       next_tails = get_next_dbs.call(tails)
     end while next_tails.count > 0
     all
+  end
+
+  def self.find_or_null_question_answer(question_answer_id, bot, probability, classify_threshold)
+    if question_answer_id.blank? || question_answer_id == NO_CLASSIFIED_ID || probability < classify_threshold
+      NullQuestionAnswer.new(bot)
+    else
+      QuestionAnswer.find(question_answer_id)
+    end
   end
 end

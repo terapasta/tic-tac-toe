@@ -39,7 +39,7 @@ class Reply:
             print('proba: %s \n' % max(probabilities2))
 
         results_ordered_by_probability = list(map(lambda x: {
-            'answer_id': float(x[0]), 'probability': x[1]
+            'question_answer_id': int(x[0]), 'probability': x[1]
         }, sorted(zip(self.estimator.classes_, probabilities[0]), key=lambda x: x[1], reverse=True)))
 
         results = results_ordered_by_probability[0:10]

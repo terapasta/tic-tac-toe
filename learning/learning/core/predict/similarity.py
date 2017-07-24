@@ -31,7 +31,7 @@ class Similarity:
 
     def to_data_frame(self):
         df = pd.DataFrame.from_dict(self.ordered_data)
-        return df[self.use_column], df['similarity'], df['answer_id']
+        return df[self.use_column], df['similarity']
 
     def to_data(self):
         filter_iter = lambda x: x['similarity'] > 0.1
@@ -70,12 +70,11 @@ class Similarity:
         logger.debug("__order_result: \n%s" % data)
         # NOTE to_data_frameで使うのでインスタンス変数にしておく
         self.use_column = use_column
-        zipped_data = zip(data[self.use_column], similarities, data['answer_id'])
+        zipped_data = zip(data[self.use_column], similarities)
         sorted_data = sorted(zipped_data, key=lambda x: x[1], reverse=True)
         map_iter = (lambda x: {
             self.use_column: float(x[0]),
             'similarity': x[1],
-            'answer_id': float(x[2])
         })
         ordered_data = list(map(map_iter, sorted_data))
         return ordered_data

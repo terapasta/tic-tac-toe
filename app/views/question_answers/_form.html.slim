@@ -1,3 +1,7 @@
+= link_to '戻る', bot_question_answers_path(@bot, session[:question_answers_queries]), class: 'btn btn-default'
+br
+br
+
 .panel.panel-default
   .panel-heading: .panel-title
     = @question_answer.persisted? ? 'Q&A編集' : 'Q&A新規登録'

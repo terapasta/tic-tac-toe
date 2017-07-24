@@ -11,10 +11,6 @@ namespace :twitter do
     TwitterBot::Favorite.new.all
   end
 
-  task auto_tweet: :environment do
-    TwitterBot::AutoTweet.new.auto
-  end
-
   task clone_tweets: :environment do
     TwitterBot::AutoTweet.new.clone
   end

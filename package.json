@@ -58,6 +58,7 @@
     "lodash": "^4.17.2",
     "object-to-formdata": "^1.0.12",
     "promise": "^7.1.1",
+    "prop-types": "^15.5.10",
     "react": "0.14.8",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "0.14.8",
@@ -77,5 +78,13 @@
     "toastr": "^2.1.2",
     "uuid": "^3.0.1",
     "watchify": "^3.7.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.2.0",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "^7.1.0"
   }
 }

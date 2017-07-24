@@ -46,20 +46,17 @@ class QuestionAnswerPolicy < ApplicationPolicy
       [
         :id,
         :question,
+        :answer,
         :answer_id,
         {
           sentence_synonyms_attributes: [
             :body,
             :created_user_id
           ],
-          answer_attributes: [
+          answer_files_attributes: [
             :id,
-            :body,
-            answer_files_attributes: [
-              :id,
-              :file,
-              :_destroy
-            ]
+            :file,
+            :_destroy
           ],
           topic_taggings_attributes: [
             :id,

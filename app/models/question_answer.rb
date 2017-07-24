@@ -2,11 +2,10 @@ class QuestionAnswer < ActiveRecord::Base
   include HasManySentenceSynonyms
 
   paginates_per 100
-  acts_as_taggable
 
   belongs_to :bot
   belongs_to :answer_data, class_name: 'Answer', foreign_key: :answer_id
-  has_many :decision_branches
+  has_many :decision_branches, dependent: :destroy
   has_many :topic_taggings, dependent: :destroy, inverse_of: :question_answer
   has_many :topic_tags, through: :topic_taggings
   has_many :answer_files, dependent: :destroy, inverse_of: :answer
@@ -53,13 +52,8 @@ class QuestionAnswer < ActiveRecord::Base
 
   scope :keyword, -> (_keyword) {
     if _keyword.present?
-      qa = QuestionAnswer.arel_table
-      answers = Answer.arel_table
-      kw = "%#{_keyword}%"
-      joins(:answer).where(
-        qa[:question].matches(kw)
-        .or(answers[:body].matches(kw))
-      )
+      _kw = "%#{_keyword}%"
+      where('question LIKE ? OR answer LIKE ?', _kw, _kw)
     end
   }
 
@@ -69,6 +63,20 @@ class QuestionAnswer < ActiveRecord::Base
 
   def self.import_csv(file, bot, options = {})
     CsvImporter.new(file, bot, options).tap(&:import)
+  end
+
+  def self_and_deep_child_decision_branches
+    all = [self, *decision_branches]
+    tails = decision_branches
+    next_tails = nil
+    get_next_dbs = -> (dbs) {
+      dbs.map(&:child_decision_branches).flatten.compact
+    }
+    begin
+      all += tails = next_tails || get_next_dbs.call(tails)
+      next_tails = get_next_dbs.call(tails)
+    end while next_tails.count > 0
+    all
   end
 
   def self.find_or_null_question_answer(question_answer_id, bot, probability, classify_threshold)

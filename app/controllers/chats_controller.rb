@@ -9,8 +9,9 @@ class ChatsController < ApplicationController
   end
 
   def new
-    new_action
-    render :show
+    success = new_action
+    render :show and return if success
+    render file: 'public/404.html', status: :not_found, layout: false
   end
 
   def show_old
@@ -28,7 +29,9 @@ class ChatsController < ApplicationController
     end
 
     def set_guest_key
-      session[:guest_key] ||= SecureRandom.hex(64)
+      if session[:guest_key].blank?
+        session[:guest_key] = SecureRandom.hex(64)
+      end
     end
 
     def set_warning_message
@@ -57,5 +60,10 @@ class ChatsController < ApplicationController
         chat.is_staff = true if current_user.try(:staff?)
         chat.is_normal = true if current_user.try(:normal?)
       end
+      true
+    rescue Pundit::NotAuthorizedError => e
+      logger.error e.message
+      logger.error e.backtrace.join('\n')
+      false
     end
 end

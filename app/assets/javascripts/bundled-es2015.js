@@ -550,9 +550,7 @@ function create(token, _ref) {
   return _axios2.default.post(path, {
     question_answer: {
       question: questionBody,
-      answer_attributes: {
-        body: answerBody
-      }
+      answer: answerBody
     },
     question_message_id: questionId,
     answer_message_id: answerId
@@ -2022,6 +2020,7 @@ var ChatBotMessageEditor = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (ChatBotMessageEditor.__proto__ || Object.getPrototypeOf(ChatBotMessageEditor)).call(this, props));
 
+    _this._mounted = false;
     _this.state = {
       searchedAnswers: []
     };
@@ -2031,6 +2030,16 @@ var ChatBotMessageEditor = function (_Component) {
   }
 
   _createClass(ChatBotMessageEditor, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this._mounted = true;
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this._mounted = false;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -2112,6 +2121,9 @@ var ChatBotMessageEditor = function (_Component) {
         return this.setState({ searchedAnswers: [] });
       }
       AnswerAPI.findAll(window.currentBot.id, { q: text }).then(function (res) {
+        if (!_this3._mounted) {
+          return;
+        }
         var searchedAnswers = res.data.answers;
         _this3.setState({ searchedAnswers: searchedAnswers });
       }).catch(console.error);
@@ -4276,7 +4288,7 @@ function classifyBotMessage(sections, message) {
   lastSec.answer = pickUp(message);
   secs[secs.length - 1] = lastSec;
 
-  var decisionBranches = (0, _get2.default)(message, "answer.decisionBranches");
+  var decisionBranches = (0, _get2.default)(message, "questionAnswer.decisionBranches");
   if (!(0, _isEmpty2.default)(decisionBranches)) {
     secs.push({ decisionBranches: decisionBranches });
   }

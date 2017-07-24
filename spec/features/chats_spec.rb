@@ -35,19 +35,21 @@ RSpec.describe 'Chats', type: :features, js: true do
   let!(:has_decision_branch_answer_message) do
     create(:message,
       speaker: :bot,
-      body: has_decision_branch_answer.body,
-      answer: has_decision_branch_answer,
+      body: has_decision_branch_question_answer.question,
+      question_answer: has_decision_branch_question_answer,
     )
   end
 
-  let!(:has_decision_branch_answer) do
-    create(:answer, bot: bot)
+  let!(:has_decision_branch_question_answer) do
+    create(:question_answer, bot: bot).tap do |qa|
+      2.times do |n|
+        create(:decision_branch, question_answer: qa, bot: bot, body: "hoge#{n}")
+      end
+    end
   end
 
   let!(:decision_branches) do
-    2.times.to_a.map do |n|
-      has_decision_branch_answer.decision_branches.create(bot: bot, body: "hoge#{n}", next_answer: create(:answer, bot: bot))
-    end
+    has_decision_branch_question_answer.decision_branches
   end
 
   feature 'チャットを開始する' do
@@ -97,7 +99,7 @@ RSpec.describe 'Chats', type: :features, js: true do
             click_link db.body
             sleep 1
             expect(page).to have_content(db.body)
-            expect(page).to have_content(db.next_answer.body)
+            expect(page).to have_content(db.answer)
           end
         end
 

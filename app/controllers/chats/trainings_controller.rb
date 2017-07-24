@@ -3,7 +3,7 @@ class Chats::TrainingsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @question_answer = @bot.question_answers.create!(question_answer_params)
+      @question_answer = @bot.question_answers.create!(permitted_attributes(QuestionAnswer))
       @question_message.update_for_training_with!(@question_answer)
       @answer_message.update_for_training_with!(@question_answer)
     end
@@ -19,11 +19,5 @@ class Chats::TrainingsController < ApplicationController
       @chat = @bot.chats.where(guest_key: session[:guest_key]).last
       @question_message = @chat.messages.find(params[:question_message_id])
       @answer_message = @chat.messages.find(params[:answer_message_id])
-    end
-
-    def question_answer_params
-      permitted_attributes(QuestionAnswer).tap do |prm|
-        prm[:answer_attributes][:bot_id] = @bot.id
-      end
     end
 end

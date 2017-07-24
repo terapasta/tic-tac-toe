@@ -59,7 +59,7 @@ export function classifyBotMessage(sections, message) {
   lastSec.answer = pickUp(message);
   secs[secs.length - 1] = lastSec;
 
-  const decisionBranches = get(message, "answer.decisionBranches");
+  const decisionBranches = get(message, "questionAnswer.decisionBranches");
   if (!isEmpty(decisionBranches)) {
     secs.push({ decisionBranches });
   }

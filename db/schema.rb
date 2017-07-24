@@ -168,21 +168,23 @@ ActiveRecord::Schema.define(version: 20170721025724) do
   add_index "learning_training_messages", ["question_answer_id"], name: "index_learning_training_messages_on_question_answer_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "chat_id",       limit: 4
-    t.integer  "answer_id",     limit: 4
-    t.string   "speaker",       limit: 255,                   null: false
-    t.text     "body",          limit: 65535
-    t.string   "user_agent",    limit: 1024
-    t.boolean  "learn_enabled",               default: true,  null: false
-    t.boolean  "answer_failed",               default: false, null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.integer  "rating",        limit: 4,     default: 0
-    t.boolean  "answer_marked",               default: false, null: false
+    t.integer  "chat_id",            limit: 4
+    t.integer  "answer_id",          limit: 4
+    t.string   "speaker",            limit: 255,                   null: false
+    t.text     "body",               limit: 65535
+    t.string   "user_agent",         limit: 1024
+    t.boolean  "learn_enabled",                    default: true,  null: false
+    t.boolean  "answer_failed",                    default: false, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.integer  "rating",             limit: 4,     default: 0
+    t.boolean  "answer_marked",                    default: false, null: false
     t.datetime "trained_at"
+    t.integer  "question_answer_id", limit: 4
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
+  add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
   add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 

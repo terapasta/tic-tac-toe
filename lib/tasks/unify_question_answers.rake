@@ -89,6 +89,12 @@ namespace :unify_question_answers do
         end
         question_answer.save!
       end
+      Message.find_each do |message|
+        next if message.answer_data.blank?
+
+        message.question_answer_id = message.answer_id
+        message.save!
+      end
     end
   end
 end

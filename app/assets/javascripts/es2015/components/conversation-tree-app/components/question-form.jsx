@@ -32,7 +32,7 @@ class QuestionForm extends Component {
     if (question == null) { return; }
     this.setState({
       question: question.question,
-      answer: question.answer,
+      answer: question.answer || '',
     });
   }
 

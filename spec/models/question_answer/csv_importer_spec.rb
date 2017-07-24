@@ -30,9 +30,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
         it 'QuestionAnserが登録されること' do
           expect(bot.question_answers.count).to eq 2
         end
-        it 'Answerが登録されること' do
-          expect(bot.answers.count).to eq 6
-        end
         it 'DecisionBranchが登録されること' do
           expect(bot.decision_branches.count).to eq 4
         end
@@ -59,9 +56,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
           it 'QuestionAnserが登録されること' do
             expect(bot.question_answers.count).to eq 2
           end
-          it 'Answerが登録されること' do
-            expect(bot.answers.count).to eq 6
-          end
           it 'DecisionBranchが登録されること' do
             expect(bot.decision_branches.count).to eq 4
           end
@@ -86,9 +80,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
 
           it 'QuestionAnserが登録されること' do
             expect(bot.question_answers.count).to eq 2
-          end
-          it 'Answerが登録されること' do
-            expect(bot.answers.count).to eq 6
           end
           it 'DecisionBranchが登録されること' do
             expect(bot.decision_branches.count).to eq 4
@@ -115,9 +106,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(bot.question_answers.count).to eq 2
           expect(bot2.question_answers.count).to eq 1
         end
-        it 'Answerが登録されていること' do
-          expect(bot.answers.count).to eq 6
-        end
         it 'DecisionBranchが登録されていること' do
           expect(bot.decision_branches.count).to eq 4
         end
@@ -140,9 +128,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
       it 'QuestionAnserが登録されないこと' do
         expect(bot.question_answers.count).to eq 0
       end
-      it 'Answerが登録されないこと' do
-        expect(bot.answers.count).to eq 0
-      end
       it 'DecisionBranchが登録されないこと' do
         expect(bot.decision_branches.count).to eq 0
       end
@@ -162,9 +147,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
 
       it 'QuestionAnserが登録されていること' do
         expect(bot.question_answers.count).to eq 2
-      end
-      it 'Answerが登録されていること' do
-        expect(bot.answers.count).to eq 4
       end
       it 'DecisionBranchが登録されていること' do
         expect(bot.decision_branches.count).to eq 2

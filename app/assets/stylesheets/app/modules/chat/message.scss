@@ -234,7 +234,7 @@
       color: lighten($gray, 10%);
     }
 
-    &-button {
+    %base-rating-button {
       padding: 0 10px 0 0;
       font-size: 20px;
       color: darken($gray-lighter, 10%);
@@ -270,5 +270,21 @@
         color: $brand-danger;
       }
     }
+
+    &-button {
+      @extend %base-rating-button;
+    }
+
+    span.chat-message__rating-button {
+      @extend %base-rating-button;
+      &:hover {
+        color: darken($gray-lighter, 10%);
+      }
+    }
+  }
+
+  &__meta {
+    padding-top: 8px;
+    margin-left: $-icon-size + $-balloon-spacing;
   }
 }

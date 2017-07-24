@@ -29,6 +29,10 @@
         // background-color: rgba(#000, 0.03);
         color: darken($base-text-color, 10%);
       }
+
+      &:focus {
+        border-color: transparent;
+      }
     }
   }
 }

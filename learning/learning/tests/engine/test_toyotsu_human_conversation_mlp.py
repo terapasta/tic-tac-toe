@@ -17,7 +17,7 @@ class ToyotsuHumanConversationMlpTestCase(TestCase):
     def setUpClass(cls):
         cls.question_answers = helper.build_question_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     # FIXME mlpは本番環境で使われていないため、一旦テストケースの修正を見送る。直すのかケース自体削除するのか方針を決めたい
 #     def test_jal_mileage(self):

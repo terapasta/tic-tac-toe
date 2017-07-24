@@ -18,11 +18,11 @@ class TrainingMessage(Base):
         logger.debug('TrainingMessage#build start')
         learning_training_messages = self._datasource.learning_training_messages(self._bot_id)
         questions = np.array(learning_training_messages['question'])
-        answer_ids = np.array(learning_training_messages['answer_id'], dtype=np.int)
+        question_answer_ids = np.array(learning_training_messages['question_answer_id'], dtype=np.int)
 
         # 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
         questions = np.append(questions, [''] * self.COUNT_OF_APPEND_BLANK)
-        answer_ids = np.append(answer_ids, [Reply.CLASSIFY_FAILED_ANSWER_ID] * self.COUNT_OF_APPEND_BLANK)
+        question_answer_ids = np.append(question_answer_ids, [Reply.CLASSIFY_FAILED_ANSWER_ID] * self.COUNT_OF_APPEND_BLANK)
 
         if self.learning_parameter.vectorize_using_all_bots:
             vectorizer = self.__build_vectorizer_from_all_bots()
@@ -39,7 +39,7 @@ class TrainingMessage(Base):
 
         self._body_array = body_array
         self._x = body_vec
-        self._y = answer_ids
+        self._y = question_answer_ids
         return self
 
     def __build_vectorizer_from_all_bots(self):

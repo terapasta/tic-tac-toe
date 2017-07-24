@@ -72,7 +72,7 @@ RSpec.describe 'Chats', type: :features, js: true do
           sleep 1
           expect(find("input[name='chat-message-body']").value).to eq('')
           expect(page).to have_content('サンプルメッセージ')
-          expect(page).to have_content(DefinedAnswer.classify_failed.body)
+          expect(page).to have_content(DefinedAnswer.classify_failed_text)
 
           within find("#message-#{Message.last.id}") do
             find('.chat-message__rating-button.good').click
@@ -108,7 +108,7 @@ RSpec.describe 'Chats', type: :features, js: true do
           sleep 1
           expect(find("input[name='chat-message-body']").value).to eq('')
           expect(page).to have_content('サンプルメッセージ')
-          expect(page).to have_content(DefinedAnswer.classify_failed.body)
+          expect(page).to have_content(DefinedAnswer.classify_failed_text)
 
           within all('.chat-section--bordered')[1] do
             find('.chat-section__switch').click

@@ -55,7 +55,7 @@ class Bot < ActiveRecord::Base
   end
 
   def classify_failed_message_with_fallback
-    classify_failed_message.presence || DefinedAnswer.classify_failed&.body || ""
+    classify_failed_message.presence || DefinedAnswer.classify_failed_text
   end
 
   def add_selected_question_answer_ids(question_answer_id)

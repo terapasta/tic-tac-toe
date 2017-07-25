@@ -3614,10 +3614,6 @@ var ButtonClasses = {
   Good: "chat-message__rating-button good",
   Bad: "chat-message__rating-button bad"
 };
-var FaIcons = {
-  Good: "fa fa-thumbs-up",
-  Bad: "fa fa-thumbs-down"
-};
 
 var MessageRatingButtons = function (_Component) {
   _inherits(MessageRatingButtons, _Component);
@@ -3652,14 +3648,22 @@ var MessageRatingButtons = function (_Component) {
           "a",
           { href: "#", className: goodClassName,
             ref: "root", onClick: this.onClick.bind(this, c.Ratings.Good) },
-          _react2.default.createElement("i", { className: FaIcons.Good })
+          _react2.default.createElement(
+            "i",
+            { className: "material-icons" },
+            "thumb_up"
+          )
         ),
         " ",
         _react2.default.createElement(
           "a",
           { href: "#", className: badClassName,
             ref: "root", onClick: this.onClick.bind(this, c.Ratings.Bad) },
-          _react2.default.createElement("i", { className: FaIcons.Bad })
+          _react2.default.createElement(
+            "i",
+            { className: "material-icons" },
+            "thumb_down"
+          )
         )
       );
     }

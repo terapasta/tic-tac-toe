@@ -251,13 +251,13 @@
         color: darken($gray-lighter, 10%);
       }
 
-      .fa {
+      .material-icons {
         transition-duration: .1s;
         transition-property: all;
       }
 
       &:active {
-        .fa {
+        .material-icons {
           transform: scale(1.25);
         }
       }

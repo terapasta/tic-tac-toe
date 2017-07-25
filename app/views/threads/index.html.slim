@@ -39,41 +39,10 @@
       li style="float: right"
         = link_to '対話履歴をエクスポート', bot_threads_path(format: :csv), class: 'btn btn-default'
 
-  br.clear
+  - pagination = capture do
+    = render 'shared/pagination', resources: @chats
 
+  = pagination
   - @chats.each do |chat|
-    .card.mb-4
-      .card-block
-        .text-center.mb-3= link_to 'これ以前の発言もすべて見る', bot_thread_messages_path(@bot, chat)
-        .row
-          - chat.messages.limit(2).reverse.tap do |messages|
-            - messages.first.tap do |message|
-              .col-sm-6.push-sm-6
-                .chat-message--my.full-width
-                  .chat-message__icon style=("background-image:url(#{image_path('silhouette.png')});")
-                  .chat-message__balloon= message.body
-            - messages.second.tap do |message|
-              .col-sm-6.pull-sm-6 style="padding-top:16px"
-                .chat-message.full-width
-                  .chat-message__icon style=("background-image:url(#{@bot.image_url});")
-                  .chat-message__balloon
-                    = message.body
-                  - if message.answer_failed
-                    .chat-message__meta
-                      = material_icon 'error_outline', class: 'text-warning'
-                      = space 2
-                      span 回答失敗
-                  - else
-                    .chat-message__rating
-                      .chat-message__rating-title この返答の評価
-                      span.chat-message__rating-button.good class=('active' if message.good?)
-                        = material_icon 'thumb_up'
-                      span.chat-message__rating-button.bad class=('active' if message.bad?)
-                        = material_icon 'thumb_down'
-
-      .card-footer
-        small ID：#{chat.id}
-        = space 10
-        small 日時：#{l chat.messages.last.created_at}
-
-  = paginate @chats
+    = render 'threads/summary', bot: @bot, chat: chat
+  = pagination

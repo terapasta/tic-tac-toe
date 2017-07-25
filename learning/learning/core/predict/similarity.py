@@ -30,7 +30,7 @@ class Similarity:
         return self
 
     def to_data_frame(self):
-        df = pd.DataFrame.from_dict(self.ordered_data)
+        df = pd.DataFrame.from_dict(self.ordered_data).drop_duplicates(subset=[self.use_column])
         return df[self.use_column], df['similarity'], df['learning_training_message_id']
 
     def to_data(self):

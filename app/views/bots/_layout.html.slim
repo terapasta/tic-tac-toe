@@ -6,7 +6,7 @@
         = space
         = @bot.name
         = space 2
-        = link_to chats_path(@bot.token), class: 'btn btn-outline-success btn-sm' do
+        = link_to new_chats_path(@bot.token), class: 'btn btn-outline-success btn-sm', target: '_blank' do
           = material_icon 'chat', class: 'mi-xs'
           = space
           span チャットする

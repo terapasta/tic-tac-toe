@@ -1,12 +1,13 @@
-- if policy(:bot).index?
-  .row: .col-8.offset-2
-    .mt-5.mb-4
-      h4 Bot一覧
+.container
+  - if policy(:bot).index?
+    .row: .col-8.offset-2
+      .mt-5.mb-4
+        h4 Bot一覧
 
-    table.table: tbody
-      - @bots.each do |bot|
-        tr: td: h4
-          = link_to bot_path(bot), class: 'd-block link-silent' do
-            = image_tag(bot.image_url(:thumb), width: 56, height: 56, class: 'img-circle img-thumbnail')
-            = space
-            = bot.name
+      table.table: tbody
+        - @bots.each do |bot|
+          tr: td: h4
+            = link_to bot_path(bot), class: 'd-block link-silent' do
+              = image_tag(bot.image_url(:thumb), width: 56, height: 56, class: 'img-circle img-thumbnail')
+              = space
+              = bot.name

@@ -54,7 +54,6 @@ class ChatsController < ApplicationController
     end
 
     def new_action
-      return false if policy(:chat).ip_address_authorization?(@bot)
       iframe_support @bot
       @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
         authorize chat

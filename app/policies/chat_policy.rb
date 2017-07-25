@@ -1,9 +1,11 @@
 class ChatPolicy < ApplicationPolicy
   def show?
+    return false if ip_address_authorization?(Bot.find(record.bot_id))
     new?
   end
 
   def new?
+    return false if ip_address_authorization?(Bot.find(record.bot_id))
     return true if user.staff? || bot_owner? || record.bot.allowed_hosts.blank?
     return false if request.referer.blank?
     referer_is_allowed_origin?
@@ -18,8 +20,9 @@ class ChatPolicy < ApplicationPolicy
   end
 
   def ip_address_authorization?(bot)
-    return true if bot.allowed_ip_addresses.present? && bot.allowed_ip_addresses.detect { |ip| ip.value == request.ip }.blank?
-    false
+    return false if bot.allowed_ip_addresses.blank?
+    return false if bot.allowed_ip_addresses.present? && bot.allowed_ip_addresses.map(&:value).include?(request.ip)
+    true
   end
 
   private

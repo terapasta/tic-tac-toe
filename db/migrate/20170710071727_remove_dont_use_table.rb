@@ -1,8 +1,6 @@
 class RemoveDontUseTable < ActiveRecord::Migration
   def change
     drop_table :training_texts
-    drop_table :tags
-    drop_table :taggings
     drop_table :contexts
     drop_table :contact_states
     drop_table :contact_answers

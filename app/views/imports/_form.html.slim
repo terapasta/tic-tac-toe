@@ -16,6 +16,33 @@
       br
       |※Excelで作成したCSVのエンコードはShift_JISです
 
+  div style="padding:24px;"
+    h4
+      = material_icon 'notifications', class: 'text-success'
+      = space
+      |トピックタグもインポート出来るようになりました
+
+    p これによりCSVのフォーマットも変更されました。
+    p 旧CSVフォーマット
+    pre
+      |
+        40,好きな食べ物は？,あっさりしているものが好きですね！
+        41,趣味はなんですか？,最近ジョギングを始めました。
+
+    p 新CSVフォーマット
+    pre
+      |
+        40,<span class="text-danger">トピックタグA</span>,好きな食べ物は？,あっさりしているものが好きですね！
+        41,<span class="text-danger">トピックタグA/トピックタグB</span>,趣味はなんですか？,最近ジョギングを始めました。
+        42,,ごきげんいかがですか？,とっても元気です！
+
+    p
+      |二列目（IDと質問の間）にトピックタグの列が追加されました。
+      br
+      |トピックタグ名を半角スラッシュ<code>/</code>区切りで記述してください。
+      br
+      |※トピックタグが不要な場合は空欄にしておいて下さい
+
   .panel.panel-default style="margin-bottom: 0;"
     .panel-heading: .panel-title 文字エンコードについて
     .panel-body

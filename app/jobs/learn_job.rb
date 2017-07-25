@@ -1,7 +1,7 @@
 class LearnJob < ActiveJob::Base
   queue_as :default
 
-  rescue_from(ActiveRecord::RecordNotFound) do |exception|
+  rescue_from(ActiveRecord::StandardError) do |exception|
     Rails.logger.debug('LearnJob: 学習の実行に失敗しました。')
     Rails.logger.error exception.message
     Rails.logger.error exception.backtrace.join("\n")

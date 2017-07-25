@@ -4,10 +4,11 @@ from learning.log import logger
 
 class ReplyResult:
 
-    def __init__(self, question_answer_ids, probabilities, question, question_feature_count):
+    def __init__(self, question_answer_ids, probabilities, question, question_feature_count, learning_training_message_ids):
         self.question = question
         self.question_feature_count = question_feature_count
         self._question_answer_ids = question_answer_ids
+        self._learning_training_message_ids = learning_training_message_ids
         self._probabilities = probabilities
         self._result = self.__sort()
 
@@ -39,9 +40,15 @@ class ReplyResult:
             logger.debug(row)
 
     def __sort(self):
+        if self._learning_training_message_ids is None:
+            dict = list(map(lambda x: {
+                'question_answer_id': int(x[0]), 'probability': x[1],
+            }, sorted(zip_longest(self._question_answer_ids, self._probabilities), key=lambda x: x[1], reverse=True)))
+            return dict
+
         dict = list(map(lambda x: {
-            'question_answer_id': int(x[0]), 'probability': x[1],
-        }, sorted(zip_longest(self._question_answer_ids, self._probabilities), key=lambda x: x[1], reverse=True)))
+            'question_answer_id': int(x[0]), 'probability': x[1], 'learning_training_message_id': int(x[2]),
+        }, sorted(zip_longest(self._question_answer_ids, self._probabilities, self._learning_training_message_ids), key=lambda x: x[1], reverse=True)))
         return dict
 
     def __limited_result(self):

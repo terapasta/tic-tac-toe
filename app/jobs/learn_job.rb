@@ -6,7 +6,7 @@ class LearnJob < ActiveJob::Base
     summarizer = Learning::Summarizer.new(bot)
     summarizer.summary
 
-    if bot.learning_parameter&.use_similarity_classification?
+    if bot.learning_parameter&.use_similarity_classification? != false
       summarizer.unify_learning_training_message_words!
     else
       LearningTrainingMessage.amp!(bot)

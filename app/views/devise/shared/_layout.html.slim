@@ -1,0 +1,17 @@
+- content_for :hide_global_header, true
+
+
+.container: .row: .col-sm-4.offset-sm-4: .my-5
+  .text-center.mb-4
+    h1.mb-4= link_to image_tag('logo--orange.svg'), root_path
+    h5= title
+  .card
+    .card-block
+      - if resource.errors.any? || alert
+        .alert.alert-danger
+          - if alert
+            = alert
+            br
+          = resource.errors.full_messages.join('<br />').html_safe
+
+      = yield

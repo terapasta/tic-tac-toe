@@ -1,0 +1,44 @@
+.chat-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px;
+  text-align: center;
+  background-color: rgba($white, .7);
+
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: $gray-light;
+  }
+
+  &__right {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    right: 4px;
+  }
+
+  &__button {
+    padding: 6px 8px !important;
+
+    .material-icons {
+      vertical-align: middle;
+    }
+
+    span {
+      display: none;
+    }
+
+    @include media-breakpoint-up(sm) {
+    // @media (min-width: $screen-sm-min) {
+      span {
+        display: inline;
+      }
+    }
+  }
+}

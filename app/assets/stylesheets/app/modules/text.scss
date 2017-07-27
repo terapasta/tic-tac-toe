@@ -1,0 +1,5 @@
+.text {
+  &-gray-light {
+    color: lighten($gray-light, 25%);
+  }
+}

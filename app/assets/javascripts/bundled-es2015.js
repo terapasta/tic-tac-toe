@@ -898,7 +898,7 @@ var BotResetButton = function (_Component) {
 
 
       var modalClassName = (0, _classnames2.default)("modal fade", {
-        in: isOpenedModal
+        show: isOpenedModal
       });
       var modalStyle = { display: isOpenedModal ? "block" : "none" };
 
@@ -911,7 +911,7 @@ var BotResetButton = function (_Component) {
             onClick: this.onClickResetButton.bind(this) },
           "\u5B66\u7FD2\u30C7\u30FC\u30BF\u30EA\u30BB\u30C3\u30C8"
         ),
-        isOpenedModal && _react2.default.createElement("div", { className: "modal-backdrop fade in" }),
+        isOpenedModal && _react2.default.createElement("div", { className: "modal-backdrop fade show" }),
         _react2.default.createElement(
           "div",
           { className: modalClassName,
@@ -929,14 +929,14 @@ var BotResetButton = function (_Component) {
                 "div",
                 { className: "modal-header" },
                 _react2.default.createElement(
-                  "a",
-                  { href: "#", className: "close", onClick: this.onClickModalClose.bind(this) },
-                  "\xD7"
-                ),
-                _react2.default.createElement(
                   "h5",
                   { className: "modal-title" },
                   "\u5B66\u7FD2\u30C7\u30FC\u30BF\u30EA\u30BB\u30C3\u30C8\u306E\u78BA\u8A8D"
+                ),
+                _react2.default.createElement(
+                  "a",
+                  { href: "#", className: "close", onClick: this.onClickModalClose.bind(this) },
+                  "\xD7"
                 )
               ),
               _react2.default.createElement(
@@ -3614,10 +3614,6 @@ var ButtonClasses = {
   Good: "chat-message__rating-button good",
   Bad: "chat-message__rating-button bad"
 };
-var FaIcons = {
-  Good: "fa fa-thumbs-up",
-  Bad: "fa fa-thumbs-down"
-};
 
 var MessageRatingButtons = function (_Component) {
   _inherits(MessageRatingButtons, _Component);
@@ -3652,14 +3648,22 @@ var MessageRatingButtons = function (_Component) {
           "a",
           { href: "#", className: goodClassName,
             ref: "root", onClick: this.onClick.bind(this, c.Ratings.Good) },
-          _react2.default.createElement("i", { className: FaIcons.Good })
+          _react2.default.createElement(
+            "i",
+            { className: "material-icons" },
+            "thumb_up"
+          )
         ),
         " ",
         _react2.default.createElement(
           "a",
           { href: "#", className: badClassName,
             ref: "root", onClick: this.onClick.bind(this, c.Ratings.Bad) },
-          _react2.default.createElement("i", { className: FaIcons.Bad })
+          _react2.default.createElement(
+            "i",
+            { className: "material-icons" },
+            "thumb_down"
+          )
         )
       );
     }
@@ -8317,10 +8321,10 @@ var Modal = function (_Component) {
       return _react2.default.createElement(
         "span",
         null,
-        _react2.default.createElement("div", { className: "modal-backdrop fade in" }),
+        _react2.default.createElement("div", { className: "modal-backdrop fade show" }),
         _react2.default.createElement(
           "div",
-          { className: "modal fade in",
+          { className: "modal fade show",
             style: { display: "block", overflowY: "auto" },
             onClick: function onClick() {
               onClose();

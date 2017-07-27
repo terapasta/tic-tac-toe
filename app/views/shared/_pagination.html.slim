@@ -1,0 +1,13 @@
+nav.d-flex.justify-content-between
+  .pagination-desc
+    - if resources.total_pages > 1
+      - if resources.current_page == 1
+        span 1〜
+      - else
+        span #{resources.length * (resources.current_page - 1) + 1}〜
+      span #{resources.current_page * resources.length}件表示 /#{space}
+    - else
+      span 全件表示 /#{space}
+    span #{resources.total_count}件
+
+  = paginate resources, window: 1

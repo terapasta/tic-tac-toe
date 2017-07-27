@@ -1,0 +1,244 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title My-ope office
+
+    link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
+    link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"
+    = stylesheet_link_tag 'app'
+    = javascript_include_tag 'app'
+  body
+    nav.navbar.navbar-light.navbar-global
+      .container.d-flex.justify-content-between
+        h1.navbar__logo.mr-auto= link_to 'My-ope office', root_path
+        - if user_signed_in?
+          ul.navbar-nav.d-flex.flex-row
+            li.nav-item
+              = link_to 'ヘルプ', 'https://mofmof.zendesk.com/', class: 'nav-link', target: '_blank'
+            li.nav-item
+              = link_to 'サポート', new_contacts_path, class: 'nav-link'
+            li.nav-item
+              = link_to new_contacts_path, class: 'nav-link' do
+                span アップデート情報
+                = space
+                span.badge.badge-pill.badge-danger 1
+            li.nav-item.dropdown
+              = link_to current_user.email.split('@').first, '#', class: 'nav-link dropdown-toggle', id: 'navbarDropdownMenuLink', data: { toggle: "dropdown" }
+              .dropdown-menu.dropdown-menu-right aria-labelledby="navbarDropdownMenuLink"
+                = link_to 'ボット一覧', '#', class: 'dropdown-item'
+                = link_to 'メールアドレス変更', '#', class: 'dropdown-item'
+                = link_to 'パスワード変更', '#', class: 'dropdown-item'
+                .dropdown-divider
+                = link_to 'ログアウト', destroy_user_session_path, class: 'dropdown-item'
+                .dropdown-divider
+                h6.dropdown-header Staffメニュー
+                = link_to 'システム同義語', '#', class: 'dropdown-item'
+                = link_to '精度テスト', '#', class: 'dropdown-item'
+
+        - else
+          = link_to 'ログイン', new_user_session_path, class: 'btn btn-sm btn-primary'
+
+    .bot-header.bg-gray-light.pt-3
+      .container
+        .bot-header__title.d-flex.justify-content-between
+          - Bot.first.tap do |bot|
+            h4.d-inline-block
+              = link_to image_tag(bot.image_url(:thumb), width: 56, height: 56, class: 'img-circle img-thumbnail'), '#'
+              = space
+              = bot.name
+              = space 2
+              = link_to '#', class: 'btn btn-outline-success btn-sm' do
+                = material_icon 'chat', class: 'mi-xs'
+                = space
+                span チャットする
+            div.pt-3
+              = link_to '#', class: 'btn btn-outline-warning btn-sm' do
+                = material_icon 'trending_up', class: 'mi-xs'
+                = space
+                span 学習を実行
+              = space 2
+              = link_to edit_bot_path(bot), class: 'btn btn-outline-gray btn-sm' do
+                = material_icon 'settings', class: 'mi-xs'
+                = space
+                span 設定
+
+    .nav.nav-tabs.nav-global.bg-gray-light.pt-3
+      .container
+        ul.d-flex.justify-content-start
+          li.nav-item
+            a class="nav-link active" href="#"
+              = material_icon 'dashboard', class: 'text-gray-light mi-sm'
+              = space
+              span ダッシュボード
+          li class="nav-item"
+            a class="nav-link" href="#"
+              = material_icon 'history', class: 'text-gray-light mi-sm'
+              = space
+              span 対話履歴
+          li class="nav-item"
+            a class="nav-link" href="#"
+              = material_icon 'playlist_add_check', class: 'text-gray-light mi-sm'
+              = space
+              span 対話タスク
+              = space
+              span.badge.badge-pill.badge-warning 11
+          li class="nav-item"
+            a class="nav-link" href="#"
+              = material_icon 'view_list', class: 'text-gray-light mi-sm'
+              = space
+              span 学習データ
+          li class="nav-item"
+            a class="nav-link" href="#"
+              = material_icon 'question_answer', class: 'text-gray-light mi-sm'
+              = space
+              span Q&A
+          li class="nav-item"
+            a class="nav-link" href="#"
+              = material_icon 'clear_all', class: 'text-gray-light mi-sm flip-horizontal'
+              = space
+              span 会話ツリー
+          li class="nav-item"
+            a class="nav-link" href="#"
+              = material_icon 'book', class: 'text-gray-light mi-sm'
+              = space
+              span 辞書
+          li class="nav-item dropdown"
+            a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+              span その他
+            .dropdown-menu.dropdown-menu-right
+              a class="dropdown-item" href="#"
+                = material_icon 'done_all', class: 'text-gray-light mi-sm'
+                = space
+                span ボットテスト
+                = space
+                span.badge.badge-warning.badge-pill 11
+
+    .pt-4
+      .container
+        .alert.alert-success
+          button.close type="button" class="close" data-dismiss="alert"
+            span &times;
+          = material_icon 'done'
+          = space
+          span アイテムを作成しました
+        .alert.alert-danger
+          button.close type="button" class="close" data-dismiss="alert"
+            span &times;
+          = material_icon 'info_outline'
+          = space
+          span アイテムの作成に失敗しました
+
+    .pt-4
+      .container.text-center
+        .btn-group
+          = link_to '学習データをインポート', '#', class: 'btn btn-orange'
+          = link_to '学習データをエクスポート', '#', class: 'btn btn-outline-orange'
+
+    .main-container.py-4
+      .container
+        form.form-inline.mb-4.d-flex.justify-content-between
+          div
+            select.form-control.form-control-sm
+              option -- タグを選択 --
+            = space
+            input.form-control.form-control-sm type="search" placeholder="キーワード"
+            = space
+            button.btn.btn-primary.btn-sm type="submit" 検索
+          div
+            select.form-control.form-control-sm
+              option 作成日の新しい順
+
+        nav.d-flex.justify-content-between
+          .pagination-desc 全250件中 / 1〜10件表示
+          ul.pagination
+            li.page-item: a.page-link href="#" &laquo;
+            li.page-item: a.page-link href="#" 1
+            li.page-item: a.page-link href="#" 2
+            li.page-item: a.page-link href="#" 3
+            li.page-item: a.page-link href="#" &raquo;
+
+        table.table.table-striped
+          thead
+            tr
+              th id
+              th 名称
+              th 属性
+              th
+          tbody
+            - 10.times do |n|
+              tr
+                td= n
+                td アイテム名 #{n}
+                td アイテム属性 #{n}
+                td.text-right= link_to '#', class: 'btn btn-secondary btn-sm' do
+                  = material_icon 'edit', class: 'mi-xs'
+                  = space
+                  span 編集
+
+        - 5.times do
+          .card.mb-4
+            .card-block.d-flex.justify-content-between
+              dl.mr-2.mb-0
+                dt 回答
+                dd 回答文のサンプルです回答文のサンプルです回答文のサンプルです回答文のサンプルです回答文のサンプルです
+              dl.mb-0
+                dt 質問
+                dd 質問文のサンプルです質問文のサンプルです質問文のサンプルです質問文のサンプルです質問文のサンプルです
+            .card-footer.d-flex.justify-content-between
+              div.text-muted
+                span ID 12345
+                = space 10
+                span 作成日時 2017/07/09 23:32
+              div
+                = link_to '#', class: 'btn btn-secondary btn-sm' do
+                  = material_icon 'edit', class: 'mi-xs'
+                  = space
+                  span 編集
+                = space 2
+                = link_to '#', class: 'btn btn-danger btn-sm' do
+                  = material_icon 'delete', class: 'mi-xs'
+                  = space
+                  span 削除
+
+        - 5.times do
+          .card.mb-4
+            .card-block
+              .row
+                .col-6.pt-3
+                  .chat-message.full-width
+                    .chat-message__icon style=("background-image:url(#{image_path('usao001.png')});")
+                    .chat-message__balloon
+                      i.fa.fa-exclamation-triangle.text-warning
+                      = space 2
+                      span 回答失敗
+                .col-6
+                  .chat-message--my.full-width
+                    .chat-message__icon style=("background-image:url(#{image_path('silhouette.png')});")
+                    .chat-message__balloon ゲストメッセージ
+            .card-footer.d-flex.justify-content-between
+              div.text-muted
+                span ID 12345
+                = space 10
+                span 作成日時 2017/07/09 23:32
+              div
+                = link_to '#', class: 'btn btn-secondary btn-sm' do
+                  = material_icon 'edit', class: 'mi-xs'
+                  = space
+                  span 編集
+                = space 2
+                = link_to '#', class: 'btn btn-danger btn-sm' do
+                  = material_icon 'delete', class: 'mi-xs'
+                  = space
+                  span 削除
+
+
+
+        nav.d-flex.justify-content-between
+          .pagination-desc 全250件中 / 1〜10件表示
+          ul.pagination
+            li.page-item: a.page-link href="#" &laquo;
+            li.page-item: a.page-link href="#" 1
+            li.page-item: a.page-link href="#" 2
+            li.page-item: a.page-link href="#" 3
+            li.page-item: a.page-link href="#" &raquo;

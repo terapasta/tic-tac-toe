@@ -14,6 +14,7 @@ class ThreadsController < ApplicationController
       .has_bad_answer(params[:bad])
       .has_answer_marked(params[:answer_marked])
       .page(params[:page])
+      .per(20)
 
     respond_to do |format|
       format.html

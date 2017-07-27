@@ -7,8 +7,8 @@ export default class Modal extends Component {
 
     return (
       <span>
-        <div className="modal-backdrop fade in" />
-        <div className="modal fade in"
+        <div className="modal-backdrop fade show" />
+        <div className="modal fade show"
              style={{display:"block", overflowY:"auto"}}
              onClick={() => { onClose(); }}>
           <div className={"modal-dialog" + (wide ? " wide" : "")}

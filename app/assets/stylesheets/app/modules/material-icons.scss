@@ -1,0 +1,21 @@
+.material-icons {
+  vertical-align: middle;
+
+  &.mi-sm {
+    font-size: 20px;
+  }
+
+  &.mi-xs {
+    font-size: 16px;
+  }
+
+  &.mi-v-sub {
+    vertical-align: sub;
+  }
+}
+
+.page-link {
+  .material-icons {
+    line-height: 0.5;
+  }
+}

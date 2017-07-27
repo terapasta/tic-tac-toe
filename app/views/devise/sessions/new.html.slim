@@ -1,0 +1,12 @@
+= render layout: 'devise/shared/layout', locals: { title: 'ログイン' } do
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }, data: { event_name: 'Login' }) do |f|
+    .form-group
+      = f.label :email
+      = f.email_field :email, autofocus: true, class: "form-control"
+    .form-group
+      .d-flex.justify-content-between
+        = f.label :password
+        small= link_to 'パスワードを忘れましたか？', new_user_password_path, tabindex: -1
+      = f.password_field :password, autocomplete: "off", class: "form-control"
+    .text-center
+      = f.submit 'ログイン', class: "btn btn-success btn-block"

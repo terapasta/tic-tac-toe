@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713012507) do
+ActiveRecord::Schema.define(version: 20170714023951) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -123,13 +123,6 @@ ActiveRecord::Schema.define(version: 20170713012507) do
   end
 
   add_index "exports", ["bot_id"], name: "index_exports_on_bot_id", using: :btree
-
-  create_table "favorite_words", force: :cascade do |t|
-    t.string   "word",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "bot_id",     limit: 4,   null: false
-  end
 
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",                        limit: 4
@@ -249,14 +242,6 @@ ActiveRecord::Schema.define(version: 20170713012507) do
   end
 
   add_index "topic_tags", ["name", "bot_id"], name: "index_topic_tags_on_name_and_bot_id", unique: true, using: :btree
-
-  create_table "twitter_replies", force: :cascade do |t|
-    t.integer  "tweet_id",    limit: 8,   null: false
-    t.string   "screen_name", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "bot_id",      limit: 4,   null: false
-  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false

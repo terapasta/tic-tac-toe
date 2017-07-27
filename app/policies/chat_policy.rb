@@ -15,6 +15,7 @@ class ChatPolicy < ApplicationPolicy
     if record.bot.allowed_ip_addresses.any?
       return true if authorized_ip_address?
     end
+    true
   end
 
   def show_app?

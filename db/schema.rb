@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714023951) do
+ActiveRecord::Schema.define(version: 20170719023518) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 20170714023951) do
   end
 
   add_index "allowed_hosts", ["scheme", "domain", "bot_id"], name: "index_allowed_hosts_on_scheme_and_domain_and_bot_id", unique: true, using: :btree
+
+  create_table "allowed_ip_addresses", force: :cascade do |t|
+    t.string   "value",      limit: 255, null: false
+    t.integer  "bot_id",     limit: 4,   null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "answer_files", force: :cascade do |t|
     t.integer  "answer_id",  limit: 4,               null: false

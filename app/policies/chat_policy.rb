@@ -13,7 +13,7 @@ class ChatPolicy < ApplicationPolicy
       return false unless referer_is_allowed_origin?
     end
     if record.bot.allowed_ip_addresses.any?
-      return true if authorized_ip_address?
+      return authorized_ip_address?
     end
     true
   end

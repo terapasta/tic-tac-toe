@@ -1,10 +1,13 @@
 .row: .col-8.offset-2
   .mt-5.mb-4
     h4 サポートフォーム
-    p
-      |My-ope officeご利用にあたってお気づきの点や不具合、
-      br
-      |及び機能要望などお気軽にお問い合わせください。
+    br
+
+    .card.card-outline-warning
+      .card-block
+          |My-ope officeご利用にあたってお気づきの点や不具合、
+          br
+          |及び機能要望などお気軽にお問い合わせください。
 
   = form_for(:ticket, url: contacts_path, method: "post" ) do |f|
     .form-group

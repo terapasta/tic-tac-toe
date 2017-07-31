@@ -1,0 +1,56 @@
+- breadcrumb :bot_thread_messages, @bot, @chat
+- pagination = capture do
+  = render 'shared/pagination', resources: @messages, per_page: @per_page
+
+= render layout: 'bots/layout' do
+  .card.mb-3
+    .card-header.d-flex.justify-content-between
+      div
+        small ID：#{@chat.id}
+        = space 10
+        small 日時：#{l @chat.messages.last.created_at}
+      div.text-muted
+        span.mr-3
+          - @chat.messages.answer_failed.count.tap do |count|
+            = material_icon 'error_outline', class: ('text-warning' if count > 0)
+            = space
+            = count
+        span.mr-3
+          - @chat.messages.good.count.tap do |count|
+            = material_icon 'thumb_up', class: ('text-success' if count > 0)
+            = space
+            = count
+        span
+          - @chat.messages.bad.count.tap do |count|
+            = material_icon 'thumb_down', class: ('text-danger' if count > 0)
+            = space
+            = count
+    .card-block
+
+      - @messages.each do |message|
+        .row
+          - if message.guest?
+            .col-6.offset-6
+              .chat-message--my.full-width
+                .chat-message__icon style=("background-image:url(#{image_path('silhouette.png')});")
+                .chat-message__balloon= message.body
+          - else
+            .col-6
+              .chat-message.full-width
+                .chat-message__icon style=("background-image:url(#{@bot.image_url});")
+                .chat-message__balloon
+                  = message.body
+                .d-flex.justify-content-between
+                  .chat-message__meta
+                    - if message.answer_failed
+                      = material_icon 'error_outline', class: 'mi-sm text-muted'
+                      = space 2
+                      small 回答失敗
+                  .chat-message__rating
+                    .chat-message__rating-title この返答の評価
+                    span.chat-message__rating-button.good class=('active' if message.good?)
+                      = material_icon 'thumb_up'
+                    span.chat-message__rating-button.bad class=('active' if message.bad?)
+                      = material_icon 'thumb_down'
+
+  = pagination

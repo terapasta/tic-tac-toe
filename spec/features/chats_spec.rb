@@ -52,6 +52,10 @@ RSpec.describe 'Chats', type: :features, js: true do
     has_decision_branch_question_answer.decision_branches
   end
 
+  before do
+    stub_const('Ml::Engine', DummyMLEngine)
+  end
+
   feature 'チャットを開始する' do
     context 'normal権限ユーザーでログインしている場合' do
       context '自分の管理ボットの場合' do

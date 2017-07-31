@@ -83,4 +83,14 @@
         .alert.alert-danger
           button.close data-dismiss="alert" &times;
           = alert
+
+    - breadcrumbs.tap do |links|
+      - if links.any?
+        ol.breadcrumb
+          - links.each do |link|
+            - if links.last == link
+              li.breadcrumb-item= link.text
+            - else
+              li.breadcrumb-item= link_to link.text, link.url
+
     = yield

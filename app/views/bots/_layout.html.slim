@@ -42,7 +42,7 @@
             = space
             span.badge.badge-pill.badge-warning 11
         li class="nav-item"
-          = active_link_to bot_imports_path(@bot), class: 'nav-link', active: :exact do
+          = active_link_to bot_imports_path(@bot), class: "nav-link #{'active' if request.path == bot_exports_path}", active: :exact do
             = material_icon 'view_list', class: 'text-gray-light mi-sm'
             = space
             span 学習データ

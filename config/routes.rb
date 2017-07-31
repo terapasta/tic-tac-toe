@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       end
     end
     resources :topic_tags
-    resource :imports, only: [:new, :create]
+    resource :imports, only: [:show, :create]
     resources :exports, only: [:index, :create]
     resources :chat_tests, only: [:new, :create, :show]
     resources :threads, only: :index do

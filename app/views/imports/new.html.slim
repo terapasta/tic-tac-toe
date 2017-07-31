@@ -1,9 +1,0 @@
-.panel.panel-default
-  .panel-heading
-    h4 インポート
-
-  .panel-body
-    = render 'form'
-
-    - if @error_row.present?
-      p.text-danger #{ @error_row }行目でエラーが発生しました

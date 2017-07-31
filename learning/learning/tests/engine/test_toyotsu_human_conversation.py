@@ -87,3 +87,16 @@ https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T000818?O
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
         ok_(result.probability > self.threshold)
+
+    def test_insurance_card2(self):
+        questions = ['保険証を失くした']
+        result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
+        answer_body = helper.get_answer(self.question_answers, result.question_answer_id)
+
+        expected_answer = '''
+保険証の紛失等の場合は、TWNIS「TTCﾗｲﾌﾞﾗﾘｰ」を確認し、委託先の弁護士法人クローバーへ関係書類を提出して下さい。
+https://twins-a3.toyotsu.co.jp/AP0103/KeijiPub.nsf/vwDocNo-Link-Teikei/T000818?OpenDocument
+'''
+
+        eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
+        ok_(result.probability > self.threshold)

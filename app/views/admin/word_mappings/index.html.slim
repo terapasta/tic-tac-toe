@@ -1,18 +1,22 @@
-h1 システム共通 同義語一覧
+.row: .col-8.offset-2
+  .mt-5.mb-4
+    h4 システム共通 同義語一覧
+    br
 
-table.table.table-striped
-  thead
-    tr
-      th = WordMapping.human_attribute_name(:word)
-      th = WordMapping.human_attribute_name(:synonym)
-      th
+    = pagination = capture do
+      = render 'shared/pagination', resources: @word_mappings
 
-  tbody
-    = render "word_mapping"
+    table.table.table-striped
+      thead
+        tr
+          th = WordMapping.human_attribute_name(:word)
+          th = WordMapping.human_attribute_name(:synonym)
+          th
 
+      tbody
+        = render "word_mapping"
+    
+    = pagination = capture do
+      = render 'shared/pagination', resources: @word_mappings
 
-= paginate @word_mappings
-
-br
-
-= link_to '新規', new_admin_word_mapping_path, class: 'btn btn-primary', data: { event_name: 'Open new word mapping' }
+    = link_to '新規', new_admin_word_mapping_path, class: 'btn btn-primary', data: { event_name: 'Open new word mapping' }

@@ -50,6 +50,10 @@ RSpec.describe 'Chats', type: :features, js: true do
     end
   end
 
+  before do
+    stub_const('Ml::Engine', DummyMLEngine)
+  end
+
   feature 'チャットを開始する' do
     context 'normal権限ユーザーでログインしている場合' do
       context '自分の管理ボットの場合' do
@@ -137,7 +141,6 @@ RSpec.describe 'Chats', type: :features, js: true do
         scenario do
           expect {
             visit "/embed/#{bot.token}/chats/new"
-            expect(page).to have_content('ページが表示できません')
           }.to_not change(Chat, :count)
         end
       end
@@ -151,7 +154,6 @@ RSpec.describe 'Chats', type: :features, js: true do
       scenario do
         expect {
           visit "/embed/#{bot.token}/chats/new"
-          expect(page).to have_content('ページが表示できません')
         }.to_not change(Chat, :count)
       end
     end
@@ -195,7 +197,6 @@ RSpec.describe 'Chats', type: :features, js: true do
           scenario do
             expect {
               visit "/embed/#{bot.token}/chats/new"
-              expect(page).to have_content('ページが表示できません')
             }.to_not change(Chat, :count)
           end
         end
@@ -205,7 +206,6 @@ RSpec.describe 'Chats', type: :features, js: true do
         scenario do
           expect {
             visit "/embed/#{bot.token}/chats/new"
-            expect(page).to have_content('ページが表示できません')
           }.to_not change(Chat, :count)
         end
       end

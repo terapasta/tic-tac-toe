@@ -23,11 +23,13 @@ RSpec.describe Conversation::Bot do
       # FIXME DatabaseCleanerでdefined_answerがテストケースごとに削除されてしまうための対処
       # defined_answerはマスタデータなので削除されないようにしたい
       let!(:defined_answer) do
-        create(:defined_answer, defined_answer_id: DefinedAnswer::CLASSIFY_FAILED_ID, body: 'hogehoge')
+        if DefinedAnswer.find_by(id: DefinedAnswer::CLASSIFY_FAILED_ID).blank?
+          create(:defined_answer, defined_answer_id: DefinedAnswer::CLASSIFY_FAILED_ID, body: 'hogehoge')
+        end
       end
 
       before do
-        Ml::Engine.any_instance.stub(:reply).and_return({
+        allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
           answer_id: Answer::NO_CLASSIFIED_ID,
           probability: 1.0,
           results: []

@@ -20,14 +20,6 @@ class Message < ActiveRecord::Base
     chat
   end
 
-  def to_training_message_attributes
-    {
-      answer_id: answer_id,
-      speaker: speaker,
-      body: body,
-    }
-  end
-
   def speaker_image_url
     if bot?
       parent.bot.image_url
@@ -62,5 +54,17 @@ class Message < ActiveRecord::Base
     when 'guest'
       messages[index + 1]
     end
+  end
+
+  def self.build_for_bot_test(chat)
+    bot_test_results = []
+    chat.messages.each_with_index do |message, i|
+      next if i.odd?
+        messages = []
+        messages.push(message.body)
+        messages.push(chat.messages[i + 1].body)
+        bot_test_results.push(messages)
+    end
+    bot_test_results
   end
 end

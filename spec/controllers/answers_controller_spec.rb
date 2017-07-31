@@ -25,10 +25,6 @@ RSpec.describe AnswersController, type: :controller do
     create(:decision_branch, next_answer: answer, bot: bot)
   end
 
-  let!(:training_message) do
-    create(:training_message, answer: answer, bot: bot)
-  end
-
   let!(:question_answer) do
     create(:question_answer, answer: answer, bot: bot)
   end
@@ -71,21 +67,19 @@ RSpec.describe AnswersController, type: :controller do
 
       it { is_expected.to change(Answer, :count).by(1) }
 
-      it 'new_answer has answer_files, decision_branches, training_messages, question_answers and parent_decision_branch' do
+      it 'new_answer has answer_files, decision_branches, question_answers and parent_decision_branch' do
         subject.call
         expect(new_answer.answer_files).to eq([answer_file])
         expect(new_answer.decision_branches).to eq([descision_branch])
-        expect(new_answer.training_messages).to eq([training_message])
         expect(new_answer.question_answers).to eq([question_answer])
         expect(new_answer.parent_decision_branch).to eq(parent_decision_branch)
       end
 
-      it 'old_answer not has answer_files, decision_branches, training_messages, question_answers and parent_decision_branch' do
+      it 'old_answer not has answer_files, decision_branches, question_answers and parent_decision_branch' do
         subject.call
         answer.reload
         expect(answer.answer_files).to be_blank
         expect(answer.decision_branches).to be_blank
-        expect(answer.training_messages).to be_blank
         expect(answer.question_answers).to be_blank
         expect(answer.parent_decision_branch).to be_nil
       end

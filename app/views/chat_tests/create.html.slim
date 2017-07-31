@@ -1,0 +1,31 @@
+h1 ボットテスト結果
+
+.well.clearfix
+  .pull-left
+    = link_to new_bot_chat_test_path(@bot), class: 'btn btn-default' do
+      i.material-icons arrow_back
+      span アップロード画面に戻る
+  .pull-right
+    i.material-icons file_download
+    = space
+    span 結果CSVファイルを
+    = space 2
+    = form_tag bot_chat_tests_path({format: :csv, encode: "Shift_JIS"}), class: 'd-inline-block' do
+      = hidden_field_tag :file_data, @bot_test_results.to_json
+      = button_tag 'Shift_JISでダウンロード', class: 'btn btn-success'
+    = space
+    = form_tag bot_chat_tests_path({format: :csv, encode: "UTF-8"}), class: 'd-inline-block' do
+      = hidden_field_tag :file_data, @bot_test_results.to_json
+      = button_tag 'UTF-8でダウンロード', class: 'btn btn-success'
+
+table.table.table-striped
+  thead
+    tr
+      th style="width:200px" テスト質問
+      th 得られた回答
+
+      tbody#chat-test-results
+        - @bot_test_results.each do |bot_test_result|
+          tr
+            td = bot_test_result[0]
+            td = bot_test_result[1]

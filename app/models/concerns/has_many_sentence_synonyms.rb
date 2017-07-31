@@ -20,15 +20,8 @@ module HasManySentenceSynonyms
       #botがnilでない且つ、コサイン類似検索を利用している(use_similarity_classificationがtrue)場合
       return [] if bot&.learning_parameter&.use_similarity_classification
 
-      messages = begin
-        if self == TrainingMessage
-          (bot.try(:training_messages) || TrainingMessage)
-            .guest.includes(:sentence_synonyms)
-        elsif self == QuestionAnswer
-          (bot.try(:question_answers) || QuestionAnswer)
-            .includes(:sentence_synonyms)
-        end
-      end
+      messages = bot&.question_answers || QuestionAnswer.includes(:sentence_synonyms)
+
       messages.select {|m|
         m.sentence_synonyms.length < 18 &&
         m.sentence_synonyms.select{ |ss| ss.created_user_id == user.id }.count < 3
@@ -56,7 +49,7 @@ module HasManySentenceSynonyms
     end
     if send("#{target_attr}_changed?")
       sentence_synonyms.each do |ss|
-        ss.training_message_id = nil
+        ss.question_answer_id = nil
       end
     end
   end

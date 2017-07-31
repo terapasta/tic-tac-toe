@@ -38,3 +38,19 @@ RailsAdmin.config do |config|
     Contact
   )
 end
+
+module RailsAdmin
+  module Config
+    module Fields
+      module Types
+        class Serialized < RailsAdmin::Config::Fields::Types::Text
+          # monkey patch for `no implicit conversion of Fixnum into String` error
+          # @see https://github.com/sferik/rails_admin/pull/2759
+          def parse_value(value)
+            value.present? ? (RailsAdmin.yaml_load(value.try(:to_s)) || nil) : nil
+          end
+        end
+      end
+    end
+  end
+end

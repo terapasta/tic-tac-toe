@@ -2,14 +2,15 @@ class QuestionAnswersController < ApplicationController
   include BotUsable
   include QuestionAnswersSearchable
   before_action :authenticate_user!
-  before_action :pundit_auth
 
   before_action :set_bot
   before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
-  before_action :set_topic_tags, only: [:index, :headless]
+  before_action :set_topic_tags, only: [:index]
   autocomplete :answer, :body, full: true
 
   def index
+    authorize QuestionAnswer
+    session[:question_answers_queries] = request.query_parameters
     @topic_tags = @bot.topic_tags
     @keyword = params[:keyword]
     @current_page = current_page
@@ -39,11 +40,13 @@ class QuestionAnswersController < ApplicationController
       question: params[:question],
       answer_attributes: { body: params[:answer] }
     )
+    authorize @question_answer
   end
 
   def create
     respond_to do |format|
       @question_answer = @bot.question_answers.build(question_answer_params)
+      authorize @question_answer
       if @question_answer.save
         format.html { redirect_to bot_question_answers_path(@bot), notice: '登録しました。' }
         format.json { render json: @question_answer.decorate.as_json, status: :created }
@@ -123,14 +126,11 @@ class QuestionAnswersController < ApplicationController
 
     def set_question_answer
       @question_answer = @bot.question_answers.find params[:id]
+      authorize @question_answer
     end
 
     def set_topic_tags
       @topic_tags = @bot.topic_tags
-    end
-
-    def pundit_auth
-      authorize QuestionAnswer
     end
 
     def question_answer_params

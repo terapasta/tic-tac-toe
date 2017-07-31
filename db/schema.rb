@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616093158) do
+ActiveRecord::Schema.define(version: 20170714023951) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -55,12 +55,6 @@ ActiveRecord::Schema.define(version: 20170616093158) do
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
   add_index "answers", ["defined_answer_id"], name: "index_answers_on_defined_answer_id", unique: true, using: :btree
 
-  create_table "auto_tweets", force: :cascade do |t|
-    t.string   "body",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",                      limit: 4
     t.string   "name",                         limit: 255
@@ -92,38 +86,13 @@ ActiveRecord::Schema.define(version: 20170616093158) do
   add_index "chats", ["is_normal"], name: "index_chats_on_is_normal", using: :btree
   add_index "chats", ["is_staff"], name: "index_chats_on_is_staff", using: :btree
 
-  create_table "contact_answers", force: :cascade do |t|
-    t.text     "body",          limit: 65535
-    t.string   "transition_to", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "bot_id",        limit: 4,     null: false
-  end
-
-  create_table "contact_states", force: :cascade do |t|
-    t.integer  "chat_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.string   "email",      limit: 255
-    t.text     "body",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "contact_states", ["chat_id"], name: "index_contact_states_on_chat_id", using: :btree
-
-  create_table "contexts", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
   create_table "decision_branches", force: :cascade do |t|
-    t.integer  "answer_id",      limit: 4,                null: false
-    t.string   "body",           limit: 255, default: "", null: false
+    t.integer  "answer_id",      limit: 4,     null: false
+    t.text     "body",           limit: 65535, null: false
     t.integer  "next_answer_id", limit: 4
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "bot_id",         limit: 4,                null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "bot_id",         limit: 4,     null: false
   end
 
   add_index "decision_branches", ["answer_id"], name: "index_decision_branches_on_answer_id", using: :btree
@@ -145,12 +114,15 @@ ActiveRecord::Schema.define(version: 20170616093158) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "favorite_words", force: :cascade do |t|
-    t.string   "word",       limit: 255
+  create_table "exports", force: :cascade do |t|
+    t.string   "file",       limit: 255, null: false
+    t.integer  "bot_id",     limit: 4,   null: false
+    t.integer  "encoding",   limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "bot_id",     limit: 4,   null: false
   end
+
+  add_index "exports", ["bot_id"], name: "index_exports_on_bot_id", using: :btree
 
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",                        limit: 4
@@ -159,7 +131,7 @@ ActiveRecord::Schema.define(version: 20170616093158) do
     t.boolean  "include_failed_data",                         default: false, null: false
     t.boolean  "include_tag_vector",                          default: false, null: false
     t.float    "classify_threshold",            limit: 24,    default: 0.5,   null: false
-    t.boolean  "use_similarity_classification",               default: false, null: false
+    t.boolean  "use_similarity_classification",               default: true,  null: false
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
   end
@@ -202,7 +174,7 @@ ActiveRecord::Schema.define(version: 20170616093158) do
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4
-    t.string   "question",   limit: 255
+    t.text     "question",   limit: 65535
     t.integer  "answer_id",  limit: 4
     t.text     "underlayer", limit: 65535
     t.datetime "created_at",                               null: false
@@ -226,17 +198,15 @@ ActiveRecord::Schema.define(version: 20170616093158) do
   add_index "scores", ["bot_id"], name: "index_scores_on_bot_id", using: :btree
 
   create_table "sentence_synonyms", force: :cascade do |t|
-    t.integer  "training_message_id", limit: 4
-    t.integer  "created_user_id",     limit: 4,     null: false
-    t.text     "body",                limit: 65535, null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "question_answer_id",  limit: 4
+    t.integer  "created_user_id",    limit: 4,     null: false
+    t.text     "body",               limit: 65535, null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "question_answer_id", limit: 4
   end
 
   add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
   add_index "sentence_synonyms", ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id", using: :btree
-  add_index "sentence_synonyms", ["training_message_id"], name: "index_sentence_synonyms_on_training_message_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.integer  "feature",    limit: 4, null: false
@@ -245,26 +215,6 @@ ActiveRecord::Schema.define(version: 20170616093158) do
     t.datetime "updated_at",           null: false
     t.integer  "bot_id",     limit: 4, null: false
   end
-
-  create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id",        limit: 4
-    t.integer  "taggable_id",   limit: 4
-    t.string   "taggable_type", limit: 255
-    t.integer  "tagger_id",     limit: 4
-    t.string   "tagger_type",   limit: 255
-    t.string   "context",       limit: 128
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
-
-  create_table "tags", force: :cascade do |t|
-    t.string  "name",           limit: 255
-    t.integer "taggings_count", limit: 4,   default: 0
-  end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.text     "guest_message", limit: 65535
@@ -292,42 +242,6 @@ ActiveRecord::Schema.define(version: 20170616093158) do
   end
 
   add_index "topic_tags", ["name", "bot_id"], name: "index_topic_tags_on_name_and_bot_id", unique: true, using: :btree
-
-  create_table "training_messages", force: :cascade do |t|
-    t.integer  "training_id",        limit: 4,                     null: false
-    t.integer  "answer_id",          limit: 4
-    t.integer  "question_answer_id", limit: 4
-    t.string   "speaker",            limit: 255,                   null: false
-    t.text     "body",               limit: 65535
-    t.boolean  "learn_enabled",                    default: true,  null: false
-    t.boolean  "answer_failed",                    default: false, null: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-  end
-
-  add_index "training_messages", ["question_answer_id"], name: "index_training_messages_on_question_answer_id", using: :btree
-  add_index "training_messages", ["training_id"], name: "index_training_messages_on_training_id", using: :btree
-
-  create_table "training_texts", force: :cascade do |t|
-    t.text     "body",       limit: 65535, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  create_table "trainings", force: :cascade do |t|
-    t.string   "context",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "bot_id",     limit: 4,   null: false
-  end
-
-  create_table "twitter_replies", force: :cascade do |t|
-    t.integer  "tweet_id",    limit: 8,   null: false
-    t.string   "screen_name", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "bot_id",      limit: 4,   null: false
-  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false

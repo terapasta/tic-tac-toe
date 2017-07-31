@@ -1,8 +1,6 @@
 class Bot < ActiveRecord::Base
   belongs_to :user
   has_many :chats, -> { extending HasManyChatsExtension }
-  has_many :trainings
-  has_many :training_messages, through: :trainings
   has_many :messages, through: :chats
   has_many :learning_training_messages
   has_many :question_answers
@@ -17,6 +15,7 @@ class Bot < ActiveRecord::Base
   has_many :word_mappings, dependent: :destroy
   has_many :tasks, dependent: :destroy
   has_many :accuracy_test_cases, dependent: :destroy
+  has_many :exports, dependent: :destroy
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 

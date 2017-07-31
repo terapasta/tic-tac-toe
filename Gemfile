@@ -95,7 +95,6 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'compass'
 gem 'autoprefixer-rails', '~> 6.7.7.2'
-gem 'acts-as-taggable-on', '~> 3.4'
 gem 'bootstrap-tagsinput-rails'
 gem 'draper'
 gem 'pundit'
@@ -171,4 +170,5 @@ group :production, :staging do
   # ログ保存先変更、静的アセット Heroku 向けに調整
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
+  gem 'rollbar'
 end

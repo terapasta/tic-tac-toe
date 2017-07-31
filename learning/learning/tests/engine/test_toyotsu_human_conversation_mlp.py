@@ -11,7 +11,7 @@ class ToyotsuHumanConversationMlpTestCase(TestCase):
     csv_file_path = './fixtures/learning_training_messages/toyotsu_human.csv'
     bot_id = 13  # bot_id = 13 は豊通
     threshold = 0.5
-    learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK)
+    learning_parameter = helper.learning_parameter(algorithm=LearningParameter.ALGORITHM_NEURAL_NETWORK, use_similarity_classification=False)
 
     @classmethod
     def setUpClass(cls):

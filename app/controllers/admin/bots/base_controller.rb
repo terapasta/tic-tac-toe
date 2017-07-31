@@ -5,6 +5,6 @@ class Admin::Bots::BaseController < ApplicationController
   private
     def set_bot
       @bot = bots.find(params[:bot_id])
-      authorize @bot, :show?
+      authorize @bot, :admin_show?
     end
 end

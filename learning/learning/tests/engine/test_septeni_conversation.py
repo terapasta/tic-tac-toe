@@ -19,7 +19,7 @@
 #     @classmethod
 #     def setUpClass(cls):
 #         cls.answers = helper.build_answers(cls.csv_file_path)
-#         cls.learning_parameter = helper.learning_parameter()
+#         cls.learning_parameter = helper.learning_parameter(use_similarity_classification=False)
 #         _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 #
 #     # def test_stop(self):

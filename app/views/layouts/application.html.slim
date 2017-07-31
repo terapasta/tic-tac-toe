@@ -11,21 +11,22 @@ html
 
     - if Rails.env.production?
       = render 'layouts/shared/analytics/mixpanel'
+      = render 'layouts/shared/analytics/rollbar'
     - if user_signed_in?
       = render 'layouts/shared/js_vars/current_user'
     = render 'layouts/shared/js_vars/images'
     = render 'layouts/shared/js_vars/current_bot'
 
-body
-  - if Rails.env.production?
-    = render 'layouts/shared/analytics/google_analytics'
+  body
+    - if Rails.env.production?
+      = render 'layouts/shared/analytics/google_analytics'
 
-  - if chat_page?
-    = yield
+    - if chat_page?
+      = yield
 
-  - else
-    - if !content_for?(:hide_global_header)
-      = render 'layouts/shared/ui/header'
+    - else
+      - if !content_for?(:hide_global_header)
+        = render 'layouts/shared/ui/header'
 
 
     = yield

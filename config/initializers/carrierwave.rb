@@ -13,16 +13,13 @@ if Rails.env.production? || Rails.env.staging?
     config.fog_public     = true
     config.fog_authenticated_url_expiration = 1.day.to_i
     config.storage = :fog
-    config.asset_host = "//#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com"
+    config.asset_host = "https://#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com"
     # config.fog_attributes = { 'Cache-Control' => 'max-age=315576000' }
   end
 elsif Rails.env.development?
   CarrierWave.configure do |config|
     config.storage = :file
-
-    Rails.application.secrets.asset_host.tap do |asset_host|
-      config.asset_host = asset_host
-    end
+    config.asset_host = 'http://localhost:3000'
   end
 else
   CarrierWave.configure do |config|

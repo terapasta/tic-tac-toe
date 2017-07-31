@@ -1,0 +1,6 @@
+ja:
+  enums:
+    export:
+      encoding:
+        utf8: UTF-8
+        sjis: Shift_JIS

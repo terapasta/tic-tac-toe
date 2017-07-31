@@ -25,7 +25,8 @@ Rails.application.routes.draw do
     end
     resources :topic_tags
     resource :imports, only: [:new, :create]
-    resources :exports, only: [:index, :show], param: :encoding
+    resources :exports, only: [:index, :create]
+    resources :chat_tests, only: [:new, :create, :show]
     resources :threads, only: :index do
       resources :messages, only: [:index] do
         resource :answer_marked, only: [:create, :destroy], controller: :answer_marked
@@ -33,22 +34,9 @@ Rails.application.routes.draw do
     end
     # resource :imports, only: [:new, :create]
 
-    resources :trainings do
-      get :autocomplete_answer_body, on: :collection
-      scope module: :trainings do
-        resources :training_messages, only: [:create, :update, :destroy]
-        resources :questions, only: :create
-        resources :answers, except: [:index, :update] do
-          resources :decision_branches, except: :index do
-            post :choice, on: :member
-          end
-        end
-      end
-    end
     resource :learning, only: [:show, :update]
     resources :answers, except: [:new] do
       resources :decision_branches, only: [:index]
-      resources :training_messages, only: [:index], module: :answers
       resources :question_answers, only: [:index], module: :answers
     end
     resources :decision_branches, only: [:show, :update, :create, :destroy]
@@ -94,6 +82,7 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     resources :messages, only: :create
     resources :question_answers
+    resources :public_bots, param: :token, only: [:show]
     resources :bots do
       resources :topic_tags, module: :bots
       resources :question_answers, module: :bots do

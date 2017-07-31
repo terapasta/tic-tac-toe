@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # layout 'lumen'
 
-  rescue_from StandardError, with: :handle_500 unless Rails.env.development?
+  rescue_from StandardError, with: :handle_500 if Rails.env.production?
   before_action :inject_request_to_application_policy
   before_action :set_notification
 

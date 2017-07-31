@@ -35,7 +35,7 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
 
   private
     def set_accuracy_test_case
-      @accuracy_test_case = AccuracyTestCase.find(params[:id])
+      @accuracy_test_case = @bot.accuracy_test_cases.find(params[:id])
     end
 
     def accuracy_test_case_params

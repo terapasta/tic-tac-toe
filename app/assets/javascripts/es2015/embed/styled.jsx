@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
   bottom: -${HiddenBottomValue}px;
   right: ${Margin}px;
   height: ${Height}px;
-  z-index: 5000;
+  z-index: 99995000;
   border-radius: 3px 3px 0 0;
   background-color: #fff;
   box-shadow: 0 2px 6px rgba(0,0,0,.5);
@@ -37,7 +37,12 @@ export const Wrapper = styled.div`
     width: ${WidthMobileHidden}px;
 
     &.active {
-      width: ${Width}px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -67,8 +72,8 @@ export const Header = styled.div`
 
 export const Arrow = styled.div`
   position: absolute;
-  top: 12px;
-  right: 13px;
+  top: 27px;
+  right: 11px;
 
   transform: rotate(0deg);
 
@@ -85,18 +90,51 @@ export const Arrow = styled.div`
   }
 `;
 
+export const Avatar = styled.div`
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background-color: #fff;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+`;
+
+export const DummyInput = styled.div`
+  cursor: text;
+  position: absolute;
+  padding-top: 4px;
+  padding-left: 5px;
+  top: 31px;
+  left: 65px;
+  width: 250px;
+  height: 24px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #999;
+
+  @media (max-width: ${MobileMaxWidth}px) {
+    width: 190px;
+  }
+`;
+
+export const StatusLabel = styled.div`
+  position: absolute;
+  padding-top: 4px;
+  top: 31px;
+  left: 65px;
+  width: 250px;
+  height: 24px;
+  color: #fff;
+`;
+
 export const Logo = styled.div`
   position: absolute;
-  top: 8px;
-  left: 8px;
-
-  @media(max-width: ${MobileMaxWidth}px) {
-    display: none;
-
-    &.active {
-      display: block;
-    }
-  }
+  top: 10px;
+  left: 65px;
 
   svg {
     vertical-align: top;
@@ -116,6 +154,11 @@ export const Iframe = styled.iframe`
   display: block;
   border: 0;
   height: ${Height - HeaderHeight}px;
+  width: 100%;
+
+  @media (max-width: ${MobileMaxWidth}px) {
+    height: 100%;
+  }
 `;
 
 export const Loading = styled.div`

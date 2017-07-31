@@ -7,6 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from learning.core.datasource import Datasource
 from learning.core.evaluator import Evaluator
 from learning.core.learn.learning_parameter import LearningParameter
+from learning.core.persistance import Persistance
 from learning.core.training_set.training_message import TrainingMessage
 
 
@@ -25,9 +26,10 @@ class EvaluatorTestCase(TestCase):
         training_set_x = training_set.x[indices_train]
         training_set_y = training_set.y[indices_train]
 
-        grid = GridSearchCV(LogisticRegression(), param_grid={'C': [100, 200]})
-        grid.fit(training_set_x, training_set_y)
-        estimator = grid.best_estimator_
+        estimator = Persistance.load_model(self.bot_id)
+        # grid = GridSearchCV(LogisticRegression(), param_grid={'C': [100, 200]})
+        # grid.fit(training_set_x, training_set_y)
+        # estimator = grid.best_estimator_
 
         return estimator, training_set
 
@@ -82,7 +84,7 @@ class EvaluatorTestCase(TestCase):
             'classify_threshold': 0.5,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
             'params_for_algorithm': {},
-            'excluded_labels_for_fitting': [2708,2745,4630]
+            'excluded_labels_for_fitting': [8974,9015,10238]
         }
         learning_parameter = LearningParameter(attr)
         estimator, training_set = self.__get_estimator_and_training_set(learning_parameter)

@@ -1,4 +1,4 @@
 class QuestionAnswerSerializer < ActiveModel::Serializer
-  attributes :id, :question, :answer_id
-  has_one :answer
+  attributes :id, :question, :answer, :answer_id
+  has_many :decision_branches
 end

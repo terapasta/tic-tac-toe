@@ -4,15 +4,15 @@ import promiseMiddleware from 'redux-promise';
 import ChatApp from "./components/chat/app";
 import ChatAppReducers from "./components/chat/reducers";
 import MessageRatingButtons from "./components/message-rating-buttons";
-import ConversationTree from "./components/conversation-tree";
-import ConversationTreeReducers from "./components/conversation-tree/reducers";
+import ConversationTree from "./components/conversation-tree-app/app";
+import ConversationTreeReducers from "./components/conversation-tree-app/reducers";
 import BotResetButton from "./components/bot-reset-button";
 import mountComponent, { mountComponentWithRedux } from "./modules/mount-component";
 import Mixpanel from "./analytics/mixpanel";
 import LearningButton from "./components/learning-button";
 import CopyButton from "./components/copy-button";
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
-import AnswerBodyTextArea from "./components/answer-body-text-area";
+import AnswerTextArea from "./components/answer-body-text-area";
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -26,7 +26,7 @@ function init() {
   mountComponent(BotResetButton);
   mountComponent(LearningButton);
   mountComponent(QuestionAnswerTagForm);
-  mountComponent(AnswerBodyTextArea);
+  mountComponent(AnswerTextArea);
   CopyButton.initialize();
 }
 

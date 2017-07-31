@@ -18,8 +18,8 @@ export default class ConversationTree extends Component {
   static get propTypes() {
     return {
       botId: PropTypes.number.isRequired,
-      answersTree: PropTypes.array.isRequired,
-      answersRepo: PropTypes.object.isRequired,
+      questionsTree: PropTypes.array.isRequired,
+      questionsRepo: PropTypes.object.isRequired,
       decisionBranchesRepo: PropTypes.object.isRequired,
     };
   }

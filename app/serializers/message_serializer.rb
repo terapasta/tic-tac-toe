@@ -1,6 +1,6 @@
 class MessageSerializer < ActiveModel::Serializer
   attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed
-  has_one :answer
+  has_one :question_answer
   has_many :similar_question_answers, serializer: QuestionAnswerSerializer
 
   def icon_image_url
@@ -13,6 +13,6 @@ class MessageSerializer < ActiveModel::Serializer
   end
 
   def answer_files
-    object.answer&.answer_files.as_json(only: [:file, :file_size, :file_type])
+    object.question_answer&.answer_files.as_json(only: [:file, :file_size, :file_type])
   end
 end

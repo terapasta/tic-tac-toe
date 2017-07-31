@@ -1,6 +1,6 @@
-h1 システム共通同義語 新規作成
+.row: .col-6.offset-3
+  .mt-5.mb-4
+    h4 システム共通同義語 新規作成
+    br
 
-= render 'word_mappings/form', { resource: [:admin, @word_mapping] }
-
-br
-= link_to '戻る', admin_word_mappings_path, class: 'btn btn-default', data: { event_name: 'Back to word mapping index', word_mapping_id: @word_mapping.id }
+    = render 'word_mappings/form', { resource: [:admin, @word_mapping] }

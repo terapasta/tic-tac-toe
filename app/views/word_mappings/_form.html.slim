@@ -1,12 +1,11 @@
 - data = @word_mapping.persisted? ? { event_name: 'Update word mapping', word_mapping_id: @word_mapping.id } : { event_name: 'Create word mapping' }
+= bootstrap_form_for resource, data: data do |f|
+  = render "shared/errors", object: @word_mapping
 
-.row
-  .col-md-6.col-xs-12
-    = bootstrap_form_for resource, data: data do |f|
-      = render "shared/errors", object: @word_mapping
+  = f.text_field :word
+  = f.text_field :synonym
 
-      = f.text_field :word
-      = f.text_field :synonym
-
-      .actions
-        = f.submit class: 'btn btn-primary'
+  .actions
+    .text-right
+      = link_to '戻る', admin_word_mappings_path, class: 'btn btn-secondary', data: { event_name: 'Back to word mapping index', word_mapping_id: @word_mapping.id }
+      = f.submit class: 'btn btn-primary'

@@ -62,4 +62,8 @@ module ApplicationHelper
   def done_tasks_count
     @_done_tasks_count ||= Task.where(bot_id: @bot.id).with_done(true).count
   end
+
+  def class_names(hash = {})
+    hash.map{ |class_name, use| class_name if use }.compact.join(' ')
+  end
 end

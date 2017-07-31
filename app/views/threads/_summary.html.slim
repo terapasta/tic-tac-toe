@@ -14,12 +14,12 @@
               .chat-message__icon style=("background-image:url(#{bot.image_url});")
               .chat-message__balloon
                 = message.body
-              - if message.answer_failed
+              .d-flex.justify-content-between
                 .chat-message__meta
-                  = material_icon 'error_outline', class: 'text-warning'
-                  = space 2
-                  span 回答失敗
-              - else
+                  - if message.answer_failed
+                    = material_icon 'error_outline', class: 'mi-sm text-muted'
+                    = space 2
+                    small 回答失敗
                 .chat-message__rating
                   .chat-message__rating-title この返答の評価
                   span.chat-message__rating-button.good class=('active' if message.good?)

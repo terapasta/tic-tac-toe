@@ -18,4 +18,8 @@
   &-outline-gray {
     @include button-outline-variant(#999);
   }
+
+  &-text-sm {
+    font-size: 13px;
+  }
 }

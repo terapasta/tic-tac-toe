@@ -4,6 +4,7 @@ class ThreadsController < ApplicationController
   before_action :set_bot
 
   def index
+    @per_page = 2
     @chats = @bot.chats
       .has_multiple_messages
       .not_staff(!current_user.staff?)
@@ -14,7 +15,7 @@ class ThreadsController < ApplicationController
       .has_bad_answer(params[:bad])
       .has_answer_marked(params[:answer_marked])
       .page(params[:page])
-      .per(20)
+      .per(@per_page)
 
     respond_to do |format|
       format.html

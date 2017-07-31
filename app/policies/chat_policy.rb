@@ -4,9 +4,19 @@ class ChatPolicy < ApplicationPolicy
   end
 
   def new?
-    return true if user.staff? || bot_owner? || record.bot.allowed_hosts.blank?
-    return false if request.referer.blank?
-    referer_is_allowed_origin?
+    # 以下の条件の場合、アクセスを許可する
+    # 1. userがstaffかowner且つ、host & ipリストが空の場合
+    # 2. host & ipリストが存在する且つ、リクエストのhost & ipが許可されている場合
+    return true if user.staff? || bot_owner?
+    return true if record.bot.allowed_hosts.blank? && record.bot.allowed_ip_addresses.blank?
+    if record.bot.allowed_hosts.any?
+      return false if request.referer.blank?
+      return false unless referer_is_allowed_origin?
+    end
+    if record.bot.allowed_ip_addresses.any?
+      return false unless authorized_ip_address?
+    end
+    true
   end
 
   def show_app?
@@ -36,5 +46,9 @@ class ChatPolicy < ApplicationPolicy
 
     def bot_owner?
       user.id == record.bot&.user&.id
+    end
+
+    def authorized_ip_address?
+      record.bot.allowed_ip_addresses.map(&:value).include?(request.remote_ip)
     end
 end

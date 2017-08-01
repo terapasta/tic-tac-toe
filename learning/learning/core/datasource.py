@@ -28,16 +28,9 @@ class Datasource:
 
 
     def __build_data_from_csv(self, table_name):
-        arr = []
-        files = glob.glob('./fixtures/%s/*' % table_name)
-        logger.debug(files)
+        file_name = ('./fixtures/%s/all.csv' % table_name)
 
-        for file in files:
-            df = pd.read_csv(file)
-            arr.append(df)
-
-        data = pd.concat(arr)
-        return data
+        return pd.read_csv(file_name)
 
 
     def learning_training_messages(self, bot_id):

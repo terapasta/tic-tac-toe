@@ -23,6 +23,12 @@ class QuestionAnswer::CsvImporter
         question_answer.tap do |qa|
           qa.answer = import_param[:answer_body]
           qa.save!
+          if import_param[:topic_tag_names].present?
+            topic_tag_names = import_param[:topic_tag_names]
+            target_topic_tags = @bot.topic_tags.where(name: topic_tag_names)
+            new_topic_tags = target_topic_tags - question_answer.topic_tags
+            qa.topic_taggings.create(new_topic_tags.map{ |t| { topic_tag_id: t.id } })
+          end
         end
 
         create_underlayer_records(question_answer, import_param[:decision_branches_attributes])
@@ -61,6 +67,7 @@ class QuestionAnswer::CsvImporter
         },
         answer_body: data[:answer],
         decision_branches_attributes: decision_branches,
+        topic_tag_names: data[:topic_tag_names],
       }
       out
     }.values
@@ -68,16 +75,18 @@ class QuestionAnswer::CsvImporter
 
   def detect_or_initialize_by_row(row)
     id = sjis_safe(row[0]).to_i
-    q = sjis_safe(row[1])
-    a = sjis_safe(row[2])
-    decision_branch = sjis_safe(row[3])
-    next_answer = sjis_safe(row[4])
+    topic_tag_names = sjis_safe(row[1])&.gsub('／', '/')&.split("/")&.map(&:strip) || []
+    q = sjis_safe(row[2])
+    a = sjis_safe(row[3])
+    decision_branch = sjis_safe(row[4])
+    next_answer = sjis_safe(row[5])
     bot_had = @bot.question_answers.detect {|qa| qa.id == id}.present?
     fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || a.blank?
 
     {
       key: bot_had ? id : "#{q}-#{a}",
       id: bot_had ? id : nil,
+      topic_tag_names: topic_tag_names,
       question: q,
       answer: a,
       decision_branch: decision_branch.present? ? { body: decision_branch, next_answer_body: next_answer } : nil,

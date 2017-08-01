@@ -8,7 +8,7 @@ from learning.tests import helper
 
 
 class PtnaConversationTestCase(TestCase):
-    learning_parameter = helper.learning_parameter(use_similarity_classification=False)
+    learning_parameter = helper.learning_parameter(use_similarity_classification=True)
 
     # TODO setUpClassに変更する(毎回学習処理が走ってしまうため)
     def setUp(self):
@@ -28,8 +28,7 @@ class PtnaConversationTestCase(TestCase):
         expected_answer = '教室の一覧に性別が表示されていますので、そちらをご参照ください。'
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        # TODO: probabilityが低くなってしまう
-        # ok_(result.probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
     def test_hello(self):
         questions = ['こんにちは']
@@ -39,8 +38,7 @@ class PtnaConversationTestCase(TestCase):
         expected_answer = 'こんにちは'
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        # TODO: probabilityが低くなってしまう
-        # ok_(result.probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
     def test_want_to_join(self):
         questions = ['入会したいのですが']
@@ -50,21 +48,16 @@ class PtnaConversationTestCase(TestCase):
         expected_answer = 'オンライン入会\r\nhttps://www.piano.or.jp/member_entry/member_entry_step0_1.php\r\n\r\n入会申込書のご請求\r\nhttp://www.piano.or.jp/info/member/memberentry.html'
 
         eq_(helper.replace_newline_and_space(answer_body), helper.replace_newline_and_space(expected_answer))
-        # TODO: probabilityが低くなってしまう
-        # ok_(result.probability > self.threshold)
+        ok_(result.probability > self.threshold)
 
     def test_fail_want_to_eat_ramen(self):
         questions = ['おいしいラーメンが食べたいです']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
 
-        # ラベル0(分類失敗)に分類されること
-        eq_(result.question_answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
-        ok_(result.probability > self.threshold)
+        ok_(result.probability < self.threshold)
 
     def test_fail_blank(self):
         questions = ['']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions, datasource_type='csv')
 
-        # ラベル0(分類失敗)に分類されること
-        eq_(result.question_answer_id, Reply.CLASSIFY_FAILED_ANSWER_ID)
-        ok_(result.probability > self.threshold)
+        ok_(result.probability < self.threshold)

@@ -6,7 +6,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 from sklearn.preprocessing import Normalizer
-from sklearn.pipeline import Pipeline
 
 
 class TextArray:

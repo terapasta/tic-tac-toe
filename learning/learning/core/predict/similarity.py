@@ -57,10 +57,9 @@ class Similarity:
         self.ordered_data = self.__order_result(data, similarities, use_column)
 
     def __get_similarities(self, data, question):
-        all_array = TextArray(data['question'], vectorizer=self.vectorizer)
-        all_vec = all_array.to_vec()
-        question_array = TextArray([question], vectorizer=self.vectorizer)
-        question_vec = question_array.to_vec()
+        text_array = TextArray(self.vectorizer)
+        all_vec = text_array.to_vec(data['question'])
+        question_vec = text_array.to_vec([question])
         similarities = cosine_similarity(all_vec, question_vec)
         similarities = similarities.flatten()
         logger.debug("similarities: %s" % similarities)

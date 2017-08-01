@@ -9,7 +9,6 @@ import CurrentDecisionBranch from "./conversation-item-form/current-decision-bra
 import DecisionBranches from "./conversation-item-form/decision-branches";
 import NewDecisionBranch from "./conversation-item-form/new-decision-branch";
 import QuestionForm from "./conversation-item-form/question-form";
-import ReferenceQuestions from "./conversation-item-form/reference-questions";
 import AnswerForm from "./conversation-item-form/answer-form";
 
 export default class ConversationItemForm extends Component {
@@ -50,13 +49,12 @@ export default class ConversationItemForm extends Component {
   // TODO: reduxでtrainingMessagesを管理するように変更が必須
   componentWillReceiveProps(nextProps) {
     const {
-      editingAnswerModel,
       editingQuestionModel,
     } = nextProps;
 
     this.setState({
       question: get(editingQuestionModel, "question", ""),
-      answerBody: get(editingAnswerModel, "body", ""),
+      answerBody: get(editingQuestionModel, "answer", ""),
     });
   }
 
@@ -85,7 +83,6 @@ export default class ConversationItemForm extends Component {
 
     return (
       <div>
-        <ReferenceQuestions {...{ referenceQuestionModels }} />
         <CurrentDecisionBranch {...{ activeItem, editingDecisionBranchModel }} />
         <QuestionForm
           {...{

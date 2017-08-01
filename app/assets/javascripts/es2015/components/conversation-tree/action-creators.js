@@ -1,6 +1,7 @@
 import * as t from "./action-types";
 import includes from "lodash/includes";
 import get from "lodash/get";
+import find from "lodash/find";
 
 import Question from "../../models/question";
 import Answer from "../../models/answer";
@@ -310,45 +311,54 @@ export function offProcessing() {
 export function setActiveItem(dataType, id) {
   window.scrollTo(0, 0);
   return (dispatch, getState) => {
-    const { botId } = getState();
+    const { botId, questionsTree, questionsRepo, decisionBranchesRepo } = getState();
     dispatch({ type: t.SET_ACTIVE_ITEM, dataType, id });
     dispatch(clearEditingQuestionModel());
     dispatch(clearEditingAnswerModel());
     dispatch(clearEditingDecisionBranchModel());
     dispatch(clearEditingDecisionBranchModels());
-    dispatch(clearReferenceQuestionModels());
 
     switch(dataType) {
       case "question":
         if (id == null) {
           return dispatch(setEditingQuestionModel(new Question));
         } else {
-          return Question.fetch(botId, id).then((questionModel) => {
-            if (getState().activeItem.dataType !== "question") { return; }
-            dispatch(setEditingQuestionModel(questionModel));
-            questionModel.fetchAnswer().then(() => {
-              dispatch(setEditingAnswerModel(questionModel.answer));
-            }).catch((err) => {
-              if (err.response.status === 404) {
-                return dispatch(setEditingAnswerModel(new Answer));
-              }
-            });
-          });
+          const questionData = questionsRepo[id];
+          const question = get(questionData, "question");
+          const answer = get(questionData, "answer");
+          dispatch(setEditingQuestionModel(new Question({ question })));
+          dispatch(setEditingAnswerModel(new Answer({ body: answer })));
+
+          // return Question.fetch(botId, id).then((questionModel) => {
+          //   if (getState().activeItem.dataType !== "question") { return; }
+          //   dispatch(setEditingQuestionModel(questionModel));
+          // });
         }
       case "answer":
         if (id == null) {
           return dispatch(setEditingAnswerModel(new Answer));
         } else {
-          return Answer.fetch(botId, id).then((answerModel) => {
-            if (getState().activeItem.dataType !== "answer") { return; }
-            dispatch(setEditingAnswerModel(answerModel));
-            answerModel.fetchDecisionBranches().then(() => {
-              dispatch(setEditingDecisionBranchModels(answerModel.decisionBranchModels));
-            });
-            answerModel.fetchQuestions().then(() => {
-              dispatch(setReferenceQuestionModels(answerModel.questions));
-            });
+          const answer = get(questionsRepo[id], "answer");
+          dispatch(setEditingAnswerModel(new Answer({ body: answer })));
+
+          const questionNode = find(questionsTree, (q) => q.id == id);
+          const decisionBranchModels = questionNode.decisionBranches.map((dbNode) => {
+            const db = decisionBranchesRepo[dbNode.id];
+            return new DecisionBranch(db);
           });
+          dispatch(setEditingDecisionBranchModels(decisionBranchModels));
+          break;
+
+          // return Answer.fetch(botId, id).then((answerModel) => {
+          //   if (getState().activeItem.dataType !== "answer") { return; }
+          //   dispatch(setEditingAnswerModel(answerModel));
+          //   answerModel.fetchDecisionBranches().then(() => {
+          //     dispatch(setEditingDecisionBranchModels(answerModel.decisionBranchModels));
+          //   });
+          //   answerModel.fetchQuestions().then(() => {
+          //     dispatch(setReferenceQuestionModels(answerModel.questions));
+          //   });
+          // });
         }
       case "decisionBranch":
         if (id == null) {

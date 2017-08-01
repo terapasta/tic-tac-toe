@@ -80,14 +80,6 @@ class Evaluator:
         self.f1 = scores[2]
         self.__out_log()
 
-    def indexes_of_failed(self, estimator, X, y):
-        y_pred = estimator.predict(X)
-        indexes = []
-        for i, answer_id in enumerate(y):
-            if y[i] != y_pred[i]:
-                indexes.append(i)
-        return indexes
-
     def __out_log(self):
         logger.debug('accuracy: %s' % self.accuracy)
         # logger.debug('precision: %s' % self.precision)

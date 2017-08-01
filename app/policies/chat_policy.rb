@@ -4,10 +4,8 @@ class ChatPolicy < ApplicationPolicy
   end
 
   def new?
-    # 以下の条件の場合、アクセスを許可する
-    # 1. userがstaffかowner且つ、host & ipリストが空の場合
-    # 2. host & ipリストが存在する且つ、リクエストのhost & ipが許可されている場合
-    return true if (user.staff? || bot_owner?) && (record.bot.allowed_hosts.blank? && record.bot.allowed_ip_addresses.blank?)
+    return true if user.staff? || bot_owner?
+    return true if record.bot.allowed_hosts.blank? && record.bot.allowed_ip_addresses.blank?
     if record.bot.allowed_hosts.any?
       return false if request.referer.blank?
       return false unless referer_is_allowed_origin?

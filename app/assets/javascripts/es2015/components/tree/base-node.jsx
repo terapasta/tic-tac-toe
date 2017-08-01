@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from "react";
 export default class BaseNode extends Component {
   static get propTypes() {
     return {
-      answerNode:              PropTypes.object.isRequired,
       answersRepo:             PropTypes.object.isRequired,
       decisionBranchesRepo:    PropTypes.object.isRequired,
       openedAnswerIDs:         PropTypes.array.isRequired,

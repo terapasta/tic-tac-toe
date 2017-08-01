@@ -14,15 +14,29 @@ RSpec.describe '/api/public_bots', type: :request do
   end
 
   describe 'GET /api/public_bots/:token' do
-    let(:resource) do
-      "/api/public_bots/#{bot.token}"
+    context 'when bot exists' do
+      let(:resource) do
+        "/api/public_bots/#{bot.token}"
+      end
+
+      it 'returns bot data' do
+        get resource
+        expect(response).to be_success
+        json_data['bot'].tap do |bot_data|
+          expect(bot_data.keys).to match_array(['name', 'image'])
+        end
+      end
     end
 
-    it 'returns bot data' do
-      get resource
-      expect(response).to be_success
-      json_data['bot'].tap do |bot_data|
-        expect(bot_data.keys).to match_array(['name', 'image'])
+    context 'when bot not exists' do
+      let(:resource) do
+        '/api/public_bots/hogehoge'
+      end
+
+      it 'returns bot data' do
+        get resource
+        expect(response.status).to eq(404)
+        expect(json_data['error']).to be_present
       end
     end
   end

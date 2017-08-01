@@ -10,7 +10,7 @@ class NullReplyResult:
         return ''
 
     @property
-    def answer_id(self):
+    def question_answer_id(self):
         return Reply.CLASSIFY_FAILED_ANSWER_ID
 
     @property

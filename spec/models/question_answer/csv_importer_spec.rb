@@ -30,9 +30,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
         it 'QuestionAnserが登録されること' do
           expect(bot.question_answers.count).to eq 2
         end
-        it 'Answerが登録されること' do
-          expect(bot.answers.count).to eq 6
-        end
         it 'DecisionBranchが登録されること' do
           expect(bot.decision_branches.count).to eq 4
         end
@@ -43,11 +40,9 @@ RSpec.describe QuestionAnswer::CsvImporter do
           create(:question_answer, id: 1, bot_id: bot.id)
         end
 
-        context 'next_answerの無いDecisionBranchが登録済の場合' do
+        context 'answerの無いDecisionBranchが登録済の場合' do
           before do
-            answer = create(:answer, bot_id: bot.id)
-            create(:decision_branch, bot_id: bot.id, answer_id: answer.id, body: 'それ以降1-1')
-            question_answer.answer = answer
+            create(:decision_branch, bot_id: bot.id, question_answer_id: question_answer.id, body: 'それ以降1-1')
             question_answer.save
           end
           let!(:succeeded) { subject.succeeded }
@@ -59,24 +54,15 @@ RSpec.describe QuestionAnswer::CsvImporter do
           it 'QuestionAnserが登録されること' do
             expect(bot.question_answers.count).to eq 2
           end
-          it 'Answerが登録されること' do
-            expect(bot.answers.count).to eq 6
-          end
           it 'DecisionBranchが登録されること' do
             expect(bot.decision_branches.count).to eq 4
-          end
-          it 'next_answerが登録されていること' do
-            expect(question_answer.decision_branches.first.next_answer.body).to eq 'それ以降1-2'
+            expect(question_answer.decision_branches.first.answer).to eq 'それ以降1-2'
           end
         end
 
-        context 'next_answerをもつDecisionBranchが登録済の場合' do
-          let(:next_answer) { create(:answer, bot_id: bot.id, body: 'ほげほげ') }
-          before do
-            answer = create(:answer, bot_id: bot.id)
-            create(:decision_branch, bot_id: bot.id, answer_id: answer.id, next_answer_id: next_answer.id, body: 'それ以降2-1')
-            question_answer.answer = answer
-            question_answer.save
+        context 'answerをもつDecisionBranchが登録済の場合' do
+          let!(:decision_branch) do
+            create(:decision_branch, bot_id: bot.id, question_answer_id: question_answer.id, body: 'それ以降2-1', answer: 'ほげほげ')
           end
           let!(:succeeded) { subject.succeeded }
 
@@ -87,14 +73,11 @@ RSpec.describe QuestionAnswer::CsvImporter do
           it 'QuestionAnserが登録されること' do
             expect(bot.question_answers.count).to eq 2
           end
-          it 'Answerが登録されること' do
-            expect(bot.answers.count).to eq 6
-          end
           it 'DecisionBranchが登録されること' do
             expect(bot.decision_branches.count).to eq 4
           end
-          it 'next_answerが更新されていること' do
-            expect(next_answer.reload.body).to eq 'それ以降2-2'
+          it 'DecisionBranchが更新されること' do
+            expect(decision_branch.reload.answer).to eq 'それ以降2-2'
           end
         end
       end
@@ -114,9 +97,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
         it 'QuestionAnserが登録されていること' do
           expect(bot.question_answers.count).to eq 2
           expect(bot2.question_answers.count).to eq 1
-        end
-        it 'Answerが登録されていること' do
-          expect(bot.answers.count).to eq 6
         end
         it 'DecisionBranchが登録されていること' do
           expect(bot.decision_branches.count).to eq 4
@@ -140,9 +120,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
       it 'QuestionAnserが登録されないこと' do
         expect(bot.question_answers.count).to eq 0
       end
-      it 'Answerが登録されないこと' do
-        expect(bot.answers.count).to eq 0
-      end
       it 'DecisionBranchが登録されないこと' do
         expect(bot.decision_branches.count).to eq 0
       end
@@ -162,9 +139,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
 
       it 'QuestionAnserが登録されていること' do
         expect(bot.question_answers.count).to eq 2
-      end
-      it 'Answerが登録されていること' do
-        expect(bot.answers.count).to eq 4
       end
       it 'DecisionBranchが登録されていること' do
         expect(bot.decision_branches.count).to eq 2

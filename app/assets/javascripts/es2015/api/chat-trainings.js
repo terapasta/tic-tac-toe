@@ -6,9 +6,7 @@ export function create(token, { questionBody, answerBody, questionId, answerId }
   return axios.post(path, {
     question_answer: {
       question: questionBody,
-      answer_attributes: {
-        body: answerBody,
-      },
+      answer: answerBody,
     },
     question_message_id: questionId,
     answer_message_id: answerId,

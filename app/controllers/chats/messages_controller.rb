@@ -52,6 +52,6 @@ class Chats::MessagesController < ApplicationController
     end
 
     def included_associations
-      'answer,answer.decision_branches,similar_question_answers,answer.answer_files'
+      'question_answer,question_answer.decision_branches,similar_question_answers,question_answer.answer_files'
     end
 end

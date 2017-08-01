@@ -6,11 +6,10 @@ class Chats::ChoicesController < ApplicationController
     ActiveRecord::Base.transaction do
       @message = @chat.messages.create!(guest_message_params)
       @bot_message = @chat.messages.create!(bot_message_params)
-      @bot_messages = [@bot_message]
     end
     respond_to do |format|
       format.js { render 'chats/messages/create' }
-      format.json { render json: [@message, @bot_message], adapter: :json, include: 'answer,answer.decision_branches,similar_question_answers' }
+      format.json { render json: [@message, @bot_message], adapter: :json, include: 'child_decision_branches,similar_question_answers' }
     end
   end
 
@@ -19,7 +18,6 @@ class Chats::ChoicesController < ApplicationController
       @bot = Bot.find_by!(token: params[:token])
       @chat = @bot.chats.where(guest_key: session[:guest_key]).last
       @decision_branch = @chat.bot.decision_branches.find(params[:id])
-      @answer = @decision_branch.next_answer
     end
 
     def guest_message_params
@@ -32,9 +30,9 @@ class Chats::ChoicesController < ApplicationController
     def bot_message_params
       {
         speaker: 'bot',
-        answer_id: @answer&.id || Answer::NO_CLASSIFIED_ID,
-        body: @answer&.body || @bot.classify_failed_message_with_fallback,
+        body: @decision_branch.answer.presence || @bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text,
         created_at: @message.created_at + 1.second,
+        answer_failed: @decision_branch.answer.blank?,
       }
     end
 end

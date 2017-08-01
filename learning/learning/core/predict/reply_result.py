@@ -4,12 +4,12 @@ from learning.log import logger
 
 class ReplyResult:
 
-    def __init__(self, answer_ids, probabilities, question, question_feature_count, question_answer_ids):
+    def __init__(self, question_answer_ids, probabilities, question, question_feature_count, learning_training_message_ids):
         self.question = question
         self.question_feature_count = question_feature_count
-        self._answer_ids = answer_ids
-        self._probabilities = probabilities
         self._question_answer_ids = question_answer_ids
+        self._learning_training_message_ids = learning_training_message_ids
+        self._probabilities = probabilities
         self._result = self.__sort()
 
     def to_dict(self):
@@ -17,16 +17,16 @@ class ReplyResult:
         return d
 
     @property
-    def answer_id(self):
-        if len(self._answer_ids) > 0:
-            return self._result[0]['answer_id']
+    def question_answer_id(self):
+        if len(self._question_answer_ids) > 0:
+            return self._result[0]['question_answer_id']
 
     @property
     def probability(self):
         from learning.core.predict.reply import Reply
 
         if len(self._probabilities) > 0:
-            if self.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID:
+            if self.question_answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID:
                 return 1
             else:
                 return self._result[0]['probability']
@@ -40,9 +40,15 @@ class ReplyResult:
             logger.debug(row)
 
     def __sort(self):
+        if self._learning_training_message_ids is None:
+            dict = list(map(lambda x: {
+                'question_answer_id': int(x[0]), 'probability': x[1],
+            }, sorted(zip_longest(self._question_answer_ids, self._probabilities), key=lambda x: x[1], reverse=True)))
+            return dict
+
         dict = list(map(lambda x: {
-            'answer_id': float(x[0]), 'probability': x[1], 'question_answer_id': x[2]
-        }, sorted(zip_longest(self._answer_ids, self._probabilities, self._question_answer_ids), key=lambda x: x[1], reverse=True)))
+            'question_answer_id': int(x[0]), 'probability': x[1], 'learning_training_message_id': int(x[2]),
+        }, sorted(zip_longest(self._question_answer_ids, self._probabilities, self._learning_training_message_ids), key=lambda x: x[1], reverse=True)))
         return dict
 
     def __limited_result(self):

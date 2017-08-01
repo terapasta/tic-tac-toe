@@ -24,7 +24,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v1-dependencies-{{ checksum "lib/bin/mecab-install-circleci.sh" }}
 
       - run:
           name: install dependencies
@@ -36,6 +36,11 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "lib/bin/mecab-install-circleci.sh" }}
+
 
       # Database setup
       - run: bundle exec rake db:create

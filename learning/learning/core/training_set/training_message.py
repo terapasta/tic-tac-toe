@@ -36,7 +36,7 @@ class TrainingMessage(Base):
         #     tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
         #     body_vec = np.c_[tag_vec, body_vec]
 
-        self._body_array = body_array
+        self._body_array = text_array
         self._x = body_vec
         self._y = question_answer_ids
         return self

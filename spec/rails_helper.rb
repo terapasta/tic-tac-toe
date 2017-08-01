@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'devise'
+require "pundit/rspec"
 require 'capybara/poltergeist'
 Capybara.register_driver :poltergeist_debug do |app|
   Capybara::Poltergeist::Driver.new(app, inspector: true, js_errors: true)

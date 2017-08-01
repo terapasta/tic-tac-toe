@@ -59,3 +59,9 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+
+dependencies:
+  pre:
+    - sh lib/bin/mecab-install-circleci.sh
+  cache_directories:
+    - vendor/mecab

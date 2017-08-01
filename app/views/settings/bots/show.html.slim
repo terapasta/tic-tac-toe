@@ -1,6 +1,4 @@
-= render layout: 'bots/layout' do
-  .row: .col-8.offset-2
-
+= render layout: 'settings/shared/layout' do
     = nested_form_for(@bot, data: { event_name: "Update bot", bot_id: @bot.id, bot_name: @bot.name }) do |f|
       = render "shared/errors", object: @bot
 

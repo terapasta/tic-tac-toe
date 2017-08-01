@@ -10,13 +10,14 @@
           = material_icon 'chat', class: 'mi-xs'
           = space
           span チャットする
+        = space 2
       div.pt-3
         = link_to '#', class: 'btn btn-outline-warning btn-sm' do
           = material_icon 'trending_up', class: 'mi-xs'
           = space
           span 学習を実行
         = space 2
-        = active_link_to edit_bot_path(@bot), class: 'btn btn-outline-gray btn-sm', active: :exact do
+        = active_link_to bot_settings_bot_path(@bot), class: 'btn btn-outline-gray btn-sm', active: :exact do
           = material_icon 'settings', class: 'mi-xs'
           = space
           span 設定

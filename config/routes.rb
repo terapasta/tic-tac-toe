@@ -7,7 +7,13 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', as: 'user_registration'
   end
 
-  resources :bots, only: [:show, :index, :edit, :update] do
+  resources :bots, only: [:show, :index] do
+    namespace :settings do
+      get 'embed', to: 'pages#embed'
+      resource :bot, only: [:show, :update]
+      resource :allowed_hosts, only: [:show, :update]
+      resource :reset, only: [:show, :create]
+    end
     member do
       post :reset
     end

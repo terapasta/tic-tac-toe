@@ -29,8 +29,10 @@ class EditingDecisionBranchForm extends Component {
               onClick={() => onSave(body)}
             >保存</button>
             {" "}
+          </span>
+          <span className="input-group-btn">
             <button
-              className="btn btn-default"
+              className="btn btn-secondary"
               onClick={onDelete}
             ><span className="text-danger">削除</span></button>
           </span>

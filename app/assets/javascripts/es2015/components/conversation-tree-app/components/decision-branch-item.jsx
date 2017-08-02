@@ -17,7 +17,7 @@ class DecisionBranchItem extends Component {
           className="btn btn-link"
           onClick={onClick}
         >
-          <i className="fa fa-pencil"></i>
+          <i className="material-icons mi-xs">edit</i>
         </span>
       </li>
     );

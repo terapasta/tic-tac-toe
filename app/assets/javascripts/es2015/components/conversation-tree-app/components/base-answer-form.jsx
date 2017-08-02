@@ -96,7 +96,7 @@ class BaseAnswerForm extends Component {
         </div>
 
         <div className="form-group clearfix">
-          <div className="pull-right">
+          <div className="text-right">
             <a className="btn btn-success"
               id="save-answer-button"
               href="#"

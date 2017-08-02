@@ -114,21 +114,19 @@ class DecisionBranchForm extends Component {
           />
         </div>
 
-        <div className="form-group clearfix">
-          <div className="pull-right">
-            <a className="btn btn-success"
-              id="save-answer-button"
-              href="#"
-              onClick={this.onSubmit}
-            >保存</a>
+        <div className="form-group text-right">
+          <a className="btn btn-success"
+            id="save-answer-button"
+            href="#"
+            onClick={this.onSubmit}
+          >保存</a>
 
-            &nbsp;&nbsp;
-            <a className="btn btn-link"
-              id="delete-answer-button"
-              href="#"
-              onClick={this.onDelete}
-            ><span className="text-danger">削除</span></a>
-          </div>
+          &nbsp;&nbsp;
+          <a className="btn btn-link"
+            id="delete-answer-button"
+            href="#"
+            onClick={this.onDelete}
+          ><span className="text-danger">削除</span></a>
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import isEmpty from 'is-empty';
+import bindAll from 'lodash/bindAll';
 
 import {
   questionsTreeType,
@@ -40,7 +41,21 @@ function adjustHeight(targetRef) {
 }
 
 class ConversationTree extends Component {
+  constructor(props) {
+    super(props);
+    bindAll(this, ['handleWindowResize']);
+  }
+
   componentDidMount() {
+    adjustHeight(this.refs.masterDetailPanel);
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  handleWindowResize() {
     adjustHeight(this.refs.masterDetailPanel);
   }
 

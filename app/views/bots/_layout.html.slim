@@ -12,7 +12,11 @@
           span チャットする
         = space 2
       div.pt-3
-        = link_to '#', class: 'btn btn-outline-warning btn-sm' do
+        span(
+          data-component="LearningButton"
+          data-bot-id=@bot.id
+        )
+        /= link_to '#', class: 'btn btn-outline-warning btn-sm' do
           = material_icon 'trending_up', class: 'mi-xs'
           = space
           span 学習を実行

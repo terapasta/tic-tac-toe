@@ -382,7 +382,7 @@ var Trackable = function () {
 
 exports.default = Trackable;
 
-},{"../modules/get-data":82,"uuid/v1":956}],6:[function(require,module,exports){
+},{"../modules/get-data":82,"uuid/v1":954}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1157,7 +1157,7 @@ function makeDummyLink(url) {
   return window.$(a);
 }
 
-},{"classnames":117,"react":885,"uuid/v1":956}],19:[function(require,module,exports){
+},{"classnames":117,"react":885,"uuid/v1":954}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1537,7 +1537,7 @@ var getLearningStatus = exports.getLearningStatus = (0, _reduxActions.createActi
 var fetchInitialQuestions = exports.fetchInitialQuestions = (0, _reduxActions.createAction)("FETCH_INITIAL_QUESTIONS", InitialQuestionsAPI.fetchAll);
 var setInitialQuestionsToMessages = exports.setInitialQuestionsToMessages = (0, _reduxActions.createAction)("SET_INITIAL_QUESTIONS_TO_MESSAGES");
 
-},{"../../analytics/mixpanel":4,"../../api/bot-learning":7,"../../api/chat-message-rating":8,"../../api/chat-messages":9,"../../api/chat-trainings":10,"../../api/initial-questions":13,"../../modules/snake-case-keys":87,"./constants":25,"is-empty":444,"lodash/assign":657,"lodash/find":671,"lodash/findIndex":672,"lodash/get":674,"lodash/trim":714,"redux-actions":894,"toastr":948}],20:[function(require,module,exports){
+},{"../../analytics/mixpanel":4,"../../api/bot-learning":7,"../../api/chat-message-rating":8,"../../api/chat-messages":9,"../../api/chat-trainings":10,"../../api/initial-questions":13,"../../modules/snake-case-keys":87,"./constants":25,"is-empty":444,"lodash/assign":657,"lodash/find":671,"lodash/findIndex":672,"lodash/get":674,"lodash/trim":714,"redux-actions":894,"toastr":946}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1923,6 +1923,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _templateObject = _taggedTemplateLiteral(["\n  cursor: pointer;\n  padding: 8px;\n  border-bottom: 1px solid #ccc;\n\n  &:hover {\n    background-color: #efefef;\n  }\n\n  &:last-child {\n    border-bottom: 0;\n  }\n"], ["\n  cursor: pointer;\n  padding: 8px;\n  border-bottom: 1px solid #ccc;\n\n  &:hover {\n    background-color: #efefef;\n  }\n\n  &:last-child {\n    border-bottom: 0;\n  }\n"]);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -1938,6 +1940,10 @@ var _isEmpty2 = _interopRequireDefault(_isEmpty);
 var _debounce = require("lodash/debounce");
 
 var _debounce2 = _interopRequireDefault(_debounce);
+
+var _styledComponents = require("styled-components");
+
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 var _preventWheelScrollOfParent = require("../prevent-wheel-scroll-of-parent");
 
@@ -1956,6 +1962,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var SuggestItem = _styledComponents2.default.div(_templateObject);
 
 var ChatBotMessageEditor = function (_Component) {
   _inherits(ChatBotMessageEditor, _Component);
@@ -2045,8 +2055,8 @@ var ChatBotMessageEditor = function (_Component) {
                 "div",
                 { className: "panel panel-default stacked-close", key: a.id },
                 _react2.default.createElement(
-                  "a",
-                  { href: "#", className: "panel-body", onClick: function onClick(e) {
+                  SuggestItem,
+                  { onClick: function onClick(e) {
                       return _this2.selectAnswer(a, e);
                     } },
                   a.body
@@ -2105,7 +2115,7 @@ ChatBotMessageEditor.propTypes = {
 
 exports.default = ChatBotMessageEditor;
 
-},{"../../api/answer":6,"../prevent-wheel-scroll-of-parent":79,"is-empty":444,"lodash/debounce":667,"react":885,"react-textarea-autosize":755}],23:[function(require,module,exports){
+},{"../../api/answer":6,"../prevent-wheel-scroll-of-parent":79,"is-empty":444,"lodash/debounce":667,"react":885,"react-textarea-autosize":755,"styled-components":918}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3258,6 +3268,10 @@ var _values = require("lodash/values");
 
 var _values2 = _interopRequireDefault(_values);
 
+var _learningButton = require("../learning-button");
+
+var _learningButton2 = _interopRequireDefault(_learningButton);
+
 var _constants = require("./constants");
 
 var _botLearning = require("../../api/bot-learning");
@@ -3340,39 +3354,7 @@ var ChatHeader = function (_Component) {
         isManager && _react2.default.createElement(
           "div",
           { className: "chat-header__right" },
-          isSucceeded && _react2.default.createElement(
-            "span",
-            { className: "label label-success" },
-            "\u5B66\u7FD2\u6E08"
-          ),
-          isFailed && _react2.default.createElement(
-            "span",
-            { className: "label label-danger" },
-            "\u5B66\u7FD2\u5931\u6557"
-          ),
-          isProcessing && _react2.default.createElement(
-            "span",
-            { className: "label label-warning" },
-            "\u5B66\u7FD2\u4E2D"
-          ),
-          " ",
-          _react2.default.createElement(
-            "button",
-            { className: "chat-header__button btn btn-default",
-              disabled: isLearning,
-              onClick: this.onClickLearning },
-            _react2.default.createElement(
-              "i",
-              { className: "material-icons" },
-              "trending_up"
-            ),
-            " ",
-            _react2.default.createElement(
-              "span",
-              null,
-              isLearning ? "学習中..." : "学習を実行"
-            )
-          )
+          _react2.default.createElement(_learningButton2.default, { botId: window.currentBot.id })
         )
       );
     }
@@ -3412,8 +3394,23 @@ ChatHeader.propTypes = {
 };
 
 exports.default = ChatHeader;
+/*
+          <div className="chat-header__right">
+            {isSucceeded && <span className="label label-success">学習済</span>}
+            {isFailed && <span className="label label-danger">学習失敗</span>}
+            {isProcessing && <span className="label label-warning">学習中</span>}
+            {" "}
+            <button className="chat-header__button btn btn-default"
+              disabled={isLearning}
+              onClick={this.onClickLearning}>
+              <i className="material-icons">trending_up</i>
+              {" "}
+              <span>{isLearning ? "学習中..." : "学習を実行"}</span>
+            </button>
+          </div>
+*/
 
-},{"../../api/bot-learning":7,"./constants":25,"lodash/values":716,"react":885}],35:[function(require,module,exports){
+},{"../../api/bot-learning":7,"../learning-button":74,"./constants":25,"lodash/values":716,"react":885}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7893,31 +7890,34 @@ var LearningButton = function (_Component) {
           status = _state.status;
 
       var statusLabel = LearningStatus[status];
-      var statusClassName = (0, _classnames2.default)("label", {
-        "label-success": LearningStatus.isSucceeded(status),
-        "label-danger": LearningStatus.isFailed(status),
-        "label-warning": LearningStatus.isProcessing(status),
+      var statusClassName = (0, _classnames2.default)("badge", {
+        "badge-success": LearningStatus.isSucceeded(status),
+        "badge-danger": LearningStatus.isFailed(status),
+        "badge-warning": LearningStatus.isProcessing(status),
         "Animate-fadeInOut": LearningStatus.isProcessing(status)
       });
+      var icon = LearningStatus.isProcessing(status) ? 'cached' : 'trending_up';
 
       return _react2.default.createElement(
         "div",
-        { id: "bot-status-label" },
-        _react2.default.createElement(
-          "div",
-          { style: labelBoxStyle },
-          status && _react2.default.createElement(
-            "label",
-            { className: statusClassName },
-            statusLabel
-          )
+        { id: "bot-status-label", className: "d-inline-block" },
+        status && _react2.default.createElement(
+          "label",
+          { className: statusClassName },
+          statusLabel
         ),
+        "\xA0",
         _react2.default.createElement(
           "button",
-          { className: "btn btn-danger btn-block btn-learning",
+          { className: "btn btn-outline-warning btn-sm",
             disabled: isDisabled,
             onClick: this.onClickButton.bind(this) },
-          "\u5B66\u7FD2\u3092\u5B9F\u884C\u3059\u308B"
+          _react2.default.createElement(
+            "i",
+            { className: "material-icons mi-xs" },
+            icon
+          ),
+          "\xA0 \u5B66\u7FD2\u3092\u5B9F\u884C"
         )
       );
     }
@@ -8308,16 +8308,16 @@ var Modal = function (_Component) {
                 "div",
                 { className: "modal-header" },
                 _react2.default.createElement(
+                  "h4",
+                  { className: "modal-title" },
+                  title
+                ),
+                _react2.default.createElement(
                   "button",
                   { className: "close", onClick: function onClick() {
                       onClose();
                     } },
                   "\xD7"
-                ),
-                _react2.default.createElement(
-                  "h4",
-                  { className: "modal-title" },
-                  title
                 )
               ),
               (0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement(
@@ -11099,7 +11099,7 @@ function copy(text, options) {
 
 module.exports = copy;
 
-},{"toggle-selection":949}],119:[function(require,module,exports){
+},{"toggle-selection":947}],119:[function(require,module,exports){
 require('../../modules/core.regexp.escape');
 module.exports = require('../../modules/_core').RegExp.escape;
 },{"../../modules/_core":140,"../../modules/core.regexp.escape":236}],120:[function(require,module,exports){
@@ -30078,7 +30078,7 @@ exports.tpl_link_no_ip_fuzzy =
     '(^|(?![.:/\\-_@])(?:[$+<=>^`|]|' + src_ZPCc + '))' +
     '((?![$+<=>^`|])' + tpl_host_port_no_ip_fuzzy_strict + src_path + ')';
 
-},{"uc.micro/categories/Cc/regex":950,"uc.micro/categories/P/regex":951,"uc.micro/categories/Z/regex":952,"uc.micro/properties/Any/regex":953}],451:[function(require,module,exports){
+},{"uc.micro/categories/Cc/regex":948,"uc.micro/categories/P/regex":949,"uc.micro/categories/Z/regex":950,"uc.micro/properties/Any/regex":951}],451:[function(require,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -40963,7 +40963,7 @@ Linkify.defaultProps = {
 };
 exports.default = Linkify;
 
-},{"linkify-it":449,"react":885,"tlds":947}],738:[function(require,module,exports){
+},{"linkify-it":449,"react":885,"tlds":945}],738:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"));
@@ -61781,7 +61781,7 @@ function createStore(reducer, preloadedState, enhancer) {
     replaceReducer: replaceReducer
   }, _ref2[_symbolObservable2['default']] = observable, _ref2;
 }
-},{"lodash/isPlainObject":690,"symbol-observable":944}],909:[function(require,module,exports){
+},{"lodash/isPlainObject":690,"symbol-observable":942}],909:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -64206,7 +64206,7 @@ var flatten = function flatten(chunks, executionContext) {
 };
 
 exports.default = flatten;
-},{"../types":927,"fbjs/lib/hyphenateStyleName":942,"is-plain-object":446,"prop-types":731}],933:[function(require,module,exports){
+},{"../types":927,"fbjs/lib/hyphenateStyleName":428,"is-plain-object":446,"prop-types":731}],933:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -64309,7 +64309,7 @@ var stringifyRules = function stringifyRules(rules, selector, prefix) {
 
 exports.default = stringifyRules;
 module.exports = exports['default'];
-},{"../types":927,"prop-types":731,"stylis":943}],939:[function(require,module,exports){
+},{"../types":927,"prop-types":731,"stylis":941}],939:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -64979,78 +64979,6 @@ function Umul32(n, m) {
 }
 module.exports = exports["default"];
 },{}],941:[function(require,module,exports){
-'use strict';
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @typechecks
- */
-
-var _uppercasePattern = /([A-Z])/g;
-
-/**
- * Hyphenates a camelcased string, for example:
- *
- *   > hyphenate('backgroundColor')
- *   < "background-color"
- *
- * For CSS style names, use `hyphenateStyleName` instead which works properly
- * with all vendor prefixes, including `ms`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenate(string) {
-  return string.replace(_uppercasePattern, '-$1').toLowerCase();
-}
-
-module.exports = hyphenate;
-},{}],942:[function(require,module,exports){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @typechecks
- */
-
-'use strict';
-
-var hyphenate = require('./hyphenate');
-
-var msPattern = /^ms-/;
-
-/**
- * Hyphenates a camelcased CSS property name, for example:
- *
- *   > hyphenateStyleName('backgroundColor')
- *   < "background-color"
- *   > hyphenateStyleName('MozTransition')
- *   < "-moz-transition"
- *   > hyphenateStyleName('msTransition')
- *   < "-ms-transition"
- *
- * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
- * is converted to `-ms-`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenateStyleName(string) {
-  return hyphenate(string).replace(msPattern, '-ms-');
-}
-
-module.exports = hyphenateStyleName;
-},{"./hyphenate":941}],943:[function(require,module,exports){
 /*
  *          __        ___
  *    _____/ /___  __/ (_)____
@@ -66514,10 +66442,10 @@ module.exports = hyphenateStyleName;
 	return stylis
 }));
 
-},{}],944:[function(require,module,exports){
+},{}],942:[function(require,module,exports){
 module.exports = require('./lib/index');
 
-},{"./lib/index":945}],945:[function(require,module,exports){
+},{"./lib/index":943}],943:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -66549,7 +66477,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":946}],946:[function(require,module,exports){
+},{"./ponyfill":944}],944:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -66573,7 +66501,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],947:[function(require,module,exports){
+},{}],945:[function(require,module,exports){
 module.exports = [
   "aaa",
   "aarp",
@@ -68107,7 +68035,7 @@ module.exports = [
   "zw"
 ];
 
-},{}],948:[function(require,module,exports){
+},{}],946:[function(require,module,exports){
 /*
  * Toastr
  * Copyright 2012-2015
@@ -68544,7 +68472,7 @@ module.exports = [
     }
 }));
 
-},{"jquery":448}],949:[function(require,module,exports){
+},{"jquery":448}],947:[function(require,module,exports){
 
 module.exports = function () {
   var selection = document.getSelection();
@@ -68585,15 +68513,15 @@ module.exports = function () {
   };
 };
 
-},{}],950:[function(require,module,exports){
+},{}],948:[function(require,module,exports){
 module.exports=/[\0-\x1F\x7F-\x9F]/
-},{}],951:[function(require,module,exports){
+},{}],949:[function(require,module,exports){
 module.exports=/[!-#%-\*,-/:;\?@\[-\]_\{\}\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E44\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]|\uD800[\uDD00-\uDD02\uDF9F\uDFD0]|\uD801\uDD6F|\uD802[\uDC57\uDD1F\uDD3F\uDE50-\uDE58\uDE7F\uDEF0-\uDEF6\uDF39-\uDF3F\uDF99-\uDF9C]|\uD804[\uDC47-\uDC4D\uDCBB\uDCBC\uDCBE-\uDCC1\uDD40-\uDD43\uDD74\uDD75\uDDC5-\uDDC9\uDDCD\uDDDB\uDDDD-\uDDDF\uDE38-\uDE3D\uDEA9]|\uD805[\uDC4B-\uDC4F\uDC5B\uDC5D\uDCC6\uDDC1-\uDDD7\uDE41-\uDE43\uDE60-\uDE6C\uDF3C-\uDF3E]|\uD807[\uDC41-\uDC45\uDC70\uDC71]|\uD809[\uDC70-\uDC74]|\uD81A[\uDE6E\uDE6F\uDEF5\uDF37-\uDF3B\uDF44]|\uD82F\uDC9F|\uD836[\uDE87-\uDE8B]|\uD83A[\uDD5E\uDD5F]/
-},{}],952:[function(require,module,exports){
+},{}],950:[function(require,module,exports){
 module.exports=/[ \xA0\u1680\u2000-\u200A\u202F\u205F\u3000]/
-},{}],953:[function(require,module,exports){
+},{}],951:[function(require,module,exports){
 module.exports=/[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/
-},{}],954:[function(require,module,exports){
+},{}],952:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -68618,7 +68546,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],955:[function(require,module,exports){
+},{}],953:[function(require,module,exports){
 (function (global){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
@@ -68655,7 +68583,7 @@ if (!rng) {
 module.exports = rng;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],956:[function(require,module,exports){
+},{}],954:[function(require,module,exports){
 // Unique ID creation requires a high quality random # generator.  We feature
 // detect to determine the best RNG source, normalizing to a function that
 // returns 128-bits of randomness, since that's what's usually required
@@ -68760,4 +68688,4 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-},{"./lib/bytesToUuid":954,"./lib/rng":955}]},{},[1]);
+},{"./lib/bytesToUuid":952,"./lib/rng":953}]},{},[1]);

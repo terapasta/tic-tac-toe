@@ -177,6 +177,10 @@
     margin-top: 16px;
     margin-left: $-icon-size + $-balloon-spacing;
 
+    &:first-child {
+      margin-top: 0;
+    }
+
     @include media-breakpoint-down(xs) {
     // @media (max-width: $screen-xxs-max) {
       &.has-part-label {
@@ -192,12 +196,13 @@
   &__suggestions {
     overflow-y: auto;
     position: absolute;
-    top: 100%;
+    top: calc(100% - 1px);
     left: 0;
     right: 0;
     z-index: 250;
     height: 100px;
     background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 3px;
     box-shadow: 0 2px 5px rgba(0,0,0,.2);
   }

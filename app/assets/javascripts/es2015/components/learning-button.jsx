@@ -54,24 +54,25 @@ export default class LearningButton extends Component {
   render() {
     const { isDisabled, status } = this.state;
     const statusLabel = LearningStatus[status];
-    const statusClassName = classNames("label", {
-      "label-success": LearningStatus.isSucceeded(status),
-      "label-danger": LearningStatus.isFailed(status),
-      "label-warning": LearningStatus.isProcessing(status),
+    const statusClassName = classNames("badge", {
+      "badge-success": LearningStatus.isSucceeded(status),
+      "badge-danger": LearningStatus.isFailed(status),
+      "badge-warning": LearningStatus.isProcessing(status),
       "Animate-fadeInOut": LearningStatus.isProcessing(status),
-    })
+    });
+    const icon = LearningStatus.isProcessing(status) ? 'cached' : 'trending_up';
 
     return (
-      <div id="bot-status-label">
-        <div style={labelBoxStyle}>
-          {status && (
-            <label className={statusClassName}>{statusLabel}</label>
-          )}
-        </div>
-        <button className="btn btn-danger btn-block btn-learning"
+      <div id="bot-status-label" className="d-inline-block">
+        {status && (
+          <label className={statusClassName}>{statusLabel}</label>
+        )}
+        &nbsp;
+        <button className="btn btn-outline-warning btn-sm"
           disabled={isDisabled}
           onClick={this.onClickButton.bind(this)}>
-          学習を実行する
+          <i className="material-icons mi-xs">{icon}</i>&nbsp;
+          学習を実行
         </button>
       </div>
     )

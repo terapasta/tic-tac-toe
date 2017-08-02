@@ -15,8 +15,8 @@ export default class Modal extends Component {
             onClick={(e) => { e.stopPropagation(); }}>
             <div className="modal-content">
               <div className="modal-header">
-                <button className="close" onClick={() => { onClose(); }}>&times;</button>
                 <h4 className="modal-title">{title}</h4>
+                <button className="close" onClick={() => { onClose(); }}>&times;</button>
               </div>
               {isEmpty(iframeUrl) && (
                 <div className="modal-body">

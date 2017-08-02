@@ -30,7 +30,7 @@ Rails.application.routes.draw do
         resources :selections, only: [:index], module: :question_answers, as: :question_answers_selections
       end
     end
-    resources :topic_tags
+    resource :topic_tags, only: [:show, :update]
     resource :imports, only: [:show, :create]
     resources :exports, only: [:index, :create]
     resources :chat_tests, only: [:new, :create, :show]

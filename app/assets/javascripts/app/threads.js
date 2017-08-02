@@ -1,4 +1,4 @@
-$(function() {
+window.jQuery$(function($) {
   var $filterNav = $('[data-role="threads-filter-nav"]');
   var $checkboxes = $filterNav.find('input[type="checkbox"]')
   var state = {
@@ -25,7 +25,7 @@ $(function() {
 
   var jumpTo = function(state) {
     var newState = $.extend(getQueryParams(), state);
-    location.search = toQueryString(newState);
+    window.location.search = toQueryString(newState);
   };
 
   // Convert object to query string
@@ -37,7 +37,7 @@ $(function() {
 
   var getQueryParams = function() {
     var result = {};
-    location.search.replace('?', '').split('&').forEach(function(pair) {
+    window.location.search.replace('?', '').split('&').forEach(function(pair) {
       var splitted = pair.split('=')
       result[splitted[0]] = splitted[1];
     });

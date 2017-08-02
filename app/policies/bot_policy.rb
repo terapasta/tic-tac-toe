@@ -53,6 +53,11 @@ class BotPolicy < ApplicationPolicy
           :id,
           :value,
           :_destroy,
+        ],
+        topic_tags_attributes: [
+          :id,
+          :name,
+          :_destroy,
         ]
       },
     ]

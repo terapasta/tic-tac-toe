@@ -10,4 +10,7 @@ nav.d-flex.justify-content-between
       span 全件表示 /#{space}
     span #{resources.total_count}件
 
-  = paginate resources, window: 1
+  = yield
+
+  - if local_assigns[:hide_paginator].blank?
+    = paginate resources, window: 1

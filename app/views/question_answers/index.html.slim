@@ -3,13 +3,31 @@
   - content_for :hide_sidebar, true
   - content_for :additional_container_main_class, 'container-main--headless'
 
+- sort = params.dig(:q, :s)
+
 - pagination = capture do
   = render 'shared/pagination', resources: @question_answers, per_page: @per_page
 
 = render layout: 'bots/layout' do
-  = render 'search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_path(@bot)
+  = render 'search_form', bot: @bot, search_result: @search_result, keyword: @keyword, action_url: bot_question_answers_path(@bot)
 
-  = pagination
+  = render layout: 'shared/pagination', locals: { resources: @question_answers, per_page: @per_page, hide_paginator: true } do
+    .form-inline
+      span 順序：
+      select.form-control.form-control-sm(
+        data-role="url-switcher"
+        data-event="Sort question answers"
+        data-bot-id=@bot.id
+        data-bot-name=@bot.name
+      )
+        option value=sorting_url('created_at desc') selected=(sort.blank? || sort == "created_at desc")
+          |作成日時の新しい順
+        option value=sorting_url('created_at asc') selected=(sort == "created_at asc")
+          |作成日時の古い順
+        option value=sorting_url('updated_at desc') selected=(sort == "updated_at desc")
+          |更新日時の新しい順
+        option value=sorting_url('updated_at asc') selected=(sort == "updated_at asc")
+          |更新日時の古い順
 
   - @question_answers.each do |question_answer|
     = render 'summary_card', question_answer: question_answer, bot: @bot

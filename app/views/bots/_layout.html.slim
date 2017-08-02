@@ -79,15 +79,7 @@
 
 .pt-4
   .container
-    - if notice || alert
-      - if notice
-        .alert.alert-success
-          button.close data-dismiss="alert" &times;
-          = notice
-      - if alert
-        .alert.alert-danger
-          button.close data-dismiss="alert" &times;
-          = alert
+    = render 'shared/flash'
 
     - breadcrumbs.tap do |links|
       - if links.any?

@@ -1,8 +1,9 @@
 .container
   - if policy(:bot).index?
-    .row: .col-8.offset-2
-      .mt-5.mb-4
-        h4 Bot一覧
+    .row: .col-8.offset-2.mt-5.mb-4
+      = render 'shared/flash'
+
+      h4.mb-4 Bot一覧
 
       table.table: tbody
         - @bots.each do |bot|

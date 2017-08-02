@@ -19,38 +19,35 @@
     .form-group
       span(
         data-component="AnswerTextArea"
-        data-base-name="question_answer[answer_attributes]"
-        data-default-value=@question_answer.answer&.body
+        data-base-name="question_answer"
+        data-default-value=@question_answer.answer
         data-bot-id=@bot.id
       )
 
     .form-group
       .card: .card-block
         label 回答添付ファイル
-        = f.fields_for :answer do |nf|
-          = nf.hidden_field :id
+        #answer-files
+          = f.fields_for :answer_files, wrapper: false do |nf|
+            .fields.mb-3
+              - if nf.object.file?
+                .card: .card-block.p-3
+                  .row
+                    .col-10
+                      - if nf.object.image?
+                        .mb-2= link_to image_tag(nf.object.file_url, width: 200, class: 'img-thumbnail'), nf.object.file_url, target: '_blank'
+                      - else
+                        = link_to nf.object.read_attribute(:file), nf.object.file_url, target: '_blank'
+                      p.mb-0 ファイルタイプ：<code>#{nf.object.file_type}</code>, ファイルサイズ <code>#{nf.object.file_size.to_s(:human_size)}</code>
+                    .col-2.text-right
+                      = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
 
-          #answer-files
-            = nf.fields_for :answer_files, wrapper: false do |nnf|
-              .fields.mb-3
-                - if nnf.object.file?
-                  .card: .card-block.p-3
-                    .row
-                      .col-10
-                        - if nnf.object.image?
-                          .mb-2= link_to image_tag(nnf.object.file_url, width: 200, class: 'img-thumbnail'), nnf.object.file_url, target: '_blank'
-                        - else
-                          = link_to nnf.object.read_attribute(:file), nnf.object.file_url, target: '_blank'
-                        p.mb-0 ファイルタイプ：<code>#{nnf.object.file_type}</code>, ファイルサイズ <code>#{nnf.object.file_size.to_s(:human_size)}</code>
-                      .col-2.text-right
-                        = nnf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
-
-                - else
-                  .input-group
-                    = nnf.file_field :file, class: 'form-control'
-                    span.input-group-btn
-                      = nnf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
-          = nf.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
+              - else
+                .input-group
+                  = nf.file_field :file, class: 'form-control'
+                  span.input-group-btn
+                    = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
+        = f.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
 
     span(
       data-component="QuestionAnswerTagForm"

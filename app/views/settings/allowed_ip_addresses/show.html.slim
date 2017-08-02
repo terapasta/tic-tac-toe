@@ -1,0 +1,20 @@
+= render layout: 'settings/shared/layout' do
+  = nested_form_for @bot, url: bot_settings_allowed_ip_addresses_path(@bot) do |f|
+    .form-group
+      .card: .card-block
+        h5.mb-3: strong チャット埋め込みの許可IPアドレス
+        #bot-allowed-ip-addresses.form-inline
+          = f.fields_for :allowed_ip_addresses do |nf|
+            .input-group
+              = nf.text_field :value, class: 'form-control form-control-sm', placeholder: '例）192.168.255.255'
+              span.input-group-btn
+                = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
+            hr
+        = f.link_to_add '許可IPアドレスを追加', :allowed_ip_addresses, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-allowed-ip-addresses' }
+        .form-text.text-muted
+          |※事前に登録したIPアドレスからのみ、チャットを利用することができます。<br />
+          |※未登録の場合は、全てのIPアドレスからアクセス可能です。<br />
+          |あなたの現在のIPアドレス :<code>#{request.remote_ip}</code>
+
+    .form-group.text-right
+      = f.submit class: 'btn btn-success'

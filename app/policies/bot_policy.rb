@@ -49,6 +49,11 @@ class BotPolicy < ApplicationPolicy
           :domain,
           :_destroy,
         ],
+        allowed_ip_addresses_attributes: [
+          :id,
+          :value,
+          :_destroy,
+        ]
       },
     ]
   end

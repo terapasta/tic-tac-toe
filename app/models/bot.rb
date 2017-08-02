@@ -19,6 +19,7 @@ class Bot < ActiveRecord::Base
   has_many :allowed_ip_addresses, dependent: :destroy
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
+  accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true
 
   serialize :selected_question_answer_ids, Array
 

@@ -1,5 +1,5 @@
 = render layout: 'settings/shared/layout' do
-    = nested_form_for(@bot, data: { event_name: "Update bot", bot_id: @bot.id, bot_name: @bot.name }) do |f|
+    = nested_form_for(@bot, url: bot_settings_bot_path(@bot), data: { event_name: "Update bot", bot_id: @bot.id, bot_name: @bot.name }) do |f|
       = render "shared/errors", object: @bot
 
       .form-group
@@ -18,22 +18,13 @@
         = f.label :name
         = f.text_field :name, class: 'form-control'
 
+      .form-group
+        = f.label :start_message
+        = f.text_area :start_message, rows: 3, class: 'form-control', placeholder: "デフォルト：#{DefinedAnswer.start_answer_unsetting_text}"
 
       .form-group
         = f.label :classify_failed_message
-        = f.text_area :classify_failed_message, rows: 3, class: 'form-control'
-
-      .form-group
-        = f.label :start_message
-        = f.text_area :start_message, rows: 3, class: 'form-control'
+        = f.text_area :classify_failed_message, rows: 3, class: 'form-control', placeholder: "デフォルト：#{DefinedAnswer.classify_failed_text}"
 
       .form-group.text-right
         = f.submit class: 'btn btn-success'
-
-      .form-group.mt-5
-        .card: .card-block
-          h5.mb-3: strong Danger zone
-          span(
-            data-component="BotResetButton"
-            data-url=reset_bot_path(@bot)
-          )

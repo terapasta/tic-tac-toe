@@ -7,7 +7,7 @@ class Settings::AllowedHostsController < Settings::BaseController
       redirect_to bot_settings_allowed_hosts_path(@bot), notice: '許可ホストを更新しました'
     else
       flash.now.alert = '許可ホストを更新できませんでした'
-      render :index
+      render :show
     end
   end
 end

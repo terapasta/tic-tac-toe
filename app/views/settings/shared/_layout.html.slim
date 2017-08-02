@@ -18,6 +18,11 @@
             = space
             span 許可ホスト
         li.nav-item
+          = active_link_to bot_settings_allowed_ip_addresses_path(@bot), class: 'nav-link' do
+            = material_icon 'language', class: 'mi-xs'
+            = space
+            span 許可IPアドレス
+        li.nav-item
           = active_link_to bot_settings_reset_path(@bot), class: 'nav-link' do
             = material_icon 'layers_clear', class: 'mi-xs'
             = space

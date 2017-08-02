@@ -11,7 +11,7 @@
           dt: small 質問
           dd= highlight(nl2br(question_answer.question), params[:keyword])
       .col-sm-6
-        dl
+        dl.mb-0
           dt: small 回答
           dd
             p
@@ -22,12 +22,14 @@
 
             - if question_answer.answer_files&.any?
               - question_answer.answer_files.each do |answer_file|
-                  - if answer_file.image?
-                    .mini-well.text-center= link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
-                  - else
-                    small.text-muted 添付ファイル
-                    br
-                    = link_to answer_file.read_attribute(:file), answer_file.file_url, target: '_blank'
+                .card class=('mb-2' if answer_file != question_answer.answer_files.last)
+                  .card-block.p-2
+                    - if answer_file.image?
+                      .text-center= link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
+                    - else
+                      small.text-muted 添付ファイル
+                      br
+                      = link_to answer_file.read_attribute(:file), answer_file.file_url, target: '_blank'
   .card-footer
     .row
       .col-sm-8

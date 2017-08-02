@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'embed', to: 'pages#embed'
       resource :bot, only: [:show, :update]
       resource :allowed_hosts, only: [:show, :update]
+      resource :allowed_ip_addresses, only: [:show, :update]
       resource :reset, only: [:show, :create]
     end
     member do

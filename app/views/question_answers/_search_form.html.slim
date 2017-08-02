@@ -1,14 +1,17 @@
 .d-flex.justify-content-between.bg-faded.mb-3.p-2
-  = form_tag action_url, method: :get, class: 'form-inline', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
+  = form_tag action_url, method: :get, class: 'form-inline d-flex justify-content-between', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
     = collection_select :topic, :id, topic_tags_for_select(@bot), :id, :name, { prompt: "-- トピックタグで絞込 --", selected: (@topic_id.to_i if @topic_id.present?) }, class: 'form-control'
-    = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
-    = submit_tag '検索', name: "search", class: "btn btn-secondary"
+    = space
+    .input-group
+      = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
+      span.input-group-btn
+        = submit_tag '検索', name: "search", class: "btn btn-secondary"
     - if params.dig(:topic, :id).present? || params[:keyword].present?
       = space
       = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
 
   .form-inline
-    span 並べ替え：
+    span 順序：
     select.form-control data-role="url-switcher" data-event="Sort question answers" data-bot-id=bot.id data-bot-name=bot.name
       option value=sorting_url('created_at desc') selected=(sort.blank? || sort == "created_at desc")
         |作成日時の新しい順

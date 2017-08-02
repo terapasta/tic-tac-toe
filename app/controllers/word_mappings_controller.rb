@@ -5,7 +5,11 @@ class WordMappingsController < ApplicationController
   before_action :set_word_mapping, only: [:show, :edit, :update, :destroy]
 
   def index
-    @word_mappings = @bot.word_mappings.order(created_at: :desc).page(params[:page]).per(params[:per])
+    @per_page = 20
+    @word_mappings = @bot.word_mappings
+      .keyword(params[:keyword])
+      .order(created_at: :desc)
+      .page(params[:page]).per(@per_page)
   end
 
   def new

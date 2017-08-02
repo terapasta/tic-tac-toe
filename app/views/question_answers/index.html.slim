@@ -4,18 +4,14 @@
   - content_for :additional_container_main_class, 'container-main--headless'
 
 - pagination = capture do
-  = render 'pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
+  = render 'shared/pagination', resources: @question_answers, per_page: @per_page
 
-.page-header
-  .page-header__title Q&A管理
-  .page-header__controls
-    = link_to '新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-default', data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+= render layout: 'bots/layout' do
+  = render 'search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_path(@bot)
 
-= render 'search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_path(@bot)
+  = pagination
 
-= pagination
+  - @question_answers.each do |question_answer|
+    = render 'summary_card', question_answer: question_answer, bot: @bot
 
-- @question_answers.each do |question_answer|
-  = render 'summary_card', question_answer: question_answer, bot: @bot
-
-= pagination
+  = pagination

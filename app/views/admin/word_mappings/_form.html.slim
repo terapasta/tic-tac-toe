@@ -1,0 +1,15 @@
+- data = @word_mapping.persisted? ? { event_name: 'Update word mapping', word_mapping_id: @word_mapping.id } : { event_name: 'Create word mapping' }
+
+= form_for [:admin, @word_mapping], data: data do |f|
+  = render "shared/errors", object: @word_mapping
+
+  .form-group
+    = f.label :word
+    = f.text_field :word, class: 'form-control'
+
+  .form-group
+    = f.label :synonym
+    = f.text_field :synonym, class: 'form-control'
+
+  .form-group.text-right
+    = f.submit class: 'btn btn-success'

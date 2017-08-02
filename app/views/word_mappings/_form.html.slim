@@ -5,7 +5,5 @@
   = f.text_field :word
   = f.text_field :synonym
 
-  .actions
-    .text-right
-      = link_to '戻る', admin_word_mappings_path, class: 'btn btn-secondary', data: { event_name: 'Back to word mapping index', word_mapping_id: @word_mapping.id }
-      = f.submit class: 'btn btn-primary'
+  .form-group.text-right
+    = f.submit class: 'btn btn-primary'

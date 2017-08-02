@@ -1,22 +1,28 @@
-.row: .col-8.offset-2
-  .mt-5.mb-4
-    h4 システム共通 同義語一覧
-    br
+- pagination = capture do
+  = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
-    = pagination = capture do
-      = render 'shared/pagination', resources: @word_mappings
+.container: .row: .col-8.offset-2
+  .mt-5.mb-4.d-flex.justify-content-between
+    h4 システム共通同義語
+    = link_to '新規登録', new_admin_word_mapping_path, class: 'btn btn-success', data: { event_name: 'Open new word mapping' }
 
-    table.table.table-striped
-      thead
+  = pagination
+
+  table.table.table-striped
+    thead
+      tr
+        th = WordMapping.human_attribute_name(:word)
+        th = WordMapping.human_attribute_name(:synonym)
+        th
+
+    tbody
+      - @word_mappings.each do |word_mapping|
         tr
-          th = WordMapping.human_attribute_name(:word)
-          th = WordMapping.human_attribute_name(:synonym)
-          th
+          td = word_mapping.word
+          td = word_mapping.synonym
+          td.text-right
+            = link_to '編集', edit_admin_word_mapping_path(word_mapping), class: 'btn btn-secondary btn-sm', data: { event_name: 'Open edit admin word mapping', word_mapping_id: word_mapping.id }
+            = space 2
+            = link_to '削除', admin_word_mapping_path(word_mapping), class: 'btn btn-danger btn-sm', data: { confirm: '削除します。よろしいですか？', method: :delete, event_name: 'Delete admin word mapping', word_mapping_id: word_mapping.id }
 
-      tbody
-        = render "word_mapping"
-    
-    = pagination = capture do
-      = render 'shared/pagination', resources: @word_mappings
-
-    = link_to '新規', new_admin_word_mapping_path, class: 'btn btn-primary', data: { event_name: 'Open new word mapping' }
+  = pagination

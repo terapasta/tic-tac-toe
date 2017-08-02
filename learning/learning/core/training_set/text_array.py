@@ -45,7 +45,9 @@ class TextArray:
         if self._lsa is not None:
             return self._lsa
 
-        # n_componentsに1以上の値でfeature数以下かつ大きな数を設定する
+        # NOTE:
+        #   n_componentsは削減後の次元数。
+        #   条件: k must be between 1 and min(A.shape)
         n_components = min(features.shape)
         if n_components > 1:
             n_components = (n_components - 1)

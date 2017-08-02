@@ -18,28 +18,28 @@
     )
       |Bot管理者対話のみ
 
-  .d-flex.justify-content-between.align-items-start.my-2.p-2.bg-faded
+  .d-flex.justify-content-between.align-items-start.my-2.p-2.bg-faded data-role='threads-filter-nav'
     .checkbox-pill-group
       label.checkbox-pill
-        input.checkbox-pill__input type="checkbox" checked=true
+        input.checkbox-pill__input type="checkbox" checked=params[:answer_failed].to_bool name="answer_failed"
         .checkbox-pill__label
           = material_icon 'error_outline', class: 'text-muted mi-sm'
           = space
           span 回答失敗
       label.checkbox-pill
-        input.checkbox-pill__input type="checkbox" checked=true
+        input.checkbox-pill__input type="checkbox" checked=params[:good].to_bool name="good"
         .checkbox-pill__label
           = material_icon 'thumb_up', class: 'text-success mi-sm'
           = space
           span Good
       label.checkbox-pill
-        input.checkbox-pill__input type="checkbox" checked=true
+        input.checkbox-pill__input type="checkbox" checked=params[:bad].to_bool name="bad"
         .checkbox-pill__label
           = material_icon 'thumb_down', class: 'text-danger mi-sm'
           = space
           span Bad
       label.checkbox-pill
-        input.checkbox-pill__input type="checkbox" checked=true
+        input.checkbox-pill__input type="checkbox" checked=params[:marked].to_bool name="marked"
         .checkbox-pill__label
           = material_icon 'flag', class: 'text-muted mi-sm'
           = space

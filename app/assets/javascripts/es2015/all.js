@@ -6,7 +6,7 @@ import ChatAppReducers from "./components/chat/reducers";
 import MessageRatingButtons from "./components/message-rating-buttons";
 import ConversationTree from "./components/conversation-tree";
 import ConversationTreeReducers from "./components/conversation-tree/reducers";
-import BotResetButton from "./components/bot-reset-button";
+import BotResetForm from "./components/bot-reset-form";
 import mountComponent, { mountComponentWithRedux } from "./modules/mount-component";
 import Mixpanel from "./analytics/mixpanel";
 import LearningButton from "./components/learning-button";
@@ -23,7 +23,7 @@ function init() {
   window.initMessageRatingButtons();
   mountComponentWithRedux(ChatApp, ChatAppReducers, [promiseMiddleware]);
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers);
-  mountComponent(BotResetButton);
+  mountComponent(BotResetForm);
   mountComponent(LearningButton);
   mountComponent(QuestionAnswerTagForm);
   mountComponent(AnswerBodyTextArea);

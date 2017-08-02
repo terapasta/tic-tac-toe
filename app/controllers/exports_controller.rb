@@ -5,7 +5,8 @@ class ExportsController < ApplicationController
   before_action :set_question_answers, only: [:create]
 
   def index
-    @exports = @bot.exports.order(created_at: :desc).page(params[:page]).per(10)
+    @per_page = 10
+    @exports = @bot.exports.order(created_at: :desc).page(params[:page]).per(@per_page)
   end
 
   def create

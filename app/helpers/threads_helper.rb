@@ -21,7 +21,7 @@ module ThreadsHelper
 
   private
     def message_params
-      @message_params ||= params.slice(:filter, :good, :bad, :answer_marked)
+      @message_params ||= params.slice(:answer_failed, :good, :bad, :marked)
     end
 
     def role_params

@@ -1,0 +1,47 @@
+= render layout: 'bots/layout' do
+  .text-center.mb-4: .btn-group
+    = link_to '学習データインポート', bot_imports_path(@bot), class: 'btn btn-primary'
+    = link_to '学習データエクスポート', bot_exports_path(@bot), class: 'btn btn-outline-primary'
+
+  .card.card-outline-secondary.mb-4: .card-block
+    h5 学習データインポート機能とは
+    |このインポート機能は、学習データを一括で追加登録・編集する機能です。
+    br
+    |以前に登録してあるデータとidが一致する質問は更新されます。
+    br
+    |idの欄が空の場合新しい質問が追加されます。
+    br
+    |idが一致しない場合でも以前のデータが削除されることはありません。
+
+    h5.pt-3 文字エンコードについて
+    |Excelで作成したCSVファイルに特殊文字が含まれていると、インポート時に文字化けしたり?に変換されたりする可能性がありますのでご注意ください
+    br
+    |例：
+    code 〜
+    span 波線
+    = space 2
+    code ー
+    span ハイフン
+    = space 2
+    code style="font-size:22px;" ①
+    = space
+    span 丸数字
+
+  .row: .col-8.offset-2
+    = form_tag bot_imports_path(@bot), method: :post, multipart: true, data: { event_name: 'Import learning data' } do
+
+      - if @error_row.present?
+        .form-group
+          .alert.alert-danger #{ @error_row }行目でエラーが発生しました
+
+      .form-group
+        = file_field_tag :file, label: 'ファイル', class: 'form-control'
+
+      .form-group.text-center
+        = submit_tag 'Shift_JISでインポート', class: 'btn btn-success'
+        = space 5
+        = submit_tag 'UTF-8でインポート', class: 'btn btn-success'
+        p.pt-3.help-block
+          |※ファイルはCSV形式でインポートして下さい
+          br
+          |※Excelで作成したCSVのエンコードはShift_JISです

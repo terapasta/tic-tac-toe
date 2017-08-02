@@ -1,0 +1,77 @@
+= render layout: 'settings/shared/layout' do
+  p チャットは以下の３つのご利用タイプからお選びいただけます
+
+  .card.card-block.mb-4: .row
+    .col-4
+      = link_to image_tag('chat-widget.png', alt: 'チャットウィジェット', class: 'img-fluid'), image_path('chat-widget.png')
+    .col-8
+      h5.mb-3 チャットウィジェット
+      p
+        |ウィンドウの右下に常にくっついている形でご利用いただけます。
+        br
+        |初期状態では閉じているので質問をしたい時だけ開くことができます。
+        br
+        | 埋め込みコードをWebサイトのソースコードに貼り付けてご利用下さい。
+      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-widget-desc"
+        = material_icon 'code', class: 'mi-xs'
+        = space
+        span コードを取得する
+
+  .card.card-block.mb-4: .row
+    .col-4
+      = link_to image_tag('chat-embedding.png', alt: 'チャット埋め込み', class: 'img-fluid'), image_path('chat-embedding.png')
+    .col-8
+      h5.mb-3 チャット埋め込み
+      p
+        |ページ内の一部分にチャットのエリアを作る形でご利用いただけます。
+        br
+        |アクセスと同時に必ずチャットをスタートさせることができます。
+        br
+        |埋め込みコードをWebサイトのソースコードに貼り付けてご利用下さい。
+      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-embedding-desc"
+        = material_icon 'code', class: 'mi-xs'
+        = space
+        span コードを取得する
+
+  .card.card-block.mb-4
+    h5.mb-3 チャット画面に直接アクセス
+    p
+      |チャット画面のURLをメールなどでシェアしていただいてもご利用が可能です。
+      br
+      |以下のURLをお使い下さい
+    input.form-control readonly=true value=new_chats_url(@bot.token) onclick="this.select()"
+
+
+  .modal.fade#chat-widget-desc tabindex="-1" role="dialog"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title チャットウィジェット
+          button.close type="button" data-dismiss="modal" &times;
+        .modal-body
+          p 以下のコードをWebサイトのソースコードに貼り付けて下さい
+          p= render 'chat_widgets/embed_code'
+          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
+            i.material-icons content_copy
+            span クリップボードにコピー
+
+  .modal.fade#chat-embedding-desc tabindex="-1" role="dialog"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title チャット埋め込み
+          button.close type="button" data-dismiss="modal" &times;
+        .modal-body
+          .form-group
+            label 高さ
+            input.form-control type="number" name="height" value=750
+          .form-group
+            label 横幅
+            input.form-control type="number" name="width" value=500
+          .form-group
+            label 埋め込みコード
+            textarea#chat-embedding-code.form-control name="embed" readonly=true rows=4 onfocus="this.select()"
+              = bot_embed_code(@bot, width: 750, height: 500)
+          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-embedding-code' } do
+            i.material-icons content_copy
+            span クリップボードにコピー

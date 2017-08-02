@@ -1,63 +1,40 @@
-.panel.panel-default
-  .panel-heading
-    h4 エクスポート
+= render layout: 'bots/layout' do
+  .text-center.mb-4: .btn-group
+    = link_to '学習データインポート', bot_imports_path(@bot), class: 'btn btn-outline-primary'
+    = link_to '学習データエクスポート', bot_exports_path(@bot), class: 'btn btn-primary'
 
-  .panel-body
-    p
-      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), mixpanel_event_data('Export learning data as Shift_JIS', @bot).merge(class: 'btn btn-default', method: :post)
-      = space
-      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), mixpanel_event_data('Export learninig data as UTF-8', @bot).merge(class: 'btn btn-default', method: :post)
+  .card.card-outline-secondary.mb-4: .card-block
+    h5 学習データエクスポート機能とは
+    |既に登録されている学習データをCSV形式でダウンロード出来る機能です。
+    br
+    |ダウンロードしたCSVはそのままインポートにも使用できますので、一括でQ&amp;Aを更新したい場合もまずはエクスポートを行って下さい。
+    br
+    |エクスポートファイルを作成すると、サーバーに保存されますので表示されたURLをクリックしてファイルをファウンロードして下さい。
 
-    p.help-block ※ファイルはCSV形式でエクスポートされます
-    p.help-block ※Excelで開きたい場合はShift_JISでエクスポートしてください
+  .row: .col-8.offset-2
+    .form-group.text-center
+      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), mixpanel_event_data('Export learning data as Shift_JIS', @bot).merge(class: 'btn btn-success', method: :post)
+      = space 5
+      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), mixpanel_event_data('Export learninig data as UTF-8', @bot).merge(class: 'btn btn-success', method: :post)
+
+    p.pt-3.help-block
+      |※ファイルはCSV形式でエクスポートされます
+      br
+      |※Excelで開きたい場合はShift_JISでエクスポートしてください
 
     - if @exports.any?
-      div style="padding:24px 24px 0 24px;"
-        - @exports.first.tap do |export|
-          h5 最新のエクスポート
-          table.table
-            thead: tr
-              th ダウンロードURL
-              th エンコーディング
-              th 作成日時
-            tbody: tr
-              td= link_to export.file_url, export.file_url
-              td= export.encoding
+      table.table
+        thead: tr
+          th ダウンロードURL
+          th エンコーディング
+          th 作成日時
+        tbody
+          - @exports.each_with_index do |export, i|
+            tr
+              td
+                - if i.zero?
+                  span.badge.badge-warning 最新のエクスポート
+                = link_to export.file_url, export.file_url
+              td: strong= export.encoding.upcase
               td= l export.created_at
-
-    div style="padding:24px;"
-      h4
-        = material_icon 'notifications', class: 'text-success'
-        = space
-        |エクスポートCSVファイルに質問idが追加されるようになりました
-
-      p 旧CSVフォーマット
-      pre
-        |
-          "好きな食べ物は？","あっさりしているものが好きですね！"
-          "趣味はなんですか？","最近ジョギングを始めました。"
-
-      p 新CSVフォーマット
-      pre
-        |
-          <span class="text-danger">40</span>,"好きな食べ物は？","あっさりしているものが好きですね！"
-          <span class="text-danger">41</span>,"趣味はなんですか？","最近ジョギングを始めました。"
-
-      p
-        |このフォーマットを利用して質問や回答のテキストを書き換えると、そのままインポートに使用できます。
-
-- if @exports.count > 1
-  h5 過去のエクスポート
-  table.table.table-striped
-    thead: tr
-      th ダウンロードURL
-      th エンコーディング
-      th 作成日時
-    tbody
-      - @exports.drop(1).each do |export|
-        tr
-          td= link_to export.file_url, export.file_url
-          td= export.encoding
-          td= l export.created_at
-
-  = paginate @exports
+      = render 'shared/pagination', resources: @exports, per_page: @per_page

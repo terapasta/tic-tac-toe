@@ -4,16 +4,16 @@ class ThreadsController < ApplicationController
   before_action :set_bot
 
   def index
-    @per_page = 2
+    @per_page = 20
     @chats = @bot.chats
       .has_multiple_messages
       .not_staff(!current_user.staff?)
       .not_normal(!params[:normal].present?)
       .normal(params[:normal])
-      .has_answer_failed(params[:filter])
-      .has_good_answer(params[:good])
-      .has_bad_answer(params[:bad])
-      .has_answer_marked(params[:answer_marked])
+      .has_answer_failed(params[:answer_failed].to_bool)
+      .has_good_answer(params[:good].to_bool)
+      .has_bad_answer(params[:bad].to_bool)
+      .has_answer_marked(params[:marked].to_bool)
       .page(params[:page])
       .per(@per_page)
 

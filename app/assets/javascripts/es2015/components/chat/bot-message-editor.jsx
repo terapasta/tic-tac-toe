@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { findDOMNode } from "react-dom";
 import TextArea from "react-textarea-autosize";
-import classNames from "classnames";
 import isEmpty from 'is-empty';
 import debounce from 'lodash/debounce';
 
@@ -11,11 +9,20 @@ import * as AnswerAPI from '../../api/answer';
 class ChatBotMessageEditor extends Component {
   constructor(props) {
     super(props);
+    this._mounted = false;
     this.state = {
       searchedAnswers: [],
     };
 
     this.searchAnswerIfNeeded = debounce(this.searchAnswerIfNeeded, 250);
+  }
+
+  componentDidMount() {
+    this._mounted = true;
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   render() {
@@ -81,6 +88,7 @@ class ChatBotMessageEditor extends Component {
   searchAnswerIfNeeded(text) {
     if (isEmpty(text)) { return this.setState({ searchedAnswers: [] }); }
     AnswerAPI.findAll(window.currentBot.id, { q: text }).then((res) => {
+      if (!this._mounted) { return; }
       const searchedAnswers = res.data.answers;
       this.setState({ searchedAnswers });
     }).catch(console.error);

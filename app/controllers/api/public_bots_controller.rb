@@ -5,6 +5,7 @@ class Api::PublicBotsController < Api::BaseController
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET,HEAD'
     @bot = Bot.find_by(token: params[:token])
+    render json: { error: 'not not found' }, status: :not_found and return if @bot.nil?
     render json: @bot, adapter: :json, serializer: PublicBotSerializer
   end
 end

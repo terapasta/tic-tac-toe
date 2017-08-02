@@ -40,7 +40,7 @@ RSpec.describe QuestionAnswer do
       end
 
       it 'not creates Answer record' do
-        expect{importing.call}.to_not change(Answer, :count)
+        expect{importing.call}.to_not change(QuestionAnswer, :count)
       end
     end
 
@@ -54,10 +54,6 @@ RSpec.describe QuestionAnswer do
       it 'creates QuestionAnswer record' do
         expect{importing.call}.to change(QuestionAnswer, :count).by(2)
       end
-
-      it 'creates Answer record' do
-        expect{importing.call}.to change(Answer, :count).by(4)
-      end
     end
 
     context 'when multiple times with valid csv' do
@@ -70,7 +66,7 @@ RSpec.describe QuestionAnswer do
       end
 
       it 'not creates duplicated Answer records' do
-        expect{importing.call}.to_not change(Answer, :count)
+        expect{importing.call}.to_not change(QuestionAnswer, :count)
       end
     end
 
@@ -84,8 +80,8 @@ RSpec.describe QuestionAnswer do
       end
 
       it 'not creates new Answer records' do
-        expect{updated_valid_importing.call}.to change { Answer.order(:updated_at).last.body }.to('アンサー1更新済み')
-        expect{updated_valid_importing.call}.to change(Answer, :count).by(0)
+        expect{updated_valid_importing.call}.to change { QuestionAnswer.order(:updated_at).last.answer }.to('アンサー1更新済み')
+        expect{updated_valid_importing.call}.to change(QuestionAnswer, :count).by(0)
       end
     end
   end

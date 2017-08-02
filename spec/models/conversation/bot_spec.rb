@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Conversation::Bot do
   let(:bot) { create(:bot) }
-  let(:answer) { create(:answer, bot: bot) }
+  let(:question_answer) { create(:question_answer, bot: bot) }
   let(:message) { create(:message) }
   let(:conversation_bot) { Conversation::Bot.new(bot, message) }
 
@@ -11,23 +11,15 @@ RSpec.describe Conversation::Bot do
 
     before do
       allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
-        answer_id: answer.id,
+        question_answer_id: question_answer.id,
         probability: 0.999,
         results: []
       })
     end
 
-    it { expect(subject.answer).to eq answer }
+    it { expect(subject.question_answer).to eq question_answer }
 
     context '#replyの結果のanswer_idが0の場合' do
-      # FIXME DatabaseCleanerでdefined_answerがテストケースごとに削除されてしまうための対処
-      # defined_answerはマスタデータなので削除されないようにしたい
-      let!(:defined_answer) do
-        if DefinedAnswer.find_by(id: DefinedAnswer::CLASSIFY_FAILED_ID).blank?
-          create(:defined_answer, defined_answer_id: DefinedAnswer::CLASSIFY_FAILED_ID, body: 'hogehoge')
-        end
-      end
-
       before do
         allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
           answer_id: Answer::NO_CLASSIFIED_ID,
@@ -37,7 +29,8 @@ RSpec.describe Conversation::Bot do
       end
 
       it 'NullAnswerが返ること' do
-        expect(subject.answer).to be_a NullAnswer
+        # TODO: NullQuestionAnswerに置き換える
+        expect(subject.question_answer).to be_a NullQuestionAnswer
       end
     end
   end

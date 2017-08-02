@@ -9,16 +9,12 @@ RSpec.describe 'chats/messages', type: :request do
     create(:user)
   end
 
-  let!(:answer) do
-    create(:answer, bot: bot)
+  let!(:question_answer) do
+    create(:question_answer, bot: bot)
   end
 
   let!(:decision_branches) do
-    create_list(:decision_branch, 2, answer: answer, bot: bot)
-  end
-
-  let!(:next_answer) do
-    create(:answer, bot: bot)
+    create_list(:decision_branch, 2, question_answer: question_answer, bot: bot)
   end
 
   let(:chat_path) do
@@ -34,12 +30,8 @@ RSpec.describe 'chats/messages', type: :request do
       Capybara.reset_session!
       get "#{chat_path}/new" # make guest_key and chat
       Message.last.tap do |m|
-        m.answer = answer
+        m.question_answer = question_answer 
         m.save
-      end
-      decision_branches.first.tap do |db|
-        db.next_answer = next_answer
-        db.save
       end
     end
 
@@ -47,7 +39,7 @@ RSpec.describe 'chats/messages', type: :request do
       it 'returns json data' do
         get "#{chat_path}/messages.json"
         expect(res_json['messages'].is_a?(Array)).to be
-        expect(res_json['messages'].first['answer']['id']).to be
+        expect(res_json['messages'].first['questionAnswer']['id']).to be
         expect(res_json['meta']['totalPages']).to be_present
       end
     end

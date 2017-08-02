@@ -14,13 +14,16 @@
         dl
           dt: small 回答
           dd
-            p= highlight(nl2br(question_answer.answer&.body), params[:keyword])
+            p
+              - if question_answer.answer.present?
+                = highlight(nl2br(question_answer.answer), params[:keyword])
+              - else
+                span.label.label-default 回答なし
 
-            - if question_answer.answer&.answer_files&.any?
-              - question_answer.answer.answer_files.each do |answer_file|
-                .mini-well
+            - if question_answer.answer_files&.any?
+              - question_answer.answer_files.each do |answer_file|
                   - if answer_file.image?
-                    = link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
+                    .mini-well.text-center= link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
                   - else
                     small.text-muted 添付ファイル
                     br

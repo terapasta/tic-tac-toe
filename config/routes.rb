@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     resources :decision_branches, only: [:show, :update, :create, :destroy]
     resource :conversation_tree, only: [:show]
     resources :word_mappings
+    resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
@@ -93,6 +94,11 @@ Rails.application.routes.draw do
       resources :topic_tags, module: :bots
       resources :question_answers, module: :bots do
         resources :topic_taggings, module: :question_answers
+        resources :decision_branches, module: :question_answers
+        resource :child_decision_branches, only: [:destroy], module: :question_answers
+      end
+      resources :decision_branches, module: :bots do
+        resource :child_decision_branches, only: [:destroy], module: :decision_branches
       end
       resources :answers, module: :bots
     end

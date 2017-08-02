@@ -66,7 +66,7 @@ export default class AnswerTextArea extends Component {
           rows={5}
           onChange={this.onChangeTextArea}
           value={text}
-          name={`${baseName}[body]`}
+          name={`${baseName}[answer]`}
         />
         {!isEmpty(text) && <input type="hidden" name={`${baseName}[bot_id]`} value={botId} />}
         {!isEmpty(answers) && (

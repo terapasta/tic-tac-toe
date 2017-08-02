@@ -16,6 +16,7 @@ class Bot < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
   has_many :accuracy_test_cases, dependent: :destroy
   has_many :exports, dependent: :destroy
+  has_many :allowed_ip_addresses, dependent: :destroy
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
 
@@ -53,7 +54,7 @@ class Bot < ActiveRecord::Base
   end
 
   def classify_failed_message_with_fallback
-    classify_failed_message.presence || DefinedAnswer.classify_failed&.body || ""
+    classify_failed_message.presence || DefinedAnswer.classify_failed_text
   end
 
   def add_selected_question_answer_ids(question_answer_id)

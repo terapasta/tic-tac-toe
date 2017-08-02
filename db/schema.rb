@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714023951) do
+ActiveRecord::Schema.define(version: 20170721025724) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -32,14 +32,24 @@ ActiveRecord::Schema.define(version: 20170714023951) do
 
   add_index "allowed_hosts", ["scheme", "domain", "bot_id"], name: "index_allowed_hosts_on_scheme_and_domain_and_bot_id", unique: true, using: :btree
 
-  create_table "answer_files", force: :cascade do |t|
-    t.integer  "answer_id",  limit: 4,               null: false
-    t.string   "file",       limit: 255,             null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "file_type",  limit: 255,             null: false
-    t.integer  "file_size",  limit: 4,   default: 0
+  create_table "allowed_ip_addresses", force: :cascade do |t|
+    t.string   "value",      limit: 255, null: false
+    t.integer  "bot_id",     limit: 4,   null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
+
+  create_table "answer_files", force: :cascade do |t|
+    t.integer  "answer_id",          limit: 4
+    t.string   "file",               limit: 255,             null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "file_type",          limit: 255,             null: false
+    t.integer  "file_size",          limit: 4,   default: 0
+    t.integer  "question_answer_id", limit: 4
+  end
+
+  add_index "answer_files", ["question_answer_id"], name: "index_answer_files_on_question_answer_id", using: :btree
 
   create_table "answers", force: :cascade do |t|
     t.integer  "defined_answer_id", limit: 4
@@ -87,16 +97,20 @@ ActiveRecord::Schema.define(version: 20170714023951) do
   add_index "chats", ["is_staff"], name: "index_chats_on_is_staff", using: :btree
 
   create_table "decision_branches", force: :cascade do |t|
-    t.integer  "answer_id",      limit: 4,     null: false
-    t.text     "body",           limit: 65535, null: false
-    t.integer  "next_answer_id", limit: 4
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "bot_id",         limit: 4,     null: false
+    t.integer  "answer_id",                 limit: 4
+    t.text     "body",                      limit: 65535, null: false
+    t.integer  "next_answer_id",            limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "bot_id",                    limit: 4,     null: false
+    t.integer  "question_answer_id",        limit: 4
+    t.text     "answer",                    limit: 65535
+    t.integer  "parent_decision_branch_id", limit: 4
   end
 
   add_index "decision_branches", ["answer_id"], name: "index_decision_branches_on_answer_id", using: :btree
   add_index "decision_branches", ["bot_id"], name: "index_decision_branches_on_bot_id", using: :btree
+  add_index "decision_branches", ["question_answer_id", "parent_decision_branch_id"], name: "main_decision_branches_index", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -154,21 +168,23 @@ ActiveRecord::Schema.define(version: 20170714023951) do
   add_index "learning_training_messages", ["question_answer_id"], name: "index_learning_training_messages_on_question_answer_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "chat_id",       limit: 4
-    t.integer  "answer_id",     limit: 4
-    t.string   "speaker",       limit: 255,                   null: false
-    t.text     "body",          limit: 65535
-    t.string   "user_agent",    limit: 1024
-    t.boolean  "learn_enabled",               default: true,  null: false
-    t.boolean  "answer_failed",               default: false, null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.integer  "rating",        limit: 4,     default: 0
-    t.boolean  "answer_marked",               default: false, null: false
+    t.integer  "chat_id",            limit: 4
+    t.integer  "answer_id",          limit: 4
+    t.string   "speaker",            limit: 255,                   null: false
+    t.text     "body",               limit: 65535
+    t.string   "user_agent",         limit: 1024
+    t.boolean  "learn_enabled",                    default: true,  null: false
+    t.boolean  "answer_failed",                    default: false, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.integer  "rating",             limit: 4,     default: 0
+    t.boolean  "answer_marked",                    default: false, null: false
     t.datetime "trained_at"
+    t.integer  "question_answer_id", limit: 4
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
+  add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
   add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 
@@ -180,6 +196,7 @@ ActiveRecord::Schema.define(version: 20170714023951) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.boolean  "selection",                default: false
+    t.text     "answer",     limit: 65535
   end
 
   add_index "question_answers", ["answer_id"], name: "index_question_answers_on_answer_id", using: :btree

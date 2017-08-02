@@ -12,13 +12,11 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
   end
 
   let!(:question_answer) do
-    bot.question_answers.create(attributes_for(:question_answer))
+    create(:question_answer, bot: bot)
   end
 
-  let!(:answer) do
-    bot.answers.create(attributes_for(:answer)).tap do |a|
-      question_answer.update(answer: a)
-    end
+  let!(:topic_tags) do
+    create_list(:topic_tag, 2, bot: bot)
   end
 
   before do
@@ -30,30 +28,38 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       lambda do
         visit "/bots/#{bot.id}/question_answers/new"
         fill_in 'question_answer[question]', with: 'sample question'
-        fill_in 'question_answer[answer_attributes][body]', with: 'sample answer body'
+        fill_in 'question_answer[answer]', with: 'sample answer body'
+        click_link '添付ファイルを追加'
+        within '#answer-files' do
+          locator = all('input[type="file"]').first['name']
+          attach_file locator, Rails.root.join('spec/fixtures/images/sample_naoki.jpg').to_s
+        end
+        fill_in 'topic-tag-name', with: 'ほげ'
+        click_button '追加'
+        check "topic-tag-#{topic_tags.first.id}"
         click_button '登録する'
       end
     end
 
     it { is_expected.to change(QuestionAnswer, :count).by(1) }
-    it { is_expected.to change(Answer, :count).by(1) }
+    it { is_expected.to change(TopicTagging, :count).by(1) }
+    it { is_expected.to change(TopicTag, :count).by(1) }
+    it { is_expected.to change(AnswerFile, :count).by(1) }
   end
 
   feature 'edit action' do
     subject do
       lambda do
         visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-        fill_in 'question_answer[question]', with: 'update question'
-        fill_in 'question_answer[answer_attributes][body]', with: 'update answer'
+        fill_in 'question_answer[question]', with: 'updated question'
+        fill_in 'question_answer[answer]', with: 'updated answer'
         click_button '更新する'
         question_answer.reload
-        answer.reload
       end
     end
 
-    it { is_expected.to change(question_answer, :question).to('update question') }
-    it { is_expected.not_to change(answer, :body) }
+    it { is_expected.to change(question_answer, :question).to('updated question') }
+    it { is_expected.to change(question_answer, :answer).to('updated answer') }
     it { is_expected.not_to change(QuestionAnswer, :count) }
-    it { is_expected.to change(Answer, :count).by(1) }
   end
 end

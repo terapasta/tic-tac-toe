@@ -56,7 +56,14 @@ export default class QuestionAnswerTagFrom extends Component {
                   <div key={i}>
                     <label>
                       {get(tt, "id") != null && <input type="hidden" name={`${baseName}[id]`} value={tt.id} />}
-                      <input type="checkbox" checked={!isEmpty(tt)} onChange={(e) => this.onChangeCheckBox(t, e)} name={`${baseName}[topic_tag_id]`} value={t.id} />
+                      <input
+                        id={`topic-tag-${get(t, 'id')}`}
+                        type="checkbox"
+                        checked={!isEmpty(tt)}
+                        onChange={(e) => this.onChangeCheckBox(t, e)}
+                        name={`${baseName}[topic_tag_id]`}
+                        value={t.id}
+                      />
                       {" "}
                       <span className="badge badge-primary">{t.name}</span>
                     </label>

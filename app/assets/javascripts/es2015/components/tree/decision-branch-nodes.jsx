@@ -19,7 +19,7 @@ export default class DecisionBranchNodes extends BaseNode {
 
   render() {
     const {
-      answerNode,
+      questionNode,
       decisionBranchNodes,
       openedAnswerIDs,
     } = this.props;
@@ -27,7 +27,7 @@ export default class DecisionBranchNodes extends BaseNode {
     if (isEmpty(decisionBranchNodes)) { return null; }
 
     const style = {
-      display: includes(openedAnswerIDs, answerNode.id) ? "block" : null,
+      display: includes(openedAnswerIDs, questionNode.id) ? "block" : null,
     };
 
     return (

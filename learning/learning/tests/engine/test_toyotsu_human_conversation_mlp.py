@@ -15,9 +15,9 @@ class ToyotsuHumanConversationMlpTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.answers = helper.build_answers(cls.csv_file_path)
+        cls.question_answers = helper.build_question_answers(cls.csv_file_path)
         # 学習処理は時間がかかるためmodelのdumpファイルを作ったらコメントアウトしてもテスト実行可能
-        # _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
+        _evaluator = Bot(cls.bot_id, cls.learning_parameter).learn(datasource_type='csv')
 
     # FIXME mlpは本番環境で使われていないため、一旦テストケースの修正を見送る。直すのかケース自体削除するのか方針を決めたい
 #     def test_jal_mileage(self):
@@ -66,7 +66,7 @@ class ToyotsuHumanConversationMlpTestCase(TestCase):
         questions = ['']
         result = Reply(self.bot_id, self.learning_parameter).perform(questions)
 
-        ok_(result.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
+        ok_(result.question_answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
 
     # TODO
     # def test_dislike_carrot(self):
@@ -78,4 +78,4 @@ class ToyotsuHumanConversationMlpTestCase(TestCase):
     #     questions = ['ニンジンが嫌いなので出さないでください']
     #     result = Reply(self.bot_id, self.learning_parameter).perform(questions)
     #
-    #     ok_(result.answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)
+    #     ok_(result.question_answer_id == Reply.CLASSIFY_FAILED_ANSWER_ID or result.probability < self.threshold)

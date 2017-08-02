@@ -5,7 +5,8 @@ class Message < ActiveRecord::Base
   attr_accessor :similar_question_answers
 
   belongs_to :chat
-  belongs_to :answer
+  belongs_to :answer_data, class_name: 'Answer', foreign_key: :answer_id # TODO あとで消す
+  belongs_to :question_answer
 
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum rating: [:nothing, :good, :bad]
@@ -32,9 +33,7 @@ class Message < ActiveRecord::Base
 
   def update_for_training_with!(question_answer)
     if bot?
-      question_answer.answer.tap do |a|
-        assign_attributes(body: a.body, answer_id: a.id)
-      end
+      assign_attributes(body: question_answer.answer)
     elsif guest?
       assign_attributes(body: question_answer.question)
     end

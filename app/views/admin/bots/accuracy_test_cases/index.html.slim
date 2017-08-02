@@ -1,87 +1,86 @@
-.row: .col-10.offset-1
-  .mt-5.mb-4
-    .page-header
-      .d-flex.justify-content-between.align-items-start.my-2.p-2
-        h4 精度テスト
-        = link_to 'テスト実行', admin_bot_accuracy_test_cases_execution_path(@bot), class: 'btn btn-outline-primary btn-sm', data: { method: :post }
+.container: .row: .col-12.mt-5.mb-4
+  .page-header
+    .d-flex.justify-content-between.align-items-start.my-2.p-2
+      h4 精度テスト
+      = link_to 'テスト実行', admin_bot_accuracy_test_cases_execution_path(@bot), class: 'btn btn-outline-primary btn-sm', data: { method: :post }
 
-      table.table.table-striped
-        thead
+    table.table.table-striped
+      thead
+        tr
+          th style="width:250px;" = AccuracyTestCase.human_attribute_name :question_text
+          th style="width:250px;" = AccuracyTestCase.human_attribute_name :expected_text
+          th style="width:100px;"
+          th style="width:250px;" 結果
+          th.text-center
+      tbody
+        - @accuracy_test_cases.each do |accuracy_test_case|
           tr
-            th style="width:250px;" テスト質問
-            th style="width:250px;" 期待値
-            th style="width:100px;"
-            th style="width:250px;" 結果
-            th.text-center
-        tbody
-          - @accuracy_test_cases.each do |accuracy_test_case|
-            tr
-              td
-                = accuracy_test_case.question_text
-              td
-                p
-                  = accuracy_test_case.expected_text
-                  - if accuracy_test_case.is_expected_suggestion?
-                    p
-                      = material_icon 'check'
-                      = space
-                      |サジェストを期待
-              td
-                p
-                  = link_to edit_admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-outline-primary btn-xs' do
-                    = material_icon 'edit'
+            td
+              = accuracy_test_case.question_text
+            td
+              p
+                = accuracy_test_case.expected_text
+                - if accuracy_test_case.is_expected_suggestion?
+                  p
+                    = material_icon 'check'
                     = space
-                    span 編集
+                    = AccuracyTestCase.human_attribute_name :is_expected_suggestion
+            td
+              p
+                = link_to edit_admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-outline-primary btn-sm' do
+                  = material_icon 'edit', class: 'mi-xs'
+                  = space
+                  span 編集
 
-                p
-                  = link_to admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-outline-danger btn-xs', data: { confirm: '本当に削除してよいですか？', method: :delete } do
-                    = material_icon 'close'
-                    = space
-                    span 削除
-              td
-                - if @results.present?
-                  - @results[accuracy_test_case.id].tap do |bot_messages|
-                    - bot_messages.each do |bot_message|
-                      dl style="margin-bottom:16px"
-                        dt 回答
-                        dd
-                          - if bot_message.answer_failed
-                            i.fa.fa-exclamation-triangle.text-warning
-                            = space
-                          = nl2br bot_message.body
+              p
+                = link_to admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-outline-danger btn-sm', data: { confirm: '本当に削除してよいですか？', method: :delete } do
+                  = material_icon 'close', class: 'mi-xs'
+                  = space
+                  span 削除
+            td
+              - if @results.present?
+                - @results[accuracy_test_case.id].tap do |bot_messages|
+                  - bot_messages.each do |bot_message|
+                    dl style="margin-bottom:16px"
+                      dt 回答
+                      dd
+                        - if bot_message.answer_failed
+                          i.fa.fa-exclamation-triangle.text-warning
+                          = space
+                        = nl2br bot_message.body
 
-                      - if bot_message.similar_question_answers.present?
-                        strong サジェスト
-                        ul
-                          - bot_message.similar_question_answers.each do |qa|
-                            li= qa.question
+                    - if bot_message.similar_question_answers.present?
+                      strong サジェスト
+                      ul
+                        - bot_message.similar_question_answers.each do |qa|
+                          li= qa.question
 
-              td.text-center
-                - if @results.present?
-                  - if accuracy_test_case.success_result?(@results[accuracy_test_case.id])
-                    = material_icon 'check_circle', class: 'text-success'
-                  - else
-                    = material_icon 'close', class: 'text-danger'
+            td.text-center
+              - if @results.present?
+                - if accuracy_test_case.success_result?(@results[accuracy_test_case.id])
+                  = material_icon 'check_circle', class: 'text-success'
+                - else
+                  = material_icon 'close', class: 'text-danger'
 
-        - if @results.present?
-          tfoot
-            tr
-              td colspan=3
-              td colspan=2
-                h4.text-center
-                  span #{@success_count} 成功 / #{@accuracy_test_cases.count} total,
-                  = space 3
-                  span 成功率 #{(@success_count.to_f / @accuracy_test_cases.count.to_f * 100).to_i}%
+      - if @results.present?
+        tfoot
+          tr
+            td colspan=3
+            td colspan=2
+              h4.text-center
+                span #{@success_count} 成功 / #{@accuracy_test_cases.count} total,
+                = space 3
+                span 成功率 #{(@success_count.to_f / @accuracy_test_cases.count.to_f * 100).to_i}%
 
-      = form_for [:admin, @bot, @bot.accuracy_test_cases.build] do |f|
-        table.table: tbody: tr
-          td style="width: 250px;"
-            = f.text_area :question_text, class: 'form-control', placeholder: 'テスト質問'
-          td style="width: 250px;"
-            = f.text_area :expected_text, class: 'form-control', placeholder: '期待値'
-            .help-block: label
-              = f.check_box :is_expected_suggestion
-              = space
-              span サジェストを期待
-          td
-            = f.submit class: 'btn btn-outline-success'
+    = form_for [:admin, @bot, @bot.accuracy_test_cases.build] do |f|
+      table.table: tbody: tr
+        td style="width: 250px;"
+          = f.text_area :question_text, class: 'form-control', placeholder: AccuracyTestCase.human_attribute_name(:question_text)
+        td style="width: 250px;"
+          = f.text_area :expected_text, class: 'form-control', placeholder: AccuracyTestCase.human_attribute_name(:expected_text)
+          .help-block: label
+            = f.check_box :is_expected_suggestion
+            = space
+            = AccuracyTestCase.human_attribute_name :is_expected_suggestion
+        td
+          = f.submit class: 'btn btn-outline-success btn-sm'

@@ -5045,6 +5045,10 @@ var _bindAll = require('lodash/bindAll');
 
 var _bindAll2 = _interopRequireDefault(_bindAll);
 
+var _toastr = require('toastr');
+
+var _toastr2 = _interopRequireDefault(_toastr);
+
 var _types = require('./types');
 
 var _helpers = require('./helpers');
@@ -5232,13 +5236,19 @@ var ConversationTree = function (_Component) {
             activeItem: activeItem,
             questionsRepo: questionsRepo,
             onCreate: function onCreate(question, answer) {
-              return dispatch(questionActions.createQuestion(question, answer));
+              dispatch(questionActions.createQuestion(question, answer)).then(function () {
+                _toastr2.default.success('Q&Aを追加しました');
+              });
             },
             onUpdate: function onUpdate(id, question, answer) {
-              return dispatch(questionActions.updateQuestion(id, question, answer));
+              dispatch(questionActions.updateQuestion(id, question, answer)).then(function () {
+                _toastr2.default.success('Q&Aを更新しました');
+              });
             },
             onDelete: function onDelete(id) {
-              return dispatch(questionActions.deleteQuestion(id));
+              dispatch(questionActions.deleteQuestion(id)).then(function () {
+                _toastr2.default.success('Q&Aを削除しました');
+              });
             }
           }),
           activeItem.type === 'answer' && _react2.default.createElement(_answerForm2.default, {
@@ -5246,10 +5256,14 @@ var ConversationTree = function (_Component) {
             questionsRepo: questionsRepo,
             decisionBranchesRepo: decisionBranchesRepo,
             onUpdateAnswer: function onUpdateAnswer(id, question, answer) {
-              return dispatch(questionActions.updateQuestion(id, question, answer));
+              dispatch(questionActions.updateQuestion(id, question, answer)).then(function () {
+                _toastr2.default.success('回答を更新しました');
+              });
             },
             onDeleteAnswer: function onDeleteAnswer(id, question) {
-              return dispatch(questionActions.deleteAnswer(id, question));
+              dispatch(questionActions.deleteAnswer(id, question)).then(function () {
+                _toastr2.default.success('回答を削除しました');
+              });
             },
             onCreateDecisionBranch: function onCreateDecisionBranch(answerId, body) {
               return dispatch(decisionBranchActions.createDecisionBranch(answerId, body));
@@ -5266,7 +5280,9 @@ var ConversationTree = function (_Component) {
             questionsTree: questionsTree,
             decisionBranchesRepo: decisionBranchesRepo,
             onUpdate: function onUpdate(answerId, id, body, answer) {
-              return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer));
+              return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer)).then(function () {
+                _toastr2.default.success('選択肢を更新しました');
+              });
             },
             onNestedUpdate: function onNestedUpdate(id, body, answer) {
               return dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer));
@@ -5274,6 +5290,7 @@ var ConversationTree = function (_Component) {
             onDelete: function onDelete(answerId, id) {
               dispatch(decisionBranchActions.deleteDecisionBranch(answerId, id)).then(function () {
                 dispatch(actions.rejectActiveItem());
+                _toastr2.default.success('選択肢を削除しました');
               });
             },
             onNestedDelete: function onNestedDelete(parentId, id) {
@@ -5284,10 +5301,14 @@ var ConversationTree = function (_Component) {
             activeItem: activeItem,
             decisionBranchesRepo: decisionBranchesRepo,
             onUpdateAnswer: function onUpdateAnswer(id, body, answer) {
-              return dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer));
+              dispatch(decisionBranchActions.updateNestedDecisionBranch(id, body, answer)).then(function () {
+                _toastr2.default.success('回答を更新しました');
+              });
             },
             onDeleteAnswer: function onDeleteAnswer(id, body) {
-              return dispatch(decisionBranchActions.deleteNestedDecisionBranchAnswer(id, body));
+              dispatch(decisionBranchActions.deleteNestedDecisionBranchAnswer(id, body)).then(function () {
+                _toastr2.default.success('回答を削除しました');
+              });
             },
             onCreateDecisionBranch: function onCreateDecisionBranch(dbId, body) {
               return dispatch(decisionBranchActions.createNestedDecisionBracnh(dbId, body));
@@ -5319,7 +5340,7 @@ ConversationTree.propTypes = {
 
 exports.default = ConversationTree;
 
-},{"../../modules/get-offset":83,"../master-detail-panel":75,"./action-creators":48,"./action-creators/decision-branch":49,"./action-creators/question":50,"./components/adding-node":52,"./components/answer-form":53,"./components/decision-branch-answer-form":56,"./components/decision-branch-form":57,"./components/question-form":62,"./components/question-node":63,"./components/tree":64,"./helpers":65,"./types":72,"is-empty":444,"lodash/bindAll":660,"react":885,"react-dom":736}],52:[function(require,module,exports){
+},{"../../modules/get-offset":83,"../master-detail-panel":75,"./action-creators":48,"./action-creators/decision-branch":49,"./action-creators/question":50,"./components/adding-node":52,"./components/answer-form":53,"./components/decision-branch-answer-form":56,"./components/decision-branch-form":57,"./components/question-form":62,"./components/question-node":63,"./components/tree":64,"./helpers":65,"./types":72,"is-empty":444,"lodash/bindAll":660,"react":885,"react-dom":736,"toastr":946}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

@@ -44,11 +44,9 @@ class Bot < ActiveRecord::Base
 
   def reset_training_data!
     transaction do
-      trainings.destroy_all
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
-      answers.destroy_all
 
       model_dir = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}")
       FileUtils.rm_r(model_dir)

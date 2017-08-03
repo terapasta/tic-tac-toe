@@ -9,7 +9,7 @@
   = render 'shared/pagination', resources: @question_answers, per_page: @per_page
 
 = render layout: 'bots/layout' do
-  = render 'search_form', bot: @bot, search_result: @search_result, keyword: @keyword, action_url: bot_question_answers_path(@bot)
+  = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, action_url: bot_question_answers_path(@bot, headless: params[:headless], hide_global_header: params[:hide_global_header])
 
   = render layout: 'shared/pagination', locals: { resources: @question_answers, per_page: @per_page, hide_paginator: true } do
     .form-inline

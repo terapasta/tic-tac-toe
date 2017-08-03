@@ -1,0 +1,15 @@
+.modal {
+  &-dialog {
+    &.wide {
+      max-width: 770px;
+      width: auto;
+    }
+  }
+
+  &-iframe {
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 500px;
+  }
+}

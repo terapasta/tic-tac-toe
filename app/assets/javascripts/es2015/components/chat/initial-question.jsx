@@ -63,9 +63,9 @@ export default class ChatInitialQuestion extends Component {
           </span>
         )}
         <p>
-          <button className="btn btn-default"
+          <button className="btn btn-secondary"
             onClick={this.openSelector}>
-            <i className="material-icons">playlist_add_check</i>
+            <i className="material-icons text-gray-light">playlist_add_check</i>
             {" "}
             <span>初期質問リストを選択する</span>
           </button>

@@ -1,5 +1,8 @@
 .d-flex.justify-content-between.bg-faded.mb-3.p-2
   = form_tag action_url, method: :get, class: 'form-inline d-flex justify-content-between', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
+    = hidden_field_tag :headless, local_assigns[:headless]
+    = hidden_field_tag :hide_global_header, local_assigns[:hide_global_header]
+
     = collection_select :topic, :id, topic_tags_for_select(@bot), :id, :name, { prompt: "-- トピックタグで絞込 --", selected: (@topic_id.to_i if @topic_id.present?) }, class: 'form-control', style: 'max-width:200px'
     = space
     .input-group
@@ -10,7 +13,8 @@
       = space
       = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
 
-  div
-    = link_to 'トピックタグ管理', bot_topic_tags_path(@bot), class: 'btn btn-secondary'
-    = space
-    = link_to 'Q&A新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-success', data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+  - if params[:headless].blank?
+    div
+      = link_to 'トピックタグ管理', bot_topic_tags_path(@bot), class: 'btn btn-secondary'
+      = space
+      = link_to 'Q&A新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-success', data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }

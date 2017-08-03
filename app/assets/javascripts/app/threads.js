@@ -1,4 +1,4 @@
-window.jQuery$(function($) {
+window.jQuery(function($) {
   var $filterNav = $('[data-role="threads-filter-nav"]');
   var $checkboxes = $filterNav.find('input[type="checkbox"]')
   var state = {

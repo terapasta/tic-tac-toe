@@ -3534,11 +3534,11 @@ var ChatInitialQuestion = function (_Component) {
           null,
           _react2.default.createElement(
             "button",
-            { className: "btn btn-default",
+            { className: "btn btn-secondary",
               onClick: this.openSelector },
             _react2.default.createElement(
               "i",
-              { className: "material-icons" },
+              { className: "material-icons text-gray-light" },
               "playlist_add_check"
             ),
             " ",

@@ -6,37 +6,33 @@
 - pagination = capture do
   = render 'question_answers/pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
 
-- unless params[:hide_page_header].present?
-  .page-header
-    .page-header__title Q&Aを選択
-    .page-header__controls
+.px-3.pt-3
+  = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_selections_path(@bot, headless: params[:headless], hide_global_header: params[:hide_global_header]), headless: params[:headless], hide_global_header: params[:hide_global_header]
 
-= render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_selections_path(@bot)
+  = pagination
 
-= pagination
+  table.table.table-hover: tbody
+    - @question_answers.each do |question_answer|
+      - is_selected = @bot.selected_question_answer_ids.include?(question_answer.id)
+      tr
+        td style="width: 80px;"
+          label
+            input type="checkbox" checked=is_selected data-role="select-question-answer" data-bot-id=@bot.id data-question-answer-id=question_answer.id
+            = space
+            span.label class=("label-#{is_selected ? 'success' : 'default'}") data-role="select-question-answer-label" data-question-answer-id=question_answer.id
+              = is_selected ? "選択済" : "未選択"
+        td
+          = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot, hide_buttons: true
 
-table.table.table-hover: tbody
-  - @question_answers.each do |question_answer|
-    - is_selected = @bot.selected_question_answer_ids.include?(question_answer.id)
-    tr
-      td style="width: 80px;"
-        label
-          input type="checkbox" checked=is_selected data-role="select-question-answer" data-bot-id=@bot.id data-question-answer-id=question_answer.id
-          = space
-          span.label class=("label-#{is_selected ? 'success' : 'default'}") data-role="select-question-answer-label" data-question-answer-id=question_answer.id
-            = is_selected ? "選択済" : "未選択"
-      td
-        = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot, hide_buttons: true
+  = pagination
 
-= pagination
+  - 3.times do # sticky-footerが被ってしまうので隙間をあける
+    br
 
-- 3.times do # sticky-footerが被ってしまうので隙間をあける
-  br
-
-.sticky-footer
-  .sticky-footer__title
-    span 選択済のQ&A：
-    strong data-role="select-question-answer-counter"
-      = @bot.selected_question_answer_ids.count
-    = space
-    span ／ 5
+  .sticky-footer
+    .sticky-footer__title
+      span 選択済のQ&A：
+      strong data-role="select-question-answer-counter"
+        = @bot.selected_question_answer_ids.count
+      = space
+      span ／ 5

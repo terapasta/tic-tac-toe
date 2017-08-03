@@ -1,12 +1,14 @@
-h1 ボットテスト結果
+= render layout: 'bots/layout' do
+  .mb-4
+    = link_to new_bot_chat_test_path(@bot), class: 'text-muted' do
+      = material_icon 'keyboard_arrow_left'
+      = space
+      span 戻る
+    = space 2
+    h5.d-inline-block ボットテスト結果
 
-.well.clearfix
-  .pull-left
-    = link_to new_bot_chat_test_path(@bot), class: 'btn btn-default' do
-      i.material-icons arrow_back
-      span アップロード画面に戻る
-  .pull-right
-    i.material-icons file_download
+  .p-2.bg-faded.text-right
+    = material_icon 'file_download', class: 'text-gray-light'
     = space
     span 結果CSVファイルを
     = space 2
@@ -18,14 +20,14 @@ h1 ボットテスト結果
       = hidden_field_tag :file_data, @bot_test_results.to_json
       = button_tag 'UTF-8でダウンロード', class: 'btn btn-success'
 
-table.table.table-striped
-  thead
-    tr
-      th style="width:200px" テスト質問
-      th 得られた回答
+  table.table.table-striped
+    thead
+      tr
+        th style="width:200px" テスト質問
+        th 得られた回答
 
-      tbody#chat-test-results
-        - @bot_test_results.each do |bot_test_result|
-          tr
-            td = bot_test_result[0]
-            td = bot_test_result[1]
+        tbody#chat-test-results
+          - @bot_test_results.each do |bot_test_result|
+            tr
+              td = bot_test_result[0]
+              td = bot_test_result[1]

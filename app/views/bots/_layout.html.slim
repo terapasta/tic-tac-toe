@@ -62,21 +62,19 @@
             = material_icon 'clear_all', class: 'text-gray-light mi-sm flip-horizontal'
             = space
             span 会話ツリー
-        li class="nav-item"
-          = active_link_to bot_word_mappings_path(@bot), class: 'nav-link', active: :exact do
-            = material_icon 'book', class: 'text-gray-light mi-sm'
-            = space
-            span 同義語
-        /li class="nav-item dropdown"
-          a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+        - active_other = !!/^\/bots\/[0-9]+\/(word_mappings|chat_tests)/.match(request.path) ? 'active' : ''
+        li class="nav-item dropdown"
+          a class=("nav-link dropdown-toggle #{active_other}") href="#" data-toggle="dropdown" role="button"
             span その他
           .dropdown-menu.dropdown-menu-right
-            a class="dropdown-item" href="#"
+            = active_link_to bot_word_mappings_path(@bot), class: 'dropdown-item' do
+              = material_icon 'book', class: 'text-gray-light mi-sm'
+              = space
+              span 同義語
+            = active_link_to new_bot_chat_test_path(@bot), class: 'dropdown-item' do
               = material_icon 'done_all', class: 'text-gray-light mi-sm'
               = space
               span ボットテスト
-              = space
-              span.badge.badge-warning.badge-pill 11
 
 .pt-4
   .container

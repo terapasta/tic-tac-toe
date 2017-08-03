@@ -15,7 +15,8 @@
         border-top: 2px solid $orange;
         font-weight: bold;
 
-        &:hover {
+        &:hover,
+        &:focus {
           cursor: default;
           border-top: 2px solid $orange;
           border-left-color: #ddd;

@@ -3,7 +3,11 @@
 
 = render layout: 'bots/layout' do
 
-  - if @word_mappings.any?
+  - if @word_mappings.blank? && params[:keyword].blank?
+    .card: .card-block.text-center
+      p 同義語はまだ登録されていません
+      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success'
+  - else
     .mb-3.p-2.bg-faded.d-flex.justify-content-between
       = form_tag bot_word_mappings_path(@bot), method: :get, class: 'd-flex justify-content-between' do
         .input-group
@@ -33,8 +37,3 @@
               = space 2
               = link_to '削除', bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-danger btn-sm', data: { confirm: '削除します。よろしいですか？', method: :delete, event_name: 'Delete word mapping', word_mapping_id: word_mapping.id }
     = pagination
-
-  - else
-    .card: .card-block.text-center
-      p 同義語はまだ登録されていません
-      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success'

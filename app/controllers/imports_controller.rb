@@ -13,6 +13,7 @@ class ImportsController < ApplicationController
     else
       flash.now.alert = 'インポートに失敗しました'
       @error_row = importer.current_row
+      @error_message = importer.error_message
     end
     render :new
   end

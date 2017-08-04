@@ -85,7 +85,7 @@ export default class QuestionAnswerTagFrom extends Component {
             </div>
             <div className="card-footer">
               <div className="form-inline input-group">
-                <input type="text" className="form-control form-control-sm" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
+                <input id="topic-tag-name" type="text" className="form-control form-control-sm" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
                 <span className="input-group-btn">
                   <button className="btn btn-primary btn-sm" onClick={this.onClickButton}>追加</button>
                 </span>

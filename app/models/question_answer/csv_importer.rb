@@ -62,7 +62,7 @@ class QuestionAnswer::CsvImporter
 
   def parse
     f = open(@file.path, @mode_enc, undef: :replace)
-    raw_data = f.read.encode("UTF-16BE", "UTF-8", :invalid => :replace, :undef => :replace, :replace => '?').encode("UTF-8")
+    raw_data = f.read.scrub('?')
     CSV.new(raw_data).each_with_index.inject({}) { |out, (row, index)|
       @current_row = index + 1
       data = detect_or_initialize_by_row(row)

@@ -146,6 +146,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'rspec_junit_formatter'
 
   # dummy data
   gem 'faker'

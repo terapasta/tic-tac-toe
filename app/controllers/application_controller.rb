@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 
     def handle_500(exception)
       ExceptionNotifier.notify_exception exception, env: request.env
+      Rollbar.log(exception)
 
       logger.error exception.message
       logger.error exception.backtrace.join("\n")

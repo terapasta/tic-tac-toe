@@ -6,9 +6,11 @@ class Learning::Summarizer
   end
 
   def summary
-    LearningTrainingMessage.where(bot: @bot).delete_all
-    convert_question_answers!
-    convert_decision_branches!
+    ActiveRecord::Base.transaction do
+      LearningTrainingMessage.where(bot: @bot).delete_all
+      convert_question_answers!
+      convert_decision_branches!
+    end
   end
 
   def unify_learning_training_message_words!

@@ -43,6 +43,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   scenario 'display tree nodes' do
     find("#question-#{question_answers.first.id}").click
     expect(page).to have_content(question_answers.first.answer)
+    page.save_screenshot
     find("#answer-#{question_answers.first.id}").click
     expect(page).to have_content(decision_branches.first.body)
     expect(page).to have_content(decision_branches.second.body)

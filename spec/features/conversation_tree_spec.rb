@@ -66,7 +66,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find("#answer-#{question_answers.first.id}").click
     find('#add-decision-branch-button').click
     fill_in 'decision-branch-body', with: 'new decision branch'
-    find('span.btn.btn-primary').click
+    find('span.btn.btn-success').click
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
     end
@@ -113,7 +113,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
       find('.btn').click
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn-default').click
+      find('.btn-secondary').click
     end
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)

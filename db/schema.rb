@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807054238) do
+ActiveRecord::Schema.define(version: 20170807062748) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 20170807054238) do
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
 
   create_table "chats", force: :cascade do |t|
-    t.string   "context",    limit: 255
     t.string   "guest_key",  limit: 255,                 null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false

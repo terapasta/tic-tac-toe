@@ -112,7 +112,6 @@ gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
 gem 'active_link_to'
-gem 'gretel'
 
 group :development, :test do
 

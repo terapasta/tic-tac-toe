@@ -2,6 +2,11 @@
   = render 'shared/pagination', resources: @messages, per_page: @per_page
 
 = render layout: 'bots/layout' do
+  .mb-3= link_to bot_threads_path(@bot), class: 'text-muted' do
+    = material_icon 'keyboard_arrow_left'
+    = space
+    span 一覧に戻る
+
   .card.mb-3
     .card-header.d-flex.justify-content-between
       div

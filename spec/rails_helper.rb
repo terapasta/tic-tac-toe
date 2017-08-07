@@ -6,13 +6,7 @@ require 'devise'
 require "pundit/rspec"
 require 'capybara/poltergeist'
 Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new(app, {
-    inspector: true,
-    js_errors: true,
-    phantomjs_options: [
-      '--ignore-ssl-errors=yes',
-    ],
-  })
+  Capybara::Poltergeist::Driver.new(app, inspector: true, js_errors: true)
 end
 
 # Capybara.javascript_driver = :poltergeist

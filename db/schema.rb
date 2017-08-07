@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807070110) do
+ActiveRecord::Schema.define(version: 20170807072605) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -186,9 +186,8 @@ ActiveRecord::Schema.define(version: 20170807070110) do
     t.text     "question",   limit: 65535
     t.integer  "answer_id",  limit: 4
     t.text     "underlayer", limit: 65535
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.boolean  "selection",                default: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.text     "answer",     limit: 65535
   end
 

@@ -33,8 +33,6 @@ class QuestionAnswers::SelectionsController < ApplicationController
   def create
     @bot.add_selected_question_answer_ids(@question_answer.id)
     @bot.save
-    @question_answer.selection = true
-    @question_answer.save
     respond_to do |format|
       format.json { render json: @question_answer}
     end
@@ -43,8 +41,6 @@ class QuestionAnswers::SelectionsController < ApplicationController
   def destroy
     @bot.remove_selected_question_answer_ids(@question_answer.id)
     @bot.save
-    @question_answer.selection = false
-    @question_answer.save
     respond_to do |format|
       format.json { render json: @question_answer}
     end

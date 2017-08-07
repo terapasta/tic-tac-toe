@@ -53,13 +53,11 @@ class Bot < ActiveRecord::Base
   end
 
   def add_selected_question_answer_ids(question_answer_id)
-    self.selected_question_answer_ids.push(question_answer_id).tap do
-    end
+    self.selected_question_answer_ids.push(question_answer_id)
   end
 
   def remove_selected_question_answer_ids(question_answer_id)
-    self.selected_question_answer_ids.delete(question_answer_id).tap do
-    end
+    self.selected_question_answer_ids.delete(question_answer_id)
   end
 
   def selected_question_answers

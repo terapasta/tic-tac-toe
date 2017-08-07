@@ -9,10 +9,6 @@ module Replyable
 
     reply_messages = [question_answer].map do |qa|
       body = qa.answer
-      if enabled_chitchat?(qa, parent)
-        # 分類出来なかった場合かつ親モデルがChatの場合、Docomoの雑談APIを使って返す
-        body = DocomoClient.new.reply(parent, parent.bot, message.body)
-      end
 
       message = parent.messages.create!(
         speaker: 'bot',
@@ -36,12 +32,6 @@ module Replyable
   private
     def auto_mode?
       params[:auto] == '1'
-    end
-
-    def enabled_chitchat?(question_answer, parent)
-      question_answer.no_classified? &&
-      parent.is_a?(Chat) &&
-      parent.bot.has_feature?(:chitchat)
     end
 
     # HACK questionはreplyが持っているので引数に必要ない？

@@ -7,7 +7,6 @@ class Bot < ActiveRecord::Base
   has_many :topic_tags
   has_many :answers
   has_many :decision_branches
-  has_many :services, dependent: :destroy
   has_one :score, dependent: :destroy
   has_one :learning_parameter, dependent: :destroy
   has_many :sentence_synonyms, through: :question_answers
@@ -27,10 +26,6 @@ class Bot < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   before_validation :generate_token, :set_learning_status_changed_at_if_needed
-
-  def has_feature?(feature)
-    services.where(feature: Service.features[feature], enabled: true).present?
-  end
 
   def learning_parameter_attributes
     if learning_parameter.present?

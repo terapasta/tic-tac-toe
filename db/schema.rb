@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807053445) do
+ActiveRecord::Schema.define(version: 20170807054238) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -222,14 +222,6 @@ ActiveRecord::Schema.define(version: 20170807053445) do
 
   add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
   add_index "sentence_synonyms", ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id", using: :btree
-
-  create_table "services", force: :cascade do |t|
-    t.integer  "feature",    limit: 4, null: false
-    t.boolean  "enabled",              null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "bot_id",     limit: 4, null: false
-  end
 
   create_table "tasks", force: :cascade do |t|
     t.text     "guest_message", limit: 65535

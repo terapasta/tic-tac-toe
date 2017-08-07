@@ -35,8 +35,6 @@ class EvaluatorTestCase(TestCase):
 
     def test_normal_evaluate(self):
         attr = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
             'classify_threshold': 0.5,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
             'params_for_algorithm': {}
@@ -56,8 +54,6 @@ class EvaluatorTestCase(TestCase):
 
     def test_no_exist_excluded_labels(self):
         attr = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
             'classify_threshold': 0.5,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
             'params_for_algorithm': {}
@@ -79,8 +75,6 @@ class EvaluatorTestCase(TestCase):
 
     def test_exist_excluded_labels(self):
         attr = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
             'classify_threshold': 0.5,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
             'params_for_algorithm': {},

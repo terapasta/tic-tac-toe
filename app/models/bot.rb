@@ -34,7 +34,7 @@ class Bot < ActiveRecord::Base
       attrs = LearningParameter.default_attributes
     end
     # TODO フィールドが変わる度に修正が必要になってしまう
-    attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :include_tag_vector, :classify_threshold, :use_similarity_classification)
+    attrs.slice(:algorithm, :params_for_algorithm, :classify_threshold, :use_similarity_classification)
   end
 
   def reset_training_data!

@@ -41,17 +41,17 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'display tree nodes' do
-    find("#question-#{question_answers.first.id}").click
+    find("#question-#{question_answers.first.id}").trigger('click')
     expect(page).to have_content(question_answers.first.answer)
-    find("#answer-#{question_answers.first.id}").click
+    find("#answer-#{question_answers.first.id}").trigger('click')
     expect(page).to have_content(decision_branches.first.body)
     expect(page).to have_content(decision_branches.second.body)
-    find("#decision-branch-#{decision_branches.first.id}").click
+    find("#decision-branch-#{decision_branches.first.id}").trigger('click')
     expect(page).to have_content(decision_branches.first.answer)
   end
 
   scenario 'creates question with answer'  do
-    find('#adding').click
+    find('#adding').trigger('click')
     fill_in 'question-question', with: 'new question'
     fill_in 'question-answer', with: 'new answer'
     click_link '保存'
@@ -62,19 +62,19 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'creates decision_branch' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
+    find("#question-#{question_answers.first.id}").trigger('click')
+    find("#answer-#{question_answers.first.id}").trigger('click')
     find('#add-decision-branch-button').trigger('click')
     fill_in 'decision-branch-body', with: 'new decision branch'
-    find('span.btn.btn-success').click
+    find('span.btn.btn-success').trigger('click')
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
     end
   end
 
   scenario 'updates answer' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
+    find("#question-#{question_answers.first.id}").trigger('click')
+    find("#answer-#{question_answers.first.id}").trigger('click')
     fill_in 'answer-body', with: 'updated answer'
     click_link '保存'
     within '.master-detail-panel__master' do
@@ -83,14 +83,14 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'updates decision branch' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
+    find("#question-#{question_answers.first.id}").trigger('click')
+    find("#answer-#{question_answers.first.id}").trigger('click')
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn').click
+      find('.btn').trigger('click')
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
       fill_in 'decision-branch-body', with: 'updated decision branch'
-      find('.btn-success').click
+      find('.btn-success').trigger('click')
     end
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated decision branch')
@@ -98,22 +98,22 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes answer' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
-    find("#delete-answer-button").click
+    find("#question-#{question_answers.first.id}").trigger('click')
+    find("#answer-#{question_answers.first.id}").trigger('click')
+    find("#delete-answer-button").trigger('click')
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(question_answers.first.answer)
     end
   end
 
   scenario 'deletes decision branch' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
+    find("#question-#{question_answers.first.id}").trigger('click')
+    find("#answer-#{question_answers.first.id}").trigger('click')
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn').click
+      find('.btn').trigger('click')
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn-secondary').click
+      find('.btn-secondary').trigger('click')
     end
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)

@@ -8695,9 +8695,28 @@ var QuestionAnswerTagFrom = function (_Component) {
               "div",
               { className: "card-block" },
               _react2.default.createElement(
-                "label",
-                null,
-                "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0"
+                "div",
+                { className: "d-flex justify-content-between" },
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0"
+                ),
+                "\xA0\xA0",
+                _react2.default.createElement(
+                  "a",
+                  { href: "/bots/" + window.currentBot.id + "/topic_tags", target: "_blank" },
+                  _react2.default.createElement(
+                    "i",
+                    { className: "material-icons mi-xs mi-label-rotate" },
+                    "label"
+                  ),
+                  _react2.default.createElement(
+                    "span",
+                    null,
+                    "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u7BA1\u7406\u306F\u3053\u3061\u3089"
+                  )
+                )
               ),
               topicTags.map(function (t, i) {
                 var tt = (0, _find2.default)(topicTaggings, function (tt) {

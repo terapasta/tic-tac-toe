@@ -48,7 +48,14 @@ export default class QuestionAnswerTagFrom extends Component {
         <div className="form-group">
           <div className="card">
             <div className="card-block">
-              <label>トピックタグ</label>
+              <div className="d-flex justify-content-between">
+                <label>トピックタグ</label>
+                &nbsp;&nbsp;
+                <a href={`/bots/${window.currentBot.id}/topic_tags`} target="_blank">
+                  <i className="material-icons mi-xs mi-label-rotate">label</i>
+                  <span>トピックタグ管理はこちら</span>
+                </a>
+              </div>
               {topicTags.map((t, i) => {
                 const tt = find(topicTaggings, (tt) => tt.topicTagId === t.id);
                 const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;

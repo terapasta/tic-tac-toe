@@ -16,6 +16,12 @@
   &.mi-v-sub {
     vertical-align: sub;
   }
+
+  &.mi-label-rotate {
+    transform: rotate(-135deg);
+    position: relative;
+    top: -2px;
+  }
 }
 
 .page-link {

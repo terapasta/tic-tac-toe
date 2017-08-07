@@ -19,6 +19,7 @@ class QuestionAnswer < ActiveRecord::Base
   serialize :underlayer
 
   validates :question, presence: true
+  validates :answer, presence: true
 
   scope :completed_count_for, -> (user_id, target_date) {
     joins(:sentence_synonyms)

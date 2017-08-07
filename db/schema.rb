@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807062748) do
+ActiveRecord::Schema.define(version: 20170807065431) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -170,7 +170,6 @@ ActiveRecord::Schema.define(version: 20170807062748) do
     t.string   "speaker",            limit: 255,                   null: false
     t.text     "body",               limit: 65535
     t.string   "user_agent",         limit: 1024
-    t.boolean  "learn_enabled",                    default: true,  null: false
     t.boolean  "answer_failed",                    default: false, null: false
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false

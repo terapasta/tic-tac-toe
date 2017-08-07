@@ -102,6 +102,9 @@ Rails.application.routes.draw do
         resource :child_decision_branches, only: [:destroy], module: :decision_branches
       end
       resources :answers, module: :bots
+      resources :messages, module: :bots, only: [] do
+        resource :mark, module: :messages, only: [:create, :destroy]
+      end
     end
   end
 

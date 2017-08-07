@@ -1,7 +1,11 @@
 .chat-message.full-width
   .chat-message__icon style=("background-image:url(#{bot.image_url});")
-  .chat-message__balloon
+  .chat-message__balloon.position-relative
     = message.body
+
+    - if local_assigns[:show_mark_button]
+      = link_to material_icon('flag'), '#', class: "chat-message__mark-button #{'active' if message.answer_marked}", data: { role: 'message-mark-button', id: message.id, toggle: 'tooltip', placement: 'right' }, title: '注意回答としてマーク'
+
   .d-flex.justify-content-between
     .chat-message__meta
       - if message.answer_failed

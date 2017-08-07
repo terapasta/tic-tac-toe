@@ -22,7 +22,7 @@
 //= require bundled-es2015
 //= require rollbar
 
-$(function() {
+window.jQuery(function($) {
   var $notificationModal = $('[data-role="notification-modal"]');
   $notificationModal.find('.close').on('click', function() {
     $notificationModal.removeAttr("style").hide();
@@ -33,7 +33,7 @@ $(function() {
     var $select = $(this);
     var url = $select.val();
     if (url != null && url.length > 0) {
-      location.href = url;
+      window.location.href = url;
     }
   });
 });

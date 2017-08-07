@@ -26,7 +26,7 @@
             = space
             = count
 
-    .card-block
+    .card-block.padding-left-64
       - @messages.each do |message|
         .row
           - if message.guest?
@@ -34,6 +34,6 @@
               = render 'messages/guest_balloon', message: message
           - else
             .col-6
-              = render 'messages/bot_balloon', bot: @bot, message: message
+              = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
 
   = pagination

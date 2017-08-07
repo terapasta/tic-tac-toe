@@ -293,3 +293,35 @@
     margin-left: $-icon-size + $-balloon-spacing;
   }
 }
+
+.chat-message__mark-button {
+  position: absolute;
+  top: 50%;
+  left: -90px;
+  transform: translateY(-50%);
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: darken($gray-lighter, 10%);
+
+  &:hover {
+    color: darken($gray-lighter, 20%);
+  }
+  &:focus {
+    color: darken($gray-lighter, 10%);
+  }
+
+  .material-icons {
+    transition-duration: .1s;
+    transition-property: all;
+  }
+  &:active {
+    .material-icons {
+      transform: scale(1.25);
+    }
+  }
+
+  &.active {
+    color: $brand-warning;
+  }
+}

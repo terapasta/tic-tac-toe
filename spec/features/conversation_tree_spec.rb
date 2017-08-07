@@ -63,9 +63,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
 
   scenario 'creates decision_branch' do
     find("#question-#{question_answers.first.id}").click
-    page.save_screenshot Rails.root.join('tmp/test-results/capybara-conversation-trees.png').to_s
     find("#answer-#{question_answers.first.id}").click
-    find('#add-decision-branch-button').click
+    find('#add-decision-branch-button').trigger('click')
     fill_in 'decision-branch-body', with: 'new decision branch'
     find('span.btn.btn-success').click
     within '.master-detail-panel__master' do

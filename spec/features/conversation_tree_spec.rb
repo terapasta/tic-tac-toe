@@ -43,7 +43,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   scenario 'display tree nodes' do
     find("#question-#{question_answers.first.id}").click
     expect(page).to have_content(question_answers.first.answer)
-    page.save_screenshot Rails.root.join('tmp/test-results/capybara-conversation-treecs.png')
     find("#answer-#{question_answers.first.id}").click
     expect(page).to have_content(decision_branches.first.body)
     expect(page).to have_content(decision_branches.second.body)
@@ -64,6 +63,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
 
   scenario 'creates decision_branch' do
     find("#question-#{question_answers.first.id}").click
+    page.save_screenshot Rails.root.join('tmp/test-results/capybara-conversation-trees.png').to_s
     find("#answer-#{question_answers.first.id}").click
     find('#add-decision-branch-button').click
     fill_in 'decision-branch-body', with: 'new decision branch'

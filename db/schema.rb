@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721025724) do
+ActiveRecord::Schema.define(version: 20170807053140) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 20170721025724) do
     t.string   "image",                        limit: 255
     t.string   "learning_status",              limit: 255
     t.datetime "learning_status_changed_at"
-    t.boolean  "is_limited",                                 default: false
     t.boolean  "is_selected_for_chat",                       default: false
     t.text     "selected_question_answer_ids", limit: 65535
   end

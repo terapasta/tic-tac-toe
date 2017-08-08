@@ -1,8 +1,12 @@
 .container: .row: .col-12.mt-5.mb-4
+  = render 'shared/flash'
   .page-header
     .d-flex.justify-content-between.align-items-start.my-2.p-2
       h4 精度テスト
-      = link_to 'テスト実行', admin_bot_accuracy_test_cases_execution_path(@bot), class: 'btn btn-outline-primary btn-sm', data: { method: :post }
+      = link_to admin_bot_accuracy_test_cases_execution_path(@bot), class: 'btn btn-outline-warning btn-sm', data: { method: :post } do
+        = material_icon 'trending_up', class: 'mi-xs'
+        = space
+        span テスト実行
 
     table.table.table-striped
       thead
@@ -27,14 +31,14 @@
                     = AccuracyTestCase.human_attribute_name :is_expected_suggestion
             td
               p
-                = link_to edit_admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-outline-primary btn-sm' do
+                = link_to edit_admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-secondary btn-sm' do
                   = material_icon 'edit', class: 'mi-xs'
                   = space
                   span 編集
 
               p
-                = link_to admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-outline-danger btn-sm', data: { confirm: '本当に削除してよいですか？', method: :delete } do
-                  = material_icon 'close', class: 'mi-xs'
+                = link_to admin_bot_accuracy_test_case_path(@bot, accuracy_test_case), class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよいですか？', method: :delete } do
+                  = material_icon 'delete', class: 'mi-xs'
                   = space
                   span 削除
             td
@@ -83,4 +87,4 @@
             = space
             = AccuracyTestCase.human_attribute_name :is_expected_suggestion
         td
-          = f.submit class: 'btn btn-outline-success btn-sm'
+          = f.submit class: 'btn btn-success btn-sm'

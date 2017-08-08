@@ -5,11 +5,11 @@
 
   .form-group
     = f.label :word
-    = f.text_field :word, class: 'form-control'
+    = f.text_field :word, class: 'form-control', placeholder: '正とする単語を入力してください（例：会話）', autofocus: true
 
   .form-group
     = f.label :synonym
-    = f.text_field :synonym, class: 'form-control'
+    = f.text_field :synonym, class: 'form-control', placeholder: '単語と意味が同じで異なるものを入力して下さい（例：お話）'
 
   .form-group.text-right
     = f.submit class: 'btn btn-success'

@@ -6766,7 +6766,7 @@ var NewDecisionBranchForm = function (_Component) {
               },
               id: 'add-decision-branch-button'
             },
-            '\uFF0B\u9078\u629E\u80A2\u3092\u8FFD\u52A0\u3059\u308B'
+            '\uFF0B\u3053\u306E\u56DE\u7B54\u306B\u5BFE\u3059\u308B\u9078\u629E\u80A2\u3092\u8FFD\u52A0\u3059\u308B'
           )
         )
       );

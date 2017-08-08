@@ -6,7 +6,6 @@ class QuestionAnswersController < ApplicationController
   before_action :set_bot
   before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
   before_action :set_topic_tags, only: [:index]
-  # autocomplete :answer, :body, full: true
 
   def index
     authorize QuestionAnswer

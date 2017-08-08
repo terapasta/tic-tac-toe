@@ -34,6 +34,7 @@
               td
                 - if i.zero?
                   span.badge.badge-warning 最新のエクスポート
+                  br
                 = link_to export.file_url, export.file_url
               td: strong= export.encoding.upcase
               td= l export.created_at

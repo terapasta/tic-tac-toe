@@ -3,7 +3,7 @@
     = hidden_field_tag :headless, local_assigns[:headless]
     = hidden_field_tag :hide_global_header, local_assigns[:hide_global_header]
 
-    = collection_select :topic, :id, topic_tags_for_select(@bot), :id, :name, { prompt: "-- トピックタグで絞込 --", selected: (@topic_id.to_i if @topic_id.present?) }, class: 'form-control', style: 'max-width:200px'
+    = collection_select :topic, :id, topic_tags_for_select(@bot), :id, :name, { include_blank: "-- トピックタグで絞込 --", selected: (@topic_id.to_i if @topic_id.present?) }, class: 'form-control', style: 'max-width:200px'
     = space
     .input-group
       = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"

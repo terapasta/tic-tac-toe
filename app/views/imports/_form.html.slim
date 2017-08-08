@@ -7,6 +7,11 @@
       idが一致しない場合でも以前のデータが削除されることはありません。
 
   = f.file_field :file, label: 'ファイル'
+  
+  - if @error_row.present?
+    p.text-danger #{ @error_row }行目でエラーが発生しました
+  - if @error_message.present?
+    p.text-danger= @error_message
 
   .actions
     = f.submit 'Shift_JISでインポート', class: 'btn btn-success'

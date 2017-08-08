@@ -2,7 +2,10 @@ class QuestionAnswer::CsvImporter
   ModeEncForUTF8 = 'r'
   ModeEncForSJIS = 'rb:Shift_JIS:UTF-8'
 
-  attr_reader :succeeded, :current_row
+  class EmptyQuestionError < StandardError; end
+  class EmptyAnswerError < StandardError; end
+
+  attr_reader :succeeded, :current_row, :error_message
 
   def initialize(file, bot, options = {})
     @file = file
@@ -12,6 +15,7 @@ class QuestionAnswer::CsvImporter
     @current_answer = nil
     @current_row = nil
     @succeeded = false
+    @error_message = nil
   end
 
   def import
@@ -35,6 +39,10 @@ class QuestionAnswer::CsvImporter
       end
     end
     @succeeded = true
+  rescue EmptyQuestionError => e
+    @error_message = '質問を入力してください'
+  rescue EmptyAnswerError => e
+    @error_message = '回答を入力してください'
   rescue => e
     Rails.logger.debug(e)
     Rails.logger.debug(e.backtrace.join("\n"))
@@ -54,7 +62,8 @@ class QuestionAnswer::CsvImporter
 
   def parse
     f = open(@file.path, @mode_enc, undef: :replace)
-    CSV.new(f).each_with_index.inject({}) { |out, (row, index)|
+    raw_data = f.read.scrub('?')
+    CSV.new(raw_data).each_with_index.inject({}) { |out, (row, index)|
       @current_row = index + 1
       data = detect_or_initialize_by_row(row)
       decision_branches = out[data[:key]].try(:fetch, :decision_branches_attributes) || []
@@ -81,7 +90,8 @@ class QuestionAnswer::CsvImporter
     decision_branch = sjis_safe(row[4])
     next_answer = sjis_safe(row[5])
     bot_had = @bot.question_answers.detect {|qa| qa.id == id}.present?
-    fail ActiveRecord::RecordInvalid.new(QuestionAnswer.new) if q.blank? || a.blank?
+    fail EmptyQuestionError.new if q.blank?
+    fail EmptyAnswerError.new if a.blank?
 
     {
       key: bot_had ? id : "#{q}-#{a}",

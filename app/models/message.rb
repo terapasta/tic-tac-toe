@@ -37,10 +37,7 @@ class Message < ActiveRecord::Base
     elsif guest?
       assign_attributes(body: question_answer.question)
     end
-    assign_attributes(
-      rating: :nothing,
-      trained_at: Time.current,
-    )
+    assign_attributes(rating: :nothing)
     save!
   end
 

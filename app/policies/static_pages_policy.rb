@@ -4,7 +4,7 @@ class StaticPagesPolicy < ApplicationPolicy
   end
 
   def can_use_nav?(bot)
-    return false if bot.blank? || user.worker? || bot.is_limited
+    return false if bot.blank? || user.worker?
     true
   end
 end

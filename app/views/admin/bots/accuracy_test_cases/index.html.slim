@@ -72,9 +72,9 @@
           td colspan=4
           td colspan=2
             h4.text-center
-              span #{@success_count} 成功 / #{@accuracy_test_cases.count} total,
+              span = @success_count_text
               = space 3
-              span 成功率 #{(@success_count.to_f / @accuracy_test_cases.count.to_f * 100).to_i}%
+              span = @success_percentage_text
 
   = form_for [:admin, @bot, @bot.accuracy_test_cases.build] do |f|
     table.table: tbody: tr

@@ -7,6 +7,9 @@ class Admin::Bots::AccuracyTestCases::ExecutionsController < Admin::Bots::BaseCo
     @success_count = @accuracy_test_cases.select{ |a|
       a.success_result?(@results[a.id])
     }.count
+    @success_count_text = "#{@success_count} 成功 / #{@accuracy_test_cases.count} total,"
+    @success_percentage_text = "成功率 #{(@success_count.to_f / @accuracy_test_cases.count.to_f * 100).to_i}%"
+    notify_to_slack
     render 'admin/bots/accuracy_test_cases/index'
   end
 
@@ -26,5 +29,15 @@ class Admin::Bots::AccuracyTestCases::ExecutionsController < Admin::Bots::BaseCo
         raise ActiveRecord::Rollback
       end
       results
+    end
+
+    def notify_to_slack
+      notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL'], channel: "#accuracy_tests"
+      notifier.ping(<<-EOS
+<!here>
+「#{@bot.name}」 の精度テスト結果
+    #{@success_count_text}   #{@success_percentage_text}
+EOS
+      )
     end
 end

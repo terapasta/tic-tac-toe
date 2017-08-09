@@ -30,7 +30,12 @@ class EmbedCodeGenerator extends Component {
   handleClickCopyButton(e) {
     e.preventDefault();
     const { width, height } = this.state;
-    copyToClipboard(makeCode(this.props.token, width, height));
+    const code = makeCode(this.props.token, width, height);
+    if (window.clipboardData) {
+      window.clipboardData.setData('Text', code);
+    } else {
+      copyToClipboard(code);
+    }
     this.setState({ isCopied: true });
     this.timerID = setTimeout(() => {
       this.setState({ isCopied: false });

@@ -7895,7 +7895,12 @@ var EmbedCodeGenerator = function (_Component) {
           width = _state.width,
           height = _state.height;
 
-      (0, _copyToClipboard2.default)(makeCode(this.props.token, width, height));
+      var code = makeCode(this.props.token, width, height);
+      if (window.clipboardData) {
+        window.clipboardData.setData('Text', code);
+      } else {
+        (0, _copyToClipboard2.default)(code);
+      }
       this.setState({ isCopied: true });
       this.timerID = setTimeout(function () {
         _this2.setState({ isCopied: false });

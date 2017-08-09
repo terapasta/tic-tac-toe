@@ -8773,7 +8773,7 @@ var QuestionAnswerTagFrom = function (_Component) {
                 _react2.default.createElement("input", { id: "topic-tag-name", type: "text", className: "form-control form-control-sm", placeholder: "\u30C8\u30D4\u30C3\u30AF\u30BF\u30B0\u3092\u8FFD\u52A0", onChange: this.onChangeInputText, value: newTopicTagName }),
                 _react2.default.createElement(
                   "span",
-                  { className: "input-group-btn" },
+                  { className: "input-group-btn", style: { height: '26px' } },
                   _react2.default.createElement(
                     "button",
                     { className: "btn btn-primary btn-sm", onClick: this.onClickButton },

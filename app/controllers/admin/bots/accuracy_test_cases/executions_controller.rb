@@ -32,6 +32,7 @@ class Admin::Bots::AccuracyTestCases::ExecutionsController < Admin::Bots::BaseCo
     end
 
     def notify_to_slack
+      return if ENV['SLACK_WEBHOOK_URL'].blank?
       notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL'], channel: "#accuracy_tests"
       notifier.ping(<<-EOS
 <!here>

@@ -65,7 +65,7 @@ class NewDecisionBranchForm extends Component {
             onClick={() => this.setState({ isAdding: true })}
             id="add-decision-branch-button"
           >
-            ＋選択肢を追加する
+            ＋この回答に対する選択肢を追加する
           </span>
         </li>
       </div>

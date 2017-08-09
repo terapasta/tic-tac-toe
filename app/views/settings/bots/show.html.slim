@@ -5,7 +5,7 @@
       .form-group
         - if @bot.image?
           .text-center
-            = image_tag @bot.image_url(:thumb), class: 'img-circle img-thumbnail'
+            a.circle-image-80 href=@bot.image_url style=css_bg_image(@bot.image_url(:thumb)) target="_blank"
             br
             = f.label :remove_image do
               = f.check_box :remove_image

@@ -66,4 +66,8 @@ module ApplicationHelper
   def class_names(hash = {})
     hash.map{ |class_name, use| class_name if use }.compact.join(' ')
   end
+
+  def css_bg_image(url)
+    "background-image:url(#{url});"
+  end
 end

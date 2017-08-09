@@ -2,7 +2,7 @@
   .container
     .bot-header__title.d-flex.justify-content-between
       h4.d-inline-block
-        = link_to image_tag(@bot.image_url(:thumb), width: 56, height: 56, class: 'img-circle img-thumbnail'), @bot.image_url, target: '_blank'
+        a.circle-image-56 href=@bot.image_url style=css_bg_image(@bot.image_url(:thumb)) target="_blank"
         = space
         = @bot.name
         = space 2

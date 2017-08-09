@@ -62,16 +62,7 @@
           h5.modal-title チャット埋め込み
           button.close type="button" data-dismiss="modal" &times;
         .modal-body
-          .form-group
-            label 高さ
-            input.form-control type="number" name="height" value=750
-          .form-group
-            label 横幅
-            input.form-control type="number" name="width" value=500
-          .form-group
-            label 埋め込みコード
-            textarea#chat-embedding-code.form-control name="embed" readonly=true rows=4 onfocus="this.select()"
-              = bot_embed_code(@bot, width: 750, height: 500)
-          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-embedding-code' } do
-            i.material-icons content_copy
-            span クリップボードにコピー
+          span(
+            data-component="EmbedCodeGenerator"
+            data-token=@bot.token
+          )

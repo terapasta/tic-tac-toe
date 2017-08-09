@@ -13,6 +13,7 @@ import LearningButton from "./components/learning-button";
 import CopyButton from "./components/copy-button";
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
 import AnswerTextArea from "./components/answer-text-area";
+import EmbedCodeGenerator from "./components/embed-code-generator";
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -27,6 +28,7 @@ function init() {
   mountComponent(LearningButton);
   mountComponent(QuestionAnswerTagForm);
   mountComponent(AnswerTextArea);
+  mountComponent(EmbedCodeGenerator);
   CopyButton.initialize();
 }
 

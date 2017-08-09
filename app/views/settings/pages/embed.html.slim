@@ -1,7 +1,7 @@
 = render layout: 'settings/shared/layout' do
   p チャットは以下の３つのご利用タイプからお選びいただけます
 
-  .card.card-block.mb-4: .row
+  .card.d-block.mb-4: .card-block: .row
     .col-4
       = link_to image_tag('chat-widget.png', alt: 'チャットウィジェット', class: 'img-fluid'), image_path('chat-widget.png')
     .col-8
@@ -17,7 +17,7 @@
         = space
         span コードを取得する
 
-  .card.card-block.mb-4: .row
+  .card.d-block.mb-4: .card-block: .row
     .col-4
       = link_to image_tag('chat-embedding.png', alt: 'チャット埋め込み', class: 'img-fluid'), image_path('chat-embedding.png')
     .col-8
@@ -33,7 +33,7 @@
         = space
         span コードを取得する
 
-  .card.card-block.mb-4
+  .card.d-block.mb-4: .card-block
     h5.mb-3 チャット画面に直接アクセス
     p
       |チャット画面のURLをメールなどでシェアしていただいてもご利用が可能です。

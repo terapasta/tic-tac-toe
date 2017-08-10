@@ -1,32 +1,33 @@
-#sidebar-wrapper
-  .sidebar-nav.list-group
-    = link_to edit_bot_path(@bot), class: 'bot-profile list-group-item text-center' do
-      p= @bot.name
-      - if @bot.image
-        = image_tag @bot.image_url(:thumb)
+- if need_side_nav? && @bot.present?
+  #sidebar-wrapper
+    .sidebar-nav.list-group
+      = link_to edit_bot_path(@bot), class: 'bot-profile list-group-item text-center' do
+        p= @bot.name
+        - if @bot.image
+          = image_tag @bot.image_url(:thumb)
 
-    #bot-status-label
-      span(
-        data-component="LearningButton"
-        data-bot-id=@bot.id
-      )
+      #bot-status-label
+        span(
+          data-component="LearningButton"
+          data-bot-id=@bot.id
+        )
 
-    = link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank', data: { event_name: 'Open new chat', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item', data: { event_name: 'Open threads', bot_id: @bot.id, bot_name: @bot.name }
-    /= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item', data: { event_name: 'Open training', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to bot_tasks_path(@bot), class: 'list-group-item', data: { event_name: 'Open tasks', bot_id: @bot.id, bot_name: @bot.name } do
-      = Task.model_name.human
-      = space
-      span.badge class=('badge-warning' unless unstarted_tasks_count.zero?) = unstarted_tasks_count
-    = link_to "ボットテスト", new_bot_chat_test_path(@bot), class: 'list-group-item', data: {event_name: 'Open chat test', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to bot_allowed_ip_addresses_path(@bot), class: 'list-group-item', data: {event_name: 'Open ip address', bot_id: @bot.id, bot_name: @bot.name } do
-      span 許可IPアドレス
-      - if Time.current < Time.zone.parse('2017-08-11 23:59:59')
+      = link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank', data: { event_name: 'Open new chat', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "対話履歴", bot_threads_path(@bot), class: 'list-group-item', data: { event_name: 'Open threads', bot_id: @bot.id, bot_name: @bot.name }
+      /= link_to "育てる", new_bot_training_path(@bot), class: 'list-group-item', data: { event_name: 'Open training', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to bot_tasks_path(@bot), class: 'list-group-item', data: { event_name: 'Open tasks', bot_id: @bot.id, bot_name: @bot.name } do
+        = Task.model_name.human
         = space
-        span.label.label-warning NEW
-    = link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item', data: { event_name: 'Open exporing', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item', data: { event_name: 'Open importing', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open qestion answers', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to "トピックタグ", bot_topic_tags_path(@bot), class: 'list-group-item', data: { event_name: 'Open topic tags', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item', data: { event_name: 'Open conversation tree', bot_id: @bot.id, bot_name: @bot.name }
-    = link_to "同義語", bot_word_mappings_path(@bot), class: 'list-group-item', data: { event_name: 'Open word mappings', bot_id: @bot.id, bot_name: @bot.name }
+        span.badge class=('badge-warning' unless unstarted_tasks_count.zero?) = unstarted_tasks_count
+      = link_to "ボットテスト", new_bot_chat_test_path(@bot), class: 'list-group-item', data: {event_name: 'Open chat test', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to bot_allowed_ip_addresses_path(@bot), class: 'list-group-item', data: {event_name: 'Open ip address', bot_id: @bot.id, bot_name: @bot.name } do
+        span 許可IPアドレス
+        - if Time.current < Time.zone.parse('2017-08-11 23:59:59')
+          = space
+          span.label.label-warning NEW
+      = link_to "学習データをエクスポート", bot_exports_path(@bot), class: 'list-group-item', data: { event_name: 'Open exporing', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "学習データをインポート", new_bot_imports_path(@bot), class: 'list-group-item', data: { event_name: 'Open importing', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "Q&A管理", bot_question_answers_path(@bot), class: 'list-group-item', data: { event_name: 'Open qestion answers', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "トピックタグ", bot_topic_tags_path(@bot), class: 'list-group-item', data: { event_name: 'Open topic tags', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "会話ツリー", bot_conversation_tree_path(@bot), class: 'list-group-item', data: { event_name: 'Open conversation tree', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to "同義語", bot_word_mappings_path(@bot), class: 'list-group-item', data: { event_name: 'Open word mappings', bot_id: @bot.id, bot_name: @bot.name }

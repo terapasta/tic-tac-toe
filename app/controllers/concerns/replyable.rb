@@ -1,32 +1,37 @@
 module Replyable
   extend ActiveSupport::Concern
 
-  def receive_and_reply!(parent, message)
-    responder = Conversation::Switcher.new.responder(message, session[:states])
+  def receive_and_reply!(parent, guest_message)
+    responder = Conversation::Switcher.new.responder(guest_message, session[:states])
     reply = responder.do_reply
     question_answer = reply.question_answer
     # session[:states] = responder.states
 
-    reply_messages = [question_answer].map do |qa|
+    bot_messages = [question_answer].map do |qa|
       body = qa.answer
 
-      message = parent.messages.create!(
+      bot_message = parent.messages.create!(
         speaker: 'bot',
         question_answer_id: qa.id,
         body: body,
         answer_failed: qa.no_classified?,
-        created_at: message.created_at + 1.second,
+        created_at: guest_message.created_at + 1.second,
       )
       if responder.present?
         if enabled_suggest_question?(reply, parent)
-          message.similar_question_answers = responder.similar_question_answers_in(reply.question_answer_ids).compact
+          responder.similar_question_answers_in(reply.question_answer_ids).compact.tap do |suggests|
+            bot_message.similar_question_answers = suggests
+            if suggests.count > 0 && qa.no_classified?
+              bot_message.body = parent.bot.render_has_suggests_message(guest_message.body)
+            end
+          end
         end
       end
-      message
+      bot_message
     end
 
     parent.save!
-    reply_messages
+    bot_messages
   end
 
   private

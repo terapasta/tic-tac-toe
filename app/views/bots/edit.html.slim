@@ -26,14 +26,14 @@ ul.nav.nav-tabs
         h4 Bot管理
       .panel-body
         = render 'form'
-        
+
   .tab-pane id="widget"
     = bootstrap_nested_form_for(@bot, data: { event_name: "Update bot", bot_id: @bot.id, bot_name: @bot.name }) do |f|
-      br 
+      br
       = f.form_group nil, label: { text: '埋め込みコード' } do
         .form-group.form-inline
-          | 高さ: #{text_field_tag :width, 500, class: 'form-control'}  
-          | 幅: #{text_field_tag :height, 500, class: 'form-control'}
+          | 高さ: #{number_field_tag :width, 500, class: 'form-control'}  
+          | 幅: #{number_field_tag :height, 500, class: 'form-control'}
         = text_field_tag :embed, bot_embed_code(@bot), class: 'form-control', readonly: true
       .form-group.form-inline
         .panel.panel-default

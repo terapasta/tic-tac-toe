@@ -32,16 +32,19 @@ export default class Widget extends Component {
     this.state = {
       isActive: false,
       isLoadingIframe: false,
-      isLoadedIframe: false
+      isLoadedIframe: false,
+      isDeniedAccess: true,
     };
+
+    this.fetchPulicBot(props.token);
   }
 
-  componentDidMount() {
-    const { token } = this.props;
+  fetchPulicBot(token) {
     PublicBotAPI.find(token, { origin: Origin }).then((res) => {
       this.setState({
         name: get(res, "data.bot.name"),
         avatarURL: get(res, "data.bot.image.thumb.url"),
+        isDeniedAccess: false,
       });
     }).catch(console.error);
   }
@@ -56,9 +59,12 @@ export default class Widget extends Component {
       isActive,
       isLoadingIframe,
       isLoadedIframe,
+      isDeniedAccess,
       name,
       avatarURL,
     } = this.state;
+
+    if (isDeniedAccess) { return <span />; }
 
     const activeClassName = classNames({
       active: isActive,

@@ -6,7 +6,7 @@
 
   <div class="row">
     <% @bots.each do |bot| %>
-      <div class="col-sm-6 col-md-4">
+      <div class="col-sm-6 col-md-4" id="bot-<%= bot.id %>">
         <div class="thumbnail">
           <%= image_tag bot.image_url(:thumb) %>
           <div class="caption">

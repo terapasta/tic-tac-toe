@@ -7,7 +7,7 @@ class LearningParameter < ActiveRecord::Base
 
   def self.default_attributes
       {
-        algorithm: algorithms[:naive_bayes],
+        algorithm: algorithms[:logistic_regression],
         params_for_algorithm: {},
         classify_threshold: 0.5,
         use_similarity_classification: true,

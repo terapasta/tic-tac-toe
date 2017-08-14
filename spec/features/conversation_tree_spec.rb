@@ -101,6 +101,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find("#question-#{question_answers.first.id}").click
     find("#answer-#{question_answers.first.id}").click
     find("#delete-answer-button").click
+    page.driver.browser.switch_to.alert.accept
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(question_answers.first.answer)
     end
@@ -114,6 +115,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn-default').click
+      page.driver.browser.switch_to.alert.accept
     end
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)

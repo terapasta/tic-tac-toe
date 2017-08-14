@@ -52,6 +52,13 @@ RSpec.describe 'Chats', type: :features, js: true do
     has_decision_branch_question_answer.decision_branches
   end
 
+  let(:fake_request) do
+    double(:fake_request).as_null_object.tap do |it|
+      allow(it).to receive(:referer).and_return(referer)
+      allow(it).to receive(:remote_ip).and_return(remote_ip)
+    end
+  end
+
   before do
     stub_const('Ml::Engine', DummyMLEngine)
   end
@@ -177,8 +184,16 @@ RSpec.describe 'Chats', type: :features, js: true do
     context 'ログインしていない場合' do
       context 'iframe経由の場合' do
         context 'リファラが許可ホストに入っている場合' do
+          let(:referer) do
+            'http://example.com'
+          end
+
+          let(:remote_ip) do
+            '127.0.0.1'
+          end
+
           before do
-            Capybara.current_session.driver.add_header('Referer', 'http://example.com')
+            allow_any_instance_of(ChatPolicy).to receive(:request).and_return(fake_request)
           end
 
           scenario do
@@ -192,8 +207,16 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         context 'リファラが許可ホストに入っていない場合' do
+          let(:referer) do
+            'http://hoge.com'
+          end
+
+          let(:remote_ip) do
+            '127.0.0.1'
+          end
+
           before do
-            Capybara.current_session.driver.add_header('Referer', 'http://hoge.com')
+            allow_any_instance_of(ChatPolicy).to receive(:request).and_return(fake_request)
           end
 
           scenario do

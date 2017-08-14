@@ -46,12 +46,17 @@ RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
     end
 
     scenario 'Message "削除しました。" is displayed' do
-      visit bot_topic_tags_path(bot)
-      click_on '登録する'
-      fill_in 'topic_tag_name', with: topic_tag_attrs[:name]
-      click_on '登録する'
-      expect{ click_on '削除' }.to change(TopicTag, :count).by(-1)
-      expect(page).to have_content '削除しました。'
+      expect{
+        visit bot_topic_tags_path(bot)
+        click_on '登録する'
+        fill_in 'topic_tag_name', with: topic_tag_attrs[:name]
+        click_on '登録する'
+      }.to change(TopicTag, :count).by(1)
+      expect{
+        click_on '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content '削除しました。'
+      }.to change(TopicTag, :count).by(-1)
     end
 
     scenario 'Message "更新しました。" is displayed'  do

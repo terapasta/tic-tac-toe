@@ -5,6 +5,7 @@ class LearnJob < ActiveJob::Base
 
   def perform(bot_id)
     @bot = Bot.find(bot_id)
+    @bot.update(learning_status: :processing)
     summarizer = Learning::Summarizer.new(@bot)
     summarizer.summary
 

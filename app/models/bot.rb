@@ -64,6 +64,10 @@ class Bot < ActiveRecord::Base
     question_answers.where(id: selected_question_answer_ids)
   end
 
+  def learn_later
+    LearnJob.perform_later(self.id)
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?

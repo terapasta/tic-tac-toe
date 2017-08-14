@@ -12,6 +12,7 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
     @question_answer = @bot.question_answers.build(permitted_attributes(QuestionAnswer))
     authorize @question_answer
     if @question_answer.save
+      @bot.learn_later
       logger.debug 'succeeded'
       render json: @question_answer, adapter: :json, status: :created, includes: 'decision_branches'
     else
@@ -22,6 +23,7 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
 
   def update
     if @question_answer.update(permitted_attributes(@question_answer))
+      @bot.learn_later
       render json: @question_answer, adapter: :json, status: :ok
     else
       render json: { errors: @question_answer.errors }, status: :unprocessable_entity

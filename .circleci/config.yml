@@ -33,6 +33,11 @@ jobs:
           command: |
             sh lib/bin/mecab-install-circleci.sh
             bundle install --jobs=4 --retry=3 --path vendor/bundle
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+            wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip
+            sudo cp chromedriver /usr/local/bin/chromedriver
 
       - save_cache:
           paths:

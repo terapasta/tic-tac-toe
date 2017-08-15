@@ -34,6 +34,7 @@ services:
     environment:
       - DB_HOST=db
       - RPC_HOST=learning_test
+      - RAILS_ENV=test
   db:
     image: mysql
     tty: false

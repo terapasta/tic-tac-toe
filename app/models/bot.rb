@@ -1,4 +1,6 @@
 class Bot < ActiveRecord::Base
+  include HasSuggestsMessage
+
   belongs_to :user
   has_many :chats, -> { extending HasManyChatsExtension }
   has_many :messages, through: :chats

@@ -1,23 +1,6 @@
 class LearnJob < ActiveJob::Base
   queue_as :default
 
-  rescue_from StandardError, with: :handle_error
-
-  before_enqueue do |job|
-    # NOTE: 同じbotの未実行学習ジョブがあったら削除する
-    bot_id = job.arguments[0] # performメソッドの第一引数
-    Delayed::Job
-        .where(attempts: 0, locked_at: nil)
-        .where.not(id: job.job_id)
-        .each do |delayed_job|
-      job_data = YAML.load(delayed_job.handler).job_data
-      if job_data['job_class'] == self.class.name and job_data['arguments'][0] == bot_id
-        # TODO: 削除してしまうと思わぬ挙動をする恐れがないだろうか
-        delayed_job.delete
-      end
-    end
-  end
-
   def perform(bot_id)
     @bot = Bot.find(bot_id)
     @bot.update(learning_status: :processing)

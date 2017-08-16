@@ -35,6 +35,7 @@ export default class LearningButton extends Component {
   static get propTypes() {
     return {
       botId: PropTypes.number.isRequired,
+      isAdmin: PropTypes.bool.isRequired,
     };
   }
 
@@ -53,9 +54,10 @@ export default class LearningButton extends Component {
 
   render() {
     const { isDisabled, status } = this.state;
+    const { isAdmin } = this.props;
     const statusLabel = LearningStatus[status];
     const statusClassName = classNames("label", {
-      "label-success": LearningStatus.isSucceeded(status),
+      "label-success": LearningStatus.isSucceeded(status) && isAdmin,
       "label-danger": LearningStatus.isFailed(status),
       "label-warning": LearningStatus.isProcessing(status),
       "Animate-fadeInOut": LearningStatus.isProcessing(status),
@@ -68,11 +70,13 @@ export default class LearningButton extends Component {
             <label className={statusClassName}>{statusLabel}</label>
           )}
         </div>
-        <button className="btn btn-danger btn-block btn-learning"
-          disabled={isDisabled}
-          onClick={this.onClickButton.bind(this)}>
-          学習を実行する
-        </button>
+        {(isAdmin || LearningStatus.isFailed(status)) && (
+          <button className="btn btn-danger btn-block btn-learning"
+            disabled={isDisabled}
+            onClick={this.onClickButton.bind(this)}>
+            学習を実行する
+          </button>
+        )}
       </div>
     )
   }

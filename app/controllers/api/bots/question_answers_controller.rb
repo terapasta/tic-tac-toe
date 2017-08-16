@@ -34,6 +34,7 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
     ActiveRecord::Base.transaction do
       Array(@question_answer.self_and_deep_child_decision_branches).map(&:destroy!)
     end
+    @bot.learn_later
     render json: {}, status: :no_content
   end
 

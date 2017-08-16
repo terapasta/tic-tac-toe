@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Chats', type: :features, js: true do
+  include CapybaraHelpers
+
   let!(:normal_user) do
     create(:user)
   end
@@ -80,7 +82,8 @@ RSpec.describe 'Chats', type: :features, js: true do
 
         scenario 'show answer and rating' do
           visit "/embed/#{bot.token}/chats/new"
-          fill_in 'chat-message-body', with: 'サンプルメッセージ'
+          fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
+          expect(find("input[name='chat-message-body']").value).to_not eq('')
           click_button '質問'
           sleep 1
           expect(find("input[name='chat-message-body']").value).to eq('')
@@ -103,7 +106,7 @@ RSpec.describe 'Chats', type: :features, js: true do
           has_decision_branch_answer_message.update(chat: Chat.last)
           allow_any_instance_of(Chats::MessagesController).to receive(:receive_and_reply!).and_return([has_decision_branch_answer_message])
 
-          fill_in 'chat-message-body', with: 'サンプルメッセージ'
+          fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
           click_button '質問'
           sleep 1
           decision_branches.first.tap do |db|
@@ -116,7 +119,7 @@ RSpec.describe 'Chats', type: :features, js: true do
 
         scenario 'training' do
           visit "/embed/#{bot.token}/chats/new"
-          fill_in 'chat-message-body', with: 'サンプルメッセージ'
+          fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
           click_button '質問'
           sleep 1
           expect(find("input[name='chat-message-body']").value).to eq('')
@@ -125,8 +128,10 @@ RSpec.describe 'Chats', type: :features, js: true do
 
           within all('.chat-section--bordered')[1] do
             find('.chat-section__switch').click
-            fill_in 'chat-guest-message-body', with: 'トレーニング質問'
-            fill_in 'chat-bot-message-body', with: 'トレーニング回答'
+            fill_in_input name: 'chat-guest-message-body', value: 'トレーニング質問'
+            fill_in_input name: 'chat-bot-message-body', value: 'トレーニング回答'
+            sleep 1
+            page.save_screenshot
             click_link 'キャンセル'
             sleep 1
             find('.chat-section__switch').click

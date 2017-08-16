@@ -13,3 +13,25 @@ Capybara.register_driver :selenium do |app|
 end
 
 Capybara.javascript_driver = :selenium
+
+module CapybaraHelpers
+  def fill_in_input(id: nil, name: nil, value:)
+    find_script = if id.present?
+      "document.getElementById('#{id}')"
+    elsif name.present?
+      "document.querySelector('[name=\"#{name}\"]')"
+    end
+
+    script = %Q{
+      (function() {
+        var target = #{find_script};
+        target.value = '#{value}';
+        var event = document.createEvent('Events');
+        event.initEvent('input', true, true);
+        target.dispatchEvent(event);
+      })();
+    }
+
+    page.execute_script(script)
+  end
+end

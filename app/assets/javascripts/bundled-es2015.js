@@ -2895,13 +2895,6 @@ var ChatForm = function (_Component) {
   }
 
   _createClass(ChatForm, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, _) {
-      if ((0, _isEmpty2.default)(this.props.messageBody)) {
-        (0, _reactDom.findDOMNode)(this.refs.input).focus();
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
       var _props = this.props,
@@ -2930,8 +2923,7 @@ var ChatForm = function (_Component) {
                 placeholder: "\u8CEA\u554F\u3092\u5165\u308C\u3066\u304F\u3060\u3055\u3044",
                 value: messageBody,
                 onChange: this.onChange.bind(this),
-                disabled: isDisabled,
-                autoFocus: true
+                disabled: isDisabled
               }),
               _react2.default.createElement(
                 "button",

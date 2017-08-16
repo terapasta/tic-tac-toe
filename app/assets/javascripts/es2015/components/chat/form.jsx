@@ -19,12 +19,6 @@ export default class ChatForm extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, _) {
-    if (isEmpty(this.props.messageBody)) {
-      findDOMNode(this.refs.input).focus();
-    }
-  }
-
   render() {
     const {
       onSubmit,
@@ -46,7 +40,6 @@ export default class ChatForm extends Component {
                 value={messageBody}
                 onChange={this.onChange.bind(this)}
                 disabled={isDisabled}
-                autoFocus={true}
               />
               <button
                 className="chat-form__submit"

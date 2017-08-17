@@ -4,7 +4,6 @@ import argparse
 from gevent.server import StreamServer
 from mprpc import RPCServer
 
-from learning.core.learn.learning_parameter import LearningParameter
 from app.shared.logger import logger
 from app.shared.config import Config
 from app.shared.stop_watch import stop_watch
@@ -16,9 +15,7 @@ from app.controllers.learn_controller import LearnController
 class MyopeServer(RPCServer):
 
     def reply(self, bot_id, body, learning_parameter_attributes):
-        CurrentBot().init(bot_id)
-        # TODO: learning_parameterを使用する
-        learning_parameter = LearningParameter(learning_parameter_attributes)
+        CurrentBot().init(bot_id, learning_parameter_attributes)
         X = np.array([body])
 
         try:
@@ -34,8 +31,7 @@ class MyopeServer(RPCServer):
 
     @stop_watch
     def learn(self, bot_id, learning_parameter_attributes):
-        CurrentBot().init(bot_id)
-        learning_parameter = LearningParameter(learning_parameter_attributes)
+        CurrentBot().init(bot_id, learning_parameter_attributes)
         try:
             result = LearnController().perform()
         except:

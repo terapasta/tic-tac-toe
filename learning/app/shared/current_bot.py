@@ -8,12 +8,17 @@ class CurrentBot(object):
         self.__dict__ = self.__shared_state
         self.config = config if config is not None else Config()
 
-    def init(self, bot_id):
+    def init(self, bot_id, learning_parameter):
         self._bot_id = bot_id
+        self._learning_parameter = learning_parameter
 
     @property
     def id(self):
         return self._bot_id
+
+    @property
+    def learning_parameter(self):
+        return self._learning_parameter
 
     @property
     def dump_dirpath(self):

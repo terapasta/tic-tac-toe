@@ -49,7 +49,7 @@
                       dt 回答
                       dd
                         - if bot_message.answer_failed
-                          i.fa.fa-exclamation-triangle.text-warning
+                          = material_icon 'error_outline', class: 'mi-sm text-muted'
                           = space
                         = nl2br bot_message.body
 

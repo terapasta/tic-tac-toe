@@ -60,7 +60,7 @@ export default class ChatBotMessage extends Component {
       <div className={className} id={`message-${id}`}>
         <div className="chat-message__icon" style={iconStyle} key="icon" />
         <div className="chat-message__balloon" key="balloon">
-          {answerFailed && <i className="fa fa-exclamation-triangle text-warning" style={{marginRight: "4px"}} />}
+          {answerFailed && <i className="material-icons mi-xs text-muted mr-1">error_outline</i>}
           {!isLoading && <Linkify properties={{ target: "_blank" }}>{nl2br(body)}</Linkify>}
           {isLoading && (
             <div className="chat-message__balloon-loader">

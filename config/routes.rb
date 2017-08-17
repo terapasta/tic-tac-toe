@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get :styleguide, to: 'pages#styleguide'
-
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'

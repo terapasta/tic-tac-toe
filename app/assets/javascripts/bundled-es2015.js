@@ -2402,7 +2402,11 @@ var ChatBotMessage = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "chat-message__balloon", key: "balloon" },
-          answerFailed && _react2.default.createElement("i", { className: "fa fa-exclamation-triangle text-warning", style: { marginRight: "4px" } }),
+          answerFailed && _react2.default.createElement(
+            "i",
+            { className: "material-icons mi-xs text-muted mr-1" },
+            "error_outline"
+          ),
           !isLoading && _react2.default.createElement(
             _reactLinkify2.default,
             { properties: { target: "_blank" } },

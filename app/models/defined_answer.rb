@@ -4,6 +4,6 @@ class DefinedAnswer
   end
 
   def self.classify_failed_text
-    '回答出来ませんでした。この回答失敗時のメッセージはボット設定画面から変更できます。'
+    '回答出来ませんでした。この回答不可時のメッセージはボット設定画面から変更できます。'
   end
 end

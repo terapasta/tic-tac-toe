@@ -11,7 +11,7 @@
       - if message.answer_failed
         = material_icon 'error_outline', class: 'mi-sm text-muted'
         = space 2
-        small 回答失敗
+        small 回答不可
     .chat-message__rating
       .chat-message__rating-title この返答の評価
       span.chat-message__rating-button.good class=('active' if message.good?)

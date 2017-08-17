@@ -21,11 +21,13 @@ end
 Capybara.javascript_driver = :selenium
 
 module CapybaraHelpers
-  def fill_in_input(id: nil, name: nil, value:)
+  def fill_in_input(id: nil, name: nil, selector: nil, value:)
     find_script = if id.present?
       "document.getElementById('#{id}')"
     elsif name.present?
       "document.querySelector('[name=\"#{name}\"]')"
+    elsif selector.present?
+      "document.querySelector('#{selector}')"
     end
 
     script = %Q{

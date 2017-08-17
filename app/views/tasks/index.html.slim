@@ -3,7 +3,7 @@
 
 = render layout: 'bots/layout' do
   .card.card-outline-secondary.mb-3: .card-block
-    |対話タスクとは、うまくいかなかった対話（回答失敗かBad評価の付いたもの）の記録をタスク形式で表示する機能です。
+    |対話タスクとは、うまくいかなかった対話（回答不可かBad評価の付いたもの）の記録をタスク形式で表示する機能です。
     br
     |この対話記録を元に新しくQ&Aを作成していただくか、対応済みにすることでタスクを消化できます。
 
@@ -39,9 +39,9 @@
               .chat-message__icon style=("background-image:url(#{@bot.image_url});")
               .chat-message__balloon
                 - if task.bot_message.blank?
-                  i.fa.fa-exclamation-triangle.text-warning
+                  = material_icon 'error_outline', class: 'mi-sm text-muted'
                   = space 2
-                  span 回答失敗
+                  span 回答不可
                 - else
                   i.fa.fa-thumbs-down.text-danger
                   = space 2

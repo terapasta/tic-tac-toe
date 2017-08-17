@@ -42,12 +42,12 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'display tree nodes' do
-    find("#question-#{question_answers.first.id}").trigger('click')
+    find("#question-#{question_answers.first.id}").click
     expect(page).to have_content(question_answers.first.answer)
-    find("#answer-#{question_answers.first.id}").trigger('click')
+    find("#answer-#{question_answers.first.id}").click
     expect(page).to have_content(decision_branches.first.body)
     expect(page).to have_content(decision_branches.second.body)
-    find("#decision-branch-#{decision_branches.first.id}").trigger('click')
+    find("#decision-branch-#{decision_branches.first.id}").click
     expect(page).to have_content(decision_branches.first.answer)
   end
 
@@ -67,7 +67,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find("#answer-#{question_answers.first.id}").click
     find('#add-decision-branch-button').click
     fill_in_input name: 'decision-branch-body', value: 'new decision branch'
-    find('span.btn.btn-primary').click
+    find('span.btn.btn-success').click
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
     end
@@ -84,10 +84,10 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'updates decision branch' do
-    find("#question-#{question_answers.first.id}").trigger('click')
-    find("#answer-#{question_answers.first.id}").trigger('click')
+    find("#question-#{question_answers.first.id}").click
+    find("#answer-#{question_answers.first.id}").click
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn').trigger('click')
+      find('.btn').click
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
       fill_in_input name: 'decision-branch-body', value: 'updated decision branch'
@@ -109,16 +109,15 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes decision branch' do
-    find("#question-#{question_answers.first.id}").trigger('click')
-    find("#answer-#{question_answers.first.id}").trigger('click')
+    find("#question-#{question_answers.first.id}").click
+    find("#answer-#{question_answers.first.id}").click
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn').trigger('click')
+      find('.btn').click
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn-secondary').trigger('click')
+      find('.btn-secondary').click
     end
     find("#alert-delete-button").click
-    page.save_screenshot
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)
     end

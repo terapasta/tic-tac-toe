@@ -9,4 +9,4 @@ class TfidfVectorizer:
         self.vectorizer.fit(sentences)
 
     def transform(self, sentences):
-        self.vectorizer.transform(sentences)
+        return self.vectorizer.transform(sentences)

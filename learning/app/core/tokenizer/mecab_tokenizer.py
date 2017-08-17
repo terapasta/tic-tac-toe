@@ -8,7 +8,13 @@ class MecabTokenizer:
         # Note: node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         self.tagger.parse('')
 
-    def tokenize(self, text):
+    def tokenize(self, texts):
+        splited_texts = []
+        for text in texts:
+            splited_texts.append(self.tokenize_single_text(text))
+        return splited_texts
+
+    def tokenize_single_text(self, text):
         node = self.tagger.parseToNode(text)
         word_list = []
         while node:
@@ -38,4 +44,4 @@ class MecabTokenizer:
 
                 word_list.append(mojimoji.han_to_zen(lemma))
             node = node.next
-        return word_list
+        return " ".join(word_list)

@@ -6,22 +6,23 @@ from mprpc import RPCServer
 
 from learning.core.stop_watch import stop_watch
 from learning.log import logger
-from learning.core.predict.null_reply_result import NullReplyResult
-from learning.core.learn.bot import Bot
 from learning.core.learn.learning_parameter import LearningParameter
 from app.shared.config import Config
+from app.shared.current_bot import CurrentBot
 from app.controllers.reply_controller import ReplyController
+from app.controllers.learn_controller import LearnController
 
 
 class MyopeServer(RPCServer):
 
     def reply(self, bot_id, body, learning_parameter_attributes):
+        CurrentBot().init(bot_id)
         # TODO: learning_parameterを使用する
         learning_parameter = LearningParameter(learning_parameter_attributes)
         X = np.array([body])
 
         try:
-            result = ReplyController(bot_id).perform(X[0])
+            result = ReplyController().perform(X[0])
         except:
             logger.error(traceback.format_exc())
             result = {
@@ -33,14 +34,19 @@ class MyopeServer(RPCServer):
 
     @stop_watch
     def learn(self, bot_id, learning_parameter_attributes):
+        CurrentBot().init(bot_id)
         learning_parameter = LearningParameter(learning_parameter_attributes)
-        evaluator = Bot(bot_id, learning_parameter).learn()
-        return {
-            'accuracy': evaluator.accuracy,
-            'precision': evaluator.precision,
-            'recall': evaluator.recall,
-            'f1': evaluator.f1,
-        }
+        try:
+            result = LearnController().perform()
+        except:
+            logger.error(traceback.format_exc())
+            result = {
+                'accuracy': 0,
+                'precision': 0,
+                'recall': 0,
+                'f1': 0,
+            }
+        return result
 
 
 if __name__ == '__main__':

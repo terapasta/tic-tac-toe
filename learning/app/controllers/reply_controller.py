@@ -1,18 +1,16 @@
 import numpy as np
-import pandas as pd
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
-from learning.core.predict.reply_result import ReplyResult
+from app.shared.current_bot import CurrentBot
 
 
 class ReplyController:
-    def __init__(self, bot_id, factory=None):
-        self.bot_id = bot_id
+    def __init__(self, bot=None, factory=None):
+        self.bot = bot if bot is not None else CurrentBot()
         self._factory = factory if factory is not None else CosineSimilarityFactory()
 
     def perform(self, text):
-        bot_learning_training_messages_data = self._factory.get_learning_training_messages().by_bot(self.bot_id)
+        bot_learning_training_messages_data = self._factory.get_learning_training_messages().by_bot(self.bot.id)
         bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(bot_learning_training_messages_data['question'])
-        self._factory.get_vectorizer().fit(bot_tokenized_sentences)
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
 
         tokenized_sentences = self._factory.get_tokenizer().tokenize([text])

@@ -5,6 +5,12 @@ class LearningTrainingMessages:
     def __init__(self):
         self.database = Database()
 
+    def all(self):
+        return self.database.select(
+                "select * from learning_training_messages;",
+                params={}
+            )
+
     def by_bot(self, bot_id):
         return self.database.select(
                 "select * from learning_training_messages where bot_id = %(bot_id)s;",

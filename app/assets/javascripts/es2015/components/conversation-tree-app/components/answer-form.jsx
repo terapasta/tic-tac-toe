@@ -30,11 +30,9 @@ AnswerForm.onUpdateAnswer = (props, answer) => {
 };
 
 AnswerForm.onDeleteAnswer = (props) => {
-  if (window.confirm('本当に削除してよろしいですか？')) {
-    const { activeItem, questionsRepo, onDeleteAnswer } = props;
-    const { question } = questionsRepo[activeItem.node.id];
-    return onDeleteAnswer(activeItem.node.id, question);
-  }
+  const { activeItem, questionsRepo, onDeleteAnswer } = props;
+  const { question } = questionsRepo[activeItem.node.id];
+  return onDeleteAnswer(activeItem.node.id, question);
 };
 
 AnswerForm.onCreateDecisionBranch = (props, body) => {
@@ -50,10 +48,8 @@ AnswerForm.onUpdateDecisionBranch = (props, id, body) => {
 };
 
 AnswerForm.onDeleteDecisionBranch = (props, id) => {
-  if (window.confirm('本当に削除してよろしいですか？')) {
-    const { activeItem, onDeleteDecisionBranch } = props;
-    return onDeleteDecisionBranch(activeItem.node.id, id);
-  }
+  const { activeItem, onDeleteDecisionBranch } = props;
+  return onDeleteDecisionBranch(activeItem.node.id, id);
 };
 
 AnswerForm.propTypes = {

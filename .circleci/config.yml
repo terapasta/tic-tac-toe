@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.3.4-node-browsers
+      - image: kozo002/ruby-node-chrome
         environment:
           DB_HOST: 127.0.0.1
 
@@ -26,27 +26,16 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-{{ checksum "lib/bin/mecab-install-circleci.sh" }}
 
       - run:
           name: install dependencies
           command: |
-            sh lib/bin/mecab-install-circleci.sh
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
-            wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            cp chromedriver /usr/local/bin/chromedriver
 
       - save_cache:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "lib/bin/mecab-install-circleci.sh" }}
 
 
       # Database setup
@@ -71,9 +60,3 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
-
-dependencies:
-  pre:
-    - sh lib/bin/mecab-install-circleci.sh
-  cache_directories:
-    - vendor/mecab

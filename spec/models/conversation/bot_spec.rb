@@ -5,12 +5,17 @@ RSpec.describe Conversation::Bot do
   let(:question_answer) { create(:question_answer, bot: bot) }
   let(:message) { create(:message) }
   let(:conversation_bot) { Conversation::Bot.new(bot, message) }
+  let(:dummy_ml_engine) { double('dummy ml engine').as_null_object }
+
+  before do
+    allow(Ml::Engine).to receive(:new) { dummy_ml_engine }
+  end
 
   describe '#reply' do
     subject { conversation_bot.do_reply }
 
     before do
-      allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
+      allow(dummy_ml_engine).to receive(:reply).and_return({
         question_answer_id: question_answer.id,
         probability: 0.999,
         results: []
@@ -21,7 +26,7 @@ RSpec.describe Conversation::Bot do
 
     context '#replyの結果のanswer_idが0の場合' do
       before do
-        allow_any_instance_of(Ml::Engine).to receive(:reply).and_return({
+        allow(dummy_ml_engine).to receive(:reply).and_return({
           answer_id: Answer::NO_CLASSIFIED_ID,
           probability: 1.0,
           results: []

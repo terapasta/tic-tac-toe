@@ -6,7 +6,13 @@ Capybara.register_driver :selenium do |app|
     browser: :chrome,
     desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
       'chromeOptions' => {
-        args: %w(headless disable-gpu no-sandbox window-size=1680,1050),
+        args: %w(
+          headless
+          disable-gpu
+          no-sandbox
+          disable-popup-blocking
+          window-size=1680,1050
+        ),
       },
     )
   )

@@ -10,6 +10,7 @@ from app.shared.stop_watch import stop_watch
 from app.shared.current_bot import CurrentBot
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
+from app.factories.factory_selector import FactorySelector
 
 
 class MyopeServer(RPCServer):
@@ -19,7 +20,7 @@ class MyopeServer(RPCServer):
         X = np.array([body])
 
         try:
-            result = ReplyController().perform(X[0])
+            result = ReplyController(factory=FactorySelector().get_factory()).perform(X[0])
         except:
             logger.error(traceback.format_exc())
             result = {
@@ -33,7 +34,7 @@ class MyopeServer(RPCServer):
     def learn(self, bot_id, learning_parameter_attributes):
         CurrentBot().init(bot_id, learning_parameter_attributes)
         try:
-            result = LearnController().perform()
+            result = LearnController(factory=FactorySelector().get_factory()).perform()
         except:
             logger.error(traceback.format_exc())
             result = {

@@ -11,6 +11,7 @@ class CurrentBot(object):
     def init(self, bot_id, learning_parameter):
         self._bot_id = bot_id
         self._learning_parameter = learning_parameter
+        return self
 
     @property
     def id(self):
@@ -23,3 +24,10 @@ class CurrentBot(object):
     @property
     def dump_dirpath(self):
         return 'dumps/%s/%s' % (self.config.env, self._bot_id)
+
+    @property
+    def algorithm(self):
+        if self.learning_parameter.get('use_similarity_classification', True):
+            return 'similarity_classification'
+
+        return 'similarity_classification'

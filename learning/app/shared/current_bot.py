@@ -1,4 +1,5 @@
 from app.shared.config import Config
+from app.shared.constants import Constants
 
 
 class CurrentBot(object):
@@ -28,6 +29,6 @@ class CurrentBot(object):
     @property
     def algorithm(self):
         if self.learning_parameter.get('use_similarity_classification', True):
-            return 'similarity_classification'
+            return Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
 
-        return 'similarity_classification'
+        return self.learning_parameter.get('algorithm', Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)

@@ -1,6 +1,6 @@
 from functools import wraps
 import time
-from learning.log import logger
+from app.shared.logger import logger
 
 
 def stop_watch(func):

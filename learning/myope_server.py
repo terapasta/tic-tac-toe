@@ -4,10 +4,10 @@ import argparse
 from gevent.server import StreamServer
 from mprpc import RPCServer
 
-from learning.core.stop_watch import stop_watch
-from learning.log import logger
 from learning.core.learn.learning_parameter import LearningParameter
+from app.shared.logger import logger
 from app.shared.config import Config
+from app.shared.stop_watch import stop_watch
 from app.shared.current_bot import CurrentBot
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController

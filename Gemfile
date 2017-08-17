@@ -147,7 +147,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'
 
   # dummy data

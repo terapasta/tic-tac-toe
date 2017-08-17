@@ -7,10 +7,8 @@ class LearningParameter < ActiveRecord::Base
 
   def self.default_attributes
       {
-        algorithm: algorithms[:naive_bayes],
+        algorithm: algorithms[:logistic_regression],
         params_for_algorithm: {},
-        include_failed_data: false,  # FIXME include_failed_dataは現在は使用されていないので削除したい
-        include_tag_vector: false,
         classify_threshold: 0.5,
         use_similarity_classification: true,
       }

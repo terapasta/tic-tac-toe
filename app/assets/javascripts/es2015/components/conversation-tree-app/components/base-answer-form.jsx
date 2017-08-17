@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from 'react-textarea-autosize';
 import isEmpty from 'is-empty';
 
+import Modal from '../../modal';
 import EditingDecisionBranchForm from './editing-decision-branch-form';
 import NewDecisionBranchForm from './new-decision-branch-form';
 import DecisionBranchItem from './decision-branch-item';
@@ -14,6 +15,7 @@ class BaseAnswerForm extends Component {
       answer,
       decisionBranches,
       editingDecisionBranchIndex: null,
+      isShowConfirmDelete: false,
     };
   }
 
@@ -38,8 +40,28 @@ class BaseAnswerForm extends Component {
     return this.constructor.onUpdateDecisionBranch(this.props, id, body);
   }
 
-  onDeleteDeicsionBranch(id) {
+  onDeleteDecisionBranch(id) {
     return this.constructor.onDeleteDecisionBranch(this.props, id);
+  }
+
+  onClickDeleteCommon() {
+    const { deleteType, deletingDecisionBranchId } = this.state;
+
+    switch (deleteType) {
+      case 'answer':
+        this.onDeleteAnswer();
+        break;
+      case 'decisionBranch':
+        this.onDeleteDecisionBranch(deletingDecisionBranchId);
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      isShowConfirmDelete: false,
+      deleteType: null,
+      deletingDecisionBranchId: null,
+    });
   }
 
   renderDecisionBranches() {
@@ -61,7 +83,7 @@ class BaseAnswerForm extends Component {
                       this.setState({ editingDecisionBranchIndex: null });
                     });
                   }}
-                  onDelete={() => this.onDeleteDeicsionBranch(db.id)}
+                  onDelete={() => this.setState({ isShowConfirmDelete: true, deleteType: 'decisionBranch', deletingDecisionBranchId: db.id })}
                 />
               );
             } else {
@@ -80,7 +102,7 @@ class BaseAnswerForm extends Component {
   }
 
   render() {
-    const { answer } = this.state;
+    const { answer, isShowConfirmDelete } = this.state;
 
     return (
       <div>
@@ -107,7 +129,7 @@ class BaseAnswerForm extends Component {
             <a className="btn btn-link"
               id="delete-answer-button"
               href="#"
-              onClick={() => this.onDeleteAnswer(answer)}
+              onClick={() => this.setState({ isShowConfirmDelete: true, deleteType: 'answer' })}
               disabled={false}
             ><span className="text-danger">削除</span></a>
           </div>
@@ -120,6 +142,28 @@ class BaseAnswerForm extends Component {
             onSave={(body) => this.onCreateDecisionBranch(body)}
           />
         </div>
+
+        {isShowConfirmDelete && (
+          <Modal
+            title="本当に削除してよろしいですか？"
+            onClose={() => this.setState({ isShowConfirmDelete: false })}
+            narrow
+          >
+            <div className="text-right">
+              <button
+                className="btn btn-default"
+                onClick={() => this.setState({ isShowConfirmDelete: false })}
+                id="alert-cancel-button"
+              >キャンセル</button>
+              &nbsp;
+              <button
+                className="btn btn-danger"
+                onClick={() => this.onClickDeleteCommon()}
+                id="alert-delete-button"
+              >削除</button>
+            </div>
+          </Modal>
+        )}
       </div>
     );
   }

@@ -11,6 +11,8 @@ import {
   decisionBranchesRepoType,
 } from '../types';
 
+import Modal from '../../modal';
+
 const getBodyAndAnswer = (props, { exists, empty }) => {
   const { activeItem, decisionBranchesRepo } = props;
   const decisionBranch = decisionBranchesRepo[activeItem.node.id];
@@ -70,7 +72,6 @@ class DecisionBranchForm extends Component {
   onDelete() {
     if (this.state.disabled) { return; }
     this.setState({ disabled: true });
-    if (!window.confirm('本当に削除してよろしいですか？')) { return; }
 
     const {
       activeItem,
@@ -91,7 +92,7 @@ class DecisionBranchForm extends Component {
   }
 
   render() {
-    const { answer, body } = this.state;
+    const { answer, body, isShowConfirmDelete } = this.state;
 
     return (
       <div>
@@ -125,9 +126,31 @@ class DecisionBranchForm extends Component {
           <a className="btn btn-link"
             id="delete-answer-button"
             href="#"
-            onClick={this.onDelete}
+            onClick={() => this.setState({ isShowConfirmDelete: true })}
           ><span className="text-danger">削除</span></a>
         </div>
+
+        {isShowConfirmDelete && (
+          <Modal
+            title="本当に削除してよろしいですか？"
+            onClose={() => this.setState({ isShowConfirmDelete: false })}
+            narrow
+          >
+            <div className="text-right">
+              <button
+                className="btn btn-default"
+                onClick={() => this.setState({ isShowConfirmDelete: false })}
+                id="alert-cancel-button"
+              >キャンセル</button>
+              &nbsp;
+              <button
+                className="btn btn-danger"
+                onClick={this.onDelete}
+                id="alert-delete-button"
+              >削除</button>
+            </div>
+          </Modal>
+        )}
       </div>
     );
   }

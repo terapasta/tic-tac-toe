@@ -1,4 +1,4 @@
-- if need_side_nav?
+- if need_side_nav? && @bot.present?
   #sidebar-wrapper
     .sidebar-nav.list-group
       = link_to edit_bot_path(@bot), class: 'bot-profile list-group-item text-center' do

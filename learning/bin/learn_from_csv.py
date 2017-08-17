@@ -10,8 +10,6 @@ parser.add_argument('--excluded_labels_for_fitting', nargs='+', default=None, ty
 args = parser.parse_args()
 
 attr = {
-    'include_failed_data': False,
-    'include_tag_vector': False,
     'classify_threshold': args.classify_threshold,
     'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
     'params_for_algorithm': {},

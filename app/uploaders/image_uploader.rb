@@ -12,12 +12,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    if Rails.env.development?
-      origin = 'http://localhost:3000'
-      origin + ActionController::Base.helpers.asset_url("default_bot.png")
-    else
-      ActionController::Base.helpers.asset_url("default_bot.png")
-    end
+    [
+      (Rails.env.development? ? CarrierWave::Uploader::Base.asset_host : nil),
+      ActionController::Base.helpers.asset_url("default_bot.png"),
+    ].compact.join
   end
 
   # Process files as they are uploaded:

@@ -13,8 +13,6 @@ class MyopeServerTestCase(TestCase):
     def setUp(self):
         self.bot_id = 999
         self.learning_parameter_attributes = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION
         }
 

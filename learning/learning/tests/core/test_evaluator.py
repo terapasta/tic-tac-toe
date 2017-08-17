@@ -35,8 +35,6 @@ class EvaluatorTestCase(TestCase):
 
     def test_normal_evaluate(self):
         attr = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
             'classify_threshold': 0.5,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
             'params_for_algorithm': {}
@@ -56,8 +54,6 @@ class EvaluatorTestCase(TestCase):
 
     def test_no_exist_excluded_labels(self):
         attr = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
             'classify_threshold': 0.5,
             'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
             'params_for_algorithm': {}
@@ -77,26 +73,24 @@ class EvaluatorTestCase(TestCase):
         ok_(evaluator.accuracy > 0)
         ok_(evaluator.failure_score == 0)
 
-    def test_exist_excluded_labels(self):
-        attr = {
-            'include_failed_data': False,
-            'include_tag_vector': False,
-            'classify_threshold': 0.5,
-            'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
-            'params_for_algorithm': {},
-            'excluded_labels_for_fitting': [8974,9015,10238]
-        }
-        learning_parameter = LearningParameter(attr)
-        estimator, training_set = self.__get_estimator_and_training_set(learning_parameter)
+    # def test_exist_excluded_labels(self):
+    #     attr = {
+    #         'classify_threshold': 0.5,
+    #         'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
+    #         'params_for_algorithm': {},
+    #         'excluded_labels_for_fitting': [8974,9015,10238]
+    #     }
+    #     learning_parameter = LearningParameter(attr)
+    #     estimator, training_set = self.__get_estimator_and_training_set(learning_parameter)
 
-        '''
-            evaluate_with_failure_scoreを実行し
-            回答失敗になるスコアを計測。
-              学習セットから分離させたいラベルが指定されている場合
-              accuracyおよびfailure_scoreが算出される
-        '''
-        evaluator = Evaluator()
-        evaluator.evaluate_with_failure_score(estimator, training_set, learning_parameter)
+    #     '''
+    #         evaluate_with_failure_scoreを実行し
+    #         回答失敗になるスコアを計測。
+    #           学習セットから分離させたいラベルが指定されている場合
+    #           accuracyおよびfailure_scoreが算出される
+    #     '''
+    #     evaluator = Evaluator()
+    #     evaluator.evaluate_with_failure_score(estimator, training_set, learning_parameter)
 
-        ok_(evaluator.accuracy > 0)
-        ok_(evaluator.failure_score > 0)
+    #     ok_(evaluator.accuracy > 0)
+    #     ok_(evaluator.failure_score > 0)

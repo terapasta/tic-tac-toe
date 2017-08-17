@@ -5461,14 +5461,12 @@ AnswerForm.onUpdateAnswer = function (props, answer) {
 };
 
 AnswerForm.onDeleteAnswer = function (props) {
-  if (window.confirm('本当に削除してよろしいですか？')) {
-    var activeItem = props.activeItem,
-        questionsRepo = props.questionsRepo,
-        onDeleteAnswer = props.onDeleteAnswer;
-    var question = questionsRepo[activeItem.node.id].question;
+  var activeItem = props.activeItem,
+      questionsRepo = props.questionsRepo,
+      onDeleteAnswer = props.onDeleteAnswer;
+  var question = questionsRepo[activeItem.node.id].question;
 
-    return onDeleteAnswer(activeItem.node.id, question);
-  }
+  return onDeleteAnswer(activeItem.node.id, question);
 };
 
 AnswerForm.onCreateDecisionBranch = function (props, body) {
@@ -5492,12 +5490,10 @@ AnswerForm.onUpdateDecisionBranch = function (props, id, body) {
 };
 
 AnswerForm.onDeleteDecisionBranch = function (props, id) {
-  if (window.confirm('本当に削除してよろしいですか？')) {
-    var activeItem = props.activeItem,
-        onDeleteDecisionBranch = props.onDeleteDecisionBranch;
+  var activeItem = props.activeItem,
+      onDeleteDecisionBranch = props.onDeleteDecisionBranch;
 
-    return onDeleteDecisionBranch(activeItem.node.id, id);
-  }
+  return onDeleteDecisionBranch(activeItem.node.id, id);
 };
 
 AnswerForm.propTypes = {
@@ -5676,6 +5672,10 @@ var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _modal = require('../../modal');
+
+var _modal2 = _interopRequireDefault(_modal);
+
 var _editingDecisionBranchForm = require('./editing-decision-branch-form');
 
 var _editingDecisionBranchForm2 = _interopRequireDefault(_editingDecisionBranchForm);
@@ -5711,7 +5711,8 @@ var BaseAnswerForm = function (_Component) {
     _this.state = {
       answer: answer,
       decisionBranches: decisionBranches,
-      editingDecisionBranchIndex: null
+      editingDecisionBranchIndex: null,
+      isShowConfirmDelete: false
     };
     return _this;
   }
@@ -5746,18 +5747,42 @@ var BaseAnswerForm = function (_Component) {
       return this.constructor.onUpdateDecisionBranch(this.props, id, body);
     }
   }, {
-    key: 'onDeleteDeicsionBranch',
-    value: function onDeleteDeicsionBranch(id) {
+    key: 'onDeleteDecisionBranch',
+    value: function onDeleteDecisionBranch(id) {
       return this.constructor.onDeleteDecisionBranch(this.props, id);
+    }
+  }, {
+    key: 'onClickDeleteCommon',
+    value: function onClickDeleteCommon() {
+      var _state = this.state,
+          deleteType = _state.deleteType,
+          deletingDecisionBranchId = _state.deletingDecisionBranchId;
+
+
+      switch (deleteType) {
+        case 'answer':
+          this.onDeleteAnswer();
+          break;
+        case 'decisionBranch':
+          this.onDeleteDecisionBranch(deletingDecisionBranchId);
+          break;
+        default:
+          break;
+      }
+      this.setState({
+        isShowConfirmDelete: false,
+        deleteType: null,
+        deletingDecisionBranchId: null
+      });
     }
   }, {
     key: 'renderDecisionBranches',
     value: function renderDecisionBranches() {
       var _this2 = this;
 
-      var _state = this.state,
-          decisionBranches = _state.decisionBranches,
-          editingDecisionBranchIndex = _state.editingDecisionBranchIndex;
+      var _state2 = this.state,
+          decisionBranches = _state2.decisionBranches,
+          editingDecisionBranchIndex = _state2.editingDecisionBranchIndex;
 
       if ((0, _isEmpty2.default)(decisionBranches)) {
         return null;
@@ -5783,7 +5808,7 @@ var BaseAnswerForm = function (_Component) {
                   });
                 },
                 onDelete: function onDelete() {
-                  return _this2.onDeleteDeicsionBranch(db.id);
+                  return _this2.setState({ isShowConfirmDelete: true, deleteType: 'decisionBranch', deletingDecisionBranchId: db.id });
                 }
               });
             } else {
@@ -5804,7 +5829,9 @@ var BaseAnswerForm = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var answer = this.state.answer;
+      var _state3 = this.state,
+          answer = _state3.answer,
+          isShowConfirmDelete = _state3.isShowConfirmDelete;
 
 
       return _react2.default.createElement(
@@ -5858,7 +5885,7 @@ var BaseAnswerForm = function (_Component) {
                 id: 'delete-answer-button',
                 href: '#',
                 onClick: function onClick() {
-                  return _this3.onDeleteAnswer(answer);
+                  return _this3.setState({ isShowConfirmDelete: true, deleteType: 'answer' });
                 },
                 disabled: false
               },
@@ -5879,6 +5906,43 @@ var BaseAnswerForm = function (_Component) {
               return _this3.onCreateDecisionBranch(body);
             }
           })
+        ),
+        isShowConfirmDelete && _react2.default.createElement(
+          _modal2.default,
+          {
+            title: '\u672C\u5F53\u306B\u524A\u9664\u3057\u3066\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F',
+            onClose: function onClose() {
+              return _this3.setState({ isShowConfirmDelete: false });
+            },
+            narrow: true
+          },
+          _react2.default.createElement(
+            'div',
+            { className: 'text-right' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-default',
+                onClick: function onClick() {
+                  return _this3.setState({ isShowConfirmDelete: false });
+                },
+                id: 'alert-cancel-button'
+              },
+              '\u30AD\u30E3\u30F3\u30BB\u30EB'
+            ),
+            '\xA0',
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-danger',
+                onClick: function onClick() {
+                  return _this3.onClickDeleteCommon();
+                },
+                id: 'alert-delete-button'
+              },
+              '\u524A\u9664'
+            )
+          )
         )
       );
     }
@@ -5889,7 +5953,7 @@ var BaseAnswerForm = function (_Component) {
 
 exports.default = BaseAnswerForm;
 
-},{"./decision-branch-item":58,"./editing-decision-branch-form":60,"./new-decision-branch-form":61,"is-empty":445,"react":886,"react-textarea-autosize":756}],56:[function(require,module,exports){
+},{"../../modal":78,"./decision-branch-item":58,"./editing-decision-branch-form":60,"./new-decision-branch-form":61,"is-empty":445,"react":886,"react-textarea-autosize":756}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6033,6 +6097,10 @@ var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
 var _types = require('../types');
 
+var _modal = require('../../modal');
+
+var _modal2 = _interopRequireDefault(_modal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6138,9 +6206,6 @@ var DecisionBranchForm = function (_Component) {
         return;
       }
       this.setState({ disabled: true });
-      if (!window.confirm('本当に削除してよろしいですか？')) {
-        return;
-      }
 
       var _props2 = this.props,
           activeItem = _props2.activeItem,
@@ -6167,7 +6232,8 @@ var DecisionBranchForm = function (_Component) {
 
       var _state2 = this.state,
           answer = _state2.answer,
-          body = _state2.body;
+          body = _state2.body,
+          isShowConfirmDelete = _state2.isShowConfirmDelete;
 
 
       return _react2.default.createElement(
@@ -6230,11 +6296,48 @@ var DecisionBranchForm = function (_Component) {
             { className: 'btn btn-link',
               id: 'delete-answer-button',
               href: '#',
-              onClick: this.onDelete
+              onClick: function onClick() {
+                return _this4.setState({ isShowConfirmDelete: true });
+              }
             },
             _react2.default.createElement(
               'span',
               { className: 'text-danger' },
+              '\u524A\u9664'
+            )
+          )
+        ),
+        isShowConfirmDelete && _react2.default.createElement(
+          _modal2.default,
+          {
+            title: '\u672C\u5F53\u306B\u524A\u9664\u3057\u3066\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F',
+            onClose: function onClose() {
+              return _this4.setState({ isShowConfirmDelete: false });
+            },
+            narrow: true
+          },
+          _react2.default.createElement(
+            'div',
+            { className: 'text-right' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-default',
+                onClick: function onClick() {
+                  return _this4.setState({ isShowConfirmDelete: false });
+                },
+                id: 'alert-cancel-button'
+              },
+              '\u30AD\u30E3\u30F3\u30BB\u30EB'
+            ),
+            '\xA0',
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-danger',
+                onClick: this.onDelete,
+                id: 'alert-delete-button'
+              },
               '\u524A\u9664'
             )
           )
@@ -6258,7 +6361,7 @@ DecisionBranchForm.propTypes = {
 
 exports.default = DecisionBranchForm;
 
-},{"../types":72,"is-empty":445,"lodash/find":672,"lodash/includes":678,"lodash/map":699,"react":886,"react-textarea-autosize":756}],58:[function(require,module,exports){
+},{"../../modal":78,"../types":72,"is-empty":445,"lodash/find":672,"lodash/includes":678,"lodash/map":699,"react":886,"react-textarea-autosize":756}],58:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6822,6 +6925,10 @@ var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
 var _types = require('../types');
 
+var _modal = require('../../modal');
+
+var _modal2 = _interopRequireDefault(_modal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6851,7 +6958,8 @@ var QuestionForm = function (_Component) {
     var question = questionsRepo[activeItem.node.id];
     _this.state = {
       question: question.question,
-      answer: question.answer
+      answer: question.answer,
+      isShowConfirmDelete: false
     };
     return _this;
   }
@@ -6899,9 +7007,7 @@ var QuestionForm = function (_Component) {
           activeItem = _props2.activeItem,
           onDelete = _props2.onDelete;
 
-      if (window.confirm('本当に削除してよろしいですか？')) {
-        onDelete(activeItem.node.id);
-      }
+      onDelete(activeItem.node.id);
     }
   }, {
     key: 'render',
@@ -6911,7 +7017,8 @@ var QuestionForm = function (_Component) {
       var activeItem = this.props.activeItem;
       var _state2 = this.state,
           question = _state2.question,
-          answer = _state2.answer;
+          answer = _state2.answer,
+          isShowConfirmDelete = _state2.isShowConfirmDelete;
 
 
       return _react2.default.createElement(
@@ -6992,7 +7099,9 @@ var QuestionForm = function (_Component) {
                 { className: 'btn btn-link',
                   id: 'delete-answer-button',
                   href: '#',
-                  onClick: this.onDelete,
+                  onClick: function onClick() {
+                    return _this2.setState({ isShowConfirmDelete: true });
+                  },
                   disabled: false
                 },
                 _react2.default.createElement(
@@ -7001,6 +7110,41 @@ var QuestionForm = function (_Component) {
                   '\u524A\u9664'
                 )
               )
+            )
+          )
+        ),
+        isShowConfirmDelete && _react2.default.createElement(
+          _modal2.default,
+          {
+            title: '\u672C\u5F53\u306B\u524A\u9664\u3057\u3066\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F',
+            onClose: function onClose() {
+              return _this2.setState({ isShowConfirmDelete: false });
+            },
+            narrow: true
+          },
+          _react2.default.createElement(
+            'div',
+            { className: 'text-right' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-default',
+                onClick: function onClick() {
+                  return _this2.setState({ isShowConfirmDelete: false });
+                },
+                id: 'alert-cancel-button'
+              },
+              '\u30AD\u30E3\u30F3\u30BB\u30EB'
+            ),
+            '\xA0',
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'btn btn-danger',
+                onClick: this.onDelete,
+                id: 'alert-delete-button'
+              },
+              '\u524A\u9664\u3059\u308B'
             )
           )
         )
@@ -7021,7 +7165,7 @@ QuestionForm.propTypes = {
 
 exports.default = QuestionForm;
 
-},{"../types":72,"is-empty":445,"react":886,"react-textarea-autosize":756}],63:[function(require,module,exports){
+},{"../../modal":78,"../types":72,"is-empty":445,"react":886,"react-textarea-autosize":756}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8473,6 +8617,10 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = require("classnames");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _isEmpty = require("is-empty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
@@ -8502,8 +8650,13 @@ var Modal = function (_Component) {
           title = _props.title,
           children = _props.children,
           iframeUrl = _props.iframeUrl,
-          wide = _props.wide;
+          wide = _props.wide,
+          narrow = _props.narrow;
 
+
+      var dialogStyle = {
+        width: narrow ? '300px' : ''
+      };
 
       return _react2.default.createElement(
         "span",
@@ -8518,10 +8671,13 @@ var Modal = function (_Component) {
             } },
           _react2.default.createElement(
             "div",
-            { className: "modal-dialog" + (wide ? " wide" : ""),
+            {
+              className: (0, _classnames2.default)('modal-dialog', { wide: wide }),
               onClick: function onClick(e) {
-                e.stopPropagation();
-              } },
+                return e.stopPropagation();
+              },
+              style: dialogStyle
+            },
             _react2.default.createElement(
               "div",
               { className: "modal-content" },
@@ -8546,7 +8702,7 @@ var Modal = function (_Component) {
                 { className: "modal-body" },
                 children
               ),
-              !(0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement("iframe", { className: "modal-iframe", src: iframeUrl })
+              !(0, _isEmpty2.default)(iframeUrl) && _react2.default.createElement("iframe", { className: "modal-iframe", src: iframeUrl, title: title })
             )
           )
         )
@@ -8559,7 +8715,7 @@ var Modal = function (_Component) {
 
 exports.default = Modal;
 
-},{"is-empty":445,"react":886}],79:[function(require,module,exports){
+},{"classnames":118,"is-empty":445,"react":886}],79:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

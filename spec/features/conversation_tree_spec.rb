@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'ConversationTree', type: :feature, js: true do
   include RequestSpecHelper
+  include CapybaraHelpers
 
   let!(:staff) do
     create(:user, role: :staff)
@@ -51,9 +52,9 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'creates question with answer'  do
-    find('#adding').trigger('click')
-    fill_in 'question-question', with: 'new question'
-    fill_in 'question-answer', with: 'new answer'
+    find('#adding').click
+    fill_in_input name: 'question-question', value: 'new question'
+    fill_in_input name: 'question-answer', value: 'new answer'
     click_link '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('new question')
@@ -62,20 +63,20 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'creates decision_branch' do
-    find("#question-#{question_answers.first.id}").trigger('click')
-    find("#answer-#{question_answers.first.id}").trigger('click')
-    find('#add-decision-branch-button').trigger('click')
-    fill_in 'decision-branch-body', with: 'new decision branch'
-    find('span.btn.btn-success').trigger('click')
+    find("#question-#{question_answers.first.id}").click
+    find("#answer-#{question_answers.first.id}").click
+    find('#add-decision-branch-button').click
+    fill_in_input name: 'decision-branch-body', value: 'new decision branch'
+    find('span.btn.btn-primary').click
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
     end
   end
 
   scenario 'updates answer' do
-    find("#question-#{question_answers.first.id}").trigger('click')
-    find("#answer-#{question_answers.first.id}").trigger('click')
-    fill_in 'answer-body', with: 'updated answer'
+    find("#question-#{question_answers.first.id}").click
+    find("#answer-#{question_answers.first.id}").click
+    fill_in_input name: 'answer-body', value: 'updated answer'
     click_link '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated answer')
@@ -89,8 +90,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
       find('.btn').trigger('click')
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      fill_in 'decision-branch-body', with: 'updated decision branch'
-      find('.btn-success').trigger('click')
+      fill_in_input name: 'decision-branch-body', value: 'updated decision branch'
+      find('.btn-success').click
     end
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated decision branch')
@@ -98,9 +99,10 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes answer' do
-    find("#question-#{question_answers.first.id}").trigger('click')
-    find("#answer-#{question_answers.first.id}").trigger('click')
-    find("#delete-answer-button").trigger('click')
+    find("#question-#{question_answers.first.id}").click
+    find("#answer-#{question_answers.first.id}").click
+    find("#delete-answer-button").click
+    find("#alert-delete-button").click
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(question_answers.first.answer)
     end
@@ -115,6 +117,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     within "#decision-branch-item-#{decision_branches.first.id}" do
       find('.btn-secondary').trigger('click')
     end
+    find("#alert-delete-button").click
+    page.save_screenshot
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)
     end

@@ -1,6 +1,4 @@
 class Learning::Summarizer
-  include Learning::TagSummarizable
-
   def initialize(bot)
     @bot = bot
   end

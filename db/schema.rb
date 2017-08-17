@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721025724) do
+ActiveRecord::Schema.define(version: 20170809054543) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -68,23 +68,21 @@ ActiveRecord::Schema.define(version: 20170721025724) do
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",                      limit: 4
     t.string   "name",                         limit: 255
-    t.string   "token",                        limit: 64,                    null: false
+    t.string   "token",                        limit: 64,    null: false
     t.string   "classify_failed_message",      limit: 255
     t.string   "start_message",                limit: 255
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "image",                        limit: 255
     t.string   "learning_status",              limit: 255
     t.datetime "learning_status_changed_at"
-    t.boolean  "is_limited",                                 default: false
-    t.boolean  "is_selected_for_chat",                       default: false
     t.text     "selected_question_answer_ids", limit: 65535
+    t.text     "has_suggests_message",         limit: 65535
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
 
   create_table "chats", force: :cascade do |t|
-    t.string   "context",    limit: 255
     t.string   "guest_key",  limit: 255,                 null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -140,14 +138,12 @@ ActiveRecord::Schema.define(version: 20170721025724) do
 
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",                        limit: 4
-    t.integer  "algorithm",                     limit: 4,     default: 0,     null: false
+    t.integer  "algorithm",                     limit: 4,     default: 0,    null: false
     t.text     "params_for_algorithm",          limit: 65535
-    t.boolean  "include_failed_data",                         default: false, null: false
-    t.boolean  "include_tag_vector",                          default: false, null: false
-    t.float    "classify_threshold",            limit: 24,    default: 0.5,   null: false
-    t.boolean  "use_similarity_classification",               default: true,  null: false
-    t.datetime "created_at",                                                  null: false
-    t.datetime "updated_at",                                                  null: false
+    t.float    "classify_threshold",            limit: 24,    default: 0.5,  null: false
+    t.boolean  "use_similarity_classification",               default: true, null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -157,7 +153,6 @@ ActiveRecord::Schema.define(version: 20170721025724) do
     t.string   "question",           limit: 255
     t.text     "answer_body",        limit: 65535
     t.integer  "answer_id",          limit: 4
-    t.text     "tag_ids",            limit: 65535
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer  "question_answer_id", limit: 4
@@ -173,29 +168,25 @@ ActiveRecord::Schema.define(version: 20170721025724) do
     t.string   "speaker",            limit: 255,                   null: false
     t.text     "body",               limit: 65535
     t.string   "user_agent",         limit: 1024
-    t.boolean  "learn_enabled",                    default: true,  null: false
     t.boolean  "answer_failed",                    default: false, null: false
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.integer  "rating",             limit: 4,     default: 0
     t.boolean  "answer_marked",                    default: false, null: false
-    t.datetime "trained_at"
     t.integer  "question_answer_id", limit: 4
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
-  add_index "messages", ["trained_at"], name: "index_messages_on_trained_at", using: :btree
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4
     t.text     "question",   limit: 65535
     t.integer  "answer_id",  limit: 4
     t.text     "underlayer", limit: 65535
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.boolean  "selection",                default: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.text     "answer",     limit: 65535
   end
 
@@ -224,14 +215,6 @@ ActiveRecord::Schema.define(version: 20170721025724) do
 
   add_index "sentence_synonyms", ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id", using: :btree
   add_index "sentence_synonyms", ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id", using: :btree
-
-  create_table "services", force: :cascade do |t|
-    t.integer  "feature",    limit: 4, null: false
-    t.boolean  "enabled",              null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "bot_id",     limit: 4, null: false
-  end
 
   create_table "tasks", force: :cascade do |t|
     t.text     "guest_message", limit: 65535

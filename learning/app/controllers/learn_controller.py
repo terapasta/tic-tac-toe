@@ -18,14 +18,11 @@ class LearnController:
 
         self._learn()
 
+        result = self._evaluate()
+
         self._write_process_log('end')
 
-        return {
-            'accuracy': 0,
-            'precision': 0,
-            'recall': 0,
-            'f1': 0,
-        }
+        return result
 
     def _vocabulary_learn(self):
         self._write_process_log('load all learning_training_messages')
@@ -58,6 +55,14 @@ class LearnController:
                 bot_features,
                 question_answer_ids,
             )
+
+    def _evaluate(self):
+        return {
+            'accuracy': 0,
+            'precision': 0,
+            'recall': 0,
+            'f1': 0,
+        }
 
     def _write_process_log(self, process_name):
         logger.info('>> LearnController: %s' % process_name)

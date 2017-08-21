@@ -1,6 +1,6 @@
 class WordMapping < ActiveRecord::Base
   belongs_to :bot
-  has_many :synonyms
+  has_many :word_mapping_synonyms
 
   validates :word,
     presence: true,

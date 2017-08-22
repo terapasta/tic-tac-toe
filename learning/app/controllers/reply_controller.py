@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
@@ -34,26 +35,19 @@ class ReplyController:
         probabilities = self._factory.get_estimator().predict(question_features, bot_features)
 
         self._write_process_log('sort')
-        sorted_data = sorted(
-                zip(bot_learning_training_messages_data['question_answer_id'], probabilities),
-                key=lambda x: x[1],
-                reverse=True
-            )
-        results = list(map(
-                (lambda x: {
-                    'question_answer_id': float(x[0]),
-                    'probability': x[1],
-                }),
-                sorted_data
-            ))
-        for row in results[:10]:
+        data_frame = bot_learning_training_messages_data[['question', 'question_answer_id']]
+        data_frame['probability'] = probabilities
+        data_frame = data_frame.sort_values(by='probability', ascending=False)
+        results = data_frame.to_dict('records')[:10]
+ 
+        for row in results:
             logger.debug(row)
 
         self._write_process_log('end')
 
         return {
             'question_feature_count': np.count_nonzero(question_features.toarray()),
-            'results': results[:10],
+            'results': results,
         }
 
     def _write_process_log(self, process_name):

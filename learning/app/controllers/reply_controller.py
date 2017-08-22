@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
@@ -39,7 +38,7 @@ class ReplyController:
         data_frame['probability'] = probabilities
         data_frame = data_frame.sort_values(by='probability', ascending=False)
         results = data_frame.to_dict('records')[:10]
- 
+
         for row in results:
             logger.debug(row)
 

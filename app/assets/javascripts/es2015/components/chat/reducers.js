@@ -18,6 +18,7 @@ const app = combineReducers({
   learnings,
   readMore,
   token: through,
+  isAdmin: through,
   isManager: through,
   flashMessage: through,
   initialQuestions,

@@ -3,7 +3,7 @@ import TextArea from 'react-textarea-autosize';
 import isEmpty from 'is-empty';
 
 import { activeItemType, questionsRepoType } from '../types';
-import Modal from '../../mGodal';
+import Modal from '../../modal';
 
 class QuestionForm extends Component {
   constructor(props) {

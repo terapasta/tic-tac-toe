@@ -1,10 +1,9 @@
 class LearnJob < ActiveJob::Base
   queue_as :default
 
-  rescue_from StandardError, with: :handle_error
-
   def perform(bot_id)
     @bot = Bot.find(bot_id)
+    @bot.update(learning_status: :processing)
     summarizer = Learning::Summarizer.new(@bot)
     summarizer.summary
 

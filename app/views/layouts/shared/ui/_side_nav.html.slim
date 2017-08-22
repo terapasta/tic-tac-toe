@@ -10,6 +10,7 @@
         span(
           data-component="LearningButton"
           data-bot-id=@bot.id
+          data-is-admin=(current_user.present? && current_user.staff?).to_json
         )
 
       = link_to 'チャットする', new_chats_path(@bot.token), class: 'list-group-item', target: '_blank', data: { event_name: 'Open new chat', bot_id: @bot.id, bot_name: @bot.name }

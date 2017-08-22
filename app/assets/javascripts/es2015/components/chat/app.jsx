@@ -78,6 +78,7 @@ export default class ChatApp extends Component {
       form,
       learning,
       learnings,
+      isAdmin,
       isManager,
       readMore,
       flashMessage,
@@ -93,6 +94,7 @@ export default class ChatApp extends Component {
         <ChatHeader {...{
           botName: window.currentBot.name,
           learningStatus: learning.status,
+          isAdmin,
           isManager,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />

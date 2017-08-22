@@ -22,7 +22,7 @@ class LearnJob < ActiveJob::Base
   end
 
   private
-    def handle_error
+    def handle_error(exception)
       Rails.logger.error('LearnJob: 学習の実行に失敗しました。')
       Rails.logger.error exception.message
       Rails.logger.error exception.backtrace.join("\n")

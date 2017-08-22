@@ -86,16 +86,18 @@ $ python myope_server.py
 
 ## テストの実行について
 
-feature testはPython側エンジンと連携してテストする必要があるため、specを実行する前にtestモードでRPCサーバを起動する。
+feature test は headless chrome を使っているため、chromedriverをインストールして下さい
 
 ```
-$ cd learning
-$ python myope_server.py test
-$ cd ..
-$ guard
+macOSの場合
+$ brew install chromedriver
 ```
 
-※ テスト実行中にPython側でエラーが発生するとrspecがストップしてしまう問題があります。その際はPython側RPCサーバを停止するとrspecが流れます。
+全テスト実行
+
+```
+$ bin/rspec spec
+```
 
 ## デプロイ
 ### Capistrano

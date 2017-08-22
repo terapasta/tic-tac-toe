@@ -26,6 +26,7 @@ class WordMappingPolicy < ApplicationPolicy
   def destroy?
     user.normal? || user.staff?
   end
+<<<<<<< HEAD
   
   def permitted_attributes
     [ 
@@ -40,6 +41,12 @@ class WordMappingPolicy < ApplicationPolicy
           :_destroy
         ]
       }
+=======
+
+  def permitted_attributes
+    [
+      :word,
+>>>>>>> Implement api endpoints of word_mappings and word_mapping_synonyms
     ]
   end
 end

@@ -9,6 +9,7 @@ class TfidfVectorizer:
         self.loader = loader if loader is not None else Loader()
         self.vectorizer = self.loader.load(self.vectorizer_path)
         if self.vectorizer is None:
+            # Note: token_patternは1文字のデータを除外しない設定
             self.vectorizer = SkTfidfVectorizer(use_idf=True, token_pattern=u'(?u)\\b\\w+\\b')
 
     def fit(self, sentences):

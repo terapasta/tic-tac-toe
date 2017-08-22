@@ -1,8 +1,9 @@
 #!/bin/sh
 
 # $1: output file path
+# $2: bot_ids (ex: '8,11,13')
 OUTPUT=$1
-BOT_IDS='8,11,13'
+BOT_IDS=$2
 cd ~
 source /var/www/donusagi-bot/shared/.env
 echo '[mysqldump]' > .mysqldumpconfig

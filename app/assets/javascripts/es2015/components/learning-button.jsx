@@ -4,7 +4,7 @@ import classNames from "classnames";
 import * as API from "../api/bot-learning";
 
 const labelBoxStyle = {
-  padding: "20px 0",
+  paddingBottom: "10",
   textAlign: "center",
   backgroundColor: "#fff",
   borderRight: "1px solid rgb(221, 221, 221)",

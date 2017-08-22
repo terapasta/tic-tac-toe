@@ -56,6 +56,6 @@ class WordMappingsController < ApplicationController
     end
 
     def word_mapping_params
-      params.require(:word_mapping).permit(:word, :synonym)
+      params.require(:word_mapping).permit(:word, :synonym, word_mapping_synonyms_attributes: [:id, :value, :_destroy])
     end
 end

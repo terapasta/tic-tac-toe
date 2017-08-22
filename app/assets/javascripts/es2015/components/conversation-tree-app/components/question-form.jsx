@@ -3,6 +3,7 @@ import TextArea from 'react-textarea-autosize';
 import isEmpty from 'is-empty';
 
 import { activeItemType, questionsRepoType } from '../types';
+import Modal from '../../modal';
 
 class QuestionForm extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class QuestionForm extends Component {
     this.state = {
       question: question.question,
       answer: question.answer,
+      isShowConfirmDelete: false,
     };
   }
 
@@ -48,14 +50,12 @@ class QuestionForm extends Component {
 
   onDelete() {
     const { activeItem, onDelete } = this.props;
-    if (window.confirm('本当に削除してよろしいですか？')) {
-      onDelete(activeItem.node.id);
-    }
+    onDelete(activeItem.node.id);
   }
 
   render() {
     const { activeItem } = this.props;
-    const { question, answer } = this.state;
+    const { question, answer, isShowConfirmDelete } = this.state;
 
     return (
       <div>
@@ -98,13 +98,34 @@ class QuestionForm extends Component {
                 <a className="btn btn-link"
                   id="delete-answer-button"
                   href="#"
-                  onClick={this.onDelete}
+                  onClick={() => this.setState({ isShowConfirmDelete: true })}
                   disabled={false}
                 ><span className="text-danger">削除</span></a>
               </span>
             )}
           </div>
         </div>
+        {isShowConfirmDelete && (
+          <Modal
+            title="本当に削除してよろしいですか？"
+            onClose={() => this.setState({ isShowConfirmDelete: false })}
+            narrow
+          >
+            <div className="text-right">
+              <button
+                className="btn btn-default"
+                onClick={() => this.setState({ isShowConfirmDelete: false })}
+                id="alert-cancel-button"
+              >キャンセル</button>
+              &nbsp;
+              <button
+                className="btn btn-danger"
+                onClick={this.onDelete}
+                id="alert-delete-button"
+              >削除する</button>
+            </div>
+          </Modal>
+        )}
       </div>
     );
   }

@@ -6,6 +6,34 @@ RSpec.describe QuestionAnswer::CsvImporter do
     QuestionAnswer::CsvImporter.new(csv_file, bot, import_options)
   end
 
+  it 'deep tree test' do
+    bot = create(:bot)
+    topic_tags = [
+      create(:topic_tag, name: 'hoge', bot: bot),
+      create(:topic_tag, name: 'fuga', bot: bot),
+    ]
+    csv = fixture_file_upload('deep-import-test.csv', 'text/csv')
+    importer = QuestionAnswer::CsvImporter.new(csv, bot, { is_utf8: true })
+
+    expect {
+      expect {
+        importer.import
+      }.to change(QuestionAnswer, :count).by(1)
+    }.to change(DecisionBranch, :count).by(7)
+
+    csv = fixture_file_upload('deep-import-test-2.csv', 'text/csv')
+    importer = QuestionAnswer::CsvImporter.new(csv, bot, { is_utf8: true })
+
+    expect {
+      expect {
+        importer.import
+      }.to change(QuestionAnswer, :count).by(0)
+    }.to change(DecisionBranch, :count).by(1)
+
+    expect(bot.decision_branches.find_by(body: 'うそでしょ').id).to_not \
+      eq(bot.decision_branches.last.id)
+  end
+
   describe '#import' do
     let(:bot) { create(:bot, id: 1) }
 

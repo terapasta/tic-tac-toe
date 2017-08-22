@@ -48,10 +48,8 @@ class DatasourceTestCase(TestCase):
     def test_all_learning_training_messages_from_csv(self):
         # CSVファイルの該当レコード件数を取得しておく
         n_record = 0
-        files = glob.glob('%s/*' % self.csv_dir_name)
-        for file in files:
-            df = pd.read_csv(file)
-            n_record += df.shape[0]
+        df = pd.read_csv('%s/all.csv' % self.csv_dir_name)
+        n_record += df.shape[0]
 
         datasource = Datasource(type='csv')
         all_learning_training_messages = datasource.all_learning_training_messages()

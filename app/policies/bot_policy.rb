@@ -41,6 +41,7 @@ class BotPolicy < ApplicationPolicy
       :image,
       :classify_failed_message,
       :start_message,
+      :has_suggests_message,
       {
         allowed_hosts_attributes: [
           :id,

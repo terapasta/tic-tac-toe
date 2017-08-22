@@ -46,4 +46,30 @@ RSpec.describe Bot do
       end
     end
   end
+
+  describe 'HasSuggestMessage' do
+    describe 'default has_suggests_message' do
+      let(:bot) do
+        build(:bot)
+      end
+
+      subject do
+        bot.has_suggests_message
+      end
+
+      it { is_expected.to eq("{question}についてですね。\nどのような質問ですか？\n以下から選択して下さい。") }
+    end
+
+    describe '#render_has_suggests_message' do
+      let(:bot) do
+        build(:bot)
+      end
+
+      subject do
+        bot.render_has_suggests_message('test')
+      end
+
+      it { is_expected.to eq("「test」についてですね。\nどのような質問ですか？\n以下から選択して下さい。") }
+    end
+  end
 end

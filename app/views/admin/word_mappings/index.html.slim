@@ -5,6 +5,67 @@
   h1 システム共通 同義語一覧
   p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
 
+.well.clearfix
+  .pull-left
+    = form_tag admin_word_mappings_path, class: 'form-inline' do
+      .input-group
+        = search_field_tag :q, params[:q], class: 'form-control', placeholder: 'キーワード検索'
+        .input-group-btn= submit_tag '検索', class: 'btn btn-default'
+  .pull-right.text-right
+    button.btn.btn-success
+      small= material_icon 'add_circle', class: 'mi-v-top'
+      = space 1
+      span 辞書を追加
+
+- data = @word_mappings.inject({}) { |res, wm| res[wm.word] ||= []; res[wm.word] << wm.synonym; res }
+
+- data.each_with_index do |(word, synonyms), index|
+  - if index.odd?
+    .dict
+      .dict__title.editing
+        input.dict__input value=word
+        = space 2
+        small: button= material_icon('close', class: 'mi-v-baseline')
+        .dict__input-text: small
+          = material_icon('keyboard_return')
+          = space
+          span エンターキーで保存します
+      .dict__subtitle 同じ意味の単語
+      ul.dict__words
+        - if synonyms.any?
+          - synonyms.each do |synonym|
+            li.dict__word= synonym
+        - else
+          li.dict__word-empty まだ登録されていません
+        li
+          input.dict__input type="text" placeholder="単語を追加"
+          .dict__input-text: small
+            = material_icon('keyboard_return')
+            = space
+            span エンターキーで保存します
+        li.dict__word-button: button= material_icon('close')
+  - else
+    .dict
+      .dict__title
+        = word
+        = space 2
+        small: button= material_icon('edit', class: 'mi-v-baseline')
+      .dict__subtitle 同じ意味の単語
+      ul.dict__words
+        - if synonyms.any?
+          - synonyms.each do |synonym|
+            li.dict__word= synonym
+        - else
+          li.dict__word-empty まだ登録されていません
+        li.dict__word-button: button= material_icon('add_circle')
+
+table.table.table-striped
+  thead
+    tr
+      th = WordMapping.human_attribute_name(:word)
+      th = WordMapping.human_attribute_name(:synonym)
+      th
+
 .container: .row: .col-8.offset-2
   br
   = render 'shared/flash'
@@ -25,7 +86,7 @@
       - @word_mappings.each do |word_mapping|
         tr
           td = word_mapping.word
-          td 
+          td
             - word_mapping.word_mapping_synonyms.each do |wms|
               = wms.value
               br

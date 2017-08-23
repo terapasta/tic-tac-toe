@@ -6,10 +6,15 @@
 
       = f.text_field :word
       = f.fields_for :word_mapping_synonyms do |synonym|
-        = synonym.text_field :value
-        = synonym.link_to_remove "削除"
+        = synonym.label :value
+        .form-group.form-inline
+          = synonym.text_field :value, hide_label: true, style: "width:529px"
+          = space
+          = synonym.link_to_remove "削除", class: 'btn btn-danger'
       p
-        = f.link_to_add "追加", :word_mapping_synonyms
+        = f.link_to_add "同義語追加", :word_mapping_synonyms, class: 'btn btn-success btn-sm'
+        br
+        br
+
       .actions
         = f.submit class: 'btn btn-primary'
-

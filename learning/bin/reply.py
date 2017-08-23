@@ -11,12 +11,14 @@ parser.add_argument('--env', type=str, default='development')
 parser.add_argument('--question', type=str, default='プリンの話や')
 parser.add_argument('--use_similarity_classification', type=str, default='true')
 parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_LOGISTIC_REGRESSION)
+parser.add_argument('--datasource', type=str, default=Constants.DATASOURCE_TYPE_DATABASE)
 args = parser.parse_args()
 Config().init(args.env)
 
 attr = {
     'use_similarity_classification': args.use_similarity_classification == 'true',
     'algorithm': args.algorithm,
+    'datasource_type': args.datasource,
 }
 
 myope_server = MyopeServer()

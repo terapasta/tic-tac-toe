@@ -11,7 +11,6 @@ from app.shared.current_bot import CurrentBot
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
 from app.factories.factory_selector import FactorySelector
-from app.shared.datasource.database.database import Database
 
 
 class MyopeServer(RPCServer):

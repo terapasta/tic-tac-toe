@@ -16,11 +16,9 @@ class Database():
         return pd.read_sql(sql, self.db, params=params)
 
     def _connect(self):
-        logger.debug('connect start')
         if self.is_connected is True:
             return
 
-        logger.debug('connect!!!!!!')
         dbconfig = Config().get('database')
         self.db = MySQLdb.connect(
                 host=dbconfig['host'],
@@ -29,4 +27,5 @@ class Database():
                 passwd=dbconfig['password'],
                 charset='utf8',
             )
+        logger.info('database connected')
         self.is_connected = True

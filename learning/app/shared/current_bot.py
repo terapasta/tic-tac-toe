@@ -19,16 +19,16 @@ class CurrentBot(object):
         return self._bot_id
 
     @property
-    def learning_parameter(self):
-        return self._learning_parameter
-
-    @property
     def dump_dirpath(self):
         return 'dumps/%s/%s' % (self.config.env, self._bot_id)
 
     @property
+    def datasource_type(self):
+        return self._learning_parameter.get('datasource_type', Constants.DATASOURCE_TYPE_DATABASE)
+
+    @property
     def algorithm(self):
-        if self.learning_parameter.get('use_similarity_classification', True):
+        if self._learning_parameter.get('use_similarity_classification', True):
             return Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
 
-        return self.learning_parameter.get('algorithm', Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
+        return self._learning_parameter.get('algorithm', Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)

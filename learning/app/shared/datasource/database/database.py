@@ -4,7 +4,12 @@ from app.shared.config import Config
 
 
 class Database():
+    __shared_state = {}
+
     def __init__(self):
+        self.__dict__ = self.__shared_state
+
+    def connect(self):
         dbconfig = Config().get('database')
         self.db = MySQLdb.connect(
                 host=dbconfig['host'],

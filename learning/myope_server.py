@@ -11,9 +11,12 @@ from app.shared.current_bot import CurrentBot
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
 from app.factories.factory_selector import FactorySelector
+from app.shared.datasource.database.database import Database
 
 
 class MyopeServer(RPCServer):
+    def __init__(self):
+        Database().connect()
 
     def reply(self, bot_id, body, learning_parameter_attributes):
         CurrentBot().init(bot_id, learning_parameter_attributes)
@@ -33,6 +36,7 @@ class MyopeServer(RPCServer):
     @stop_watch
     def learn(self, bot_id, learning_parameter_attributes):
         CurrentBot().init(bot_id, learning_parameter_attributes)
+
         try:
             result = LearnController(factory=FactorySelector().get_factory()).perform()
         except:

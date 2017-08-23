@@ -220,6 +220,8 @@ ja:
       word_mapping:
         word: 単語
         synonym: 同義語
+      word_mapping_synonym:
+        value: 同義語
   enums:
     bot:
       learning_status:

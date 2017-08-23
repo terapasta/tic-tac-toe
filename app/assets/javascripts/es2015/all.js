@@ -14,7 +14,7 @@ import CopyButton from "./components/copy-button";
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
 import AnswerTextArea from "./components/answer-text-area";
 import EmbedCodeGenerator from "./components/embed-code-generator";
-import WordMappingForm from './components/word-mapping-form';
+import WordMappingForm from './components/WordMappingForm';
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();

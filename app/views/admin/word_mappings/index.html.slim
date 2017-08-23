@@ -5,6 +5,15 @@
   h1 システム共通 同義語一覧
   p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
 
+- Bot.find(1).word_mappings.each do |word_mapping|
+  span(
+    data-component="WordMappingForm"
+    data-bot-id=1
+    data-id=word_mapping.id
+    data-word=word_mapping.word
+    data-synonyms=word_mapping.word_mapping_synonyms.to_json(only: [:id, :value])
+  )
+
 .well.clearfix
   .pull-left
     = form_tag admin_word_mappings_path, class: 'form-inline' do

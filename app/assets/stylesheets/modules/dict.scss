@@ -1,123 +1,69 @@
-%base-dict-word {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-}
-
-%base-dict-button {
-  cursor: pointer;
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
-  border: 0;
-  color: #888;
-
-  &:hover {
-    text-decoration: none;
-    color: darken(#888, 10%);
-  }
-
-  i {
-    position: relative;
-    top: -1px;
-    font-size: 16px;
-  }
-}
-
-%base-dict-help-text {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  color: #888;
-  font-size: 14px !important;
-}
-
-.dict {
-  padding-bottom: 32px;
-  margin-bottom: 32px;
-  border-bottom: 1px solid #ddd;
-
-  &:first-of-type {
-    padding-top: 32px;
-  }
-
-  &:last-of-type {
-    margin-bottom: 0;
-    border-bottom: 0;
-  }
-
-  &:hover {
-    .dict__title button {
-      display: inline-block;
-    }
-  }
-
-  &__title {
-    position: relative;
-    margin-bottom: 16px;
-    font-size: 24px;
-
-    &.editing {
-      margin-bottom: 32px;
-
-      button {
-        display: inline-block;
-      }
-    }
-
-    button {
-      @extend %base-dict-button;
-      display: none;
-    }
-  }
-
-  &__subtitle {
-    padding-bottom: 12px;
-    color: #888;
-  }
-
-  &__words {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-      position: relative;
-      margin: 0 8px 8px 0;
-      display: inline-block;
-    }
-  }
-
-  &__input {
-    @extend %base-dict-word;
-    outline: none;
-
-    &:focus {
-      border: 1px solid $brand-primary;
-    }
-
-    &-text {
-      @extend %base-dict-help-text;
-    }
-  }
-
-  &__word {
-    @extend %base-dict-word;
-    cursor: text;
-
-    &:hover {
-      border-color: $brand-primary;
-    }
-  }
-
-  &__word-empty {
-  }
-
-  &__word-button {
-    button {
-      @extend %base-dict-button;
-    }
-  }
-}
+// %base-dict-word {
+// }
+//
+// %base-dict-button {
+// }
+//
+// %base-dict-help-text {
+//   position: absolute;
+//   top: 100%;
+//   left: 0;
+//   right: 0;
+//   color: #888;
+//   font-size: 14px !important;
+// }
+//
+// .dict {
+//
+//
+//   &:hover {
+//     .dict__title button {
+//       display: inline-block;
+//     }
+//   }
+//
+//   &__title {
+//
+//       button {
+//         display: inline-block;
+//       }
+//     }
+//
+//     button {
+//       @extend %base-dict-button;
+//       display: none;
+//     }
+//   }
+//
+//   &__subtitle {
+//   }
+//
+//   &__words {
+//   }
+//
+//   &__input {
+//     @extend %base-dict-word;
+//     outline: none;
+//
+//     &:focus {
+//       border: 1px solid $brand-primary;
+//     }
+//
+//     &-text {
+//       @extend %base-dict-help-text;
+//     }
+//   }
+//
+//   &__word {
+//     @extend %base-dict-word;
+//   }
+//
+//   &__word-empty {
+//   }
+//
+//   &__word-button {
+//     button {
+//       @extend %base-dict-button;
+//     }
+//   }
+// }

@@ -9,6 +9,15 @@ class WordMapping < ActiveRecord::Base
   validates :word,
     presence: true,
     length: { maximum: 20 }
+  #
+  # validates :synonym,
+  #   presence: true,
+  #   length: { maximum: 20 },
+  #   uniqueness: { scope: [:bot_id] }
+
+  # validate :unique_pair
+  # validate :word_is_not_eq_synonym
+  # validate :word_is_not_eq_other_synonym
 
   before_validation :strip_word_and_synonym
 

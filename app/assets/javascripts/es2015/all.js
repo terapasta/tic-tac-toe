@@ -14,6 +14,7 @@ import CopyButton from "./components/copy-button";
 import QuestionAnswerTagForm from "./components/question-answer-tag-form";
 import AnswerTextArea from "./components/answer-text-area";
 import EmbedCodeGenerator from "./components/embed-code-generator";
+import WordMappingForm from './components/word-mapping-form';
 
 window.initMessageRatingButtons = () => {
   MessageRatingButtons.mountComponentAll();
@@ -31,6 +32,7 @@ function init() {
   mountComponent(QuestionAnswerTagForm);
   mountComponent(AnswerTextArea);
   mountComponent(EmbedCodeGenerator);
+  mountComponent(WordMappingForm);
   CopyButton.initialize();
 }
 

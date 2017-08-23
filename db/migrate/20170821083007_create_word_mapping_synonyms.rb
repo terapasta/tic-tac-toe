@@ -6,11 +6,5 @@ class CreateWordMappingSynonyms < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-
-    ActiveRecord::Base.transaction do
-      WordMapping.find_each do |word|
-        WordMappingSynonym.create(value: word.synonym, word_mapping_id: word.id)
-      end
-    end
   end
 end

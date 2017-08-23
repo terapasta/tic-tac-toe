@@ -15,9 +15,6 @@ from app.shared.datasource.database.database import Database
 
 
 class MyopeServer(RPCServer):
-    def __init__(self):
-        Database().connect()
-
     def reply(self, bot_id, body, learning_parameter_attributes):
         CurrentBot().init(bot_id, learning_parameter_attributes)
         X = np.array([body])

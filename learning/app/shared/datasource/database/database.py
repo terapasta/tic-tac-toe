@@ -1,15 +1,26 @@
 import MySQLdb
 import pandas as pd
 from app.shared.config import Config
+from app.shared.logger import logger
 
 
 class Database():
     __shared_state = {}
+    is_connected = False
 
     def __init__(self):
         self.__dict__ = self.__shared_state
 
-    def connect(self):
+    def select(self, sql, params):
+        self._connect()
+        return pd.read_sql(sql, self.db, params=params)
+
+    def _connect(self):
+        logger.debug('connect start')
+        if self.is_connected is True:
+            return
+
+        logger.debug('connect!!!!!!')
         dbconfig = Config().get('database')
         self.db = MySQLdb.connect(
                 host=dbconfig['host'],
@@ -18,6 +29,4 @@ class Database():
                 passwd=dbconfig['password'],
                 charset='utf8',
             )
-
-    def select(self, sql, params):
-        return pd.read_sql(sql, self.db, params=params)
+        self.is_connected = True

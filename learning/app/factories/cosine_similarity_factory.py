@@ -8,8 +8,15 @@ class CosineSimilarityFactory:
     def __init__(self, tokenizer=None, vectorizer=None, estimator=None, ltm=None):
         self.tokenizer = tokenizer if tokenizer is not None else MecabTokenizer()
         self.vectorizer = vectorizer if vectorizer is not None else TfidfVectorizer()
-        self.estimator = estimator if estimator is not None else CosineSimilarity()
         self.learning_training_messages = ltm if ltm is not None else LearningTrainingMessages()
+        if estimator is not None:
+            self.estimator = estimator
+        else:
+            self.estimator = CosineSimilarity(
+                    self.tokenizer,
+                    self.vectorizer,
+                    self.learning_training_messages,
+                )
 
     def get_tokenizer(self):
         return self.tokenizer

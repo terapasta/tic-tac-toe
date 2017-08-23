@@ -24,9 +24,15 @@ class Conversation::Bot
     question = @question_text
     question_feature_count = result[:question_feature_count]
     effective_results = @results.select{|x| x[:probability] > 0.1}
-    question_answer_ids = effective_results.map{|x| x[:question_answer_id].to_i}
-    question_answer_id = question_answer_ids.first
-    probability = effective_results.first[:probability]
+    if effective_results.length == 0
+      question_answer_ids = [0]
+      question_answer_id = 0
+      probability = 1
+    else
+      question_answer_ids = effective_results.map{|x| x[:question_answer_id].to_i}
+      question_answer_id = question_answer_ids.first
+      probability = effective_results.first[:probability]
+    end
     Rails.logger.debug(probability)
 
     @question_answer = QuestionAnswer.find_or_null_question_answer(question_answer_id, @bot, probability, classify_threshold)

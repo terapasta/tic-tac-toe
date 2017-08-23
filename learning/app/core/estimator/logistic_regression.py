@@ -1,3 +1,4 @@
+import pandas as pd
 from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression as SkLogisticRegression
 from app.shared.current_bot import CurrentBot
@@ -17,9 +18,12 @@ class LogisticRegression:
         self.estimator = grid.best_estimator_
         self.loader.dump(self.estimator, self.estimator_path)
 
-    def predict(self, question_features, _):
+    def predict(self, question_features):
         results = self.estimator.predict_proba(question_features)
-        return results[0]
+        return pd.DataFrame({
+                'question_answer_id': self.estimator.classes_,
+                'probability': results[0],
+            })
 
     @property
     def estimator_path(self):

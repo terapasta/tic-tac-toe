@@ -18,7 +18,7 @@ class CosineSimilarity:
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
         similarities = cosine_similarity(bot_features, question_features)
         similarities = similarities.flatten()
-        result = self.bot_learning_training_messages_data[['question', 'question_answer_id']]
+        result = self.bot_learning_training_messages_data[['question', 'question_answer_id']].copy()
         result['probability'] = similarities
         return result
 

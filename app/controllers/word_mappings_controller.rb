@@ -14,6 +14,7 @@ class WordMappingsController < ApplicationController
 
   def new
     @word_mapping = @bot.word_mappings.build
+    @word_mapping.word_mapping_synonyms.build
   end
 
   def edit

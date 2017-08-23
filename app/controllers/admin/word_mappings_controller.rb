@@ -9,6 +9,7 @@ class Admin::WordMappingsController < ApplicationController
 
   def new
     @word_mapping = WordMapping.new
+    @word_mapping.word_mapping_synonyms.build
   end
 
   def edit

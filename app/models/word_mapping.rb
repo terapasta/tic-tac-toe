@@ -16,7 +16,7 @@ class WordMapping < ActiveRecord::Base
   # validate :word_is_not_eq_synonym
   # validate :word_is_not_eq_other_synonym
 
-  before_validation :strip_word_and_synonym
+  # before_validation :strip_word_and_synonym
 
   scope :for_bot, -> (bot) {
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
@@ -30,13 +30,12 @@ class WordMapping < ActiveRecord::Base
   }
 
   private
-
     # def unique_pair
-    #   if WordMapping.exists?(bot_id: bot_id, word: word, synonym: synonym)
-    #     errors.add :base, '単語と同意語の組み合わせは既に存在しています'
-    #   end
+    #  if WordMapping.exists?(bot_id: bot_id, word: word, synonym: synonym)
+    #    errors.add :base, '単語と同意語の組み合わせは既に存在しています'
+    #  end
     # end
-    # 
+
     # def word_is_not_eq_synonym
     #   if word == synonym
     #     errors.add :base, '単語と同義語を同じにはできません'
@@ -49,8 +48,8 @@ class WordMapping < ActiveRecord::Base
     #   end
     # end
 
-    def strip_word_and_synonym
-      word.strip!
-      synonym.strip!
-    end
+    # def strip_word_and_synonym
+    #   word.strip!
+    #   synonym.strip!
+    # end
 end

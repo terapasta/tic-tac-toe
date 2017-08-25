@@ -7,6 +7,7 @@ class Chats::TrainingsController < ApplicationController
       @question_message.update_for_training_with!(@question_answer)
       @answer_message.update_for_training_with!(@question_answer)
     end
+    @bot.learn_later
     render json: @question_answer, adapter: :json
   rescue => e
     logger.error e.message + e.backtrace.join("\n")

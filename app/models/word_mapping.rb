@@ -7,16 +7,11 @@ class WordMapping < ActiveRecord::Base
     presence: true,
     length: { maximum: 20 }
 
-  # validates :synonym,
-  #   presence: true,
-  #   length: { maximum: 20 },
-  #   uniqueness: { scope: [:bot_id] }
+  validate :word_is_not_eq_synonym
+  validate :unique_pair
+  validate :word_is_not_eq_other_synonym
 
-  # validate :unique_pair
-  # validate :word_is_not_eq_synonym
-  # validate :word_is_not_eq_other_synonym
-
-  # before_validation :strip_word_and_synonym
+  before_validation :strip_word_and_synonym
 
   scope :for_bot, -> (bot) {
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
@@ -30,26 +25,28 @@ class WordMapping < ActiveRecord::Base
   }
 
   private
-    # def unique_pair
-    #  if WordMapping.exists?(bot_id: bot_id, word: word, synonym: synonym)
-    #    errors.add :base, '単語と同意語の組み合わせは既に存在しています'
-    #  end
-    # end
+    def word_is_not_eq_synonym
+      word_mapping_synonyms.each do |wms|
+        if wms.value == word
+          errors.add :base, '単語と同義語を同じにはできません'
+        end
+      end
+    end
 
-    # def word_is_not_eq_synonym
-    #   if word == synonym
-    #     errors.add :base, '単語と同義語を同じにはできません'
-    #   end
-    # end
-    # 
-    # def word_is_not_eq_other_synonym
-    #   if WordMapping.exists?(synonym: word, bot_id: bot_id)
-    #     errors.add :word, 'はすでに登録されている同義語を登録できません'
-    #   end
-    # end
+    def unique_pair
+      values = word_mapping_synonyms.map(&:value)
+      unless values.size == values.uniq.size
+        errors.add :base, '単語と同意語の組み合わせは既に存在しています'
+      end
+    end
 
-    # def strip_word_and_synonym
-    #   word.strip!
-    #   synonym.strip!
-    # end
+    def word_is_not_eq_other_synonym
+      if WordMapping.exists?(synonym: word, bot_id: bot_id)
+        errors.add :word, 'はすでに登録されている同義語を登録できません'
+      end
+    end
+
+    def strip_word_and_synonym
+      word.strip!
+    end
 end

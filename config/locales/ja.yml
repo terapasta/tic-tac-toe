@@ -222,6 +222,8 @@ ja:
         synonym: 同義語
       word_mapping_synonym:
         value: 同義語
+      word_mapping_synonyms:
+        value: 同義語  
   enums:
     bot:
       learning_status:

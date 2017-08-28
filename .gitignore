@@ -66,6 +66,7 @@ learning/learning/models/**
 !learning/learning/models/test/.keep
 !learning/learning/models/development/.keep
 learning/logs/*
+.ipynb_checkpoints
 !*.keep
 
 slack-bot/log

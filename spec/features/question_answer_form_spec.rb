@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
   include RequestSpecHelper
+  include CapybaraHelpers
 
   let!(:bot) do
     create(:bot, user: owner)
@@ -27,14 +28,14 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     subject do
       lambda do
         visit "/bots/#{bot.id}/question_answers/new"
-        fill_in 'question_answer[question]', with: 'sample question'
-        fill_in 'question_answer[answer]', with: 'sample answer body'
+        fill_in_input name: 'question_answer[question]', value: 'sample question'
+        fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
         click_link '添付ファイルを追加'
         within '#answer-files' do
           locator = all('input[type="file"]').first['name']
           attach_file locator, Rails.root.join('spec/fixtures/images/sample_naoki.jpg').to_s
         end
-        fill_in 'topic-tag-name', with: 'ほげ'
+        fill_in_input id: 'topic-tag-name', value: 'ほげ'
         click_button '追加'
         check "topic-tag-#{topic_tags.first.id}"
         click_button '登録する'
@@ -51,8 +52,8 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     subject do
       lambda do
         visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-        fill_in 'question_answer[question]', with: 'updated question'
-        fill_in 'question_answer[answer]', with: 'updated answer'
+        fill_in_input name: 'question_answer[question]', value: 'updated question'
+        fill_in_input name: 'question_answer[answer]', value: 'updated answer'
         click_button '更新する'
         question_answer.reload
       end

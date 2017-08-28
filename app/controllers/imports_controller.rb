@@ -9,10 +9,12 @@ class ImportsController < ApplicationController
   def create
     importer = QuestionAnswer.import_csv(params[:file], @bot, import_options)
     if importer.succeeded
+      @bot.learn_later
       flash.now.notice = 'インポートしました'
     else
       flash.now.alert = 'インポートに失敗しました'
       @error_row = importer.current_row
+      @error_message = importer.error_message
     end
     render :new
   end

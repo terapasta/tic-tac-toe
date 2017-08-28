@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
+ruby '2.3.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
@@ -145,7 +145,8 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'selenium-webdriver'
+  gem 'rspec_junit_formatter'
 
   # dummy data
   gem 'faker'

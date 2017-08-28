@@ -1,14 +1,14 @@
 class Learning::Summarizer
-  include Learning::TagSummarizable
-
   def initialize(bot)
     @bot = bot
   end
 
   def summary
-    LearningTrainingMessage.where(bot: @bot).delete_all
-    convert_question_answers!
-    convert_decision_branches!
+    ActiveRecord::Base.transaction do
+      LearningTrainingMessage.where(bot: @bot).delete_all
+      convert_question_answers!
+      convert_decision_branches!
+    end
   end
 
   def unify_learning_training_message_words!

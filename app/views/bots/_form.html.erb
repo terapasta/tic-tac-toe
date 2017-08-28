@@ -11,6 +11,14 @@
   <%= f.text_area :classify_failed_message, rows: 3 %>
   <%= f.text_area :start_message, rows: 3 %>
 
+  <%= f.text_area :has_suggests_message, rows: 3 %>
+  <div class="form-group">
+    質問に対して回答不可だった場合に、サジェスト出来る質問がある場合にこのメッセージが使用されます。
+    <br />
+    ※<code>{question}</code>の部分に質問メッセージが展開されます。
+    <a href="#" data-toggle="modal" data-target="#describe-has-suggests-message-modal">もっと詳しく</a>
+  </div>
+
   <div class="actions">
     <%= f.submit class: 'btn btn-success' %>
     <div class="pull-right">
@@ -18,5 +26,31 @@
             data-url="<%= reset_bot_path(@bot) %>"></span>
     </div>
   </div>
-  <%= javascript_include_tag 'bots/form' %>
 <% end %>
+
+<div class="modal fade" id="describe-has-suggests-message-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><%= Bot.human_attribute_name(:has_suggests_message) %></h4>
+      </div>
+      <div class="modal-body">
+        <p>質問に対して回答不可だった場合に、サジェスト出来る質問がある場合にこのメッセージが使用されます。</p>
+        <p>例：社員証に対して回答不可だったが、サジェストが見つかった場合</p>
+        <p><%= link_to image_tag('screenshot-has-suggests-message.png', class: 'img-thumbnail'), image_path('screenshot-has-suggests-message.png'), target: '_blank' %></p>
+        <p><code>{question}</code>の部分に質問メッセージが入りますので任意の文章を組み立てることが可能です。</p>
+        <p>例：<code>社員証</code>と質問した場合</p>
+        <div class="well well-sm" style="margin-bottom:0;">
+          申し訳ありません<code>{question}</code>についてうまく回答出来ませんでしたが、
+          以下の中に近い質問はございますか？
+        </div>
+        <div class="text-center"><%= material_icon 'keyboard_arrow_down' %></div>
+        <div class="well well-sm" style="margin-bottom:0;">
+          申し訳ありません<code>「社員証」</code>についてうまく回答出来ませんでしたが、
+          以下の中に近い質問はございますか？
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

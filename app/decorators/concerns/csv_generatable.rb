@@ -17,7 +17,9 @@ module CsvGeneratable
         csv
       when :sjis
         # FIXME 〜などが変換時に情報落ちしてしまう
-        csv.encode(Encoding::SJIS, replace: '')
+        SjisSafeConverter
+          .sjis_safe(csv)
+          .encode('Shift_JIS', invalid: :replace, undef: :replace, replace: '?')
       end
     end
 end

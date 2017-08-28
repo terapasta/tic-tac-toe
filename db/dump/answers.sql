@@ -25,7 +25,6 @@ DROP TABLE IF EXISTS `answers`;
 CREATE TABLE `answers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `defined_answer_id` int(11) DEFAULT NULL,
-  `context` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `body` text COLLATE utf8_unicode_ci,
   `transition_to` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -33,8 +32,7 @@ CREATE TABLE `answers` (
   `updated_at` datetime NOT NULL,
   `bot_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_answers_on_defined_answer_id` (`defined_answer_id`),
-  KEY `index_answers_on_context` (`context`)
+  UNIQUE KEY `index_answers_on_defined_answer_id` (`defined_answer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2382 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

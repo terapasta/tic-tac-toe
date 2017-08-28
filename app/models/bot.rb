@@ -1,4 +1,6 @@
 class Bot < ActiveRecord::Base
+  include HasSuggestsMessage
+
   belongs_to :user
   has_many :chats, -> { extending HasManyChatsExtension }
   has_many :messages, through: :chats
@@ -7,7 +9,6 @@ class Bot < ActiveRecord::Base
   has_many :topic_tags
   has_many :answers
   has_many :decision_branches
-  has_many :services, dependent: :destroy
   has_one :score, dependent: :destroy
   has_one :learning_parameter, dependent: :destroy
   has_many :sentence_synonyms, through: :question_answers
@@ -28,10 +29,6 @@ class Bot < ActiveRecord::Base
 
   before_validation :generate_token, :set_learning_status_changed_at_if_needed
 
-  def has_feature?(feature)
-    services.where(feature: Service.features[feature], enabled: true).present?
-  end
-
   def learning_parameter_attributes
     if learning_parameter.present?
       attrs = learning_parameter.attributes.with_indifferent_access
@@ -39,16 +36,14 @@ class Bot < ActiveRecord::Base
       attrs = LearningParameter.default_attributes
     end
     # TODO フィールドが変わる度に修正が必要になってしまう
-    attrs.slice(:algorithm, :params_for_algorithm, :include_failed_data, :include_tag_vector, :classify_threshold, :use_similarity_classification)
+    attrs.slice(:algorithm, :params_for_algorithm, :classify_threshold, :use_similarity_classification)
   end
 
   def reset_training_data!
     transaction do
-      trainings.destroy_all
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
-      answers.destroy_all
 
       model_dir = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}")
       FileUtils.rm_r(model_dir)
@@ -60,17 +55,19 @@ class Bot < ActiveRecord::Base
   end
 
   def add_selected_question_answer_ids(question_answer_id)
-    self.selected_question_answer_ids.push(question_answer_id).tap do
-    end
+    self.selected_question_answer_ids.push(question_answer_id)
   end
 
   def remove_selected_question_answer_ids(question_answer_id)
-    self.selected_question_answer_ids.delete(question_answer_id).tap do
-    end
+    self.selected_question_answer_ids.delete(question_answer_id)
   end
 
   def selected_question_answers
     question_answers.where(id: selected_question_answer_ids)
+  end
+
+  def learn_later
+    LearnJob.perform_later(self.id)
   end
 
   private

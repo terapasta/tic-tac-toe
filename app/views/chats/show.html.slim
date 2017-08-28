@@ -1,19 +1,7 @@
 span(
   data-component="ChatApp"
   data-token=@bot.token
+  data-is-admin=(current_user.present? && current_user.staff?).to_json
   data-is-manager=(current_user.present? && (current_user.normal? || current_user.staff?)).to_json
   data-flash-message=flash[:warning]
 )
-
-/ TODO 2017-05-19 を過ぎたら削除する
-- if user_signed_in? && Time.current < Time.zone.parse('2017-05-19 23:59:59') && !Rails.env.test?
-  .modal-backdrop.fade.in
-  .modal.fade.in tabindex="-1" style="display:block;" data-role="notification-modal"
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close type="button"
-            span aria-hidden="true"  &times;
-          h4.modal-title 新しいチャットのご紹介
-        .modal-body
-          iframe src="https://www.youtube.com/embed/A0UIKr-dwcM" frameborder="0" allowfullscreen=true style="width:100%; height:300px;"

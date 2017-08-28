@@ -6,7 +6,6 @@ describe Replyable do
   let(:replayable) { klass.new }
 
   describe '#enabled_suggest_question?' do
-    let!(:service) { create(:service, :enable_suggest_question, bot: bot) }
     let(:bot) { create(:bot) }
     let(:chat) { create(:chat, bot: bot) }
     let(:question) { '質問です。ほげほげ、もげもげ' }

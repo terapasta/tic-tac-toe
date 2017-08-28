@@ -1,5 +1,5 @@
 require 'json'
-include Replyable
+include ReplyTestable
 
 def session
   { states: {} }
@@ -15,7 +15,7 @@ respond '正答率' do |e|
   begin
     Slappy.logger.info e.data.to_json
     e.reply_to(e.user, 'はい！各ボットの正答率です！', {
-      attachments: helper.bot_scores_as_attachment,
+      attachments: helper.generate_attachments(all_bot_accuracy_test!),
     })
   rescue => e
     Slappy.logger.error e.message
@@ -53,10 +53,18 @@ end
 
 # 毎週月曜10am
 schedule '0 10 * * 1' do |e|
-  helper.send_bot_scores('定期投稿です。')
+  send_all_bot_accuracies
 end
 
 # 毎週水曜10am
 schedule '0 10 * * 3' do |e|
-  helper.send_bot_scores('定期投稿です。')
+  send_all_bot_accuracies
+end
+
+def send_all_bot_accuracies
+  Slappy::Messenger.new({
+    text: '定期投稿です。 各ボットの正答率',
+    channel: '#random',
+    attachments: helper.generate_attachments(all_bot_accuracy_test!),
+  }).message
 end

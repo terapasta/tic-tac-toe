@@ -31,12 +31,7 @@ class TrainingMessage(Base):
 
         body_vec = text_array.to_vec(questions)
 
-        # if self.learning_parameter.include_tag_vector:
-        #     body_vec = body_vec.toarray()
-        #     tag_vec = self.__extract_binarized_tag_vector(learning_training_messages)
-        #     body_vec = np.c_[tag_vec, body_vec]
-
-        self._body_array = text_array
+        self._body_array = body_array
         self._x = body_vec
         self._y = question_answer_ids
         return self
@@ -56,20 +51,3 @@ class TrainingMessage(Base):
     @property
     def body_array(self):
         return self._body_array
-
-    def __extract_binarized_tag_vector(self, learning_training_messages):
-        tag_ids = learning_training_messages['tag_ids']
-        tag_ids[tag_ids.isnull()] = ','
-        tag_ids[tag_ids == ''] = ','
-        tag_ids = tag_ids.str.split(':')
-        logger.debug("tag_ids: %s" % list(tag_ids))
-
-        try:
-            logger.debug("self.binarizer.classes_: %s" % self.binarizer.classes_)
-            tag_vector = self.binarizer.transform(tag_ids)
-        except KeyError as e:
-            logger.error('タグ学習時に存在していなかったタグが含まれている可能性があります。python learn_tag.pyを実行してください。')
-            raise e
-
-        logger.debug("tag_vector: %s" % tag_vector)
-        return tag_vector

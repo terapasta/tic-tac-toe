@@ -86,16 +86,44 @@ $ python myope_server.py
 
 ## テストの実行について
 
-feature testはPython側エンジンと連携してテストする必要があるため、specを実行する前にtestモードでRPCサーバを起動する。
+feature test は headless chrome を使っているため、chromedriverをインストールして下さい
 
 ```
-$ cd learning
-$ python myope_server.py test
-$ cd ..
-$ guard
+macOSの場合
+$ brew install chromedriver
 ```
 
-※ テスト実行中にPython側でエラーが発生するとrspecがストップしてしまう問題があります。その際はPython側RPCサーバを停止するとrspecが流れます。
+全テスト実行
+
+```
+$ bin/rspec spec
+```
+
+### 開発環境で本番同様の精度テストを実行する方法
+python修正時には回答のが変わっていないかを確認したいので本番のデータを取得して確認する。
+
+```
+$ cap production db:pull
+00:00 db:pull
+      01 /home/deploy/tmp/db_pull_test.sh /var/www/donusagi-bot/shared/tmp/2017080716330…
+      01 mysqldump: Couldn't execute 'SELECT /*!40001 SQL_NO_CACHE */ * FROM `topic_tagg…
+    ✔ 01 deploy@54.92.55.255 0.443s
+      Downloading ./tmp/20170807163300.sql 10.14%
+      Downloading ./tmp/20170807163300.sql 25.36%
+      Downloading ./tmp/20170807163300.sql 35.5%
+      Downloading ./tmp/20170807163300.sql 40.57%
+      Downloading ./tmp/20170807163300.sql 55.78%
+      Downloading ./tmp/20170807163300.sql 65.93%
+      Downloading ./tmp/20170807163300.sql 76.07%
+      Downloading ./tmp/20170807163300.sql 86.21%
+      Downloading ./tmp/20170807163300.sql 96.35%
+      Downloading ./tmp/20170807163300.sql 100.0%
+## You got restore command!
+mysql -uroot donusagi_bot < ./tmp/20170807163300.sql
+```
+
+上記を実行するとmysqldumpを取得できるので表示されているコマンドを実行する開発DBに反映できる。
+反映後、画面から精度テストを実施する。
 
 ## デプロイ
 ### Capistrano

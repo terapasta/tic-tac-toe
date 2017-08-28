@@ -6,7 +6,9 @@ class SlackBotHelper
   end
 
   def generate_attachments(results)
-    results.map{ |x|
+    results.select { |s|
+      !s.result.accuracy.nan?
+    }.map{ |x|
       {
         title: x.bot.name,
         text: (x.result.accuracy * 100).to_s + '%',

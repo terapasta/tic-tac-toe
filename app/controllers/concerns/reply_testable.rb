@@ -3,12 +3,12 @@ module ReplyTestable
   include Replyable
 
   def all_bot_accuracy_test!
-    Bot.all.each do |bot|
-      Struct.new(:bot, :result).new(
+    Bot.all.map { |bot|
+      results << Struct.new(:bot, :result).new(
         bot,
         accuracy_test!(bot),
       )
-    end
+    }
   end
 
   def accuracy_test!(bot)
@@ -20,6 +20,8 @@ module ReplyTestable
       a.success_result?(result.details[a.id])
     }.count
     result.accuracy = result.success_count.to_f / result.accuracy_test_cases.count.to_f
+    # Note: テストケースがない場合にエラーを回避&区別するために-1(-100%)にしておく
+    result.accuracy = -1 if result.accuracy.nan?
     result
   end
 

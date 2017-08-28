@@ -5,12 +5,12 @@
       = render "shared/errors", object: @word_mapping
 
       = f.text_field :word
-      = f.fields_for :word_mapping_synonyms do |synonym|
-        = synonym.label :value
+      = f.fields_for :word_mapping_synonyms do |nf|
+        = nf.label :value
         .form-group.form-inline
-          = synonym.text_field :value, hide_label: true, style: "width:529px"
+          = nf.text_field :value, hide_label: true, style: "width:529px"
           = space
-          = synonym.link_to_remove "削除", class: 'btn btn-danger'
+          = nf.link_to_remove "削除", class: 'btn btn-danger'
       p
         = f.link_to_add "同義語追加", :word_mapping_synonyms, class: 'btn btn-success btn-sm'
         br

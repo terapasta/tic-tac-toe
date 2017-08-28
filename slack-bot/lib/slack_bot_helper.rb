@@ -10,7 +10,7 @@ class SlackBotHelper
       {
         title: x.bot.name,
         text: (x.result.accuracy * 100).to_s + '%',
-        color: score_color(x.accuracy),
+        color: score_color(x.result.accuracy),
       }
     }.to_json
   end

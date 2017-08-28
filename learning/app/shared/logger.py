@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
-format = '%(asctime)s %(message)s'
+format = '[%(levelname)5s %(asctime)s %(module)25s:%(lineno)3s - %(funcName)20s] %(message)s'
 logging.basicConfig(format=format, datefmt='%Y/%m/%d %p %I:%M:%S',)
 formatter = logging.Formatter(format)
 logger = logging.getLogger(__name__)

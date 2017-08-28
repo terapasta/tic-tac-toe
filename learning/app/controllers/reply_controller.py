@@ -10,33 +10,30 @@ class ReplyController:
         self._factory = factory if factory is not None else CosineSimilarityFactory()
 
     def perform(self, text):
-        self._write_process_log('start')
+        logger.info('start')
         logger.debug('question: %s' % text)
 
-        self._write_process_log('tokenize question')
+        logger.info('tokenize question')
         tokenized_sentences = self._factory.get_tokenizer().tokenize([text])
         logger.debug(tokenized_sentences)
 
-        self._write_process_log('vectorize question')
+        logger.info('vectorize question')
         question_features = self._factory.get_vectorizer().transform(tokenized_sentences)
         logger.debug(question_features)
 
-        self._write_process_log('predict')
+        logger.info('predict')
         data_frame = self._factory.get_estimator().predict(question_features)
 
-        self._write_process_log('sort')
+        logger.info('sort')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
         results = data_frame.to_dict('records')[:10]
 
         for row in results:
             logger.debug(row)
 
-        self._write_process_log('end')
+        logger.info('end')
 
         return {
             'question_feature_count': np.count_nonzero(question_features.toarray()),
             'results': results,
         }
-
-    def _write_process_log(self, process_name):
-        logger.info('>> ReplyController: %s' % process_name)

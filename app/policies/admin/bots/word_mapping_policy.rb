@@ -1,4 +1,4 @@
-class WordMappingPolicy < ApplicationPolicy
+class Admin::Bots::WordMappingPolicy < ApplicationPolicy
   def index?
     user.normal? || user.staff?
   end

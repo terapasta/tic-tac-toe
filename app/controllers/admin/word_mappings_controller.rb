@@ -16,7 +16,7 @@ class Admin::WordMappingsController < ApplicationController
   end
 
   def create
-    @word_mapping = WordMapping.new(word_mapping_params)
+    @word_mapping = WordMapping.new(permitted_attributes(WordMapping))
 
     if @word_mapping.save
       redirect_to admin_word_mappings_path, notice: '同義語を登録しました。'
@@ -26,7 +26,7 @@ class Admin::WordMappingsController < ApplicationController
   end
 
   def update
-    if @word_mapping.update(word_mapping_params)
+    if @word_mapping.update(permitted_attributes(@word_mapping))
       redirect_to admin_word_mappings_path, notice: '同義語を更新しました。'
     else
       render :edit
@@ -41,9 +41,5 @@ class Admin::WordMappingsController < ApplicationController
   private
     def set_word_mapping
       @word_mapping = WordMapping.find(params[:id])
-    end
-
-    def word_mapping_params
-      params.require(:word_mapping).permit(:word, :synonym, word_mapping_synonyms_attributes: [:id, :value, :_destroy])
     end
 end

@@ -107,6 +107,9 @@ Rails.application.routes.draw do
         resources :synonyms, only: [:create, :update, :destroy], module: :word_mappings
       end
     end
+    resources :word_mappings, only: [:create, :update, :destroy] do
+      resources :synonyms, only: [:create, :update, :destroy], module: :word_mappings
+    end
   end
 
   resource :contacts, only: [:new, :create]

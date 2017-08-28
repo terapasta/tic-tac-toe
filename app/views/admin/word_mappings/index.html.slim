@@ -5,30 +5,40 @@
   h1 システム共通 同義語一覧
   p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
 
-- Bot.find(1).word_mappings.each do |word_mapping|
-  span(
-    data-component="WordMappingForm"
-    data-bot-id=1
-    data-id=word_mapping.id
-    data-word=word_mapping.word
-    data-synonyms=word_mapping.word_mapping_synonyms.to_json(only: [:id, :value])
-  )
+css:
+  .placeholder-box {
+    height: 38px;
+    background-color: #ccc;
+  }
+  .placeholder-box--sm {
+    height: 20px;
+    background-color: #ccc;
+  }
 
-.well.clearfix
-  .pull-left
-    = form_tag admin_word_mappings_path, class: 'form-inline' do
-      .input-group
-        = search_field_tag :q, params[:q], class: 'form-control', placeholder: 'キーワード検索'
-        .input-group-btn= submit_tag '検索', class: 'btn btn-default'
-  .pull-right.text-right
-    button.btn.btn-success
-      small= material_icon 'add_circle', class: 'mi-v-top'
-      = space 1
-      span 辞書を追加
+span(
+  data-component="WordMappings"
+  data-form-action-url=admin_word_mappings_path
+  data-word-mappings=ActiveModelSerializers::SerializableResource.new(@word_mappings).to_json
+)
+  .well.clearfix
+    .pull-left
+      .placeholder-box style="width: 200px"
+    .pull-right.text-right
+      .placeholder-box style="width: 130px"
 
-- data = @word_mappings.inject({}) { |res, wm| res[wm.word] ||= []; res[wm.word] << wm.synonym; res }
+  - 10.times do
+    .dict
+      .dict__title
+        .placeholder-box style="width: 130px"
+      .dict__subtitle
+        .placeholder-box--sm style="width: 98px;"
+      ul.dict__words
+        - 3.times do
+          li: .placeholder-box style="width: 60px"
 
-- data.each_with_index do |(word, synonyms), index|
+/- data = @word_mappings.inject({}) { |res, wm| res[wm.word] ||= []; res[wm.word] << wm.synonym; res }
+
+/- data.each_with_index do |(word, synonyms), index|
   - if index.odd?
     .dict
       .dict__title.editing
@@ -68,45 +78,11 @@
           li.dict__word-empty まだ登録されていません
         li.dict__word-button: button= material_icon('add_circle')
 
-table.table.table-striped
+/table.table.table-striped
   thead
     tr
       th = WordMapping.human_attribute_name(:word)
       th = WordMapping.human_attribute_name(:synonym)
       th
 
-.container: .row: .col-8.offset-2
-  br
-  = render 'shared/flash'
-  .mt-5.mb-4.d-flex.justify-content-between
-    h4 システム共通同義語
-    = link_to '新規登録', new_admin_word_mapping_path, class: 'btn btn-success', data: { event_name: 'Open new word mapping' }
-
-  = pagination
-
-  table.table.table-striped
-    thead
-      tr
-        th = WordMapping.human_attribute_name(:word)
-        th = WordMapping.human_attribute_name(:synonym)
-        th
-
-    tbody
-      - @word_mappings.each do |word_mapping|
-        tr
-          td = word_mapping.word
-          td
-            - word_mapping.word_mapping_synonyms.each do |wms|
-              = wms.value
-              br
-          td.text-right
-            = link_to edit_admin_word_mapping_path(word_mapping), class: 'btn btn-secondary btn-sm', data: { event_name: 'Open edit admin word mapping', word_mapping_id: word_mapping.id } do
-              = material_icon 'edit', class: 'mi-xs'
-              = space
-              span 編集
-            = space 3
-            = link_to admin_word_mapping_path(word_mapping), class: 'btn btn-danger btn-sm', data: { confirm: '削除します。よろしいですか？', method: :delete, event_name: 'Delete admin word mapping', word_mapping_id: word_mapping.id } do
-              = material_icon 'delete', class: 'mi-xs'
-              = space
-              span 削除
-  = pagination
+= paginate @word_mappings

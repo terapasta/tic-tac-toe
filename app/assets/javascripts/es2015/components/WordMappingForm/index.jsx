@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import styled from 'styled-components';
 import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
 import findIndex from 'lodash/findIndex';
@@ -7,9 +6,8 @@ import assign from 'lodash/assign';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'is-empty';
 
-import setCaretPosition from '../../modules/set-caret-position';
 import * as WordMappingAPI from '../../api/word-mappings';
-import Modal from '../modal';
+import Alert from '../Alert';
 
 import {
   Wrapper,
@@ -22,11 +20,8 @@ import {
 } from './elements';
 
 import EditingSynonym from './EditingSynonym';
-
-const setCaretToTail = (input) => {
-  if (input == null) { return; }
-  setCaretPosition(input, get(input, 'value', '').length);
-};
+import EditingWord from './EditingWord';
+import ConfirmModal from './ConfirmModal';
 
 class WordMappingForm extends Component {
   constructor(props) {
@@ -36,27 +31,30 @@ class WordMappingForm extends Component {
       synonyms: props.synonyms,
       editingSynonym: null,
       editingSynonymValue: '',
-      isAddingSynonym: false,
+      isEditingWord: false,
       alertMessage: null,
       addingSynonymValue: '',
+      isConfirmDeleteWord: false,
+      isDeletedWord: false,
     };
     bindAll(this, [
-      'handleClickEditWord',
       'handleClickSynonym',
-      'handleChangeEditingSynonym',
-      'handleClickCloseEditingSynonym',
-      'handleClickAddSynonym',
-      'handleClickCloseAddingSynonym',
       'handleSaveEditingSynonym',
-      'handleConfirmDeleteEditingSynonym',
       'handleDeleteEditingSynonym',
-      'handleChangeAddingSynonym',
       'handleSubmitAddingSynonym',
+      'handleSaveEditingWord',
+      'handleDeleteEditingWord',
+      'handleXHRError',
+      'handleCreateWord',
     ]);
   }
 
-  handleClickEditWord() {
-    console.log('handleClickEditWord');
+  handleXHRError(err) {
+    let { error, errors } = err.response.data;
+    if (!isEmpty(errors)) {
+      error = [error, ...errors].join("\n");
+    }
+    this.setState({ alertMessage: error });
   }
 
   handleClickSynonym(synonym) {
@@ -67,62 +65,26 @@ class WordMappingForm extends Component {
     });
   }
 
-  handleChangeEditingSynonym(e) {
-    this.setState({
-      editingSynonymValue: e.target.value,
-    });
-  }
-
-  handleClickCloseEditingSynonym() {
-    this.setState({
-      editingSynonym: null,
-    });
-  }
-
-  handleClickAddSynonym() {
-    this.setState({
-      isAddingSynonym: true,
-    });
-  }
-
-  handleClickCloseAddingSynonym() {
-    this.setState({
-      isAddingSynonym: false,
-    })
-  }
-
-  handleSaveEditingSynonym(e) {
-    e.preventDefault();
+  handleSaveEditingSynonym(synonymId, value) {
     const { botId, id } = this.props;
-    const { editingSynonymValue, editingSynonym, synonyms } = this.state;
-    if (isEmpty(editingSynonymValue)) { return; }
+    const { synonyms, editingSynonym } = this.state;
+    if (isEmpty(value)) { return; }
 
-    WordMappingAPI.updateWordMappingSynonym(botId, id, editingSynonym.id, {
-      value: editingSynonymValue,
-    }).then((res) => {
-      const index = findIndex(synonyms, (s) => s.id === editingSynonym.id);
-      synonyms.splice(index, 1, assign({}, editingSynonym, {
-        value: editingSynonymValue,
-      }));
-      this.setState({
-        synonyms,
-        editingSynonym: null,
-      });
-    })
-    .catch((err) => {
-      const { error } = err.response.data;
-      this.setState({ alertMessage: error });
-    });
-  }
-
-  handleConfirmDeleteEditingSynonym(e) {
-    this.setState({ isConfirmEditingSynonym: true });
+    WordMappingAPI.updateWordMappingSynonym(botId, id, synonymId, { value })
+      .then((res) => {
+        const index = findIndex(synonyms, (s) => s.id === synonymId);
+        synonyms.splice(index, 1, assign({}, editingSynonym, { value }));
+        this.setState({
+          synonyms,
+          editingSynonym: null,
+        });
+      }).catch(this.handleXHRError);
   }
 
   handleDeleteEditingSynonym(e) {
     const { botId, id } = this.props;
     const { editingSynonym, synonyms } = this.state;
-    this.setState({ isConfirmEditingSynonym: false });
+    this.setState({ isConfirmDeleteEditingSynonym: false });
 
     WordMappingAPI.deleteWordMappingSynonym(botId, id, editingSynonym.id)
       .then((res) => {
@@ -131,16 +93,7 @@ class WordMappingForm extends Component {
           synonyms: newSynonyms,
           editingSynonym: null,
         });
-      }).catch((err) => {
-        const { error } = err.response.data;
-        this.setState({ alertMessage: error });
-      });
-  }
-
-  handleChangeAddingSynonym(e) {
-    this.setState({
-      addingSynonymValue: e.target.value,
-    });
+      }).catch(this.handleXHRError);
   }
 
   handleSubmitAddingSynonym(e) {
@@ -149,19 +102,48 @@ class WordMappingForm extends Component {
     const { addingSynonymValue, synonyms } = this.state;
     if (isEmpty(addingSynonymValue)) { return; }
 
-    WordMappingAPI.createWordMappingSynonym(botId, id, {
-      value: addingSynonymValue,
-    }).then((res) => {
-      const newSynonyms = synonyms.concat([res.data.wordMappingSynonym]);
-      this.setState({
-        synonyms: newSynonyms,
-        isAddingSynonym: false,
-        addingSynonymValue: null,
-      });
-    }).catch((err) => {
-      const { error } = err.response.data;
-      this.setState({ alertMessage: error });
-    })
+    WordMappingAPI.createWordMappingSynonym(botId, id, { value: addingSynonymValue })
+      .then((res) => {
+        const newSynonyms = synonyms.concat([res.data.wordMappingSynonym]);
+        this.setState({
+          synonyms: newSynonyms,
+          isAddingSynonym: false,
+          addingSynonymValue: null,
+        });
+      }).catch(this.handleXHRError);
+  }
+
+  handleSaveEditingWord(word) {
+    const { botId, id } = this.props;
+    WordMappingAPI.updateWordMapping(botId, id, { word })
+      .then((res) => this.setState({
+        word: get(res, 'data.wordMapping.word'),
+        isEditingWord: false,
+      }))
+      .catch(this.handleXHRError);
+  }
+
+  handleDeleteEditingWord() {
+    const { botId, id } = this.props;
+    WordMappingAPI.deleteWordMapping(botId, id)
+      .then((res) => this.setState({
+        isDeleted: true,
+        isConfirmDeleteWord: false,
+      }))
+      .catch(this.handleXHRError);
+  }
+
+  handleCreateWord(word) {
+    const { botId } = this.props;
+
+    WordMappingAPI.createWordMapping(botId, { word })
+      .then((res) => {
+        const { wordMapping } = res.data;
+        const { onCreate } = this.props;
+        if (typeof onCreate === 'function') {
+          onCreate(wordMapping);
+        }
+      }).catch(this.handleXHRError);
   }
 
   render() {
@@ -171,92 +153,116 @@ class WordMappingForm extends Component {
       synonyms,
       editingSynonym,
       isAddingSynonym,
-      isConfirmEditingSynonym,
+      isConfirmDeleteEditingSynonym,
       alertMessage,
+      isEditingWord,
+      isConfirmDeleteWord,
+      isDeleted,
     } = this.state;
+
+    if (isDeleted) { return <span />; }
 
     return (
       <Wrapper id={`dict-${id}`}>
-        <Title>
-          {word}
-          <button onClick={this.handleClickEditWord}>
-            <i className="material-icons mi-v-top">edit</i>
-          </button>
+        <Title editing={isEditingWord}>
+          {(!isEditingWord && !isEmpty(id)) && (
+            <span>
+              {word}
+              &nbsp;
+              <button onClick={() => this.setState({ isEditingWord: true })}>
+                <i className="material-icons mi-v-baseline">edit</i>
+              </button>
+            </span>
+          )}
+          {isEditingWord && (
+            <EditingWord
+              defaultValue={word}
+              onClose={() => this.setState({ isEditingWord: false })}
+              onSubmit={this.handleSaveEditingWord}
+              onDelete={() => this.setState({ isConfirmDeleteWord: true })}
+            />
+          )}
+          {isEmpty(id) && (
+            <EditingWord
+              onSubmit={this.handleCreateWord}
+            />
+          )}
         </Title>
-        <SubTitle>同じ意味の単語</SubTitle>
-        <Words>
-          {synonyms.map((synonym) => {
-            if (!isEmpty(editingSynonym) && isEqual(editingSynonym, synonym)) {
-              return <EditingSynonym
-                synonym={synonym}
-                onSave={this.handleSaveEditingSynonym}
-                onClose={() => this.setState({ editingSynonym: null })}
-                onDelete={this.handleConfirmDeleteEditingSynonym}
-              />
-            } else {
-              return (
-                <Word
-                  key={synonym.id}
-                  onClick={() => this.handleClickSynonym(synonym)}
-                >
-                  {synonym.value}
+        {!isEmpty(id) && (
+          <span>
+            <SubTitle>同じ意味の単語</SubTitle>
+            <Words>
+              {isEmpty(synonyms) && !isAddingSynonym && (
+                <Word noBorder>まだ登録されていません</Word>
+              )}
+              {synonyms.map((synonym) => {
+                if (!isEmpty(editingSynonym) && isEqual(editingSynonym, synonym)) {
+                  return (
+                    <EditingSynonym
+                      key={synonym.id}
+                      synonym={synonym}
+                      onSave={this.handleSaveEditingSynonym}
+                      onClose={() => this.setState({ editingSynonym: null })}
+                      onDelete={() => this.setState({ isConfirmDeleteEditingSynonym: true })}
+                    />
+                  );
+                }
+                return (
+                  <Word
+                    key={synonym.id}
+                    onClick={() => this.handleClickSynonym(synonym)}
+                  >{synonym.value}</Word>
+                );
+              })}
+              {isEmpty(editingSynonym) && !isAddingSynonym && (
+                <Word noBorder>
+                  <button onClick={() => this.setState({ isAddingSynonym: true })}>
+                    <i className="material-icons">add_circle</i>
+                  </button>
                 </Word>
-              );
-            }
-          })}
-          {isEmpty(editingSynonym) && !isAddingSynonym && (
-            <Word noBorder>
-              <button onClick={this.handleClickAddSynonym}>
-                <i className="material-icons">add_circle</i>
-              </button>
-            </Word>
-          )}
-          {isAddingSynonym && (
-            <Word noBorder noPadding>
-              <form onSubmit={this.handleSubmitAddingSynonym}>
-                <Input
-                  type="text"
-                  placeholder="単語を追加"
-                  onChange={this.handleChangeAddingSynonym}
-                  autoFocus
-                />
-              </form>
-              &nbsp;
-              <button onClick={this.handleClickCloseAddingSynonym}>
-                <i className="material-icons">close</i>
-              </button>
-              <EnterToSaveText />
-            </Word>
-          )}
-        </Words>
-        {isConfirmEditingSynonym && (
-          <Modal narrow title="確認">
-            <p>本当に削除してよろしいですか？</p>
-            <div className="text-right">
-              <button
-                className="btn btn-default"
-                onClick={() => this.setState({ editingSynonym: null, isConfirmEditingSynonym: false })}
-              >
-                キャンセル
-              </button>
-              &nbsp;
-              <button
-                className="btn btn-primary"
-                onClick={this.handleDeleteEditingSynonym}
-              >OK</button>
-            </div>
-          </Modal>
-        )}
-        {!isEmpty(alertMessage) && (
-          <Modal narrow title="エラー">
-            <p>{alertMessage}</p>
-            <div className="text-right">
-              <button
-                className="btn btn-primary"
-                onClick={() => this.setState({ alertMessage: null })}
-              >OK</button>
-            </div>
-          </Modal>
+              )}
+              {isAddingSynonym && (
+                <Word noBorder noPadding>
+                  <form onSubmit={this.handleSubmitAddingSynonym}>
+                    <Input
+                      type="text"
+                      placeholder="単語を追加"
+                      onChange={(e) => this.setState({ addingSynonymValue: e.target.value })}
+                      autoFocus
+                    />
+                  </form>
+                  &nbsp;
+                  <button onClick={() => this.setState({ isAddingSynonym: false })}>
+                    <i className="material-icons">close</i>
+                  </button>
+                  <EnterToSaveText />
+                </Word>
+              )}
+            </Words>
+            {isConfirmDeleteEditingSynonym && (
+              <Alert
+                title="確認"
+                subtitle="本当に削除してよろしいですか？"
+                onCancel={() => this.setState({ isConfirmDeleteEditingSynonym: false })}
+                onOK={this.handleDeleteEditingSynonym}
+              />
+            )}
+            {isConfirmDeleteWord && (
+              <Alert
+                title="確認"
+                subtitle="本当に削除してよろしいですか？同じ意味の単語も全て削除され、この操作は元に戻せません。"
+                onCancel={() => this.setState({ isConfirmDeleteWord: false })}
+                onOK={this.handleDeleteEditingWord}
+              />
+            )}
+            {!isEmpty(alertMessage) && (
+              <Alert
+                title="エラー"
+                subtitle={alertMessage}
+                onOK={() => this.setState({ alertMessage: null })}
+              />
+            )}
+          </span>
         )}
       </Wrapper>
     );
@@ -266,13 +272,22 @@ class WordMappingForm extends Component {
 WordMappingForm.componentName = 'WordMappingForm';
 
 WordMappingForm.propTypes = {
-  botId: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
-  word: PropTypes.string.isRequired,
+  botId: PropTypes.number,
+  id: PropTypes.number,
+  word: PropTypes.string,
   synonyms: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
   })),
+  onCreate: PropTypes.func,
+};
+
+WordMappingForm.defaultProps = {
+  botId: null,
+  id: null,
+  word: '',
+  synonyms: [],
+  onCreate: null,
 };
 
 export default WordMappingForm;

@@ -32,6 +32,10 @@ class WordMapping < ActiveRecord::Base
     end
   }
 
+  scope :systems, -> {
+    where(bot_id: nil)
+  }
+
   private
     def strip_word_and_synonym
       word.strip!

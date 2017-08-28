@@ -1,9 +1,8 @@
-class Api::Bots::WordMappingsController < Api::BaseController
-  before_action :set_bot
+class Api::WordMappingsController < Api::BaseController
   before_action :set_word_mapping, only: [:update, :destroy]
 
   def create
-    @word_mapping = @bot.word_mappings.build(permitted_attributes(WordMapping))
+    @word_mapping = WordMapping.new(permitted_attributes(WordMapping))
     authorize @word_mapping
     if @word_mapping.save
       render json: @word_mapping, adapter: :json
@@ -26,17 +25,12 @@ class Api::Bots::WordMappingsController < Api::BaseController
   end
 
   private
-    def set_bot
-      @bot = Bot.find(params[:bot_id])
-      authorize @bot, :show?
+    def render_errors
+      render json: { errors: @word_mapping.errors.full_messages }, status: :unprocessable_entity
     end
 
     def set_word_mapping
-      @word_mapping = @bot.word_mappings.find(params[:id])
+      @word_mapping = WordMapping.systems.find(params[:id])
       authorize @word_mapping
-    end
-
-    def render_errors
-      render json: { errors: @word_mapping.errors.full_messages }, status: :unprocessable_entity
     end
 end

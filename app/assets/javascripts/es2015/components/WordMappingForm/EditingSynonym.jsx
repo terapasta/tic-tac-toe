@@ -23,31 +23,25 @@ class EditingSynonym extends Component {
     };
     bindAll(this, [
       'handleSubmit',
-      'handleClickClose',
-      'handleClickDelete',
     ]);
   }
 
   componentDidMount() {
+    if (this.input == null) { return; }
     this.input.select();
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
     const { synonym, onSave } = this.props;
     onSave(synonym.id, this.state.value);
-  }
-
-  handleClickClose() {
-    this.props.onClose();
-  }
-
-  handleClickDelete() {
-    this.props.onDelete(this.props.synonym.id);
   }
 
   render() {
     const {
       synonym,
+      onDelete,
+      onClose,
     } = this.props;
 
     const {
@@ -65,10 +59,10 @@ class EditingSynonym extends Component {
           />
         </form>
         &nbsp;
-        <button onClick={this.handleClickClose}>
+        <button onClick={() => onClose()}>
           <i className="material-icons">close</i>
         </button>
-        <button onClick={this.handleClickDelete} className="delete-button">
+        <button onClick={() => onDelete(synonym.id)} className="delete-button">
           <span className="text-danger">削除</span>
         </button>
         <EnterToSaveText />

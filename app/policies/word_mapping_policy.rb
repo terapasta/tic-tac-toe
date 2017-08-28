@@ -4,7 +4,7 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def show?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 
   def new?
@@ -12,7 +12,7 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def create?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 
   def edit?
@@ -20,11 +20,11 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 
   def destroy?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 <<<<<<< HEAD
   
@@ -49,4 +49,10 @@ class WordMappingPolicy < ApplicationPolicy
 >>>>>>> Implement api endpoints of word_mappings and word_mapping_synonyms
     ]
   end
+
+  private
+    def has_write_permission?
+      return true if record.bot_id.nil? && user.staff?
+      user.normal? || user.staff?
+    end
 end

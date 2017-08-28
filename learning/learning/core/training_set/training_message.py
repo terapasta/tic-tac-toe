@@ -31,7 +31,7 @@ class TrainingMessage(Base):
 
         body_vec = text_array.to_vec(questions)
 
-        self._body_array = body_array
+        self._body_array = text_array
         self._x = body_vec
         self._y = question_answer_ids
         return self

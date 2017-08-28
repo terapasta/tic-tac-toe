@@ -4,7 +4,7 @@ module ReplyTestable
 
   def all_bot_accuracy_test!
     Bot.all.map { |bot|
-      results << Struct.new(:bot, :result).new(
+      Struct.new(:bot, :result).new(
         bot,
         accuracy_test!(bot),
       )

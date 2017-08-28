@@ -16,7 +16,7 @@
         th style="width:250px;" 結果
         th.text-center
     tbody
-      - @result.accuracy_test_cases.each do |accuracy_test_case|
+      - @accuracy_test_cases.each do |accuracy_test_case|
         tr
           td
           td
@@ -42,8 +42,8 @@
                 = space
                 span 削除
           td
-            - if @result.details.present?
-              - @result.details[accuracy_test_case.id].tap do |bot_messages|
+            - if @result.present?
+              - @result[accuracy_test_case.id].tap do |bot_messages|
                 - bot_messages.each do |bot_message|
                   dl style="margin-bottom:16px"
                     dt 回答
@@ -60,13 +60,13 @@
                         li= qa.question
 
           td.text-center
-            - if @result.details.present?
-              - if accuracy_test_case.success_result?(@result.details[accuracy_test_case.id])
+            - if @result.present?
+              - if accuracy_test_case.success_result?(@result[accuracy_test_case.id])
                 = material_icon 'check_circle', class: 'text-success'
               - else
                 = material_icon 'close', class: 'text-danger'
 
-    - if @result.details.present?
+    - if @result.present?
       tfoot
         tr
           td colspan=4

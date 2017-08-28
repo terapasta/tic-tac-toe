@@ -15,7 +15,7 @@ respond '正答率' do |e|
   begin
     Slappy.logger.info e.data.to_json
     e.reply_to(e.user, 'はい！各ボットの正答率です！', {
-      attachments: generate_attachments(all_bot_accuracy_test!),
+      attachments: helper.generate_attachments(all_bot_accuracy_test!),
     })
   rescue => e
     Slappy.logger.error e.message
@@ -65,6 +65,6 @@ def send_all_bot_accuracies
   Slappy::Messenger.new({
     text: '定期投稿です。 各ボットの正答率',
     channel: '#random',
-    attachments: generate_attachments(all_bot_accuracy_test!),
+    attachments: helper.generate_attachments(all_bot_accuracy_test!),
   }).message
 end

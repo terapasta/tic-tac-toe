@@ -20,8 +20,6 @@ module ReplyTestable
       a.success_result?(result.details[a.id])
     }.count
     result.accuracy = result.success_count.to_f / result.accuracy_test_cases.count.to_f
-    # Note: テストケースがない場合にエラーを回避&区別するために-1(-100%)にしておく
-    result.accuracy = -1 if result.accuracy.nan?
     result
   end
 

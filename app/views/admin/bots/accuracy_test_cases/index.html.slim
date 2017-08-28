@@ -16,7 +16,7 @@
         th style="width:250px;" 結果
         th.text-center
     tbody
-      - @accuracy_test_cases.each do |accuracy_test_case|
+      - @result.accuracy_test_cases.each do |accuracy_test_case|
         tr
           td
           td
@@ -42,8 +42,8 @@
                 = space
                 span 削除
           td
-            - if @results.present?
-              - @results[accuracy_test_case.id].tap do |bot_messages|
+            - if @result.details.present?
+              - @result.details[accuracy_test_case.id].tap do |bot_messages|
                 - bot_messages.each do |bot_message|
                   dl style="margin-bottom:16px"
                     dt 回答
@@ -60,21 +60,21 @@
                         li= qa.question
 
           td.text-center
-            - if @results.present?
-              - if accuracy_test_case.success_result?(@results[accuracy_test_case.id])
+            - if @result.details.present?
+              - if accuracy_test_case.success_result?(@result.details[accuracy_test_case.id])
                 = material_icon 'check_circle', class: 'text-success'
               - else
                 = material_icon 'close', class: 'text-danger'
 
-    - if @results.present?
+    - if @result.details.present?
       tfoot
         tr
           td colspan=4
           td colspan=2
             h4.text-center
-              span #{@success_count} 成功 / #{@accuracy_test_cases.count} total,
+              span = @success_count_text
               = space 3
-              span 成功率 #{(@success_count.to_f / @accuracy_test_cases.count.to_f * 100).to_i}%
+              span = @success_percentage_text
 
   = form_for [:admin, @bot, @bot.accuracy_test_cases.build] do |f|
     table.table: tbody: tr

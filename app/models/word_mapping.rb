@@ -8,7 +8,7 @@ class WordMapping < ActiveRecord::Base
     length: { maximum: 20 }
 
   validate :word_is_not_eq_synonym
-  validate :unique_pair
+  validate :unique_pair_word
   validate :word_is_not_eq_other_synonym
 
   before_validation :strip_word_and_synonym
@@ -33,16 +33,31 @@ class WordMapping < ActiveRecord::Base
       end
     end
 
-    def unique_pair
+    def unique_pair_word
       values = word_mapping_synonyms.map(&:value)
       unless values.size == values.uniq.size
-        errors.add :base, '単語と同意語の組み合わせは既に存在しています'
+        errors.add :base, '同じ同意語は登録できません' 
       end
     end
 
     def word_is_not_eq_other_synonym
-      if WordMapping.exists?(synonym: word, bot_id: bot_id)
-        errors.add :word, 'はすでに登録されている同義語を登録できません'
+      if bot_id.nil?
+        word_mappings = WordMapping.where(bot_id: nil)
+      else
+        word_mappings = WordMapping.where(bot_id: bot_id)
+      end
+
+      values = []
+      word_mappings.each do |wm|
+        wm.word_mapping_synonyms.each do |wms|
+          values << wms.value
+        end
+      end
+
+      values.each do |v|
+        if word == v
+          errors.add :base, 'この単語は既に同義語に登録されています'
+        end
       end
     end
 

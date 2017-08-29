@@ -1,6 +1,9 @@
 - pagination = capture do
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
+h1 システム共通 同義語一覧
+p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
+
 .container: .row: .col-8.offset-2
   br
   = render 'shared/flash'

@@ -9,6 +9,7 @@ class ImportsController < ApplicationController
   def create
     importer = QuestionAnswer.import_csv(params[:file], @bot, import_options)
     if importer.succeeded
+      @bot.learn_later
       redirect_to bot_imports_path, notice: 'インポートしました'
     else
       flash.now.alert = 'インポートに失敗しました'

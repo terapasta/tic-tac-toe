@@ -13,6 +13,7 @@ class QuestionAnswer < ActiveRecord::Base
   # accepts_nested_attributes_for :answer
   accepts_nested_attributes_for :topic_taggings, allow_destroy: true
   accepts_nested_attributes_for :answer_files, allow_destroy: true
+  accepts_nested_attributes_for :decision_branches
 
   NO_CLASSIFIED_ID = 0
 

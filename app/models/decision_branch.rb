@@ -8,4 +8,6 @@ class DecisionBranch < ActiveRecord::Base
     class_name: 'DecisionBranch',
     foreign_key: :parent_decision_branch_id,
     dependent: :destroy
+
+  accepts_nested_attributes_for :child_decision_branches
 end

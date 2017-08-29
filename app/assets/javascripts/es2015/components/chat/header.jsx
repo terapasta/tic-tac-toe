@@ -36,19 +36,14 @@ class ChatHeader extends Component {
   }
 
   render() {
-    const { botName, isManager } = this.props;
-    const { isLearning, learningStatus } = this.state;
-
-    const isSucceeded = learningStatus === LearningStatus.Succeeded;
-    const isFailed = learningStatus === LearningStatus.Failed;
-    const isProcessing = learningStatus === LearningStatus.Processing;
+    const { botName, isAdmin, isManager } = this.props;
 
     return (
       <header className="chat-header">
         <h1 className="chat-header__title">{botName}</h1>
         {isManager && (
           <div className="chat-header__right">
-            <LearningButton botId={window.currentBot.id} />
+            <LearningButton botId={window.currentBot.id} isAdmin={isAdmin} />
           </div>
         )}
       </header>
@@ -77,6 +72,7 @@ class ChatHeader extends Component {
 
 ChatHeader.propTypes = {
   botName: PropTypes.string.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isManager: PropTypes.bool.isRequired,
   learningStatus: PropTypes.oneOf(values(LearningStatus)),
 };

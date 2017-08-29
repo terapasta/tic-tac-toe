@@ -47,6 +47,7 @@ class QuestionAnswersController < ApplicationController
       @question_answer = @bot.question_answers.build(question_answer_params)
       authorize @question_answer
       if @question_answer.save
+        @bot.learn_later
         format.html { redirect_to bot_question_answers_path(@bot), notice: '登録しました。' }
         format.json { render json: @question_answer.decorate.as_json, status: :created }
       else
@@ -61,6 +62,7 @@ class QuestionAnswersController < ApplicationController
 
   def update
     if @question_answer.update(question_answer_params)
+      @bot.learn_later
       respond_to do |format|
         format.html do
           redirect_to edit_bot_question_answer_path(@bot, @question_answer), notice: '更新しました。'
@@ -83,12 +85,14 @@ class QuestionAnswersController < ApplicationController
       begin
         format.html do
           @question_answer.destroy!
+          @bot.learn_later
           redirect_to bot_question_answers_path(@bot), notice: '削除しました。'
         end
         format.json do
           ActiveRecord::Base.transaction do
             @question_answer.self_and_deep_child_decision_branches.map(&:destroy!)
           end
+          @bot.learn_later
           render json: {}, status: :no_content
         end
       rescue => e

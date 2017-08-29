@@ -1801,6 +1801,7 @@ var ChatApp = function (_Component) {
           form = _props4.form,
           learning = _props4.learning,
           learnings = _props4.learnings,
+          isAdmin = _props4.isAdmin,
           isManager = _props4.isManager,
           readMore = _props4.readMore,
           flashMessage = _props4.flashMessage,
@@ -1814,6 +1815,7 @@ var ChatApp = function (_Component) {
         _react2.default.createElement(_header2.default, {
           botName: window.currentBot.name,
           learningStatus: learning.status,
+          isAdmin: isAdmin,
           isManager: isManager,
           onClickStartLearning: function onClickStartLearning() {
             dispatch(a.startLearning(window.currentBot.id));
@@ -3426,15 +3428,9 @@ var ChatHeader = function (_Component) {
     value: function render() {
       var _props = this.props,
           botName = _props.botName,
+          isAdmin = _props.isAdmin,
           isManager = _props.isManager;
-      var _state = this.state,
-          isLearning = _state.isLearning,
-          learningStatus = _state.learningStatus;
 
-
-      var isSucceeded = learningStatus === _constants.LearningStatus.Succeeded;
-      var isFailed = learningStatus === _constants.LearningStatus.Failed;
-      var isProcessing = learningStatus === _constants.LearningStatus.Processing;
 
       return _react2.default.createElement(
         "header",
@@ -3447,7 +3443,7 @@ var ChatHeader = function (_Component) {
         isManager && _react2.default.createElement(
           "div",
           { className: "chat-header__right" },
-          _react2.default.createElement(_learningButton2.default, { botId: window.currentBot.id })
+          _react2.default.createElement(_learningButton2.default, { botId: window.currentBot.id, isAdmin: isAdmin })
         )
       );
     }
@@ -3482,6 +3478,7 @@ var ChatHeader = function (_Component) {
 
 ChatHeader.propTypes = {
   botName: _react.PropTypes.string.isRequired,
+  isAdmin: _react.PropTypes.bool.isRequired,
   isManager: _react.PropTypes.bool.isRequired,
   learningStatus: _react.PropTypes.oneOf((0, _values2.default)(_constants.LearningStatus))
 };
@@ -4009,6 +4006,7 @@ var app = (0, _redux.combineReducers)({
   learnings: _learnings2.default,
   readMore: _readMore2.default,
   token: through,
+  isAdmin: through,
   isManager: through,
   flashMessage: through,
   initialQuestions: _initialQuestions2.default
@@ -8327,7 +8325,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var labelBoxStyle = {
-  padding: "20px 0",
+  paddingBottom: "10",
   textAlign: "center",
   backgroundColor: "#fff",
   borderRight: "1px solid rgb(221, 221, 221)"
@@ -8362,7 +8360,8 @@ var LearningButton = function (_Component) {
     key: "propTypes",
     get: function get() {
       return {
-        botId: _react.PropTypes.number.isRequired
+        botId: _react.PropTypes.number.isRequired,
+        isAdmin: _react.PropTypes.bool.isRequired
       };
     }
   }]);
@@ -8391,10 +8390,11 @@ var LearningButton = function (_Component) {
       var _state = this.state,
           isDisabled = _state.isDisabled,
           status = _state.status;
+      var isAdmin = this.props.isAdmin;
 
       var statusLabel = LearningStatus[status];
       var statusClassName = (0, _classnames2.default)("badge", {
-        "badge-success": LearningStatus.isSucceeded(status),
+        "badge-success": LearningStatus.isSucceeded(status) && isAdmin,
         "badge-danger": LearningStatus.isFailed(status),
         "badge-warning": LearningStatus.isProcessing(status),
         "Animate-fadeInOut": LearningStatus.isProcessing(status)
@@ -8410,7 +8410,7 @@ var LearningButton = function (_Component) {
           statusLabel
         ),
         "\xA0",
-        _react2.default.createElement(
+        (isAdmin || LearningStatus.isFailed(status)) && _react2.default.createElement(
           "button",
           { className: "btn btn-outline-warning btn-sm",
             disabled: isDisabled,

@@ -5,7 +5,7 @@ import Mixpanel, { makeEvent } from '../analytics/mixpanel';
 import * as API from "../api/bot-learning";
 
 const labelBoxStyle = {
-  padding: "20px 0",
+  paddingBottom: "10",
   textAlign: "center",
   backgroundColor: "#fff",
   borderRight: "1px solid rgb(221, 221, 221)",
@@ -36,6 +36,7 @@ export default class LearningButton extends Component {
   static get propTypes() {
     return {
       botId: PropTypes.number.isRequired,
+      isAdmin: PropTypes.bool.isRequired,
     };
   }
 
@@ -54,9 +55,10 @@ export default class LearningButton extends Component {
 
   render() {
     const { isDisabled, status } = this.state;
+    const { isAdmin } = this.props;
     const statusLabel = LearningStatus[status];
     const statusClassName = classNames("badge", {
-      "badge-success": LearningStatus.isSucceeded(status),
+      "badge-success": LearningStatus.isSucceeded(status) && isAdmin,
       "badge-danger": LearningStatus.isFailed(status),
       "badge-warning": LearningStatus.isProcessing(status),
       "Animate-fadeInOut": LearningStatus.isProcessing(status),
@@ -69,12 +71,14 @@ export default class LearningButton extends Component {
           <label className={statusClassName}>{statusLabel}</label>
         )}
         &nbsp;
-        <button className="btn btn-outline-warning btn-sm"
-          disabled={isDisabled}
-          onClick={this.onClickButton.bind(this)}>
-          <i className="material-icons mi-xs">{icon}</i>&nbsp;
-          学習を実行
-        </button>
+        {(isAdmin || LearningStatus.isFailed(status)) && (
+          <button className="btn btn-outline-warning btn-sm"
+            disabled={isDisabled}
+            onClick={this.onClickButton.bind(this)}>
+            <i className="material-icons mi-xs">{icon}</i>&nbsp;
+            学習を実行
+          </button>
+        )}
       </div>
     )
   }

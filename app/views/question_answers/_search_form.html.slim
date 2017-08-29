@@ -1,23 +1,22 @@
-.well.clearfix
-  .pull-left
-    = form_tag action_url, method: :get, class: 'form-inline', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
-      = collection_select :topic, :id, topic_tags_for_select(@bot), :id, :name, { prompt: "-- トピックタグで絞込 --", selected: (@topic_id.to_i if @topic_id.present?) }, class: 'form-control'
-      = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
-      = space
-      = submit_tag '検索', name: "search", class: "btn btn-default"
-      - if params.dig(:topic, :id).present? || params[:keyword].present?
-        = space
-        = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
+.d-flex.justify-content-between.bg-faded.mb-3.p-2
+  = form_tag action_url, method: :get, class: 'form-inline d-flex justify-content-between', data: { event_name: 'Search question answer', bot_id: bot.id, bot_name: bot.name } do
+    = hidden_field_tag :headless, local_assigns[:headless]
+    = hidden_field_tag :hide_global_header, local_assigns[:hide_global_header]
 
-  .pull-right
-    .form-inline
-      span 並べ替え：
-      select.form-control data-role="url-switcher" data-event="Sort question answers" data-bot-id=bot.id data-bot-name=bot.name
-        option value=sorting_url('created_at desc') selected=(sort.blank? || sort == "created_at desc")
-          |作成日時の新しい順
-        option value=sorting_url('created_at asc') selected=(sort == "created_at asc")
-          |作成日時の古い順
-        option value=sorting_url('updated_at desc') selected=(sort == "updated_at desc")
-          |更新日時の新しい順
-        option value=sorting_url('updated_at asc') selected=(sort == "updated_at asc")
-          |更新日時の古い順
+    = collection_select :topic, :id, topic_tags_for_select(@bot), :id, :name, { include_blank: "-- トピックタグで絞込 --", selected: (@topic_id.to_i if @topic_id.present?) }, class: 'form-control', style: 'max-width:200px'
+    = space
+    .input-group
+      = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
+      span.input-group-btn
+        = submit_tag '検索', name: "search", class: "btn btn-secondary", data: { event: 'search q&a' }
+    - if params.dig(:topic, :id).present? || params[:keyword].present?
+      = space
+      = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
+
+  - if params[:headless].blank?
+    div
+      = link_to bot_topic_tags_path(@bot), class: 'btn btn-secondary', data: { event: 'control topic tag' } do
+        = material_icon 'label', class: 'mi-sm mi-label-rotate text-gray-light'
+        span トピックタグ管理
+      = space
+      = link_to 'Q&A新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-success', data: { event: 'click new create q&a' }

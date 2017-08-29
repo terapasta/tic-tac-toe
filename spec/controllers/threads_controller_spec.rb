@@ -41,11 +41,11 @@ RSpec.describe ThreadsController, type: :controller do
 
   describe 'GET #index' do
     subject do
-      get :index, bot_id: bot.id, filter: filter
+      get :index, bot_id: bot.id, answer_failed: answer_failed
       assigns[:chats]
     end
 
-    let(:filter) do
+    let(:answer_failed) do
       nil
     end
 
@@ -61,7 +61,7 @@ RSpec.describe ThreadsController, type: :controller do
       end
 
       context 'with filter param' do
-        let(:filter) do
+        let(:answer_failed) do
           '1'
         end
 
@@ -83,7 +83,7 @@ RSpec.describe ThreadsController, type: :controller do
       end
 
       context 'with filter param' do
-        let(:filter) do
+        let(:answer_failed) do
           '1'
         end
 

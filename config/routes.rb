@@ -5,7 +5,14 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', as: 'user_registration'
   end
 
-  resources :bots, only: [:index, :edit, :update] do
+  resources :bots, only: [:show, :index] do
+    namespace :settings do
+      get 'embed', to: 'pages#embed'
+      resource :bot, only: [:show, :update]
+      resource :allowed_hosts, only: [:show, :update]
+      resource :allowed_ip_addresses, only: [:show, :update]
+      resource :reset, only: [:show, :create]
+    end
     member do
       post :reset
     end
@@ -20,8 +27,8 @@ Rails.application.routes.draw do
         resources :selections, only: [:index], module: :question_answers, as: :question_answers_selections
       end
     end
-    resources :topic_tags
-    resource :imports, only: [:new, :create]
+    resource :topic_tags, only: [:show, :update]
+    resource :imports, only: [:show, :create]
     resources :exports, only: [:index, :create]
     resources :chat_tests, only: [:new, :create, :show]
     resources :threads, only: :index do
@@ -92,6 +99,9 @@ Rails.application.routes.draw do
         resource :child_decision_branches, only: [:destroy], module: :decision_branches
       end
       resources :answers, module: :bots
+      resources :messages, module: :bots, only: [] do
+        resource :mark, module: :messages, only: [:create, :destroy]
+      end
     end
   end
 

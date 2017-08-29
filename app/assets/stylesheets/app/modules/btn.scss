@@ -1,0 +1,25 @@
+.btn {
+  &-orange {
+    @include button-variant(#fff, $orange, $orange);
+  }
+  &-outline-orange {
+    @include button-outline-variant($orange);
+  }
+
+  &-outline-white {
+    @include button-outline-variant(#fff);
+
+    &:hover {
+      background-color: rgba(#fff, 0.25);
+      color: #fff;
+    }
+  }
+
+  &-outline-gray {
+    @include button-outline-variant(#999);
+  }
+
+  &-text-sm {
+    font-size: 13px;
+  }
+}

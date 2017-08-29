@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import values from "lodash/values";
 
+import LearningButton from '../learning-button';
 import { LearningStatus } from "./constants";
 import * as LearningAPI from "../../api/bot-learning";
 
@@ -36,30 +37,13 @@ class ChatHeader extends Component {
 
   render() {
     const { botName, isAdmin, isManager } = this.props;
-    const { isLearning, learningStatus } = this.state;
-
-    const isSucceeded = learningStatus === LearningStatus.Succeeded;
-    const isFailed = learningStatus === LearningStatus.Failed;
-    const isProcessing = learningStatus === LearningStatus.Processing;
 
     return (
       <header className="chat-header">
         <h1 className="chat-header__title">{botName}</h1>
         {isManager && (
           <div className="chat-header__right">
-            {(isSucceeded && isAdmin) && <span className="label label-success">学習済</span>}
-            {isFailed && <span className="label label-danger">学習失敗</span>}
-            {isProcessing && <span className="label label-warning">学習中</span>}
-            {" "}
-            {(isAdmin || isFailed) && (
-              <button className="chat-header__button btn btn-default"
-                disabled={isLearning}
-                onClick={this.onClickLearning}>
-                <i className="material-icons">trending_up</i>
-                {" "}
-                <span>{isLearning ? "学習中..." : "学習を実行"}</span>
-              </button>
-            )}
+            <LearningButton botId={window.currentBot.id} isAdmin={isAdmin} />
           </div>
         )}
       </header>
@@ -94,3 +78,18 @@ ChatHeader.propTypes = {
 };
 
 export default ChatHeader;
+/*
+          <div className="chat-header__right">
+            {isSucceeded && <span className="label label-success">学習済</span>}
+            {isFailed && <span className="label label-danger">学習失敗</span>}
+            {isProcessing && <span className="label label-warning">学習中</span>}
+            {" "}
+            <button className="chat-header__button btn btn-default"
+              disabled={isLearning}
+              onClick={this.onClickLearning}>
+              <i className="material-icons">trending_up</i>
+              {" "}
+              <span>{isLearning ? "学習中..." : "学習を実行"}</span>
+            </button>
+          </div>
+*/

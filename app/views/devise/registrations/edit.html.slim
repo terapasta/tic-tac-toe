@@ -1,0 +1,23 @@
+.container: .row: .col-8.offset-2.my-4
+  = bootstrap_devise_error_messages!
+  h5.mb-3 ユーザー情報変更
+
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }, data: { event_name: 'Update password' }) do |f|
+    .form-group
+      = f.label :password
+      = f.password_field :password, :autocomplete => "off", class: "form-control"
+
+    .form-group
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, class: "form-control"
+
+    .form-group
+      = f.label :email
+      = f.email_field :email, class: "form-control"
+
+    .form-group
+      = f.label :current_password
+      = f.password_field :current_password, class: "form-control"
+
+    .form-group.text-right
+      = f.submit t('.update', :default => "Update"), class: "btn btn-success", data: { event: 'update user account' }

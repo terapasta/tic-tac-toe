@@ -5,9 +5,6 @@ export default class MasterDetailPanel extends Component {
     const { title, children } = this.props;
     return (
       <div className="master-detail-panel">
-        <div className="master-detail-panel__header">
-          <h1 className="master-detail-panel__title">{title}</h1>
-        </div>
         <div className="master-detail-panel__body">
           {children}
         </div>

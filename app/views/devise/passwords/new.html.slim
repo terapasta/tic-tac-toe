@@ -1,0 +1,10 @@
+= render layout: 'devise/shared/layout', locals: { title: 'パスワード再設定' } do
+  = form_for(resource, :as => resource_name, url: password_path(resource_name), html: { method: :post, role: "form" }) do |f|
+
+    .form-group
+      = f.label :email
+      = f.email_field :email, autofocus: true, class: "form-control"
+
+    = f.submit '再設定URLを受取る', class: "btn btn-success btn-block", data: { event: 'send re-set password' }
+    = link_to new_user_session_path, class: 'btn btn-link btn-block', data: { event: 'return to login home' } do
+      small ログインページへ

@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    attributes:
+      accuracy_test_case:
+        question_text: テスト質問
+        expected_text: 期待値
+        is_expected_suggestion: サジェストを期待

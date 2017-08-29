@@ -1,17 +1,23 @@
-h2 テスト内容編集
-hr
-= form_for [:admin, @bot, @accuracy_test_case] do |f|
-  = f.label :テスト質問
-  = f.text_area :question_text, rows: 3, class: 'form-control'
-  br
-  
-  = f.label :期待値
-  = f.text_area :expected_text, rows: 3, class: 'form-control'
-  br
-  
-  = f.label :サジェストを期待する
-  = f.check_box :is_expected_suggestion 
-  br
-  br
-  
-  = f.submit class: "btn btn-default"
+.container: .row: .col-8.offset-2.mt-5.mb-4
+  .mb-4= link_to admin_bot_accuracy_test_cases_path(@bot), class: 'text-muted' do
+    = material_icon 'keyboard_arrow_left', class: 'mi-xs'
+    = space
+    span 一覧へ戻る
+
+  = form_for [:admin, @bot, @accuracy_test_case] do |f|
+    .form-group
+      = f.label :question_text
+      = f.text_area :question_text, rows: 3, class: 'form-control'
+
+    .form-group
+      = f.label :expected_text
+      = f.text_area :expected_text, rows: 3, class: 'form-control'
+
+    .form-group
+      = f.label :is_expected_suggestion do
+        = f.check_box :is_expected_suggestion
+        = space
+        = AccuracyTestCase.human_attribute_name :is_expected_suggestion
+
+    .form-group
+      = f.submit class: "btn btn-success"

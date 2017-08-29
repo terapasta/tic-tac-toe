@@ -1,0 +1,22 @@
+= render layout: 'bots/layout' do
+  .row: .col-8.offset-2
+    .mb-3
+      = link_to bot_question_answers_path(@bot), class: 'text-muted' do
+        = material_icon 'keyboard_arrow_left', class: 'mi-xs'
+        = space
+        span Q&A一覧へ戻る
+
+    = nested_form_for @bot, url: bot_topic_tags_path(@bot) do |f|
+      .form-group
+        .card: .card-block
+          h5.mb-3: strong Q&Aトピックタグ
+          #bot-topic-tags
+            = f.fields_for :topic_tags do |nf|
+              .input-group.mb-3
+                = nf.text_field :name, class: 'form-control form-control-sm'
+                span.input-group-btn
+                  = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete topic tag' }
+          = f.link_to_add 'トピックタグを追加', :topic_tags, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-topic-tags' }
+
+      .form-group.text-right
+        = f.submit class: 'btn btn-success'

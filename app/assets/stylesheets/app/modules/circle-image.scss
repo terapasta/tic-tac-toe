@@ -1,0 +1,24 @@
+%base-circle-image {
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid lighten($gray, 30%);
+  background: {
+    color: #efefef;
+    position: center center;
+    size: cover;
+    repeat: no-repeat;
+  }
+  vertical-align: middle;
+}
+
+.circle-image-56 {
+  @extend %base-circle-image;
+  width: 56px;
+  height: 56px;
+}
+
+.circle-image-80 {
+  @extend %base-circle-image;
+  width: 80px;
+  height: 80px;
+}

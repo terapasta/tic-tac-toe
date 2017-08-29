@@ -35,6 +35,9 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     active_hash (1.4.1)
       activesupport (>= 2.2.2)
+    active_link_to (1.0.4)
+      actionpack
+      addressable
     active_model_serializers (0.10.5)
       actionpack (>= 4.1, < 6)
       activemodel (>= 4.1, < 6)
@@ -514,6 +517,8 @@ GEM
     temple (0.7.7)
     termcolor (1.2.2)
       highline (>= 1.5.0)
+    tether-rails (1.4.0)
+      rails (>= 3.1)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -576,6 +581,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
+  active_link_to
   active_model_serializers
   activerecord-import
   addressable
@@ -661,6 +667,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   tapp
+  tether-rails
   therubyracer
   to_bool
   toastr-rails

@@ -1,17 +1,28 @@
-.row
-  .col-md-8.col-md-offset-2.col-sm-10.col-offset-1
-    h1 サポートフォーム
-    br/
-    
-    .info-support-form 
-      .well.well-sm
-        p
-          |  
-            My-ope officeご利用にあたってお気づきの点や不具合、<br>
-            及び機能要望などお気軽にお問い合わせください。
-    
-    = bootstrap_form_for(:ticket, url: contacts_path, method: "post" ) do |f|
-      = f.email_field :email, hide_label: true, placeholder: "メールアドレス      *記載されたメールアドレス宛に返信致します。"
-      = f.text_field :subject, hide_label: true, placeholder: "件名"
-      = f.text_area :description, rows: 10, hide_label: true, placeholder: "お問い合わせ内容"
-      = f.submit "送信する", class: "btn btn-primary"
+.container: .row: .col-8.offset-2
+  br
+  = render 'shared/flash'
+  .mt-5.mb-4
+    h4 サポートフォーム
+    br
+
+    .card.card-outline-warning
+      .card-block
+          |My-ope officeご利用にあたってお気づきの点や不具合、
+          br
+          |及び機能要望などお気軽にお問い合わせください。
+
+  = form_for(:ticket, url: contacts_path, method: "post" ) do |f|
+    .form-group
+      = f.label :email, 'メールアドレス'
+      = f.email_field :email, class: 'form-control', placeholder: "*記載されたメールアドレス宛に返信致します。"
+
+    .form-group
+      = f.label :subject, '件名'
+      = f.text_field :subject, class: 'form-control', placeholder: "例）〇〇画面で不具合が発生しました"
+
+    .form-group
+      = f.label :description, 'お問合わせ内容'
+      = f.text_area :description, rows: 10, class: 'form-control', placeholder: "例）◯◯画面で✕✕の操作をするとエラー画面が表示されてしまいます"
+
+    .form-group.text-right
+      = f.submit "送信する", class: "btn btn-success", data: { event: 'send inquiry' }

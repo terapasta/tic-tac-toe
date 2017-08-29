@@ -2,9 +2,24 @@ import React, { Component, PropTypes } from "react";
 import TextArea from "react-textarea-autosize";
 import isEmpty from 'is-empty';
 import debounce from 'lodash/debounce';
+import styled from 'styled-components';
 
 import PreventWheelScrollOfParent from '../prevent-wheel-scroll-of-parent';
 import * as AnswerAPI from '../../api/answer';
+
+const SuggestItem = styled.div`
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+
+  &:hover {
+    background-color: #efefef;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+`;
 
 class ChatBotMessageEditor extends Component {
   constructor(props) {
@@ -73,9 +88,9 @@ class ChatBotMessageEditor extends Component {
             <PreventWheelScrollOfParent className="chat-message__suggestions">
               {searchedAnswers.map((a) => (
                 <div className="panel panel-default stacked-close" key={a.id}>
-                  <a href="#" className="panel-body" onClick={(e) => this.selectAnswer(a, e)}>
+                  <SuggestItem onClick={(e) => this.selectAnswer(a, e)}>
                     {a.body}
-                  </a>
+                  </SuggestItem>
                 </div>
               ))}
             </PreventWheelScrollOfParent>

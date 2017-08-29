@@ -1,0 +1,21 @@
+= render layout: 'settings/shared/layout' do
+  = nested_form_for @bot, url: bot_settings_allowed_hosts_path do |f|
+    .form-group.form-inline
+      .card: .card-block
+        h5.mb-3: strong チャット埋め込みの許可ホスト
+        #bot-allowed-hosts
+          = f.fields_for :allowed_hosts do |nf|
+            = nf.select :scheme, AllowedHost.schemes.keys, {}, class: 'form-control form-control-sm'
+            = space
+            = nf.text_field :domain, class: 'form-control form-control-sm', hide_label: true, placeholder: '*.example.com'
+            = space
+            = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete allowed hosts' }
+            hr
+        = f.link_to_add '許可ホストを追加', :allowed_hosts, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-allowed-hosts' }
+        .form-text.text-muted
+          |※１つも登録がない場合すべてのホストに対して埋め込みが許可されます<br />
+          |※追加と削除を行ったら必ず更新するボタンを押してください<br />
+          |※サブドメインは <code>*</code> で全てにマッチできます（例：*.example.com）サブドメイン無しは個別に登録する必要があります
+
+    .form-group.text-right
+      = f.submit class: 'btn btn-success', data: { event: 'update allowed hosts' }

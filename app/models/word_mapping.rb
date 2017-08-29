@@ -20,6 +20,13 @@ class WordMapping < ActiveRecord::Base
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
   }
 
+  scope :keyword, -> (_keyword) {
+    if _keyword.present?
+      _kw = "%#{_keyword}%"
+      where('word LIKE ? OR synonym LIKE ?', _kw, _kw)
+    end
+  }
+
   private
 
     def unique_pair

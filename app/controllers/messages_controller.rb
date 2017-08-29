@@ -5,7 +5,8 @@ class MessagesController < ApplicationController
   before_action :set_chat
 
   def index
-    @messages = @chat.messages.page(params[:page])
+    @per_page = 20
+    @messages = @chat.messages.page(params[:page]).per(@per_page)
   end
 
   private

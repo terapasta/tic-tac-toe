@@ -3,6 +3,7 @@ import find from "lodash/find";
 import get from "lodash/get";
 import isEmpty from "is-empty";
 
+import Mixpanel, { makeEvent } from '../analytics/mixpanel';
 import * as TopicTaggingAPI from "../api/topic-tagging";
 import * as TopicTagAPI from "../api/topic-tag";
 
@@ -33,6 +34,7 @@ export default class QuestionAnswerTagFrom extends Component {
     this.onChangeCheckBox = this.onChangeCheckBox.bind(this);
     this.onChangeInputText = this.onChangeInputText.bind(this);
     this.onClickButton = this.onClickButton.bind(this);
+    this.handleTopicTagsLink = this.handleTopicTagsLink.bind(this);
   }
 
   componentDidMount() {
@@ -46,11 +48,16 @@ export default class QuestionAnswerTagFrom extends Component {
     return (
       <div>
         <div className="form-group">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <div className="panel-title">トピックタグ</div>
-            </div>
-            <div className="panel-body">
+          <div className="card">
+            <div className="card-block">
+              <div className="d-flex justify-content-between">
+                <label>トピックタグ</label>
+                &nbsp;&nbsp;
+                <a href={`/bots/${window.currentBot.id}/topic_tags`} target="_blank" onClick={this.handleTopicTagsLink}>
+                  <i className="material-icons mi-xs mi-label-rotate">label</i>
+                  <span>トピックタグ管理はこちら</span>
+                </a>
+              </div>
               {topicTags.map((t, i) => {
                 const tt = find(topicTaggings, (tt) => tt.topicTagId === t.id);
                 const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;
@@ -67,13 +74,13 @@ export default class QuestionAnswerTagFrom extends Component {
                         value={t.id}
                       />
                       {" "}
-                      <span className="label label-primary">{t.name}</span>
+                      <span className="badge badge-primary">{t.name}</span>
                     </label>
                   </div>
                 );
               })}
               {isEmpty(topicTags) && (
-                <p>トピックタグはありません</p>
+                <p className="mb-0">トピックタグはありません</p>
               )}
               {deletedTopicTaggings.map((dtt, i) => {
                 const baseName = `question_answer[topic_taggings_attributes][${uniqueKey()}]`;
@@ -85,10 +92,12 @@ export default class QuestionAnswerTagFrom extends Component {
                 );
               })}
             </div>
-            <div className="panel-footer">
-              <div className="form-inline">
-                <input type="text" id="topic-tag-name" className="form-control" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
-                <button className="btn btn-primary" onClick={this.onClickButton} id="topic-tag-submit">追加</button>
+            <div className="card-footer">
+              <div className="form-inline input-group">
+                <input id="topic-tag-name" type="text" className="form-control form-control-sm" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
+                <span className="input-group-btn" style={{ height: '26px' }}>
+                  <button className="btn btn-primary btn-sm" onClick={this.onClickButton}>追加</button>
+                </span>
               </div>
             </div>
           </div>
@@ -173,5 +182,12 @@ export default class QuestionAnswerTagFrom extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.createTag();
+    const { eventName, options } = makeEvent('add to topic tag');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
+  }
+
+  handleTopicTagsLink() {
+    const { eventName, options } = makeEvent('control topic tag');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
   }
 }

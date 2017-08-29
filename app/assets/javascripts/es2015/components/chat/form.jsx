@@ -28,7 +28,7 @@ export default class ChatForm extends Component {
 
     return (
       <div className="chat-form">
-        <div className="container">
+        <div style={{ margin: '0 auto', padding: '0 15px', maxWidth: '970px' }}>
           <div className=".chat-container--no-padding">
             <form className="form" onSubmit={this.onSubmitForm.bind(this)}>
               <input
@@ -46,9 +46,9 @@ export default class ChatForm extends Component {
                 id="chat-submit"
                 disabled={isDisabled}
                 onClick={() => onSubmit(messageBody)}>
-                <span className="visible-sm visible-md visible-lg">質問</span>
-                <span className="visible-xs">
-                  <i className="fa fa-icon fa-paper-plane-o" />
+                <span className="d-sm-inline-block d-none">質問</span>
+                <span className="d-inline-block d-sm-none">
+                  <i className="material-icons">send</i>
                 </span>
               </button>
             </form>

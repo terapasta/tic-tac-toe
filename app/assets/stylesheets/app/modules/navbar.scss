@@ -1,0 +1,52 @@
+.navbar {
+  &-global {
+    border-bottom: 2px solid $orange;
+    // border-bottom: 1px solid #ddd;
+  }
+
+  &__logo {
+    display: inline-block;
+    margin-bottom: 0;
+    line-height: 1;
+    font-size: 2rem;
+    vertical-align: top;
+
+    a {
+      display: block;
+      width: 130px;
+      background: {
+        image: image-url('logo--orange.svg');
+        position: center center;
+        size: contain;
+        repeat: no-repeat;
+      }
+      text-indent: -99999px;
+    }
+  }
+
+  .btn {
+    line-height: inherit;
+  }
+
+  .navbar-nav {
+    .nav-item,
+    .dropdown-menu {
+      font-size: 14px;
+    }
+
+    .nav-item {
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 100%;
+        line-height: 32px;
+      }
+    }
+  }
+}

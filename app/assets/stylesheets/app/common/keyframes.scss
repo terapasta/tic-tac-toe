@@ -1,0 +1,19 @@
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.Animate-fadeInOut {
+  animation-duration: 2s;
+  animation-name: fadeInOut;
+  animation-iteration-count: infinite;
+}

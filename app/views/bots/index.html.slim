@@ -1,0 +1,14 @@
+.container
+  - if policy(:bot).index?
+    .row: .col-8.offset-2.mt-5.mb-4
+      = render 'shared/flash'
+
+      h4.mb-4 Bot一覧
+
+      table.table: tbody
+        - @bots.each do |bot|
+          tr: td: h4
+            = link_to bot_path(bot), class: 'd-block link-silent' do
+              .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+              = space
+              = bot.name

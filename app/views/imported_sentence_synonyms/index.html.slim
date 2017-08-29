@@ -1,36 +1,39 @@
-p= link_to '全同義文一覧へ', imported_sentence_synonyms_path, data: { event_name: 'Back to sentence synonym index from sentence synonym index' }
+.container
+  = render 'shared/flash'
 
-= render 'filter_form'
+  p= link_to '全同義文一覧へ', imported_sentence_synonyms_path, data: { event_name: 'Back to sentence synonym index from sentence synonym index' }
 
-p 全体数: #{@sentence_synonyms_all}
-p 未着手: #{@not_have_sentence_synonyms}
-- @sentence_synonyms_registration_number.each do |key, value|
-  p 同義文#{key}件登録済: #{value}
+  = render 'filter_form'
 
-table.table.table-striped
-  thead
-    tr
-      th id
-      - if policy(Bot).show?
-        th bot
-      th トレーニングメッセージ
-      th 同義文
-  tbody
-    - @filtered_question_answers.each do |qa, ss_list|
-      - if ss_list.any?
-        tr
-          td= qa.id
-          - if policy(Bot).show?
-            th= link_to "#{ qa&.bot&.id } #{ qa&.bot&.name }", edit_bot_path(qa&.bot_id)
-          td= qa.question
-          td
-            table.table.table-striped: tbody
-              - ss_list.each do |ss|
-                tr.sentence-synonym-row
-                  td= ss.id
-                  td= ss.body
-                  td= ss.created_user.email
-                  - if policy(ss).destroy?
-                    - url = @bot ? bot_imported_sentence_synonym_path(@bot, ss) : imported_sentence_synonym_path(ss)
-                    td= link_to '削除', url, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete sentence synonym', sentence_synonym_id: ss.id, bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
-                  td= ss.created_at.strftime('%Y/%m/%d')
+  p 全体数: #{@sentence_synonyms_all}
+  p 未着手: #{@not_have_sentence_synonyms}
+  - @sentence_synonyms_registration_number.each do |key, value|
+    p 同義文#{key}件登録済: #{value}
+
+  table.table.table-striped
+    thead
+      tr
+        th id
+        - if policy(Bot).show?
+          th bot
+        th トレーニングメッセージ
+        th 同義文
+    tbody
+      - @filtered_question_answers.each do |qa, ss_list|
+        - if ss_list.any?
+          tr
+            td= qa.id
+            - if policy(Bot).show?
+              th= link_to "#{ qa&.bot&.id } #{ qa&.bot&.name }", edit_bot_path(qa&.bot_id)
+            td= qa.question
+            td
+              table.table.table-striped: tbody
+                - ss_list.each do |ss|
+                  tr.sentence-synonym-row
+                    td= ss.id
+                    td= ss.body
+                    td= ss.created_user.email
+                    - if policy(ss).destroy?
+                      - url = @bot ? bot_imported_sentence_synonym_path(@bot, ss) : imported_sentence_synonym_path(ss)
+                      td= link_to '削除', url, class: 'btn btn-danger', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete sentence synonym', sentence_synonym_id: ss.id, bot_id: @bot.try(:id), bot_name: @bot.try(:name) }
+                    td= ss.created_at.strftime('%Y/%m/%d')

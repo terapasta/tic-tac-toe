@@ -1,12 +1,22 @@
 - data = @word_mapping.persisted? ? { event_name: 'Update word mapping', word_mapping_id: @word_mapping.id } : { event_name: 'Create word mapping' }
 
-.row
-  .col-md-6.col-xs-12
-    = bootstrap_form_for resource, data: data do |f|
-      = render "shared/errors", object: @word_mapping
+.row: .col-8.offset-2
+  .mb-3
+    = link_to bot_word_mappings_path(@bot), class: 'text-muted', data: { event: 'return to synonym' } do
+      = material_icon 'keyboard_arrow_left', class: 'mi-xs'
+      = space
+      span 一覧へ戻る
 
-      = f.text_field :word
-      = f.text_field :synonym
+  = form_for [@bot, @word_mapping], data: data do |f|
+    = render "shared/errors", object: @word_mapping
 
-      .actions
-        = f.submit class: 'btn btn-primary'
+    .form-group
+      = f.label :word
+      = f.text_field :word, class: 'form-control', placeholder: '正とする単語を入力してください（例：会話）', autofocus: true
+
+    .form-group
+      = f.label :synonym
+      = f.text_field :synonym, class: 'form-control', placeholder: '単語と意味が同じで異なるものを入力して下さい（例：お話）'
+
+    .form-group.text-right
+      = f.submit class: 'btn btn-success', data: { event: @word_mapping.persisted? ? 'update synonym' : 'create synonym' }

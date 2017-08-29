@@ -1,0 +1,33 @@
+.master-detail-panel {
+  position: relative;
+  overflow-y: hidden;
+  border: 1px solid $gray-lighter;
+
+  &__body {
+    @extend .clearfix;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+  }
+
+  &__master {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: auto;
+    float: left;
+    width: 30%;
+    padding: 16px 0;
+    background-color: lighten($gray-lighter, 5%);
+  }
+
+  &__detail {
+    float: right;
+    padding: 16px;
+    width: 70%;
+  }
+}

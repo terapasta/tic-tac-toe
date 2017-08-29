@@ -3,10 +3,11 @@ class TasksController < ApplicationController
   before_action :set_bot
 
   def index
+    @per_page = 20
     @tasks = @bot.tasks
       .with_done(params[:done])
       .page(params[:page])
-      .per(20)
+      .per(@per_page)
       .order(:created_at)
   end
 

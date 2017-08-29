@@ -1,0 +1,34 @@
+/*
+ *= require toastr
+ */
+
+@import 'bootstrap-v4.0.0-alpha.6-scss/bootstrap';
+
+
+html {
+  height: 100%;
+}
+
+body {
+  font-size: 14px;
+  font-family:
+    'Open Sans',
+    helvetica,
+    arial,
+    'hiragino kaku gothic pro',
+    meiryo,
+    'ms pgothic',
+    sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 970px;
+  max-width: none !important;
+}
+
+@import 'app/common/variables';
+@import 'app/common/keyframes';
+@import 'app/helpers/*';
+@import 'app/modules/**/*';

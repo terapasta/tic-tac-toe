@@ -1,0 +1,42 @@
+.checkbox-pill {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid lighten($gray, 50%);
+  border-radius: 3px;
+  font-weight: normal;
+
+  &:hover {
+    background-color: lighten($gray-lighter, 5%);
+  }
+
+  &__input {
+    margin-right: 8px;
+  }
+
+  &__label {
+    display: inline-block;
+  }
+}
+
+.checkbox-pill-group {
+  .checkbox-pill {
+    border-left: 0;
+    border-radius: 0;
+
+    &:first-child {
+      border-left: 1px solid lighten($gray, 50%);
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+
+    &:first-child:last-child {
+      border-radius: 3px;
+    }
+  }
+}

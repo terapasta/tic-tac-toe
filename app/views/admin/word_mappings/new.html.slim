@@ -1,6 +1,9 @@
-h1 システム共通同義語 新規作成
+.container: .row: .col-8.offset-2
+  .mt-5.mb-4
+    .mb-3= link_to admin_word_mappings_path, class: 'text-muted' do
+      = material_icon 'keyboard_arrow_left', class: 'mi-xs'
+      = space
+      span 一覧へ戻る
+    h4.mb-3 システム共通同義語 新規作成
 
-= render 'word_mappings/form', { resource: [:admin, @word_mapping] }
-
-br
-= link_to '戻る', admin_word_mappings_path, class: 'btn btn-default', data: { event_name: 'Back to word mapping index', word_mapping_id: @word_mapping.id }
+    = render 'form', { resource: [:admin, @word_mapping] }

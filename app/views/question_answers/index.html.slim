@@ -3,19 +3,33 @@
   - content_for :hide_sidebar, true
   - content_for :additional_container_main_class, 'container-main--headless'
 
+- sort = params.dig(:q, :s)
+
 - pagination = capture do
-  = render 'pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
+  = render 'shared/pagination', resources: @question_answers, per_page: @per_page
 
-.page-header
-  .page-header__title Q&A管理
-  .page-header__controls
-    = link_to '新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-default', data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+= render layout: 'bots/layout' do
+  = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, action_url: bot_question_answers_path(@bot, headless: params[:headless], hide_global_header: params[:hide_global_header])
 
-= render 'search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_path(@bot)
+  = render layout: 'shared/pagination', locals: { resources: @question_answers, per_page: @per_page, hide_paginator: true } do
+    .form-inline
+      span 順序：
+      select.form-control.form-control-sm(
+        data-role="url-switcher"
+        data-event="Sort question answers"
+        data-bot-id=@bot.id
+        data-bot-name=@bot.name
+      )
+        option value=sorting_url('created_at desc') selected=(sort.blank? || sort == "created_at desc")
+          |作成日時の新しい順
+        option value=sorting_url('created_at asc') selected=(sort == "created_at asc")
+          |作成日時の古い順
+        option value=sorting_url('updated_at desc') selected=(sort == "updated_at desc")
+          |更新日時の新しい順
+        option value=sorting_url('updated_at asc') selected=(sort == "updated_at asc")
+          |更新日時の古い順
 
-= pagination
+  - @question_answers.each do |question_answer|
+    = render 'summary_card', question_answer: question_answer, bot: @bot
 
-- @question_answers.each do |question_answer|
-  = render 'summary_card', question_answer: question_answer, bot: @bot
-
-= pagination
+  = pagination

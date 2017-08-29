@@ -1,0 +1,43 @@
+- pagination = capture do
+  = render 'shared/pagination', resources: @messages, per_page: @per_page
+
+= render layout: 'bots/layout' do
+  .mb-3= link_to bot_threads_path(@bot), class: 'text-muted', data: { method: 'return to chat log' } do
+    = material_icon 'keyboard_arrow_left'
+    = space
+    span 一覧に戻る
+
+  .card.mb-3
+    .card-header.d-flex.justify-content-between
+      div
+        small ID：#{@chat.id}
+        = space 10
+        small 日時：#{l @chat.messages.last.created_at}
+      div.text-muted
+        span.mr-3
+          - @chat.messages.answer_failed.count.tap do |count|
+            = material_icon 'error_outline', class: ('text-warning' if count > 0)
+            = space
+            = count
+        span.mr-3
+          - @chat.messages.good.count.tap do |count|
+            = material_icon 'thumb_up', class: ('text-success' if count > 0)
+            = space
+            = count
+        span
+          - @chat.messages.bad.count.tap do |count|
+            = material_icon 'thumb_down', class: ('text-danger' if count > 0)
+            = space
+            = count
+
+    .card-block.padding-left-64
+      - @messages.each do |message|
+        .row
+          - if message.guest?
+            .col-6.offset-6
+              = render 'messages/guest_balloon', message: message
+          - else
+            .col-6
+              = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
+
+  = pagination

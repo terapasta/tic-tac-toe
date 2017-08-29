@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Login', typre: :feature, js: true do
+  include CapybaraHelpers
+
   let!(:user) do
     create(:user)
   end
@@ -17,8 +19,8 @@ RSpec.describe 'Login', typre: :feature, js: true do
     scenario do
       visit '/users/sign_in'
       expect(page).to have_content('ログイン')
-      fill_in 'user[email]', with: user.email
-      fill_in 'user[password]', with: 'hogehoge'
+      fill_in_input name: 'user[email]', value: user.email
+      fill_in_input name: 'user[password]', value: 'hogehoge'
       click_on 'ログイン'
       page.save_screenshot
       expect(page).to have_content(bot.name)
@@ -29,16 +31,13 @@ RSpec.describe 'Login', typre: :feature, js: true do
     scenario do
       visit '/users/sign_in'
       expect(page).to have_content('ログイン')
-      fill_in 'user[email]', with: user.email
-      fill_in 'user[password]', with: 'hogehoge'
+      fill_in_input name: 'user[email]', value: user.email
+      fill_in_input name: 'user[password]', value: 'hogehoge'
       click_on 'ログイン'
-      page.save_screenshot
-      within "#bot-#{bot.id}" do
-        click_on '詳細'
-      end
+      click_on bot.name
 
       expect(page).to have_content('チャットする')
-      expect(page).to have_content('Q&A管理')
+      expect(page).to have_content('Q&A')
     end
   end
 end

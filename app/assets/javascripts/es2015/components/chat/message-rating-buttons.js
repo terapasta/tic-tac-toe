@@ -9,10 +9,6 @@ const ButtonClasses = {
   Good: "chat-message__rating-button good",
   Bad: "chat-message__rating-button bad",
 };
-const FaIcons = {
-  Good: "fa fa-thumbs-up",
-  Bad:  "fa fa-thumbs-down",
-};
 
 export default class MessageRatingButtons extends Component {
   static get propTypes() {
@@ -37,12 +33,12 @@ export default class MessageRatingButtons extends Component {
         <div className="chat-message__rating-title">この返答を評価してください</div>
         <a href="#" className={goodClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Good)}>
-          <i className={FaIcons.Good} />
+          <i className="material-icons">thumb_up</i>
         </a>
         {" "}
         <a href="#" className={badClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Bad)}>
-          <i className={FaIcons.Bad} />
+          <i className="material-icons">thumb_down</i>
         </a>
       </span>
     );

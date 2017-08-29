@@ -51,7 +51,7 @@ export const postMessageIfNeeded = (token, messageBody, options = { isForce: fal
     const process = () => {
       dispatch(disableForm());
       postMessage(token, m, dispatch);
-      trackMixpanel("Create chat message");
+      trackMixpanel("question");
     };
     if (options.isForce) { process(); }
     if (isEmpty(m)) { return toastr.warning(c.ErrorPostMessage) }
@@ -95,6 +95,7 @@ export function chooseDecisionBranch(token, decisionBranchId) {
       .then((res) => {
         dispatch(chosenDecisionBranch(res));
         dispatch(enableForm());
+        trackMixpanel('click choice question');
       })
       .catch((err) => {
         console.error(err);
@@ -118,15 +119,15 @@ export function changeMessageRatingTo(type, token, messageId) {
   return (dispatch, getState) => {
     switch (type) {
       case c.Ratings.Good:
-        trackMixpanel("Good rating answer", { messageId })
+        trackMixpanel("good", { messageId })
         dispatch(goodMessage(token, messageId));
         break;
       case c.Ratings.Bad:
-        trackMixpanel("Bad rating answer", { messageId })
+        trackMixpanel("bad", { messageId })
         dispatch(badMessage(token, messageId));
         break;
       case c.Ratings.Nothing:
-        trackMixpanel("No rating answer", { messageId })
+        trackMixpanel("nothing", { messageId })
         dispatch(nothingMessage(token, messageId));
         break;
     }
@@ -163,6 +164,7 @@ export function toggleActiveSection(index) {
             answerId: answer.id,
             questionBody: question.body,
           }));
+          trackMixpanel('teach from chat screen');
         }
       } else if (hasActive) {
         dispatch(inactiveSection(i));

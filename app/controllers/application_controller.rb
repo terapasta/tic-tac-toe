@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   # layout 'lumen'
 
   rescue_from StandardError, with: :handle_500 if Rails.env.production?
+  rescue_from Pundit::NotAuthorizedError, with: :handle_403
   before_action :inject_request_to_application_policy
   before_action :set_notification
 
@@ -18,8 +19,13 @@ class ApplicationController < ActionController::Base
 
       logger.error exception.message
       logger.error exception.backtrace.join("\n")
-
       render 'errors/error_500', layout: false, status: 500
+    end
+
+    def handle_403(exception)
+      logger.error exception.message
+      logger.error exception.backtrace.join("\n")
+      render file: 'public/403.html', layout: false, status: 403
     end
 
     def after_sign_in_path_for(resource)

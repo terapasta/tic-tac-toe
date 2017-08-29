@@ -5,22 +5,23 @@ class ChatsController < ApplicationController
   before_action :set_warning_message
 
   def show
-    show_action
+    iframe_support @bot
+    @chat = @bot.chats.find_last_by(session[:guest_key])
+    if @chat.nil?
+      redirect_to new_chats_path(token: params[:token])
+    else
+      authorize @chat
+    end
   end
 
   def new
-    success = new_action
-    render :show and return if success
-    render file: 'public/404.html', status: :not_found, layout: false
-  end
-
-  def show_old
-    show_action
-  end
-
-  def new_old
-    new_action
-    render :show_app
+    iframe_support @bot
+    @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
+      authorize chat
+      chat.is_staff = true if current_user.try(:staff?)
+      chat.is_normal = true if current_user.try(:normal?)
+    end
+    render :show
   end
 
   private
@@ -41,29 +42,5 @@ class ChatsController < ApplicationController
 
     def message_params
       params.require(:message).permit(:body)
-    end
-
-    def show_action
-      iframe_support @bot
-      @chat = @bot.chats.find_last_by(session[:guest_key])
-      if @chat.nil?
-        redirect_to new_chats_path(token: params[:token])
-      else
-        authorize @chat
-      end
-    end
-
-    def new_action
-      iframe_support @bot
-      @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
-        authorize chat
-        chat.is_staff = true if current_user.try(:staff?)
-        chat.is_normal = true if current_user.try(:normal?)
-      end
-      true
-    rescue Pundit::NotAuthorizedError => e
-      logger.error e.message
-      logger.error e.backtrace.join('\n')
-      false
     end
 end

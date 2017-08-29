@@ -12,8 +12,8 @@ export default class Modal extends Component {
 
     return (
       <span>
-        <div className="modal-backdrop fade in" />
-        <div className="modal fade in"
+        <div className="modal-backdrop fade show" />
+        <div className="modal fade show"
              style={{display:"block", overflowY:"auto"}}
              onClick={() => { onClose(); }}>
           <div
@@ -23,8 +23,8 @@ export default class Modal extends Component {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <button className="close" onClick={() => { onClose(); }}>&times;</button>
                 <h4 className="modal-title">{title}</h4>
+                <button className="close" onClick={() => { onClose(); }}>&times;</button>
               </div>
               {isEmpty(iframeUrl) && (
                 <div className="modal-body">

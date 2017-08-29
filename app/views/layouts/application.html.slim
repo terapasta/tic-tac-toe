@@ -1,13 +1,12 @@
 doctype html
 html
   head
-    meta name="charset" content="utf-8"
-    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    meta charset="utf-8"
     title My-ope office - 社内問い合わせ専用AIチャットボット
 
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
     link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"
-    = stylesheet_link_tag    'application', media: 'all'
+    = stylesheet_link_tag    'app', media: 'all'
     = csrf_meta_tags
 
     - if Rails.env.production?
@@ -21,23 +20,8 @@ html
   body
     - if Rails.env.production?
       = render 'layouts/shared/analytics/google_analytics'
+    - if !content_for?(:hide_global_header)
+      = render 'layouts/shared/ui/header'
+    = yield
 
-    - if chat_page?
-      = yield
-
-    - else
-      - if !content_for?(:hide_global_header)
-        = render 'layouts/shared/ui/header'
-
-
-      - if content_for?(:hide_sidebar)
-        .header-space
-        .kontainer= render "shared/flash"
-        = yield
-      - else
-        = render 'layouts/shared/ui/side_nav'
-        .container.container-main class=content_for(:additional_container_main_class)
-          = render "shared/flash"
-          = yield
-
-  = javascript_include_tag 'application'
+  = javascript_include_tag 'app'

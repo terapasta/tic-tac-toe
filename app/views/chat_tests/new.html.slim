@@ -1,28 +1,30 @@
-= bootstrap_form_tag url: bot_chat_tests_path(@bot), method: :post do |f|
-  .panel.panel-default
-    .panel-heading
-      h4 ボットテスト
+= render layout: 'bots/layout' do
+  h5.mb-4 ボットテスト
 
-    .panel-body
-      p
-        |
-          ボットテスト機能は、csv形式の質問を一括投入することで、<br />
-          対応した回答が得られるかをテストし、結果のcsvファイルをダウンロードできます。<br />
+  .card.mb-4: .card-block
+    |ボットテスト機能は、csv形式の質問を一括投入することで、<br />
+    |対応した回答が得られるかをテストし、結果のcsvファイルをダウンロードできます。
 
-      = f.file_field :file, label: "CSVファイル"
+  = form_tag bot_chat_tests_path(@bot), multipart: true do
+    .row: .col-8.offset-2
+      .form-group
+        = file_field_tag :file, label: "CSVファイル", class: 'form-control'
 
-      = f.submit 'Shift_JISでアップロード', class: 'btn btn-success'
-      = f.submit 'UTF-8でアップロード', class: 'btn btn-success'
-      .p.help-block
-        |※ファイルはCSV形式でアップロードして下さい
+      .form-group.text-center
+        = submit_tag 'Shift_JISでアップロード', class: 'btn btn-success', data: { event: 'upload with shift_JIS' }
+        = space 2
+        = submit_tag 'UTF-8でアップロード', class: 'btn btn-success', data: { event: 'upload with UTF_8' }
+
+      .form-text.mb-3
+        |※ ファイルはCSV形式でアップロードして下さい
         br
-        |※Excelで作成したCSVのエンコードはShift_JISです
+        |※ Excelで作成したCSVのエンコードはShift_JISです
 
-      .panel.panel-default: .panel-body.text-muted
-        p: strong テストデータ作成の注意点
-        p
-          | Excel等の表計算ソフトにてデータを作成する場合、<br />
-            下図のように、A列に質問を入力してファイルを作成してください。<br />
-            ファイル作成後、CSV形式でアップロードして下さい。
+      .card: .card-block
+        .mb-2: strong テストデータ作成の注意点
+        .mb-2
+          |Excel等の表計算ソフトにてデータを作成する場合、<br />
+          |下図のように、A列に質問を入力してファイルを作成してください。<br />
+          |ファイル作成後、CSV形式でアップロードして下さい。
 
         = image_tag 'import_file.png', width: 400, style: 'border: 1px solid #999;'

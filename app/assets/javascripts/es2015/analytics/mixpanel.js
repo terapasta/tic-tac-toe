@@ -2,7 +2,48 @@ import Logger from "./logger";
 import CurrentUser from "./current-user";
 import Trackable from "./trackable";
 
+const getElements = selector => [].slice.call(document.querySelectorAll(selector));
+
+export const makeEvent = elOrEventName => {
+  let eventName;
+  if (typeof elOrEventName === 'string') {
+    eventName = elOrEventName;
+  } else {
+    eventName = elOrEventName.getAttribute('data-event');
+  }
+
+  const options = {};
+  if (window.currentBot) {
+    const { id, name } = window.currentBot;
+    options.bot_id = id;
+    options.bot_name = name;
+  }
+  return { eventName, options };
+};
+
+const listenAll = (els, eventName, makeHandler) => {
+  els.forEach((el) => {
+    el.addEventListener(eventName, makeHandler(el));
+  });
+};
+
 export default class Mixpanel {
+  static listenEvents() {
+    const links = getElements('a[data-event]');
+    const buttons = getElements('button[data-event]');
+    const inputButtons = getElements('input[type="submit"][data-event]');
+    const clickables = [...links, ...buttons, ...inputButtons];
+    const checkboxes = getElements('input[type="checkbox"][data-event]');
+
+    const makeHandler = (el) => ((e) => {
+      const { eventName, options } = makeEvent(el);
+      Mixpanel.sharedInstance.trackEvent(eventName, options);
+    });
+
+    listenAll(clickables, 'click', makeHandler);
+    listenAll(checkboxes, 'change', makeHandler);
+  }
+
   static initialize(token) {
     this.sharedInstance = new Mixpanel(token);
   }
@@ -12,8 +53,8 @@ export default class Mixpanel {
     if (window.mixpanel == null) { return; }
     this.initMixpanel(token);
     this.setupProfile();
-    this.bindClickLinkEvent();
-    this.bindSubmitFormEvent();
+    // this.bindClickLinkEvent();
+    // this.bindSubmitFormEvent();
   }
 
   initMixpanel(token) {

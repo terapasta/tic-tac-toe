@@ -3,20 +3,20 @@ class ImportsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bot
 
-  def new
+  def show
   end
 
   def create
     importer = QuestionAnswer.import_csv(params[:file], @bot, import_options)
     if importer.succeeded
       @bot.learn_later
-      flash.now.notice = 'インポートしました'
+      redirect_to bot_imports_path, notice: 'インポートしました'
     else
       flash.now.alert = 'インポートに失敗しました'
       @error_row = importer.current_row
       @error_message = importer.error_message
+      render :show
     end
-    render :new
   end
 
   private

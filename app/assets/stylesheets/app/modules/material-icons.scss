@@ -1,0 +1,31 @@
+.material-icons {
+  vertical-align: middle;
+
+  &.mi-sm {
+    font-size: 20px;
+  }
+
+  &.mi-xs {
+    font-size: 16px;
+  }
+
+  &.mi-lg {
+    font-size: 50px;
+  }
+
+  &.mi-v-sub {
+    vertical-align: sub;
+  }
+
+  &.mi-label-rotate {
+    transform: rotate(-135deg);
+    position: relative;
+    top: -2px;
+  }
+}
+
+.page-link {
+  .material-icons {
+    line-height: 0.5;
+  }
+}

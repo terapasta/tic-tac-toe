@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import classNames from "classnames";
 
+import Mixpanel, { makeEvent } from '../analytics/mixpanel';
 import * as API from "../api/bot-learning";
 
 const labelBoxStyle = {
@@ -56,25 +57,26 @@ export default class LearningButton extends Component {
     const { isDisabled, status } = this.state;
     const { isAdmin } = this.props;
     const statusLabel = LearningStatus[status];
-    const statusClassName = classNames("label", {
-      "label-success": LearningStatus.isSucceeded(status) && isAdmin,
-      "label-danger": LearningStatus.isFailed(status),
-      "label-warning": LearningStatus.isProcessing(status),
+    const statusClassName = classNames("badge", {
+      "badge-success": LearningStatus.isSucceeded(status) && isAdmin,
+      "badge-danger": LearningStatus.isFailed(status),
+      "badge-warning": LearningStatus.isProcessing(status),
       "Animate-fadeInOut": LearningStatus.isProcessing(status),
-    })
+    });
+    const icon = LearningStatus.isProcessing(status) ? 'cached' : 'trending_up';
 
     return (
-      <div id="bot-status-label">
-        <div style={labelBoxStyle}>
-          {status && (
-            <label className={statusClassName}>{statusLabel}</label>
-          )}
-        </div>
+      <div id="bot-status-label" className="d-inline-block">
+        {status && (
+          <label className={statusClassName}>{statusLabel}</label>
+        )}
+        &nbsp;
         {(isAdmin || LearningStatus.isFailed(status)) && (
-          <button className="btn btn-danger btn-block btn-learning"
+          <button className="btn btn-outline-warning btn-sm"
             disabled={isDisabled}
             onClick={this.onClickButton.bind(this)}>
-            学習を実行する
+            <i className="material-icons mi-xs">{icon}</i>&nbsp;
+            学習を実行
           </button>
         )}
       </div>
@@ -104,5 +106,8 @@ export default class LearningButton extends Component {
     if (this.state.isDisabled) { return; }
     this.setState({ isDisabled: true });
     this.startLearning();
+
+    const { eventName, options } = makeEvent('learning');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
   }
 }

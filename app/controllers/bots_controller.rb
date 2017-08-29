@@ -1,23 +1,11 @@
 class BotsController < ApplicationController
   include BotUsable
   before_action :authenticate_user!
-  before_action :set_bot, only: [:edit, :update, :reset]
+  before_action :set_bot, only: [:show, :edit, :update, :reset]
 
   def index
     @bots = bots.all
     redirect_to edit_bot_path(@bots.first) if @bots.count == 1
-  end
-
-  def edit
-  end
-
-  def update
-    if @bot.update(permitted_attributes(@bot))
-      redirect_to edit_bot_path(@bot), notice: '更新しました'
-    else
-      flash.now.alert = '更新に失敗しました'
-      render :edit
-    end
   end
 
   def reset

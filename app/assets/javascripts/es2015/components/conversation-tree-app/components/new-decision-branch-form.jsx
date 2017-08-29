@@ -25,32 +25,32 @@ class NewDecisionBranchForm extends Component {
 
     return (
       <div>
-        <input
-          className="form-control"
-          placeholder="新しい選択肢を入力"
-          value={body}
-          onChange={e => this.setState({ body: e.target.value })}
-          disabled={false}
-          name="decision-branch-body"
-        />
-        <div className="clearfix padding-top-8">
-          <div className="pull-left">
+        <div className="input-group">
+          <input
+            className="form-control"
+            placeholder="新しい選択肢を入力"
+            value={body}
+            onChange={e => this.setState({ body: e.target.value })}
+            disabled={false}
+            name="decision-branch-body"
+          />
+          <span className="input-group-btn">
             <span
-              className="btn btn-link"
-              onClick={() => this.setState({ isAdding: false })}
-              disabled={false}
-            >
-              キャンセル
-            </span>
-          </div>
-          <div className="pull-right">
-            <span
-              className="btn btn-primary"
+              className="btn btn-success"
               disabled={false}
               onClick={this.onClickSave}>
               追加
             </span>
-          </div>
+          </span>
+        </div>
+        <div className="padding-top-8 d-flex justify-content-between">
+          <span
+            className="btn btn-link"
+            onClick={() => this.setState({ isAdding: false })}
+            disabled={false}
+          >
+            キャンセル
+          </span>
         </div>
       </div>
     );
@@ -65,7 +65,7 @@ class NewDecisionBranchForm extends Component {
             onClick={() => this.setState({ isAdding: true })}
             id="add-decision-branch-button"
           >
-            ＋選択肢を追加する
+            ＋この回答に対する選択肢を追加する
           </span>
         </li>
       </div>

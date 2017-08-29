@@ -39,6 +39,7 @@ class BotPolicy < ApplicationPolicy
     [
       :name,
       :image,
+      :remove_image,
       :classify_failed_message,
       :start_message,
       :has_suggests_message,
@@ -49,6 +50,16 @@ class BotPolicy < ApplicationPolicy
           :domain,
           :_destroy,
         ],
+        allowed_ip_addresses_attributes: [
+          :id,
+          :value,
+          :_destroy,
+        ],
+        topic_tags_attributes: [
+          :id,
+          :name,
+          :_destroy,
+        ]
       },
     ]
   end

@@ -1,0 +1,39 @@
+.nav {
+  &-tabs {
+    ul {
+      margin-bottom: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+  }
+
+  &-global {
+    .nav-link {
+      color: lighten($base-text-color, 10%);
+
+      &.active {
+        border-top: 2px solid $orange;
+        font-weight: bold;
+
+        &:hover,
+        &:focus {
+          cursor: default;
+          border-top: 2px solid $orange;
+          border-left-color: #ddd;
+          border-right-color: #ddd;
+          background-color: #fff;
+        }
+      }
+
+      &:hover {
+        border-color: transparent;
+        // background-color: rgba(#000, 0.03);
+        color: darken($base-text-color, 10%);
+      }
+
+      &:focus {
+        border-color: transparent;
+      }
+    }
+  }
+}

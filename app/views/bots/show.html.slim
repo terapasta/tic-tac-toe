@@ -1,0 +1,21 @@
+= render layout: 'bots/layout' do
+
+  .my-4
+    h6.mb-4
+      = material_icon 'new_releases', class: 'mi-sm mi-v-sub text-muted'
+      = space
+      span アップデート情報
+
+    h5: strong
+      - if Time.current < Time.zone.parse('2017-07-07 23:59:59')
+        small: span.label.label-warning NEW
+        = space
+      span 初期質問リスト機能が使えるようになりました
+    p
+      |初期質問リストとは：チャットを開始すぐの画面に、任意の質問候補を最大で５つまで表示できる機能です。
+      br
+      |時期によって質問内容が予想される場合等に設定しておくと効果的です。
+    = link_to new_chats_path(@bot.token), class: 'btn btn-link', target: '_blank' do
+      span チャット画面で設定する
+      = space
+      i.material-icons keyboard_arrow_right

@@ -1,0 +1,16 @@
+nav.d-flex.justify-content-between
+  .pagination-desc
+    - if resources.total_pages > 1
+      - if resources.current_page == 1
+        span 1〜
+      - else
+        span #{per_page * (resources.current_page - 1) + 1}〜
+      span #{per_page * (resources.current_page - 1) + resources.length}件表示 /#{space}
+    - else
+      span 全件表示 /#{space}
+    span #{resources.total_count}件
+
+  = yield
+
+  - if local_assigns[:hide_paginator].blank?
+    = paginate resources, window: 1

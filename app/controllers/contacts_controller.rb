@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
       description: params[:ticket][:description]
     )
     if ticket.save
-      redirect_to root_path, notice: 'お問い合わせが完了しました。'
+      redirect_to new_contacts_path, notice: 'お問い合わせが完了しました。'
     else
       redirect_to new_contacts_path, alert: <<~MSG
         お問い合わせに失敗しました。内容を確認してください。

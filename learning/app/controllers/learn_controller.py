@@ -1,3 +1,4 @@
+import inject
 import numpy as np
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
@@ -6,9 +7,10 @@ from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 
 
 class LearnController:
+    @inject.params(bot=CurrentBot, factory=CosineSimilarityFactory)
     def __init__(self, bot=None, factory=None):
-        self.bot = bot if bot is not None else CurrentBot()
-        self._factory = factory if factory is not None else CosineSimilarityFactory()
+        self.bot = bot
+        self._factory = factory
 
     def perform(self):
         logger.info('start')

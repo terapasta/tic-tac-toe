@@ -1,4 +1,5 @@
 import traceback
+import inject
 import numpy as np
 import argparse
 from gevent.server import StreamServer
@@ -15,6 +16,9 @@ from app.factories.factory_selector import FactorySelector
 
 class MyopeServer(RPCServer):
     def reply(self, bot_id, body, learning_parameter_attributes):
+        logger.debug('bot_id = %s' % bot_id)
+        logger.debug('body = %s' % body)
+        logger.debug('learning_parameter = %s' % learning_parameter_attributes)
         CurrentBot().init(bot_id, learning_parameter_attributes)
         X = np.array([body])
 
@@ -47,6 +51,7 @@ class MyopeServer(RPCServer):
 
 
 if __name__ == '__main__':
+    inject.configure()
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='127.0.0.1')
     parser.add_argument('--port', type=int, default=6000)

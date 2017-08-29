@@ -1,12 +1,14 @@
+import inject
 from sklearn.preprocessing import Normalizer as SkNormalizer
 from app.shared.current_bot import CurrentBot
 from app.shared.loader import Loader
 
 
 class Normalizer:
+    @inject.params(bot=CurrentBot, loader=Loader)
     def __init__(self, bot=None, loader=None):
-        self.bot = bot if bot is not None else CurrentBot()
-        self.loader = loader if loader is not None else Loader()
+        self.bot = bot
+        self.loader = loader
         self.normalizer = self.loader.load(self.dump_path)
 
     def fit(self, features):

@@ -1,9 +1,11 @@
+import inject
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 
 
 class CosineSimilarity:
+    @inject.params(bot=CurrentBot)
     def __init__(self, tokenizer, vectorizer, reducer, normalizer, ltm, bot=None):
         self.bot = bot if bot is not None else CurrentBot()
         self.tokenizer = tokenizer

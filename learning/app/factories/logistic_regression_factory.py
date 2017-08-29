@@ -1,3 +1,4 @@
+import inject
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.logistic_regression import LogisticRegression
@@ -7,13 +8,21 @@ from app.shared.datasource.database.learning_training_messages import LearningTr
 
 
 class LogisticRegressionFactory:
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, estimator=None, ltm=None):
-        self.tokenizer = tokenizer if tokenizer is not None else MecabTokenizer()
-        self.vectorizer = vectorizer if vectorizer is not None else TfidfVectorizer()
-        self.reducer = reducer if reducer is not None else PassReducer()
-        self.normalizer = normalizer if normalizer is not None else PassNormalizer()
-        self.estimator = estimator if estimator is not None else LogisticRegression()
-        self.learning_training_messages = ltm if ltm is not None else LearningTrainingMessages()
+    @inject.params(
+        tokenizer=MecabTokenizer,
+        vectorizer=TfidfVectorizer,
+        reducer=PassReducer,
+        normalizer=PassNormalizer,
+        ltm=LearningTrainingMessages,
+        estimator=LogisticRegression,
+    )
+    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, ltm=None, estimator=None):
+        self.tokenizer = tokenizer
+        self.vectorizer = vectorizer
+        self.reducer = reducer
+        self.normalizer = normalizer
+        self.learning_training_messages = ltm
+        self.estimator = estimator
 
     def get_tokenizer(self):
         return self.tokenizer

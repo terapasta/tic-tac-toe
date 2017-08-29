@@ -1,3 +1,4 @@
+import inject
 import pandas as pd
 from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression as SkLogisticRegression
@@ -6,9 +7,10 @@ from app.shared.loader import Loader
 
 
 class LogisticRegression:
+    @inject.params(bot=CurrentBot, loader=Loader)
     def __init__(self, bot=None, loader=None):
-        self.bot = bot if bot is not None else CurrentBot()
-        self.loader = loader if loader is not None else Loader()
+        self.bot = bot
+        self.loader = loader
         self.estimator = self.loader.load(self.estimator_path)
 
     def fit(self, x, y):

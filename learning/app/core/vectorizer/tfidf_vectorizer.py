@@ -19,6 +19,10 @@ class TfidfVectorizer:
     def transform(self, sentences):
         return self.vectorizer.transform(sentences)
 
+    def fit_transform(self, sentences):
+        self.fit(sentences)
+        return self.transform(sentences)
+
     @property
     def vectorizer_path(self):
         return self.bot.dump_dirpath + '/tfidf_vectorizer.pkl'

@@ -28,11 +28,17 @@ class LearnController:
         logger.info('load all learning_training_messages')
         all_learning_training_messages_data = self._factory.get_learning_training_messages().all()
 
-        logger.info('tokenize all learning_training_messages')
+        logger.info('tokenize all')
         tokenized_sentences = self._factory.get_tokenizer().tokenize(all_learning_training_messages_data['question'])
 
-        logger.info('vocabulary fit')
-        self._factory.get_vectorizer().fit(tokenized_sentences)
+        logger.info('vectorize all')
+        vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)
+
+        logger.info('reduce all')
+        reduced_features = self._factory.get_reducer().fit_transform(vectorized_features)
+
+        logger.info('normalize all')
+        self._factory.get_normalizer().fit(reduced_features)
 
     def _learn(self):
         logger.info('load learning_training_messages')

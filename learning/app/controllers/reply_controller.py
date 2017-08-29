@@ -18,11 +18,17 @@ class ReplyController:
         logger.debug(tokenized_sentences)
 
         logger.info('vectorize question')
-        question_features = self._factory.get_vectorizer().transform(tokenized_sentences)
-        logger.debug(question_features)
+        vectorized_features = self._factory.get_vectorizer().transform(tokenized_sentences)
+        logger.debug(vectorized_features)
+
+        logger.info('reduce question')
+        reduced_features = self._factory.get_reducer().transform(vectorized_features)
+
+        logger.info('normalize question')
+        normalized_features = self._factory.get_normalizer().transform(reduced_features)
 
         logger.info('predict')
-        data_frame = self._factory.get_estimator().predict(question_features)
+        data_frame = self._factory.get_estimator().predict(normalized_features)
 
         logger.info('sort')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
@@ -34,6 +40,6 @@ class ReplyController:
         logger.info('end')
 
         return {
-            'question_feature_count': np.count_nonzero(question_features.toarray()),
+            'question_feature_count': np.count_nonzero(normalized_features),
             'results': results,
         }

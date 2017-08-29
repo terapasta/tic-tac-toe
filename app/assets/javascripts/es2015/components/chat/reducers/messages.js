@@ -143,6 +143,7 @@ export default handleActions({
       initialQuestionsSection = { similarQuestionAnswers: payload };
       sliceIndex = 1;
     }
+
     return assign({}, state, { classifiedData: [
       data[0],
       initialQuestionsSection,

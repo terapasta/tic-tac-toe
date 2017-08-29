@@ -115,7 +115,7 @@ export default class ChatInitialQuestion extends Component {
 
   openSelector() {
     this.setState({ isAppearSelector: true });
-    Mixpanel.sharedInstance.trackEvent("Open initial quesions selector", {
+    Mixpanel.sharedInstance.trackEvent("selection screen of first question", {
       bot_id: get(window, "currentBot.id"),
       bot_name: get(window, "currentBot.name"),
     });
@@ -123,7 +123,7 @@ export default class ChatInitialQuestion extends Component {
 
   openDesc() {
     this.setState({ isAppearDesc: true });
-    Mixpanel.sharedInstance.trackEvent("Open initial quesions description", {
+    Mixpanel.sharedInstance.trackEvent("description of first question", {
       bot_id: get(window, "currentBot.id"),
       bot_name: get(window, "currentBot.name"),
     });

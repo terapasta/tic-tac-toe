@@ -3,6 +3,7 @@ import find from "lodash/find";
 import get from "lodash/get";
 import isEmpty from "is-empty";
 
+import Mixpanel, { makeEvent } from '../analytics/mixpanel';
 import * as TopicTaggingAPI from "../api/topic-tagging";
 import * as TopicTagAPI from "../api/topic-tag";
 
@@ -33,6 +34,7 @@ export default class QuestionAnswerTagFrom extends Component {
     this.onChangeCheckBox = this.onChangeCheckBox.bind(this);
     this.onChangeInputText = this.onChangeInputText.bind(this);
     this.onClickButton = this.onClickButton.bind(this);
+    this.handleTopicTagsLink = this.handleTopicTagsLink.bind(this);
   }
 
   componentDidMount() {
@@ -51,7 +53,7 @@ export default class QuestionAnswerTagFrom extends Component {
               <div className="d-flex justify-content-between">
                 <label>トピックタグ</label>
                 &nbsp;&nbsp;
-                <a href={`/bots/${window.currentBot.id}/topic_tags`} target="_blank">
+                <a href={`/bots/${window.currentBot.id}/topic_tags`} target="_blank" onClick={this.handleTopicTagsLink}>
                   <i className="material-icons mi-xs mi-label-rotate">label</i>
                   <span>トピックタグ管理はこちら</span>
                 </a>
@@ -180,5 +182,12 @@ export default class QuestionAnswerTagFrom extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.createTag();
+    const { eventName, options } = makeEvent('add to topic tag');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
+  }
+
+  handleTopicTagsLink() {
+    const { eventName, options } = makeEvent('control topic tag');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
   }
 }

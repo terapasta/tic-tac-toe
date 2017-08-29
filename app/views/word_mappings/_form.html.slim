@@ -2,7 +2,7 @@
 
 .row: .col-8.offset-2
   .mb-3
-    = link_to bot_word_mappings_path(@bot), class: 'text-muted' do
+    = link_to bot_word_mappings_path(@bot), class: 'text-muted', data: { event: 'return to synonym' } do
       = material_icon 'keyboard_arrow_left', class: 'mi-xs'
       = space
       span 一覧へ戻る
@@ -19,4 +19,4 @@
       = f.text_field :synonym, class: 'form-control', placeholder: '単語と意味が同じで異なるものを入力して下さい（例：お話）'
 
     .form-group.text-right
-      = f.submit class: 'btn btn-success'
+      = f.submit class: 'btn btn-success', data: { event: @word_mapping.persisted? ? 'update synonym' : 'create synonym' }

@@ -15,7 +15,7 @@
               .input-group.mb-3
                 = nf.text_field :name, class: 'form-control form-control-sm'
                 span.input-group-btn
-                  = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
+                  = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete topic tag' }
           = f.link_to_add 'トピックタグを追加', :topic_tags, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-topic-tags' }
 
       .form-group.text-right

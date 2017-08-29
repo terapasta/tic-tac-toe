@@ -1,6 +1,6 @@
 = render layout: 'bots/layout' do
   .mb-4
-    = link_to new_bot_chat_test_path(@bot), class: 'text-muted' do
+    = link_to new_bot_chat_test_path(@bot), class: 'text-muted', data: { event: 'return to bot test' } do
       = material_icon 'keyboard_arrow_left'
       = space
       span 戻る
@@ -14,11 +14,11 @@
     = space 2
     = form_tag bot_chat_tests_path({format: :csv, encode: "Shift_JIS"}), class: 'd-inline-block' do
       = hidden_field_tag :file_data, @bot_test_results.to_json
-      = button_tag 'Shift_JISでダウンロード', class: 'btn btn-success'
+      = button_tag 'Shift_JISでダウンロード', class: 'btn btn-success', data: { event: 'bot test import with shift_JIS' }
     = space
     = form_tag bot_chat_tests_path({format: :csv, encode: "UTF-8"}), class: 'd-inline-block' do
       = hidden_field_tag :file_data, @bot_test_results.to_json
-      = button_tag 'UTF-8でダウンロード', class: 'btn btn-success'
+      = button_tag 'UTF-8でダウンロード', class: 'btn btn-success', data: { event: 'bot test import with UTF-8' }
 
   table.table.table-striped
     thead

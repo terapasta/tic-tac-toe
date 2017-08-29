@@ -8,15 +8,15 @@
     .input-group
       = text_field_tag :keyword, params[:keyword], class: "search-question-answer form-control", placeholder: "検索ワードを入力"
       span.input-group-btn
-        = submit_tag '検索', name: "search", class: "btn btn-secondary"
+        = submit_tag '検索', name: "search", class: "btn btn-secondary", data: { event: 'search q&a' }
     - if params.dig(:topic, :id).present? || params[:keyword].present?
       = space
       = link_to '✕ 検索を解除', action_url, class: 'btn btn-link'
 
   - if params[:headless].blank?
     div
-      = link_to bot_topic_tags_path(@bot), class: 'btn btn-secondary' do
+      = link_to bot_topic_tags_path(@bot), class: 'btn btn-secondary', data: { event: 'control topic tag' } do
         = material_icon 'label', class: 'mi-sm mi-label-rotate text-gray-light'
         span トピックタグ管理
       = space
-      = link_to 'Q&A新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-success', data: { event_name: 'Open new question answer', bot_id: @bot.id, bot_name: @bot.name }
+      = link_to 'Q&A新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-success', data: { event: 'click new create q&a' }

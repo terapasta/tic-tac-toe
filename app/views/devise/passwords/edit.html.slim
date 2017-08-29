@@ -10,4 +10,4 @@
       = f.label :password_confirmation
       = f.password_field :password_confirmation, class: "form-control"
 
-    = f.submit 'パスワード再設定', class: "btn btn-success btn-block"
+    = f.submit 'パスワード再設定', class: "btn btn-success btn-block", data: { event: 're-set password' }

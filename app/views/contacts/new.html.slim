@@ -25,4 +25,4 @@
       = f.text_area :description, rows: 10, class: 'form-control', placeholder: "例）◯◯画面で✕✕の操作をするとエラー画面が表示されてしまいます"
 
     .form-group.text-right
-      = f.submit "送信する", class: "btn btn-success"
+      = f.submit "送信する", class: "btn btn-success", data: { event: 'send inquiry' }

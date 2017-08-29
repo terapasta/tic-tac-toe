@@ -1,6 +1,6 @@
 .row: .col-8.offset-2
   .mb-4
-    = link_to bot_question_answers_path(@bot, session[:question_answers_queries].presence || {}), class: 'text-muted' do
+    = link_to bot_question_answers_path(@bot, session[:question_answers_queries].presence || {}), class: 'text-muted', data: { event: 'return to q&a list' } do
       = material_icon 'keyboard_arrow_left'
       = space
       span 一覧へ戻る
@@ -56,4 +56,4 @@
     )
 
     .form-group.text-right
-      = f.submit class: 'btn btn-success'
+      = f.submit class: 'btn btn-success', data: { event: (@question_answer.persisted? ? 'update q&a' : 'new create q&a') }

@@ -20,4 +20,4 @@
       = f.password_field :current_password, class: "form-control"
 
     .form-group.text-right
-      = f.submit t('.update', :default => "Update"), class: "btn btn-success"
+      = f.submit t('.update', :default => "Update"), class: "btn btn-success", data: { event: 'update user account' }

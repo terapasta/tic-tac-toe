@@ -12,7 +12,7 @@
         |初期状態では閉じているので質問をしたい時だけ開くことができます。
         br
         | 埋め込みコードをWebサイトのソースコードに貼り付けてご利用下さい。
-      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-widget-desc"
+      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-widget-desc" data-event="get chat widget code"
         = material_icon 'code', class: 'mi-xs'
         = space
         span コードを取得する
@@ -28,7 +28,7 @@
         |アクセスと同時に必ずチャットをスタートさせることができます。
         br
         |埋め込みコードをWebサイトのソースコードに貼り付けてご利用下さい。
-      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-embedding-desc"
+      p: a.btn.btn-secondary href="#" data-toggle="modal" data-target="#chat-embedding-desc" data-event="get chat embed code"
         = material_icon 'code', class: 'mi-xs'
         = space
         span コードを取得する

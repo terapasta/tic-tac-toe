@@ -40,12 +40,12 @@
         small.text-muted 更新日時：#{l question_answer.updated_at, format: :short}
       .col-sm-4.text-right
         - unless local_assigns[:hide_buttons]
-          = link_to edit_bot_question_answer_path(bot, question_answer), class: 'btn btn-secondary btn-sm', data: { event_name: 'Open edit question answer', bot_id: bot.id, bot_name: bot.name } do
+          = link_to edit_bot_question_answer_path(bot, question_answer), class: 'btn btn-secondary btn-sm', data: { event: 'edit q&a' } do
             = material_icon 'edit', class: 'mi-xs'
             = space
             span 編集
           = space 3
-          = link_to bot_question_answer_path(bot, question_answer), class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event_name: 'Delete question answer', bot_id: bot.id, bot_name: bot.name } do
+          = link_to bot_question_answer_path(bot, question_answer), class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', method: :delete, event: 'delete q&a' } do
             = material_icon 'delete', class: 'mi-xs'
             = space
             span 削除

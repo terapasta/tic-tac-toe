@@ -1,7 +1,7 @@
 = render layout: 'bots/layout' do
   .text-center.mb-4: .btn-group
-    = link_to '学習データインポート', bot_imports_path(@bot), class: 'btn btn-outline-primary'
-    = link_to '学習データエクスポート', bot_exports_path(@bot), class: 'btn btn-primary'
+    = link_to '学習データインポート', bot_imports_path(@bot), class: 'btn btn-outline-primary', data: { event: 'import to learning data page' }
+    = link_to '学習データエクスポート', bot_exports_path(@bot), class: 'btn btn-primary', data: { event: 'export to learning data page' }
 
   .card.card-outline-secondary.mb-4: .card-block
     h5 学習データエクスポート機能とは
@@ -13,9 +13,9 @@
 
   .row: .col-8.offset-2
     .form-group.text-center
-      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), mixpanel_event_data('Export learning data as Shift_JIS', @bot).merge(class: 'btn btn-success', method: :post)
+      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), mixpanel_event_data('Export learning data as Shift_JIS', @bot).merge(class: 'btn btn-success', method: :post), data: { event: 'export with shift_JIS' }
       = space 5
-      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), mixpanel_event_data('Export learninig data as UTF-8', @bot).merge(class: 'btn btn-success', method: :post)
+      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), mixpanel_event_data('Export learninig data as UTF-8', @bot).merge(class: 'btn btn-success', method: :post), data: { event: 'export with UTF_8' }
 
     p.pt-3.help-block
       |※ファイルはCSV形式でエクスポートされます
@@ -35,7 +35,7 @@
                 - if i.zero?
                   span.badge.badge-warning 最新のエクスポート
                   br
-                = link_to export.file_url, export.file_url
+                = link_to export.file_url, export.file_url, data: { event: 'click to export' }
               td: strong= export.encoding.upcase
               td= l export.created_at
       = render 'shared/pagination', resources: @exports, per_page: @per_page

@@ -6,6 +6,8 @@ import isEqual from "lodash/isEqual"
 import includes from "lodash/includes"
 import isEmpty from "is-empty";
 
+import Mixpanel, { makeEvent } from '../../analytics/mixpanel';
+
 import getOffset from "../../modules/get-offset";
 import * as a from "./action-creators";
 import * as c from "./constants";
@@ -160,6 +162,8 @@ export default class ChatApp extends Component {
                   section,
                   onChoose(question) {
                     dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
+                    const { eventName, options } = makeEvent('click suggest');
+                    Mixpanel.sharedInstance.trackEvent(eventName, options);
                   }
                 }} />
               </ChatSection>

@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from 'react-textarea-autosize';
 import isEmpty from 'is-empty';
 
+import Mixpanel, { makeEvent } from '../../../analytics/mixpanel';
+
 import Modal from '../../modal';
 import EditingDecisionBranchForm from './editing-decision-branch-form';
 import NewDecisionBranchForm from './new-decision-branch-form';
@@ -25,22 +27,32 @@ class BaseAnswerForm extends Component {
   }
 
   onUpdateAnswer(answer) {
+    const { eventName, options } = makeEvent('tree save answer');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
     return this.constructor.onUpdateAnswer(this.props, answer);
   }
 
   onDeleteAnswer() {
+    const { eventName, options } = makeEvent('tree delete answer');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
     return this.constructor.onDeleteAnswer(this.props);
   }
 
   onCreateDecisionBranch(body) {
+    const { eventName, options } = makeEvent('tree add branch');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
     return this.constructor.onCreateDecisionBranch(this.props, body);
   }
 
   onUpdateDecisionBranch(id, body) {
+    const { eventName, options } = makeEvent('tree save branch');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
     return this.constructor.onUpdateDecisionBranch(this.props, id, body);
   }
 
   onDeleteDecisionBranch(id) {
+    const { eventName, options } = makeEvent('tree delete branch');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
     return this.constructor.onDeleteDecisionBranch(this.props, id);
   }
 

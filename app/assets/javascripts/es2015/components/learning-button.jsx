@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import classNames from "classnames";
 
+import Mixpanel, { makeEvent } from '../analytics/mixpanel';
 import * as API from "../api/bot-learning";
 
 const labelBoxStyle = {
@@ -101,5 +102,8 @@ export default class LearningButton extends Component {
     if (this.state.isDisabled) { return; }
     this.setState({ isDisabled: true });
     this.startLearning();
+
+    const { eventName, options } = makeEvent('learning');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
   }
 }

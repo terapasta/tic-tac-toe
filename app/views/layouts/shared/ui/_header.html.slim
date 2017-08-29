@@ -1,13 +1,13 @@
 header
   nav.navbar.navbar-light.navbar-global
     .container.d-flex.justify-content-between
-      h1.navbar__logo.mr-auto= link_to 'My-ope office', root_path
+      h1.navbar__logo.mr-auto= link_to 'My-ope office', root_path, data: { event: 'my-ope home' }
       - if user_signed_in?
         ul.navbar-nav.d-flex.flex-row
           li.nav-item
-            = link_to 'ヘルプ', 'https://mofmof.zendesk.com/', class: 'nav-link', target: '_blank', data: { event_name: 'Open help center' }
+            = link_to 'ヘルプ', 'https://mofmof.zendesk.com/', class: 'nav-link', target: '_blank', data: { event: 'help' }
           li.nav-item
-            = link_to 'サポート', new_contacts_path, class: 'nav-link', data: { event_name: 'Open contact form' }
+            = link_to 'サポート', new_contacts_path, class: 'nav-link', data: { event: 'click support' }
           /li.nav-item
             = link_to new_contacts_path, class: 'nav-link' do
               span アップデート情報
@@ -16,12 +16,12 @@ header
           li.nav-item.dropdown
             = link_to current_user.email.split('@').first, '#', class: 'nav-link dropdown-toggle', id: 'navbarDropdownMenuLink', data: { toggle: "dropdown", event_name: 'Toggle account dropdown menu' }
             .dropdown-menu.dropdown-menu-right aria-labelledby="navbarDropdownMenuLink"
-              = link_to 'ボット一覧', bots_path, class: 'dropdown-item', data: { event_name: 'Open bot index' }
-              = link_to 'ユーザー情報変更', edit_user_registration_path, class: 'dropdown-item', data: { event_name: 'Open edit password' }
+              = link_to 'ボット一覧', bots_path, class: 'dropdown-item', data: { event: 'return my-ope home' }
+              = link_to 'ユーザー情報変更', edit_user_registration_path, class: 'dropdown-item', data: { event: 'user account' }
 
               .dropdown-divider
 
-              = link_to 'ログアウト', destroy_user_session_path, class: 'dropdown-item', data: { method: :delete, event_name: 'Logout' }
+              = link_to 'ログアウト', destroy_user_session_path, class: 'dropdown-item', data: { method: :delete, event: 'logout' }
 
               .dropdown-divider
 

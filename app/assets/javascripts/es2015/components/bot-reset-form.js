@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from "react";
 import classNames from "classnames";
 import uuid from "uuid/v1";
 
+import Mixpanel, { makeEvent } from '../analytics/mixpanel';
+
 export default class BotResetForm extends Component {
   static get componentName() {
     return "BotResetForm";
@@ -82,6 +84,9 @@ export default class BotResetForm extends Component {
 
   onClickSubmitButton(e) {
     e.preventDefault();
+    const { eventName, options } = makeEvent('to all reset');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
+
     const { url } = this.props;
     const { isValidUnlockCode } = this.state;
     if (!isValidUnlockCode) { return; }

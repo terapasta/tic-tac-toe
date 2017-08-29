@@ -9,7 +9,7 @@
             = space
             = nf.text_field :domain, class: 'form-control form-control-sm', hide_label: true, placeholder: '*.example.com'
             = space
-            = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
+            = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete allowed hosts' }
             hr
         = f.link_to_add '許可ホストを追加', :allowed_hosts, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-allowed-hosts' }
         .form-text.text-muted
@@ -18,4 +18,4 @@
           |※サブドメインは <code>*</code> で全てにマッチできます（例：*.example.com）サブドメイン無しは個別に登録する必要があります
 
     .form-group.text-right
-      = f.submit class: 'btn btn-success'
+      = f.submit class: 'btn btn-success', data: { event: 'update allowed hosts' }

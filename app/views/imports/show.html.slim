@@ -1,7 +1,7 @@
 = render layout: 'bots/layout' do
   .text-center.mb-4: .btn-group
-    = link_to '学習データインポート', bot_imports_path(@bot), class: 'btn btn-primary'
-    = link_to '学習データエクスポート', bot_exports_path(@bot), class: 'btn btn-outline-primary'
+    = link_to '学習データインポート', bot_imports_path(@bot), class: 'btn btn-primary', data: { event: 'import to learning data page' }
+    = link_to '学習データエクスポート', bot_exports_path(@bot), class: 'btn btn-outline-primary', data: { event: 'export to learning data page' }
 
   .card.card-outline-secondary.mb-4: .card-block
     h5 学習データインポート機能とは
@@ -38,9 +38,9 @@
         = file_field_tag :file, label: 'ファイル', class: 'form-control'
 
       .form-group.text-center
-        = submit_tag 'Shift_JISでインポート', class: 'btn btn-success'
+        = submit_tag 'Shift_JISでインポート', class: 'btn btn-success', data: { event: 'import with shift_JIS' }
         = space 5
-        = submit_tag 'UTF-8でインポート', class: 'btn btn-success'
+        = submit_tag 'UTF-8でインポート', class: 'btn btn-success', data: { event: 'import with UTF_8' }
         p.pt-3.help-block
           |※ファイルはCSV形式でインポートして下さい
           br

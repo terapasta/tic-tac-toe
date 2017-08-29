@@ -6,7 +6,7 @@
     .form-group
       .d-flex.justify-content-between
         = f.label :password
-        small= link_to 'パスワードを忘れましたか？', new_user_password_path, tabindex: -1
+        small= link_to 'パスワードを忘れましたか？', new_user_password_path, tabindex: -1, data: { event: 'click forgot password' }
       = f.password_field :password, autocomplete: "off", class: "form-control"
     .text-center
-      = f.submit 'ログイン', class: "btn btn-success btn-block"
+      = f.submit 'ログイン', class: "btn btn-success btn-block", data: { event: 'click login' }

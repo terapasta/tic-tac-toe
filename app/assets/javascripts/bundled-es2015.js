@@ -67,6 +67,8 @@ window.initMessageRatingButtons = function () {
 
 function init() {
   _mixpanel2.default.initialize("3c53484fb604d6e20438b4fac8d2ea56");
+  _mixpanel2.default.listenEvents();
+
   window.initMessageRatingButtons();
   (0, _mountComponent.mountComponentWithRedux)(_app2.default, _reducers2.default, [_reduxPromise2.default]);
   (0, _mountComponent.mountComponentWithRedux)(_app4.default, _reducers4.default);
@@ -171,6 +173,7 @@ exports.default = Logger;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.makeEvent = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -188,10 +191,64 @@ var _trackable2 = _interopRequireDefault(_trackable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var getElements = function getElements(selector) {
+  return [].slice.call(document.querySelectorAll(selector));
+};
+
+var makeEvent = exports.makeEvent = function makeEvent(elOrEventName) {
+  var eventName = void 0;
+  if (typeof elOrEventName === 'string') {
+    eventName = elOrEventName;
+  } else {
+    eventName = elOrEventName.getAttribute('data-event');
+  }
+
+  var options = {};
+  if (window.currentBot) {
+    var _window$currentBot = window.currentBot,
+        id = _window$currentBot.id,
+        name = _window$currentBot.name;
+
+    options.bot_id = id;
+    options.bot_name = name;
+  }
+  return { eventName: eventName, options: options };
+};
+
+var listenAll = function listenAll(els, eventName, makeHandler) {
+  els.forEach(function (el) {
+    el.addEventListener(eventName, makeHandler(el));
+  });
+};
 
 var Mixpanel = function () {
   _createClass(Mixpanel, null, [{
+    key: "listenEvents",
+    value: function listenEvents() {
+      var links = getElements('a[data-event]');
+      var buttons = getElements('button[data-event]');
+      var inputButtons = getElements('input[type="submit"][data-event]');
+      var clickables = [].concat(_toConsumableArray(links), _toConsumableArray(buttons), _toConsumableArray(inputButtons));
+      var checkboxes = getElements('input[type="checkbox"][data-event]');
+
+      var makeHandler = function makeHandler(el) {
+        return function (e) {
+          var _makeEvent = makeEvent(el),
+              eventName = _makeEvent.eventName,
+              options = _makeEvent.options;
+
+          Mixpanel.sharedInstance.trackEvent(eventName, options);
+        };
+      };
+
+      listenAll(clickables, 'click', makeHandler);
+      listenAll(checkboxes, 'change', makeHandler);
+    }
+  }, {
     key: "initialize",
     value: function initialize(token) {
       this.sharedInstance = new Mixpanel(token);
@@ -207,8 +264,8 @@ var Mixpanel = function () {
     }
     this.initMixpanel(token);
     this.setupProfile();
-    this.bindClickLinkEvent();
-    this.bindSubmitFormEvent();
+    // this.bindClickLinkEvent();
+    // this.bindSubmitFormEvent();
   }
 
   _createClass(Mixpanel, [{
@@ -988,6 +1045,10 @@ var _v = require("uuid/v1");
 
 var _v2 = _interopRequireDefault(_v);
 
+var _mixpanel = require("../analytics/mixpanel");
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1131,6 +1192,13 @@ var BotResetForm = function (_Component) {
     key: "onClickSubmitButton",
     value: function onClickSubmitButton(e) {
       e.preventDefault();
+
+      var _makeEvent = (0, _mixpanel.makeEvent)('to all reset'),
+          eventName = _makeEvent.eventName,
+          options = _makeEvent.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
+
       var url = this.props.url;
       var isValidUnlockCode = this.state.isValidUnlockCode;
 
@@ -1162,7 +1230,7 @@ function makeDummyLink(url) {
   return window.$(a);
 }
 
-},{"classnames":118,"react":886,"uuid/v1":955}],19:[function(require,module,exports){
+},{"../analytics/mixpanel":4,"classnames":118,"react":886,"uuid/v1":955}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1293,7 +1361,7 @@ var postMessageIfNeeded = exports.postMessageIfNeeded = function postMessageIfNe
     var process = function process() {
       dispatch(disableForm());
       postMessage(token, m, dispatch);
-      trackMixpanel("Create chat message");
+      trackMixpanel("question");
     };
     if (options.isForce) {
       process();
@@ -1344,6 +1412,7 @@ function chooseDecisionBranch(token, decisionBranchId) {
     API.chooseDecisionBranch(token, decisionBranchId).then(function (res) {
       dispatch(chosenDecisionBranch(res));
       dispatch(enableForm());
+      trackMixpanel('click choice question');
     }).catch(function (err) {
       console.error(err);
       _toastr2.default.error(c.ErrorCreateMessage, c.ErrorTitle);
@@ -1370,15 +1439,15 @@ function changeMessageRatingTo(type, token, messageId) {
   return function (dispatch, getState) {
     switch (type) {
       case c.Ratings.Good:
-        trackMixpanel("Good rating answer", { messageId: messageId });
+        trackMixpanel("good", { messageId: messageId });
         dispatch(goodMessage(token, messageId));
         break;
       case c.Ratings.Bad:
-        trackMixpanel("Bad rating answer", { messageId: messageId });
+        trackMixpanel("bad", { messageId: messageId });
         dispatch(badMessage(token, messageId));
         break;
       case c.Ratings.Nothing:
-        trackMixpanel("No rating answer", { messageId: messageId });
+        trackMixpanel("nothing", { messageId: messageId });
         dispatch(nothingMessage(token, messageId));
         break;
     }
@@ -1425,6 +1494,7 @@ function toggleActiveSection(index) {
             answerId: answer.id,
             questionBody: question.body
           }));
+          trackMixpanel('teach from chat screen');
         }
       } else if (hasActive) {
         dispatch(inactiveSection(i));
@@ -1576,6 +1646,10 @@ var _includes2 = _interopRequireDefault(_includes);
 var _isEmpty = require("is-empty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
+var _mixpanel = require("../../analytics/mixpanel");
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
 
 var _getOffset = require("../../modules/get-offset");
 
@@ -1814,6 +1888,12 @@ var ChatApp = function (_Component) {
                 section: section,
                 onChoose: function onChoose(question) {
                   dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
+
+                  var _makeEvent = (0, _mixpanel.makeEvent)('click suggest'),
+                      eventName = _makeEvent.eventName,
+                      options = _makeEvent.options;
+
+                  _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
                 }
               })
             );
@@ -1870,7 +1950,7 @@ function scrollToLastSectionIfNeeded(prevProps, component) {
   }
 }
 
-},{"../../modules/get-offset":84,"./action-creators":19,"./area":21,"./bot-message-row":23,"./constants":25,"./container":26,"./decision-branches-row":27,"./flash-message":29,"./form":30,"./guest-message":33,"./guest-message-row":32,"./header":34,"./read-more":37,"./row":45,"./section":46,"./similar-question-answers-row":47,"is-empty":445,"lodash/assign":658,"lodash/includes":678,"lodash/isEqual":684,"lodash/sortBy":708,"react":886,"react-dom":737}],21:[function(require,module,exports){
+},{"../../analytics/mixpanel":4,"../../modules/get-offset":84,"./action-creators":19,"./area":21,"./bot-message-row":23,"./constants":25,"./container":26,"./decision-branches-row":27,"./flash-message":29,"./form":30,"./guest-message":33,"./guest-message-row":32,"./header":34,"./read-more":37,"./row":45,"./section":46,"./similar-question-answers-row":47,"is-empty":445,"lodash/assign":658,"lodash/includes":678,"lodash/isEqual":684,"lodash/sortBy":708,"react":886,"react-dom":737}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2885,7 +2965,7 @@ var ChatForm = function (_Component) {
         { className: "chat-form" },
         _react2.default.createElement(
           "div",
-          { className: "container" },
+          { style: { margin: '0 auto', padding: '0 15px', maxWidth: '970px' } },
           _react2.default.createElement(
             "div",
             { className: ".chat-container--no-padding" },
@@ -2914,13 +2994,17 @@ var ChatForm = function (_Component) {
                   } },
                 _react2.default.createElement(
                   "span",
-                  { className: "visible-sm visible-md visible-lg" },
+                  { className: "d-sm-inline-block d-none" },
                   "\u8CEA\u554F"
                 ),
                 _react2.default.createElement(
                   "span",
-                  { className: "visible-xs" },
-                  _react2.default.createElement("i", { className: "fa fa-icon fa-paper-plane-o" })
+                  { className: "d-inline-block d-sm-none" },
+                  _react2.default.createElement(
+                    "i",
+                    { className: "material-icons" },
+                    "send"
+                  )
                 )
               )
             )
@@ -3631,7 +3715,7 @@ var ChatInitialQuestion = function (_Component) {
     key: "openSelector",
     value: function openSelector() {
       this.setState({ isAppearSelector: true });
-      _mixpanel2.default.sharedInstance.trackEvent("Open initial quesions selector", {
+      _mixpanel2.default.sharedInstance.trackEvent("selection screen of first question", {
         bot_id: (0, _get2.default)(window, "currentBot.id"),
         bot_name: (0, _get2.default)(window, "currentBot.name")
       });
@@ -3640,7 +3724,7 @@ var ChatInitialQuestion = function (_Component) {
     key: "openDesc",
     value: function openDesc() {
       this.setState({ isAppearDesc: true });
-      _mixpanel2.default.sharedInstance.trackEvent("Open initial quesions description", {
+      _mixpanel2.default.sharedInstance.trackEvent("description of first question", {
         bot_id: (0, _get2.default)(window, "currentBot.id"),
         bot_name: (0, _get2.default)(window, "currentBot.name")
       });
@@ -4319,6 +4403,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
     initialQuestionsSection = { similarQuestionAnswers: payload };
     sliceIndex = 1;
   }
+
   return (0, _assign2.default)({}, state, { classifiedData: [data[0], initialQuestionsSection].concat(_toConsumableArray(data.slice(sliceIndex))) });
 }), _handleActions), {
   data: [],
@@ -5676,6 +5761,10 @@ var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _mixpanel = require('../../../analytics/mixpanel');
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
+
 var _modal = require('../../modal');
 
 var _modal2 = _interopRequireDefault(_modal);
@@ -5733,26 +5822,51 @@ var BaseAnswerForm = function (_Component) {
   }, {
     key: 'onUpdateAnswer',
     value: function onUpdateAnswer(answer) {
+      var _makeEvent = (0, _mixpanel.makeEvent)('tree save answer'),
+          eventName = _makeEvent.eventName,
+          options = _makeEvent.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
       return this.constructor.onUpdateAnswer(this.props, answer);
     }
   }, {
     key: 'onDeleteAnswer',
     value: function onDeleteAnswer() {
+      var _makeEvent2 = (0, _mixpanel.makeEvent)('tree delete answer'),
+          eventName = _makeEvent2.eventName,
+          options = _makeEvent2.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
       return this.constructor.onDeleteAnswer(this.props);
     }
   }, {
     key: 'onCreateDecisionBranch',
     value: function onCreateDecisionBranch(body) {
+      var _makeEvent3 = (0, _mixpanel.makeEvent)('tree add branch'),
+          eventName = _makeEvent3.eventName,
+          options = _makeEvent3.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
       return this.constructor.onCreateDecisionBranch(this.props, body);
     }
   }, {
     key: 'onUpdateDecisionBranch',
     value: function onUpdateDecisionBranch(id, body) {
+      var _makeEvent4 = (0, _mixpanel.makeEvent)('tree save branch'),
+          eventName = _makeEvent4.eventName,
+          options = _makeEvent4.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
       return this.constructor.onUpdateDecisionBranch(this.props, id, body);
     }
   }, {
     key: 'onDeleteDecisionBranch',
     value: function onDeleteDecisionBranch(id) {
+      var _makeEvent5 = (0, _mixpanel.makeEvent)('tree delete branch'),
+          eventName = _makeEvent5.eventName,
+          options = _makeEvent5.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
       return this.constructor.onDeleteDecisionBranch(this.props, id);
     }
   }, {
@@ -5957,7 +6071,7 @@ var BaseAnswerForm = function (_Component) {
 
 exports.default = BaseAnswerForm;
 
-},{"../../modal":78,"./decision-branch-item":58,"./editing-decision-branch-form":60,"./new-decision-branch-form":61,"is-empty":445,"react":886,"react-textarea-autosize":756}],56:[function(require,module,exports){
+},{"../../../analytics/mixpanel":4,"../../modal":78,"./decision-branch-item":58,"./editing-decision-branch-form":60,"./new-decision-branch-form":61,"is-empty":445,"react":886,"react-textarea-autosize":756}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6927,6 +7041,10 @@ var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _mixpanel = require('../../../analytics/mixpanel');
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
+
 var _types = require('../types');
 
 var _modal = require('../../modal');
@@ -7003,6 +7121,12 @@ var QuestionForm = function (_Component) {
       } else {
         onUpdate(activeItem.node.id, question, answer);
       }
+
+      var _makeEvent = (0, _mixpanel.makeEvent)('tree save q&a'),
+          eventName = _makeEvent.eventName,
+          options = _makeEvent.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
     }
   }, {
     key: 'onDelete',
@@ -7012,6 +7136,12 @@ var QuestionForm = function (_Component) {
           onDelete = _props2.onDelete;
 
       onDelete(activeItem.node.id);
+
+      var _makeEvent2 = (0, _mixpanel.makeEvent)('tree delete q&a'),
+          eventName = _makeEvent2.eventName,
+          options = _makeEvent2.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
     }
   }, {
     key: 'render',
@@ -7169,7 +7299,7 @@ QuestionForm.propTypes = {
 
 exports.default = QuestionForm;
 
-},{"../../modal":78,"../types":72,"is-empty":445,"react":886,"react-textarea-autosize":756}],63:[function(require,module,exports){
+},{"../../../analytics/mixpanel":4,"../../modal":78,"../types":72,"is-empty":445,"react":886,"react-textarea-autosize":756}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8178,6 +8308,10 @@ var _classnames = require("classnames");
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _mixpanel = require("../analytics/mixpanel");
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
+
 var _botLearning = require("../api/bot-learning");
 
 var API = _interopRequireWildcard(_botLearning);
@@ -8322,6 +8456,12 @@ var LearningButton = function (_Component) {
       }
       this.setState({ isDisabled: true });
       this.startLearning();
+
+      var _makeEvent = (0, _mixpanel.makeEvent)('learning'),
+          eventName = _makeEvent.eventName,
+          options = _makeEvent.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
     }
   }]);
 
@@ -8330,7 +8470,7 @@ var LearningButton = function (_Component) {
 
 exports.default = LearningButton;
 
-},{"../api/bot-learning":7,"classnames":118,"react":886}],76:[function(require,module,exports){
+},{"../analytics/mixpanel":4,"../api/bot-learning":7,"classnames":118,"react":886}],76:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8967,6 +9107,10 @@ var _isEmpty = require("is-empty");
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _mixpanel = require("../analytics/mixpanel");
+
+var _mixpanel2 = _interopRequireDefault(_mixpanel);
+
 var _topicTagging = require("../api/topic-tagging");
 
 var TopicTaggingAPI = _interopRequireWildcard(_topicTagging);
@@ -9021,6 +9165,7 @@ var QuestionAnswerTagFrom = function (_Component) {
     _this.onChangeCheckBox = _this.onChangeCheckBox.bind(_this);
     _this.onChangeInputText = _this.onChangeInputText.bind(_this);
     _this.onClickButton = _this.onClickButton.bind(_this);
+    _this.handleTopicTagsLink = _this.handleTopicTagsLink.bind(_this);
     return _this;
   }
 
@@ -9065,7 +9210,7 @@ var QuestionAnswerTagFrom = function (_Component) {
                 "\xA0\xA0",
                 _react2.default.createElement(
                   "a",
-                  { href: "/bots/" + window.currentBot.id + "/topic_tags", target: "_blank" },
+                  { href: "/bots/" + window.currentBot.id + "/topic_tags", target: "_blank", onClick: this.handleTopicTagsLink },
                   _react2.default.createElement(
                     "i",
                     { className: "material-icons mi-xs mi-label-rotate" },
@@ -9263,6 +9408,21 @@ var QuestionAnswerTagFrom = function (_Component) {
       e.preventDefault();
       e.stopPropagation();
       this.createTag();
+
+      var _makeEvent = (0, _mixpanel.makeEvent)('add to topic tag'),
+          eventName = _makeEvent.eventName,
+          options = _makeEvent.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
+    }
+  }, {
+    key: "handleTopicTagsLink",
+    value: function handleTopicTagsLink() {
+      var _makeEvent2 = (0, _mixpanel.makeEvent)('control topic tag'),
+          eventName = _makeEvent2.eventName,
+          options = _makeEvent2.options;
+
+      _mixpanel2.default.sharedInstance.trackEvent(eventName, options);
     }
   }]);
 
@@ -9271,7 +9431,7 @@ var QuestionAnswerTagFrom = function (_Component) {
 
 exports.default = QuestionAnswerTagFrom;
 
-},{"../api/topic-tag":15,"../api/topic-tagging":16,"is-empty":445,"lodash/find":672,"lodash/get":675,"react":886}],82:[function(require,module,exports){
+},{"../analytics/mixpanel":4,"../api/topic-tag":15,"../api/topic-tagging":16,"is-empty":445,"lodash/find":672,"lodash/get":675,"react":886}],82:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -27,4 +27,4 @@
         = f.text_area :classify_failed_message, rows: 3, class: 'form-control', placeholder: "デフォルト：#{DefinedAnswer.classify_failed_text}"
 
       .form-group.text-right
-        = f.submit class: 'btn btn-success'
+        = f.submit class: 'btn btn-success', data: { event: 'update bot account' }

@@ -3,7 +3,7 @@
 
 .container: .row: .col-sm-4.offset-sm-4: .my-5
   .text-center.mb-4
-    h1.mb-4= link_to image_tag('logo--orange.svg'), root_path
+    h1.mb-4= link_to image_tag('logo--orange.svg'), root_path, data: { event: 'login home' }
     h5= title
   .card
     .card-block

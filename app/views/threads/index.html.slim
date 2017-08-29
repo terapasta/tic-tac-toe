@@ -3,18 +3,14 @@
     a.btn(
       href=bot_threads_path(@bot, params: role_filter_params)
       class=(class_names('btn-outline-primary' => params[:normal].present?, 'btn-primary' => params[:normal].blank?))
-      data-event-name="Open all threads"
-      data-bot-id=@bot.id
-      data-bot-name=@bot.name
+      data-event="click normal talk"
     )
       |通常対話のみ
 
     a.btn(
       href=bot_threads_path(@bot, role_filter_params(normal: 1))
       class=(class_names('btn-outline-primary' => params[:normal].blank?, 'btn-primary' => params[:normal].present?))
-      data-event-name="Open normal threads"
-      data-bot-id=@bot.id
-      data-bot-name=@bot.name
+      data-event="click Admin talk"
     )
       |Bot管理者対話のみ
 
@@ -45,7 +41,7 @@
           = space
           span 注意回答
 
-    = link_to bot_threads_path(format: :csv), class: 'btn btn-secondary btn-text-sm' do
+    = link_to bot_threads_path(format: :csv), class: 'btn btn-secondary btn-text-sm', data: { event: 'chat log export' } do
       = material_icon 'file_download', class: 'mi-sm text-muted'
       = space
       span CSVエクスポート

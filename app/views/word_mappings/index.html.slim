@@ -19,7 +19,7 @@
             = material_icon 'close', class: 'mi-xs'
             span 検索を解除
 
-      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success', data: { event_name: 'Open new word mapping' }
+      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success'
     = pagination
     table.table.table-striped
       thead
@@ -33,7 +33,7 @@
             td= highlight(word_mapping.word, params[:keyword])
             td= highlight(word_mapping.synonym, params[:keyword])
             td.text-right
-              = link_to '編集', edit_bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-secondary btn-sm', data: { event_name: 'Open edit word mapping', word_mapping_id: word_mapping.id }
+              = link_to '編集', edit_bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-secondary btn-sm', data: { event: 'update synonym' }
               = space 2
-              = link_to '削除', bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-danger btn-sm', data: { confirm: '削除します。よろしいですか？', method: :delete, event_name: 'Delete word mapping', word_mapping_id: word_mapping.id }
+              = link_to '削除', bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-danger btn-sm', data: { confirm: '削除します。よろしいですか？', method: :delete, event: 'delete synonym' }
     = pagination

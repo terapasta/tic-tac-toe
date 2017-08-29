@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from 'react-textarea-autosize';
 import isEmpty from 'is-empty';
 
+import Mixpanel, { makeEvent } from '../../../analytics/mixpanel';
 import { activeItemType, questionsRepoType } from '../types';
 import Modal from '../../modal';
 
@@ -46,11 +47,15 @@ class QuestionForm extends Component {
     } else {
       onUpdate(activeItem.node.id, question, answer);
     }
+    const { eventName, options } = makeEvent('tree save q&a');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
   }
 
   onDelete() {
     const { activeItem, onDelete } = this.props;
     onDelete(activeItem.node.id);
+    const { eventName, options } = makeEvent('tree delete q&a');
+    Mixpanel.sharedInstance.trackEvent(eventName, options);
   }
 
   render() {

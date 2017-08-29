@@ -8,7 +8,7 @@
             .input-group
               = nf.text_field :value, class: 'form-control form-control-sm', placeholder: '例）192.168.255.255'
               span.input-group-btn
-                = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
+                = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete allowed IP address' }
             hr
         = f.link_to_add '許可IPアドレスを追加', :allowed_ip_addresses, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-allowed-ip-addresses' }
         .form-text.text-muted
@@ -17,4 +17,4 @@
           |あなたの現在のIPアドレス :<code>#{request.remote_ip}</code>
 
     .form-group.text-right
-      = f.submit class: 'btn btn-success'
+      = f.submit class: 'btn btn-success', data: { event: 'update allowed IP address' }

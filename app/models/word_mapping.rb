@@ -41,23 +41,10 @@ class WordMapping < ActiveRecord::Base
     end
 
     def word_is_not_eq_other_synonym
-      if bot_id.nil?
-        word_mappings = WordMapping.where(bot_id: nil)
-      else
-        word_mappings = WordMapping.where(bot_id: bot_id)
-      end
-
-      values = []
-      word_mappings.each do |wm|
-        wm.word_mapping_synonyms.each do |wms|
-          values << wms.value
-        end
-      end
-
-      values.each do |v|
-        if word == v
-          errors.add :base, 'この単語は既に同義語に登録されています'
-        end
+      values = WordMappingSynonym.where(word_mapping_id: WordMapping.select(:id).where(bot_id: bot_id)).pluck(:value)
+      
+      if values.any? { |v| v == word }
+        errors.add :base, 'この単語は既に同義語に登録されています'
       end
     end
 

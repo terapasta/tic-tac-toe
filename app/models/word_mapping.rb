@@ -1,4 +1,7 @@
 class WordMapping < ActiveRecord::Base
+  include ActiveModel::Validations
+  validates_with WordMappingValidator
+
   belongs_to :bot
   has_many :word_mapping_synonyms
   accepts_nested_attributes_for :word_mapping_synonyms, allow_destroy: true
@@ -6,10 +9,6 @@ class WordMapping < ActiveRecord::Base
   validates :word,
     presence: true,
     length: { maximum: 20 }
-
-  validate :word_is_not_eq_synonym
-  validate :unique_pair_word
-  validate :word_is_not_eq_other_synonym
 
   before_validation :strip_word_and_synonym
 
@@ -25,29 +24,6 @@ class WordMapping < ActiveRecord::Base
   }
 
   private
-    def word_is_not_eq_synonym
-      word_mapping_synonyms.each do |wms|
-        if wms.value == word
-          errors.add :base, '単語と同義語を同じにはできません'
-        end
-      end
-    end
-
-    def unique_pair_word
-      values = word_mapping_synonyms.map(&:value)
-      unless values.size == values.uniq.size
-        errors.add :base, '同じ同意語は登録できません' 
-      end
-    end
-
-    def word_is_not_eq_other_synonym
-      values = WordMappingSynonym.where(word_mapping_id: WordMapping.select(:id).where(bot_id: bot_id)).pluck(:value)
-      
-      if values.any? { |v| v == word }
-        errors.add :base, 'この単語は既に同義語に登録されています'
-      end
-    end
-
     def strip_word_and_synonym
       word.strip!
     end

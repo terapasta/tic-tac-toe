@@ -6,9 +6,9 @@ class PassNormalizer:
         pass
 
     def transform(self, features):
-        pass
+        return features
 
-    def fit_tranform(self, features):
+    def fit_transform(self, features):
         return features
 
     @property

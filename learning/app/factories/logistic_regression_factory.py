@@ -30,6 +30,12 @@ class LogisticRegressionFactory:
     def get_vectorizer(self):
         return self.vectorizer
 
+    def get_reducer(self):
+        return self.reducer
+
+    def get_normalizer(self):
+        return self.normalizer
+
     def get_learning_training_messages(self):
         return self.learning_training_messages
 

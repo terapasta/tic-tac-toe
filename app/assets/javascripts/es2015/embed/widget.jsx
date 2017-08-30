@@ -2,6 +2,7 @@ import React, { Component, PropTypes, createElement } from "react";
 import styled from "styled-components";
 import classNames from "classnames";
 import get from "lodash/get";
+import forEach from 'lodash/forEach';
 
 import * as PublicBotAPI from '../api/public_bot';
 
@@ -10,6 +11,9 @@ import LogoSVG from "./logo-svg";
 
 import {
   HeaderHeight,
+  Width,
+  Height,
+  MobileMaxWidth,
 } from './constants';
 
 import {
@@ -28,7 +32,7 @@ import {
 } from "./styled";
 
 const Origin = process.env.NODE_ENV === "development" ?
-  "http://donusagi-bot.dev" : "https://app.my-ope.net";
+  "http://donusagi-bot.192.168.10.10.xip.io" : "https://app.my-ope.net";
 
 export default class Widget extends Component {
   constructor(props) {
@@ -51,6 +55,15 @@ export default class Widget extends Component {
         isDeniedAccess: false,
       });
     }).catch(console.error);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', () => {
+      if (this.iframe == null) { return; }
+      forEach(this.getIframeStyle(), (val, key) => {
+        this.iframe.style[key] = val;
+      });
+    });
   }
 
   render() {
@@ -101,11 +114,10 @@ export default class Widget extends Component {
               src={chatURL}
               onLoad={this.onLoadIframe.bind(this)}
               scrolling="no"
+              frameBorder="0"
               title="My-ope office"
-              style={{
-                width: `${window.innerWidth}px`,
-                height: `${window.innerHeight - HeaderHeight}px`,
-              }}
+              style={this.getIframeStyle()}
+              ref={(node) => this.iframe = node}
             />
           )}
           {isLoadingIframe && !isLoadedIframe && (
@@ -132,5 +144,13 @@ export default class Widget extends Component {
 
   onLoadIframe() {
     this.setState({ isLoadingIframe: false, isLoadedIframe: true });
+  }
+
+  getIframeStyle() {
+    const { innerWidth, innerHeight } = window;
+    const isMobile = innerWidth <= MobileMaxWidth;
+    const width = `${isMobile ? innerWidth : Width}px`;
+    const height = `${(isMobile ? innerHeight : Height) - HeaderHeight}px`;
+    return { width, height };
   }
 }

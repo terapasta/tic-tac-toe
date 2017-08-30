@@ -1,14 +1,18 @@
 class TasksController < ApplicationController
+  include BotUsable
   before_action :authenticate_user!
   before_action :set_bot
 
   def index
+    @unstarted_tasks_count = Task.unstarted(@bot).count
+    @done_tasks_count = Task.where(bot_id: @bot.id).with_done(true).count
     @per_page = 20
+
     @tasks = @bot.tasks
       .with_done(params[:done])
       .page(params[:page])
       .per(@per_page)
-      .order(:created_at)
+      .order(created_at: :asc)
   end
 
   def update
@@ -26,6 +30,6 @@ class TasksController < ApplicationController
 
   private
     def set_bot
-      @bot = Bot.find(params[:bot_id])
+      @bot = bots.find(params[:bot_id])
     end
 end

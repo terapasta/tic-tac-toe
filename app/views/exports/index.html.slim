@@ -13,9 +13,9 @@
 
   .row: .col-8.offset-2
     .form-group.text-center
-      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), mixpanel_event_data('Export learning data as Shift_JIS', @bot).merge(class: 'btn btn-success', method: :post), data: { event: 'export with shift_JIS' }
+      = link_to 'Shift_JISでエクスポート', bot_exports_path(@bot, encoding: :sjis), class: 'btn btn-success', method: :post, data: { event: 'export with shift_JIS' }
       = space 5
-      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), mixpanel_event_data('Export learninig data as UTF-8', @bot).merge(class: 'btn btn-success', method: :post), data: { event: 'export with UTF_8' }
+      = link_to 'UTF-8でエクスポート', bot_exports_path(@bot, encoding: :utf8), class: 'btn btn-success', method: :post, data: { event: 'export with UTF_8' }
 
     p.pt-3.help-block
       |※ファイルはCSV形式でエクスポートされます

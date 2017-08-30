@@ -51,7 +51,7 @@ class MyopeServer(RPCServer):
 
 
 if __name__ == '__main__':
-    inject.configure()
+    inject.configure_once()
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='127.0.0.1')
     parser.add_argument('--port', type=int, default=6000)

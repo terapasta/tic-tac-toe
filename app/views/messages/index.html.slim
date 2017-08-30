@@ -2,7 +2,7 @@
   = render 'shared/pagination', resources: @messages, per_page: @per_page
 
 = render layout: 'bots/layout' do
-  .mb-3= link_to bot_threads_path(@bot), class: 'text-muted', data: { method: 'return to chat log' } do
+  .mb-3= link_to bot_threads_path(@bot), class: 'text-muted', data: { event: 'return to chat log' } do
     = material_icon 'keyboard_arrow_left'
     = space
     span 一覧に戻る

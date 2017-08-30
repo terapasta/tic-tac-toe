@@ -11,7 +11,10 @@ class WordMappingValidator < ActiveModel::Validator
       record.errors.add :base, '同じ同意語は登録できません'
     end
 
-    values = WordMappingSynonym.where(word_mapping_id: WordMapping.select(:id).where(bot_id: record.bot_id)).pluck(:value)
+    # values = WordMappingSynonym.where(word_mapping_id: WordMapping.select(:id).where(bot_id: record.bot_id)).pluck(:value)
+    binding.pry
+    values = WordMappingSynonym.registered_synonym(record.bot_id)
+    
     if values.any? { |v| v == record.word }
       record.errors.add :base, 'この単語は既に同義語に登録されています'
     end

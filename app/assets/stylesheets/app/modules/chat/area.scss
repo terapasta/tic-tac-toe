@@ -1,4 +1,7 @@
 .chat-area {
+  max-height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding-top: 47px;
   padding-bottom: 58px;
   -webkit-font-smoothing: antialiased;

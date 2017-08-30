@@ -9,6 +9,10 @@ import ArrowSVG from "./arrow-svg";
 import LogoSVG from "./logo-svg";
 
 import {
+  HeaderHeight,
+} from './constants';
+
+import {
   Wrapper,
   LeftWrapper,
   Header,
@@ -72,6 +76,8 @@ export default class Widget extends Component {
 
     const chatURL = `${Origin}/embed/${token}/chats`;
 
+    const isShowIframe = isLoadingIframe || isLoadedIframe;
+
     const result = (
       <span>
         <Header onClick={this.onClickHeader.bind(this)}>
@@ -90,8 +96,17 @@ export default class Widget extends Component {
           </Logo>
         </Header>
         <IframeContainer>
-          {(isLoadingIframe || isLoadedIframe) && (
-            <Iframe src={chatURL} onLoad={this.onLoadIframe.bind(this)} />
+          {isShowIframe && (
+            <iframe
+              src={chatURL}
+              onLoad={this.onLoadIframe.bind(this)}
+              scrolling="no"
+              title="My-ope office"
+              style={{
+                width: `${window.innerWidth}px`,
+                height: `${window.innerHeight - HeaderHeight}px`,
+              }}
+            />
           )}
           {isLoadingIframe && !isLoadedIframe && (
             <Loading>

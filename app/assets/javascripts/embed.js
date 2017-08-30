@@ -268,6 +268,8 @@ var _logoSvg = require("./logo-svg");
 
 var _logoSvg2 = _interopRequireDefault(_logoSvg);
 
+var _constants = require("./constants");
+
 var _styled = require("./styled");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -339,6 +341,8 @@ var Widget = function (_Component) {
 
       var chatURL = Origin + "/embed/" + token + "/chats";
 
+      var isShowIframe = isLoadingIframe || isLoadedIframe;
+
       var result = _react2.default.createElement(
         "span",
         null,
@@ -370,7 +374,16 @@ var Widget = function (_Component) {
         _react2.default.createElement(
           _styled.IframeContainer,
           null,
-          (isLoadingIframe || isLoadedIframe) && _react2.default.createElement(_styled.Iframe, { src: chatURL, onLoad: this.onLoadIframe.bind(this) }),
+          isShowIframe && _react2.default.createElement("iframe", {
+            src: chatURL,
+            onLoad: this.onLoadIframe.bind(this),
+            scrolling: "no",
+            title: "My-ope office",
+            style: {
+              width: window.innerWidth + "px",
+              height: window.innerHeight - _constants.HeaderHeight + "px"
+            }
+          }),
           isLoadingIframe && !isLoadedIframe && _react2.default.createElement(
             _styled.Loading,
             null,
@@ -408,7 +421,7 @@ var Widget = function (_Component) {
 
 exports.default = Widget;
 
-},{"../api/public_bot":1,"./arrow-svg":3,"./logo-svg":5,"./styled":6,"classnames":36,"lodash/get":133,"react":297,"styled-components":317}],8:[function(require,module,exports){
+},{"../api/public_bot":1,"./arrow-svg":3,"./constants":4,"./logo-svg":5,"./styled":6,"classnames":36,"lodash/get":133,"react":297,"styled-components":317}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

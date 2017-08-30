@@ -62,6 +62,8 @@
 
     @include media-breakpoint-down(xs) {
     // @media (max-width: $screen-xs-max) {
+      padding-left: 0;
+      padding-right: 0;
       width: 38px;
     }
   }

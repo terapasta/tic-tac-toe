@@ -5,7 +5,6 @@ class Message < ActiveRecord::Base
   attr_accessor :similar_question_answers
 
   belongs_to :chat
-  belongs_to :answer_data, class_name: 'Answer', foreign_key: :answer_id # TODO あとで消す
   belongs_to :question_answer
 
   enum speaker: { bot: 'bot', guest: 'guest' }

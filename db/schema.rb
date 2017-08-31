@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823063916) do
+ActiveRecord::Schema.define(version: 20170831053001) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 20170823063916) do
   end
 
   create_table "answer_files", force: :cascade do |t|
-    t.integer  "answer_id",          limit: 4
     t.string   "file",               limit: 255,             null: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
@@ -50,20 +49,6 @@ ActiveRecord::Schema.define(version: 20170823063916) do
   end
 
   add_index "answer_files", ["question_answer_id"], name: "index_answer_files_on_question_answer_id", using: :btree
-
-  create_table "answers", force: :cascade do |t|
-    t.integer  "defined_answer_id", limit: 4
-    t.string   "context",           limit: 255,   default: "0", null: false
-    t.text     "body",              limit: 65535
-    t.string   "transition_to",     limit: 255
-    t.string   "type",              limit: 255
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.integer  "bot_id",            limit: 4
-  end
-
-  add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
-  add_index "answers", ["defined_answer_id"], name: "index_answers_on_defined_answer_id", unique: true, using: :btree
 
   create_table "bots", force: :cascade do |t|
     t.integer  "user_id",                      limit: 4
@@ -95,9 +80,7 @@ ActiveRecord::Schema.define(version: 20170823063916) do
   add_index "chats", ["is_staff"], name: "index_chats_on_is_staff", using: :btree
 
   create_table "decision_branches", force: :cascade do |t|
-    t.integer  "answer_id",                 limit: 4
     t.text     "body",                      limit: 65535, null: false
-    t.integer  "next_answer_id",            limit: 4
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.integer  "bot_id",                    limit: 4,     null: false
@@ -106,7 +89,6 @@ ActiveRecord::Schema.define(version: 20170823063916) do
     t.integer  "parent_decision_branch_id", limit: 4
   end
 
-  add_index "decision_branches", ["answer_id"], name: "index_decision_branches_on_answer_id", using: :btree
   add_index "decision_branches", ["bot_id"], name: "index_decision_branches_on_bot_id", using: :btree
   add_index "decision_branches", ["question_answer_id", "parent_decision_branch_id"], name: "main_decision_branches_index", using: :btree
 
@@ -152,19 +134,16 @@ ActiveRecord::Schema.define(version: 20170823063916) do
     t.integer  "bot_id",             limit: 4
     t.string   "question",           limit: 255
     t.text     "answer_body",        limit: 65535
-    t.integer  "answer_id",          limit: 4
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer  "question_answer_id", limit: 4
   end
 
-  add_index "learning_training_messages", ["answer_id"], name: "index_learning_training_messages_on_answer_id", using: :btree
   add_index "learning_training_messages", ["bot_id"], name: "index_learning_training_messages_on_bot_id", using: :btree
   add_index "learning_training_messages", ["question_answer_id"], name: "index_learning_training_messages_on_question_answer_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "chat_id",            limit: 4
-    t.integer  "answer_id",          limit: 4
     t.string   "speaker",            limit: 255,                   null: false
     t.text     "body",               limit: 65535
     t.string   "user_agent",         limit: 1024
@@ -183,14 +162,12 @@ ActiveRecord::Schema.define(version: 20170823063916) do
   create_table "question_answers", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4
     t.text     "question",   limit: 65535
-    t.integer  "answer_id",  limit: 4
     t.text     "underlayer", limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.text     "answer",     limit: 65535
   end
 
-  add_index "question_answers", ["answer_id"], name: "index_question_answers_on_answer_id", using: :btree
   add_index "question_answers", ["bot_id"], name: "index_question_answers_on_bot_id", using: :btree
 
   create_table "scores", force: :cascade do |t|

@@ -1811,7 +1811,7 @@ var ChatApp = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { ref: "root" },
+        { ref: "root", style: { height: '100%' } },
         _react2.default.createElement(_header2.default, {
           botName: window.currentBot.name,
           learningStatus: learning.status,

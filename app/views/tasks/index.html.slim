@@ -12,11 +12,11 @@
       = link_to bot_tasks_path(@bot), class: "btn #{params.has_key?(:done) ? 'btn-outline-primary' : 'btn-primary'}", data: { event: 'click untreated' } do
         span 未対応
         = space 2
-        span.badge.badge-warning= unstarted_tasks_count
+        span.badge.badge-warning= @unstarted_tasks_count
       = link_to bot_tasks_path(@bot, done: true), class: "btn #{params.has_key?(:done) ? 'btn-primary' : 'btn-outline-primary'}", data: { event: 'click processed' } do
         span 対応済み
         = space
-        span.badge.badge-success= done_tasks_count
+        span.badge.badge-success= @done_tasks_count
 
   = pagination
 

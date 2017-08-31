@@ -40,10 +40,7 @@ class DecisionBranchesController < ApplicationController
   end
 
   def destroy
-    ActiveRecord::Base.transaction do
-      @decision_branch.next_answer.try(:self_and_deep_child_answers).try(:map, &:destroy!)
-      @decision_branch.destroy!
-    end
+    @decision_branch.destroy!
     respond_to do |format|
       format.json { render json: {}, status: :no_content }
     end

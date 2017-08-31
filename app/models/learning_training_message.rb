@@ -1,6 +1,5 @@
 class LearningTrainingMessage < ActiveRecord::Base
   belongs_to :bot
-  belongs_to :answer
 
   validates :answer_body, length: { maximum: 10000 }
 

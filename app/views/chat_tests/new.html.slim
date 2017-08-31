@@ -11,14 +11,13 @@
         = file_field_tag :file, label: "CSVファイル", class: 'form-control'
 
       .form-group.text-center
-        = submit_tag 'Shift_JISでアップロード', class: 'btn btn-success', data: { event: 'upload with shift_JIS' }
+        .d-inline-block.align-top.text-left
+          = submit_tag 'Shift_JISでアップロード', class: 'btn btn-success', data: { event: 'upload with shift_JIS' }
+          br
+          span.text-muted Excelで作成した場合はこちら
         = space 2
-        = submit_tag 'UTF-8でアップロード', class: 'btn btn-success', data: { event: 'upload with UTF_8' }
-
-      .form-text.mb-3
-        |※ ファイルはCSV形式でアップロードして下さい
-        br
-        |※ Excelで作成したCSVのエンコードはShift_JISです
+        .d-inline-block.align-top
+          = submit_tag 'UTF-8でアップロード', class: 'btn btn-success', data: { event: 'upload with UTF_8' }
 
       .card: .card-block
         .mb-2: strong テストデータ作成の注意点

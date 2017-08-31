@@ -27,15 +27,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     create_list(:decision_branch, 2, bot: bot, question_answer: question_answers.first)
   end
 
-  let!(:nested_answer) do
-    create(:answer, bot: bot).tap do |a|
-      decision_branches.first.tap do |d|
-        d.next_answer = a
-        d.save
-      end
-    end
-  end
-
   before do
     sign_in staff
     visit "/bots/#{bot.id}/conversation_tree"

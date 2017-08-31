@@ -1,6 +1,7 @@
 class ChatTestsController < ApplicationController
   include Replyable
   include BotUsable
+  before_action :authenticate_user!
   before_action :set_bot
 
   def new

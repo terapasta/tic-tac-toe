@@ -5,12 +5,8 @@ RSpec.shared_examples_for HasManySentenceSynonyms do |target_attr|
     create(:bot)
   end
 
-  let!(:answer) do
-    create(:answer, bot: bot)
-  end
-
   let!(:resource) do
-    create(described_class.name.underscore, bot: bot, answer: answer)
+    create(described_class.name.underscore, bot: bot)
   end
 
   let!(:sentence_synonyms) do

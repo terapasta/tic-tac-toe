@@ -38,10 +38,10 @@
         = file_field_tag :file, label: 'ファイル', class: 'form-control'
 
       .form-group.text-center
-        = submit_tag 'Shift_JISでインポート', class: 'btn btn-success', data: { event: 'import with shift_JIS' }
-        = space 5
-        = submit_tag 'UTF-8でインポート', class: 'btn btn-success', data: { event: 'import with UTF_8' }
-        p.pt-3.help-block
-          |※ファイルはCSV形式でインポートして下さい
+        .d-inline-block.align-top.text-left
+          = submit_tag 'Shift_JISでインポート', class: 'btn btn-success', data: { event: 'import with shift_JIS' }
           br
-          |※Excelで作成したCSVのエンコードはShift_JISです
+          span.text-muted Excelで作成した場合はこちら
+        = space 5
+        .d-inline-block.align-top
+          = submit_tag 'UTF-8でインポート', class: 'btn btn-success', data: { event: 'import with UTF_8' }

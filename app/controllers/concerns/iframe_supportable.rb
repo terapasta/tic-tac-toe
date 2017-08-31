@@ -7,5 +7,6 @@ module IframeSupportable
     csp = "frame-ancestors 'self' #{origins}"
     response.headers['X-Content-Security-Policy'] = csp
     response.headers['Content-Security-Policy'] = csp
+    response.headers['P3P']= "CP='UNI CUR OUR'"
   end
 end

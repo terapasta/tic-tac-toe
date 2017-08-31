@@ -1,5 +1,6 @@
 class Settings::PagesController < ApplicationController
   include BotUsable
+  before_action :authenticate_user!
   before_action :set_bot
 
   private

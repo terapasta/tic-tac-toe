@@ -27,7 +27,7 @@ RSpec.describe Conversation::Bot do
     context '#replyの結果のanswer_idが0の場合' do
       before do
         allow(dummy_ml_engine).to receive(:reply).and_return({
-          answer_id: Answer::NO_CLASSIFIED_ID,
+          answer_id: QuestionAnswer::NO_CLASSIFIED_ID,
           probability: 1.0,
           results: []
         })

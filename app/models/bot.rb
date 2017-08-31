@@ -7,7 +7,6 @@ class Bot < ActiveRecord::Base
   has_many :learning_training_messages
   has_many :question_answers
   has_many :topic_tags
-  has_many :answers
   has_many :decision_branches
   has_one :score, dependent: :destroy
   has_one :learning_parameter, dependent: :destroy

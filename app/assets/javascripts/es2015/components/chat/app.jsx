@@ -92,7 +92,7 @@ export default class ChatApp extends Component {
     } = messages;
 
     return (
-      <div ref="root">
+      <div ref="root" style={{ height: '100%' }}>
         <ChatHeader {...{
           botName: window.currentBot.name,
           learningStatus: learning.status,

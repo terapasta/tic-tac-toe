@@ -10,10 +10,8 @@ describe Replyable do
     let(:chat) { create(:chat, bot: bot) }
     let(:question) { '質問です。ほげほげ、もげもげ' }
     let(:question_feature_count) { 3 }
-    let(:answer) { create(:answer, bot: bot) }
     let(:probability) { MyOpeConfig.threshold_of_suggest_similar_questions - 0.01 }
     let(:reply) { Conversation::Reply.new(
-      answer: answer,
       probability: probability,
       question: question,
       question_feature_count: question_feature_count

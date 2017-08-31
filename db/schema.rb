@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831053001) do
+ActiveRecord::Schema.define(version: 20170831061200) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -245,15 +245,14 @@ ActiveRecord::Schema.define(version: 20170831053001) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "word_mapping_synonyms", force: :cascade do |t|
-    t.string   "value",           limit: 255
-    t.integer  "word_mapping_id", limit: 4
+    t.string   "value",           limit: 255, null: false
+    t.integer  "word_mapping_id", limit: 4,   null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
   create_table "word_mappings", force: :cascade do |t|
     t.string   "word",       limit: 20, null: false
-    t.string   "synonym",    limit: 20, null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "bot_id",     limit: 4

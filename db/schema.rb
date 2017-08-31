@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823063916) do
+ActiveRecord::Schema.define(version: 20170831053001) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -276,7 +276,6 @@ ActiveRecord::Schema.define(version: 20170823063916) do
 
   create_table "word_mappings", force: :cascade do |t|
     t.string   "word",       limit: 20, null: false
-    t.string   "synonym",    limit: 20
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "bot_id",     limit: 4

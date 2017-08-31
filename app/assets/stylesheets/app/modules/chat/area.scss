@@ -3,8 +3,15 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-top: 47px;
-  padding-bottom: 80px;
+  padding-bottom: 58px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 1px;
+}
+
+@media all and (-ms-high-contrast:none){
+  /* IE11 */
+  *::-ms-backdrop, .chat-area {
+    max-height: none;
+  }
 }

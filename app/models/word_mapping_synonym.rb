@@ -7,7 +7,6 @@ class WordMappingSynonym < ActiveRecord::Base
 
   scope :registered_synonym, -> (bot_id) {
     where(word_mapping_id: WordMapping.select(:id).
-    where(bot_id: bot_id)).
-    pluck(:value)
+    where(bot_id: bot_id))
   }
 end

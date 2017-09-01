@@ -73,11 +73,8 @@ class EvaluatorTestCase(TestCase):
         ok_(evaluator.accuracy > 0)
         ok_(evaluator.failure_score == 0)
 
-    # excluded_labels_for_fitting は未使用なので一旦コメントアウト
     # def test_exist_excluded_labels(self):
     #     attr = {
-    #         'include_failed_data': False,
-    #         'include_tag_vector': False,
     #         'classify_threshold': 0.5,
     #         'algorithm': LearningParameter.ALGORITHM_LOGISTIC_REGRESSION,
     #         'params_for_algorithm': {},

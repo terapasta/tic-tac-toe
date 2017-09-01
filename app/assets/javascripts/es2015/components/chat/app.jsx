@@ -44,7 +44,7 @@ export default class ChatApp extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    scrollToLastSectionIfNeeded(prevProps, this);
+    scrollToLastSectionIfNeeded(prevProps, this, this.area);
     this.fetchInitialQuestionsIfNeeded();
     this.setInitialQuestionsToMessagesIfNeeded(prevProps);
   }
@@ -100,7 +100,7 @@ export default class ChatApp extends Component {
           isManager,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
-        <ChatArea>
+        <ChatArea innerRef={(node) => this.area = node}>
           <ChatFlashMessage flashMessage={flashMessage} />
           <ChatReadMore {...assign({
             isManager,
@@ -185,7 +185,8 @@ export default class ChatApp extends Component {
   }
 }
 
-function scrollToLastSectionIfNeeded(prevProps, component) {
+function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
+  if (scrollableElement == null) { return; }
   const { props, refs } = component;
   const prevCount = prevProps.messages.classifiedData.length
   const currentCount = props.messages.classifiedData.length;
@@ -201,6 +202,7 @@ function scrollToLastSectionIfNeeded(prevProps, component) {
     if (targetNode == null) { return; }
     const offset = getOffset(targetNode);
 
-    window.scrollTo(0, offset.top - c.HeaderHeight);
+    const dest = offset.top - c.HeaderHeight;
+    scrollableElement.scrollTop = dest;
   }
 }

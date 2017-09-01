@@ -7,7 +7,7 @@ RSpec.describe WordMapping, type: :model do
         build(:word_mapping, word: 'ほげ')
       end
       
-      context 'invalid' do
+      context 'word_mapping_validatorのバリデーションチェック' do
         it 'invalidになること' do
           params = {
             word: 'ほげ',

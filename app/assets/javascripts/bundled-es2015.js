@@ -1749,7 +1749,7 @@ var ChatApp = function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
-      scrollToLastSectionIfNeeded(prevProps, this);
+      scrollToLastSectionIfNeeded(prevProps, this, this.area);
       this.fetchInitialQuestionsIfNeeded();
       this.setInitialQuestionsToMessagesIfNeeded(prevProps);
     }
@@ -1794,6 +1794,8 @@ var ChatApp = function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _props4 = this.props,
           dispatch = _props4.dispatch,
           token = _props4.token,
@@ -1823,7 +1825,9 @@ var ChatApp = function (_Component) {
         }),
         _react2.default.createElement(
           _area2.default,
-          null,
+          { innerRef: function innerRef(node) {
+              return _this2.area = node;
+            } },
           _react2.default.createElement(_flashMessage2.default, { flashMessage: flashMessage }),
           _react2.default.createElement(_readMore2.default, (0, _assign2.default)({
             isManager: isManager,
@@ -1929,7 +1933,10 @@ var ChatApp = function (_Component) {
 exports.default = ChatApp;
 
 
-function scrollToLastSectionIfNeeded(prevProps, component) {
+function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
+  if (scrollableElement == null) {
+    return;
+  }
   var props = component.props,
       refs = component.refs;
 
@@ -1948,7 +1955,8 @@ function scrollToLastSectionIfNeeded(prevProps, component) {
     }
     var offset = (0, _getOffset2.default)(targetNode);
 
-    window.scrollTo(0, offset.top - c.HeaderHeight);
+    var dest = offset.top - c.HeaderHeight;
+    scrollableElement.scrollTop = dest;
   }
 }
 
@@ -1985,12 +1993,14 @@ var ChatArea = function (_Component) {
   _createClass(ChatArea, [{
     key: "render",
     value: function render() {
-      var children = this.props.children;
+      var _props = this.props,
+          children = _props.children,
+          innerRef = _props.innerRef;
 
 
       return _react2.default.createElement(
         "div",
-        { className: "chat-area" },
+        { className: "chat-area", ref: innerRef },
         children
       );
     }

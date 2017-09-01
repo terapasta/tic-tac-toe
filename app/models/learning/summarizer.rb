@@ -27,7 +27,6 @@ class Learning::Summarizer
       ltm = LearningTrainingMessage.find_or_initialize_by(
         bot_id: @bot.id,
         question: qa.question,
-        answer_id: qa.answer_id,
       )
 
       # NOTE Answer廃止でQuestionAnswerに統一したら上のfindする時にquestion_answer_idを使用するけど今はセットしておくだけ

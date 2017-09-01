@@ -17,10 +17,12 @@ class TextArrayTestCase(TestCase):
             '私は元気にしています',
             'あなたの名前を教えてください'
         ])
-        text_array = TextArray()
-        vec = text_array.to_vec(X)
+        text_array = TextArray(X)
+        vec = text_array.to_vec()
 
-        eq_(vec.shape, (3, 2))
+        # 3x7のスパース行列であること
+        ok_(isinstance(vec, scipy.sparse.csr.csr_matrix))
+        eq_(vec.shape, (3, 7))
 
     # def test_except_blank(self):
     #     X = pd.Series([

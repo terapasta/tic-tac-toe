@@ -24,12 +24,15 @@ class Reply:
         except IOError:
             raise ModelNotExistsError()
 
+
     def perform(self, X, datasource_type='database'):
-        text_array = TextArray(self.vectorizer)
-        features = text_array.to_vec(X)
+        datasource = Datasource(datasource_type)
+
+        text_array = TextArray(X, vectorizer=self.vectorizer)
         logger.debug('Reply#perform text_array.separated_sentences: %s' % text_array.separated_sentences)
+        features = text_array.to_vec()
         logger.debug('Reply#perform features: %s' % features)
-        count = np.count_nonzero(features)
+        count = np.count_nonzero(features.toarray())
 
         learning_training_message_ids = None
         if self.learning_parameter.use_similarity_classification:

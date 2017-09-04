@@ -53,15 +53,11 @@ end
 
 # 毎週月曜10am
 schedule '0 10 * * 1' do |e|
-  send_all_bot_accuracies
+  send_all_bot_accuracies(helper.generate_attachments(all_bot_accuracy_test!))
 end
 
 # 毎週水曜10am
 schedule '0 10 * * 3' do |e|
-  send_all_bot_accuracies
-end
-
-schedule '* * * * *' do |e|
   send_all_bot_accuracies(helper.generate_attachments(all_bot_accuracy_test!))
 end
 

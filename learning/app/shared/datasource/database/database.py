@@ -27,4 +27,6 @@ class Database():
                 passwd=dbconfig['password'],
                 charset='utf8',
             )
+        # Note: mysqlで別コネクションの最新のデータをselectするための設定
+        self.db.autocommit(True)
         logger.info('database connected')

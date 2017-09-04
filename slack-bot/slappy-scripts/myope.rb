@@ -62,17 +62,16 @@ schedule '0 10 * * 3' do |e|
 end
 
 schedule '* * * * *' do |e|
-  Slappy.logger.debug e.inspect
-  send_all_bot_accuracies
+  send_all_bot_accuracies(helper.generate_attachments(all_bot_accuracy_test!))
 end
 
-def send_all_bot_accuracies
+def send_all_bot_accuracies(attachments)
   begin
     Slappy.logger.info '正答率を定期投稿します'
     Slappy::Messenger.new({
       text: '定期投稿です。 各ボットの正答率',
       channel: '#random',
-      attachments: helper.generate_attachments(all_bot_accuracy_test!),
+      attachments: attachments,
     }).message
   rescue => e
     Slappy.logger.error e.message + e.backtrace.join("\n")

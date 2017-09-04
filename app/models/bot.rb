@@ -46,7 +46,8 @@ class Bot < ActiveRecord::Base
       learning_training_messages.destroy_all
       chats.destroy_all
 
-      model_dir = Rails.root.join('learning', 'learning', 'models', Rails.env, "#{id}")
+      # FIXME: ディレクトリが存在しない場合に例外になってしまう
+      model_dir = Rails.root.join('learning', 'dumps', Rails.env, "#{id}")
       FileUtils.rm_r(model_dir)
     end
   end

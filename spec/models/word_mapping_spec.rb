@@ -7,7 +7,7 @@ RSpec.describe WordMapping, type: :model do
         build(:word_mapping, word: 'ほげ')
       end
       
-      context 'word_mapping_validatorのバリデーションチェック' do
+      context 'word_mapping_validatorを用いる場合' do
         it 'invalidになること' do
           params = {
             word: 'ほげ',
@@ -18,7 +18,7 @@ RSpec.describe WordMapping, type: :model do
             ]
           }
           @word_mapping = WordMapping.new(params)
-          expect(@word_mapping.valid?).to_not be
+          expect(@word_mapping).to_not be_valid
           expect(@word_mapping.errors[:base]).to be_present
         end
         
@@ -35,7 +35,7 @@ RSpec.describe WordMapping, type: :model do
             ]
           }
           @word_mapping = WordMapping.new(params)
-          expect(@word_mapping.valid?).to_not be
+          expect(@word_mapping).to_not be_valid
           expect(@word_mapping.errors[:base]).to be_present
         end
         
@@ -47,7 +47,7 @@ RSpec.describe WordMapping, type: :model do
             word: synonym.value,
           }
           @word_mapping = WordMapping.new(params)
-          expect(@word_mapping.valid?).to_not be
+          expect(@word_mapping).to_not be_valid
           expect(@word_mapping.errors[:base]).to be_present
         end
       end

@@ -13,7 +13,7 @@ class Conversation::Bot
     @ModelClass = message.class
     @engine = Ml::Engine.new(@bot)
     @word_mappings = WordMapping.for_bot(@bot).decorate
-    @question_text = @bot.learning_parameter&.use_similarity_classification ?
+    @question_text = @bot.use_similarity_classification? ?
       @word_mappings.replace_synonym(@message.body) : @message.body
   end
 

@@ -8,7 +8,7 @@ class LearnJob < ActiveJob::Base
     summarizer.summary
 
     # Note: use_similarity_classificationがnilの場合もtrue扱いにする
-    if @bot.learning_parameter&.use_similarity_classification? != false
+    if @bot.use_similarity_classification?
       summarizer.unify_learning_training_message_words!
     else
       LearningTrainingMessage.amp!(@bot)
@@ -16,7 +16,7 @@ class LearnJob < ActiveJob::Base
     end
 
     scores = Ml::Engine.new(@bot).learn
-    if @bot.learning_parameter&.use_similarity_classification? == false
+    unless @bot.use_similarity_classification?
       @bot.build_score if @bot.score.nil?
       @bot.score.update!(scores)
     end

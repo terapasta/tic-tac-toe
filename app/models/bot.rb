@@ -40,6 +40,13 @@ class Bot < ActiveRecord::Base
     attrs.slice(:algorithm, :params_for_algorithm, :classify_threshold, :use_similarity_classification)
   end
 
+  def use_similarity_classification?
+    if learning_parameter.present?
+      return learning_parameter.use_similarity_classification?
+    end
+    true
+  end
+
   def reset_training_data!
     transaction do
       question_answers.destroy_all

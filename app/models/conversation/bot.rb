@@ -5,6 +5,8 @@ class Conversation::Bot
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
+  NO_CLASSIFIED_ANSWER_ID = 0
+
   def initialize(bot, message)
     @bot = bot
     @message = message
@@ -25,7 +27,7 @@ class Conversation::Bot
     question_feature_count = result[:question_feature_count]
     effective_results = @results.select{|x| x[:probability] > 0.1}
     if effective_results.length == 0
-      question_answer_ids = [0]
+      question_answer_ids = [NO_CLASSIFIED_ANSWER_ID]
       question_answer_id = 0
       probability = 1
     else

@@ -3,7 +3,7 @@
   gather_facts: no
   become: yes
   vars:
-      ruby_version: 2.3.4
+    ruby_version: 2.3.4
   vars_files:
     - private.yml
   roles:
@@ -12,9 +12,4 @@
     - rbenv
     - nginx
     - mysql
-  # vars:
-  #   deploy_user: a.harada
-  #   newrelic_api_key: 11c470b346004a036af703c766f93be841385bcd
-  # roles:
-  #   - app
-  #   - newrelic
+    - app

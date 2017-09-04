@@ -1,7 +1,27 @@
 ---
+- name: install libraries
+  yum: name={{ item }} state=installed
+  with_items:
+    - MySQL-python27
+
 - name: install MySQL
   yum: name=mysql-server state=installed
 
 - name: Auto Running MySQL
   service: name=mysqld state=running enabled=yes
   tags: mysqld
+
+- mysql_user:
+    name: 'root'
+    host: localhost
+    state: present
+    priv: '*.*:ALL'
+    password: '{{ passwords.mysql_root }}'
+    login_user: root
+    login_password: '{{ passwords.mysql_root }}'
+
+- mysql_db:
+    name: donusagi_bot
+    state: present
+    login_user: 'root'
+    login_password: '{{ passwords.mysql_root }}'

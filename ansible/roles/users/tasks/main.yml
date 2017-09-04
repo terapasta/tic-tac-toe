@@ -1,0 +1,65 @@
+---
+- user:
+    name: deploy
+    comment: "Deployment user"
+- name: Set up authorized_keys for deploy user
+  authorized_key:
+    user: deploy
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/a.harada
+    - public_keys/s.tachibana
+    - public_keys/k.yamagata
+
+- user:
+    name: a.harada
+    comment: "Atsushi Harada"
+    password: '{{ passwords.harada }}'
+    group: wheel
+- name: Set up authorized_keys for a.harada user
+  authorized_key:
+    user: a.harada
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/a.harada
+
+- user:
+    name: s.tachibana
+    comment: "Shusei Tachibana"
+    password: '{{ passwords.tachibana }}'
+    group: wheel
+- name: Set up authorized_keys for s.tachibana user
+  authorized_key:
+    user: s.tachibana
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/s.tachibana
+
+- user:
+    name: k.yamagata
+    comment: "Kozo Yamagata"
+    password: '{{ passwords.yamagata }}'
+    group: wheel
+- name: Set up authorized_keys for k.yamagata user
+  authorized_key:
+    user: k.yamagata
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/k.yamagata
+
+- user:
+    name: y.miyata
+    comment: "Yuki Miyata"
+    password: '{{ passwords.miyata }}'
+    group: wheel
+- name: Set up authorized_keys for y.miyata user
+  authorized_key:
+    user: y.miyata
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/y.miyata

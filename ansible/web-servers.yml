@@ -1,13 +1,20 @@
+---
 - hosts: web-servers
-  sudo: true
+  gather_facts: no
+  become: yes
   vars:
-    ruby_version: 2.3.1
-    deploy_user: a.harada
-    newrelic_api_key: 11c470b346004a036af703c766f93be841385bcd
+      ruby_version: 2.3.4
+  vars_files:
+    - private.yml
   roles:
+    - users
     - base
     - rbenv
     - nginx
-    #- mysql
-    - app
-    - newrelic
+    - mysql
+  # vars:
+  #   deploy_user: a.harada
+  #   newrelic_api_key: 11c470b346004a036af703c766f93be841385bcd
+  # roles:
+  #   - app
+  #   - newrelic

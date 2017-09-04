@@ -6,6 +6,7 @@ from app.shared.logger import logger
 
 class Database():
     __shared_state = {}
+    db = None
 
     def __init__(self):
         self.__dict__ = self.__shared_state

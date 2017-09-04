@@ -4,7 +4,7 @@ from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.cosine_similarity import CosineSimilarity
 from app.core.reducer.lsi import LSI
 from app.core.normalizer.normalizer import Normalizer
-from app.shared.datasource.database.learning_training_messages import LearningTrainingMessages
+from app.shared.datasource.database.question_answers import QuestionAnswers
 
 
 class CosineSimilarityFactory:
@@ -13,14 +13,14 @@ class CosineSimilarityFactory:
         vectorizer=TfidfVectorizer,
         reducer=LSI,
         normalizer=Normalizer,
-        ltm=LearningTrainingMessages,
+        question_answers=QuestionAnswers,
     )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, ltm=None, estimator=None):
+    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, question_answers=None, estimator=None):
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
-        self.learning_training_messages = ltm
+        self.question_answers = question_answers 
         if estimator is not None:
             self.estimator = estimator
         else:
@@ -29,7 +29,7 @@ class CosineSimilarityFactory:
                     self.vectorizer,
                     self.reducer,
                     self.normalizer,
-                    self.learning_training_messages,
+                    self.question_answers,
                 )
 
     def get_tokenizer(self):
@@ -44,8 +44,8 @@ class CosineSimilarityFactory:
     def get_normalizer(self):
         return self.normalizer
 
-    def get_learning_training_messages(self):
-        return self.learning_training_messages
+    def get_question_answers(self):
+        return self.question_answers
 
     def get_estimator(self):
         return self.estimator

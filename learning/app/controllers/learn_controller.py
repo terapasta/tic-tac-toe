@@ -27,11 +27,11 @@ class LearnController:
         return result
 
     def _vocabulary_learn(self):
-        logger.info('load all learning_training_messages')
-        all_learning_training_messages_data = self._factory.get_learning_training_messages().all()
+        logger.info('load all get_question_answers')
+        all_question_answers_data = self._factory.get_question_answers().all()
 
         logger.info('tokenize all')
-        tokenized_sentences = self._factory.get_tokenizer().tokenize(all_learning_training_messages_data['question'])
+        tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
 
         logger.info('vectorize all')
         vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)
@@ -43,19 +43,19 @@ class LearnController:
         self._factory.get_normalizer().fit(reduced_features)
 
     def _learn(self):
-        logger.info('load learning_training_messages')
-        bot_learning_training_messages_data = self._factory.get_learning_training_messages().by_bot(self.bot.id)
+        logger.info('load question_answers')
+        bot_question_answers_data = self._factory.get_question_answers().by_bot(self.bot.id)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
-        questions = np.array(bot_learning_training_messages_data['question'])
+        questions = np.array(bot_question_answers_data['question'])
         questions = np.append(questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
-        question_answer_ids = np.array(bot_learning_training_messages_data['question_answer_id'], dtype=np.int)
+        question_answer_ids = np.array(bot_question_answers_data['question_answer_id'], dtype=np.int)
         question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
-        logger.info('tokenize learning_training_messages')
+        logger.info('tokenize question_answers')
         bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
 
-        logger.info('vectorize learning_training_messages')
+        logger.info('vectorize get_question_answers')
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
 
         logger.info('fit')

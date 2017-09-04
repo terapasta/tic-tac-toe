@@ -6,7 +6,6 @@ from app.shared.logger import logger
 
 class Database():
     __shared_state = {}
-    is_connected = False
 
     def __init__(self):
         self.__dict__ = self.__shared_state
@@ -16,7 +15,7 @@ class Database():
         return pd.read_sql(sql, self.db, params=params)
 
     def _connect(self):
-        if self.is_connected is True:
+        if self.db is not None:
             return
 
         dbconfig = Config().get('database')
@@ -28,4 +27,3 @@ class Database():
                 charset='utf8',
             )
         logger.info('database connected')
-        self.is_connected = True

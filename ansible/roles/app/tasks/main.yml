@@ -1,2 +1,8 @@
 - name: install bundler gem
   gem: name=bundler user_install=no
+
+- file: path=/var/www state=directory owner=root group=root mode=0755
+- file: path=/var/www/donusagi-bot state=directory owner=deploy group=deploy mode=0775
+- file: path=/var/www/donusagi-bot/shared state=directory owner=deploy group=deploy mode=0775
+
+- template: src=.env.j2 dest=/var/www/donusagi-bot/shared/.env

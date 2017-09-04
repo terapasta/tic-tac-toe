@@ -2,8 +2,10 @@ import inject
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.cosine_similarity import CosineSimilarity
-from app.core.reducer.lsi import LSI
-from app.core.normalizer.normalizer import Normalizer
+# from app.core.reducer.lsi import LSI
+# from app.core.normalizer.normalizer import Normalizer
+from app.core.reducer.pass_reducer import PassReducer
+from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.database.question_answers import QuestionAnswers
 
 
@@ -11,8 +13,8 @@ class CosineSimilarityFactory:
     @inject.params(
         tokenizer=MecabTokenizer,
         vectorizer=TfidfVectorizer,
-        reducer=LSI,
-        normalizer=Normalizer,
+        reducer=PassReducer,
+        normalizer=PassNormalizer,
         question_answers=QuestionAnswers,
     )
     def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, question_answers=None, estimator=None):

@@ -19,7 +19,7 @@ class WordMapping < ActiveRecord::Base
   # validate :word_is_not_eq_synonym
   # validate :word_is_not_eq_other_synonym
 
-  before_validation :strip_word_and_synonym
+  before_validation :strip_word
 
   scope :for_bot, -> (bot) {
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
@@ -37,7 +37,7 @@ class WordMapping < ActiveRecord::Base
   }
 
   private
-    def strip_word_and_synonym
+    def strip_word
       word.strip!
     end
 end

@@ -874,6 +874,10 @@ var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
+var _assign = require('lodash/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
 var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -883,31 +887,51 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var updateWordMappingSynonym = exports.updateWordMappingSynonym = function updateWordMappingSynonym(botId, wordMappingId, synonymId, data) {
   var path = void 0;
   if ((0, _isEmpty2.default)(botId)) {
-    path = '/api/word_mappings/' + wordMappingId + '/synonyms/' + synonymId + '.json';
+    path = '/api/word_mappings/' + wordMappingId + '.json';
   } else {
-    path = '/api/bots/' + botId + '/word_mappings/' + wordMappingId + '/synonyms/' + synonymId + '.json';
+    path = '/api/bots/' + botId + '/word_mappings/' + wordMappingId + '.json';
   }
-  return _axios2.default.put(path, { word_mapping_synonym: data }, (0, _config2.default)());
+  var payload = {
+    word_mapping: {
+      word_mapping_synonyms_attributes: [(0, _assign2.default)({}, data, {
+        id: synonymId
+      })]
+    }
+  };
+  return _axios2.default.put(path, payload, (0, _config2.default)());
 };
 
 var createWordMappingSynonym = exports.createWordMappingSynonym = function createWordMappingSynonym(botId, wordMappingId, data) {
   var path = void 0;
   if ((0, _isEmpty2.default)(botId)) {
-    path = '/api/word_mappings/' + wordMappingId + '/synonyms.json';
+    path = '/api/word_mappings/' + wordMappingId + '.json';
   } else {
-    path = '/api/bots/' + botId + '/word_mappings/' + wordMappingId + '/synonyms.json';
+    path = '/api/bots/' + botId + '/word_mappings/' + wordMappingId + '.json';
   }
-  return _axios2.default.post(path, { word_mapping_synonym: data }, (0, _config2.default)());
+  var payload = {
+    word_mapping: {
+      word_mapping_synonyms_attributes: [data]
+    }
+  };
+  return _axios2.default.put(path, payload, (0, _config2.default)());
 };
 
 var deleteWordMappingSynonym = exports.deleteWordMappingSynonym = function deleteWordMappingSynonym(botId, wordMappingId, synonymId) {
   var path = void 0;
   if ((0, _isEmpty2.default)(botId)) {
-    path = '/api/word_mappings/' + wordMappingId + '/synonyms/' + synonymId + '.json';
+    path = '/api/word_mappings/' + wordMappingId + '.json';
   } else {
-    path = '/api/bots/' + botId + '/word_mappings/' + wordMappingId + '/synonyms/' + synonymId + '.json';
+    path = '/api/bots/' + botId + '/word_mappings/' + wordMappingId + '.json';
   }
-  return _axios2.default.delete(path, (0, _config2.default)());
+  var payload = {
+    word_mapping: {
+      word_mapping_synonyms: [{
+        id: synonymId,
+        _destroy: true
+      }]
+    }
+  };
+  return _axios2.default.put(path, payload, (0, _config2.default)());
 };
 
 var createWordMapping = exports.createWordMapping = function createWordMapping(botId, data) {
@@ -940,7 +964,7 @@ var deleteWordMapping = exports.deleteWordMapping = function deleteWordMapping(b
   return _axios2.default.delete(path, (0, _config2.default)());
 };
 
-},{"./config":11,"axios":99,"is-empty":453}],18:[function(require,module,exports){
+},{"./config":11,"axios":99,"is-empty":453,"lodash/assign":666}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1488,6 +1512,10 @@ var _compact = require('lodash/compact');
 
 var _compact2 = _interopRequireDefault(_compact);
 
+var _last = require('lodash/last');
+
+var _last2 = _interopRequireDefault(_last);
+
 var _wordMappings = require('../../api/word-mappings');
 
 var WordMappingAPI = _interopRequireWildcard(_wordMappings);
@@ -1631,7 +1659,8 @@ var WordMappingForm = function (_Component) {
       }
 
       WordMappingAPI.createWordMappingSynonym(botId, id, { value: addingSynonymValue }).then(function (res) {
-        var newSynonyms = synonyms.concat([res.data.wordMappingSynonym]);
+        var newSynonym = (0, _last2.default)((0, _get2.default)(res, 'data.wordMapping.synonyms'));
+        var newSynonyms = synonyms.concat([newSynonym]);
         _this4.setState({
           synonyms: newSynonyms,
           isAddingSynonym: false,
@@ -1887,7 +1916,7 @@ WordMappingForm.defaultProps = {
 
 exports.default = WordMappingForm;
 
-},{"../../api/word-mappings":17,"../Alert":18,"./EditingSynonym":19,"./EditingWord":20,"./elements":21,"is-empty":453,"lodash/assign":666,"lodash/bindAll":669,"lodash/compact":674,"lodash/findIndex":681,"lodash/get":683,"lodash/isEqual":692,"react":894}],23:[function(require,module,exports){
+},{"../../api/word-mappings":17,"../Alert":18,"./EditingSynonym":19,"./EditingWord":20,"./elements":21,"is-empty":453,"lodash/assign":666,"lodash/bindAll":669,"lodash/compact":674,"lodash/findIndex":681,"lodash/get":683,"lodash/isEqual":692,"lodash/last":706,"react":894}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

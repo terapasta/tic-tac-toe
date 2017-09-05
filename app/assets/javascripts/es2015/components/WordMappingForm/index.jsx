@@ -6,6 +6,7 @@ import assign from 'lodash/assign';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'is-empty';
 import compact from 'lodash/compact';
+import last from 'lodash/last';
 
 import * as WordMappingAPI from '../../api/word-mappings';
 import Alert from '../Alert';
@@ -104,7 +105,8 @@ class WordMappingForm extends Component {
 
     WordMappingAPI.createWordMappingSynonym(botId, id, { value: addingSynonymValue })
       .then((res) => {
-        const newSynonyms = synonyms.concat([res.data.wordMappingSynonym]);
+        const newSynonym = last(get(res, 'data.wordMapping.synonyms'));
+        const newSynonyms = synonyms.concat([newSynonym]);
         this.setState({
           synonyms: newSynonyms,
           isAddingSynonym: false,

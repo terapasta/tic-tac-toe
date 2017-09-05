@@ -31,7 +31,6 @@ class WordMappingPolicy < ApplicationPolicy
     [
       :id,
       :word,
-      :synonym,
       {
         word_mapping_synonyms_attributes: [
           :id,

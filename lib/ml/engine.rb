@@ -1,12 +1,10 @@
 class Ml::Engine
-  def self.session_pool
-    @@session_pool ||= MessagePack::RPC::SessionPool.new
-  end
 
   def initialize(bot)
     host = ENV.fetch('RPC_HOST'){ '127.0.0.1' }
     port = 6000
-    @client = self.class.session_pool.get_session(host, port)
+    @session_pool = MessagePack::RPC::SessionPool.new
+    @client = @session_pool.get_session(host, port)
     @client.timeout = 30.minutes
     @bot = bot
   end

@@ -1,5 +1,5 @@
 ---
-- stat: path=/usr/bin/mecab
+- stat: path=/usr/local/bin/mecab
   register: command
 
 - name: 'install mecab'

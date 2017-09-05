@@ -4,7 +4,6 @@ lock '3.6.1'
 set :pty, true
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
-set :branch, ENV['BRANCH'] || 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/donusagi-bot'

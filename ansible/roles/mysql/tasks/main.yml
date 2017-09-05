@@ -1,5 +1,5 @@
 ---
-- name: install libraries
+- name: install dependencies
   yum: name={{ item }} state=installed
   with_items:
     - MySQL-python27
@@ -11,17 +11,46 @@
   service: name=mysqld state=running enabled=yes
   tags: mysqld
 
+- name: setup password for root
+  template:
+    src: .my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+
 - mysql_user:
     name: 'root'
-    host: localhost
+    host: '{{ item }}'
     state: present
-    priv: '*.*:ALL'
+    priv: '*.*:ALL,GRANT'
     password: '{{ passwords.mysql_root }}'
     login_user: root
     login_password: '{{ passwords.mysql_root }}'
+    update_password: always
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+    - localhost.localdomain
+
+- mysql_user:
+    name: '{{ secrets.db_user }}'
+    host: '{{ item }}'
+    state: present
+    priv: '*.*:ALL'
+    password: '{{ secrets.db_password }}'
+    login_user: root
+    login_password: '{{ passwords.mysql_root }}'
+    update_password: always
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+    - localhost.localdomain
 
 - mysql_db:
-    name: donusagi_bot
+    name: '{{ secrets.db_name }}'
     state: present
     login_user: 'root'
     login_password: '{{ passwords.mysql_root }}'

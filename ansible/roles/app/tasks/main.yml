@@ -6,3 +6,5 @@
 - file: path=/var/www/donusagi-bot/shared state=directory owner=deploy group=deploy mode=0775
 
 - template: src=.env.j2 dest=/var/www/donusagi-bot/shared/.env
+- template: src=.python-version dest=/var/www/donusagi-bot/shared/.python-version
+- template: src=python-config.yml.j2 dest=/var/www/donusagi-bot/shared/learning/learning/config/config.yml

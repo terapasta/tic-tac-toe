@@ -37,6 +37,7 @@
     - libxslt-devel
     - ImageMagick
     - ImageMagick-devel
+    - python-devel
 
 - name: install Development Tool
   become: yes

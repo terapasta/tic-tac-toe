@@ -1,0 +1,23 @@
+css:
+  .placeholder-box {
+    height: 38px;
+    background-color: #ccc;
+  }
+  .placeholder-box--sm {
+    height: 20px;
+    background-color: #ccc;
+  }
+
+.d-flex.justify-content-between.bg-faded.mb-3.p-2
+  .placeholder-box style="width: 200px"
+  .placeholder-box style="width: 130px"
+
+- 10.times do
+  .dict
+    .dict__title
+      .placeholder-box style="width: 130px"
+    .dict__subtitle
+      .placeholder-box--sm style="width: 98px;"
+    ul.dict__words
+      - 3.times do
+        li: .placeholder-box style="width: 60px"

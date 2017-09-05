@@ -21,6 +21,7 @@ class WordMappings extends Component {
     this.state = {
       wordMappings: props.wordMappings,
       isAdding: false,
+      searchQuery: searchQueryParam(),
     };
     bindAll(this, ['handleCreate']);
   }
@@ -35,7 +36,7 @@ class WordMappings extends Component {
 
   render() {
     const { botId, formActionUrl } = this.props;
-    const { isAdding, wordMappings } = this.state;
+    const { isAdding, wordMappings, searchQuery } = this.state;
 
     return (
       <div>
@@ -48,7 +49,7 @@ class WordMappings extends Component {
                   name="q"
                   className="form-control"
                   placeholder="キーワード検索"
-                  defaultValue={searchQueryParam()}
+                  defaultValue={searchQuery}
                 />
                 <div className="input-group-btn">
                   <input type="submit" className="btn btn-default btn-secondary" value="検索" />
@@ -93,7 +94,12 @@ class WordMappings extends Component {
         ))}
         {isEmpty(wordMappings) && !isAdding && (
           <div className="dict">
-            <p>まだ辞書は登録されていません</p>
+            {isEmpty(searchQuery) && (
+              <p>まだ辞書は登録されていません</p>
+            )}
+            {!isEmpty(searchQuery) && (
+              <p>辞書データが見つかりませんでした</p>
+            )}
           </div>
         )}
       </div>

@@ -1,15 +1,6 @@
 - pagination = capture do
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
-css:
-  .placeholder-box {
-    height: 38px;
-    background-color: #ccc;
-  }
-  .placeholder-box--sm {
-    height: 20px;
-    background-color: #ccc;
-  }
 
 .container.pt-5
   span(
@@ -17,19 +8,6 @@ css:
     data-form-action-url=admin_word_mappings_path
     data-word-mappings=ActiveModelSerializers::SerializableResource.new(@word_mappings).to_json
   )
-    .d-flex.justify-content-between.bg-faded.mb-3.p-2
-      .placeholder-box style="width: 200px"
-      .placeholder-box style="width: 130px"
-
-    - 10.times do
-      .dict
-        .dict__title
-          .placeholder-box style="width: 130px"
-        .dict__subtitle
-          .placeholder-box--sm style="width: 98px;"
-        ul.dict__words
-          - 3.times do
-            li: .placeholder-box style="width: 60px"
-
+    = render 'word_mappings/placeholder'
 
 = paginate @word_mappings

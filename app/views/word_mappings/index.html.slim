@@ -2,52 +2,12 @@
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
 = render layout: 'bots/layout' do
-  css:
-    .placeholder-box {
-      height: 38px;
-      background-color: #ccc;
-    }
-    .placeholder-box--sm {
-      height: 20px;
-      background-color: #ccc;
-    }
-
   span(
     data-component="WordMappings"
     data-form-action-url=bot_word_mappings_path(@bot)
     data-bot-id=@bot.id
     data-word-mappings=ActiveModelSerializers::SerializableResource.new(@word_mappings).to_json
   )
-    .well.clearfix
-      .pull-left
-        .placeholder-box style="width: 200px"
-      .pull-right.text-right
-        .placeholder-box style="width: 130px"
-
-    - 10.times do
-      .dict
-        .dict__title
-          .placeholder-box style="width: 130px"
-        .dict__subtitle
-          .placeholder-box--sm style="width: 98px;"
-        ul.dict__words
-          - 3.times do
-            li: .placeholder-box style="width: 60px"
-
-  - if @word_mappings.blank? && params[:keyword].blank?
-    .card: .card-block.text-center
-      p 同義語はまだ登録されていません
-      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success'
-  - else
-    .mb-3.p-2.bg-faded.d-flex.justify-content-between
-      = form_tag bot_word_mappings_path(@bot), method: :get, class: 'd-flex justify-content-between' do
-        .input-group
-          = search_field_tag :keyword, params[:keyword], class: 'form-control', placeholder: 'キーワード'
-          span.input-group-btn= submit_tag '検索', class: 'btn btn-secondary'
-
-        - if params[:keyword].present?
-          = link_to bot_word_mappings_path(@bot), class: 'btn btn-link' do
-            = material_icon 'close', class: 'mi-xs'
-            span 検索を解除
+    = render 'placeholder'
 
 = paginate @word_mappings

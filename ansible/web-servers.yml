@@ -11,5 +11,6 @@
     - base
     - rbenv
     - nginx
-    - mysql
+    #- mysql
     - app
+    - mecab

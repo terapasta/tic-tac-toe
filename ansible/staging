@@ -1,8 +1,8 @@
 [web-servers]
-192.168.33.13 ansible_ssh_user=vagrant
+?.?.?.? ansible_ssh_user=ec2-user
 
 [development:children]
 web-servers
 
 [all:vars]
-stage=development
+stage=staging

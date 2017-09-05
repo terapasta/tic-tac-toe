@@ -5,6 +5,27 @@
 - file: path=/var/www/donusagi-bot state=directory owner=deploy group=deploy mode=0775
 - file: path=/var/www/donusagi-bot/shared state=directory owner=deploy group=deploy mode=0775
 
+- set_fact:
+    db_host: '{{ secrets.db_host.development }}'
+    aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.development }}'
+    rollbar_token_server: '{{ secrets.rollbar_token_server.development }}'
+    rollbar_token_client: '{{ secrets.rollbar_token_client.development }}'
+  when: stage == 'development'
+
+- set_fact:
+    db_host: '{{ secrets.db_host.staging }}'
+    aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.staging }}'
+    rollbar_token_server: '{{ secrets.rollbar_token_server.staging }}'
+    rollbar_token_client: '{{ secrets.rollbar_token_client.staging }}'
+  when: stage == 'staging'
+
+- set_fact:
+    db_host: '{{ secrets.db_host.production }}'
+    aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.production }}'
+    rollbar_token_server: '{{ secrets.rollbar_token_server.production }}'
+    rollbar_token_client: '{{ secrets.rollbar_token_client.production }}'
+  when: stage == 'production'
+
 - template: src=.env.j2 dest=/var/www/donusagi-bot/shared/.env
 - template: src=.python-version dest=/var/www/donusagi-bot/shared/.python-version
 - template: src=python-config.yml.j2 dest=/var/www/donusagi-bot/shared/learning/learning/config/config.yml

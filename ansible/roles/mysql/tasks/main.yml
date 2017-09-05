@@ -54,3 +54,9 @@
     state: present
     login_user: 'root'
     login_password: '{{ passwords.mysql_root }}'
+
+- name: set up default encoding
+  template:
+    src: my.cnf.general
+    dest: /etc/my.cnf
+  notify: restart mysql

@@ -1,9 +1,33 @@
 - name: install bundler gem
   gem: name=bundler user_install=no
 
-- file: path=/var/www state=directory owner=root group=root mode=0755
-- file: path=/var/www/donusagi-bot state=directory owner=deploy group=deploy mode=0775
-- file: path=/var/www/donusagi-bot/shared state=directory owner=deploy group=deploy mode=0775
+- file:
+    path: /var/www
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- file:
+    path: /var/www/donusagi-bot
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/config
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
 
 - set_fact:
     db_host: '{{ secrets.db_host.development }}'
@@ -26,6 +50,29 @@
     rollbar_token_client: '{{ secrets.rollbar_token_client.production }}'
   when: stage == 'production'
 
-- template: src=.env.j2 dest=/var/www/donusagi-bot/shared/.env
-- template: src=.python-version dest=/var/www/donusagi-bot/shared/.python-version
-- template: src=python-config.yml.j2 dest=/var/www/donusagi-bot/shared/learning/learning/config/config.yml
+- template:
+    src: .env.j2
+    dest: /var/www/donusagi-bot/shared/.env
+
+- template:
+    src: .python-version
+    dest: /var/www/donusagi-bot/shared/.python-version
+
+- template:
+    src: python-config.yml.j2
+    dest: /var/www/donusagi-bot/shared/learning/learning/config/config.yml
+
+- template:
+    src: database.yml.j2
+    dest: /var/www/donusagi-bot/shared/config/database.yml
+
+- template:
+    src: slappy.conf.j2
+    dest: /etc/init/slappy.conf
+
+- template:
+    src: supervisord.conf.j2
+    dest: /var/www/donusagi-bot/supervisord.conf
+    owner: deploy
+    group: deploy
+    mode: 0644

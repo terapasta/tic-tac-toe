@@ -1,0 +1,8 @@
+{{ stage }}:
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  host: <%= ENV['DB_HOST'] %>
+  database: myope
+  username: myope
+  password: <%= ENV['DB_PASSWORD'] %>

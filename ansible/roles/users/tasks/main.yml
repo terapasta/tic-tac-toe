@@ -63,3 +63,15 @@
     key: '{{ item }}'
   with_file:
     - public_keys/y.miyata
+
+- name: permit sudo for users
+  blockinfile:
+    dest: /etc/sudoers
+    backup: yes
+    content: |
+      a.harada        ALL=(ALL)       ALL
+      a.harada        ALL=(ALL)       NOPASSWD: /usr/bin/supervisorctl
+      k.yamagata      ALL=(ALL)       ALL
+      k.yamagata      ALL=(ALL)       NOPASSWD: /usr/bin/vim
+      s.tachibana     ALL=(ALL)       ALL
+      deploy  ALL=(ALL)       NOPASSWD: /usr/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp

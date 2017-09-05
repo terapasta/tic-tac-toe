@@ -6,8 +6,14 @@
 - name: ensure nginx/conf.d is empty
   shell: rm -f /etc/nginx/conf.d/*
 
-- name: deploy nginx config file
+- name: deploy nginx config file for myope
   template: >
     src=my-ope.conf
     dest=/etc/nginx/conf.d/my-ope.conf
+  notify: restart nginx
+
+- name:  dpeloy general nginx config file
+  template: >
+    src=nginx.conf
+    dest=/etc/nginx/nginx.conf
   notify: restart nginx

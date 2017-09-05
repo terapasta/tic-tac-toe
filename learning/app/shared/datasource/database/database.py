@@ -15,6 +15,11 @@ class Database():
         self._connect()
         return pd.read_sql(sql, self.db, params=params)
 
+    def execute(self, sql, params):
+        self._connect()
+        with self.db as cur:
+            cur.execute(sql, params)
+
     def _connect(self):
         if self.db is not None:
             return

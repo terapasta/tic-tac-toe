@@ -29,5 +29,5 @@ class CosineSimilarity:
         return result
 
     @property
-    def estimator_path(self):
-        return ''
+    def dump_key(self):
+        return 'dump_cosine_similarity'

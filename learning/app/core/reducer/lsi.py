@@ -9,7 +9,7 @@ class LSI:
     def __init__(self, bot=None, loader=None):
         self.bot = bot
         self.loader = loader
-        self.reducer = self.loader.load(self.dump_path)
+        self.reducer = self.loader.load(self.dump_key)
 
     def fit(self, features):
         # NOTE:
@@ -20,7 +20,7 @@ class LSI:
             n_components = (n_components - 1)
         self.reducer = TruncatedSVD(n_components=n_components, algorithm='randomized', n_iter=10, random_state=42)
         self.reducer.fit(features)
-        self.loader.dump(self.reducer, self.dump_path)
+        self.loader.dump(self.reducer, self.dump_key)
 
     def transform(self, features):
         return self.reducer.transform(features)
@@ -30,5 +30,5 @@ class LSI:
         return self.transform(features)
 
     @property
-    def dump_path(self):
-        return self.bot.dump_dirpath + '/lsa'
+    def dump_key(self):
+        return 'dump_lsi'

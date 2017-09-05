@@ -2018,7 +2018,7 @@ var searchQueryParam = exports.searchQueryParam = function searchQueryParam() {
   return window.location.search.replace(/^\?/, '').split('&').map(function (pair) {
     return pair.split('=');
   }).reduce(function (acc, pair) {
-    acc[pair[0]] = pair[1];
+    acc[window.decodeURIComponent(pair[0])] = window.decodeURIComponent(pair[1]);
     return acc;
   }, {})['q'];
 };

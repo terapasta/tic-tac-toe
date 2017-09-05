@@ -10,7 +10,7 @@ export const searchQueryParam = () => (
     .split('&')
     .map(pair => pair.split('='))
     .reduce((acc, pair) => {
-      acc[pair[0]] = pair[1];
+      acc[window.decodeURIComponent(pair[0])] = window.decodeURIComponent(pair[1]);
       return acc;
     }, {})['q']
 );

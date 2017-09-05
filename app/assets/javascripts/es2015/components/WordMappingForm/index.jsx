@@ -5,6 +5,7 @@ import findIndex from 'lodash/findIndex';
 import assign from 'lodash/assign';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'is-empty';
+import compact from 'lodash/compact';
 
 import * as WordMappingAPI from '../../api/word-mappings';
 import Alert from '../Alert';
@@ -21,7 +22,6 @@ import {
 
 import EditingSynonym from './EditingSynonym';
 import EditingWord from './EditingWord';
-import ConfirmModal from './ConfirmModal';
 
 class WordMappingForm extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class WordMappingForm extends Component {
   handleXHRError(err) {
     let { error, errors } = err.response.data;
     if (!isEmpty(errors)) {
-      error = [error, ...errors].join("\n");
+      error = compact([error, ...errors]).join("\n");
     }
     this.setState({ alertMessage: error });
   }
@@ -239,30 +239,30 @@ class WordMappingForm extends Component {
                 </Word>
               )}
             </Words>
-            {isConfirmDeleteEditingSynonym && (
-              <Alert
-                title="確認"
-                subtitle="本当に削除してよろしいですか？"
-                onCancel={() => this.setState({ isConfirmDeleteEditingSynonym: false })}
-                onOK={this.handleDeleteEditingSynonym}
-              />
-            )}
-            {isConfirmDeleteWord && (
-              <Alert
-                title="確認"
-                subtitle="本当に削除してよろしいですか？同じ意味の単語も全て削除され、この操作は元に戻せません。"
-                onCancel={() => this.setState({ isConfirmDeleteWord: false })}
-                onOK={this.handleDeleteEditingWord}
-              />
-            )}
-            {!isEmpty(alertMessage) && (
-              <Alert
-                title="エラー"
-                subtitle={alertMessage}
-                onOK={() => this.setState({ alertMessage: null })}
-              />
-            )}
           </span>
+        )}
+        {isConfirmDeleteEditingSynonym && (
+          <Alert
+            title="確認"
+            subtitle="本当に削除してよろしいですか？"
+            onCancel={() => this.setState({ isConfirmDeleteEditingSynonym: false })}
+            onOK={this.handleDeleteEditingSynonym}
+          />
+        )}
+        {isConfirmDeleteWord && (
+          <Alert
+            title="確認"
+            subtitle="本当に削除してよろしいですか？同じ意味の単語も全て削除され、この操作は元に戻せません。"
+            onCancel={() => this.setState({ isConfirmDeleteWord: false })}
+            onOK={this.handleDeleteEditingWord}
+          />
+        )}
+        {!isEmpty(alertMessage) && (
+          <Alert
+            title="エラー"
+            subtitle={alertMessage}
+            onOK={() => this.setState({ alertMessage: null })}
+          />
         )}
       </Wrapper>
     );

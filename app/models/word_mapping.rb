@@ -8,7 +8,8 @@ class WordMapping < ActiveRecord::Base
 
   validates :word,
     presence: true,
-    length: { maximum: 20 }
+    length: { maximum: 20 },
+    uniqueness: { scope: :bot_id }
   #
   # validates :synonym,
   #   presence: true,

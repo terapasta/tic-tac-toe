@@ -6,4 +6,4 @@
       span 一覧へ戻る
     h4.mb-3 システム共通同義語 編集
 
-    = render 'form'
+    = render 'word_mappings/form', { resource: [:admin, @word_mapping] }

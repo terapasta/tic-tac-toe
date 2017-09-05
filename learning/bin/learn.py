@@ -12,7 +12,7 @@ parser.add_argument('--datasource', type=str, default=Constants.DATASOURCE_TYPE_
 args = parser.parse_args()
 Config().init(args.env)
 
-# FIXME: csvを使うと以下のエラーが出る
+# FIXME: fileを使うと以下のエラーが出る
 #        This solver needs samples of at least 2 classes in the data, but the data contains only one class: 0
 attr = {
     'classify_threshold': None,

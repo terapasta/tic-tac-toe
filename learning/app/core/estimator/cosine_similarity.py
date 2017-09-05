@@ -6,13 +6,13 @@ from app.shared.current_bot import CurrentBot
 
 class CosineSimilarity:
     @inject.params(bot=CurrentBot)
-    def __init__(self, tokenizer, vectorizer, reducer, normalizer, question_answers, bot=None):
+    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
         self.bot = bot if bot is not None else CurrentBot()
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
-        self.bot_question_answers_data = question_answers.by_bot(self.bot.id)
+        self.bot_question_answers_data = datasource.question_answers.by_bot(self.bot.id)
 
     def fit(self, x, y):
         logger.info('PASS')

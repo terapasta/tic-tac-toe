@@ -1,14 +1,14 @@
 import inject
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
 from app.shared.current_bot import CurrentBot
-from app.shared.loader import Loader
+from app.shared.datasource.datasource import Datasource
 
 
 class TfidfVectorizer:
-    @inject.params(bot=CurrentBot, loader=Loader)
-    def __init__(self, bot=None, loader=None):
+    @inject.params(bot=CurrentBot, datasource=Datasource)
+    def __init__(self, bot=None, datasource=None):
         self.bot = bot
-        self.loader = loader
+        self.loader = datasource.loader
         self.vectorizer = self.loader.load(self.dump_key)
         if self.vectorizer is None:
             # Note: token_patternは1文字のデータを除外しない設定

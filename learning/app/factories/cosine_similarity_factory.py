@@ -6,7 +6,7 @@ from app.core.estimator.cosine_similarity import CosineSimilarity
 # from app.core.normalizer.normalizer import Normalizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
-from app.shared.datasource.database.question_answers import QuestionAnswers
+from app.shared.datasource.datasource import Datasource
 
 
 class CosineSimilarityFactory:
@@ -15,14 +15,14 @@ class CosineSimilarityFactory:
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,
-        question_answers=QuestionAnswers,
+        datasource=Datasource,
     )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, question_answers=None, estimator=None):
+    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
-        self.question_answers = question_answers 
+        self.datasource = datasource
         if estimator is not None:
             self.estimator = estimator
         else:
@@ -31,7 +31,7 @@ class CosineSimilarityFactory:
                     self.vectorizer,
                     self.reducer,
                     self.normalizer,
-                    self.question_answers,
+                    self.datasource,
                 )
 
     def get_tokenizer(self):
@@ -46,8 +46,8 @@ class CosineSimilarityFactory:
     def get_normalizer(self):
         return self.normalizer
 
-    def get_question_answers(self):
-        return self.question_answers
+    def get_datasource(self):
+        return self.datasource
 
     def get_estimator(self):
         return self.estimator

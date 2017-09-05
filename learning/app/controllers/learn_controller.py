@@ -27,8 +27,8 @@ class LearnController:
         return result
 
     def _vocabulary_learn(self):
-        logger.info('load all get_question_answers')
-        all_question_answers_data = self._factory.get_question_answers().all()
+        logger.info('load all get_datasource')
+        all_question_answers_data = self._factory.get_datasource().question_answers.all()
 
         logger.info('tokenize all')
         tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
@@ -44,7 +44,7 @@ class LearnController:
 
     def _learn(self):
         logger.info('load question_answers')
-        bot_question_answers_data = self._factory.get_question_answers().by_bot(self.bot.id)
+        bot_question_answers_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
         questions = np.array(bot_question_answers_data['question'])
@@ -55,7 +55,7 @@ class LearnController:
         logger.info('tokenize question_answers')
         bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
 
-        logger.info('vectorize get_question_answers')
+        logger.info('vectorize get_datasource')
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
 
         logger.info('fit')

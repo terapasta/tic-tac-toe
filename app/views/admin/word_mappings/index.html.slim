@@ -1,8 +1,9 @@
 - pagination = capture do
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
-h1 システム共通 同義語一覧
-p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
+.container: .row: .col-8.offset-2
+  h1 システム共通 同義語一覧
+  p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
 
 .container: .row: .col-8.offset-2
   br
@@ -24,7 +25,10 @@ p 編集結果をボットに反映するためには対象のボットで再学
       - @word_mappings.each do |word_mapping|
         tr
           td = word_mapping.word
-          td = word_mapping.synonym
+          td 
+            - word_mapping.word_mapping_synonyms.each do |wms|
+              = wms.value
+              br
           td.text-right
             = link_to edit_admin_word_mapping_path(word_mapping), class: 'btn btn-secondary btn-sm', data: { event_name: 'Open edit admin word mapping', word_mapping_id: word_mapping.id } do
               = material_icon 'edit', class: 'mi-xs'

@@ -31,7 +31,10 @@
         - @word_mappings.each do |word_mapping|
           tr
             td= highlight(word_mapping.word, params[:keyword])
-            td= highlight(word_mapping.synonym, params[:keyword])
+            td 
+              - word_mapping.word_mapping_synonyms.each do |wms|
+                = wms.value
+                br
             td.text-right
               = link_to '編集', edit_bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-secondary btn-sm', data: { event: 'update synonym' }
               = space 2

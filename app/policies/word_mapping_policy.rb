@@ -26,4 +26,20 @@ class WordMappingPolicy < ApplicationPolicy
   def destroy?
     user.normal? || user.staff?
   end
+  
+  def permitted_attributes
+    [ 
+      :id,
+      :word,
+      :synonym,
+      {
+        word_mapping_synonyms_attributes: [
+          :id,
+          :value,
+          :word_mapping_id,
+          :_destroy
+        ]
+      }
+    ]
+  end
 end

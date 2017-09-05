@@ -42,8 +42,8 @@
                   = space
                   span 削除
             td
-              - if @results.present?
-                - @results[accuracy_test_case.id].tap do |bot_messages|
+              - if @result.present?
+                - @result[accuracy_test_case.id].tap do |bot_messages|
                   - bot_messages.each do |bot_message|
                     dl style="margin-bottom:16px"
                       dt 回答
@@ -59,15 +59,14 @@
                         - bot_message.similar_question_answers.each do |qa|
                           li= qa.question
 
-<<<<<<< HEAD
             td.text-center
-              - if @results.present?
-                - if accuracy_test_case.success_result?(@results[accuracy_test_case.id])
+              - if @result.present?
+                - if accuracy_test_case.success_result?(@result[accuracy_test_case.id])
                   = material_icon 'check_circle', class: 'text-success'
                 - else
                   = material_icon 'close', class: 'text-danger'
 
-      - if @results.present?
+      - if @result.present?
         tfoot
           tr
             td colspan=3

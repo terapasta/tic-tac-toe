@@ -2,6 +2,8 @@
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
 = render layout: 'bots/layout' do
+  h4.mb-4 辞書
+
   span(
     data-component="WordMappings"
     data-form-action-url=bot_word_mappings_path(@bot)

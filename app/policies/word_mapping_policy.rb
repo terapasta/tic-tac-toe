@@ -44,7 +44,10 @@ class WordMappingPolicy < ApplicationPolicy
 
   private
     def has_write_permission?
-      return true if record.bot_id.nil? && user.staff?
-      user.normal? || user.staff?
+      return true if user.staff?
+      # ここから下はnormalユーザー
+      return false if record.bot_id.nil?
+      return true if record.bot.user == user
+      false
     end
 end

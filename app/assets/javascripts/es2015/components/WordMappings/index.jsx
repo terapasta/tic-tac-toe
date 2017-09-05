@@ -39,7 +39,7 @@ class WordMappings extends Component {
 
     return (
       <div>
-        <div className="well clearfix">
+        <div className="d-flex justify-content-between bg-faded mb-3 p-2">
           <div className="pull-left">
             <form action={formActionUrl} className="form-inline">
               <div className="input-group">

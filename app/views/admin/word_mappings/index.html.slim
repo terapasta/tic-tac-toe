@@ -1,10 +1,6 @@
 - pagination = capture do
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
-.container: .row: .col-8.offset-2
-  h1 システム共通 同義語一覧
-  p 編集結果をボットに反映するためには対象のボットで再学習する必要があります。
-
 css:
   .placeholder-box {
     height: 38px;
@@ -15,74 +11,25 @@ css:
     background-color: #ccc;
   }
 
-span(
-  data-component="WordMappings"
-  data-form-action-url=admin_word_mappings_path
-  data-word-mappings=ActiveModelSerializers::SerializableResource.new(@word_mappings).to_json
-)
-  .well.clearfix
-    .pull-left
+.container.pt-5
+  span(
+    data-component="WordMappings"
+    data-form-action-url=admin_word_mappings_path
+    data-word-mappings=ActiveModelSerializers::SerializableResource.new(@word_mappings).to_json
+  )
+    .d-flex.justify-content-between.bg-faded.mb-3.p-2
       .placeholder-box style="width: 200px"
-    .pull-right.text-right
       .placeholder-box style="width: 130px"
 
-  - 10.times do
-    .dict
-      .dict__title
-        .placeholder-box style="width: 130px"
-      .dict__subtitle
-        .placeholder-box--sm style="width: 98px;"
-      ul.dict__words
-        - 3.times do
-          li: .placeholder-box style="width: 60px"
+    - 10.times do
+      .dict
+        .dict__title
+          .placeholder-box style="width: 130px"
+        .dict__subtitle
+          .placeholder-box--sm style="width: 98px;"
+        ul.dict__words
+          - 3.times do
+            li: .placeholder-box style="width: 60px"
 
-/- data = @word_mappings.inject({}) { |res, wm| res[wm.word] ||= []; res[wm.word] << wm.synonym; res }
-
-/- data.each_with_index do |(word, synonyms), index|
-  - if index.odd?
-    .dict
-      .dict__title.editing
-        input.dict__input value=word
-        = space 2
-        small: button= material_icon('close', class: 'mi-v-baseline')
-        .dict__input-text: small
-          = material_icon('keyboard_return')
-          = space
-          span エンターキーで保存します
-      .dict__subtitle 同じ意味の単語
-      ul.dict__words
-        - if synonyms.any?
-          - synonyms.each do |synonym|
-            li.dict__word= synonym
-        - else
-          li.dict__word-empty まだ登録されていません
-        li
-          input.dict__input type="text" placeholder="単語を追加"
-          .dict__input-text: small
-            = material_icon('keyboard_return')
-            = space
-            span エンターキーで保存します
-        li.dict__word-button: button= material_icon('close')
-  - else
-    .dict
-      .dict__title
-        = word
-        = space 2
-        small: button= material_icon('edit', class: 'mi-v-baseline')
-      .dict__subtitle 同じ意味の単語
-      ul.dict__words
-        - if synonyms.any?
-          - synonyms.each do |synonym|
-            li.dict__word= synonym
-        - else
-          li.dict__word-empty まだ登録されていません
-        li.dict__word-button: button= material_icon('add_circle')
-
-/table.table.table-striped
-  thead
-    tr
-      th = WordMapping.human_attribute_name(:word)
-      th = WordMapping.human_attribute_name(:synonym)
-      th
 
 = paginate @word_mappings

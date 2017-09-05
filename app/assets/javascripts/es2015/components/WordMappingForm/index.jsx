@@ -7,9 +7,12 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'is-empty';
 import compact from 'lodash/compact';
 import last from 'lodash/last';
+import Highlighter from 'react-highlight-words';
 
 import * as WordMappingAPI from '../../api/word-mappings';
 import Alert from '../Alert';
+
+import { searchQueryParam } from '../WordMappings';
 
 import {
   Wrapper,
@@ -37,6 +40,7 @@ class WordMappingForm extends Component {
       addingSynonymValue: '',
       isConfirmDeleteWord: false,
       isDeletedWord: false,
+      searchQuery: searchQueryParam(),
     };
     bindAll(this, [
       'handleClickSynonym',
@@ -160,6 +164,7 @@ class WordMappingForm extends Component {
       isEditingWord,
       isConfirmDeleteWord,
       isDeleted,
+      searchQuery,
     } = this.state;
 
     if (isDeleted) { return <span />; }
@@ -169,7 +174,10 @@ class WordMappingForm extends Component {
         <Title editing={isEditingWord}>
           {(!isEditingWord && !isEmpty(id)) && (
             <span>
-              {word}
+              <Highlighter
+                searchWords={[searchQuery]}
+                textToHighlight={word}
+              />
               &nbsp;
               <button onClick={() => this.setState({ isEditingWord: true })}>
                 <i className="material-icons mi-v-baseline">edit</i>
@@ -213,7 +221,13 @@ class WordMappingForm extends Component {
                   <Word
                     key={synonym.id}
                     onClick={() => this.handleClickSynonym(synonym)}
-                  >{synonym.value}</Word>
+                    searchQuery={searchQuery}
+                  >
+                    <Highlighter
+                      searchWords={[searchQuery]}
+                      textToHighlight={synonym.value}
+                    />
+                  </Word>
                 );
               })}
               {isEmpty(editingSynonym) && !isAddingSynonym && (

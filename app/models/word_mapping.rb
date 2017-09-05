@@ -29,7 +29,7 @@ class WordMapping < ActiveRecord::Base
   scope :keyword, -> (_keyword) {
     if _keyword.present?
       _kw = "%#{_keyword}%"
-      where('word LIKE ? OR synonym LIKE ?', _kw, _kw)
+      joins(:word_mapping_synonyms).where('word LIKE ? OR word_mapping_synonyms.value LIKE ?', _kw, _kw)
     end
   }
 

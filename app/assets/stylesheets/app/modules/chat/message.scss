@@ -302,26 +302,31 @@
   display: block;
   width: 24px;
   height: 24px;
-  color: darken($gray-lighter, 10%);
+  background: {
+    image: image-url('icon-pin.svg');
+    position: center center;
+    size: contain;
+    repeat: no-repeat;
+  }
+  text-indent: -99999px;
+  overflow: hidden;
+  transition-duration: .1s;
+  transition-property: all;
+  opacity: 0.5;
 
   &:hover {
-    color: darken($gray-lighter, 20%);
+    opacity: 0.7;
   }
   &:focus {
-    color: darken($gray-lighter, 10%);
+    opacity: 0.8;
   }
 
-  .material-icons {
-    transition-duration: .1s;
-    transition-property: all;
-  }
   &:active {
-    .material-icons {
-      transform: scale(1.25);
-    }
+    transform: translateY(-50%) scale(1.25);
   }
 
   &.active {
-    color: $brand-warning;
+    opacity: 1;
+    background-image: image-url('icon-pin--orange.svg');
   }
 }

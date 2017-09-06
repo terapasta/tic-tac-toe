@@ -53,8 +53,6 @@ Rails.application.routes.draw do
 
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
-      get :show_old
-      get :new_old
       scope module: :chats do
         resources :messages, only: [:index, :create] do
           resource :rating, only: [], controller: :message_rating do

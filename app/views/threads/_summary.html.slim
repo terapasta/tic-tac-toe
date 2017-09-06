@@ -33,6 +33,9 @@
           = count
       span
         - chat.messages.answer_marked.count.tap do |count|
-          = material_icon 'flag', class: ('text-warning' if count > 0)
+          - if count.zero?
+            = image_tag 'icon-pin.svg', width: 24, height: 24
+          - else
+            = image_tag 'icon-pin--orange.svg', width: 24, height: 24
           = space
           = count

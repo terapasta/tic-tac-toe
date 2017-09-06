@@ -7,18 +7,18 @@ class AnswerMarkedController < ApplicationController
 
   def create
     if @message.save_to_answer_marked
-      redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '注意回答に変更しました。'
+      redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答にピンしました'
     else
-      flash.now.alert = '注意回答に変更できませんでした。'
+      flash.now.alert = '回答にピンできませんでした'
       redirect_to bot_thread_messages_path(@bot, @chat, @message)
     end
   end
 
   def destroy
     if @message.save_to_remove_answer_marked
-      redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '注意回答を取り消しました。'
+      redirect_to bot_thread_messages_path(@bot, @chat, @message), notice: '回答のピンを取り消しました'
     else
-      flash.now.alert = '注意回答の取り消しができませんでした。'
+      flash.now.alert = '回答のピン取り消しができませんでした'
       redirect_to bot_thread_messages_path(@bot, @chat, @message)
     end
   end

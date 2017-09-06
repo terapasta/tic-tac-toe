@@ -19,7 +19,8 @@ window.jQuery(function($) {
     }
   });
 
-  $('[data-role="message-mark-button"]').on('click', function() {
+  $('[data-role="message-mark-button"]').on('click', function(e) {
+    e.preventDefault();
     var $button = $(this);
     var id = $button.data('id');
     var url = '/api/bots/' + window.currentBot.id + '/messages/' + id + '/mark';

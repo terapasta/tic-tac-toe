@@ -12,8 +12,10 @@ RSpec.describe LearningTrainingMessage, type: :model do
 
     let!(:word_mappings) do
       [
-        create(:word_mapping, word: '社長', synonym: '代表取締役'),
-        create(:word_mapping, word: '社長', synonym: 'CEO'),
+        create(:word_mapping, { word: '社長', word_mapping_synonyms_attributes: [
+          { value: '代表取締役' },
+          { value: 'CEO' },
+        ]})
       ]
     end
 

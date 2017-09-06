@@ -13,9 +13,9 @@
         | 累計登録数: #{current_user.sentence_synonyms.count}件
 
       - if @question_answer.present?
-        = bootstrap_form_for @question_answer, url: form_url, method: :post, data: { event_name: 'Create sentence synonym', bot_id: @bot.try(:id), bot_name: @bot.try(:name), question_answer_id: @question_answer.id } do |f|
+        = form_for @question_answer, url: form_url, method: :post, data: { event_name: 'Create sentence synonym', bot_id: @bot.try(:id), bot_name: @bot.try(:name), question_answer_id: @question_answer.id } do |f|
           = f.hidden_field :id
-          = f.static_control :question
+          p= @question_answer.question
 
           label.control-label
             | 同義文

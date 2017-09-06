@@ -100,7 +100,10 @@ Rails.application.routes.draw do
       resources :messages, module: :bots, only: [] do
         resource :mark, module: :messages, only: [:create, :destroy]
       end
+
+      resources :word_mappings, only: [:create, :update, :destroy], module: :bots
     end
+    resources :word_mappings, only: [:create, :update, :destroy]
   end
 
   resource :contacts, only: [:new, :create]

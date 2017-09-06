@@ -114,7 +114,6 @@ RSpec.describe 'Chats', type: :features, js: true do
           end
           sleep 1
           decision_branches.first.tap do |db|
-            page.save_screenshot
             click_link db.body
             sleep 1
             expect(page).to have_content(db.body)

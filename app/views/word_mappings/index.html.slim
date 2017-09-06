@@ -2,41 +2,14 @@
   = render 'shared/pagination', resources: @word_mappings, per_page: @per_page
 
 = render layout: 'bots/layout' do
+  h4.mb-4 辞書
 
-  - if @word_mappings.blank? && params[:keyword].blank?
-    .card: .card-block.text-center
-      p 同義語はまだ登録されていません
-      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success'
-  - else
-    .mb-3.p-2.bg-faded.d-flex.justify-content-between
-      = form_tag bot_word_mappings_path(@bot), method: :get, class: 'd-flex justify-content-between' do
-        .input-group
-          = search_field_tag :keyword, params[:keyword], class: 'form-control', placeholder: 'キーワード'
-          span.input-group-btn= submit_tag '検索', class: 'btn btn-secondary'
+  span(
+    data-component="WordMappings"
+    data-form-action-url=bot_word_mappings_path(@bot)
+    data-bot-id=@bot.id
+    data-word-mappings=ActiveModelSerializers::SerializableResource.new(@word_mappings).to_json
+  )
+    = render 'placeholder'
 
-        - if params[:keyword].present?
-          = link_to bot_word_mappings_path(@bot), class: 'btn btn-link' do
-            = material_icon 'close', class: 'mi-xs'
-            span 検索を解除
-
-      = link_to '新規登録', new_bot_word_mapping_path(@bot), class: 'btn btn-success'
-    = pagination
-    table.table.table-striped
-      thead
-        tr
-          th= WordMapping.human_attribute_name(:word)
-          th= WordMapping.human_attribute_name(:synonym)
-          th
-      tbody
-        - @word_mappings.each do |word_mapping|
-          tr
-            td= highlight(word_mapping.word, params[:keyword])
-            td 
-              - word_mapping.word_mapping_synonyms.each do |wms|
-                = wms.value
-                br
-            td.text-right
-              = link_to '編集', edit_bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-secondary btn-sm', data: { event: 'update synonym' }
-              = space 2
-              = link_to '削除', bot_word_mapping_path(@bot, word_mapping), class: 'btn btn-danger btn-sm', data: { confirm: '削除します。よろしいですか？', method: :delete, event: 'delete synonym' }
-    = pagination
+= paginate @word_mappings

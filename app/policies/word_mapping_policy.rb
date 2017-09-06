@@ -4,7 +4,7 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def show?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 
   def new?
@@ -12,7 +12,7 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def create?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 
   def edit?
@@ -20,18 +20,17 @@ class WordMappingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.normal? || user.staff?
+    has_write_permission?
   end
 
   def destroy?
-    user.normal? || user.staff?
+    has_write_permission?
   end
-  
+
   def permitted_attributes
-    [ 
+    [
       :id,
       :word,
-      :synonym,
       {
         word_mapping_synonyms_attributes: [
           :id,
@@ -42,4 +41,13 @@ class WordMappingPolicy < ApplicationPolicy
       }
     ]
   end
+
+  private
+    def has_write_permission?
+      return true if user.staff?
+      # ここから下はnormalユーザー
+      return false if record.bot_id.nil?
+      return true if record.bot.user == user
+      false
+    end
 end

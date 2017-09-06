@@ -1,0 +1,152 @@
+%base-dict-word {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+%base-dict-button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: 0;
+  color: #888;
+
+  &:hover {
+    text-decoration: none;
+    color: darken(#888, 10%);
+  }
+
+  i {
+    position: relative;
+    top: -1px;
+    font-size: 16px;
+  }
+}
+
+%base-dict-help-text {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  color: #888;
+  background-color: #fff;
+  font-size: 14px !important;
+}
+
+%base-dict-delete-button {
+  position: absolute;
+  bottom: 100%;
+  right: 21px;
+  background-color: #fff;
+  font-size: 13px;
+}
+
+.dict {
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #ddd;
+
+  &:first-of-type {
+    padding-top: 32px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
+
+  &:hover {
+    .dict__title button {
+      display: inline-block;
+    }
+  }
+
+  &__title {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 16px;
+    font-size: 24px;
+
+    &.editing {
+      margin-bottom: 32px;
+
+      button {
+        display: inline-block;
+      }
+    }
+
+    button {
+      @extend %base-dict-button;
+      display: none;
+    }
+
+    .delete-button {
+      @extend %base-dict-delete-button
+    }
+  }
+
+  &__subtitle {
+    padding-bottom: 12px;
+    color: #888;
+  }
+
+  &__words {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      position: relative;
+      margin: 0 8px 8px 0;
+      display: inline-block;
+    }
+  }
+
+  &__input {
+    @extend %base-dict-word;
+    outline: none;
+
+    &:focus {
+      border: 1px solid $brand-primary;
+    }
+  }
+
+  &__word {
+    @extend %base-dict-word;
+    cursor: text;
+
+    &:hover {
+      border-color: $brand-primary;
+    }
+
+    &.no-border {
+      padding-left: 0;
+      padding-right: 0;
+      border: 0;
+    }
+
+    &.no-padding {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    button {
+      @extend %base-dict-button;
+
+      &.delete-button {
+        @extend %base-dict-delete-button;
+      }
+    }
+  }
+
+  &__help-text {
+    @extend %base-dict-help-text;
+  }
+
+  form {
+    display: inline;
+  }
+}

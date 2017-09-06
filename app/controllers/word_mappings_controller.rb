@@ -7,7 +7,7 @@ class WordMappingsController < ApplicationController
   def index
     @per_page = 20
     @word_mappings = @bot.word_mappings
-      .keyword(params[:keyword])
+      .keyword(params[:q])
       .order(created_at: :desc)
       .page(params[:page]).per(@per_page)
   end

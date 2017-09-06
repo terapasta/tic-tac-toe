@@ -8,9 +8,19 @@ class WordMapping < ActiveRecord::Base
 
   validates :word,
     presence: true,
-    length: { maximum: 20 }
+    length: { maximum: 20 },
+    uniqueness: { scope: :bot_id }
+  #
+  # validates :synonym,
+  #   presence: true,
+  #   length: { maximum: 20 },
+  #   uniqueness: { scope: [:bot_id] }
 
-  before_validation :strip_word_and_synonym
+  # validate :unique_pair
+  # validate :word_is_not_eq_synonym
+  # validate :word_is_not_eq_other_synonym
+
+  before_validation :strip_word
 
   scope :for_bot, -> (bot) {
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
@@ -19,12 +29,16 @@ class WordMapping < ActiveRecord::Base
   scope :keyword, -> (_keyword) {
     if _keyword.present?
       _kw = "%#{_keyword}%"
-      where('word LIKE ? OR synonym LIKE ?', _kw, _kw)
+      joins(:word_mapping_synonyms).where('word LIKE ? OR word_mapping_synonyms.value LIKE ?', _kw, _kw)
     end
   }
 
+  scope :systems, -> {
+    where(bot_id: nil)
+  }
+
   private
-    def strip_word_and_synonym
+    def strip_word
       word.strip!
     end
 end

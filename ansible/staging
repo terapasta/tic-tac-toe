@@ -1,5 +1,5 @@
 [web-servers]
-?.?.?.? ansible_ssh_user=ec2-user
+54.238.130.37 ansible_ssh_user=ec2-user
 
 [development:children]
 web-servers

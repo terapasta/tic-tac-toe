@@ -3,22 +3,16 @@
   yum: name={{ item }} state=installed
   with_items:
     - MySQL-python27
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - name: install MySQL
   yum: name=mysql-server state=installed
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - name: Auto starting MySQL
   service: name=mysqld state=started enabled=yes
   tags: mysqld
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - name: setup password for root
   template:
@@ -27,9 +21,7 @@
     owner: root
     group: root
     mode: 0600
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - mysql_user:
     name: 'root'
@@ -45,9 +37,7 @@
     - ::1
     - localhost
     - localhost.localdomain
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - mysql_user:
     name: '{{ secrets.db_user }}'
@@ -63,24 +53,18 @@
     - ::1
     - localhost
     - localhost.localdomain
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - mysql_db:
     name: '{{ secrets.db_name }}'
     state: present
     login_user: 'root'
     login_password: '{{ passwords.mysql_root }}'
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"
 
 - name: set up default encoding
   template:
     src: my.cnf.general
     dest: /etc/my.cnf
   notify: restart mysql
-  when:
-    - stage == "development"
-    - stage == "staging"
+  when: stage == "development" or stage == "staging"

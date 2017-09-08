@@ -136,7 +136,7 @@ $ cap production deploy
 
 __How to start__
 
-1. Make `VAULT_PASSWORD` file and write the password (ask to other developer)
+1. Make `ansible/VAULT_PASSWORD` file and write the password (ask to other developer)
 
 __How to run (development)__
 

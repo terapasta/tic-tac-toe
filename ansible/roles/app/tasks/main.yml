@@ -29,6 +29,27 @@
     group: deploy
     mode: 0775
 
+- file:
+    path: /var/www/donusagi-bot/shared/learning/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/learning/learning/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/learning/learning/config/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
 - set_fact:
     db_host: '{{ secrets.db_host.development }}'
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.development }}'

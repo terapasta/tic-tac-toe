@@ -31,7 +31,6 @@ message LearnRequest {
 }
 
 message LearnResponse {
-    bool success = 1;
     float accuracy = 2;
     float precision = 3;
     float recall  = 4;

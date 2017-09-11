@@ -62,8 +62,8 @@ class RouteGuideServicer(BotServicer):
                 'recall': 0,
                 'f1': 0,
             }
-        context.set_details("Error")
-        context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details("Error")
+            context.set_code(grpc.StatusCode.INTERNAL)
 
         return LearnResponse(**result)
 

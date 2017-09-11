@@ -28,7 +28,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :learning_parameter, :message, 3, "gateway.LearningParameter"
   end
   add_message "gateway.LearnResponse" do
-    optional :success, :bool, 1
     optional :accuracy, :float, 2
     optional :precision, :float, 3
     optional :recall, :float, 4

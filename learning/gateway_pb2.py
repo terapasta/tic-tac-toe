@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='gateway.proto',
   package='gateway',
   syntax='proto3',
-  serialized_pb=_b('\n\rgateway.proto\x12\x07gateway\"f\n\x11LearningParameter\x12%\n\x1duse_similarity_classification\x18\x01 \x01(\x08\x12\x11\n\talgorithm\x18\x02 \x01(\x05\x12\x17\n\x0f\x64\x61tasource_type\x18\x03 \x01(\t\"K\n\x06Result\x12\x1a\n\x12question_answer_id\x18\x01 \x01(\x05\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\x12\x10\n\x08question\x18\x03 \x01(\t\"d\n\x0cReplyRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x62ody\x18\x02 \x01(\t\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"Q\n\rReplyResponse\x12\x1e\n\x16question_feature_count\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.gateway.Result\"V\n\x0cLearnRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"a\n\rLearnResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x61\x63\x63uracy\x18\x02 \x01(\x02\x12\x11\n\tprecision\x18\x03 \x01(\x02\x12\x0e\n\x06recall\x18\x04 \x01(\x02\x12\n\n\x02\x66\x31\x18\x05 \x01(\x02\x32y\n\x03\x42ot\x12\x38\n\x05Reply\x12\x15.gateway.ReplyRequest\x1a\x16.gateway.ReplyResponse\"\x00\x12\x38\n\x05Learn\x12\x15.gateway.LearnRequest\x1a\x16.gateway.LearnResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\rgateway.proto\x12\x07gateway\"f\n\x11LearningParameter\x12%\n\x1duse_similarity_classification\x18\x01 \x01(\x08\x12\x11\n\talgorithm\x18\x02 \x01(\x05\x12\x17\n\x0f\x64\x61tasource_type\x18\x03 \x01(\t\"K\n\x06Result\x12\x1a\n\x12question_answer_id\x18\x01 \x01(\x05\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\x12\x10\n\x08question\x18\x03 \x01(\t\"d\n\x0cReplyRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x62ody\x18\x02 \x01(\t\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"Q\n\rReplyResponse\x12\x1e\n\x16question_feature_count\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.gateway.Result\"V\n\x0cLearnRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"P\n\rLearnResponse\x12\x10\n\x08\x61\x63\x63uracy\x18\x02 \x01(\x02\x12\x11\n\tprecision\x18\x03 \x01(\x02\x12\x0e\n\x06recall\x18\x04 \x01(\x02\x12\n\n\x02\x66\x31\x18\x05 \x01(\x02\x32y\n\x03\x42ot\x12\x38\n\x05Reply\x12\x15.gateway.ReplyRequest\x1a\x16.gateway.ReplyResponse\"\x00\x12\x38\n\x05Learn\x12\x15.gateway.LearnRequest\x1a\x16.gateway.LearnResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -244,35 +244,28 @@ _LEARNRESPONSE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='success', full_name='gateway.LearnResponse.success', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='accuracy', full_name='gateway.LearnResponse.accuracy', index=1,
+      name='accuracy', full_name='gateway.LearnResponse.accuracy', index=0,
       number=2, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='precision', full_name='gateway.LearnResponse.precision', index=2,
+      name='precision', full_name='gateway.LearnResponse.precision', index=1,
       number=3, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='recall', full_name='gateway.LearnResponse.recall', index=3,
+      name='recall', full_name='gateway.LearnResponse.recall', index=2,
       number=4, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='f1', full_name='gateway.LearnResponse.f1', index=4,
+      name='f1', full_name='gateway.LearnResponse.f1', index=3,
       number=5, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -291,7 +284,7 @@ _LEARNRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=480,
-  serialized_end=577,
+  serialized_end=560,
 )
 
 _REPLYREQUEST.fields_by_name['learning_parameter'].message_type = _LEARNINGPARAMETER
@@ -355,8 +348,8 @@ _BOT = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=579,
-  serialized_end=700,
+  serialized_start=562,
+  serialized_end=683,
   methods=[
   _descriptor.MethodDescriptor(
     name='Reply',

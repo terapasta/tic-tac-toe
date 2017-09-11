@@ -140,6 +140,8 @@ __How to start__
 
 __How to run (development)__
 
+事前にsshのpublic-keyをvagrant hostに設定する
+
 ```
 $ ansible-playbook -i ansible/development ansible/web-servers.yml --vault-password-file=ansible/VAULT_PASSWORD
 ```

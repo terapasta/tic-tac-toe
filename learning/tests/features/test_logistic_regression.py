@@ -18,7 +18,7 @@ class LogisticRegressionTestCase(TestCase):
     def setUp(self):
         inject.configure_once()
         # Fixme:
-        #     下記のエラーが出てしまうため開発DBを参照している
+        #     下記のエラーが出てしまう
         #     ```
         #     This solver needs samples of at least 2 classes in the data, but the data contains only one class: 0
         #     ```

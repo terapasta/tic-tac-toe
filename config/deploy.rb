@@ -52,7 +52,7 @@ namespace :deploy do
     on roles(:app) do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
-      execute :sudo, :supervisorctl, :reload
+      sudo :supervisorctl, :reload
     end
   end
 

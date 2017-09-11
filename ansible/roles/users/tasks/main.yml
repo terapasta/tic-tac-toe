@@ -70,8 +70,8 @@
     backup: yes
     content: |
       a.harada        ALL=(ALL)       ALL
-      a.harada        ALL=(ALL)       NOPASSWD: /usr/bin/supervisorctl
+      a.harada        ALL=(ALL)       NOPASSWD: /usr/local/bin/supervisorctl
       k.yamagata      ALL=(ALL)       ALL
       k.yamagata      ALL=(ALL)       NOPASSWD: /usr/bin/vim
       s.tachibana     ALL=(ALL)       ALL
-      deploy  ALL=(ALL)       NOPASSWD: /usr/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp
+      deploy  ALL=(ALL)       NOPASSWD: /usr/local/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp

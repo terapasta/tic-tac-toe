@@ -10,15 +10,15 @@ class LogisticRegression:
     @inject.params(bot=CurrentBot, datasource=Datasource)
     def __init__(self, bot=None, datasource=None):
         self.bot = bot
-        self.loader = datasource.loader
-        self.estimator = self.loader.load(self.dump_key)
+        self.persistence = datasource.persistence
+        self.estimator = self.persistence.load(self.dump_key)
 
     def fit(self, x, y):
         params = {'C': [10, 100, 140, 200]}
         grid = GridSearchCV(SkLogisticRegression(), param_grid=params)
         grid.fit(x, y)
         self.estimator = grid.best_estimator_
-        self.loader.dump(self.estimator, self.dump_key)
+        self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, question_features):
         results = self.estimator.predict_proba(question_features)

@@ -8,13 +8,13 @@ class Normalizer:
     @inject.params(bot=CurrentBot, datasource=Datasource)
     def __init__(self, bot=None, datasource=None):
         self.bot = bot
-        self.loader = datasource.loader
-        self.normalizer = self.loader.load(self.dump_key)
+        self.persistence = datasource.persistence
+        self.normalizer = self.persistence.load(self.dump_key)
 
     def fit(self, features):
         self.normalizer = SkNormalizer(copy=False)
         self.normalizer.fit(features)
-        self.loader.dump(self.normalizer, self.dump_key)
+        self.persistence.dump(self.normalizer, self.dump_key)
 
     def transform(self, features):
         return self.normalizer.transform(features)

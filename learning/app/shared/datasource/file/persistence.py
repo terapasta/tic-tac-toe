@@ -5,7 +5,7 @@ from sklearn.externals import joblib
 from app.shared.current_bot import CurrentBot
 
 
-class Loader:
+class Persistence:
     @inject.params(bot=CurrentBot)
     def __init__(self, bot=None):
         self.bot = bot

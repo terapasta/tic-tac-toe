@@ -6,7 +6,7 @@ from app.shared.current_bot import CurrentBot
 from app.shared.datasource.database.database import Database
 
 
-class Loader:
+class Persistence:
     @inject.params(database=Database, bot=CurrentBot)
     def __init__(self, database=None, bot=None):
         self.database = database

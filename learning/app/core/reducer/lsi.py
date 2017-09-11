@@ -8,8 +8,8 @@ class LSI:
     @inject.params(bot=CurrentBot, datasource=Datasource)
     def __init__(self, bot=None, datasource=None):
         self.bot = bot
-        self.loader = datasource.loader
-        self.reducer = self.loader.load(self.dump_key)
+        self.persistence = datasource.persistence
+        self.reducer = self.persistence.load(self.dump_key)
 
     def fit(self, features):
         # NOTE:
@@ -20,7 +20,7 @@ class LSI:
             n_components = (n_components - 1)
         self.reducer = TruncatedSVD(n_components=n_components, algorithm='randomized', n_iter=10, random_state=42)
         self.reducer.fit(features)
-        self.loader.dump(self.reducer, self.dump_key)
+        self.persistence.dump(self.reducer, self.dump_key)
 
     def transform(self, features):
         return self.reducer.transform(features)

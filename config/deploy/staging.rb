@@ -1,2 +1,2 @@
 set :branch, ENV['BRANCH'] || 'develop'
-server '54.238.130.37', user: 'deploy', roles: %w{web app batch}
+server '13.114.217.197', user: 'deploy', roles: %w{web app batch}

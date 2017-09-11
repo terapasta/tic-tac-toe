@@ -40,19 +40,8 @@
     - python-devel
 
 - name: install supervisor
-  yum:
+  pip:
     name: supervisor
-    enablerepo: epel
-- name: change use python version in supervisord
-  lineinfile: >-
-    dest='/usr/bin/supervisord'
-    regexp='#!/usr/bin/python'
-    line='#!/usr/bin/python26'
-- name: change use python version in supervisorctl
-  lineinfile: >-
-    dest='/usr/bin/supervisorctl'
-    regexp='#!/usr/bin/python'
-    line='#!/usr/bin/python26'
 
 - name: install Development Tool
   become: yes

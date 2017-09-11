@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905030057) do
+ActiveRecord::Schema.define(version: 20170911032005) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -51,23 +51,18 @@ ActiveRecord::Schema.define(version: 20170905030057) do
   add_index "answer_files", ["question_answer_id"], name: "index_answer_files_on_question_answer_id", using: :btree
 
   create_table "bots", force: :cascade do |t|
-    t.integer  "user_id",                            limit: 4
-    t.string   "name",                               limit: 255
-    t.string   "token",                              limit: 64,       null: false
-    t.string   "classify_failed_message",            limit: 255
-    t.string   "start_message",                      limit: 255
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.string   "image",                              limit: 255
-    t.string   "learning_status",                    limit: 255
+    t.integer  "user_id",                      limit: 4
+    t.string   "name",                         limit: 255
+    t.string   "token",                        limit: 64,    null: false
+    t.string   "classify_failed_message",      limit: 255
+    t.string   "start_message",                limit: 255
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "image",                        limit: 255
+    t.string   "learning_status",              limit: 255
     t.datetime "learning_status_changed_at"
-    t.text     "selected_question_answer_ids",       limit: 65535
-    t.text     "has_suggests_message",               limit: 65535
-    t.binary   "dump_cosine_similarity",             limit: 16777215
-    t.binary   "dump_logistic_regression_estimator", limit: 16777215
-    t.binary   "dump_tfidf_vectorizer",              limit: 16777215
-    t.binary   "dump_normalizer",                    limit: 16777215
-    t.binary   "dump_lsi",                           limit: 16777215
+    t.text     "selected_question_answer_ids", limit: 65535
+    t.text     "has_suggests_message",         limit: 65535
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
@@ -112,6 +107,12 @@ ActiveRecord::Schema.define(version: 20170905030057) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "dumps", force: :cascade do |t|
+    t.integer "bot_id",  limit: 4,          null: false
+    t.string  "name",    limit: 255,        null: false
+    t.binary  "content", limit: 4294967295
+  end
 
   create_table "exports", force: :cascade do |t|
     t.string   "file",       limit: 255, null: false
@@ -249,9 +250,16 @@ ActiveRecord::Schema.define(version: 20170905030057) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "word_mapping_synonyms", force: :cascade do |t|
+    t.string   "value",           limit: 255, null: false
+    t.integer  "word_mapping_id", limit: 4,   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
   create_table "word_mappings", force: :cascade do |t|
     t.string   "word",       limit: 20, null: false
-    t.string   "synonym",    limit: 20, null: false
+    t.string   "synonym",    limit: 20
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "bot_id",     limit: 4

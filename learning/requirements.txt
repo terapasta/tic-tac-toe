@@ -7,6 +7,7 @@ decorator==4.0.10
 entrypoints==0.2.2
 gevent==1.1.2
 greenlet==0.4.10
+grpcio-tools==1.6.0
 gsocketpool==0.1.5
 html5lib==0.9999999
 Inject==3.3.1

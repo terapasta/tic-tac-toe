@@ -1,16 +1,25 @@
+require 'learning/gateway_pb'
+require 'learning/gateway_services_pb'
+
 class Ml::Engine
 
   def initialize(bot)
-    host = ENV.fetch('RPC_HOST'){ '127.0.0.1' }
-    port = 6000
-    @session_pool = MessagePack::RPC::SessionPool.new
-    @client = @session_pool.get_session(host, port)
-    @client.timeout = 30.minutes
+    @host = ENV.fetch('RPC_HOST'){ '127.0.0.1' }
+    @port = 6000
+    # @session_pool = MessagePack::RPC::SessionPool.new
+    # @client = @session_pool.get_session(host, port)
+    # @client.timeout = 30.minutes
     @bot = bot
   end
 
   def reply(body)
-    return @client.call(:reply, @bot.id, body, @bot.learning_parameter_attributes).with_indifferent_access
+    stub = Gateway::Bot::Stub.new("#{@host}:#{@port}", :this_channel_is_insecure)
+    return stub.reply(
+      Gateway::ReplyRequest.new(
+        bot_id: @bot.id,
+        body: body,
+        learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
+      ))
   end
 
   def learn

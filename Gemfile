@@ -112,6 +112,8 @@ gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
 gem 'active_link_to'
+gem 'grpc'
+gem 'grpc-tools'
 
 group :development, :test do
 

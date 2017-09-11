@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package gateway;
+
+message LearningParameter {
+    bool use_similarity_classification = 1;
+    int32 algorithm = 2;
+    string datasource_type = 3;
+}
+
+message Result {
+    int32 question_answer_id = 1;
+    float probability = 2;
+    string question =3;
+}
+
+message ReplyRequest {
+    int32 bot_id = 1;
+    string body = 2;
+    LearningParameter learning_parameter = 3;
+}
+
+message ReplyResponse {
+    int32 question_feature_count = 1;
+    repeated Result results = 2;
+}
+
+service Bot {
+    rpc Reply (ReplyRequest) returns (ReplyResponse) {}
+}

@@ -37,7 +37,7 @@ class Bot < ActiveRecord::Base
       attrs = LearningParameter.default_attributes
     end
     # TODO フィールドが変わる度に修正が必要になってしまう
-    attrs.slice(:algorithm, :params_for_algorithm, :classify_threshold, :use_similarity_classification)
+    attrs.slice(:algorithm, :use_similarity_classification).symbolize_keys
   end
 
   def use_similarity_classification?

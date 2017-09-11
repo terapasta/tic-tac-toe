@@ -30,6 +30,7 @@ class Loader:
         file = io.BytesIO()
         joblib.dump(obj, file)
         file.seek(0)
+        # Note: SQLインジェクションを回避するためkeyのチェックを行う
         if re.match(r'^[a-zA-Z_]+$', key):
             sql = 'UPDATE bots SET ' + key + '=%(value)s WHERE id = %(bot_id)s'
             self.database.execute(sql, {

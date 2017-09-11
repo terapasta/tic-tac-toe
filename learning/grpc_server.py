@@ -3,7 +3,7 @@ import time
 
 import grpc
 
-from gateway_pb2 import ReplyResponse, Result
+from gateway_pb2 import ReplyResponse, Result, LearnResponse
 from gateway_pb2_grpc import BotServicer
 from gateway_pb2_grpc import add_BotServicer_to_server
 
@@ -45,6 +45,26 @@ class RouteGuideServicer(BotServicer):
             question_feature_count=reply['question_feature_count'],
             results=[Result(**x) for x in reply['results']],
             )
+
+    @stop_watch
+    def Learn(self, request, context):
+        logger.debug('request = %s' % request)
+        bot = CurrentBot().init(request.bot_id, request.learning_parameter)
+        Datasource().init(bot)
+
+        is_success = True
+        try:
+            result = LearnController(factory=FactorySelector().get_factory()).perform()
+        except:
+            logger.error(traceback.format_exc())
+            is_success = False
+            result = {
+                'accuracy': 0,
+                'precision': 0,
+                'recall': 0,
+                'f1': 0,
+            }
+        return LearnResponse(success=is_success, **result)
 
 
 def serve(port):

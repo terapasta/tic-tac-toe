@@ -25,6 +25,20 @@ message ReplyResponse {
     repeated Result results = 2;
 }
 
+message LearnRequest {
+    int32 bot_id = 1;
+    LearningParameter learning_parameter = 3;
+}
+
+message LearnResponse {
+    bool success = 1;
+    float accuracy = 2;
+    float precision = 3;
+    float recall  = 4;
+    float f1 = 5;
+}
+
 service Bot {
     rpc Reply (ReplyRequest) returns (ReplyResponse) {}
+    rpc Learn (LearnRequest) returns (LearnResponse) {}
 }

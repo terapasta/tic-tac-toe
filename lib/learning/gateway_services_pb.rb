@@ -15,6 +15,7 @@ module Gateway
       self.service_name = 'gateway.Bot'
 
       rpc :Reply, ReplyRequest, ReplyResponse
+      rpc :Learn, LearnRequest, LearnResponse
     end
 
     Stub = Service.rpc_stub_class

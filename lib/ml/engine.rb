@@ -10,11 +10,11 @@ class Ml::Engine
     # @client = @session_pool.get_session(host, port)
     # @client.timeout = 30.minutes
     @bot = bot
+    @stub = Gateway::Bot::Stub.new("#{@host}:#{@port}", :this_channel_is_insecure)
   end
 
   def reply(body)
-    stub = Gateway::Bot::Stub.new("#{@host}:#{@port}", :this_channel_is_insecure)
-    return stub.reply(
+    return @stub.reply(
       Gateway::ReplyRequest.new(
         bot_id: @bot.id,
         body: body,
@@ -24,7 +24,11 @@ class Ml::Engine
 
   def learn
     # TODO RPCサーバ側でタイムアウトしてしまうため、結果を非同期で受け取りたい
-    @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
+    return @stub.learn(
+      Gateway::LearnRequest.new(
+        bot_id: @bot.id,
+        learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
+      ))
   end
 
   # TODO 非同期でコールバックを実行するメソッドを実装したい(RPCサーバのタイムアウト対策)、RPCサーバを変更する必要があるかも

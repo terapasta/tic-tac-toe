@@ -23,6 +23,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :question_feature_count, :int32, 1
     repeated :results, :message, 2, "gateway.Result"
   end
+  add_message "gateway.LearnRequest" do
+    optional :bot_id, :int32, 1
+    optional :learning_parameter, :message, 3, "gateway.LearningParameter"
+  end
+  add_message "gateway.LearnResponse" do
+    optional :success, :bool, 1
+    optional :accuracy, :float, 2
+    optional :precision, :float, 3
+    optional :recall, :float, 4
+    optional :f1, :float, 5
+  end
 end
 
 module Gateway
@@ -30,4 +41,6 @@ module Gateway
   Result = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.Result").msgclass
   ReplyRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.ReplyRequest").msgclass
   ReplyResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.ReplyResponse").msgclass
+  LearnRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnRequest").msgclass
+  LearnResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnResponse").msgclass
 end

@@ -19,6 +19,11 @@ class BotStub(object):
         request_serializer=gateway__pb2.ReplyRequest.SerializeToString,
         response_deserializer=gateway__pb2.ReplyResponse.FromString,
         )
+    self.Learn = channel.unary_unary(
+        '/gateway.Bot/Learn',
+        request_serializer=gateway__pb2.LearnRequest.SerializeToString,
+        response_deserializer=gateway__pb2.LearnResponse.FromString,
+        )
 
 
 class BotServicer(object):
@@ -32,6 +37,13 @@ class BotServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def Learn(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_BotServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -39,6 +51,11 @@ def add_BotServicer_to_server(servicer, server):
           servicer.Reply,
           request_deserializer=gateway__pb2.ReplyRequest.FromString,
           response_serializer=gateway__pb2.ReplyResponse.SerializeToString,
+      ),
+      'Learn': grpc.unary_unary_rpc_method_handler(
+          servicer.Learn,
+          request_deserializer=gateway__pb2.LearnRequest.FromString,
+          response_serializer=gateway__pb2.LearnResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

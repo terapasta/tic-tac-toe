@@ -97,3 +97,19 @@
     owner: deploy
     group: deploy
     mode: 0644
+
+- template:
+    src: supervisord.conf2
+    dest: /etc/supervisord.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- template:
+    src: initd_rails.j2
+    dest: /etc/init.d/unicorn
+    owner: root
+    group: root
+    mode: 0755
+- name: unicorn service
+  service: name=unicorn enabled=yes

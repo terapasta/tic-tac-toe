@@ -41,12 +41,7 @@ class MyopeServer(RPCServer):
             result = LearnController(factory=FactorySelector().get_factory()).perform()
         except:
             logger.error(traceback.format_exc())
-            result = {
-                'accuracy': 0,
-                'precision': 0,
-                'recall': 0,
-                'f1': 0,
-            }
+            raise ValueError('学習に失敗しました。')
         return result
 
 

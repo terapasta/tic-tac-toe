@@ -5,7 +5,7 @@ class Ml::Engine
 
   def initialize(bot)
     host = ENV.fetch('RPC_HOST'){ '127.0.0.1' }
-    port = 6000
+    port = ENV.fetch('RPC_PORT'){ 6000 }
     @bot = bot
     @stub = Gateway::Bot::Stub.new("#{host}:#{port}", :this_channel_is_insecure)
   end

@@ -20,21 +20,12 @@ class Ml::Engine
   end
 
   def learn
-    # TODO RPCサーバ側でタイムアウトしてしまうため、結果を非同期で受け取りたい
     return @stub.learn(
       Gateway::LearnRequest.new(
         bot_id: @bot.id,
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       ))
   end
-
-  # TODO 非同期でコールバックを実行するメソッドを実装したい(RPCサーバのタイムアウト対策)、RPCサーバを変更する必要があるかも
-  # def async_learn
-  #   future = @client.callback(:learn, @bot.id, @bot.learning_parameter_attributes) do
-  #     Rails.logger.debug('hogehogehogehogehogehogehogehogehogehogehogehoge')
-  #   end
-  #   future.get
-  # end
 
   def predict_tags(bodies)
     @client.call(:predict_tags, bodies)

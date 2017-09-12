@@ -15,7 +15,7 @@
 - user:
     name: a.harada
     comment: "Atsushi Harada"
-    password: '{{ passwords.harada }}'
+    password: '{{ passwords.harada | password_hash("sha512") }}'
     group: wheel
 - name: Set up authorized_keys for a.harada user
   authorized_key:
@@ -28,7 +28,7 @@
 - user:
     name: s.tachibana
     comment: "Shusei Tachibana"
-    password: '{{ passwords.tachibana }}'
+    password: '{{ passwords.tachibana | password_hash("sha512") }}'
     group: wheel
 - name: Set up authorized_keys for s.tachibana user
   authorized_key:
@@ -41,7 +41,7 @@
 - user:
     name: k.yamagata
     comment: "Kozo Yamagata"
-    password: '{{ passwords.yamagata }}'
+    password: '{{ passwords.yamagata | password_hash("sha512") }}'
     group: wheel
 - name: Set up authorized_keys for k.yamagata user
   authorized_key:
@@ -54,7 +54,7 @@
 - user:
     name: y.miyata
     comment: "Yuki Miyata"
-    password: '{{ passwords.miyata }}'
+    password: '{{ passwords.miyata | password_hash("sha512") }}'
     group: wheel
 - name: Set up authorized_keys for y.miyata user
   authorized_key:

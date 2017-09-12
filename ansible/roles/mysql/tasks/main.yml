@@ -14,52 +14,11 @@
   tags: mysqld
   when: stage == "development" or stage == "staging"
 
-- name: setup password for root
-  template:
-    src: .my.cnf.j2
-    dest: /root/.my.cnf
-    owner: root
-    group: root
-    mode: 0600
-  when: stage == "development" or stage == "staging"
-
-- mysql_user:
-    name: 'root'
-    host: '{{ item }}'
-    state: present
-    priv: '*.*:ALL,GRANT'
-    password: '{{ passwords.mysql_root }}'
-    login_user: root
-    login_password: '{{ passwords.mysql_root }}'
-    update_password: always
-  with_items:
-    - 127.0.0.1
-    - ::1
-    - localhost
-    - localhost.localdomain
-  when: stage == "development" or stage == "staging"
-
-- mysql_user:
-    name: '{{ secrets.db_user }}'
-    host: '{{ item }}'
-    state: present
-    priv: '*.*:ALL'
-    password: '{{ secrets.db_password }}'
-    login_user: root
-    login_password: '{{ passwords.mysql_root }}'
-    update_password: always
-  with_items:
-    - 127.0.0.1
-    - ::1
-    - localhost
-    - localhost.localdomain
-  when: stage == "development" or stage == "staging"
-
 - mysql_db:
     name: '{{ secrets.db_name }}'
     state: present
-    login_user: 'root'
-    login_password: '{{ passwords.mysql_root }}'
+    login_user: root
+    login_password: ''
   when: stage == "development" or stage == "staging"
 
 - name: set up default encoding

@@ -52,6 +52,8 @@
 
 - set_fact:
     db_host: '{{ secrets.db_host.development }}'
+    db_username: 'root'
+    db_password: ''
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.development }}'
     rollbar_token_server: '{{ secrets.rollbar_token_server.development }}'
     rollbar_token_client: '{{ secrets.rollbar_token_client.development }}'
@@ -59,6 +61,8 @@
 
 - set_fact:
     db_host: '{{ secrets.db_host.staging }}'
+    db_username: 'root'
+    db_password: ''
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.staging }}'
     rollbar_token_server: '{{ secrets.rollbar_token_server.staging }}'
     rollbar_token_client: '{{ secrets.rollbar_token_client.staging }}'
@@ -66,6 +70,8 @@
 
 - set_fact:
     db_host: '{{ secrets.db_host.production }}'
+    db_username: 'myope'
+    db_password: '{{ secrets.db_password }}'
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.production }}'
     rollbar_token_server: '{{ secrets.rollbar_token_server.production }}'
     rollbar_token_client: '{{ secrets.rollbar_token_client.production }}'

@@ -13,7 +13,10 @@ class Database():
 
     def select(self, sql, params):
         self._connect()
-        return pd.read_sql(sql, self.db, params=params)
+        data = pd.read_sql(sql, self.db, params=params)
+        # Note: 常に最新のデータを取得するためにコミットする
+        self.db.commit()
+        return data
 
     def execute(self, sql, params):
         self._connect()
@@ -32,6 +35,4 @@ class Database():
                 passwd=dbconfig['password'],
                 charset='utf8',
             )
-        # Note: mysqlで別コネクションの最新のデータをselectするための設定
-        self.db.autocommit(True)
         logger.info('database connected')

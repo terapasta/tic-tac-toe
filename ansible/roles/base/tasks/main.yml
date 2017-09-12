@@ -40,8 +40,17 @@
     - python-devel
 
 - name: install supervisor
-  pip:
-    name: supervisor
+  shell: /usr/bin/pip-2.7 install supervisor
+- name: change use python version in supervisord
+  lineinfile: >-
+    dest='/usr/bin/supervisord'
+    regexp='#!/usr/bin/python'
+    line='#!/usr/bin/python27'
+- name: change use python version in supervisorctl
+  lineinfile: >-
+    dest='/usr/bin/supervisorctl'
+    regexp='#!/usr/bin/python'
+    line='#!/usr/bin/python27'
 
 - name: install Development Tool
   become: yes

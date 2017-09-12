@@ -23,6 +23,12 @@ class Database():
         with self.db as cur:
             cur.execute(sql, params)
 
+    def execute_with_transaction(self, queries):
+        self._connect()
+        with self.db as cur:
+            for query in queries:
+                cur.execute(query[0], query[1])
+
     def _connect(self):
         if self.db is not None:
             return

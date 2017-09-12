@@ -97,19 +97,25 @@
     src: slappy.conf.j2
     dest: /etc/init/slappy.conf
 
-- template:
+- name: supervisord config rails local
+  template:
     src: supervisord.conf.j2
     dest: /var/www/donusagi-bot/supervisord.conf
     owner: deploy
     group: deploy
     mode: 0644
+  notify: restart supervisord
+  changed_when: True
 
-- template:
+- name: supervisord config system wide
+  template:
     src: supervisord.conf2
     dest: /etc/supervisord.conf
     owner: root
     group: root
     mode: 0644
+  notify: restart supervisord
+  changed_when: True
 
 - template:
     src: initd_rails.j2

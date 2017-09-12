@@ -1,5 +1,5 @@
 .container: .row: .col-8.offset-2.my-4
-  = bootstrap_devise_error_messages!
+  = devise_error_messages!
   h5.mb-3 ユーザー情報変更
 
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }, data: { event_name: 'Update password' }) do |f|

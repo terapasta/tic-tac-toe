@@ -4,12 +4,14 @@
   become: yes
   vars:
     ruby_version: 2.3.4
+    python_version: 3.5.2
   vars_files:
     - private.yml
   roles:
     - users
     - base
     - rbenv
+    - pyenv
     - nginx
     - mysql
     - app

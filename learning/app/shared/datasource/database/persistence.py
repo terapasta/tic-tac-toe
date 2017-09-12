@@ -1,6 +1,5 @@
 import inject
 import io
-import re
 from sklearn.externals import joblib
 from app.shared.current_bot import CurrentBot
 from app.shared.datasource.database.database import Database

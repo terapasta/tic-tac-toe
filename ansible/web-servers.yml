@@ -5,6 +5,7 @@
   vars:
     ruby_version: 2.3.4
     python_version: 3.5.2
+    cert_fqdn: staging.my-ope.net
   vars_files:
     - private.yml
   roles:

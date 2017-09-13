@@ -6,11 +6,43 @@
 - name: ensure nginx/conf.d is empty
   shell: rm -f /etc/nginx/conf.d/*
 
-- name: deploy nginx config file for myope
+- name: make ssl directory
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: server.cert
+  copy:
+    src: '{{ role_path }}/files/server.cert'
+    dest: /etc/nginx/ssl/server.cert
+    owner: root
+    group: root
+    mode: 0755
+
+- name: server.key
+  copy:
+    src: '{{ role_path }}/files/server.key'
+    dest: /etc/nginx/ssl/server.key
+    owner: root
+    group: root
+    mode: 0755
+
+- name: deploy nginx config file for myope (http)
   template: >
     src=my-ope.conf
     dest=/etc/nginx/conf.d/my-ope.conf
   notify: restart nginx
+  when: stage == "development" and stage == "production"
+
+- name: deploy nginx config file for myope (https)
+  template: >
+    src=my-ope-https.conf
+    dest=/etc/nginx/conf.d/my-ope-https.conf
+  notify: restart nginx
+  when: stage == "staging"
 
 - name:  deploy general nginx config file
   template: >

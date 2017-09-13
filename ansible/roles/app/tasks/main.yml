@@ -57,6 +57,8 @@
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.development }}'
     rollbar_token_server: '{{ secrets.rollbar_token_server.development }}'
     rollbar_token_client: '{{ secrets.rollbar_token_client.development }}'
+    basic_auth_user: ''
+    basic_auth_pass: ''
   when: stage == 'development'
 
 - set_fact:
@@ -66,6 +68,8 @@
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.staging }}'
     rollbar_token_server: '{{ secrets.rollbar_token_server.staging }}'
     rollbar_token_client: '{{ secrets.rollbar_token_client.staging }}'
+    basic_auth_user: '{{ basic_auth.user }}'
+    basic_auth_pass: '{{ basic_auth.pass }}'
   when: stage == 'staging'
 
 - set_fact:
@@ -75,6 +79,8 @@
     aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.production }}'
     rollbar_token_server: '{{ secrets.rollbar_token_server.production }}'
     rollbar_token_client: '{{ secrets.rollbar_token_client.production }}'
+    basic_auth_user: ''
+    basic_auth_pass: ''
   when: stage == 'production'
 
 - template:

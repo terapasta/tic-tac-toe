@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :handle_403
   before_action :inject_request_to_application_policy
   before_action :set_notification
+  before_action :basic_auth_if_needed
 
   include Pundit
 
@@ -50,5 +51,12 @@ class ApplicationController < ActionController::Base
 
     def current_page
       (params[:page].presence || 1).to_i
+    end
+
+    def basic_auth_if_needed
+      return if ENV['BASIC_AUTH_USER'].blank? || ENV['BASIC_AUTH_PASS'].blank?
+      authenticate_or_request_with_http_basic do |user, pass|
+        user == ENV['BASIC_AUTH_USER'] && pass == ENV['BASIC_AUTH_PASS']
+      end
     end
 end

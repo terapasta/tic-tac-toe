@@ -52,6 +52,9 @@ namespace :deploy do
     on roles(:app) do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
+      within current_path.join('learning') do
+        execute :pip, :install, '-r requirements.deployment.txt'
+      end
       sudo :supervisorctl, :reload, '-c /etc/supervisord.conf'
     end
   end

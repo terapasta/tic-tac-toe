@@ -5,6 +5,7 @@ cycler==0.10.0
 dataset==0.6.4
 decorator==4.0.10
 entrypoints==0.2.2
+gensim==2.3.0
 gevent==1.1.2
 greenlet==0.4.10
 gsocketpool==0.1.5

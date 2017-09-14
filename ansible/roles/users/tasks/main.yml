@@ -74,4 +74,4 @@
       k.yamagata      ALL=(ALL)       ALL
       k.yamagata      ALL=(ALL)       NOPASSWD: /usr/bin/vim
       s.tachibana     ALL=(ALL)       ALL
-      deploy  ALL=(ALL)       NOPASSWD: /usr/local/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp
+      deploy  ALL=(ALL)       NOPASSWD: /usr/local/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp,/usr/local/pyenv/shims/pip

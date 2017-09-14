@@ -65,3 +65,14 @@
   hostname: name={{ hostname }}
 - name: set /etc/hosts
   lineinfile: dest=/etc/hosts regexp=^127\.0\.0\.1 line='127.0.0.1 {{ hostname }} localhost localhost.localdomain'
+
+- name: setup ld.so.conf
+  template:
+    src: ld.so.conf
+    dest: /etc/ld.so.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: execute ldconfig
+  shell: /sbin/ldconfig
+  become: true

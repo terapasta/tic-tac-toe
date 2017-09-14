@@ -3213,26 +3213,12 @@ function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
   if (scrollableElement == null) {
     return;
   }
-  var props = component.props,
-      refs = component.refs;
+  var props = component.props;
 
   var prevCount = prevProps.messages.classifiedData.length;
   var currentCount = props.messages.classifiedData.length;
   if (currentCount > prevCount && (prevCount === 0 || props.messages.isNeedScroll)) {
-
-    var rootNode = (0, _reactDom.findDOMNode)(refs.root);
-    var areaNode = rootNode.querySelector(".chat-area");
-    var children = [].slice.call(areaNode.children);
-    var targetNode = children.reverse().filter(function (n) {
-      return n.querySelector(".chat-decision-branches") == null;
-    })[0];
-    if (targetNode == null) {
-      return;
-    }
-    var offset = (0, _getOffset2.default)(targetNode);
-
-    var dest = offset.top - c.HeaderHeight;
-    scrollableElement.scrollTop = dest;
+    scrollableElement.scrollTop = scrollableElement.scrollHeight;
   }
 }
 

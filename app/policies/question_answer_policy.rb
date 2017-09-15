@@ -27,10 +27,6 @@ class QuestionAnswerPolicy < ApplicationPolicy
     staff_or_owner?
   end
 
-  def autocomplete_answer_body?
-    user.normal? || user.staff?
-  end
-
   def permitted_attributes
     if user.worker?
       [

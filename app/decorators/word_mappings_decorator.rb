@@ -12,7 +12,7 @@ class WordMappingsDecorator < Draper::CollectionDecorator
   private
     def mappings_hash
       @mappings_hash ||= object.inject({}) { |memo, obj|
-        memo[obj.synonym] = obj.word if obj.synonym.present?
+        memo[obj.synonym] = obj.word
         memo
       }
     end

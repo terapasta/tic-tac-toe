@@ -27,27 +27,31 @@
     .form-group
       .card: .card-block
         label 回答添付ファイル
-        #answer-files
-          = f.fields_for :answer_files, wrapper: false do |nf|
-            .fields.mb-3
-              - if nf.object.file?
-                .card: .card-block.p-3
-                  .row
-                    .col-10
-                      - if nf.object.image?
-                        .mb-2= link_to image_tag(nf.object.file_url, width: 200, class: 'img-thumbnail'), nf.object.file_url, target: '_blank'
-                      - else
-                        = link_to nf.object.read_attribute(:file), nf.object.file_url, target: '_blank'
-                      p.mb-0 ファイルタイプ：<code>#{nf.object.file_type}</code>, ファイルサイズ <code>#{nf.object.file_size.to_s(:human_size)}</code>
-                    .col-2.text-right
-                      = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
+        - if policy(@question_answer).attachable_answer_file?
+          #answer-files
+            = f.fields_for :answer_files, wrapper: false do |nf|
+              .fields.mb-3
+                - if nf.object.file?
+                  .card: .card-block.p-3
+                    .row
+                      .col-10
+                        - if nf.object.image?
+                          .mb-2= link_to image_tag(nf.object.file_url, width: 200, class: 'img-thumbnail'), nf.object.file_url, target: '_blank'
+                        - else
+                          = link_to nf.object.read_attribute(:file), nf.object.file_url, target: '_blank'
 
-              - else
-                .input-group
-                  = nf.file_field :file, class: 'form-control'
-                  span.input-group-btn
-                    = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
-        = f.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
+                        p.mb-0 ファイルタイプ：<code>#{nf.object.file_type}</code>, ファイルサイズ <code>#{nf.object.file_size.to_s(:human_size)}</code>
+                      .col-2.text-right
+                        = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
+
+                - else
+                  .input-group
+                    = nf.file_field :file, class: 'form-control'
+                    span.input-group-btn
+                      = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
+          = f.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
+        - else
+          p.mb-0 ※現在のプラン「#{current_user.plan.capitalize}」では回答添付ファイルはご利用いただけません
 
     span(
       data-component="QuestionAnswerTagForm"

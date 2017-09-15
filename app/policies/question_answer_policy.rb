@@ -27,6 +27,11 @@ class QuestionAnswerPolicy < ApplicationPolicy
     staff_or_owner?
   end
 
+  def attachable_answer_file?
+    return false if user.ec_plan?
+    true
+  end
+
   def permitted_attributes
     if user.worker?
       [

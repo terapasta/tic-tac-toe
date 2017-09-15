@@ -925,7 +925,7 @@ var deleteWordMappingSynonym = exports.deleteWordMappingSynonym = function delet
   }
   var payload = {
     word_mapping: {
-      word_mapping_synonyms: [{
+      word_mapping_synonyms_attributes: [{
         id: synonymId,
         _destroy: true
       }]

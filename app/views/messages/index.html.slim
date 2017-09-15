@@ -32,12 +32,13 @@
 
     .card-block.padding-left-64
       - @messages.each do |message|
-        .row
-          - if message.guest?
-            .col-6.offset-6
-              = render 'messages/guest_balloon', message: message
-          - else
-            .col-6
-              = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
+        - if message.guest?
+          .row: .col-6.offset-6
+            = render 'messages/guest_balloon', message: message
+        - else
+          .row: .col-6
+            = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
+          - if message.question_answer&.decision_branches&.any?
+            = render 'messages/decision_branches', items: message.question_answer.decision_branches
 
   = pagination

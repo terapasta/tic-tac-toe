@@ -51,6 +51,8 @@
     dest='/usr/bin/supervisorctl'
     regexp='#!/usr/bin/python'
     line='#!/usr/bin/python27'
+- name: supervisord service
+  service: name=supervisord enabled=yes
 
 - name: install Development Tool
   become: yes

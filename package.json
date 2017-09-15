@@ -62,6 +62,7 @@
     "react": "0.14.8",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "0.14.8",
+    "react-highlight-words": "^0.8.1",
     "react-linkify": "^0.2.0",
     "react-loading": "^0.0.9",
     "react-nl2br": "^0.2.0",

@@ -27,7 +27,7 @@ header
 
               - if current_user&.staff?
                 h6.dropdown-header Staffメニュー
-                = link_to 'システム同義語', admin_word_mappings_path, class: 'dropdown-item'
+                = link_to 'システム辞書', admin_word_mappings_path, class: 'dropdown-item'
                 - if @bot.present?
                   = link_to '精度テスト', admin_bot_accuracy_test_cases_path(@bot), class: 'dropdown-item'
 

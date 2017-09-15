@@ -1,5 +1,12 @@
 .material-icons {
   vertical-align: middle;
+
+  &.mi-v-baseline {
+    vertical-align: baseline;
+  }
+  &.mi-v-top {
+    vertical-align: top;
+  }
 }
 
 small {

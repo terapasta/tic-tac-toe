@@ -4,7 +4,10 @@
     = message.body
 
     - if local_assigns[:show_mark_button]
-      = link_to material_icon('flag'), '#', class: "chat-message__mark-button #{'active' if message.answer_marked}", data: { role: 'message-mark-button', id: message.id, toggle: 'tooltip', placement: 'right' }, title: '注意回答としてマーク'
+      = link_to 'この回答をピンする', '#',
+        class: "chat-message__mark-button #{message.answer_marked ? 'active' : ''}",
+        data: { role: 'message-mark-button', id: message.id, toggle: 'tooltip', placement: 'right' },
+        title: 'この回答をピンする'
 
   .d-flex.justify-content-between
     .chat-message__meta

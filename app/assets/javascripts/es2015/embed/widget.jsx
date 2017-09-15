@@ -32,7 +32,7 @@ import {
 } from "./styled";
 
 const Origin = process.env.NODE_ENV === "development" ?
-  "http://donusagi-bot.192.168.10.10.xip.io" : "https://app.my-ope.net";
+  "http://donusagi-bot.192.168.10.12.xip.io" : "https://app.my-ope.net";
 
 export default class Widget extends Component {
   constructor(props) {
@@ -64,6 +64,20 @@ export default class Widget extends Component {
         this.iframe.style[key] = val;
       });
     });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const isMobile = window.innerWidth <= MobileMaxWidth;
+    if (!isMobile) { return; }
+    let className = document.body.getAttribute('class') || '';
+    if (!this.state.isActive && nextState.isActive) {
+      className += ' prevent-scroll';
+    } else if (this.state.isActive && !nextState.isActive) {
+      className = className.replace(' prevent-scroll', '');
+    }
+    if (className != null) {
+      document.body.setAttribute('class', className);
+    }
   }
 
   render() {

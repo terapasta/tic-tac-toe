@@ -9,4 +9,5 @@ class User < ActiveRecord::Base
   has_many :sentence_synonyms, foreign_key: :created_user_id
 
   enum role: { normal: 0, worker: 1, staff: 2 }
+  enum plan: { lite: 0, standard: 1, professional: 2 }
 end

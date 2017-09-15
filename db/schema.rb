@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831061200) do
+ActiveRecord::Schema.define(version: 20170915093033) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -143,16 +143,17 @@ ActiveRecord::Schema.define(version: 20170831061200) do
   add_index "learning_training_messages", ["question_answer_id"], name: "index_learning_training_messages_on_question_answer_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "chat_id",            limit: 4
-    t.string   "speaker",            limit: 255,                   null: false
-    t.text     "body",               limit: 65535
-    t.string   "user_agent",         limit: 1024
-    t.boolean  "answer_failed",                    default: false, null: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.integer  "rating",             limit: 4,     default: 0
-    t.boolean  "answer_marked",                    default: false, null: false
-    t.integer  "question_answer_id", limit: 4
+    t.integer  "chat_id",                      limit: 4
+    t.string   "speaker",                      limit: 255,                   null: false
+    t.text     "body",                         limit: 65535
+    t.string   "user_agent",                   limit: 1024
+    t.boolean  "answer_failed",                              default: false, null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+    t.integer  "rating",                       limit: 4,     default: 0
+    t.boolean  "answer_marked",                              default: false, null: false
+    t.integer  "question_answer_id",           limit: 4
+    t.text     "similar_question_answers_log", limit: 65535
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
@@ -238,6 +239,7 @@ ActiveRecord::Schema.define(version: 20170831061200) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role",                   limit: 4,   default: 0
+    t.integer  "plan",                   limit: 4,   default: 2,  null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

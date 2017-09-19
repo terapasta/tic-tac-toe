@@ -63,11 +63,7 @@ class Chat < ActiveRecord::Base
 
   scope :in_today, -> {
     today = Time.current
-    where(
-      is_staff: false,
-      is_normal: false,
-      created_at: (today.beginning_of_day..today.end_of_day)
-    )
+    where(created_at: today.beginning_of_day..today.end_of_day)
   }
 
   def build_start_message

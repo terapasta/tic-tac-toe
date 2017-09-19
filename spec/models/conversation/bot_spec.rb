@@ -16,9 +16,11 @@ RSpec.describe Conversation::Bot do
 
     before do
       allow(dummy_ml_engine).to receive(:reply).and_return({
-        question_answer_id: question_answer.id,
-        probability: 0.999,
-        results: []
+        question_feature_count: 1,
+        results: [
+          { question_answer_id: question_answer.id, probability: 0.999 },
+          { question_answer_id: 999, probability: 0.3 },
+        ]
       })
     end
 

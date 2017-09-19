@@ -1,7 +1,6 @@
 ---
 - stat: path=/usr/local/bin/mecab
   register: command
-
 - name: 'install mecab'
   when: not command.stat.exists
   shell: |
@@ -13,8 +12,21 @@
     make
     make check
     sudo make install
+
+- stat: path=/usr/local/lib/mecab/dic/ipadic
+  register: d
+- name: 'install mecab ipadic'
+  when: not d.stat.isdir
+  shell: |
+    cd /tmp
     wget -O mecab-ipadic.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
     tar zxvf mecab-ipadic.tar.gz
     cd  mecab-ipadic-2.7.0-20070801
     ./configure --with-charset=utf8
     make
+    sudo make install
+
+- name: set up dicrc
+  template:
+    src: dicrc.general
+    dest: /usr/local/lib/mecab/dic/ipadic/dicrc

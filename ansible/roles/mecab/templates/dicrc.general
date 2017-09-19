@@ -28,4 +28,4 @@ node-format-chasen2 = %M\t%f[7]\t%f[6]\t%F-[0,1,2,3]\t%f[4]\t%f[5]\n
 unk-format-chasen2  = %M\t%m\t%m\t%F-[0,1,2,3]\t\t\n
 eos-format-chasen2  = EOS\n
 
-userdic = /var/www/donusagi-bot/current/learning/learning/dict/custom.dic
+userdic = /var/www/donusagi-bot/current/learning/dict/custom.dic

@@ -134,9 +134,30 @@ $ cap production deploy
 
 ### Ansible
 
+__How to start__
+
+1. Make `ansible/VAULT_PASSWORD` file and write the password (ask to other developer)
+
+__How to run (development)__
+
+事前にsshのpublic-keyをvagrant hostに設定する
+
 ```
-$ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
+$ ansible-playbook -i ansible/development ansible/web-servers.yml --vault-password-file=ansible/VAULT_PASSWORD
 ```
+
+__How to run (production)__
+
+```
+$ ansible-playbook -i ansible/production ansible/web-servers.yml --vault-password-file=ansible/VAULT_PASSWORD
+```
+
+__How to edit `private.yml`__
+
+```
+$ ansible-vault edit ansible/private.yml --vault-password-file=ansible/VAULT_PASSWORD
+```
+
 
 ## Dockerで開発する場合
 

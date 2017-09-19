@@ -1,2 +1,133 @@
 - name: install bundler gem
   gem: name=bundler user_install=no
+
+- file:
+    path: /var/www
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- file:
+    path: /var/www/donusagi-bot
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/config
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/learning/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/learning/learning/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
+    path: /var/www/donusagi-bot/shared/learning/learning/config/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- set_fact:
+    db_host: '{{ secrets.db_host.development }}'
+    db_username: 'root'
+    db_password: ''
+    aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.development }}'
+    rollbar_token_server: '{{ secrets.rollbar_token_server.development }}'
+    rollbar_token_client: '{{ secrets.rollbar_token_client.development }}'
+    basic_auth_user: ''
+    basic_auth_pass: ''
+  when: stage == 'development'
+
+- set_fact:
+    db_host: '{{ secrets.db_host.staging }}'
+    db_username: 'root'
+    db_password: ''
+    aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.staging }}'
+    rollbar_token_server: '{{ secrets.rollbar_token_server.staging }}'
+    rollbar_token_client: '{{ secrets.rollbar_token_client.staging }}'
+    basic_auth_user: '{{ basic_auth.user }}'
+    basic_auth_pass: '{{ basic_auth.pass }}'
+  when: stage == 'staging'
+
+- set_fact:
+    db_host: '{{ secrets.db_host.production }}'
+    db_username: 'myope'
+    db_password: '{{ secrets.db_password }}'
+    aws_s3_bucket_name: '{{ secrets.aws_s3_bucket_name.production }}'
+    rollbar_token_server: '{{ secrets.rollbar_token_server.production }}'
+    rollbar_token_client: '{{ secrets.rollbar_token_client.production }}'
+    basic_auth_user: ''
+    basic_auth_pass: ''
+  when: stage == 'production'
+
+- template:
+    src: .env.j2
+    dest: /var/www/donusagi-bot/shared/.env
+
+- template:
+    src: .python-version
+    dest: /var/www/donusagi-bot/shared/.python-version
+
+- template:
+    src: python-config.yml.j2
+    dest: /var/www/donusagi-bot/shared/learning/learning/config/config.yml
+
+- template:
+    src: database.yml.j2
+    dest: /var/www/donusagi-bot/shared/config/database.yml
+
+- template:
+    src: slappy.conf.j2
+    dest: /etc/init/slappy.conf
+
+- name: supervisord config rails local
+  template:
+    src: supervisord.conf.j2
+    dest: /var/www/donusagi-bot/supervisord.conf
+    owner: deploy
+    group: deploy
+    mode: 0644
+  notify: restart supervisord
+  changed_when: True
+
+- name: supervisord config system wide
+  template:
+    src: supervisord.conf2
+    dest: /etc/supervisord.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart supervisord
+  changed_when: True
+
+- template:
+    src: initd_rails.j2
+    dest: /etc/init.d/unicorn
+    owner: root
+    group: root
+    mode: 0755
+- name: unicorn service
+  service: name=unicorn enabled=yes

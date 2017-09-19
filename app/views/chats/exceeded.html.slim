@@ -1,0 +1,7 @@
+- content_for :hide_global_header, true
+
+.chat-area: .chat-section: .chat-row: .chat-container
+  .text-center
+    p= image_tag @bot.image_url(:thumb), class: 'circle-image-56'
+    h3 本日の受付は終了しました
+    p.text-muted 受付再開までしばらくお待ち下さい。

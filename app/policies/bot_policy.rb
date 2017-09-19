@@ -35,6 +35,10 @@ class BotPolicy < ApplicationPolicy
     update?
   end
 
+  def exceeded_chats_count?
+    record.chats.in_today.count > record.user.chats_limit_per_day
+  end
+
   def permitted_attributes
     [
       :name,

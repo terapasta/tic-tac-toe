@@ -1,6 +1,7 @@
 class Settings::BaseController < ApplicationController
   include BotUsable
   include Pundit
+  before_action :authenticate_user!
   before_action :set_bot
 
   private

@@ -21,19 +21,19 @@ class Conversation::Bot
     Rails.logger.debug("Conversation::Bot#reply body: #{@question_text}")
 
     result = @engine.reply(@question_text)
-    @results = result.results
+    @results = result[:results]
 
     question = @question_text
-    question_feature_count = result.question_feature_count
-    effective_results = @results.select{|x| x.probability > 0.1}
+    question_feature_count = result[:question_feature_count]
+    effective_results = @results.select{|x| x[:probability] > 0.1}
     if effective_results.length == 0
       question_answer_ids = [NO_CLASSIFIED_ANSWER_ID]
       question_answer_id = 0
       probability = 1
     else
-      question_answer_ids = effective_results.map{|x| x.question_answer_id.to_i}
+      question_answer_ids = effective_results.map{|x| x[:question_answer_id].to_i}
       question_answer_id = question_answer_ids.first
-      probability = effective_results.first.probability
+      probability = effective_results.first[:probability]
     end
     Rails.logger.debug(probability)
 

@@ -16,7 +16,7 @@ class Ml::Engine
         bot_id: @bot.id,
         body: body,
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
-      ))
+      )).as_json.with_indifferent_access
   end
 
   def learn
@@ -24,7 +24,7 @@ class Ml::Engine
       Gateway::LearnRequest.new(
         bot_id: @bot.id,
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
-      ))
+      )).as_json.with_indifferent_access
   end
 
   def predict_tags(bodies)

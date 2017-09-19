@@ -14,4 +14,14 @@ class User < ActiveRecord::Base
   def ec_plan?
     lite? || standard?
   end
+
+  ChatsLimitPerDay = {
+    lite: 30,
+    standard: 60,
+    professional: Float::INFINITY,
+  }.with_indifferent_access.freeze
+
+  def chats_limit_per_day
+    ChatsLimitPerDay[plan]
+  end
 end

@@ -86,11 +86,10 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
           end
         end
 
-          it { is_expected.to change(QuestionAnswer, :count).by(1) }
-          it { is_expected.to change(TopicTagging, :count).by(1) }
-          it { is_expected.to change(TopicTag, :count).by(1) }
-          it { is_expected.to_not change(AnswerFile, :count) }
-        end
+        it { is_expected.to change(QuestionAnswer, :count).by(1) }
+        it { is_expected.to change(TopicTagging, :count).by(1) }
+        it { is_expected.to change(TopicTag, :count).by(1) }
+        it { is_expected.to_not change(AnswerFile, :count) }
       end
 
       feature 'edit action' do

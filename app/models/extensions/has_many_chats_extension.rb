@@ -20,4 +20,8 @@ module HasManyChatsExtension
       chat.save!
     end
   end
+
+  def today_count_of_guests
+    not_staff.not_normal.in_today.count
+  end
 end

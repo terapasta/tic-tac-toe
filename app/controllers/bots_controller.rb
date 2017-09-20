@@ -9,7 +9,7 @@ class BotsController < ApplicationController
   end
 
   def show
-    @today_chats_count = @bot.chats.in_today.count
+    @today_chats_count = @bot.chats.today_count_of_guests
     @chats_limit = current_user.chats_limit_per_day
     @progress = ((@today_chats_count.to_f / @chats_limit.to_f) * 100).round
   end

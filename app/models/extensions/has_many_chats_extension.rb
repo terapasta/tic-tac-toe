@@ -22,6 +22,6 @@ module HasManyChatsExtension
   end
 
   def today_count_of_guests
-    not_staff.not_normal.in_today.count
+    not_staff(true).not_normal(true).in_today.count
   end
 end

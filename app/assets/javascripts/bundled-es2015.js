@@ -3213,26 +3213,12 @@ function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
   if (scrollableElement == null) {
     return;
   }
-  var props = component.props,
-      refs = component.refs;
+  var props = component.props;
 
   var prevCount = prevProps.messages.classifiedData.length;
   var currentCount = props.messages.classifiedData.length;
   if (currentCount > prevCount && (prevCount === 0 || props.messages.isNeedScroll)) {
-
-    var rootNode = (0, _reactDom.findDOMNode)(refs.root);
-    var areaNode = rootNode.querySelector(".chat-area");
-    var children = [].slice.call(areaNode.children);
-    var targetNode = children.reverse().filter(function (n) {
-      return n.querySelector(".chat-decision-branches") == null;
-    })[0];
-    if (targetNode == null) {
-      return;
-    }
-    var offset = (0, _getOffset2.default)(targetNode);
-
-    var dest = offset.top - c.HeaderHeight;
-    scrollableElement.scrollTop = dest;
+    scrollableElement.scrollTop = scrollableElement.scrollHeight;
   }
 }
 
@@ -5704,8 +5690,12 @@ function changeRatingHandler(state, action) {
   return (0, _assign2.default)({}, state, { classifiedData: classifiedData });
 }
 
+var isSkipDoneDB = true;
+
 function doneDecisionBranchesOtherThanLast(classifiedData) {
-  // return classifiedData;
+  if (isSkipDoneDB) {
+    return classifiedData;
+  }
   var data = (0, _cloneDeep2.default)(classifiedData);
   var beforeLastIndex = data.length - 2;
   var lastIndex = data.length - 1;

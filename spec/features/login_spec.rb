@@ -22,7 +22,6 @@ RSpec.describe 'Login', typre: :feature, js: true do
       fill_in_input name: 'user[email]', value: user.email
       fill_in_input name: 'user[password]', value: 'hogehoge'
       click_on 'ログイン'
-      page.save_screenshot
       expect(page).to have_content(bot.name)
     end
   end

@@ -10,6 +10,8 @@ class Message < ActiveRecord::Base
   enum speaker: { bot: 'bot', guest: 'guest' }
   enum rating: [:nothing, :good, :bad]
 
+  serialize :similar_question_answers_log
+
   scope :answer_failed, -> {
     where(answer_failed: true)
   }

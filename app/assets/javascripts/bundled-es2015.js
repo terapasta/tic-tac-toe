@@ -5690,8 +5690,12 @@ function changeRatingHandler(state, action) {
   return (0, _assign2.default)({}, state, { classifiedData: classifiedData });
 }
 
+var isSkipDoneDB = true;
+
 function doneDecisionBranchesOtherThanLast(classifiedData) {
-  // return classifiedData;
+  if (isSkipDoneDB) {
+    return classifiedData;
+  }
   var data = (0, _cloneDeep2.default)(classifiedData);
   var beforeLastIndex = data.length - 2;
   var lastIndex = data.length - 1;

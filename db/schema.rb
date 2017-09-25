@@ -109,11 +109,9 @@ ActiveRecord::Schema.define(version: 20170915093033) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "dumps", force: :cascade do |t|
-    t.integer  "bot_id",     limit: 4,          null: false
-    t.string   "name",       limit: 255,        null: false
-    t.binary   "content",    limit: 4294967295
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "bot_id",  limit: 4,          null: false
+    t.string  "name",    limit: 255,        null: false
+    t.binary  "content", limit: 4294967295
   end
 
   create_table "exports", force: :cascade do |t|

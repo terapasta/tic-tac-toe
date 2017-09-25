@@ -2,19 +2,21 @@ import os
 from sklearn.externals import joblib
 from gensim import corpora, models
 
-MAX_COUNT = 6796444
-IS_SAVE = True
-STEP = 1000
-TOPICS = 1000
-
 ENABLE_ID_CORPUS = False
 ENABLE_TFIDF = False
+MAX_COUNT = 6796444
+IS_SAVE = True
+STEP = 100000
+TOPICS = 1000
 
+print('load dictionary')
 gensim_dictionary = joblib.load('../working/gensim_dict_by_joblib.pkl')
+
+print('id_corpus')
+id_corpus_list = []
 if ENABLE_ID_CORPUS:
     i = 0
     j = STEP
-    id_corpus_list = []
     tokenized_sentences = []
 
     while i < MAX_COUNT:
@@ -36,8 +38,9 @@ if ENABLE_ID_CORPUS:
         print('update dictionary')
         joblib.dump(gensim_dictionary, '../working/gensim_dict_by_joblib_update.pkl')
 
+print('tfidf')
+tfidf = None
 if ENABLE_TFIDF:
-    print('tfidf')
     tfidf = models.TfidfModel(id_corpus_list)
 
     if IS_SAVE:
@@ -45,6 +48,10 @@ if ENABLE_TFIDF:
         tfidf.save('../working/gensim.tfidf')
         print('tfidf dump')
         joblib.dump(tfidf, '../working/gensim_tfidf_by_joblib.pkl')
+else:
+    # tfidf = models.TfidfModel()
+    # tfidf.load('../working/gensim.tfidf')
+    tfidf = joblib.load('../working/gensim_tfidf_by_joblib.pkl')
 
 print('lsi')
 i = 0
@@ -59,10 +66,14 @@ while i < MAX_COUNT:
         continue
     tokenized_sentences = joblib.load(filepath)
     id_corpus = [gensim_dictionary.doc2bow(sentence, allow_update=True) for sentence in tokenized_sentences]
-    tfidf_corpus = tfidf[id_corpus]
-    # TODO: ここで落ちる
-    #       [1]    6298 segmentation fault  python make.py
-    lsi.add_documents(tfidf_corpus)
+    k = 0
+    l = 1000
+    while k < 100000:
+        print('lsi add_documents : {start}-{end}'.format(start=k, end=l))
+        tfidf_corpus = tfidf[id_corpus[k:l]]
+        lsi.add_documents(tfidf_corpus)
+        k = k + 1000
+        l = l + 1000
     i = i + STEP
     j = j + STEP
 

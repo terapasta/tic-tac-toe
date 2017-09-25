@@ -187,22 +187,11 @@ export default class ChatApp extends Component {
 
 function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
   if (scrollableElement == null) { return; }
-  const { props, refs } = component;
+  const { props/* , refs */ } = component;
   const prevCount = prevProps.messages.classifiedData.length
   const currentCount = props.messages.classifiedData.length;
   if (currentCount > prevCount &&
      (prevCount === 0 || props.messages.isNeedScroll)) {
-
-    const rootNode = findDOMNode(refs.root);
-    const areaNode = rootNode.querySelector(".chat-area");
-    const children = [].slice.call(areaNode.children);
-    const targetNode = children.reverse().filter((n) => (
-      n.querySelector(".chat-decision-branches") == null
-    ))[0];
-    if (targetNode == null) { return; }
-    const offset = getOffset(targetNode);
-
-    const dest = offset.top - c.HeaderHeight;
-    scrollableElement.scrollTop = dest;
+    scrollableElement.scrollTop = scrollableElement.scrollHeight;
   }
 }

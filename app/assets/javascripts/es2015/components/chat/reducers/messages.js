@@ -184,8 +184,12 @@ export function changeRatingHandler(state, action) {
   return assign({}, state, { classifiedData });
 }
 
+const isSkipDoneDB = true;
+
 export function doneDecisionBranchesOtherThanLast(classifiedData) {
-  // return classifiedData;
+  if (isSkipDoneDB) {
+    return classifiedData;
+  }
   const data = cloneDeep(classifiedData);
   const beforeLastIndex = data.length - 2;
   const lastIndex = data.length - 1;

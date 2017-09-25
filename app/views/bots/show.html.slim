@@ -19,3 +19,13 @@
       span チャット画面で設定する
       = space
       i.material-icons keyboard_arrow_right
+
+  - if current_user.ec_plan?
+    .card: .card-block
+      h5.mb-3: strong 今日のチャット数（上限#{@chats_limit}）
+      .progress.mb-3
+        .progress-bar style=("width:#{@progress}%") #{@today_chats_count}
+      .text-muted
+        |※ 上限に達するとチャットが使えなくなります
+        br
+        |※ チャット数は日付が変わるとリセットされます

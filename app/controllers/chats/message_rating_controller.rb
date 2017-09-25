@@ -1,4 +1,5 @@
 class Chats::MessageRatingController < ApplicationController
+  include GuestKeyUsable
   skip_before_action :verify_authenticity_token
   before_action :set_bot_chat_message
 
@@ -22,7 +23,7 @@ class Chats::MessageRatingController < ApplicationController
   private
     def set_bot_chat_message
       @bot = Bot.find_by!(token: params[:token])
-      @chat = @bot.chats.find_by_guest_key!(session[:guest_key])
+      @chat = @bot.chats.find_by_guest_key!(guest_key)
       @message = @chat.messages.find(params[:message_id])
     end
 end

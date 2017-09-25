@@ -246,6 +246,40 @@ RSpec.describe 'Chats', type: :features, js: true do
           }.to_not change(Chat, :count)
         end
       end
+
+      describe 'guest_keyの有効期限' do
+        before do
+          bot.allowed_hosts.delete_all
+          bot.allowed_ip_addresses.delete_all
+        end
+
+        # chromedriverの時刻は変えられなかったのでpending
+        xscenario do
+          page_path = "/embed/#{bot.token}/chats"
+          visit page_path
+          fill_in_input name: 'chat-message-body', value: 'ほげほげ'
+          within 'form' do
+            click_on '質問'
+          end
+          visit page_path
+          page.save_screenshot
+          expect(page).to have_content('ほげほげ')
+          pp Time.now
+          Delorean.time_travel_to('44 days after') do
+            pp Time.now
+            visit page_path
+            page.save_screenshot
+            expect(page).to have_content('ほげほげ')
+          end
+          pp Time.now
+          Delorean.time_travel_to('46 days after') do
+            pp Time.now
+            visit page_path
+            page.save_screenshot
+            expect(page).to_not have_content('ほげほげ')
+          end
+        end
+      end
     end
   end
 end

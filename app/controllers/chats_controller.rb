@@ -1,12 +1,13 @@
 class ChatsController < ApplicationController
   include IframeSupportable
+  include GuestKeyUsable
   before_action :set_bot
   before_action :set_guest_key
   before_action :set_warning_message
 
   def show
     iframe_support @bot
-    @chat = @bot.chats.in_today.where(guest_key: session[:guest_key]).order(created_at: :asc).last
+    @chat = @bot.chats.in_today.where(guest_key: guest_key).order(created_at: :asc).last
     if @chat.nil?
       redirect_to new_chats_path(token: params[:token])
     else
@@ -17,7 +18,7 @@ class ChatsController < ApplicationController
   def new
     iframe_support @bot
     render :exceeded and return if policy(@bot).exceeded_chats_count?
-    @chat = @bot.chats.create_by(session[:guest_key]) do |chat|
+    @chat = @bot.chats.create_by(guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)
       chat.is_normal = true if current_user.try(:normal?)
@@ -28,12 +29,6 @@ class ChatsController < ApplicationController
   private
     def set_bot
       @bot = Bot.find_by!(token: params[:token])
-    end
-
-    def set_guest_key
-      if session[:guest_key].blank?
-        session[:guest_key] = SecureRandom.hex(64)
-      end
     end
 
     def set_warning_message

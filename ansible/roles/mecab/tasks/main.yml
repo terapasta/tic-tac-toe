@@ -30,3 +30,9 @@
   template:
     src: dicrc.general
     dest: /usr/local/lib/mecab/dic/ipadic/dicrc
+
+- name: install shell
+  copy: src=install-neologd.sh dest=/usr/local/bin owner=root group=root mode=0775
+
+- name: 'install mecab ipadic neologd'
+  shell: install-neologd.sh

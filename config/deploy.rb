@@ -47,6 +47,13 @@ namespace :deploy do
     end
   end
 
+  desc 'mecab ipadic neologdをアップデート'
+  task :update_neologd do
+    on roles(:app) do
+      exec 'install-neologd.sh'
+    end
+  end
+
   desc 'python engineを移動'
   task :move_engine do
     on roles(:app) do
@@ -61,4 +68,5 @@ namespace :deploy do
 
   after :finished, 'deploy:move_engine'
   after :finished, 'slappy:restart'
+  after :finished, 'deploy:update_neologd'
 end

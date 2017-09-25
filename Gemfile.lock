@@ -641,6 +641,7 @@ DEPENDENCIES
   fog-aws
   font-awesome-rails
   foreman
+  google-protobuf (= 3.4.0.2)
   grpc
   grpc-tools
   guard

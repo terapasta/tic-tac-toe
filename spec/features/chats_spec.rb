@@ -114,9 +114,11 @@ RSpec.describe 'Chats', type: :features, js: true do
           end
           sleep 1
           decision_branches.first.tap do |db|
-            click_link db.body
-            sleep 1
-            expect(page).to have_content(db.body)
+            within all('.chat-decision-branches').last do
+              click_link db.body
+              sleep 1
+              expect(page).to have_content(db.body)
+            end
             expect(page).to have_content(db.answer)
           end
         end

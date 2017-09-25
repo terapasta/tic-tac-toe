@@ -5,13 +5,15 @@ class Conversation::Bot
   POSITIVE_WORD = 'はい'
   NEGATIVE_WORD = 'いいえ'
 
+  NO_CLASSIFIED_ANSWER_ID = 0
+
   def initialize(bot, message)
     @bot = bot
     @message = message
     @ModelClass = message.class
     @engine = Ml::Engine.new(@bot)
     @word_mappings = WordMapping.for_bot(@bot).decorate
-    @question_text = @bot.learning_parameter&.use_similarity_classification ?
+    @question_text = @bot.use_similarity_classification? ?
       @word_mappings.replace_synonym(@message.body) : @message.body
   end
 
@@ -21,11 +23,18 @@ class Conversation::Bot
     result = @engine.reply(@question_text)
     @results = result[:results]
 
-    question_answer_id = result[:question_answer_id]
-    probability = result[:probability]
-    question = result[:question]
+    question = @question_text
     question_feature_count = result[:question_feature_count]
-    question_answer_ids = @results.select{|x| x[:probability] > 0.1}.map{|x| x[:question_answer_id].to_i}
+    effective_results = @results.select{|x| x[:probability] > 0.1}
+    if effective_results.length == 0
+      question_answer_ids = [NO_CLASSIFIED_ANSWER_ID]
+      question_answer_id = 0
+      probability = 1
+    else
+      question_answer_ids = effective_results.map{|x| x[:question_answer_id].to_i}
+      question_answer_id = question_answer_ids.first
+      probability = effective_results.first[:probability]
+    end
     Rails.logger.debug(probability)
 
     @question_answer = QuestionAnswer.find_or_null_question_answer(question_answer_id, @bot, probability, classify_threshold)

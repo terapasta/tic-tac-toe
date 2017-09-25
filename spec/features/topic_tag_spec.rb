@@ -52,7 +52,6 @@ RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
       click_on '更新する'
       expect{
         click_on '削除'
-        page.save_screenshot
         click_on '更新する'
         expect(page).to have_content '更新しました'
       }.to change(TopicTag, :count).by(-1)

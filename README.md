@@ -100,7 +100,7 @@ $ bin/rspec spec
 ```
 
 ### 開発環境で本番同様の精度テストを実行する方法
-python修正時には回答のが変わっていないかを確認したいので本番のデータを取得して確認する。
+以下のコマンドで本番のデータを取得できる
 
 ```
 $ cap production db:pull
@@ -122,8 +122,7 @@ $ cap production db:pull
 mysql -uroot donusagi_bot < ./tmp/20170807163300.sql
 ```
 
-上記を実行するとmysqldumpを取得できるので表示されているコマンドを実行する開発DBに反映できる。
-反映後、画面から精度テストを実施する。
+表示されているコマンドを実行することで開発DBに反映できる
 
 ## デプロイ
 ### Capistrano
@@ -134,9 +133,30 @@ $ cap production deploy
 
 ### Ansible
 
+__How to start__
+
+1. Make `ansible/VAULT_PASSWORD` file and write the password (ask to other developer)
+
+__How to run (development)__
+
+事前にsshのpublic-keyをvagrant hostに設定する
+
 ```
-$ ansible-playbook -i ansible/production ansible/web-servers.yml -u a.harada --ask-sudo-pass
+$ ansible-playbook -i ansible/development ansible/web-servers.yml --vault-password-file=ansible/VAULT_PASSWORD
 ```
+
+__How to run (production)__
+
+```
+$ ansible-playbook -i ansible/production ansible/web-servers.yml --vault-password-file=ansible/VAULT_PASSWORD
+```
+
+__How to edit `private.yml`__
+
+```
+$ ansible-vault edit ansible/private.yml --vault-password-file=ansible/VAULT_PASSWORD
+```
+
 
 ## Dockerで開発する場合
 

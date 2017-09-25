@@ -37,9 +37,25 @@
     - libxslt-devel
     - ImageMagick
     - ImageMagick-devel
+    - python-devel
+
+- name: install supervisor
+  shell: /usr/bin/pip-2.7 install supervisor
+- name: change use python version in supervisord
+  lineinfile: >-
+    dest='/usr/bin/supervisord'
+    regexp='#!/usr/bin/python'
+    line='#!/usr/bin/python27'
+- name: change use python version in supervisorctl
+  lineinfile: >-
+    dest='/usr/bin/supervisorctl'
+    regexp='#!/usr/bin/python'
+    line='#!/usr/bin/python27'
+- name: supervisord service
+  service: name=supervisord enabled=yes
 
 - name: install Development Tool
-  sudo: true
+  become: yes
   shell: yum -y groupinstall "Development Tools"
 
 # timezone
@@ -51,3 +67,14 @@
   hostname: name={{ hostname }}
 - name: set /etc/hosts
   lineinfile: dest=/etc/hosts regexp=^127\.0\.0\.1 line='127.0.0.1 {{ hostname }} localhost localhost.localdomain'
+
+- name: setup ld.so.conf
+  template:
+    src: ld.so.conf
+    dest: /etc/ld.so.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: execute ldconfig
+  shell: /sbin/ldconfig
+  become: true

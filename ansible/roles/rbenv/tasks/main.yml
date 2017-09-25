@@ -1,20 +1,29 @@
 # install rbenv to systemwide
 ---
+- stat: path=/usr/local/rbenv
+  register: rbenv_dir
+- stat: path=/usr/local/rbenv/plugins/ruby-build
+  register: ruby_build_dir
+
 - name: git clone rbenv
   git: repo=git://github.com/sstephenson/rbenv.git dest=/usr/local/rbenv accept_hostkey=yes
+  when: not rbenv_dir.stat.exists
 
 - name: mkdir rbenv/shims
   file: dest=/usr/local/rbenv/shims state=directory
+  when: not rbenv_dir.stat.exists
 
 - name: mkdir rbenv/versions
   file: dest=/usr/local/rbenv/versions state=directory
+  when: not rbenv_dir.stat.exists
 
 - name: git clone ruby-build
   git: repo=git://github.com/sstephenson/ruby-build.git dest=/usr/local/rbenv/plugins/ruby-build accept_hostkey=yes
+  when: not ruby_build_dir.stat.exists
 
 - name: install ruby-build
-  #sudo: true
   shell: cd /usr/local/rbenv/plugins/ruby-build && ./install.sh
+  when: not ruby_build_dir.stat.exists
 
 - name: check /etc/profile.d/rbenv.sh is exists
   stat: path=/etc/profile.d/rbenv.sh

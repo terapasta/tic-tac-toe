@@ -1,0 +1,6 @@
+- template:
+    src: rails_app
+    dest: /etc/logrotate.d/rails_app
+    mode: 0644
+    owner: root
+    group: root

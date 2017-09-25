@@ -10,4 +10,8 @@ class User < ActiveRecord::Base
 
   enum role: { normal: 0, worker: 1, staff: 2 }
   enum plan: { lite: 0, standard: 1, professional: 2 }
+
+  def ec_plan?
+    lite? || standard?
+  end
 end

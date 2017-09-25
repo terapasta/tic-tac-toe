@@ -27,8 +27,9 @@ class QuestionAnswerPolicy < ApplicationPolicy
     staff_or_owner?
   end
 
-  def autocomplete_answer_body?
-    user.normal? || user.staff?
+  def attachable_answer_file?
+    return false if user.ec_plan?
+    true
   end
 
   def permitted_attributes

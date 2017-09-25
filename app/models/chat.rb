@@ -61,9 +61,10 @@ class Chat < ActiveRecord::Base
     find_by(id: chat_id).messages.guest.where('id < ?', answer_message_id).order(:id).last
   }
 
-  scope :in_today, -> {
-    today = Time.current
-    where(created_at: today.beginning_of_day..today.end_of_day)
+  scope :in_today_by_unique_user, -> {
+    now = Time.current
+    joins(:messages)
+      .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
   }
 
   def build_start_message

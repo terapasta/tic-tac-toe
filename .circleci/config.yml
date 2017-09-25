@@ -55,6 +55,9 @@ jobs:
               --format progress
 
       # collect reports
+      - type: store_artifacts
+        path: tmp/capybara/
+        destination: capybara
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:

@@ -1,0 +1,7 @@
+production:
+  database:
+    endpoint: mysql://{{ secrets.db_user }}:{{ secrets.db_password }}@{{ secrets.db_host }}/{{ secrets.db_name }}?charset=utf8
+    host: {{ secrets.db_host }}
+    name: {{ secrets.db_name }}
+    user: {{ secrets.db_user }}
+    password: {{ secrets.db_password }}

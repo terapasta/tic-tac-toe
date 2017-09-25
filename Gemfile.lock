@@ -239,6 +239,19 @@ GEM
     git-version-bump (0.15.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    google-protobuf (3.4.0.2)
+    googleauth (0.5.1)
+      faraday (~> 0.9)
+      jwt (~> 1.4)
+      logging (~> 2.0)
+      memoist (~> 0.12)
+      multi_json (~> 1.11)
+      os (~> 0.9)
+      signet (~> 0.7)
+    grpc (1.6.0)
+      google-protobuf (~> 3.1)
+      googleauth (~> 0.5.1)
+    grpc-tools (1.6.0)
     guard (2.14.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -281,6 +294,7 @@ GEM
       railties (>= 3.2.16)
     json (1.8.6)
     jsonapi-renderer (0.1.2)
+    jwt (1.5.6)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -294,11 +308,16 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    little-plugger (1.1.4)
+    logging (2.2.2)
+      little-plugger (~> 1.1)
+      multi_json (~> 1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.10)
     mail (2.6.5)
       mime-types (>= 1.16, < 4)
+    memoist (0.16.0)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     meta_request (0.4.0)
@@ -335,6 +354,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
+    os (0.9.6)
     parser (2.3.1.0)
       ast (~> 2.2)
     polyamorous (1.3.1)
@@ -481,6 +501,11 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    signet (0.7.3)
+      addressable (~> 2.3)
+      faraday (~> 0.9)
+      jwt (~> 1.5)
+      multi_json (~> 1.10)
     silencer (1.0.1)
     simple_oauth (0.3.1)
     slack-api (1.2.4)
@@ -616,6 +641,8 @@ DEPENDENCIES
   fog-aws
   font-awesome-rails
   foreman
+  grpc
+  grpc-tools
   guard
   guard-rspec
   http

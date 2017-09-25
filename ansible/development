@@ -3,3 +3,6 @@
 
 [development:children]
 web-servers
+
+[all:vars]
+stage=development

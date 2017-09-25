@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915071106) do
+ActiveRecord::Schema.define(version: 20170915093033) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -107,6 +107,14 @@ ActiveRecord::Schema.define(version: 20170915071106) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "dumps", force: :cascade do |t|
+    t.integer  "bot_id",     limit: 4,          null: false
+    t.string   "name",       limit: 255,        null: false
+    t.binary   "content",    limit: 4294967295
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "exports", force: :cascade do |t|
     t.string   "file",       limit: 255, null: false
@@ -239,6 +247,7 @@ ActiveRecord::Schema.define(version: 20170915071106) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role",                   limit: 4,   default: 0
+    t.integer  "plan",                   limit: 4,   default: 2,  null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -1,4 +1,5 @@
 class Chats::ChoicesController < ApplicationController
+  include GuestKeyUsable
   skip_before_action :verify_authenticity_token
   before_action :set_bot_chat_decision_branch
 
@@ -16,7 +17,7 @@ class Chats::ChoicesController < ApplicationController
   private
     def set_bot_chat_decision_branch
       @bot = Bot.find_by!(token: params[:token])
-      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
+      @chat = @bot.chats.where(guest_key: guest_key).last
       @decision_branch = @chat.bot.decision_branches.find(params[:id])
     end
 

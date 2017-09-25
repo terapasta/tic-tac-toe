@@ -1,0 +1,10 @@
+/var/www/donusagi-bot/shared/log/*.log {
+  daily
+  create 0644 deploy deploy
+  rotate 7
+  missingok
+  compress
+  delaycompress
+  copytruncate
+  notifempty
+}

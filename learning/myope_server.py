@@ -1,69 +1,92 @@
+from concurrent import futures
+import time
+
+import grpc
+
+from gateway_pb2 import ReplyResponse, Result, LearnResponse
+from gateway_pb2_grpc import BotServicer
+from gateway_pb2_grpc import add_BotServicer_to_server
+
 import traceback
+import inject
 import numpy as np
 import argparse
-from gevent.server import StreamServer
-from mprpc import RPCServer
 
-from learning.core.stop_watch import stop_watch
-from learning.log import logger
-from learning.core.predict.reply import Reply
-from learning.core.predict.null_reply_result import NullReplyResult
-from learning.core.predict.model_not_exists_error import ModelNotExistsError
-from learning.core.learn.bot import Bot
-from learning.core.learn.learning_parameter import LearningParameter
-from learning.config.config import Config
+from app.shared.logger import logger
+from app.shared.config import Config
+from app.shared.stop_watch import stop_watch
+from app.shared.current_bot import CurrentBot
+from app.shared.datasource.datasource import Datasource
+from app.controllers.reply_controller import ReplyController
+from app.controllers.learn_controller import LearnController
+from app.factories.factory_selector import FactorySelector
 
 
-class MyopeServer(RPCServer):
-    # HACK: status_code使っていないと思われるので整理したい
-    STATUS_CODE_SUCCESS = 1
-    STATUS_CODE_MODEL_NOT_EXISTS = 101
-    STATUS_CODE_UNKNOWN_ERROR = 999
+_ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
-    def reply(self, bot_id, body, learning_parameter_attributes):
-        learning_parameter = LearningParameter(learning_parameter_attributes)
-        X = np.array([body])
+
+class RouteGuideServicer(BotServicer):
+    def Reply(self, request, context):
+        logger.debug('request = %s' % request)
+        bot = CurrentBot().init(request.bot_id, request.learning_parameter)
+        Datasource().init(bot)
+        X = np.array([request.body])
 
         try:
-            reply_result = Reply(bot_id, learning_parameter).perform(X)
-            status_code = self.STATUS_CODE_SUCCESS
-        except ModelNotExistsError:
-            logger.error(traceback.format_exc())
-            reply_result = NullReplyResult()
-            status_code = self.STATUS_CODE_MODEL_NOT_EXISTS
+            reply = ReplyController(factory=FactorySelector().get_factory()).perform(X[0])
         except:
             logger.error(traceback.format_exc())
-            reply_result = NullReplyResult()
-            status_code = self.STATUS_CODE_UNKNOWN_ERROR
+            reply = {
+                'question_feature_count': 0,
+                'results': [],
+            }
 
-        result = {
-            'status_code': status_code,
-            'question': reply_result.question,
-            'question_feature_count': reply_result.question_feature_count,
-            'question_answer_id': reply_result.question_answer_id,
-            'probability': reply_result.probability,
-            'results': reply_result.to_dict(),
-        }
-        return result
+        return ReplyResponse(
+            question_feature_count=reply['question_feature_count'],
+            results=[Result(**x) for x in reply['results']],
+            )
 
     @stop_watch
-    def learn(self, bot_id, learning_parameter_attributes):
-        learning_parameter = LearningParameter(learning_parameter_attributes)
-        evaluator = Bot(bot_id, learning_parameter).learn()
-        return {
-            'accuracy': evaluator.accuracy,
-            'precision': evaluator.precision,
-            'recall': evaluator.recall,
-            'f1': evaluator.f1,
-        }
+    def Learn(self, request, context):
+        logger.debug('request = %s' % request)
+        bot = CurrentBot().init(request.bot_id, request.learning_parameter)
+        Datasource().init(bot)
+
+        try:
+            result = LearnController(factory=FactorySelector().get_factory()).perform()
+        except:
+            logger.error(traceback.format_exc())
+            result = {
+                'accuracy': 0,
+                'precision': 0,
+                'recall': 0,
+                'f1': 0,
+            }
+            context.set_details("Error")
+            context.set_code(grpc.StatusCode.INTERNAL)
+
+        return LearnResponse(**result)
+
+
+def serve(port):
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    add_BotServicer_to_server(
+            RouteGuideServicer(), server)
+    server.add_insecure_port('[::]:%s' % port)
+    server.start()
+    try:
+        while True:
+            time.sleep(_ONE_DAY_IN_SECONDS)
+    except KeyboardInterrupt:
+        server.stop(0)
 
 
 if __name__ == '__main__':
+    inject.configure_once()
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host', type=str, default='127.0.0.1')
     parser.add_argument('--port', type=int, default=6000)
     parser.add_argument('--env', type=str, default='development')
     args = parser.parse_args()
-    Config._ENV = args.env
-    server = StreamServer((args.host, args.port), MyopeServer())
-    server.serve_forever()
+    Config().init(args.env)
+
+    serve(args.port)

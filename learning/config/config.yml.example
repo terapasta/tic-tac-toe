@@ -5,6 +5,7 @@ default: &default
     name: donusagi_bot
     user: root
     password: ""
+  dic: dict/custom.dic
 
 development:
   <<: *default
@@ -17,6 +18,7 @@ test:
     name: donusagi_bot_test
     user: root
     password: ""
+  dic: dict/custom.dic
 
 production:
   <<: *default
@@ -26,3 +28,4 @@ production:
     name: 
     user: 
     password: 
+  dic:

@@ -110,6 +110,7 @@ gem 'to_bool'
 gem 'active_link_to'
 gem 'grpc'
 gem 'grpc-tools'
+gem 'google-protobuf', '3.4.0.2'
 
 group :development, :test do
 

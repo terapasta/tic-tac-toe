@@ -1,3 +1,4 @@
+working_directory '/var/www/donusagi-bot/current'
 worker_processes 2
 timeout 150
 

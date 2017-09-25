@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915071106) do
+ActiveRecord::Schema.define(version: 20170915093033) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 20170915071106) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role",                   limit: 4,   default: 0
+    t.integer  "plan",                   limit: 4,   default: 2,  null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

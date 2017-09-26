@@ -55,18 +55,13 @@ export default class ChatSection extends Component {
       isFirst,
       isActive,
       isDisabled,
-      onClick,
       section,
-      index,
-      onSaveLearning,
     } = this.props;
 
     const {
       decisionBranches,
       similarQuestionAnswers,
       isDone,
-      question,
-      answer
     } = section;
     const isDecisionBranch = !isEmpty(decisionBranches);
     const isSQA = isArray(similarQuestionAnswers);
@@ -80,7 +75,11 @@ export default class ChatSection extends Component {
     });
 
     return (
-      <div className={className} ref="root">
+      <div
+        className={className}
+        ref="root"
+        data-decision-branch={isDecisionBranch}
+      >
         <div className="chat-section__switch-container">
           {!isFirst && !isDecisionBranch && !isSQA && (
             <a href="#"

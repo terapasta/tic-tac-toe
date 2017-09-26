@@ -12,22 +12,41 @@ class Database():
         self.__dict__ = self.__shared_state
 
     def select(self, sql, params):
-        self._connect()
-        data = pd.read_sql(sql, self.db, params=params)
-        # Note: 常に最新のデータを取得するためにコミットする
-        self.db.commit()
+        def my_execute():
+            data = pd.read_sql(sql, self.db, params=params)
+            # Note: 常に最新のデータを取得するためにコミットする
+            self.db.commit()
+            return data
+        data = self._execute_with_connect(my_execute)
         return data
 
     def execute(self, sql, params):
-        self._connect()
-        with self.db as cur:
-            cur.execute(sql, params)
+        def my_execute():
+            with self.db as cur:
+                cur.execute(sql, params)
+        self._execute_with_connect(my_execute)
 
     def execute_with_transaction(self, queries):
-        self._connect()
-        with self.db as cur:
-            for query in queries:
-                cur.execute(query[0], query[1])
+        def my_execute():
+            with self.db as cur:
+                for query in queries:
+                    cur.execute(query[0], query[1])
+        self._execute_with_connect(my_execute)
+
+    def _execute_with_connect(self, function):
+        try:
+            self._connect()
+            return function()
+        # NOTE: MYSQLに一定時間以上クエリーを実行しなかった場合に接続が切断されてしまうため再接続を行う
+        #       https://www.pivotaltracker.com/n/projects/1879711/stories/151425115
+        # HACK: MySQLdb.Errorなどで補足したいができなかった
+        except:
+            import traceback
+            traceback.print_exc()
+            logger.info('try reconnect to database')
+            self.db = None
+            self._connect()
+            return function()
 
     def _connect(self):
         if self.db is not None:

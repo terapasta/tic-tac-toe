@@ -23,11 +23,12 @@ RSpec.describe ChatsController do
     end
 
     subject do
-      get :show, { token: bot.token }, { guest_key: session_guest_key }
+      cookies.encrypted[:guest_key] = cookie_guest_key
+      get :show, { token: bot.token }
     end
 
     context 'has guest_key' do
-      let(:session_guest_key) do
+      let(:cookie_guest_key) do
         guest_key
       end
 
@@ -37,7 +38,7 @@ RSpec.describe ChatsController do
     end
 
     context 'has not guest_key' do
-      let(:session_guest_key) do
+      let(:cookie_guest_key) do
         nil
       end
 

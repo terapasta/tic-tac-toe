@@ -24,11 +24,14 @@ class CurrentBot(object):
 
     @property
     def datasource_type(self):
-        return self._learning_parameter.get('datasource_type', Constants.DATASOURCE_TYPE_DATABASE)
+        if self._learning_parameter.datasource_type == '':
+            return Constants.DATASOURCE_TYPE_DATABASE
+
+        return self._learning_parameter.datasource_type
 
     @property
     def algorithm(self):
-        if self._learning_parameter.get('use_similarity_classification', True):
+        if self._learning_parameter.use_similarity_classification:
             return Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
 
-        return self._learning_parameter.get('algorithm', Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
+        return self._learning_parameter.algorithm

@@ -4,7 +4,6 @@ lock '3.6.1'
 set :pty, true
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
-set :branch, ENV['BRANCH'] || 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/donusagi-bot'
@@ -15,8 +14,8 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 set :migration_role, 'web'
 
-set :linked_files, %w{.env .python-version learning/learning/config/config.yml}
-set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads learning/learning/models learning/logs}
+set :linked_files, %w{.env .python-version learning/config/config.yml config/database.yml}
+set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads learning/dumps learning/logs}
 
 set :bundle_jobs, 4
 set :unicorn_pid, "/tmp/unicorn.pid"
@@ -53,7 +52,10 @@ namespace :deploy do
     on roles(:app) do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
-      execute :sudo, :supervisorctl, :reload
+      within current_path.join('learning') do
+        sudo :pip, :install, '-r requirements.txt'
+      end
+      sudo :supervisorctl, :reload, '-c /etc/supervisord.conf'
     end
   end
 

@@ -6,8 +6,8 @@ RSpec.describe Learning::Amplifier do
     let(:bot) { create :bot }
 
     before do
-      create(:word_mapping, word: 'カレー', synonym: 'カリー', bot: bot)
-      create(:word_mapping, word: '食べたい', synonym: '食したい')
+      create(:word_mapping, word: 'カレー', word_mapping_synonyms_attributes: [{ value: 'カリー' }], bot: bot)
+      create(:word_mapping, word: '食べたい', word_mapping_synonyms_attributes: [{ value: '食したい' }])
     end
 
     subject { Learning::Amplifier.new(bot).amp(sentence) }

@@ -4,7 +4,7 @@
   - content_for :additional_container_main_class, 'container-main--headless'
 
 - pagination = capture do
-  = render 'question_answers/pagination', question_answers: @question_answers, current_page: @current_page, per_page: @per_page
+  = render 'shared/pagination', resources: @question_answers, current_page: @current_page, per_page: @per_page
 
 .px-3.pt-3
   = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, sort: params.dig(:q, :s), action_url: bot_question_answers_selections_path(@bot, headless: params[:headless], hide_global_header: params[:hide_global_header]), headless: params[:headless], hide_global_header: params[:hide_global_header]

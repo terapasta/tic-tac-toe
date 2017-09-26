@@ -1,0 +1,8 @@
+[web-servers]
+13.114.217.197 ansible_ssh_user=ec2-user
+
+[development:children]
+web-servers
+
+[all:vars]
+stage=staging

@@ -1,30 +1,41 @@
+require 'learning/gateway_pb'
+require 'learning/gateway_services_pb'
+
 class Ml::Engine
 
   def initialize(bot)
     host = ENV.fetch('RPC_HOST'){ '127.0.0.1' }
-    port = 6000
-    @session_pool = MessagePack::RPC::SessionPool.new
-    @client = @session_pool.get_session(host, port)
-    @client.timeout = 30.minutes
+    port = ENV.fetch('RPC_PORT'){ 6000 }
     @bot = bot
+    @stub = Gateway::Bot::Stub.new("#{host}:#{port}", :this_channel_is_insecure)
   end
 
   def reply(body)
-    return @client.call(:reply, @bot.id, body, @bot.learning_parameter_attributes).with_indifferent_access
+    return @stub.reply(
+      Gateway::ReplyRequest.new(
+        bot_id: @bot.id,
+        body: body,
+        learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
+      )).as_json.with_indifferent_access
+  rescue => e
+    ExceptionNotifier.notify_exception e
+    Rollbar.log(e)
+    logger.error 'Refer python-application.log'
+    raise e
   end
 
   def learn
-    # TODO RPCサーバ側でタイムアウトしてしまうため、結果を非同期で受け取りたい
-    @client.call(:learn, @bot.id, @bot.learning_parameter_attributes)
+    return @stub.learn(
+      Gateway::LearnRequest.new(
+        bot_id: @bot.id,
+        learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
+      )).as_json.with_indifferent_access
+  rescue => e
+    ExceptionNotifier.notify_exception e
+    Rollbar.log(e)
+    logger.error 'Refer python-application.log'
+    raise e
   end
-
-  # TODO 非同期でコールバックを実行するメソッドを実装したい(RPCサーバのタイムアウト対策)、RPCサーバを変更する必要があるかも
-  # def async_learn
-  #   future = @client.callback(:learn, @bot.id, @bot.learning_parameter_attributes) do
-  #     Rails.logger.debug('hogehogehogehogehogehogehogehogehogehogehogehoge')
-  #   end
-  #   future.get
-  # end
 
   def predict_tags(bodies)
     @client.call(:predict_tags, bodies)

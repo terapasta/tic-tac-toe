@@ -15,11 +15,9 @@ gem 'mysql2', '~> 0.3.20'
 gem 'sass'
 gem 'sass-rails', '~> 5.0'
 gem 'font-awesome-rails'
-gem 'tether-rails'
 
 # easy to write a form
-gem 'bootstrap-sass'
-gem 'bootstrap_form'
+gem 'bootstrap', '~> 4.0.0.beta'
 #gem 'simple_form' #代替案
 
 # Use Uglifier as compressor for JavaScript assets
@@ -49,7 +47,6 @@ gem 'bcrypt', '~> 3.1.7'
 
 # login
 gem 'devise'
-gem 'devise-bootstrap-views'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 
@@ -95,7 +92,6 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'compass'
 gem 'autoprefixer-rails', '~> 6.7.7.2'
-gem 'bootstrap-tagsinput-rails'
 gem 'draper'
 gem 'pundit'
 gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond'
@@ -112,6 +108,9 @@ gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
 gem 'active_link_to'
+gem 'grpc'
+gem 'grpc-tools'
+gem 'google-protobuf', '3.4.0.2'
 
 group :development, :test do
 

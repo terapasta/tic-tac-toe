@@ -1,4 +1,5 @@
 class Chats::TrainingsController < ApplicationController
+  include GuestKeyUsable
   before_action :set_bot_chat_messages
 
   def create
@@ -17,7 +18,7 @@ class Chats::TrainingsController < ApplicationController
   private
     def set_bot_chat_messages
       @bot = Bot.find_by!(token: params[:token])
-      @chat = @bot.chats.where(guest_key: session[:guest_key]).last
+      @chat = @bot.chats.where(guest_key: guest_key).last
       @question_message = @chat.messages.find(params[:question_message_id])
       @answer_message = @chat.messages.find(params[:answer_message_id])
     end

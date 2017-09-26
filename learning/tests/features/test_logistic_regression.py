@@ -13,6 +13,12 @@ from app.factories.factory_selector import FactorySelector
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 
 
+class LearningParameter:
+    datasource_type = Constants.DATASOURCE_TYPE_FILE
+    use_similarity_classification = False
+    algorithm = Constants.ALGORITHM_LOGISTIC_REGRESSION
+
+
 class LogisticRegressionTestCase(TestCase):
 
     def setUp(self):
@@ -24,11 +30,7 @@ class LogisticRegressionTestCase(TestCase):
         #     ```
         Config().init('test')
         self.bot_id = 1
-        self.learning_parameter = {
-          'datasource_type': Constants.DATASOURCE_TYPE_FILE,
-          'use_similarity_classification': False,
-          'algorithm': Constants.ALGORITHM_LOGISTIC_REGRESSION,
-        }
+        self.learning_parameter = LearningParameter()
         self.body = '会社の住所が知りたい'
 
     # def test_learn_and_reply(self):

@@ -7,11 +7,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 1px;
+
+  // -webkit-transform: translateZ(0px);
+  // -webkit-transform: translate3d(0,0,0);
+  // -webkit-perspective: 1000;
 }
 
 @media all and (-ms-high-contrast:none){
   /* IE11 */
-  *::-ms-backdrop, .chat-area {
-    max-height: none;
+  *::-ms-backdrop, .chat-area:after {
+    content: "";
+    height: 58px;
+    display: block;
+    // max-height: none;
+    // margin-bottom: 30px;
   }
 }

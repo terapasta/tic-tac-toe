@@ -6,11 +6,10 @@ class Learning::Amplifier
 
   def amp(sentence)
     @word_mappings ||= WordMapping.for_bot(@bot)
-    @word_mappings.map do |word_mapping|
-      [
-         sentence.include?(word_mapping.word) ? sentence.gsub(/#{word_mapping.word}/, word_mapping.synonym) : nil,
-         sentence.include?(word_mapping.synonym) ? sentence.gsub(/#{word_mapping.synonym}/, word_mapping.word) : nil
-      ]
-    end.flatten.compact
+    @word_mappings.map { |wm|
+      wm.word_mapping_synonyms.map { |s|
+        sentence.gsub(wm.word, s.value) if sentence.include?(wm.word)
+      }
+    }.flatten.compact
   end
 end

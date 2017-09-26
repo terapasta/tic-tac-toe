@@ -6,9 +6,9 @@ import {
 
 import Widget from "./embed/widget";
 
-if (!window._babelPolyfill) {
-  require("babel-polyfill");
-}
+// if (!window._babelPolyfill) {
+//   require("babel-polyfill");
+// }
 
 function init() {
   const mountNode = document.querySelector("#" + Namespace);

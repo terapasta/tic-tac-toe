@@ -61,6 +61,12 @@ class Chat < ActiveRecord::Base
     find_by(id: chat_id).messages.guest.where('id < ?', answer_message_id).order(:id).last
   }
 
+  scope :in_today_by_unique_user, -> {
+    now = Time.current
+    joins(:messages)
+      .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting_text
     self.messages << Message.new(speaker: 'bot', body: body)

@@ -7,7 +7,7 @@ class ChatsController < ApplicationController
 
   def show
     iframe_support @bot
-    @chat = @bot.chats.find_last_by(guest_key)
+    @chat = @bot.chats.where(guest_key: guest_key).order(created_at: :desc).first
     if @chat.nil?
       redirect_to new_chats_path(token: params[:token])
     else
@@ -17,6 +17,7 @@ class ChatsController < ApplicationController
 
   def new
     iframe_support @bot
+    render :exceeded and return if policy(@bot).exceeded_chats_count?
     @chat = @bot.chats.create_by(guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)

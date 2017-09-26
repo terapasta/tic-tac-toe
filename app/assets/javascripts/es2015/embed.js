@@ -1,7 +1,3 @@
-import React from "react";
-import { render } from "react-dom";
-import "babel-polyfill";
-
 import { directMountComponent } from "./modules/mount-component";
 
 import {
@@ -9,6 +5,10 @@ import {
 } from "./embed/constants";
 
 import Widget from "./embed/widget";
+
+if (!window._babelPolyfill) {
+  require("babel-polyfill");
+}
 
 function init() {
   const mountNode = document.querySelector("#" + Namespace);

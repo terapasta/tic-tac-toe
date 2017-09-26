@@ -32,7 +32,7 @@ import {
 } from "./styled";
 
 const Origin = process.env.NODE_ENV === "development" ?
-  "http://localhost:3000" : "https://app.my-ope.net";
+  "http://donusagi-bot.192.168.0.2.xip.io" : "https://app.my-ope.net";
 
 export default class Widget extends Component {
   constructor(props) {

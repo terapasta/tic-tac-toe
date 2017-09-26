@@ -5,15 +5,21 @@ class ThreadsController < ApplicationController
 
   def index
     @per_page = 20
-    @chats = @bot.chats
+    tmp_chats = @bot.chats
       .has_multiple_messages
       .not_staff(!current_user.staff?)
-      .not_normal(!params[:normal].present?)
+      .not_normal(params[:normal].blank?)
       .normal(params[:normal])
       .has_answer_failed(params[:answer_failed].to_bool)
       .has_good_answer(params[:good].to_bool)
       .has_bad_answer(params[:bad].to_bool)
       .has_answer_marked(params[:marked].to_bool)
+
+    if current_user.ec_plan? && params[:normal].blank?
+      tmp_chats = tmp_chats.where('chats.created_at >= ?', current_user.histories_limit_time)
+    end
+
+    @chats = tmp_chats
       .page(params[:page])
       .per(@per_page)
 

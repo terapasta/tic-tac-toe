@@ -40,6 +40,8 @@ class RouteGuideServicer(BotServicer):
                 'question_feature_count': 0,
                 'results': [],
             }
+            context.set_details("Error")
+            context.set_code(grpc.StatusCode.INTERNAL)
 
         return ReplyResponse(
             question_feature_count=reply['question_feature_count'],

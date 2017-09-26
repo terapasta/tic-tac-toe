@@ -17,6 +17,11 @@ class Ml::Engine
         body: body,
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       )).as_json.with_indifferent_access
+  rescue => e
+    ExceptionNotifier.notify_exception e
+    Rollbar.log(e)
+    logger.error 'Refer python-application.log'
+    raise e
   end
 
   def learn
@@ -25,6 +30,11 @@ class Ml::Engine
         bot_id: @bot.id,
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       )).as_json.with_indifferent_access
+  rescue => e
+    ExceptionNotifier.notify_exception e
+    Rollbar.log(e)
+    logger.error 'Refer python-application.log'
+    raise e
   end
 
   def predict_tags(bodies)

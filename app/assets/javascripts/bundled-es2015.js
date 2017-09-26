@@ -9401,7 +9401,7 @@ var makeCode = function makeCode(token, width, height) {
       host = _window$location.host;
 
   var origin = protocol + '//' + host;
-  var src = origin + '/embed/' + token + '/chats/new';
+  var src = origin + '/embed/' + token + '/chats';
   var w = (0, _isEmpty2.default)(width) ? 0 : width;
   var h = (0, _isEmpty2.default)(height) ? 0 : height;
   return '<iframe width="' + w + '" height="' + h + '" src="' + src + '" style="border: 1px solid #c0c0c0;" allowfullscreen></iframe>';

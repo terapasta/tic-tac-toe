@@ -1,6 +1,6 @@
 class GuestUserPolicy < ApplicationPolicy
   def show?
-    writable?
+    true
   end
 
   def create?
@@ -24,7 +24,7 @@ class GuestUserPolicy < ApplicationPolicy
 
   private
     def user_guest_key
-      user.cookies.try(:[], :guest_key)
+      user.request.cookies['guest_key']
     end
 
     def writable?

@@ -1,0 +1,6 @@
+ja:
+  activerecord:
+    attributes:
+      guest_user:
+        name: お名前
+        email: メールアドレス

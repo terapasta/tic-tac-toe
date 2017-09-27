@@ -13,6 +13,13 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   private
+    def pundit_user
+      UserContext.new(
+        user: current_user,
+        session: session,
+        cookies: cookies.encrypted
+      )
+    end
 
     def handle_500(exception)
       ExceptionNotifier.notify_exception exception, env: request.env

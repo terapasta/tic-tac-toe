@@ -124,6 +124,16 @@ ActiveRecord::Schema.define(version: 20171003062902) do
 
   add_index "exports", ["bot_id"], name: "index_exports_on_bot_id", using: :btree
 
+  create_table "guest_users", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.string   "email",      limit: 255
+    t.string   "guest_key",  limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "guest_users", ["guest_key"], name: "index_guest_users_on_guest_key", using: :btree
+
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",                        limit: 4
     t.integer  "algorithm",                     limit: 4,     default: 0,    null: false

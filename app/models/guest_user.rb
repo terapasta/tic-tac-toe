@@ -4,7 +4,7 @@ class GuestUser < ActiveRecord::Base
 
   validates :email,
     email: true,
-    allow_nil: true
+    allow_blank: true
 
   validates :guest_key,
     presence: true

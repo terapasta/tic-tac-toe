@@ -22,6 +22,7 @@ import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
 import ChatReadMore from "./read-more";
 import ChatFlashMessage from "./flash-message";
+import ChatGuestUserForm from './guest-user-form';
 
 let isFetchedInitialQuestions = false;
 
@@ -99,6 +100,9 @@ export default class ChatApp extends Component {
         }} />
         <ChatArea innerRef={node => this.area = node}>
           <ChatFlashMessage flashMessage={flashMessage} />
+          <ChatGuestUserForm
+            isManager={isManager}
+          />
           <ChatReadMore {...assign({
             isManager,
             onClick(e) {

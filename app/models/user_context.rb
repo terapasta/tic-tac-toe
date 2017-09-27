@@ -1,13 +1,18 @@
 class UserContext
-  attr_reader :user, :session, :cookies
+  attr_reader :user, :session, :cookies, :request
 
-  def initialize(user:, session:, cookies:)
+  def initialize(user:, session:, request:)
     @user = user
     @session = session
-    @cookies = cookies
+    @request = request
+  end
+
+  def presence
+    user.presence
   end
 
   def method_missing(method_name, *args)
+    return user.send(method_name) if user.is_a?(ApplicationPolicy::DummyUser)
     if user.respond_to?(method_name)
       user.send(method_name, *args)
     else

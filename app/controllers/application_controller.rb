@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
       UserContext.new(
         user: current_user,
         session: session,
-        cookies: cookies.encrypted
+        request: request,
       )
     end
 

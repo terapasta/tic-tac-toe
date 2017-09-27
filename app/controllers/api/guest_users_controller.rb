@@ -1,4 +1,5 @@
 class Api::GuestUsersController < Api::BaseController
+  include GuestKeyUsable
   skip_before_action :authenticate_user!
   before_action :set_guest_user, only: [:show, :update, :destroy]
 
@@ -8,7 +9,7 @@ class Api::GuestUsersController < Api::BaseController
 
   def create
     @guest_user = GuestUser.new(permitted_attributes(GuestUser).merge(
-      guest_key: cookies.encrypted[:guest_key]
+      guest_key: guest_key
     ))
     if @guest_user.save
       render json: @guest_user, adapter: :json, status: :created

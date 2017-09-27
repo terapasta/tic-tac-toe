@@ -1,3 +1,9 @@
 .chat-message--my.full-width
   .chat-message__icon style=("background-image:url(#{image_path('silhouette.png')});")
   .chat-message__balloon= message.body
+  - if @guest_user.present?
+    p.pt-2
+      |お名前：<code>#{@guest_user.name}</code>
+      - if @guest_user.email.present?
+        br
+        |メールアドレス：<code>#{@guest_user.email}</code>

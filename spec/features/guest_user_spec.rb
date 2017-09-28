@@ -41,6 +41,8 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
       click_on '質問'
 
       sign_in user
+      sign_in user
+      sign_in user
       visit "/bots/#{bot.id}/threads"
       click_on 'これ以前の発言もすべて見る'
 

@@ -54,6 +54,7 @@ class ChatHeader extends Component {
         {!isManager && (
           <div className="chat-header__left">
             <a
+              id="guest-user-modal-button"
               href="#"
               className="btn btn-link"
               title="ユーザー情報を編集できます"

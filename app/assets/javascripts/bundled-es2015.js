@@ -5167,6 +5167,7 @@ var ChatHeader = function (_Component) {
           _react2.default.createElement(
             "a",
             {
+              id: "guest-user-modal-button",
               href: "#",
               className: "btn btn-link",
               title: "\u30E6\u30FC\u30B6\u30FC\u60C5\u5831\u3092\u7DE8\u96C6\u3067\u304D\u307E\u3059",

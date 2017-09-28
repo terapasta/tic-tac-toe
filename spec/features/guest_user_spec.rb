@@ -9,7 +9,7 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
   end
 
   let!(:bot) do
-    create(:bot, user: user)
+    create(:bot, user: user, enable_guest_user_registration: flag)
   end
 
   let(:name) do
@@ -25,6 +25,10 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
   end
 
   feature 'register guest_user' do
+    let(:flag) do
+      true
+    end
+
     scenario do
       visit "/embed/#{bot.token}/chats/new"
       fill_in_input id: 'guest-user-name', value: name
@@ -48,6 +52,17 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
 
       expect(page).to have_content(name)
       expect(page).to have_content(email)
+    end
+  end
+
+  feature 'not register guest_user' do
+    let(:flag) do
+      false
+    end
+
+    scenario do
+      visit "/embed/#{bot.token}/chats/new"
+      expect(page).to_not have_content('ユーザー情報')
     end
   end
 end

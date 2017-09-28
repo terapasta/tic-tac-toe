@@ -7,4 +7,5 @@ span(
   data-is-manager=(current_user.present? && (current_user.normal? || current_user.staff?)).to_json
   data-flash-message=flash[:warning]
   data-is-registered-guest-user=@guest_user.present?.to_json
+  data-is-enable-guest-user-registration=@bot.enable_guest_user_registration.to_json
 )

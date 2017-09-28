@@ -22,6 +22,7 @@ const app = combineReducers({
   isManager: through,
   flashMessage: through,
   isRegisteredGuestUser: through,
+  isEnableGuestUserRegistration: through,
   initialQuestions,
 });
 

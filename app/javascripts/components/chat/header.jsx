@@ -40,7 +40,7 @@ class ChatHeader extends Component {
   }
 
   render() {
-    const { botName, isAdmin, isManager } = this.props;
+    const { botName, isAdmin, isManager, isEnableGuestUserRegistration } = this.props;
     const { isShowGuestUserForm, isRegisteredGuestUser } = this.state;
 
     return (
@@ -51,6 +51,19 @@ class ChatHeader extends Component {
             <LearningButton botId={window.currentBot.id} isAdmin={isAdmin} />
           </div>
         )}
+        {this.renderGuestUserParts()}
+      </header>
+    );
+  }
+
+  renderGuestUserParts() {
+    const { isManager, isEnableGuestUserRegistration } = this.props;
+    const { isShowGuestUserForm, isRegisteredGuestUser } = this.state;
+
+    if (!isEnableGuestUserRegistration) { return null; }
+
+    return (
+      <span>
         {!isManager && (
           <div className="chat-header__left">
             <a
@@ -79,7 +92,7 @@ class ChatHeader extends Component {
             />
           </Modal>
         )}
-      </header>
+      </span>
     );
   }
 

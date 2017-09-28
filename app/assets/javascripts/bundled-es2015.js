@@ -3016,10 +3016,6 @@ var _flashMessage = require("./flash-message");
 
 var _flashMessage2 = _interopRequireDefault(_flashMessage);
 
-var _guestUserForm = require("./guest-user-form");
-
-var _guestUserForm2 = _interopRequireDefault(_guestUserForm);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -3110,7 +3106,8 @@ var ChatApp = function (_Component) {
           isManager = _props3.isManager,
           readMore = _props3.readMore,
           flashMessage = _props3.flashMessage,
-          initialQuestions = _props3.initialQuestions;
+          initialQuestions = _props3.initialQuestions,
+          isRegisteredGuestUser = _props3.isRegisteredGuestUser;
       var classifiedData = messages.classifiedData;
 
 
@@ -3122,6 +3119,7 @@ var ChatApp = function (_Component) {
           learningStatus: learning.status,
           isAdmin: isAdmin,
           isManager: isManager,
+          isRegisteredGuestUser: isRegisteredGuestUser,
           onClickStartLearning: function onClickStartLearning() {
             dispatch(a.startLearning(window.currentBot.id));
           }
@@ -3132,9 +3130,6 @@ var ChatApp = function (_Component) {
               return _this2.area = node;
             } },
           _react2.default.createElement(_flashMessage2.default, { flashMessage: flashMessage }),
-          _react2.default.createElement(_guestUserForm2.default, {
-            isManager: isManager
-          }),
           _react2.default.createElement(_readMore2.default, (0, _assign2.default)({
             isManager: isManager,
             onClick: function onClick(e) {
@@ -3277,7 +3272,7 @@ function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
   }
 }
 
-},{"../../analytics/mixpanel":4,"./action-creators":26,"./area":28,"./bot-message-row":30,"./decision-branches-row":34,"./flash-message":36,"./form":37,"./guest-message-row":39,"./guest-user-form":41,"./header":42,"./read-more":45,"./section":54,"./similar-question-answers-row":55,"imagesLoaded":433,"is-empty":435,"lodash/assign":655,"lodash/findLastIndex":672,"lodash/includes":678,"lodash/isEqual":684,"lodash/sortBy":715,"lodash/takeRight":718,"react":922}],28:[function(require,module,exports){
+},{"../../analytics/mixpanel":4,"./action-creators":26,"./area":28,"./bot-message-row":30,"./decision-branches-row":34,"./flash-message":36,"./form":37,"./guest-message-row":39,"./header":42,"./read-more":45,"./section":54,"./similar-question-answers-row":55,"imagesLoaded":433,"is-empty":435,"lodash/assign":655,"lodash/findLastIndex":672,"lodash/includes":678,"lodash/isEqual":684,"lodash/sortBy":715,"lodash/takeRight":718,"react":922}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4747,7 +4742,7 @@ var Static = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'chat-guest-user-form' },
+        null,
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
@@ -4826,11 +4821,13 @@ var Form = function (_Component2) {
 
       return _react2.default.createElement(
         'form',
-        { className: 'chat-guest-user-form', onSubmit: handleSubmit },
+        { onSubmit: handleSubmit },
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
-          '\u30C1\u30E3\u30C3\u30C8\u5F8C\u306E\u30B5\u30DD\u30FC\u30C8\u306B\u5F79\u7ACB\u3066\u308B\u305F\u3081\u306B\u3001\u4EE5\u4E0B\u306E\u60C5\u5831\u3092\u3054\u5165\u529B\u4E0B\u3055\u3044\uFF08\u4EFB\u610F\uFF09'
+          '\u30C1\u30E3\u30C3\u30C8\u5F8C\u306E\u30B5\u30DD\u30FC\u30C8\u306B\u5F79\u7ACB\u3066\u308B\u305F\u3081\u306B\u3001',
+          _react2.default.createElement('br', null),
+          '\u4EE5\u4E0B\u306E\u60C5\u5831\u3092\u3054\u5165\u529B\u4E0B\u3055\u3044\uFF08\u4EFB\u610F\uFF09'
         ),
         _react2.default.createElement(
           'div',
@@ -4846,6 +4843,7 @@ var Form = function (_Component2) {
             )
           ),
           _react2.default.createElement('input', {
+            id: 'guest-user-name',
             type: 'text',
             name: 'name',
             className: 'form-control',
@@ -4867,6 +4865,7 @@ var Form = function (_Component2) {
             '\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9'
           ),
           _react2.default.createElement('input', {
+            id: 'guest-user-email',
             type: 'email',
             name: 'email',
             className: 'form-control',
@@ -4883,6 +4882,7 @@ var Form = function (_Component2) {
           'div',
           { className: 'form-group mb-0 text-center' },
           _react2.default.createElement('input', {
+            id: 'guest-user-submit',
             type: 'submit',
             value: '\u9001\u4FE1',
             className: 'btn btn-success',
@@ -4919,17 +4919,23 @@ var FormikForm = (0, _formik.withFormik)({
         email = values.email;
 
     var guestKey = _jsCookie2.default.get('guest_key');
-    var request = void 0;
+    var request = void 0,
+        isCreate = void 0;
 
     if (props.isPersisted) {
+      isCreate = false;
       request = GuestUserAPI.update(guestKey, { name: name, email: email });
     } else {
+      isCreate = true;
       request = GuestUserAPI.create({ name: name, email: email });
     }
 
     request.then(function (res) {
       setSubmitting(false);
       props.handleSaved(res.data.guestUser);
+      if (isCreate && typeof props.handleRegistered === 'function') {
+        props.handleRegistered();
+      }
     }).catch(function (err) {
       setSubmitting(false);
       var _err$response$data = err.response.data,
@@ -4998,9 +5004,7 @@ var GuestUserForm = function (_Component3) {
     value: function render() {
       var _this5 = this;
 
-      if (this.props.isManager) {
-        return null;
-      }
+      var handleRegistered = this.props.handleRegistered;
       var _state = this.state,
           guestUser = _state.guestUser,
           isEditing = _state.isEditing,
@@ -5009,34 +5013,27 @@ var GuestUserForm = function (_Component3) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'chat-section' },
-        _react2.default.createElement(
-          _row2.default,
-          null,
-          _react2.default.createElement(
-            _container2.default,
-            null,
-            isLoading && _react2.default.createElement(
-              'div',
-              { className: 'chat-guest-user-form' },
-              '\u8AAD\u307F\u8FBC\u307F\u4E2D...'
-            ),
-            ((0, _isEmpty2.default)(guestUser) || isEditing) && !isLoading && _react2.default.createElement(FormikForm, {
-              isPersisted: !(0, _isEmpty2.default)(guestUser),
-              name: (0, _get2.default)(guestUser, 'name', ''),
-              email: (0, _get2.default)(guestUser, 'email', ''),
-              handleSaved: this.handleSaved,
-              handleClickCancel: function handleClickCancel() {
-                return _this5.setState({ isEditing: false });
-              }
-            }),
-            !(0, _isEmpty2.default)(guestUser) && !isEditing && !isLoading && _react2.default.createElement(Static, {
-              name: guestUser.name,
-              email: guestUser.email,
-              onClickEditButton: this.handleClickEditButton
-            })
-          )
-        )
+        { style: { textAlign: 'left' } },
+        isLoading && _react2.default.createElement(
+          'div',
+          { className: 'chat-guest-user-form' },
+          '\u8AAD\u307F\u8FBC\u307F\u4E2D...'
+        ),
+        ((0, _isEmpty2.default)(guestUser) || isEditing) && !isLoading && _react2.default.createElement(FormikForm, {
+          isPersisted: !(0, _isEmpty2.default)(guestUser),
+          name: (0, _get2.default)(guestUser, 'name', ''),
+          email: (0, _get2.default)(guestUser, 'email', ''),
+          handleSaved: this.handleSaved,
+          handleClickCancel: function handleClickCancel() {
+            return _this5.setState({ isEditing: false });
+          },
+          handleRegistered: handleRegistered
+        }),
+        !(0, _isEmpty2.default)(guestUser) && !isEditing && !isLoading && _react2.default.createElement(Static, {
+          name: guestUser.name,
+          email: guestUser.email,
+          onClickEditButton: this.handleClickEditButton
+        })
       );
     }
   }]);
@@ -5045,7 +5042,7 @@ var GuestUserForm = function (_Component3) {
 }(_react.Component);
 
 GuestUserForm.propTypes = {
-  isManager: _react.PropTypes.bool.isRequired
+  handleRegistered: _react.PropTypes.func
 };
 
 exports.default = GuestUserForm;
@@ -5077,6 +5074,14 @@ var _botLearning = require("../../api/bot-learning");
 
 var LearningAPI = _interopRequireWildcard(_botLearning);
 
+var _modal = require("../modal");
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var _guestUserForm = require("./guest-user-form");
+
+var _guestUserForm2 = _interopRequireDefault(_guestUserForm);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5099,7 +5104,9 @@ var ChatHeader = function (_Component) {
 
     _this.state = {
       isLearning: false,
-      learningStatus: null
+      learningStatus: null,
+      isShowGuestUserForm: !props.isRegisteredGuestUser,
+      isRegisteredGuestUser: props.isRegisteredGuestUser
     };
     _this.onClickLearning = _this.onClickLearning.bind(_this);
     return _this;
@@ -5130,10 +5137,15 @@ var ChatHeader = function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var _props = this.props,
           botName = _props.botName,
           isAdmin = _props.isAdmin,
           isManager = _props.isManager;
+      var _state = this.state,
+          isShowGuestUserForm = _state.isShowGuestUserForm,
+          isRegisteredGuestUser = _state.isRegisteredGuestUser;
 
 
       return _react2.default.createElement(
@@ -5148,13 +5160,50 @@ var ChatHeader = function (_Component) {
           "div",
           { className: "chat-header__right" },
           _react2.default.createElement(_learningButton2.default, { botId: window.currentBot.id, isAdmin: isAdmin })
+        ),
+        !isManager && _react2.default.createElement(
+          "div",
+          { className: "chat-header__left" },
+          _react2.default.createElement(
+            "a",
+            {
+              href: "#",
+              className: "btn btn-link",
+              title: "\u30E6\u30FC\u30B6\u30FC\u60C5\u5831\u3092\u7DE8\u96C6\u3067\u304D\u307E\u3059",
+              onClick: function onClick() {
+                return _this3.setState({ isShowGuestUserForm: true });
+              }
+            },
+            _react2.default.createElement(
+              "i",
+              { className: "material-icons" },
+              "person"
+            )
+          )
+        ),
+        isShowGuestUserForm && _react2.default.createElement(
+          _modal2.default,
+          {
+            title: "\u30E6\u30FC\u30B6\u30FC\u60C5\u5831",
+            onClose: isRegisteredGuestUser ? function () {
+              _this3.setState({ isShowGuestUserForm: false });
+            } : null
+          },
+          _react2.default.createElement(_guestUserForm2.default, {
+            handleRegistered: function handleRegistered() {
+              _this3.setState({
+                isShowGuestUserForm: false,
+                isRegisteredGuestUser: true
+              });
+            }
+          })
         )
       );
     }
   }, {
     key: "onClickLearning",
     value: function onClickLearning() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.isLearning) {
         return;
@@ -5164,12 +5213,12 @@ var ChatHeader = function (_Component) {
         learningStatus: _constants.LearningStatus.Processing
       });
       LearningAPI.start(window.currentBot.id).then(function (res) {
-        _this3.setState({
+        _this4.setState({
           learningStatus: res.data.learning_status
         });
       }).catch(function (err) {
         console.error(err);
-        _this3.setState({
+        _this4.setState({
           isLearning: false,
           learningStatus: _constants.LearningStatus.Failed
         });
@@ -5204,7 +5253,7 @@ exports.default = ChatHeader;
           </div>
 */
 
-},{"../../api/bot-learning":6,"../learning-button":83,"./constants":32,"lodash/values":727,"react":922}],43:[function(require,module,exports){
+},{"../../api/bot-learning":6,"../learning-button":83,"../modal":86,"./constants":32,"./guest-user-form":41,"lodash/values":727,"react":922}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5713,6 +5762,7 @@ var app = (0, _redux.combineReducers)({
   isAdmin: through,
   isManager: through,
   flashMessage: through,
+  isRegisteredGuestUser: through,
   initialQuestions: _initialQuestions2.default
 });
 
@@ -10488,13 +10538,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Modal = function (_Component) {
   _inherits(Modal, _Component);
 
-  function Modal() {
+  function Modal(props) {
     _classCallCheck(this, Modal);
 
-    return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+
+    _this.handleClose = _this.handleClose.bind(_this);
+    return _this;
   }
 
   _createClass(Modal, [{
+    key: "handleClose",
+    value: function handleClose() {
+      var onClose = this.props.onClose;
+
+      if (typeof onClose === 'function') {
+        onClose();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _props = this.props,
@@ -10518,9 +10580,7 @@ var Modal = function (_Component) {
           "div",
           { className: "modal fade show",
             style: { display: "block", overflowY: "auto" },
-            onClick: function onClick() {
-              onClose();
-            } },
+            onClick: this.handleClose },
           _react2.default.createElement(
             "div",
             {
@@ -10541,7 +10601,7 @@ var Modal = function (_Component) {
                   { className: "modal-title" },
                   title
                 ),
-                _react2.default.createElement(
+                typeof onClose === 'function' && _react2.default.createElement(
                   "button",
                   { className: "close", onClick: function onClick() {
                       onClose();

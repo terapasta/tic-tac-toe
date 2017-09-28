@@ -2,12 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    @user = user.presence || UserContext.new(
-      user: DummyUser.new,
-      session: user.session,
-      cookies: user.cookies,
-      request: user.request,
-    )
+    @user = user.presence || DummyUser.new
     @record = record
   end
 

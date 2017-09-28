@@ -15,7 +15,7 @@ class Static extends Component {
   render() {
     const { name, email, onClickEditButton } = this.props;
     return (
-      <div className="chat-guest-user-form">
+      <div>
         <div className="form-group">
           以下の内容でユーザー情報を登録しています
         </div>
@@ -55,13 +55,14 @@ class Form extends Component {
     } = this.props;
 
     return (
-      <form className="chat-guest-user-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
-          チャット後のサポートに役立てるために、以下の情報をご入力下さい（任意）
+          チャット後のサポートに役立てるために、<br />以下の情報をご入力下さい（任意）
         </div>
         <div className="form-group">
           <label>お名前 <span className="text-danger">*</span></label>
           <input
+            id="guest-user-name"
             type="text"
             name="name"
             className="form-control"
@@ -75,6 +76,7 @@ class Form extends Component {
         <div className="form-group">
           <label>メールアドレス</label>
           <input
+            id="guest-user-email"
             type="email"
             name="email"
             className="form-control"
@@ -87,6 +89,7 @@ class Form extends Component {
         </div>
         <div className="form-group mb-0 text-center">
           <input
+            id="guest-user-submit"
             type="submit"
             value="送信"
             className="btn btn-success"
@@ -113,17 +116,22 @@ const FormikForm = withFormik({
   handleSubmit(values, { props, setSubmitting }) {
     const { name, email } = values;
     const guestKey = Cookies.get('guest_key');
-    let request;
+    let request, isCreate;
 
     if (props.isPersisted) {
+      isCreate = false;
       request = GuestUserAPI.update(guestKey, { name, email });
     } else {
+      isCreate = true;
       request = GuestUserAPI.create({ name, email });
     }
 
     request.then((res) => {
       setSubmitting(false);
       props.handleSaved(res.data.guestUser);
+      if (isCreate && typeof props.handleRegistered === 'function') {
+        props.handleRegistered();
+      }
     }).catch((err) => {
       setSubmitting(false);
       const { errors, error } = err.response.data;
@@ -171,39 +179,36 @@ class GuestUserForm extends Component {
   }
 
   render() {
-    if (this.props.isManager) { return null; }
+    const { handleRegistered } = this.props;
     const { guestUser, isEditing, isLoading } = this.state;
 
     return (
-      <div className="chat-section">
-        <ChatRow>
-          <ChatContainer>
-            {isLoading && <div className="chat-guest-user-form">読み込み中...</div>}
-            {(isEmpty(guestUser) || isEditing) && !isLoading && (
-              <FormikForm
-                isPersisted={!isEmpty(guestUser)}
-                name={get(guestUser, 'name', '')}
-                email={get(guestUser, 'email', '')}
-                handleSaved={this.handleSaved}
-                handleClickCancel={() => this.setState({ isEditing: false })}
-              />
-            )}
-            {(!isEmpty(guestUser) && !isEditing && !isLoading) && (
-              <Static
-                name={guestUser.name}
-                email={guestUser.email}
-                onClickEditButton={this.handleClickEditButton}
-              />
-            )}
-          </ChatContainer>
-        </ChatRow>
+      <div style={{ textAlign: 'left' }}>
+        {isLoading && <div className="chat-guest-user-form">読み込み中...</div>}
+        {(isEmpty(guestUser) || isEditing) && !isLoading && (
+          <FormikForm
+            isPersisted={!isEmpty(guestUser)}
+            name={get(guestUser, 'name', '')}
+            email={get(guestUser, 'email', '')}
+            handleSaved={this.handleSaved}
+            handleClickCancel={() => this.setState({ isEditing: false })}
+            handleRegistered={handleRegistered}
+          />
+        )}
+        {(!isEmpty(guestUser) && !isEditing && !isLoading) && (
+          <Static
+            name={guestUser.name}
+            email={guestUser.email}
+            onClickEditButton={this.handleClickEditButton}
+          />
+        )}
       </div>
     );
   }
 }
 
 GuestUserForm.propTypes = {
-  isManager: PropTypes.bool.isRequired,
+  handleRegistered: PropTypes.func,
 };
 
 export default GuestUserForm;

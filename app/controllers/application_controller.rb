@@ -13,14 +13,6 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   private
-    def pundit_user
-      UserContext.new(
-        user: current_user,
-        session: session,
-        request: request,
-      )
-    end
-
     def handle_500(exception)
       ExceptionNotifier.notify_exception exception, env: request.env
       Rollbar.log(exception)

@@ -34,6 +34,5 @@ class Api::GuestUsersController < Api::BaseController
   private
     def set_guest_user
       @guest_user = GuestUser.find_by!(guest_key: params[:guest_key])
-      authorize @guest_user
     end
 end

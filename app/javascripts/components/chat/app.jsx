@@ -22,7 +22,6 @@ import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
 import ChatReadMore from "./read-more";
 import ChatFlashMessage from "./flash-message";
-import ChatGuestUserForm from './guest-user-form';
 
 let isFetchedInitialQuestions = false;
 
@@ -83,6 +82,7 @@ export default class ChatApp extends Component {
       readMore,
       flashMessage,
       initialQuestions,
+      isRegisteredGuestUser,
     } = this.props;
 
     const {
@@ -96,13 +96,11 @@ export default class ChatApp extends Component {
           learningStatus: learning.status,
           isAdmin,
           isManager,
+          isRegisteredGuestUser,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
         <ChatArea innerRef={node => this.area = node}>
           <ChatFlashMessage flashMessage={flashMessage} />
-          <ChatGuestUserForm
-            isManager={isManager}
-          />
           <ChatReadMore {...assign({
             isManager,
             onClick(e) {

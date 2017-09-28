@@ -3,9 +3,9 @@ module GuestKeyUsable
 
   private
     def set_guest_key
-      if cookies[:guest_key].blank?
+      if guest_key.blank?
         cookies[:guest_key] = {
-          value: SecureRandom.hex(64),
+          value: SecureRandom.hex(64)[0...255],
           path: '/',
           expires: 45.days.from_now
         }
@@ -13,6 +13,6 @@ module GuestKeyUsable
     end
 
     def guest_key
-      request.cookies['guest_key']
+      request.cookies['guest_key'].presence || cookies[:guest_key]
     end
 end

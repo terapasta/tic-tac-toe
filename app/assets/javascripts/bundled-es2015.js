@@ -5182,7 +5182,7 @@ var ChatHeader = function (_Component) {
             )
           )
         ),
-        isShowGuestUserForm && _react2.default.createElement(
+        !isManager && isShowGuestUserForm && _react2.default.createElement(
           _modal2.default,
           {
             title: "\u30E6\u30FC\u30B6\u30FC\u60C5\u5831",

@@ -64,7 +64,7 @@ class ChatHeader extends Component {
             </a>
           </div>
         )}
-        {isShowGuestUserForm && (
+        {(!isManager && isShowGuestUserForm) && (
           <Modal
             title="ユーザー情報"
             onClose={isRegisteredGuestUser ? () => { this.setState({ isShowGuestUserForm: false })} : null}

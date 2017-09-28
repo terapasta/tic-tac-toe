@@ -57,7 +57,7 @@ class Form extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          チャット後のサポートに役立てるために、<br />以下の情報をご入力下さい（任意）
+          チャット後のサポートに役立てるために、<br />以下の情報をご入力下さい
         </div>
         <div className="form-group">
           <label>お名前 <span className="text-danger">*</span></label>

@@ -4827,7 +4827,7 @@ var Form = function (_Component2) {
           { className: 'form-group' },
           '\u30C1\u30E3\u30C3\u30C8\u5F8C\u306E\u30B5\u30DD\u30FC\u30C8\u306B\u5F79\u7ACB\u3066\u308B\u305F\u3081\u306B\u3001',
           _react2.default.createElement('br', null),
-          '\u4EE5\u4E0B\u306E\u60C5\u5831\u3092\u3054\u5165\u529B\u4E0B\u3055\u3044\uFF08\u4EFB\u610F\uFF09'
+          '\u4EE5\u4E0B\u306E\u60C5\u5831\u3092\u3054\u5165\u529B\u4E0B\u3055\u3044'
         ),
         _react2.default.createElement(
           'div',

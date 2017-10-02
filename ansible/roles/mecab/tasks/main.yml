@@ -34,5 +34,8 @@
 - name: install shell
   copy: src=install-neologd.sh dest=/usr/local/bin owner=root group=root mode=0775
 
+# fatal: destination path 'mecab-ipadic-neologd' already exists and is not an empty directory.
+# というエラーが出るがそのまま実行して問題ないため、エラーを無視する
 - name: 'install mecab ipadic neologd'
-  shell: install-neologd.sh
+  shell: sudo install-neologd.sh
+  ignore_errors: True

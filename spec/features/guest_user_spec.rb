@@ -31,6 +31,7 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
 
     scenario do
       visit "/embed/#{bot.token}/chats/new"
+      sleep 1
       fill_in_input id: 'guest-user-name', value: name
       fill_in_input id: 'guest-user-email', value: email
       find('#guest-user-submit').click

@@ -46,7 +46,8 @@ class RouteGuideServicer(BotServicer):
         return ReplyResponse(
             question_feature_count=reply['question_feature_count'],
             results=[Result(**x) for x in reply['results']],
-            )
+            noun_count=reply['noun_count'],
+        )
 
     @stop_watch
     def Learn(self, request, context):

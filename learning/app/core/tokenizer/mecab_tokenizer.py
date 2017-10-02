@@ -14,6 +14,16 @@ class MecabTokenizer:
             splited_texts.append(self.tokenize_single_text(text))
         return splited_texts
 
+    def extract_noun_count(self, text):
+        node = self.tagger.parseToNode(text)
+        noun_count = 0
+        while node:
+            pos = node.feature.split(',')[0]
+            if pos == '名詞':
+                noun_count += 1
+            node = node.next
+        return noun_count
+
     def tokenize_single_text(self, text):
         node = self.tagger.parseToNode(text)
         word_list = []

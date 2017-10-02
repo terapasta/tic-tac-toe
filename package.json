@@ -2,10 +2,10 @@
   "name": "donusagi-bot",
   "description": "[My-ope office](http://www.my-ope.net/)という社内問合せ特化のAIチャットBotサービスのリポジトリです。",
   "scripts": {
-    "watch": "NODE_ENV=development watchify app/assets/javascripts/es2015/all.js -o app/assets/javascripts/bundled-es2015.js --extension=.jsx -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
-    "watch-embed": "NODE_ENV=development watchify app/assets/javascripts/es2015/embed.js -o app/assets/javascripts/embed.js --extension=.jsx -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
-    "build": "NODE_ENV=production browserify app/assets/javascripts/es2015/all.js --extension=.jsx -o app/assets/javascripts/bundled-es2015.js -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
-    "build-embed": "NODE_ENV=production browserify app/assets/javascripts/es2015/embed.js --extension=.jsx -o app/assets/javascripts/embed.js -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
+    "watch": "NODE_ENV=development watchify app/javascripts/all.js -o app/assets/javascripts/bundled-es2015.js --extension=.jsx -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
+    "watch-embed": "NODE_ENV=development watchify app/javascripts/embed.js -o app/assets/javascripts/embed.js --extension=.jsx -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
+    "build": "NODE_ENV=production browserify app/javascripts/all.js --extension=.jsx -o app/assets/javascripts/bundled-es2015.js -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
+    "build-embed": "NODE_ENV=production browserify app/javascripts/embed.js --extension=.jsx -o app/assets/javascripts/embed.js -v -t [ babelify --presets [ es2015 react ] --plugins [ transform-inline-environment-variables ] ]",
     "test": "./node_modules/.bin/jest"
   },
   "jest": {

@@ -29,7 +29,7 @@ class Chats::MessagesController < ApplicationController
     end
 
     SendAnswerFailedMailService.new(@bot_messages, current_user).send_mail
-    TaskCreateService.new(@bot_messages, @bot).process
+    TaskCreateService.new(@bot_messages, @bot, current_user).process
 
     respond_to do |format|
       format.js

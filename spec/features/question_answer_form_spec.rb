@@ -41,6 +41,7 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
           fill_in_input id: 'topic-tag-name', value: 'ほげ'
           click_button '追加'
           check "topic-tag-#{topic_tags.first.id}"
+          page.save_screenshot
           click_button '登録する'
         end
       end

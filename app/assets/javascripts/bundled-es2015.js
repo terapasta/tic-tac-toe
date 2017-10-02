@@ -5935,7 +5935,7 @@ var ChatSection = function (_Component) {
         {
           className: className,
           ref: "root",
-          "data-decision-branch": isDecisionBranch
+          "data-decision-branch": isDecisionBranch || isSQA
         },
         _react2.default.createElement(
           "div",

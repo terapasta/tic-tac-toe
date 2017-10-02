@@ -78,7 +78,7 @@ export default class ChatSection extends Component {
       <div
         className={className}
         ref="root"
-        data-decision-branch={isDecisionBranch}
+        data-decision-branch={isDecisionBranch || isSQA}
       >
         <div className="chat-section__switch-container">
           {!isFirst && !isDecisionBranch && !isSQA && (

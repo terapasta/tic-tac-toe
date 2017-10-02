@@ -13,6 +13,6 @@ module GuestKeyUsable
     end
 
     def guest_key
-      request.cookies['guest_key'].presence || cookies[:guest_key]
+      cookies[:guest_key]
     end
 end

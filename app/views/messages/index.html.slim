@@ -32,15 +32,7 @@
 
     .card-block.padding-left-64
       - if @guest_user.present?
-        .row: .col-12.mb-4
-          .chat-guest-user-form
-            .form-group.text-center: strong ユーザー情報
-            .form-group
-              label お名前
-              p.mb-0: code= @guest_user.name
-            .form-group.mb-0
-              label メールアドレス
-              p.mb-0: code= @guest_user.email.presence || '未登録'
+        = render 'guest_user', guest_user: @guest_user
       - @messages.each do |message|
         - if message.guest?
           .row: .col-6.offset-6

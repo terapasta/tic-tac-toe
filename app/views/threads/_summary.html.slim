@@ -1,6 +1,8 @@
 .card.mb-4
   .card-block
     .text-center.mb-3= link_to 'これ以前の発言もすべて見る', bot_thread_messages_path(bot, chat), data: { event: 'check all chat log' }
+    - if chat.guest_user.present?
+      = render 'messages/guest_user', guest_user: chat.guest_user
     .row
       - chat.messages.order(created_at: :desc).limit(2).reverse.tap do |messages|
         - messages.first.tap do |message|

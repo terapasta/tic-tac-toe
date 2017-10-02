@@ -1,5 +1,7 @@
 import inject
 import numpy as np
+import pandas as pd
+
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 from app.shared.constants import Constants
@@ -54,6 +56,10 @@ class LearnController:
 
         logger.info('tokenize question_answers')
         bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
+
+        # TODO: IDを結合する処理を一旦learn_controllerに実装
+        bot_tokenized_sentences = np.array(bot_tokenized_sentences, dtype=object)
+        print(bot_tokenized_sentences + ' MYOPE_QA_ID:' + question_answer_ids.astype(str))
 
         logger.info('vectorize get_datasource')
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)

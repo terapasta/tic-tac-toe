@@ -7,11 +7,12 @@
             = material_icon 'settings', class: 'mi-xs'
             = space
             span ボット設定
-        li.nav-item
-          = active_link_to bot_settings_embed_path(@bot), class: 'nav-link', data: { event: 'embed code' } do
-            = material_icon 'code', class: 'mi-xs'
-            = space
-            span 埋め込みコード
+        - unless current_user.ec_plan?
+          li.nav-item
+            = active_link_to bot_settings_embed_path(@bot), class: 'nav-link', data: { event: 'embed code' } do
+              = material_icon 'code', class: 'mi-xs'
+              = space
+              span 埋め込みコード
         li.nav-item
           = active_link_to bot_settings_allowed_hosts_path(@bot), class: 'nav-link', data: { event: 'allowed hosts' } do
             = material_icon 'http', class: 'mi-xs'

@@ -4,6 +4,7 @@ import inject
 
 from app.controllers.learn_controller import LearnController
 from app.factories.factory_selector import FactorySelector
+from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.shared.config import Config
 from app.shared.constants import Constants
 from app.shared.current_bot import CurrentBot
@@ -28,5 +29,6 @@ class LearningParameter:
 
 bot = CurrentBot().init(args.bot_id, LearningParameter())
 Datasource().init(bot)
-result = LearnController(factory=FactorySelector().get_factory()).perform()
+# result = LearnController(factory=FactorySelector().get_factory()).perform()
+result = LearnController(factory=TwoStepCosineSimilarityFactory()).perform()
 print(result)

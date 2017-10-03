@@ -62,9 +62,7 @@ namespace :deploy do
       within current_path.join('learning') do
         sudo :pip, :install, '-r requirements.txt'
       end
-      sudo :supervisorctl, :reload, '-c /etc/supervisord.conf'
-      pid = capture '/usr/sbin/lsof', '-i:6000', '-t'
-      execute :kill, pid
+      sudo :supervisorctl, :restart, :engine, '-c /etc/supervisord.conf'
     end
   end
 

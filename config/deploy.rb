@@ -63,6 +63,8 @@ namespace :deploy do
         sudo :pip, :install, '-r requirements.txt'
       end
       sudo :supervisorctl, :reload, '-c /etc/supervisord.conf'
+      pid = capture '/usr/sbin/lsof', '-i:6000', '-t'
+      execute :kill, pid
     end
   end
 

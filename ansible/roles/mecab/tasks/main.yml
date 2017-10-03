@@ -26,6 +26,13 @@
     make
     sudo make install
 
+- name: install shell
+  copy: src=install-neologd.sh dest=/usr/local/bin owner=root group=root mode=0775
+
+- name: 'install mecab ipadic neologd'
+  shell: sudo install-neologd.sh
+  ignore_errors: True
+
 - name: set up dicrc
   template:
     src: dicrc.general

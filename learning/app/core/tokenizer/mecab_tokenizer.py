@@ -1,11 +1,13 @@
 import MeCab
 import mojimoji
 from app.shared.config import Config
+from app.shared.logger import logger
 
 
 class MecabTokenizer:
     def __init__(self):
-        self.tagger = MeCab.Tagger("-u " + Config().get('dic'))
+        logger.debug('dicdir: ' + Config().get('dicdir'))
+        self.tagger = MeCab.Tagger("-u dict/custom.dic -d " + Config().get('dicdir'))
         # Note: node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         self.tagger.parse('')
 

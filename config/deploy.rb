@@ -23,6 +23,13 @@ set :unicorn_config_path, 'config/unicorn.rb'
 set :whenever_identifier, ->{"#{fetch(:application)}_#{fetch(:stage)}}"}
 set :whenever_roles, ->{ :batch }
 
+desc 'mecab ipadic neologdをアップデート'
+task :update_neologd do
+  on roles(:app) do
+    sudo 'install-neologd.sh'
+  end
+end
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
@@ -47,13 +54,6 @@ namespace :deploy do
     end
   end
 
-  desc 'mecab ipadic neologdをアップデート'
-  task :update_neologd do
-    on roles(:app) do
-      exec 'install-neologd.sh'
-    end
-  end
-
   desc 'python engineを移動'
   task :move_engine do
     on roles(:app) do
@@ -68,5 +68,5 @@ namespace :deploy do
 
   after :finished, 'deploy:move_engine'
   after :finished, 'slappy:restart'
-  after :finished, 'deploy:update_neologd'
+  # after :finished, 'update_neologd'
 end

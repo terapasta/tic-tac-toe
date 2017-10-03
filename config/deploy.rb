@@ -23,6 +23,13 @@ set :unicorn_config_path, 'config/unicorn.rb'
 set :whenever_identifier, ->{"#{fetch(:application)}_#{fetch(:stage)}}"}
 set :whenever_roles, ->{ :batch }
 
+desc 'mecab ipadic neologdをアップデート'
+task :update_neologd do
+  on roles(:app) do
+    sudo 'install-neologd.sh'
+  end
+end
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
@@ -55,10 +62,11 @@ namespace :deploy do
       within current_path.join('learning') do
         sudo :pip, :install, '-r requirements.txt'
       end
-      sudo :supervisorctl, :reload, '-c /etc/supervisord.conf'
+      sudo :supervisorctl, :restart, :engine, '-c /etc/supervisord.conf'
     end
   end
 
   after :finished, 'deploy:move_engine'
   after :finished, 'slappy:restart'
+  # after :finished, 'update_neologd'
 end

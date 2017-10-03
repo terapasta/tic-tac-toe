@@ -52,7 +52,7 @@ class Bot < ActiveRecord::Base
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
-      ActiveRecord::Base.connection.execute("DELTE FROM dumps WHERE bot_id = #{id}")
+      ActiveRecord::Base.connection.execute("DELETE FROM dumps WHERE bot_id = #{id}")
     end
   end
 

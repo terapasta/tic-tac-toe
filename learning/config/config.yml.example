@@ -28,4 +28,4 @@ production:
     name: 
     user: 
     password: 
-  dic:
+  dicdir:

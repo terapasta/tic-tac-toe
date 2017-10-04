@@ -1,5 +1,5 @@
 import inject
-from gensim.similarities import SparseMatrixSimilarity
+from gensim.similarities import MatrixSimilarity
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 
@@ -26,7 +26,7 @@ class GensimCosineSimilarity:
 
         # TODO: , num_features=1000が必要か確認する
         # TODO: fitでやってもいいかもしれない
-        index = SparseMatrixSimilarity(normalized_vectors, num_features=1000)
+        index = MatrixSimilarity(normalized_vectors)
         similarities = index[question_features][0]
         result = self.bot_question_answers_data[['question', 'question_answer_id']].copy()
         result['probability'] = similarities

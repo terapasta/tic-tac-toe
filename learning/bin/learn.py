@@ -29,6 +29,5 @@ class LearningParameter:
 
 bot = CurrentBot().init(args.bot_id, LearningParameter())
 Datasource().init(bot)
-# result = LearnController(factory=FactorySelector().get_factory()).perform()
-result = LearnController(factory=TwoStepCosineSimilarityFactory()).perform()
+result = LearnController(factory=FactorySelector().get_factory()).perform()
 print(result)

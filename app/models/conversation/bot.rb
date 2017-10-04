@@ -26,6 +26,8 @@ class Conversation::Bot
     question = @question_text
     question_feature_count = result[:question_feature_count]
     effective_results = @results.select{|x| x[:probability] > 0.1}
+    classify_threshold = resolve_classify_threshold(result[:noun_count])
+
     if effective_results.length == 0
       question_answer_ids = [NO_CLASSIFIED_ANSWER_ID]
       question_answer_id = 0
@@ -38,8 +40,14 @@ class Conversation::Bot
     Rails.logger.debug(probability)
 
     @question_answer = QuestionAnswer.find_or_null_question_answer(question_answer_id, @bot, probability, classify_threshold)
-    
-    reply = Conversation::Reply.new(question: question, question_feature_count: question_feature_count, question_answer: @question_answer, probability: probability, question_answer_ids: question_answer_ids)
+
+    reply = Conversation::Reply.new(
+      question: question,
+      question_feature_count: question_feature_count,
+      question_answer: @question_answer,
+      probability: probability,
+      question_answer_ids: question_answer_ids
+    )
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
     # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
@@ -56,7 +64,8 @@ class Conversation::Bot
   end
 
   private
-    def classify_threshold
+    def resolve_classify_threshold(noun_count)
+      return 0.9 if noun_count == 1 # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
       learning_parameter = @bot.learning_parameter || LearningParameter.build_with_default
       learning_parameter.classify_threshold
     end

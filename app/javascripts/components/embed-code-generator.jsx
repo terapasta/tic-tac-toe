@@ -6,7 +6,7 @@ import copyToClipboard from 'copy-to-clipboard';
 const makeCode = (token, width, height) => {
   const { protocol, host } = window.location;
   const origin = `${protocol}//${host}`;
-  const src = `${origin}/embed/${token}/chats/new`;
+  const src = `${origin}/embed/${token}/chats`;
   const w = isEmpty(width) ? 0 : width;
   const h = isEmpty(height) ? 0 : height;
   return `<iframe width="${w}" height="${h}" src="${src}" style="border: 1px solid #c0c0c0;" allowfullscreen></iframe>`;

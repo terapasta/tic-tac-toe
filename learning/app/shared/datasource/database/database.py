@@ -39,11 +39,12 @@ class Database():
             return function()
         # NOTE: MYSQLに一定時間以上クエリーを実行しなかった場合に接続が切断されてしまうため再接続を行う
         #       https://www.pivotaltracker.com/n/projects/1879711/stories/151425115
-        # HACK: MySQLdb.Errorなどで補足したいができなかった
-        except:
-            import traceback
-            traceback.print_exc()
-            logger.info('try reconnect to database')
+        except (MySQLdb.Error, pd.io.sql.DatabaseError) as e:
+            try:
+                self.db.close()
+            except:
+                pass
+
             self.db = None
             self._connect()
             return function()

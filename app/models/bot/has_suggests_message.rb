@@ -3,7 +3,7 @@ module Bot::HasSuggestsMessage
 
   module SuggestMessage
     Placeholder = '{question}'
-    Default = "#{Placeholder}についてですね。\nどのような質問ですか？\n以下から選択して下さい。"
+    Default = "#{Placeholder}についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？"
   end
 
   included do

@@ -19,7 +19,7 @@ class Ml::Engine
       )).as_json.with_indifferent_access
   rescue => e
     ExceptionNotifier.notify_exception e
-    Rollbar.log(e)
+    Rollbar.log(e) if defined?(Rollbar)
     logger.error 'Refer python-application.log'
     raise e
   end
@@ -32,7 +32,7 @@ class Ml::Engine
       )).as_json.with_indifferent_access
   rescue => e
     ExceptionNotifier.notify_exception e
-    Rollbar.log(e)
+    Rollbar.log(e) if defined?(Rollbar)
     logger.error 'Refer python-application.log'
     raise e
   end

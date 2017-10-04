@@ -44,7 +44,7 @@ export const deleteWordMappingSynonym = (botId, wordMappingId, synonymId) => {
   }
   const payload = {
     word_mapping: {
-      word_mapping_synonyms: [{
+      word_mapping_synonyms_attributes: [{
         id: synonymId,
         _destroy: true,
       }],

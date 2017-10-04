@@ -24,6 +24,7 @@ module Replyable
             bot_message.update!(similar_question_answers_log: suggests.as_json(only: [:question, :answer]))
             if suggests.count > 0 && qa.no_classified?
               bot_message.body = parent.bot.render_has_suggests_message(guest_message.body)
+              bot_message.update!(answer_failed: false)
             end
           end
         end

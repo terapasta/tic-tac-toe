@@ -1,10 +1,13 @@
 import MeCab
 import mojimoji
+from app.shared.config import Config
+from app.shared.logger import logger
 
 
 class MecabTokenizer:
     def __init__(self):
-        self.tagger = MeCab.Tagger("-u dict/custom.dic")
+        logger.debug('dicdir: ' + Config().get('dicdir'))
+        self.tagger = MeCab.Tagger("-u dict/custom.dic -d " + Config().get('dicdir'))
         # Note: node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         self.tagger.parse('')
 
@@ -13,6 +16,16 @@ class MecabTokenizer:
         for text in texts:
             splited_texts.append(self.tokenize_single_text(text))
         return splited_texts
+
+    def extract_noun_count(self, text):
+        node = self.tagger.parseToNode(text)
+        noun_count = 0
+        while node:
+            pos = node.feature.split(',')[0]
+            if pos == '名詞':
+                noun_count += 1
+            node = node.next
+        return noun_count
 
     def tokenize_single_text(self, text):
         node = self.tagger.parseToNode(text)

@@ -61,7 +61,7 @@
             = space
             span 対話タスク
             = space
-            span.badge.badge-pill.badge-warning 11
+            span.badge.badge-pill.badge-warning= Task.unstarted(@bot).count
         - active_other = !!/^\/bots\/[0-9]+\/(word_mappings|chat_tests)/.match(request.path) ? 'active' : ''
         li class="nav-item dropdown"
           a class=("nav-link dropdown-toggle #{active_other}") href="#" data-toggle="dropdown" role="button"

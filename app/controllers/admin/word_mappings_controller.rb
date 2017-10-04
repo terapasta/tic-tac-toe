@@ -4,7 +4,11 @@ class Admin::WordMappingsController < ApplicationController
 
   def index
     @per_page = 50
-    @word_mappings = WordMapping.where(bot_id: nil).order('created_at DESC').page(params[:page]).per(@per_page)
+    @word_mappings = WordMapping
+      .where(bot_id: nil)
+      .keyword(params[:q])
+      .order('created_at DESC')
+      .page(params[:page]).per(@per_page)
   end
 
   def new

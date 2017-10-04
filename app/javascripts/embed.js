@@ -1,3 +1,4 @@
+import ES6Promise from "es6-promise";
 import { directMountComponent } from "./modules/mount-component";
 
 import {
@@ -6,9 +7,7 @@ import {
 
 import Widget from "./embed/widget";
 
-if (!window._babelPolyfill) {
-  require("babel-polyfill");
-}
+ES6Promise.polyfill();
 
 function init() {
   const mountNode = document.querySelector("#" + Namespace);

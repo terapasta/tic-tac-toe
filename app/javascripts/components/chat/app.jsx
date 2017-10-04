@@ -1,28 +1,25 @@
 import React, { Component, PropTypes } from "react";
-import { findDOMNode } from "react-dom";
 import assign from "lodash/assign";
 import sortBy from "lodash/sortBy";
 import isEqual from "lodash/isEqual"
-import includes from "lodash/includes"
+import includes from "lodash/includes";
+import findLastIndex from "lodash/findLastIndex";
+import takeRight from "lodash/takeRight";
 import isEmpty from "is-empty";
+import imagesLoaded from "imagesLoaded";
 
 import Mixpanel, { makeEvent } from '../../analytics/mixpanel';
 
-import getOffset from "../../modules/get-offset";
 import * as a from "./action-creators";
-import * as c from "./constants";
 
 import ChatHeader from "./header";
 import ChatArea from "./area";
-import ChatContainer from "./container";
 import ChatForm from "./form";
-import ChatRow from "./row";
 import ChatSection from "./section";
 import ChatDecisionBranchesRow from "./decision-branches-row";
 import ChatSimilarQuestionAnswersRow from "./similar-question-answers-row";
 import ChatBotMessageRow from "./bot-message-row";
 import ChatGuestMessageRow from "./guest-message-row";
-import ChatGuestMessage from "./guest-message";
 import ChatReadMore from "./read-more";
 import ChatFlashMessage from "./flash-message";
 
@@ -59,7 +56,7 @@ export default class ChatApp extends Component {
   }
 
   setInitialQuestionsToMessagesIfNeeded(prevProps) {
-    const { dispatch, messages } = this.props;
+    const { dispatch } = this.props;
     const prevInitialQuestions = sortBy(prevProps.initialQuestions, (q) => q.id);
     const initialQuestions = sortBy(this.props.initialQuestions, (q) => q.id);
     const isUpdated = (
@@ -100,7 +97,7 @@ export default class ChatApp extends Component {
           isManager,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
-        <ChatArea innerRef={(node) => this.area = node}>
+        <ChatArea innerRef={node => this.area = node}>
           <ChatFlashMessage flashMessage={flashMessage} />
           <ChatReadMore {...assign({
             isManager,
@@ -187,11 +184,29 @@ export default class ChatApp extends Component {
 
 function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
   if (scrollableElement == null) { return; }
-  const { props/* , refs */ } = component;
+  const { props: { messages } } = component;
   const prevCount = prevProps.messages.classifiedData.length
-  const currentCount = props.messages.classifiedData.length;
-  if (currentCount > prevCount &&
-     (prevCount === 0 || props.messages.isNeedScroll)) {
-    scrollableElement.scrollTop = scrollableElement.scrollHeight;
+  const currentCount = messages.classifiedData.length;
+  if (prevCount === 0) {
+    // scroll to bottom
+    imagesLoaded(scrollableElement, () => {
+      scrollableElement.scrollTop = scrollableElement.scrollHeight;
+    });
+    return;
+  }
+  if (!messages.isNeedScroll) { return; }
+  if (currentCount > prevCount) {
+    // scroll to last answer
+    const sectionElements = [].slice.call(scrollableElement.children)
+      .filter((it) => it.hasAttribute('data-decision-branch'));
+    const lastAnswerIndex = findLastIndex(sectionElements,
+      it => it.getAttribute('data-decision-branch') === 'false');
+    const secEls = takeRight(sectionElements, currentCount - lastAnswerIndex);
+    imagesLoaded(secEls, () => {
+      const total = secEls.reduce((sum, it) => {
+        return sum + it.offsetHeight;
+      }, 0);
+      scrollableElement.scrollTop = scrollableElement.scrollHeight - total - 95;
+    });
   }
 }

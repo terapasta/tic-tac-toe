@@ -26,5 +26,16 @@
         = f.label :classify_failed_message
         = f.text_area :classify_failed_message, rows: 3, class: 'form-control', placeholder: "デフォルト：#{DefinedAnswer.classify_failed_text}"
 
+      .form-group
+        = f.label :has_suggests_message
+        = f.text_area :has_suggests_message, rows: 3, class: 'form-control'
+        .card-block.p-2.text-muted
+          p
+            |※<code>{question}</code>の部分に質問文が埋め込まれて表示されます
+            br
+            |※ 短い文章の場合に高い確率でサジェストが表示されます（関連するQ&amp;Aが登録されているなどの条件が整う必要があります）
+          p 例：質問が"会社"のみだった場合
+          blockquote「会社」についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？
+
       .form-group.text-right
         = f.submit class: 'btn btn-success', data: { event: 'update bot account' }

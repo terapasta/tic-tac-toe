@@ -13,14 +13,14 @@ class GensimTfidfVectorizer:
     def __init__(self, bot=None, datasource=None):
         self.bot = bot
         # TODO: 検証用ファイルを参照しているので、S3などに配置してそこから取得するように変える
-        self.dictionary = Dictionary.load_from_text('../../../prototype/working/wiki_wordids.txt.bz2')
-        self.vectorizer = TfidfModel.load('../../../prototype/working/wiki.tfidf_model')
+        self.dictionary = Dictionary.load_from_text('./prototype/working/wiki_wordids.txt.bz2')
+        self.vectorizer = TfidfModel.load('./prototype/working/wiki.tfidf_model')
 
     def fit(self, sentences):
         logger.info('PASS')
 
     def transform(self, sentences):
-        id_corpus = [self.dictionary.doc2bow(sentence.split(' ')) for sentence in sentences]
+        id_corpus = [self.dictionary.doc2bow(sentence.split(' '), allow_update=True) for sentence in sentences]
         return self.vectorizer[id_corpus]
 
     def fit_transform(self, sentences):

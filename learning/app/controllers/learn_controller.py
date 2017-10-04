@@ -28,7 +28,7 @@ class LearnController:
 
     def _vocabulary_learn(self):
         logger.info('load all get_datasource')
-        all_question_answers_data = self._factory.get_datasource().wiki_corpus.all()
+        all_question_answers_data = self._factory.get_datasource().question_answers.all()
 
         logger.info('tokenize all')
         tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])

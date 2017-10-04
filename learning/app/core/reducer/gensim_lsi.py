@@ -10,7 +10,7 @@ class GensimLSI:
     @inject.params(bot=CurrentBot, datasource=Datasource)
     def __init__(self, bot=None, datasource=None):
         self.bot = bot
-        self.reducer = LsiModel.load('../../../prototype/working/lsi_1000.model')
+        self.reducer = LsiModel.load('./prototype/working/lsi_1000.model')
 
     def fit(self, features):
         # Note: オンライン学習機能は未実装

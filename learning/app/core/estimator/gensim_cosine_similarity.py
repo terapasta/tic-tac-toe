@@ -27,7 +27,7 @@ class GensimCosineSimilarity:
         # TODO: , num_features=1000が必要か確認する
         # TODO: fitでやってもいいかもしれない
         index = SparseMatrixSimilarity(normalized_vectors, num_features=1000)
-        similarities = index[normalized_vectors]
+        similarities = index[question_features][0]
         result = self.bot_question_answers_data[['question', 'question_answer_id']].copy()
         result['probability'] = similarities
         return result

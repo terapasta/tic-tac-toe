@@ -3,7 +3,6 @@ from app.shared.datasource.database.persistence import Persistence as Persistenc
 from app.shared.datasource.database.question_answers import QuestionAnswers as QuestionAnswersFromDb
 from app.shared.datasource.file.persistence import Persistence as PersistenceFromFile
 from app.shared.datasource.file.question_answers import QuestionAnswers as QuestionAnswersFromFile
-from app.shared.datasource.file.wiki_corpus import WikiCorpus
 
 
 class Datasource:
@@ -20,8 +19,6 @@ class Datasource:
             self._persistence = PersistenceFromDb()
             self._question_answers = QuestionAnswersFromDb()
 
-        self._wiki_corpus = WikiCorpus()
-
     @property
     def persistence(self):
         return self._persistence
@@ -29,7 +26,3 @@ class Datasource:
     @property
     def question_answers(self):
         return self._question_answers
-
-    @property
-    def wiki_corpus(self):
-        return self._wiki_corpus

@@ -65,7 +65,7 @@ class Conversation::Bot
 
   private
     def resolve_classify_threshold(noun_count)
-      return 0.9 if noun_count == 1 # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
+      # return 0.9 if noun_count == 1 # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
       learning_parameter = @bot.learning_parameter || LearningParameter.build_with_default
       learning_parameter.classify_threshold
     end

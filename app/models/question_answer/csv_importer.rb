@@ -12,6 +12,7 @@ class QuestionAnswer::CsvImporter
     @bot = bot
     @options = { is_utf8: false }.merge(options)
     @mode_enc = options[:is_utf8] ? ModeEncForUTF8 : ModeEncForSJIS
+    @encoding = options[:is_utf8] ? Encoding::UTF_8 : Encoding::Shift_JIS
     @current_answer = nil
     @current_row = nil
     @succeeded = false
@@ -55,8 +56,7 @@ class QuestionAnswer::CsvImporter
   end
 
   def parse
-    f = open(@file.path, @mode_enc, undef: :replace)
-    raw_data = f.read.scrub('?')
+    raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
     CSV.new(raw_data).each_with_index.inject({}) { |out, (row, index)|
       @current_row = index + 1
       data = detect_or_initialize_by_row(row)

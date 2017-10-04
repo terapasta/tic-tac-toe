@@ -36,7 +36,7 @@ class LearnController:
         # tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
 
         logger.info('data build all')
-        tokenized_sentences = self._factory.get_data_builder.build(self._factory.get_datasource(), self._factory.get_vectorizer)
+        tokenized_sentences = self._factory.get_data_builder().build(self._factory.get_datasource(), self._factory.get_tokenizer())
 
         logger.info('vectorize all')
         vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)
@@ -48,21 +48,22 @@ class LearnController:
         self._factory.get_normalizer().fit(reduced_features)
 
     def _learn(self):
-        logger.info('load question_answers')
-        bot_question_answers_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
+        # logger.info('load question_answers')
+        # bot_question_answers_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
+
+        logger.info('data build')
+        bot_tokenized_sentences = self._factory.get_data_builder().build_by_bot(
+            self._factory.get_datasource(), self._factory.get_tokenizer(), self.bot.id)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
-        questions = np.array(bot_question_answers_data['question'])
-        questions = np.append(questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
-        question_answer_ids = np.array(bot_question_answers_data['question_answer_id'], dtype=np.int)
-        question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
+        # TODO: 一旦コメントアウト
+        # questions = np.array(bot_question_answers_data['question'])
+        # questions = np.append(questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
+        # question_answer_ids = np.array(bot_question_answers_data['question_answer_id'], dtype=np.int)
+        # question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
-        logger.info('tokenize question_answers')
-        bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
-
-        # TODO: IDを結合する処理を一旦learn_controllerに実装
-        bot_tokenized_sentences = np.array(bot_tokenized_sentences, dtype=object)
-        print(bot_tokenized_sentences + ' MYOPE_QA_ID:' + question_answer_ids.astype(str))
+        # logger.info('tokenize question_answers')
+        # bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
 
         logger.info('vectorize get_datasource')
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
@@ -70,7 +71,7 @@ class LearnController:
         logger.info('fit')
         self._factory.get_estimator().fit(
                 bot_features,
-                question_answer_ids,
+                self._factory.get_data_builder().raw_data,
             )
 
     def _evaluate(self):

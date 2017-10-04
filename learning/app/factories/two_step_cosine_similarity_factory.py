@@ -22,6 +22,7 @@ class TwoStepCosineSimilarityFactory:
     )
     def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
         self.data_builder = data_builder
+        self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
@@ -39,6 +40,9 @@ class TwoStepCosineSimilarityFactory:
 
     def get_data_builder(self):
         return self.data_builder
+
+    def get_tokenizer(self):
+        return self.tokenizer
 
     def get_vectorizer(self):
         return self.vectorizer

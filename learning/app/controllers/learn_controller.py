@@ -29,11 +29,14 @@ class LearnController:
         return result
 
     def _vocabulary_learn(self):
-        logger.info('load all get_datasource')
-        all_question_answers_data = self._factory.get_datasource().question_answers.all()
+        # logger.info('load all get_datasource')
+        # all_question_answers_data = self._factory.get_datasource().question_answers.all()
+        #
+        # logger.info('tokenize all')
+        # tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
 
-        logger.info('tokenize all')
-        tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
+        logger.info('data build all')
+        tokenized_sentences = self._factory.get_data_builder.build(self._factory.get_datasource(), self._factory.get_vectorizer)
 
         logger.info('vectorize all')
         vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)

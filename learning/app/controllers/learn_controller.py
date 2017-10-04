@@ -56,11 +56,10 @@ class LearnController:
             self._factory.get_datasource(), self._factory.get_tokenizer(), self.bot.id)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
-        # TODO: 一旦コメントアウト
-        # questions = np.array(bot_question_answers_data['question'])
-        # questions = np.append(questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
-        # question_answer_ids = np.array(bot_question_answers_data['question_answer_id'], dtype=np.int)
-        # question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
+        bot_tokenized_sentences = np.array(bot_tokenized_sentences)
+        bot_tokenized_sentences = np.append(bot_tokenized_sentences, [''] * Constants.COUNT_OF_APPEND_BLANK)
+        question_answer_ids = np.array(self._factory.get_data_builder().raw_data['question_answer_id'], dtype=np.int)
+        question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
         # logger.info('tokenize question_answers')
         # bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
@@ -71,7 +70,7 @@ class LearnController:
         logger.info('fit')
         self._factory.get_estimator().fit(
                 bot_features,
-                self._factory.get_data_builder().raw_data,
+                question_answer_ids,
             )
 
     def _evaluate(self):

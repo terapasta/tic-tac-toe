@@ -19,6 +19,6 @@ class QuestionAnswerAppendedIdDataBuiler:
         logger.info('tokenize all question_answers')
         tokenized_sentences = tokenizer.tokenize(df['question'])
         tokenized_sentences = np.array(tokenized_sentences, dtype=object)
-        tokenized_sentences = tokenized_sentences + ' MYOPE_QA_ID:' + df['id'].astype(str)
+        tokenized_sentences = tokenized_sentences + ' MYOPE_QA_ID:' + df['question_answer_id'].astype(str)
         return tokenized_sentences
 

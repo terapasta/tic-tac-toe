@@ -30,7 +30,7 @@ class LogisticRegressionFactory:
 
     def get_data_builder(self):
         return self.data_builder
-    
+
     def get_tokenizer(self):
         return self.tokenizer
 

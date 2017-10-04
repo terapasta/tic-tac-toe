@@ -1,4 +1,6 @@
 import inject
+
+from app.core.data_builder.question_answer_appended_id_data_builder import QuestionAnswerAppendedIdDataBuiler
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.cosine_similarity import CosineSimilarity
@@ -11,14 +13,15 @@ from app.shared.datasource.datasource import Datasource
 
 class TwoStepCosineSimilarityFactory:
     @inject.params(
+        data_builder=QuestionAnswerAppendedIdDataBuiler,
         tokenizer=MecabTokenizer,
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,
         datasource=Datasource,
     )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
-        self.tokenizer = tokenizer
+    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
+        self.data_builder = data_builder
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
@@ -27,15 +30,15 @@ class TwoStepCosineSimilarityFactory:
             self.estimator = estimator
         else:
             self.estimator = CosineSimilarity(
-                    self.tokenizer,
+                    self.data_builder,
                     self.vectorizer,
                     self.reducer,
                     self.normalizer,
                     self.datasource,
                 )
 
-    def get_tokenizer(self):
-        return self.tokenizer
+    def get_data_builder(self):
+        return self.data_builder
 
     def get_vectorizer(self):
         return self.vectorizer

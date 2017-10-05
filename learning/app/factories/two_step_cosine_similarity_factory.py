@@ -31,7 +31,7 @@ class TwoStepCosineSimilarityFactory:
             self.estimator = estimator
         else:
             self.estimator = CosineSimilarity(
-                    self.data_builder,
+                    self.tokenizer,
                     self.vectorizer,
                     self.reducer,
                     self.normalizer,

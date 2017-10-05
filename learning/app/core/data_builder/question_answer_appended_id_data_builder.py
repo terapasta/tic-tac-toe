@@ -15,6 +15,13 @@ class QuestionAnswerAppendedIdDataBuiler:
         return self.__tokenize(self.raw_data, tokenizer)
 
 
+    def build_for_reply(self, sentences):
+        print('hoge')
+        # TODO:
+        # sentencesをtokenizeする
+        # フィードバックデータにコサイン類似検索をかけてsentencesにMYOPE_QA_IDを付与する
+
+
     def __tokenize(self, df, tokenizer):
         logger.info('tokenize all question_answers')
         tokenized_sentences = tokenizer.tokenize(df['question'])

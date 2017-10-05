@@ -18,6 +18,7 @@ class CosineSimilarity:
         logger.info('PASS')
 
     def predict(self, question_features):
+        # TODO: data_builderを使う
         bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
         reduced_vectors = self.reducer.transform(bot_features)

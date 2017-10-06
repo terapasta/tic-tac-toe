@@ -18,8 +18,9 @@ class ChatTestsController < ApplicationController
         ActiveRecord::Base.transaction do
           @chat = Chat.build_with_user_role(@bot)
           @chat.save
-          option = params[:commit].include?('UTF-8') ? {} : { encoding: "Shift_JIS:UTF-8" }
-          CSV.foreach(params[:file].path, option) do |csv_data|
+          encoding = resolve_encoding_from_params(:commit)
+          raw_data = FileReader.new(file_path: params[:file].path, encoding: encoding).read
+          CSV.parse(raw_data).each do |csv_data|
             create_message(csv_data[0])
           end
           raise ActiveRecord::Rollback
@@ -29,8 +30,8 @@ class ChatTestsController < ApplicationController
 
       format.csv do
         file_data = JSON.parse(params[:file_data])
-        option = params[:encode].include?('UTF-8') ? Encoding::CP65001 : Encoding::SJIS
-        csv = CSV.generate(force_quotes: true, encoding: option) { |csv|
+        encoding = resolve_encoding_from_params(:encode)
+        csv = CSV.generate(force_quotes: true, encoding: encoding) { |csv|
           file_data.each do |data|
             set_data = [data[0], data[1]]
             csv << set_data
@@ -52,5 +53,10 @@ class ChatTestsController < ApplicationController
         m.user_agent = request.env['HTTP_USER_AGENT']
       }
       receive_and_reply!(@chat, message)
+    end
+
+    def resolve_encoding_from_params(keyname)
+      params[keyname].include?('UTF-8') ?
+        Encoding::UTF_8 : Encoding::Shift_JIS
     end
 end

@@ -18,9 +18,7 @@ class Ml::Engine
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       )).as_json.with_indifferent_access
   rescue => e
-    ExceptionNotifier.notify_exception e
-    Rollbar.log(e) if defined?(Rollbar)
-    logger.error 'Refer python-application.log'
+    log_error(e)
     raise e
   end
 
@@ -31,9 +29,7 @@ class Ml::Engine
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       )).as_json.with_indifferent_access
   rescue => e
-    ExceptionNotifier.notify_exception e
-    Rollbar.log(e) if defined?(Rollbar)
-    logger.error 'Refer python-application.log'
+    log_error(e)
     raise e
   end
 
@@ -44,4 +40,11 @@ class Ml::Engine
   def learn_tag_model
     @client.call(:learn_tag_model)
   end
+
+  private
+    def log_error(e)
+      ExceptionNotifier.notify_exception e
+      Rollbar.log(e) if defined?(Rollbar)
+      logger.error 'Refer python-application.log' if respond_to?(:logger)
+    end
 end

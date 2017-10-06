@@ -38,7 +38,7 @@ class Message < ActiveRecord::Base
     elsif guest?
       assign_attributes(body: question_answer.question)
     end
-    assign_attributes(rating: :nothing)
+    assign_attributes(rating: :nothing, answer_failed: false)
     save!
   end
 

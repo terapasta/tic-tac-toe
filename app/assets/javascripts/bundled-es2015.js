@@ -750,6 +750,7 @@ function fetchAll(botId) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.findAll = findAll;
 exports.find = find;
 exports.create = create;
 exports.update = update;
@@ -760,11 +761,21 @@ var _axios = require("axios");
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _assign = require("lodash/assign");
+
+var _assign2 = _interopRequireDefault(_assign);
+
 var _config = require("./config");
 
 var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function findAll(botId) {
+  var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  return _axios2.default.get("/api/bots/" + botId + "/question_answers.json", (0, _assign2.default)((0, _config2.default)(), { params: params }));
+}
 
 function find(botId, id) {
   return _axios2.default.get("/api/bots/" + botId + "/question_answers/" + id + ".json", (0, _config2.default)());
@@ -796,7 +807,7 @@ function deleteChildDecisionBranches(botId, id) {
   return _axios2.default.delete("/api/bots/" + botId + "/question_answers/" + id + "/child_decision_branches.json", (0, _config2.default)());
 }
 
-},{"./config":11,"axios":99}],15:[function(require,module,exports){
+},{"./config":11,"axios":99,"lodash/assign":646}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3317,13 +3328,17 @@ var _styledComponents = require("styled-components");
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+var _v = require("uuid/v4");
+
+var _v2 = _interopRequireDefault(_v);
+
 var _preventWheelScrollOfParent = require("../prevent-wheel-scroll-of-parent");
 
 var _preventWheelScrollOfParent2 = _interopRequireDefault(_preventWheelScrollOfParent);
 
-var _answer = require("../../api/answer");
+var _questionAnswer = require("../../api/question-answer");
 
-var AnswerAPI = _interopRequireWildcard(_answer);
+var QuestionAnswerAPI = _interopRequireWildcard(_questionAnswer);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -3425,13 +3440,13 @@ var ChatBotMessageEditor = function (_Component) {
             searchedAnswers.map(function (a) {
               return _react2.default.createElement(
                 "div",
-                { className: "panel panel-default stacked-close", key: a.id },
+                { className: "panel panel-default stacked-close", key: (0, _v2.default)() },
                 _react2.default.createElement(
                   SuggestItem,
                   { onClick: function onClick(e) {
                       return _this2.selectAnswer(a, e);
                     } },
-                  a.body
+                  a
                 )
               );
             })
@@ -3447,11 +3462,13 @@ var ChatBotMessageEditor = function (_Component) {
       if ((0, _isEmpty2.default)(text)) {
         return this.setState({ searchedAnswers: [] });
       }
-      AnswerAPI.findAll(window.currentBot.id, { q: text }).then(function (res) {
+      QuestionAnswerAPI.findAll(window.currentBot.id, { q: text }).then(function (res) {
         if (!_this3._mounted) {
           return;
         }
-        var searchedAnswers = res.data.answers;
+        var searchedAnswers = res.data.questionAnswers.map(function (qa) {
+          return qa.answer;
+        });
         _this3.setState({ searchedAnswers: searchedAnswers });
       }).catch(console.error);
     }
@@ -3470,7 +3487,7 @@ var ChatBotMessageEditor = function (_Component) {
       onChangeLearning({
         questionId: questionId,
         answerId: answerId,
-        answerBody: answer.body
+        answerBody: answer
       });
 
       this.setState({ searchedAnswers: [] });
@@ -3487,7 +3504,7 @@ ChatBotMessageEditor.propTypes = {
 
 exports.default = ChatBotMessageEditor;
 
-},{"../../api/answer":6,"../prevent-wheel-scroll-of-parent":87,"is-empty":433,"lodash/debounce":656,"react":901,"react-textarea-autosize":744,"styled-components":934}],30:[function(require,module,exports){
+},{"../../api/question-answer":14,"../prevent-wheel-scroll-of-parent":87,"is-empty":433,"lodash/debounce":656,"react":901,"react-textarea-autosize":744,"styled-components":934,"uuid/v4":971}],30:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5659,6 +5676,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
       if ((0, _get2.default)(section, attr + ".id") === id) {
         section[attr].body = body;
         section[attr].rating = _constants.Ratings.Nothing;
+        section[attr].answerFailed = false;
       }
     });
   });
@@ -72670,5 +72688,36 @@ function v1(options, buf, offset) {
 }
 
 module.exports = v1;
+
+},{"./lib/bytesToUuid":968,"./lib/rng":969}],971:[function(require,module,exports){
+var rng = require('./lib/rng');
+var bytesToUuid = require('./lib/bytesToUuid');
+
+function v4(options, buf, offset) {
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options == 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ++ii) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || bytesToUuid(rnds);
+}
+
+module.exports = v4;
 
 },{"./lib/bytesToUuid":968,"./lib/rng":969}]},{},[1]);

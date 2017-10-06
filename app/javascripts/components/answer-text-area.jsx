@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from "react";
 import debounce from "lodash/debounce";
 import isEmpty from "is-empty";
 import styled from 'styled-components';
+import uuid from 'uuid/v4';
 
-import * as AnswerAPI from "../api/answer";
+import * as QuestionAnswerAPI from "../api/question-answer";
 import Panel from "./panel";
 
 const SuggestWrapper = styled.div.attrs({
@@ -72,9 +73,9 @@ export default class AnswerTextArea extends Component {
         {!isEmpty(answers) && (
           <SuggestWrapper>
             <label className="m-3">回答の候補</label>
-            {answers.map((answer, i) => {
+            {answers.map((answer) => {
               return (
-                <SuggestItem key={i} onClick={this.onClickAnswer.bind(this, answer.body)}>{answer.body}</SuggestItem>
+                <SuggestItem key={uuid()} onClick={this.onClickAnswer.bind(this, answer)}>{answer}</SuggestItem>
               );
             })}
           </SuggestWrapper>
@@ -99,8 +100,8 @@ export default class AnswerTextArea extends Component {
 
   searchAnswers(text) {
     const { botId } = this.props;
-    AnswerAPI.findAll(botId, { q: text }).then((res) => {
-      this.setState({ answers: res.data.answers });
+    QuestionAnswerAPI.findAll(botId, { q: text }).then((res) => {
+      this.setState({ answers: res.data.questionAnswers.map(qa => qa.answer) });
     }).catch((err) => {
       console.error(err);
     });

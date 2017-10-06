@@ -24,7 +24,7 @@ module StartDash
     config.i18n.default_locale = :ja
 
     config.autoload_paths += %W(
-      #{config.root}/lib
+      #{config.root}/lib/myope
       #{config.root}/app/policies
       #{config.root}/app/decorators/concerns
       #{config.root}/app/models/extensions

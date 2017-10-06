@@ -123,6 +123,7 @@ export default handleActions({
         if (get(section, `${attr}.id`) === id) {
           section[attr].body = body;
           section[attr].rating = Ratings.Nothing;
+          section[attr].answerFailed = false;
         }
       });
     });

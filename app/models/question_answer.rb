@@ -56,6 +56,13 @@ class QuestionAnswer < ActiveRecord::Base
     end
   }
 
+  scope :keyword_for_answer, -> (_keyword) {
+    if _keyword.present?
+      _kw = "%#{_keyword}%"
+      where('answer LIKE ?', _kw)
+    end
+  }
+
   def no_classified?
     bot.nil?
   end

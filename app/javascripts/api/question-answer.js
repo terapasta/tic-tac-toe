@@ -1,5 +1,10 @@
 import axios from "axios";
+import assign from "lodash/assign";
 import config from "./config";
+
+export function findAll(botId, params = {}) {
+  return axios.get(`/api/bots/${botId}/question_answers.json`, assign(config(), { params }))
+}
 
 export function find(botId, id) {
   return axios.get(`/api/bots/${botId}/question_answers/${id}.json`, config());

@@ -15,9 +15,11 @@ class Datasource:
         if bot.datasource_type == Constants.DATASOURCE_TYPE_FILE:
             self._persistence = PersistenceFromFile()
             self._question_answers = QuestionAnswersFromFile()
+            self._feedbacks = FeedbacksFromFile()
         else:
             self._persistence = PersistenceFromDb()
             self._question_answers = QuestionAnswersFromDb()
+            self._feedbacks = FeedbacksFromDb()
 
     @property
     def persistence(self):
@@ -26,3 +28,8 @@ class Datasource:
     @property
     def question_answers(self):
         return self._question_answers
+
+    @property
+    def feedbacks(self):
+        return self._feedbacks
+

@@ -1,5 +1,5 @@
 class Bot < ActiveRecord::Base
-  include HasSuggestsMessage
+  include Bot::HasSuggestsMessage
 
   belongs_to :user
   has_many :chats, -> { extending HasManyChatsExtension }
@@ -17,6 +17,8 @@ class Bot < ActiveRecord::Base
   has_many :accuracy_test_cases, dependent: :destroy
   has_many :exports, dependent: :destroy
   has_many :allowed_ip_addresses, dependent: :destroy
+  has_many :organization_ownerships, class_name: 'Organization::BotOwnership'
+  has_many :organizations, through: :organization_ownerships
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
   accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true

@@ -1,0 +1,25 @@
+.container.pt-5
+  .d-flex.justify-content-between
+    h3 Organizations
+    = link_to 'Create a new Organization', new_admin_organization_path, class: 'btn btn-secondary'
+
+  table.table.mt-5
+    thead
+      tr
+        th id
+        th image
+        th name
+        th description
+        th plan
+    tbody
+      - @organizations.each do |org|
+        tr
+          td= org.id
+          td
+            - if org.image?
+              = link_to org.image_url do
+                .circle-image-56 style=css_bg_image(org.image_url(:thumb))
+          td= org.name
+          td= org.description
+          td= org.plan_i18n
+          td= link_to 'Edit', edit_admin_organization_path(org), class: 'btn btn-secondary'

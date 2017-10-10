@@ -1,7 +1,7 @@
 namespace :db do
   task :pull do
     on roles(:app) do
-      set :bot_ids, ask('input bot ids (ex: 8,11,13):', nil, echo: true)
+      set :bot_ids, ask('input bot ids (ex: 8,11,13,30):', nil, echo: true)
       unless fetch(:bot_ids).nil?
         file_name = "#{DateTime.now.strftime('%Y%m%d%H%M%S')}.sql"
         file_path = "#{shared_path}/tmp/#{file_name}"

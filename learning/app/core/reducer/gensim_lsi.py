@@ -1,5 +1,6 @@
-import os.path
 import inject
+import os.path
+from gensim.corpora import Dictionary
 from gensim.models import LsiModel
 from app.shared.current_bot import CurrentBot
 from app.shared.datasource.datasource import Datasource
@@ -13,12 +14,10 @@ class GensimLSI:
         self.reducer_path = './prototype/working/myope_lsi.model'
         if os.path.isfile(self.reducer_path):
             self.reducer = LsiModel.load(self.reducer_path)
-        else:
-            self.reducer = LsiModel.load('./prototype/working/lsi_1000.model')
 
     def fit(self, features):
-        # FIXME: chunksizeを1にしてもsegmentation faultが発生してしまう
-        self.reducer.add_documents(features, chunksize=100)
+        dictionary = Dictionary.load_from_text('./prototype/working/myope_wordids.txt.bz2')
+        self.reducer = LsiModel(corpus=features, id2word=dictionary, num_topics=len(features))
         self.reducer.save(self.reducer_path)
 
     def transform(self, features):

@@ -1,6 +1,8 @@
 class Organization < ActiveRecord::Base
   has_many :user_memberships, class_name: 'Organization::UserMembership'
   has_many :users, through: :user_memberships
+  has_many :bot_ownerships, class_name: 'Organization::BotOwnership'
+  has_many :bots, through: :bot_ownerships
 
   enum plan: { lite: 0, standard: 1, professional: 2 }
 

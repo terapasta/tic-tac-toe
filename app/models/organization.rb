@@ -4,7 +4,12 @@ class Organization < ActiveRecord::Base
   has_many :bot_ownerships, class_name: 'Organization::BotOwnership'
   has_many :bots, through: :bot_ownerships
 
+  accepts_nested_attributes_for :user_memberships, allow_destroy: true
+  accepts_nested_attributes_for :bot_ownerships, allow_destroy: true
+
   enum plan: { lite: 0, standard: 1, professional: 2 }
+
+  mount_uploader :image, ImageUploader
 
   HistoriesLimitDays = {
     lite: 3,

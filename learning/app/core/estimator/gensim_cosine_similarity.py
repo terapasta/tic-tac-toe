@@ -25,7 +25,7 @@ class GensimCosineSimilarity:
 
         # TODO: , num_features=1000が必要か確認する
         # TODO: fitでやってもいいかもしれない
-        index = MatrixSimilarity(normalized_vectors)
+        index = MatrixSimilarity(normalized_vectors, num_features=1000)
         similarities = index[question_features][0]
         result = self.bot_question_answers_data[['question', 'question_answer_id']].copy()
         result['probability'] = similarities

@@ -1,10 +1,7 @@
 import inject
-import numpy as np
-import pandas as pd
 
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
-from app.shared.constants import Constants
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 
 
@@ -20,7 +17,7 @@ class LearnController:
 
         self._vocabulary_learn()
 
-        self._learn()
+        self._learn_bot()
 
         result = self._evaluate()
 
@@ -29,14 +26,8 @@ class LearnController:
         return result
 
     def _vocabulary_learn(self):
-        # logger.info('load all get_datasource')
-        # all_question_answers_data = self._factory.get_datasource().question_answers.all()
-        #
-        # logger.info('tokenize all')
-        # tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
-
         logger.info('data build all')
-        tokenized_sentences = self._factory.get_data_builder().build(self._factory.get_datasource(), self._factory.get_tokenizer())
+        tokenized_sentences = self._factory.get_data_builder().build_tokenized_vocabularies()
 
         logger.info('vectorize all')
         vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)
@@ -47,22 +38,9 @@ class LearnController:
         logger.info('normalize all')
         self._factory.get_normalizer().fit(reduced_features)
 
-    def _learn(self):
-        # logger.info('load question_answers')
-        # bot_question_answers_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
-
+    def _learn_bot(self):
         logger.info('data build')
-        bot_tokenized_sentences = self._factory.get_data_builder().build_by_bot(
-            self._factory.get_datasource(), self._factory.get_tokenizer(), self.bot.id)
-
-        # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
-        bot_tokenized_sentences = np.array(bot_tokenized_sentences)
-        bot_tokenized_sentences = np.append(bot_tokenized_sentences, [''] * Constants.COUNT_OF_APPEND_BLANK)
-        question_answer_ids = np.array(self._factory.get_data_builder().raw_data['question_answer_id'], dtype=np.int)
-        question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
-
-        # logger.info('tokenize question_answers')
-        # bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
+        bot_tokenized_sentences, question_answer_ids = self._factory.get_data_builder().build_learning_data(self.bot.id)
 
         logger.info('vectorize get_datasource')
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)

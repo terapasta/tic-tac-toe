@@ -13,7 +13,6 @@ from app.shared.datasource.datasource import Datasource
 
 class TwoStepCosineSimilarityFactory:
     @inject.params(
-        data_builder=QuestionAnswerAppendedIdDataBuiler,
         tokenizer=MecabTokenizer,
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
@@ -21,7 +20,6 @@ class TwoStepCosineSimilarityFactory:
         datasource=Datasource,
     )
     def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
-        self.data_builder = data_builder
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
@@ -37,6 +35,7 @@ class TwoStepCosineSimilarityFactory:
                     self.normalizer,
                     self.datasource,
                 )
+        self.data_builder = QuestionAnswerAppendedIdDataBuiler(self.tokenizer, self.datasource)
 
     def get_data_builder(self):
         return self.data_builder

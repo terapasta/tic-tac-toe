@@ -19,12 +19,14 @@ args = parser.parse_args()
 Config().init(args.env)
 inject.configure_once()
 
+
 # FIXME: fileを使うと以下のエラーが出る
 #        This solver needs samples of at least 2 classes in the data, but the data contains only one class: 0
 class LearningParameter:
     datasource_type = args.datasource
     use_similarity_classification = args.use_similarity_classification
     algorithm = args.algorithm
+
 
 bot = CurrentBot().init(args.bot_id, LearningParameter())
 Datasource().init(bot)

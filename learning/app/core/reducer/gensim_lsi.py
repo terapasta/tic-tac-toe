@@ -17,8 +17,7 @@ class GensimLSI:
             self.reducer = LsiModel.load('./prototype/working/lsi_1000.model')
 
     def fit(self, features):
-        # FIXME: chunksizeを1にしてもsegmentation faultが発生してしまう
-        self.reducer.add_documents(features, chunksize=100)
+        self.reducer.add_documents(features, chunksize=20000)
         self.reducer.save(self.reducer_path)
 
     def transform(self, features):

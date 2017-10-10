@@ -27,6 +27,7 @@ function dump() {
 dump 'bots' "id IN (${BOT_IDS})"
 dump 'question_answers' "bot_id IN (${BOT_IDS})"
 dump 'word_mappings' "word IS NOT NULL"
+dump 'word_mapping_synonims' "value IS NOT NULL"
 dump 'accuracy_test_cases' "bot_id IN (${BOT_IDS})"
 dump 'decision_branches' "bot_id IN (${BOT_IDS})"
 dump 'learning_parameters' "bot_id IN (${BOT_IDS})"

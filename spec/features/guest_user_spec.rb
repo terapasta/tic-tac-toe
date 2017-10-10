@@ -37,11 +37,6 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
       find('#guest-user-submit').click
       expect(page).to have_content('ユーザー情報を保存しました')
 
-      find('#guest-user-modal-button').click
-      expect(page).to have_content(name)
-      expect(page).to have_content(email)
-      find('button.close').click
-
       fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
       click_on '質問'
 

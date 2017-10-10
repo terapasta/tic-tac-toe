@@ -1,5 +1,5 @@
 class Bot < ActiveRecord::Base
-  include HasSuggestsMessage
+  include Bot::HasSuggestsMessage
 
   belongs_to :user
   has_many :chats, -> { extending HasManyChatsExtension }

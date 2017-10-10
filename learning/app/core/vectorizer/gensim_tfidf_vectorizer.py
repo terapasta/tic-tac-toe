@@ -27,15 +27,16 @@ class GensimTfidfVectorizer:
             self.vectorizer = TfidfModel.load(self.tfidf_path)
 
     def fit(self, sentences):
-        self.dictionary.add_documents([sentence.split(' ') for sentence in sentences])
-        self.dictionary.save_as_text(self.text_path)
-        corpus = [self.dictionary.doc2bow(text, allow_update=True) for text in [sentence.split(' ') for sentence in sentences]]
-        MmCorpus.serialize('./prototype/working/myope.mm', corpus, id2word=self.dictionary)
-        mm = MmCorpus('./prototype/working/myope.mm')
-        wiki_mm = MmCorpus('./prototype/working/wiki_bow.mm')
-        # Note: Macbook core i5 メモリ8GBで2時間半くらいかかる
-        self.vectorizer = TfidfModel(itertools.chain(wiki_mm, mm), id2word=self.dictionary, normalize=True)
-        self.vectorizer.save(self.tfidf_path)
+        pass
+        # self.dictionary.add_documents([sentence.split(' ') for sentence in sentences])
+        # self.dictionary.save_as_text(self.text_path)
+        # corpus = [self.dictionary.doc2bow(text, allow_update=True) for text in [sentence.split(' ') for sentence in sentences]]
+        # MmCorpus.serialize('./prototype/working/myope.mm', corpus, id2word=self.dictionary)
+        # mm = MmCorpus('./prototype/working/myope.mm')
+        # wiki_mm = MmCorpus('./prototype/working/wiki_bow.mm')
+        # # Note: Macbook core i5 メモリ8GBで2時間半くらいかかる
+        # self.vectorizer = TfidfModel(itertools.chain(wiki_mm, mm), id2word=self.dictionary, normalize=True)
+        # self.vectorizer.save(self.tfidf_path)
 
     def transform(self, sentences):
         id_corpus = [self.dictionary.doc2bow(sentence.split(' ')) for sentence in sentences]

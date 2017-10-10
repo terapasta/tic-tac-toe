@@ -18,7 +18,6 @@ class GensimCosineSimilarity:
         logger.info('PASS')
 
     def predict(self, question_features):
-        self.bot_question_answers_data['question']
         bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
         reduced_vectors = self.reducer.transform(bot_features)

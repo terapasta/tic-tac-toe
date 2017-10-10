@@ -6,10 +6,11 @@ class PassReducer:
         pass
 
     def transform(self, features):
-        return features.toarray()
+        return features
 
     def fit_transform(self, features):
-        return features.toarray()
+        self.fit(features)
+        return self.transform(features)
 
     @property
     def dump_path(self):

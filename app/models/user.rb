@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   has_many :bots
   has_many :sentence_synonyms, foreign_key: :created_user_id
+  has_many :organization_memberships, class_name: 'Organization::UserMembership'
+  has_many :organizations, through: :organization_memberships
 
   enum role: { normal: 0, worker: 1, staff: 2 }
   enum plan: { lite: 0, standard: 1, professional: 2 }

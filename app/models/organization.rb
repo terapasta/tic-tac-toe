@@ -1,4 +1,7 @@
 class Organization < ActiveRecord::Base
+  has_many :user_memberships, class_name: 'Organization::UserMembership'
+  has_many :users, through: :user_memberships
+
   enum plan: { lite: 0, standard: 1, professional: 2 }
 
   HistoriesLimitDays = {

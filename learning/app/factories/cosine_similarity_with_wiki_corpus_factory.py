@@ -2,8 +2,8 @@ import inject
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.gensim_tfidf_vectorizer import GensimTfidfVectorizer
 from app.core.estimator.gensim_cosine_similarity import GensimCosineSimilarity
-# from app.core.reducer.gensim_lsi import GensimLSI
-from app.core.reducer.pass_reducer import PassReducer
+from app.core.reducer.gensim_lsi import GensimLSI
+# from app.core.reducer.pass_reducer import PassReducer
 # from app.core.normalizer.normalizer import Normalizer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource
@@ -13,8 +13,8 @@ class CosineSimilarityWithWikiCorpusFactory:
     @inject.params(
         tokenizer=MecabTokenizer,
         vectorizer=GensimTfidfVectorizer,
-        # reducer=GensimLSI,
-        reducer=PassReducer,
+        reducer=GensimLSI,
+        # reducer=PassReducer,
         normalizer=PassNormalizer,
         datasource=Datasource,
     )

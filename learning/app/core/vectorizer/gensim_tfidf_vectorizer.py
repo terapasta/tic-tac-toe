@@ -35,8 +35,8 @@ class GensimTfidfVectorizer:
         MmCorpus.serialize('./prototype/working/myope.mm', corpus)
         logger.debug('make tfidf corpus')
         mm = MmCorpus('./prototype/working/myope.mm')
-        tfidf = TfidfModel(mm, id2word=self.dictionary, normalize=True)
-        tfidf.save(self.tfidf_path)
+        self.vectorizer = TfidfModel(mm, id2word=self.dictionary, normalize=True)
+        self.vectorizer.save(self.tfidf_path)
 
     def transform(self, sentences):
         id_corpus = [self.dictionary.doc2bow(sentence.split(' ')) for sentence in sentences]

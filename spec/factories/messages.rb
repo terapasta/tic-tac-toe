@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :message do
     chat nil
     speaker :guest
-    body "MyString"
+    sequence(:body) { |n| "messages.body #{n}" } 
 
     trait :failed do
       speaker :bot

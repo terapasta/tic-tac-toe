@@ -4,11 +4,11 @@ class TopicTaggingPolicy < ApplicationPolicy
   end
 
   def create?
-    has_owner_permission?
+    staff_or_owner?
   end
 
   def destroy?
-    has_owner_permission?
+    staff_or_owner?
   end
 
   def permitted_attributes
@@ -18,8 +18,7 @@ class TopicTaggingPolicy < ApplicationPolicy
   end
 
   private
-    def has_owner_permission?
-      return true if user.staff?
-      user.normal? && record.question_answer.bot.user.id == user.id
+    def target_bot
+      record.question_answer.bot
     end
 end

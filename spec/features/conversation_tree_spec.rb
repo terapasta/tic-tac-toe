@@ -13,7 +13,14 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   let!(:bot) do
-    create(:bot, user: user)
+    create(:bot)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:question_answers) do

@@ -36,8 +36,7 @@ class DecisionBranchPolicy < ApplicationPolicy
   end
 
   private
-    def staff_or_owner?
-      return true if user.staff?
-      user.normal? && record.bot.user == user
+    def target_bot
+      record.bot
     end
 end

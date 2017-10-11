@@ -20,7 +20,14 @@ RSpec.describe 'Chats', type: :features, js: true do
   end
 
   let!(:bot) do
-    create(:bot, user: bot_owner, start_message: start_message)
+    create(:bot, start_message: start_message)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: bot_owner)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:allowed_hosts) do

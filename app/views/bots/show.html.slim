@@ -20,7 +20,7 @@
       = space
       i.material-icons keyboard_arrow_right
 
-  - if current_user.ec_plan?
+  - if current_user.ec_plan?(@bot)
     .card: .card-block
       h5.mb-3: strong 今日のチャット数（上限#{@chats_limit}）
       .progress.mb-3

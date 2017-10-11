@@ -64,7 +64,11 @@ class Chat < ActiveRecord::Base
   scope :in_today_by_unique_user, -> {
     now = Time.current
     joins(:messages)
-      .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
+      .where(messages: {
+        speaker: :guest,
+        created_at: (now.beginning_of_day..now.end_of_day)
+      })
+      .uniq
   }
 
   def build_start_message

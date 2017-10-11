@@ -17,7 +17,9 @@ class ChatsController < ApplicationController
 
   def new
     iframe_support @bot
-    render :exceeded and return if policy(@bot).exceeded_chats_count?
+    if policy(@bot).exceeded_chats_count?
+      render :exceeded, status: :too_many_requests and return
+    end
     @chat = @bot.chats.create_by(guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)

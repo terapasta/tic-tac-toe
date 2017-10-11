@@ -65,6 +65,7 @@ class Chat < ActiveRecord::Base
     now = Time.current
     joins(:messages)
       .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
+      .uniq
   }
 
   def build_start_message

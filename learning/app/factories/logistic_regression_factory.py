@@ -11,7 +11,6 @@ from app.shared.datasource.datasource import Datasource
 
 class LogisticRegressionFactory:
     @inject.params(
-        data_builder=QuestionAnswerDataBuiler,
         tokenizer=MecabTokenizer,
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
@@ -20,13 +19,16 @@ class LogisticRegressionFactory:
         estimator=LogisticRegression,
     )
     def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
-        self.data_builder = data_builder
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
         self.datasource = datasource
         self.estimator = estimator
+        if data_builder is not None:
+            self.data_builder = data_builder
+        else:
+            self.data_builder = QuestionAnswerDataBuiler(self.tokenizer, self.datasource)
 
     def get_data_builder(self):
         return self.data_builder

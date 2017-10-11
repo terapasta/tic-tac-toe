@@ -35,7 +35,10 @@ class TwoStepCosineSimilarityFactory:
                     self.normalizer,
                     self.datasource,
                 )
-        self.data_builder = QuestionAnswerAppendedIdDataBuiler(self.tokenizer, self.datasource)
+        if data_builder is not None:
+            self.data_builder = data_builder
+        else:
+            self.data_builder = QuestionAnswerAppendedIdDataBuiler(self.tokenizer, self.datasource)
 
     def get_data_builder(self):
         return self.data_builder

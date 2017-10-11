@@ -11,9 +11,9 @@ class QuestionAnswerDataBuiler:
         self.tokenizer = tokenizer
         self.datasource = datasource
 
-    def build_tokenized_vocabularies(self, datasource, tokenizer):
+    def build_tokenized_vocabularies(self):
         all_question_answers_data = self.datasource.question_answers.all()
-        return tokenizer.tokenize(all_question_answers_data['question'])
+        return self.tokenizer.tokenize(all_question_answers_data['question'])
 
     def build_learning_data(self, bot_id):
         raw_data = self.datasource.question_answers.by_bot(bot_id)

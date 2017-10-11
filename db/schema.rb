@@ -165,6 +165,32 @@ ActiveRecord::Schema.define(version: 20171003062902) do
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
+  create_table "organization_bot_ownerships", force: :cascade do |t|
+    t.integer  "organization_id", limit: 4, null: false
+    t.integer  "bot_id",          limit: 4, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "organization_bot_ownerships", ["organization_id", "bot_id"], name: "main_organization_bot_ownership_index", unique: true, using: :btree
+
+  create_table "organization_user_memberships", force: :cascade do |t|
+    t.integer  "user_id",         limit: 4, null: false
+    t.integer  "organization_id", limit: 4, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "organization_user_memberships", ["user_id", "organization_id"], name: "main_organization_user_membership_index", unique: true, using: :btree
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name",        limit: 255,               null: false
+    t.string   "image",       limit: 255
+    t.text     "description", limit: 65535
+    t.integer  "plan",        limit: 4,     default: 2, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4
@@ -176,6 +202,17 @@ ActiveRecord::Schema.define(version: 20171003062902) do
   end
 
   add_index "question_answers", ["bot_id"], name: "index_question_answers_on_bot_id", using: :btree
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "level",              limit: 4,     null: false
+    t.integer  "message_id",         limit: 4,     null: false
+    t.integer  "question_answer_id", limit: 4,     null: false
+    t.integer  "bot_id",             limit: 4,     null: false
+    t.text     "question",           limit: 65535, null: false
+    t.text     "answer",             limit: 65535, null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
 
   create_table "scores", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4,  null: false

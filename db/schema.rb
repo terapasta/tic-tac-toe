@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010051758) do
+ActiveRecord::Schema.define(version: 20171011012732) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -51,19 +51,18 @@ ActiveRecord::Schema.define(version: 20171010051758) do
   add_index "answer_files", ["question_answer_id"], name: "index_answer_files_on_question_answer_id", using: :btree
 
   create_table "bots", force: :cascade do |t|
-    t.integer  "user_id",                        limit: 4
-    t.string   "name",                           limit: 255
-    t.string   "token",                          limit: 64,                    null: false
-    t.string   "classify_failed_message",        limit: 255
-    t.string   "start_message",                  limit: 255
-    t.datetime "created_at",                                                   null: false
-    t.datetime "updated_at",                                                   null: false
-    t.string   "image",                          limit: 255
-    t.string   "learning_status",                limit: 255
+    t.integer  "user_id",                      limit: 4
+    t.string   "name",                         limit: 255
+    t.string   "token",                        limit: 64,    null: false
+    t.string   "classify_failed_message",      limit: 255
+    t.string   "start_message",                limit: 255
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "image",                        limit: 255
+    t.string   "learning_status",              limit: 255
     t.datetime "learning_status_changed_at"
-    t.text     "selected_question_answer_ids",   limit: 65535
-    t.text     "has_suggests_message",           limit: 65535
-    t.boolean  "enable_guest_user_registration",               default: false
+    t.text     "selected_question_answer_ids", limit: 65535
+    t.text     "has_suggests_message",         limit: 65535
   end
 
   add_index "bots", ["user_id"], name: "index_bots_on_user_id", using: :btree
@@ -125,16 +124,6 @@ ActiveRecord::Schema.define(version: 20171010051758) do
 
   add_index "exports", ["bot_id"], name: "index_exports_on_bot_id", using: :btree
 
-  create_table "guest_users", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.string   "email",      limit: 255
-    t.string   "guest_key",  limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "guest_users", ["guest_key"], name: "index_guest_users_on_guest_key", using: :btree
-
   create_table "learning_parameters", force: :cascade do |t|
     t.integer  "bot_id",                        limit: 4
     t.integer  "algorithm",                     limit: 4,     default: 0,    null: false
@@ -167,41 +156,15 @@ ActiveRecord::Schema.define(version: 20171010051758) do
     t.boolean  "answer_failed",                              default: false, null: false
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
-    t.integer  "rating",                       limit: 4,     default: 0
     t.boolean  "answer_marked",                              default: false, null: false
     t.integer  "question_answer_id",           limit: 4
     t.text     "similar_question_answers_log", limit: 65535
+    t.integer  "rating",                       limit: 4,     default: 0
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
   add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
-  create_table "organization_bot_ownerships", force: :cascade do |t|
-    t.integer  "organization_id", limit: 4, null: false
-    t.integer  "bot_id",          limit: 4, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "organization_bot_ownerships", ["organization_id", "bot_id"], name: "main_organization_bot_ownership_index", unique: true, using: :btree
-
-  create_table "organization_user_memberships", force: :cascade do |t|
-    t.integer  "user_id",         limit: 4, null: false
-    t.integer  "organization_id", limit: 4, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "organization_user_memberships", ["user_id", "organization_id"], name: "main_organization_user_membership_index", unique: true, using: :btree
-
-  create_table "organizations", force: :cascade do |t|
-    t.string   "name",        limit: 255,               null: false
-    t.string   "image",       limit: 255
-    t.text     "description", limit: 65535
-    t.integer  "plan",        limit: 4,     default: 2, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-  end
 
   create_table "organization_bot_ownerships", force: :cascade do |t|
     t.integer  "organization_id", limit: 4, null: false

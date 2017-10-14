@@ -1,3 +1,4 @@
+import gensim
 import inject
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
 from app.shared.current_bot import CurrentBot
@@ -9,7 +10,10 @@ class Word2vecVectorizer:
     def __init__(self, bot=None, datasource=None):
         self.bot = bot
         self.persistence = datasource.persistence
-        self.vectorizer = self.persistence.load(self.dump_key)
+        # TODO: modelのロードはシングルトンにしたい
+        self._model = gensim.models.KeyedVectors.load_word2vec_format('dumps/entity_vector.model.bin', binary=True)
+
+        # self.vectorizer = self.persistence.load(self.dump_key)
         # if self.vectorizer is None:
         #     # Note: token_patternは1文字のデータを除外しない設定
         #     self.vectorizer = SkTfidfVectorizer(use_idf=True, token_pattern=u'(?u)\\b\\w+\\b')
@@ -18,9 +22,10 @@ class Word2vecVectorizer:
         print('fit')
         # self.vectorizer.fit(sentences)
 
-    # def transform(self, sentences):
-    #     return self.vectorizer.transform(sentences)
-    #
+    def transform(self, sentences):
+        print('transform')
+        # return self.vectorizer.transform(sentences)
+
     # def fit_transform(self, sentences):
     #     self.fit(sentences)
     #     return self.transform(sentences)

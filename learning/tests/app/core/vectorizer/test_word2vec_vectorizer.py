@@ -25,11 +25,12 @@ class Word2vecVectorizerTestCase(TestCase):
         self.bot_id = 1
         self.learning_parameter = LearningParameter()
 
-    def test_fit(self):
+    def test_transform(self):
         bot = CurrentBot().init(self.bot_id, self.learning_parameter)
         Datasource().init(bot)
 
         vectorizer = Word2vecVectorizer()
-        vectorizer.fit(np.array(['hoge', 'moge', 'hage']))
+        vectorizer.transform(['hoge', 'moge'])
+        # vectorizer.fit(np.array(['hoge', 'moge', 'hage']))
 
         ok_(True)

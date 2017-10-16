@@ -3,7 +3,13 @@ class LearningParameter < ActiveRecord::Base
 
   belongs_to :bot
 
-  enum algorithm: [ :logistic_regression, :naive_bayes ]
+  enum algorithm: [
+    :logistic_regression,
+    :naive_bayes,
+    :neural_network,
+    :similarity_classification,
+    :two_step_similarity_classification,
+  ]
 
   def self.default_attributes
       {

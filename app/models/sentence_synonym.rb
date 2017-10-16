@@ -1,4 +1,4 @@
-class SentenceSynonym < ActiveRecord::Base
+class SentenceSynonym < ApplicationRecord
   belongs_to :question_answer
   belongs_to :created_user, class_name: 'User'
 

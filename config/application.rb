@@ -52,5 +52,7 @@ module StartDash
     config.action_view.field_error_proc = Proc.new do |html_tag, instance|
       %Q(#{html_tag}).html_safe
     end
+
+    ActiveSupport.halt_callback_chains_on_return_false = false
   end
 end

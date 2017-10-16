@@ -1,4 +1,4 @@
-class LearningParameter < ActiveRecord::Base
+class LearningParameter < ApplicationRecord
   serialize :params_for_algorithm, JSON
 
   belongs_to :bot

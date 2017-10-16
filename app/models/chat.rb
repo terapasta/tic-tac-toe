@@ -1,4 +1,4 @@
-class Chat < ActiveRecord::Base
+class Chat < ApplicationRecord
   paginates_per 50
 
   has_many :messages, -> { extending HasManyMessagesExtension }

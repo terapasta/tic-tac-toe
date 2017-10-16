@@ -4,6 +4,7 @@ class Chat < ActiveRecord::Base
   has_many :messages
   belongs_to :bot
   has_many :organizations, through: :bot
+  has_many :users, through: :organizations
 
   scope :has_multiple_messages, -> {
     joins(:messages)
@@ -70,10 +71,6 @@ class Chat < ActiveRecord::Base
       })
       .uniq
   }
-
-  def bot_users
-    organizations.map(&:users).flatten
-  end
 
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting_text

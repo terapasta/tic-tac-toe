@@ -12,8 +12,8 @@ gem 'mysql2', '~> 0.3.20'
 
 
 # Use SCSS for stylesheets
-# gem 'sass' TODO
-# gem 'sass-rails', '~> 5.0' TODO
+gem 'sass'
+gem 'sass-rails'
 
 # easy to write a form
 gem 'bootstrap', '~> 4.0.0.beta'
@@ -22,7 +22,7 @@ gem 'bootstrap', '~> 4.0.0.beta'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-# gem 'coffee-rails', '~> 4.1.0' TODO
+gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
@@ -45,12 +45,12 @@ gem 'ransack'
 gem 'bcrypt', '~> 3.1.7'
 
 # login
-# gem 'devise' TODO
-# gem 'devise-i18n' TODO
-# gem 'devise-i18n-views' TODO
+gem 'devise'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
 
 # admin pages
-# gem 'rails_admin', '~> 1.1.1' TODO
+gem 'rails_admin'
 
 # enum with i18n
 gem 'enum_help'
@@ -68,38 +68,38 @@ gem 'virtus'
 # gem 'capistrano-rails', group: :development
 
 # Seed Data Management
-# gem 'seed-fu', '~> 2.3' TODO
-# gem 'active_hash' TODO
+gem 'seed-fu'
+gem 'active_hash'
 gem 'msgpack-rpc', '~> 0.5.4'
 gem 'dotenv-rails'
 gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
 gem 'whenever', require: false
-# gem 'carrierwave', '~> 1.1.0' TODO
+gem 'carrierwave'
 gem 'rmagick', require: false
 gem 'rails4-autocomplete'
-# gem 'slim-rails' TODO
+gem 'slim-rails'
 # gem 'twitter-bootswatch-rails', '~> 3.1.1'
 # gem 'twitter-bootswatch-rails-helpers'
 gem 'slack-api'
 gem 'activerecord-import'
-# gem 'exception_notification' TODO
+gem 'exception_notification'
 gem 'slack-notifier'
-# gem 'delayed_job' TODO
-# gem 'delayed_job_active_record' TODO
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'compass'
 gem 'autoprefixer-rails', '~> 6.7.7.2'
-# gem 'draper' TODO
-# gem 'pundit' TODO
+gem 'draper', '>= 3.0.0.pre1'
+gem 'pundit'
 gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond'
 gem 'nested_form'
 gem 'addressable', require: 'addressable/uri'
-# gem 'toastr-rails' TODO
+gem 'toastr-rails'
 gem 'natto'
 gem 'config'
-# gem 'active_model_serializers' TODO
+gem 'active_model_serializers'
 gem 'non-stupid-digest-assets'
 gem 'asset_sync'
 gem 'fog-aws'
@@ -127,8 +127,7 @@ group :development, :test do
   # Debug
   gem 'better_errors'
   gem 'binding_of_caller'
-  # gem 'meta_request' TODO
-  # gem 'quiet_assets' TODO
+  gem 'meta_request'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -141,8 +140,8 @@ group :development, :test do
   gem 'tapp'
 
   # rspec
-  # gem 'rspec-rails', '~> 3.0.0' TODO
-  # gem 'factory_girl_rails' TODO
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
   gem 'guard'
   gem 'guard-rspec'
   gem 'capybara'

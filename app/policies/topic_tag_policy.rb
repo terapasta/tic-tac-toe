@@ -4,7 +4,7 @@ class TopicTagPolicy < ApplicationPolicy
   end
 
   def show?
-    has_owner_permission?
+    staff_or_owner?
   end
 
   def new?
@@ -12,7 +12,7 @@ class TopicTagPolicy < ApplicationPolicy
   end
 
   def create?
-    has_owner_permission?
+    staff_or_owner?
   end
 
   def edit?
@@ -20,11 +20,11 @@ class TopicTagPolicy < ApplicationPolicy
   end
 
   def update?
-    has_owner_permission?
+    staff_or_owner?
   end
 
   def destroy?
-    has_owner_permission?
+    staff_or_owner?
   end
 
   def permitted_attributes
@@ -44,8 +44,7 @@ class TopicTagPolicy < ApplicationPolicy
   end
 
   private
-    def has_owner_permission?
-      return true if user.staff?
-      user.normal? && record.bot.user = user
+    def target_bot
+      record.bot
     end
 end

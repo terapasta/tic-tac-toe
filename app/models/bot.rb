@@ -1,7 +1,7 @@
 class Bot < ActiveRecord::Base
   include Bot::HasSuggestsMessage
 
-  belongs_to :user
+  belongs_to :user, required: false
   has_many :chats, -> { extending HasManyChatsExtension }
   has_many :messages, through: :chats
   has_many :learning_training_messages
@@ -79,6 +79,10 @@ class Bot < ActiveRecord::Base
 
   def learn_later
     LearnJob.perform_later(self.id)
+  end
+
+  def chats_limit_per_day
+    organizations.first.chats_limit_per_day
   end
 
   private

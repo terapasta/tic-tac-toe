@@ -34,7 +34,7 @@ class ChatPolicy < ApplicationPolicy
     end
 
     def bot_owner?
-      user.id == record.bot&.user&.id
+      user&.has_membership_of?(record.bot)
     end
 
     def authorized_ip_address?

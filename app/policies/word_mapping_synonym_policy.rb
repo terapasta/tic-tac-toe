@@ -18,8 +18,7 @@ class WordMappingSynonymPolicy < ApplicationPolicy
   end
 
   private
-    def staff_or_owner?
-      return true if user.staff?
-      record.word_mapping.bot.user == user
+    def target_bot
+      record.word_mapping.bot
     end
 end

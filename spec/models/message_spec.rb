@@ -54,7 +54,7 @@ RSpec.describe Message, :type => :model do
         it 'メッセージ本文を変更できること' do
           expect{
             answer_success_by_bot.update(body: 'changed body')
-          }.to change(answer_success_by_bot, :body).from('MyString').to('changed body')
+          }.to change(answer_success_by_bot, :body).to('changed body')
         end
       end
     end

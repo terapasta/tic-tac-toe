@@ -1,0 +1,57 @@
+- if notice
+  .my-4.alert.alert-success= notice
+- if alert
+  .my-4.alert.alert-danger= alert
+
+= nested_form_for [:admin, @organization], html: { class: 'form my-5' } do |f|
+  - if @organization.image?
+    .form-group
+      = link_to @organization.image_url do
+        .circle-image-56 style=css_bg_image(@organization.image_url(:thumb))
+
+      = space 2
+
+      = f.label :remove_image do
+        = f.check_box :remove_image
+        = space
+        span 画像を削除する
+
+  .form-group
+    = f.label :image
+    = f.file_field :image, class: 'form-control'
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+
+  .form-group
+    = f.label :plan
+    .form-inline
+      = f.select :plan, Organization.plans_i18n.invert, {}, class: 'form-control'
+
+  .form-group.mb-4
+    h4.mb-4 User Memberships
+    = f.fields_for :user_memberships do |nf|
+      .mb-4.form-inline
+        = nf.hidden_field :id
+        = nf.collection_select :user_id, User.all, :id, :email, {}, class: 'form-control form-control-sm'
+        = space 5
+        = nf.link_to_remove 'Remove', class: 'btn btn-danger btn-sm'
+    = f.link_to_add 'Add user', :user_memberships, class: 'btn btn-link'
+
+  .form-group.mb-4
+    h4.mb-4 Bot Ownerships
+    = f.fields_for :bot_ownerships do |nf|
+      .mb-4.form-inline
+        = nf.hidden_field :id
+        = nf.collection_select :bot_id, Bot.all, :id, :name, {}, class: 'form-control form-control-sm'
+        = space 5
+        = nf.link_to_remove 'Remove', class: 'btn btn-danger btn-sm'
+    = f.link_to_add 'Add bot', :bot_ownerships, class: 'btn btn-link'
+
+  .form-group
+    = f.submit class: 'btn btn-success'

@@ -43,7 +43,9 @@ class Message < ActiveRecord::Base
   end
 
   def self.find_pair_message_from(message)
+    return nil if message.chat.nil?
     messages = message.chat.messages.order(created_at: :asc)
+    return nil if messages.size < 2
     index = messages.find_index(message)
     case message.speaker
     when 'bot'

@@ -1,2 +1,5 @@
 dumps/*/*
 config/config.yml
+
+prototype/working
+**/.ipynb_checkpoints

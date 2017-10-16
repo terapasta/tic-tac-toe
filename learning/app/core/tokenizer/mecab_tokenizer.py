@@ -18,14 +18,20 @@ class MecabTokenizer:
         return splited_texts
 
     def extract_noun_count(self, text):
+        return self.__extract_pos_count('名詞', text)
+
+    def extract_verb_count(self, text):
+        return self.__extract_pos_count('動詞', text)
+
+    def __extract_pos_count(self, target_pos, text):
         node = self.tagger.parseToNode(text)
-        noun_count = 0
+        count = 0
         while node:
             pos = node.feature.split(',')[0]
-            if pos == '名詞':
-                noun_count += 1
+            if pos == target_pos:
+                count += 1
             node = node.next
-        return noun_count
+        return count
 
     def tokenize_single_text(self, text):
         node = self.tagger.parseToNode(text)

@@ -4,7 +4,7 @@ namespace :rating do
     begin
       ActiveRecord::Base.transaction do
         Rating.destroy_all
-        Message.where.not(rating: 0).find_each do |message|
+        Message.where.not(rating: 0).where.not(question_answer_id: nil).find_each do |message|
           pair = Message.find_pair_message_from(message)
           next if pair.nil?
           Rating.create!(

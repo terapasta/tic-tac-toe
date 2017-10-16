@@ -47,6 +47,7 @@ class BotPolicy < ApplicationPolicy
       :classify_failed_message,
       :start_message,
       :has_suggests_message,
+      :enable_guest_user_registration,
       {
         allowed_hosts_attributes: [
           :id,

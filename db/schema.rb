@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010051758) do
+ActiveRecord::Schema.define(version: 20171011012732) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -167,10 +167,10 @@ ActiveRecord::Schema.define(version: 20171010051758) do
     t.boolean  "answer_failed",                              default: false, null: false
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
-    t.integer  "rating",                       limit: 4,     default: 0
     t.boolean  "answer_marked",                              default: false, null: false
     t.integer  "question_answer_id",           limit: 4
     t.text     "similar_question_answers_log", limit: 65535
+    t.integer  "rating",                       limit: 4,     default: 0
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
@@ -214,6 +214,17 @@ ActiveRecord::Schema.define(version: 20171010051758) do
   end
 
   add_index "question_answers", ["bot_id"], name: "index_question_answers_on_bot_id", using: :btree
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "level",              limit: 4,     null: false
+    t.integer  "message_id",         limit: 4,     null: false
+    t.integer  "question_answer_id", limit: 4,     null: false
+    t.integer  "bot_id",             limit: 4,     null: false
+    t.text     "question",           limit: 65535, null: false
+    t.text     "answer",             limit: 65535, null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
 
   create_table "scores", force: :cascade do |t|
     t.integer  "bot_id",     limit: 4,  null: false

@@ -3,6 +3,7 @@ class ChatsController < ApplicationController
   include GuestKeyUsable
   before_action :set_bot
   before_action :set_guest_key
+  before_action :set_guest_user
   before_action :set_warning_message
 
   def show
@@ -20,7 +21,7 @@ class ChatsController < ApplicationController
     if policy(@bot).exceeded_chats_count?
       render :exceeded, status: :too_many_requests and return
     end
-    @chat = @bot.chats.create_by(guest_key) do |chat|
+    @chat = @bot.chats.create_by(guest_key: guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)
       chat.is_normal = true if current_user.try(:normal?)
@@ -40,5 +41,9 @@ class ChatsController < ApplicationController
 
     def message_params
       params.require(:message).permit(:body)
+    end
+
+    def set_guest_user
+      @guest_user = GuestUser.find_by(guest_key: guest_key)
     end
 end

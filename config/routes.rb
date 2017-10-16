@@ -107,6 +107,7 @@ Rails.application.routes.draw do
       resources :word_mappings, only: [:create, :update, :destroy], module: :bots
     end
     resources :word_mappings, only: [:create, :update, :destroy]
+    resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
   end
 
   resource :contacts, only: [:new, :create]

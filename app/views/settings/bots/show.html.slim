@@ -37,5 +37,17 @@
           p 例：質問が"会社"のみだった場合
           blockquote「会社」についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？
 
+      .form-group: .card: .card-block
+        = f.label :enable_guest_user_registration do
+          = f.check_box :enable_guest_user_registration
+          = space
+          |チャット開始時に名前とメールアドレスの登録を求める
+        .text-muted
+          |登録した情報は対話履歴からご覧いただけます
+          br
+          |チャットで回答に満足していないユーザー等に追って連絡したい場合にお役立て下さい
+          br
+          |※ ユーザー情報は45日間保存されます
+
       .form-group.text-right
         = f.submit class: 'btn btn-success', data: { event: 'update bot account' }

@@ -30,7 +30,7 @@ RSpec.describe ChatsController do
     end
 
     subject do
-      cookies.encrypted[:guest_key] = cookie_guest_key
+      cookies[:guest_key] = cookie_guest_key
       get :show, { token: bot.token }
     end
 

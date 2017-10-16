@@ -2,7 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    @user = user || DummyUser.new
+    @user = user.presence || DummyUser.new
     @record = record
   end
 

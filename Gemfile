@@ -111,6 +111,7 @@ gem 'active_link_to'
 gem 'grpc'
 gem 'grpc-tools'
 gem 'google-protobuf', '3.4.0.2'
+gem 'email_validator'
 
 group :development, :test do
 

@@ -14,7 +14,7 @@ class FeedbackDataExtension:
         self.vectorizer = vectorizer
 
     def learn(self, bot_id):
-        # ID付きボキャブラリの生成
+        # Note: ID付きボキャブラリの生成
         all_question_answers_data = self.datasource.question_answers.all()
         sencences = self.__tokenize(all_question_answers_data)
         self.vectorizer.fit(sencences)

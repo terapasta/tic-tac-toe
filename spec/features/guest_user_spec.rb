@@ -40,9 +40,11 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
       fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
       click_on '質問'
 
-      sign_in user
-      sign_in user
-      sign_in user
+      visit "/users/sign_in"
+      fill_in_input name: 'user[email]', value: user.email
+      fill_in_input name: 'user[password]', value: 'hogehoge'
+      click_on 'ログイン'
+
       visit "/bots/#{bot.id}/threads"
       page.save_screenshot 'guest_user_spec.png'
       click_on 'これ以前の発言もすべて見る'

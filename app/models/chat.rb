@@ -66,14 +66,10 @@ class Chat < ActiveRecord::Base
   scope :in_today_by_unique_user, -> {
     now = Time.current
     joins(:messages)
-<<<<<<< HEAD
       .where(messages: {
         speaker: :guest,
         created_at: (now.beginning_of_day..now.end_of_day)
       })
-=======
-      .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
->>>>>>> develop
       .uniq
   }
 

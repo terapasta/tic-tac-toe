@@ -26,7 +26,7 @@ class Conversation::Bot
     question = @question_text
     question_feature_count = result[:question_feature_count]
     effective_results = @results.select{|x| x[:probability] > 0.1}
-    classify_threshold = resolve_classify_threshold(result[:noun_count])
+    classify_threshold = resolve_classify_threshold(result[:noun_count], result[:verb_count])
 
     if effective_results.length == 0
       question_answer_ids = [NO_CLASSIFIED_ANSWER_ID]
@@ -64,8 +64,9 @@ class Conversation::Bot
   end
 
   private
-    def resolve_classify_threshold(noun_count)
-      # return 0.9 if noun_count == 1 # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
+    def resolve_classify_threshold(noun_count, verb_count)
+      # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
+      return 0.9 if noun_count == 1 && verb_count == 0
       learning_parameter = @bot.learning_parameter || LearningParameter.build_with_default
       learning_parameter.classify_threshold
     end

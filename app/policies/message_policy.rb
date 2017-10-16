@@ -4,7 +4,7 @@ class MessagePolicy < ApplicationPolicy
   end
 
   private
-    def staff_or_owner?
-      user.staff? || record.chat.bot.user == user
+    def target_bot
+      record.chat.bot
     end
 end

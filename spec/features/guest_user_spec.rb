@@ -12,6 +12,13 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
     create(:bot, user: user, enable_guest_user_registration: flag)
   end
 
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
   let(:name) do
     'samplename'
   end
@@ -32,6 +39,7 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
     scenario do
       visit "/embed/#{bot.token}/chats/new"
       sleep 1
+      page.save_screenshot
       fill_in_input id: 'guest-user-name', value: name
       fill_in_input id: 'guest-user-email', value: email
       find('#guest-user-submit').click

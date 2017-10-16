@@ -7,7 +7,7 @@
             = material_icon 'settings', class: 'mi-xs'
             = space
             span ボット設定
-        - unless current_user.ec_plan?
+        - unless current_user.ec_plan?(@bot)
           li.nav-item
             = active_link_to bot_settings_embed_path(@bot), class: 'nav-link', data: { event: 'embed code' } do
               = material_icon 'code', class: 'mi-xs'

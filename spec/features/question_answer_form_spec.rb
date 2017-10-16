@@ -5,11 +5,18 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
   include CapybaraHelpers
 
   let!(:bot) do
-    create(:bot, user: owner)
+    create(:bot)
   end
 
   let!(:owner) do
-    create(:user, plan: plan)
+    create(:user)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: plan).tap do |org|
+      org.user_memberships.create(user: owner)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:question_answer) do

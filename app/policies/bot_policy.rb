@@ -24,7 +24,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def update?
-    user.staff? || (user.normal? && record.user == user)
+    staff_or_owner?
   end
 
   def destroy?
@@ -36,7 +36,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def exceeded_chats_count?
-    record.chats.today_count_of_guests > record.user.chats_limit_per_day
+    record.chats.today_count_of_guests >= record.chats_limit_per_day
   end
 
   def permitted_attributes
@@ -68,6 +68,11 @@ class BotPolicy < ApplicationPolicy
       },
     ]
   end
+
+  private
+    def target_bot
+      record
+    end
 
   class Scope < ApplicationPolicy::Scope
     def resolve

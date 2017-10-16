@@ -27,9 +27,8 @@ class QuestionAnswerPolicy < ApplicationPolicy
     staff_or_owner?
   end
 
-  def attachable_answer_file?
-    return false if user.ec_plan?
-    true
+  def attachable_answer_file?(bot)
+    !user.ec_plan?(bot)
   end
 
   def permitted_attributes
@@ -70,8 +69,7 @@ class QuestionAnswerPolicy < ApplicationPolicy
   end
 
   private
-    def staff_or_owner?
-      return true if user.staff?
-      user.normal? && record.bot.user == user
+    def target_bot
+      record.bot
     end
 end

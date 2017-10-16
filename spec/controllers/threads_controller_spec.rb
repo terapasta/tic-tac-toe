@@ -13,6 +13,13 @@ RSpec.describe ThreadsController, type: :controller do
     create(:bot, user: normal_user)
   end
 
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: normal_user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
   let!(:succeeded_chat) do
     create(:chat, bot: bot).tap do |chat|
       create_list(:message, 2, chat: chat)

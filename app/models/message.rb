@@ -6,9 +6,9 @@ class Message < ActiveRecord::Base
 
   belongs_to :chat
   belongs_to :question_answer
+  has_one :rating
 
   enum speaker: { bot: 'bot', guest: 'guest' }
-  enum rating: [:nothing, :good, :bad]
 
   serialize :similar_question_answers_log
 

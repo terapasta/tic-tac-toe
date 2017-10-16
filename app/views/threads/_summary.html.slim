@@ -1,5 +1,7 @@
 .card.mb-4
   .card-block
+    - if chat.guest_user.present?
+      = render 'messages/guest_user', guest_user: chat.guest_user
     .text-center.mb-3= link_to 'これ以前の発言もすべて見る', bot_thread_messages_path(bot, chat), data: { event: 'check all chat log' }
     .row
       - chat.messages.order(created_at: :desc).limit(2).reverse.tap do |messages|
@@ -17,22 +19,22 @@
       small 日時：#{l chat.messages.last.created_at}
     div.text-muted
       span.mr-3
-        - chat.messages.answer_failed.count.tap do |count|
+        - chat.messages.answer_failed_count.tap do |count|
           = material_icon 'error_outline', class: ('text-warning' if count > 0)
           = space
           = count
       span.mr-3
-        - chat.messages.good.count.tap do |count|
+        - chat.messages.good_count.tap do |count|
           = material_icon 'thumb_up', class: ('text-success' if count > 0)
           = space
           = count
       span.mr-3
-        - chat.messages.bad.count.tap do |count|
+        - chat.messages.bad_count.tap do |count|
           = material_icon 'thumb_down', class: ('text-danger' if count > 0)
           = space
           = count
       span
-        - chat.messages.answer_marked.count.tap do |count|
+        - chat.messages.answer_marked_count.tap do |count|
           - if count.zero?
             = image_tag 'icon-pin.svg', width: 24, height: 24
           - else

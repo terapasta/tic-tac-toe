@@ -1,8 +1,9 @@
 class Chat < ActiveRecord::Base
   paginates_per 50
 
-  has_many :messages
+  has_many :messages, -> { extending HasManyMessagesExtension }
   belongs_to :bot
+  belongs_to :guest_user, foreign_key: :guest_key, primary_key: :guest_key
   has_one :bot_user, through: :bot, source: :user
 
   scope :has_multiple_messages, -> {

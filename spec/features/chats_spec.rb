@@ -262,20 +262,17 @@ RSpec.describe 'Chats', type: :features, js: true do
             click_on '質問'
           end
           visit page_path
-          page.save_screenshot
           expect(page).to have_content('ほげほげ')
           pp Time.now
           Delorean.time_travel_to('44 days after') do
             pp Time.now
             visit page_path
-            page.save_screenshot
             expect(page).to have_content('ほげほげ')
           end
           pp Time.now
           Delorean.time_travel_to('46 days after') do
             pp Time.now
             visit page_path
-            page.save_screenshot
             expect(page).to_not have_content('ほげほげ')
           end
         end

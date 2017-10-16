@@ -1,0 +1,12 @@
+.row: .col-12.mb-4
+  = material_icon 'person'
+  = space
+  span お名前
+  = space
+  code= guest_user.name
+  = space
+  |/
+  = space
+  span メールアドレス
+  = space
+  code= guest_user.email.presence || '未登録'

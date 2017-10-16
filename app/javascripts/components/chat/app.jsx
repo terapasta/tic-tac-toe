@@ -82,6 +82,8 @@ export default class ChatApp extends Component {
       readMore,
       flashMessage,
       initialQuestions,
+      isRegisteredGuestUser,
+      isEnableGuestUserRegistration,
     } = this.props;
 
     const {
@@ -95,6 +97,8 @@ export default class ChatApp extends Component {
           learningStatus: learning.status,
           isAdmin,
           isManager,
+          isRegisteredGuestUser,
+          isEnableGuestUserRegistration,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
         <ChatArea innerRef={node => this.area = node}>

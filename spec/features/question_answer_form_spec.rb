@@ -35,7 +35,6 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
           fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
           click_link '添付ファイルを追加'
           within '#answer-files' do
-            page.save_screenshot
             locator = all('input[type="file"]').first['name']
             attach_file locator, Rails.root.join('spec/fixtures/images/sample_naoki.jpg').to_s
           end

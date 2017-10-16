@@ -13,8 +13,8 @@ module HasManyChatsExtension
     nil
   end
 
-  def create_by(guest_key, &block)
-    build(guest_key: guest_key).tap do |chat|
+  def create_by(attributes, &block)
+    build(attributes).tap do |chat|
       block.call(chat) if block_given?
       chat.build_start_message
       chat.save!

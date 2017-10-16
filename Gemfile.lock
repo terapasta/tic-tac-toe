@@ -192,6 +192,8 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0)
+    email_validator (1.6.0)
+      activemodel
     enum_help (0.0.15)
     equalizer (0.0.10)
     erubis (2.7.0)
@@ -634,6 +636,7 @@ DEPENDENCIES
   devise-i18n-views
   dotenv-rails
   draper
+  email_validator
   enum_help
   exception_notification
   factory_girl_rails

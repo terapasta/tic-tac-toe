@@ -40,6 +40,7 @@ class RouteGuideServicer(BotServicer):
                 'question_feature_count': 0,
                 'results': [],
                 'noun_count': 0,
+                'verb_count': 0,
             }
             context.set_details("Error")
             context.set_code(grpc.StatusCode.INTERNAL)
@@ -48,6 +49,7 @@ class RouteGuideServicer(BotServicer):
             question_feature_count=reply['question_feature_count'],
             results=[Result(**x) for x in reply['results']],
             noun_count=reply['noun_count'],
+            verb_count=reply['verb_count'],
         )
 
     @stop_watch

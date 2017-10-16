@@ -24,6 +24,7 @@ message ReplyResponse {
     int32 question_feature_count = 1;
     repeated Result results = 2;
     int32 noun_count = 3;
+    int32 verb_count = 4;
 }
 
 message LearnRequest {

@@ -50,7 +50,7 @@ RSpec.describe ChatsController do
       end
 
       it 'redirects to new' do
-        expect(subject).to redirect_to(new_chats_path)
+        expect(subject).to redirect_to("/embed/#{bot.token}/chats/new")
       end
     end
   end

@@ -30,7 +30,7 @@ class Chats::MessageRatingController < ApplicationController
       @message = @chat.messages.find(params[:message_id])
       @rating = Rating.find_or_initialize_by(message_id: @message.id).tap { |rating|
         rating.message_id = @message.id
-        rating.level = @message.rating
+        rating.level = @message.rating || Rating.levels[:nothing]
         rating.question_answer_id = @message.question_answer_id
         rating.bot_id = @bot.id
         rating.question = Message.find_pair_message_from(@message).body

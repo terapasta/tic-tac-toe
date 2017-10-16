@@ -13,12 +13,12 @@ class ReplyController(object):
         logger.info('start')
         logger.debug('question: %s' % text)
 
+        logger.info('before action')
+        texts = self.factory.get_extension().before_reply([text])
+
         logger.info('tokenize question')
-        tokenized_sentences = self.factory.get_tokenizer().tokenize([text])
+        tokenized_sentences = self.factory.get_tokenizer().tokenize(texts)
         logger.debug(tokenized_sentences)
-        # logger.info('build question for reply')
-        # tokenized_sentences = self.factory.get_data_builder().build_for_reply([text])
-        # logger.debug(tokenized_sentences)
 
         logger.info('vectorize question')
         vectorized_features = self.factory.get_vectorizer().transform(tokenized_sentences)
@@ -36,6 +36,9 @@ class ReplyController(object):
         logger.info('sort')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
         results = data_frame.to_dict('records')[:10]
+
+        logger.info('after action')
+        results = self.factory.get_extension().after_reply(results)
 
         for row in results:
             logger.debug(row)

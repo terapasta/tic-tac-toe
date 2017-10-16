@@ -1,11 +1,11 @@
 import inject
 
-from app.core.data_builder.question_answer_data_builder import QuestionAnswerDataBuiler
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.cosine_similarity import CosineSimilarity
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
+from app.core.extension.pass_extension import PassExtension
 from app.shared.datasource.datasource import Datasource
 
 
@@ -15,9 +15,10 @@ class CosineSimilarityFactory:
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,
+        extension=PassExtension,
         datasource=Datasource,
     )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
+    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, extension=None, datasource=None, estimator=None):
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
@@ -33,13 +34,10 @@ class CosineSimilarityFactory:
                     self.normalizer,
                     self.datasource,
                 )
-        if data_builder is not None:
-            self.data_builder = data_builder
+        if extension is not None:
+            self.extension = extension
         else:
-            self.data_builder = QuestionAnswerDataBuiler(self.tokenizer, self.datasource)
-
-    def get_data_builder(self):
-        return self.data_builder
+            self.extension = PassExtension()
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -52,6 +50,9 @@ class CosineSimilarityFactory:
 
     def get_normalizer(self):
         return self.normalizer
+
+    def get_extension(self):
+        return self.extension
 
     def get_datasource(self):
         return self.datasource

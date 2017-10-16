@@ -1,35 +1,26 @@
 import inject
 from app.shared.logger import logger
-from app.shared.constants import Constants
 from app.shared.current_bot import CurrentBot
+from app.shared.datasource.datasource import Datasource
 import numpy as np
 
 
-class QuestionAnswerAppendedIdDataBuiler:
-    @inject.params(bot=CurrentBot)
-    def __init__(self, tokenizer, datasource, bot=None):
+class FeedbackDataExtension:
+    @inject.params(datasource=Datasource, bot=CurrentBot)
+    def __init__(self, tokenizer, vectorizer, datasource=None, bot=None):
         self.bot = bot if bot is not None else CurrentBot()
-        self.tokenizer = tokenizer
         self.datasource = datasource
+        self.tokenizer = tokenizer
+        self.vectorizer = vectorizer
 
-    def build_tokenized_vocabularies(self):
+    def learn(self, bot_id):
+        # ID付きボキャブラリの生成
         all_question_answers_data = self.datasource.question_answers.all()
-        return self.__tokenize(all_question_answers_data)
+        sencences = self.__tokenize(all_question_answers_data)
+        self.vectorizer.fit(sencences)
 
-    def build_learning_data(self, bot_id):
-        raw_data = self.datasource.question_answers.by_bot(bot_id)
-        bot_tokenized_sentences = self.__tokenize(raw_data)
-
-        # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
-        bot_tokenized_sentences = np.array(bot_tokenized_sentences)
-        bot_tokenized_sentences = np.append(bot_tokenized_sentences, [''] * Constants.COUNT_OF_APPEND_BLANK)
-        question_answer_ids = np.array(raw_data['question_answer_id'], dtype=np.int)
-        question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
-
-        return bot_tokenized_sentences, question_answer_ids
-
-    # def build_for_reply(self, sentences, tokenizer, bot_id):
-    #     tokenized_sentences = tokenizer.tokenize(sentences)
+    # def before_reply(self, sentences):
+    #     tokenized_sentences = self.tokenizer.tokenize(sentences)
 
     #     factory = CosineSimilarityFactory(
     #         data_builder=FeedbackDataBuilder(),
@@ -57,8 +48,8 @@ class QuestionAnswerAppendedIdDataBuiler:
     #     data_frame = data_frame.sort_values(by='probability', ascending=False)
     #     results = data_frame.to_dict('records')[:10]
 
-    #     # TODO:
-    #     # フィードバックデータにコサイン類似検索をかけてsentencesにMYOPE_QA_IDを付与する
+        # TODO:
+        # フィードバックデータにコサイン類似検索をかけてsentencesにMYOPE_QA_IDを付与する
 
     def __tokenize(self, df):
         logger.info('tokenize all question_answers')

@@ -5,7 +5,7 @@ class TaskCreateService
       @bot_messages = [bot_messages_or_message]
     end
     @failed_bot_messages = @bot_messages.select(&:answer_failed).presence ||
-                           @bot_messages.select(&:bad?)
+                           @bot_messages.select {|x| x.rating&.bad?}
     @bot = bot
     @current_user = current_user
   end
@@ -17,7 +17,7 @@ class TaskCreateService
       next if guest_message.nil?
 
       Task.create(
-        bot_message: (bot_message.body if bot_message.bad?),
+        bot_message: (bot_message.body if bot_message.rating&.bad?),
         guest_message: guest_message.body,
         bot_id: @bot.id,
       )

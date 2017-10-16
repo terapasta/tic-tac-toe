@@ -43,6 +43,18 @@ class Message < ActiveRecord::Base
     save!
   end
 
+  def good!
+    make_rating!(:good)
+  end
+
+  def bad!
+    make_rating!(:bad)
+  end
+
+  def no_rating!
+    rating.destroy! if rating.present?
+  end
+
   def self.find_pair_message_from(message)
     return nil if message.chat.nil?
     messages = message.chat.messages.order(created_at: :asc)
@@ -66,5 +78,19 @@ class Message < ActiveRecord::Base
         bot_test_results.push(messages)
     end
     bot_test_results
+  end
+
+  private
+
+  def make_rating!(level)
+    build_rating if rating.blank?
+    rating.assign_attributes(
+      level: level,
+      question_answer_id: question_answer_id,
+      bot_id: chat.bot.id,
+      question: Message.find_pair_message_from(self).body,
+      answer: body,
+    )
+    rating.save!
   end
 end

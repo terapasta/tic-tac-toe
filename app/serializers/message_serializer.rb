@@ -3,6 +3,11 @@ class MessageSerializer < ActiveModel::Serializer
   has_one :question_answer
   has_many :similar_question_answers, serializer: QuestionAnswerSerializer
 
+  def rating
+    return Rating.levels[:nothing] if object.rating.blank?
+    object.rating.level
+  end
+
   def icon_image_url
     case object.speaker
     when 'guest'

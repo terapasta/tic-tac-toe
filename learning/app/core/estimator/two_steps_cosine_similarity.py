@@ -7,6 +7,8 @@ from app.shared.current_bot import CurrentBot
 from app.shared.constants import Constants
 
 
+# Note: ユーザーの評価を検索結果に反映したコサイン類似検索
+#     ratingsテーブル内を類似検索し類似度の高いレコードのquestion_answer_idを使ってquestion_answersに類似検索をかける
 class TwoStepsCosineSimilarity:
     FIRST_STEP_THRESHOLD = 0.5
     BAD_QA_ID = '0'
@@ -31,6 +33,8 @@ class TwoStepsCosineSimilarity:
 
     def predict(self, question_features):
         logger.info('first step cosine similarity')
+
+        # Note: ratingsテーブルから類似questionを検索する
         ratings = self.datasource.ratings.by_bot(self.bot.id)
         bot_tokenized_sentences = self.tokenizer.tokenize(ratings['question'])
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
@@ -38,7 +42,7 @@ class TwoStepsCosineSimilarity:
         normalized_vectors = self.normalizer.transform(reduced_vectors)
         similarities = cosine_similarity(normalized_vectors, question_features)
         similarities = similarities.flatten()
-        result = ratings[['question', 'question_answer_id', 'level']].copy()
+        result = ratings[['question']].copy()
         result['probability'] = similarities
         result = result.sort_values(by='probability', ascending=False)
 

@@ -17,11 +17,11 @@ class Datasource:
         if bot.datasource_type == Constants.DATASOURCE_TYPE_FILE:
             self._persistence = PersistenceFromFile()
             self._question_answers = QuestionAnswersFromFile()
-            self._ratings = RatingsFromDb()
+            self._ratings = RatingsFromFile()
         else:
             self._persistence = PersistenceFromDb()
             self._question_answers = QuestionAnswersFromDb()
-            self._ratings = RatingsFromFile()
+            self._ratings = RatingsFromDb()
 
     @property
     def persistence(self):

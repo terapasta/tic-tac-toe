@@ -2,12 +2,11 @@ import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-from app.core.estimator.cosine_similarity import CosineSimilarity
+from app.core.estimator.two_steps_cosine_similarity import TwoStepsCosineSimilarity
 # from app.core.reducer.lsi import LSI
 # from app.core.normalizer.normalizer import Normalizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
-from app.core.extension.feedback_data_extension import FeedbackDataExtension
 from app.shared.datasource.datasource import Datasource
 
 
@@ -17,10 +16,9 @@ class TwoStepCosineSimilarityFactory:
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,
-        extension=FeedbackDataExtension,
         datasource=Datasource,
     )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, extension=None, datasource=None, estimator=None):
+    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
@@ -29,19 +27,12 @@ class TwoStepCosineSimilarityFactory:
         if estimator is not None:
             self.estimator = estimator
         else:
-            self.estimator = CosineSimilarity(
+            self.estimator = TwoStepsCosineSimilarity(
                     self.tokenizer,
                     self.vectorizer,
                     self.reducer,
                     self.normalizer,
                     self.datasource,
-                )
-        if extension is not None:
-            self.extension = extension
-        else:
-            self.extension = FeedbackDataExtension(
-                    tokenizer=self.tokenizer,
-                    vectorizer=self.vectorizer.__class__(dump_key='dump_feedback_data_tfidf_vectorizer')
                 )
 
     def get_tokenizer(self):
@@ -55,9 +46,6 @@ class TwoStepCosineSimilarityFactory:
 
     def get_normalizer(self):
         return self.normalizer
-
-    def get_extension(self):
-        return self.extension
 
     def get_datasource(self):
         return self.datasource

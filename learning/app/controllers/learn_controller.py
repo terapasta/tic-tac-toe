@@ -22,8 +22,6 @@ class LearnController:
 
         self._learn_bot()
 
-        self._extend_learn()
-
         result = self._evaluate()
 
         logger.info('end')
@@ -69,10 +67,6 @@ class LearnController:
                 bot_features,
                 question_answer_ids,
             )
-
-    def _extend_learn(self):
-        logger.info('extend learn')
-        self._factory.get_extension().learn(self.bot.id)
 
     def _evaluate(self):
         return {

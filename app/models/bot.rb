@@ -54,10 +54,7 @@ class Bot < ActiveRecord::Base
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
-
-      # FIXME: ディレクトリが存在しない場合に例外になってしまう
-      model_dir = Rails.root.join('learning', 'dumps', Rails.env, "#{id}")
-      FileUtils.rm_r(model_dir)
+      ActiveRecord::Base.connection.execute("DELETE FROM dumps WHERE bot_id = #{id}")
     end
   end
 
@@ -82,7 +79,7 @@ class Bot < ActiveRecord::Base
   end
 
   def chats_limit_per_day
-    organizations.first.chats_limit_per_day
+    organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
   private

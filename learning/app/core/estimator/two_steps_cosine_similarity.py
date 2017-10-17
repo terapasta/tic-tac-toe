@@ -9,7 +9,7 @@ from app.shared.constants import Constants
 
 class TwoStepsCosineSimilarity:
     FIRST_STEP_THRESHOLD = 0.5
-    BAD_QA_ID = '1'
+    BAD_QA_ID = '0'
 
     @inject.params(bot=CurrentBot)
     def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
@@ -31,7 +31,6 @@ class TwoStepsCosineSimilarity:
 
     def predict(self, question_features):
         logger.info('first step cosine similarity')
-        # TODO: good/badを処理する
         ratings = self.datasource.ratings.by_bot(self.bot.id)
         bot_tokenized_sentences = self.tokenizer.tokenize(ratings['question'])
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
@@ -41,7 +40,22 @@ class TwoStepsCosineSimilarity:
         similarities = similarities.flatten()
         result = ratings[['question', 'question_answer_id', 'level']].copy()
         result['probability'] = similarities
-        return result
+        result = result.sort_values(by='probability', ascending=False)
+
+        # Note: 算出したquestionをキーにして評価の多いratingsを取得する
+        top_probability = result['probability'].values[0]
+        if len(result) == 0 or top_probability < self.FIRST_STEP_THRESHOLD:
+            return pd.DataFrame()
+        most_similar_question = result['question'].values[0]
+        higher_ratings = self.datasource.ratings.higher_rate_by_bot_question(self.bot.id, most_similar_question)
+        top_rating_qaid = higher_ratings['question_answer_id'].values[0]
+        top_rating_level = higher_ratings['level'].values[0]
+        return pd.DataFrame({
+            'question': [most_similar_question],
+            'question_answer_id': [top_rating_qaid],
+            'level': [top_rating_level],
+            'probability': [top_probability],
+        })
 
     def before_reply(self, sentences):
         logger.info('PASS')
@@ -55,16 +69,17 @@ class TwoStepsCosineSimilarity:
 
         top_probability = data_frame['probability'].values[0]
         logger.debug('top probability:{}'.format(top_probability))
-        if len(data_frame) == 0 or top_probability < self.FIRST_STEP_THRESHOLD:
+        if len(data_frame) == 0:
             # Note: ratingが付いた類似解答が見つからなかった場合は通常のコサイン類似検索を行う
             logger.info('tokenize question')
             tokenized_questions = self.tokenizer.tokenize([question])
             tokenized_answers = self.tokenizer.tokenize(question_answers['question'])
         else:
+            # Note: question_answer_idを付与してコサイン類似検索を行う
             logger.info('tokenize question with question_answer_id')
             top_rating_id = data_frame['question_answer_id'].values[0]
             top_rating_level = data_frame['level'].values[0]
-            logger.debug('top rating level:{} ({}:good, {}bad)'.format(top_rating_level, Constants.RATING_GOOD, Constants.RATING_BAD))
+            logger.debug('rating level:{} ({}:good, {}bad)'.format(top_rating_level, Constants.RATING_GOOD, Constants.RATING_BAD))
             if top_rating_level == Constants.RATING_GOOD:
                 tokenized_questions = self.__tokenize_with_qaid([question], [str(top_rating_id)])
             else:
@@ -97,7 +112,6 @@ class TwoStepsCosineSimilarity:
         return normalized_features
 
     def __tokenize_with_qaid(self, texts, question_ids):
-        logger.info('tokenize all question_answers')
         tokenized_sentences = self.tokenizer.tokenize(texts)
         tokenized_sentences = np.array(tokenized_sentences, dtype=object)
         tokenized_sentences = tokenized_sentences + ' MYOPE_QA_ID:' + question_ids

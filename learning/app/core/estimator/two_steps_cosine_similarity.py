@@ -18,7 +18,7 @@ class TwoStepsCosineSimilarity:
         self.bot = bot if bot is not None else CurrentBot()
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
-        self.vectorizer_for_qaid = vectorizer.__class__(dump_key='dump_feedback_data_tfidf_vectorizer')
+        self.vectorizer_for_qaid = vectorizer.__class__(dump_key='two_steps_tfidf_vectorizer')
         self.reducer = reducer
         self.normalizer = normalizer
         self.datasource = datasource
@@ -106,7 +106,7 @@ class TwoStepsCosineSimilarity:
 
     @property
     def dump_key(self):
-        return 'dump_cosine_similarity'
+        return 'two_steps_cosine_similarity'
 
     def __get_features(self, tokenized_sentences):
         vectorized_features = self.vectorizer_for_qaid.transform(tokenized_sentences)

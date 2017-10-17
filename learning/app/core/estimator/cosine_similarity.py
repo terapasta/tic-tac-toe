@@ -38,4 +38,4 @@ class CosineSimilarity:
 
     @property
     def dump_key(self):
-        return 'dump_cosine_similarity'
+        return 'sk_cosine_similarity'

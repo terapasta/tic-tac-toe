@@ -38,4 +38,4 @@ class LogisticRegression:
 
     @property
     def dump_key(self):
-        return 'dump_logistic_regression_estimator'
+        return 'sk_logistic_regression_estimator'

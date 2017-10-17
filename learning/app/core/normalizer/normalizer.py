@@ -25,4 +25,4 @@ class Normalizer:
 
     @property
     def dump_key(self):
-        return 'dump_normalizer'
+        return 'sk_normalizer'

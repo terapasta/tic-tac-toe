@@ -6,7 +6,7 @@ from app.shared.datasource.datasource import Datasource
 
 class TfidfVectorizer:
     @inject.params(bot=CurrentBot, datasource=Datasource)
-    def __init__(self, bot=None, datasource=None, dump_key='dump_tfidf_vectorizer'):
+    def __init__(self, bot=None, datasource=None, dump_key='sk_tfidf_vectorizer'):
         self.bot = bot
         self.persistence = datasource.persistence
         self._dump_key = dump_key

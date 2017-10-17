@@ -6,7 +6,6 @@ from app.controllers.reply_controller import ReplyController
 from app.factories.factory_selector import FactorySelector
 from app.shared.current_bot import CurrentBot
 from app.shared.datasource.datasource import Datasource
-from app.shared.logger import logger
 from app.shared.config import Config
 from app.shared.constants import Constants
 
@@ -21,10 +20,12 @@ args = parser.parse_args()
 Config().init(args.env)
 inject.configure_once()
 
+
 class LearningParameter:
     datasource_type = args.datasource
     use_similarity_classification = args.use_similarity_classification
     algorithm = args.algorithm
+
 
 bot = CurrentBot().init(args.bot_id, LearningParameter())
 Datasource().init(bot)

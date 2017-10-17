@@ -18,9 +18,11 @@ class TwoStepsCosineSimilarity:
 
     def fit(self, x, y):
         logger.info('learn vocabulary with question_id')
-        all_question_answers_data = self.datasource.question_answers.all()
-        sencences = self.__tokenize_with_qaid(all_question_answers_data['question'], all_question_answers_data['question_answer_id'].astype(str))
-        self.vectorizer_for_qaid.fit(sencences)
+        question_answers = self.datasource.question_answers.all()
+        ratings = self.datasource.ratings.all()
+        all_questions = pd.concat([question_answers[['question', 'question_answer_id']], ratings[['question', 'question_answer_id']]])
+        sentences = self.__tokenize_with_qaid(all_questions['question'], all_questions['question_answer_id'].astype(str))
+        self.vectorizer_for_qaid.fit(sentences)
 
     def predict(self, question_features):
         logger.info('first step cosine similarity')

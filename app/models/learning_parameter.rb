@@ -11,12 +11,15 @@ class LearningParameter < ActiveRecord::Base
     :two_step_similarity_classification,
   ]
 
+  def use_similarity_classification?
+    similarity_classification? or two_step_similarity_classification?
+  end
+
   def self.default_attributes
       {
-        algorithm: algorithms[:logistic_regression],
+        algorithm: algorithms[:similarity_classification],
         params_for_algorithm: {},
         classify_threshold: 0.5,
-        use_similarity_classification: true,
       }
   end
 

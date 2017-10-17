@@ -129,7 +129,6 @@ ActiveRecord::Schema.define(version: 20171016030200) do
     t.integer  "algorithm",                     limit: 4,     default: 0,    null: false
     t.text     "params_for_algorithm",          limit: 65535
     t.float    "classify_threshold",            limit: 24,    default: 0.5,  null: false
-    t.boolean  "use_similarity_classification",               default: true, null: false
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
   end

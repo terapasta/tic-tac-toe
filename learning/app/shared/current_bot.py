@@ -31,8 +31,4 @@ class CurrentBot(object):
 
     @property
     def algorithm(self):
-        if self._learning_parameter.use_similarity_classification \
-                and self._learning_parameter.algorithm == Constants.ALGORITHM_SIMILARITY_CLASSIFICATION:  # TODO: 本来は必要のない条件分岐、use_similarity_classificationを廃止したい
-            return Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
-
         return self._learning_parameter.algorithm

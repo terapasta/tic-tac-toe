@@ -15,7 +15,6 @@ from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 
 class LearningParameter:
     datasource_type = Constants.DATASOURCE_TYPE_FILE
-    use_similarity_classification = True
     algorithm = Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
 
 

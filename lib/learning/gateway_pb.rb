@@ -5,7 +5,6 @@ require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "gateway.LearningParameter" do
-    optional :use_similarity_classification, :bool, 1
     optional :algorithm, :int32, 2
     optional :datasource_type, :string, 3
   end

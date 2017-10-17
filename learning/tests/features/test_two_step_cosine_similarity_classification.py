@@ -15,7 +15,6 @@ from app.factories.factory_selector import FactorySelector
 
 class LearningParameter:
     datasource_type = Constants.DATASOURCE_TYPE_FILE
-    use_similarity_classification = True
     algorithm = Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION
 
 

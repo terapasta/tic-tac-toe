@@ -70,7 +70,6 @@ gem 'virtus'
 # Seed Data Management
 gem 'seed-fu'
 gem 'active_hash'
-gem 'msgpack-rpc', '~> 0.5.4'
 gem 'dotenv-rails'
 gem 'rails_autolink'
 gem 'twitter'

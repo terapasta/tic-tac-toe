@@ -167,7 +167,6 @@ GEM
     config (1.2.1)
       activesupport (>= 3.0)
       deep_merge (~> 1.0, >= 1.0.1)
-    cool.io (1.4.4)
     crass (1.0.2)
     daemons (1.2.4)
     database_cleaner (1.5.3)
@@ -322,10 +321,6 @@ GEM
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    msgpack (0.5.12)
-    msgpack-rpc (0.5.4)
-      cool.io (~> 1.4.3)
-      msgpack (~> 0.5.10)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
@@ -632,7 +627,6 @@ DEPENDENCIES
   kaminari
   letter_opener
   meta_request
-  msgpack-rpc (~> 0.5.4)
   mysql2 (~> 0.3.20)
   natto
   nested_form

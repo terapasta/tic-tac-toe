@@ -45,9 +45,11 @@ class TwoStepsCosineSimilarity:
         # Note: 算出したquestionをキーにして評価の多いratingsを取得する
         top_probability = result['probability'].values[0]
         if len(result) == 0 or top_probability < self.FIRST_STEP_THRESHOLD:
-            return pd.DataFrame()
+            return self.__no_data()
         most_similar_question = result['question'].values[0]
         higher_ratings = self.datasource.ratings.higher_rate_by_bot_question(self.bot.id, most_similar_question)
+        if len(higher_ratings) == 0:
+            return self.__no_data()
         top_rating_qaid = higher_ratings['question_answer_id'].values[0]
         top_rating_level = higher_ratings['level'].values[0]
         return pd.DataFrame({
@@ -67,8 +69,6 @@ class TwoStepsCosineSimilarity:
         tokenized_answers = None
         question_answers = self.datasource.question_answers.by_bot(self.bot.id)
 
-        top_probability = data_frame['probability'].values[0]
-        logger.debug('top probability:{}'.format(top_probability))
         if len(data_frame) == 0:
             # Note: ratingが付いた類似解答が見つからなかった場合は通常のコサイン類似検索を行う
             logger.info('tokenize question')
@@ -116,3 +116,11 @@ class TwoStepsCosineSimilarity:
         tokenized_sentences = np.array(tokenized_sentences, dtype=object)
         tokenized_sentences = tokenized_sentences + ' MYOPE_QA_ID:' + question_ids
         return tokenized_sentences
+
+    def __no_data(self):
+        return pd.DataFrame({
+            'question': [],
+            'question_answer_id': [],
+            'level': [],
+            'probability': [],
+        })

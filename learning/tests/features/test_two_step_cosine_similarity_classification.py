@@ -1,6 +1,7 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
 import inject
+import numpy as np
 
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.shared.config import Config
@@ -8,6 +9,7 @@ from app.shared.constants import Constants
 from app.shared.current_bot import CurrentBot
 from app.shared.datasource.datasource import Datasource
 from app.controllers.learn_controller import LearnController
+from app.controllers.reply_controller import ReplyController
 from app.factories.factory_selector import FactorySelector
 
 
@@ -24,7 +26,7 @@ class TwoStepCosineSimilarityClassificationTestCase(TestCase):
         Config().init('test')
         self.bot_id = 1
         self.learning_parameter = LearningParameter()
-        self.body = '会社の住所が知りたい'
+        self.body = 'ここからどれくらいかかりますか'
 
     def test_learn_and_reply(self):
         bot = CurrentBot().init(self.bot_id, self.learning_parameter)
@@ -35,8 +37,7 @@ class TwoStepCosineSimilarityClassificationTestCase(TestCase):
 
         LearnController(factory=factory).perform()
 
-        # TODO
-        # X = np.array([self.body])
-        # ReplyController(factory=factory).perform(X[0])
+        X = np.array([self.body])
+        ReplyController(factory=factory).perform(X[0])
 
         ok_(True)

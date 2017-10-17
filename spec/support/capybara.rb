@@ -4,17 +4,17 @@ require 'capybara/rspec'
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app,
     browser: :chrome,
-    desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
-      'chromeOptions' => {
-        args: %w(
-          headless
-          disable-gpu
-          no-sandbox
-          disable-popup-blocking
-          window-size=1680,1050
-        ),
-      },
-    )
+    # desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+    #   'chromeOptions' => {
+    #     args: %w(
+    #       headless
+    #       disable-gpu
+    #       no-sandbox
+    #       disable-popup-blocking
+    #       window-size=1680,1050
+    #     ),
+    #   },
+    # )
   )
 end
 

@@ -31,7 +31,7 @@ RSpec.describe ChatsController do
 
     subject do
       cookies[:guest_key] = cookie_guest_key
-      get :show, { token: bot.token }
+      get :show, params: { token: bot.token }
     end
 
     context 'has guest_key' do
@@ -57,7 +57,7 @@ RSpec.describe ChatsController do
 
   describe 'GET #new' do
     subject do
-      get :new, { token: bot.token }
+      get :new, params: { token: bot.token }
     end
 
     it 'creates new chat' do

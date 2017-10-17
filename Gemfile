@@ -125,7 +125,7 @@ group :development, :test do
   # 現時点では、better_errorsの方が使いやすい
 #  gem 'web-console', '~> 2.0'
   # Debug
-  gem 'better_errors'
+  gem 'better_errors', '~> 2.4.0'
   gem 'binding_of_caller'
   gem 'meta_request'
 
@@ -140,13 +140,12 @@ group :development, :test do
   gem 'tapp'
 
   # rspec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.5.0.beta'
   gem 'factory_girl_rails'
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'capybara', '~> 2.15.4'
+  gem 'selenium-webdriver', '~> 3.6.0'
   gem 'rspec_junit_formatter'
+  gem 'rails-controller-testing'
 
   # dummy data
   gem 'faker'

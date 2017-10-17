@@ -9,10 +9,8 @@ class Chat < ApplicationRecord
 
   scope :has_multiple_messages, -> {
     joins(:messages)
-      .select('chats.*',
-              "SUM(CASE WHEN speaker = 'guest' THEN 1 ELSE 0 END) as exchanging_messages_count")
-      .group('chat_id')
-      .having('count(chat_id) > 1')
+      .group('messages.speaker, chats.id, messages.id')
+      .having(messages: { speaker: :guest })
       .order('chats.id desc')
   }
 
@@ -70,7 +68,7 @@ class Chat < ApplicationRecord
         speaker: :guest,
         created_at: (now.beginning_of_day..now.end_of_day)
       })
-      .uniq
+      .distinct
   }
 
   def build_start_message

@@ -1,11 +1,14 @@
 import inject
 import numpy as np
+import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 
 
 class TwoStepsCosineSimilarity:
+    FIRST_STEP_THRESHOLD = 0.5
+
     @inject.params(bot=CurrentBot)
     def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
         self.bot = bot if bot is not None else CurrentBot()
@@ -48,7 +51,9 @@ class TwoStepsCosineSimilarity:
         tokenized_answers = None
         question_answers = self.datasource.question_answers.by_bot(self.bot.id)
 
-        if len(data_frame) == 0:
+        top_probability = data_frame['probability'].values[0]
+        logger.debug('top probability:{}'.format(top_probability))
+        if len(data_frame) == 0 or top_probability < self.FIRST_STEP_THRESHOLD:
             # Note: ratingが付いた類似解答が見つからなかった場合は通常のコサイン類似検索を行う
             logger.info('tokenize question')
             tokenized_questions = self.tokenizer.tokenize([question])

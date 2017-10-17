@@ -4,10 +4,12 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
+from app.shared.constants import Constants
 
 
 class TwoStepsCosineSimilarity:
     FIRST_STEP_THRESHOLD = 0.5
+    BAD_QA_ID = '1'
 
     @inject.params(bot=CurrentBot)
     def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
@@ -37,7 +39,7 @@ class TwoStepsCosineSimilarity:
         normalized_vectors = self.normalizer.transform(reduced_vectors)
         similarities = cosine_similarity(normalized_vectors, question_features)
         similarities = similarities.flatten()
-        result = ratings[['question', 'question_answer_id']].copy()
+        result = ratings[['question', 'question_answer_id', 'level']].copy()
         result['probability'] = similarities
         return result
 
@@ -61,7 +63,12 @@ class TwoStepsCosineSimilarity:
         else:
             logger.info('tokenize question with question_answer_id')
             top_rating_id = data_frame['question_answer_id'].values[0]
-            tokenized_questions = self.__tokenize_with_qaid([question], [str(top_rating_id)])
+            top_rating_level = data_frame['level'].values[0]
+            logger.debug('top rating level:{} ({}:good, {}bad)'.format(top_rating_level, Constants.RATING_GOOD, Constants.RATING_BAD))
+            if top_rating_level == Constants.RATING_GOOD:
+                tokenized_questions = self.__tokenize_with_qaid([question], [str(top_rating_id)])
+            else:
+                tokenized_questions = self.__tokenize_with_qaid([question], [self.BAD_QA_ID])
             tokenized_answers = self.__tokenize_with_qaid(question_answers['question'], question_answers['question_answer_id'].astype(str))
         logger.debug(tokenized_questions)
 

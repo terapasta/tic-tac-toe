@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   private
-
     def handle_500(exception)
       ExceptionNotifier.notify_exception exception, env: request.env
       Rollbar.log(exception)

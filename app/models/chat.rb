@@ -1,9 +1,11 @@
 class Chat < ActiveRecord::Base
   paginates_per 50
 
-  has_many :messages
+  has_many :messages, -> { extending HasManyMessagesExtension }
   belongs_to :bot
-  has_one :bot_user, through: :bot, source: :user
+  has_many :organizations, through: :bot
+  has_many :users, through: :organizations
+  belongs_to :guest_user, foreign_key: :guest_key, primary_key: :guest_key
 
   scope :has_multiple_messages, -> {
     joins(:messages)
@@ -64,7 +66,10 @@ class Chat < ActiveRecord::Base
   scope :in_today_by_unique_user, -> {
     now = Time.current
     joins(:messages)
-      .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
+      .where(messages: {
+        speaker: :guest,
+        created_at: (now.beginning_of_day..now.end_of_day)
+      })
       .uniq
   }
 

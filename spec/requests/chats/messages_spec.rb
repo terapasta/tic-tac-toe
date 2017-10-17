@@ -2,11 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'chats/messages', type: :request do
   let!(:bot) do
-    create(:bot, user: owner)
+    create(:bot)
   end
 
   let!(:owner) do
     create(:user)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: owner)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:question_answer) do
@@ -30,7 +37,7 @@ RSpec.describe 'chats/messages', type: :request do
       Capybara.reset_session!
       get "#{chat_path}/new" # make guest_key and chat
       Message.last.tap do |m|
-        m.question_answer = question_answer 
+        m.question_answer = question_answer
         m.save
       end
     end

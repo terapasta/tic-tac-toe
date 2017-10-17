@@ -4,6 +4,8 @@ import values from "lodash/values";
 import LearningButton from '../learning-button';
 import { LearningStatus } from "./constants";
 import * as LearningAPI from "../../api/bot-learning";
+import Modal from '../modal';
+import GuestUserForm from './guest-user-form';
 
 const POLLING_INTERVAL = 1000 * 2;
 
@@ -13,6 +15,8 @@ class ChatHeader extends Component {
     this.state = {
       isLearning: false,
       learningStatus: null,
+      isShowGuestUserForm: !props.isRegisteredGuestUser,
+      isRegisteredGuestUser: props.isRegisteredGuestUser,
     };
     this.onClickLearning = this.onClickLearning.bind(this);
   }
@@ -36,7 +40,8 @@ class ChatHeader extends Component {
   }
 
   render() {
-    const { botName, isAdmin, isManager } = this.props;
+    const { botName, isAdmin, isManager, isEnableGuestUserRegistration } = this.props;
+    const { isShowGuestUserForm, isRegisteredGuestUser } = this.state;
 
     return (
       <header className="chat-header">
@@ -46,7 +51,48 @@ class ChatHeader extends Component {
             <LearningButton botId={window.currentBot.id} isAdmin={isAdmin} />
           </div>
         )}
+        {this.renderGuestUserParts()}
       </header>
+    );
+  }
+
+  renderGuestUserParts() {
+    const { isManager, isEnableGuestUserRegistration } = this.props;
+    const { isShowGuestUserForm, isRegisteredGuestUser } = this.state;
+
+    if (!isEnableGuestUserRegistration) { return null; }
+
+    return (
+      <span>
+        {!isManager && (
+          <div className="chat-header__left">
+            <a
+              id="guest-user-modal-button"
+              href="#"
+              className="btn btn-link"
+              title="ユーザー情報を編集できます"
+              onClick={() => this.setState({ isShowGuestUserForm: true })}
+            >
+              <i className="material-icons">person</i>
+            </a>
+          </div>
+        )}
+        {(!isManager && isShowGuestUserForm) && (
+          <Modal
+            title="ユーザー情報"
+            onClose={isRegisteredGuestUser ? () => { this.setState({ isShowGuestUserForm: false })} : null}
+          >
+            <GuestUserForm
+              handleRegistered={() => {
+                this.setState({
+                  isShowGuestUserForm: false,
+                  isRegisteredGuestUser: true
+                });
+              }}
+            />
+          </Modal>
+        )}
+      </span>
     );
   }
 

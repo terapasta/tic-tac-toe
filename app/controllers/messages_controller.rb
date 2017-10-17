@@ -7,6 +7,7 @@ class MessagesController < ApplicationController
   def index
     @per_page = 20
     @messages = @chat.messages.page(params[:page]).per(@per_page)
+    @guest_user = GuestUser.find_by(guest_key: @chat.guest_key)
   end
 
   private

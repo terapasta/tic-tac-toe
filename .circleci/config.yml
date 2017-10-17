@@ -51,8 +51,7 @@ jobs:
             bundle exec rspec spec \
               --format progress \
               --format RspecJunitFormatter \
-              --out /tmp/test-results/rspec.xml \
-              --format progress
+              --out /tmp/test-results/rspec.xml
 
       # collect reports
       - type: store_artifacts

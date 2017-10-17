@@ -10,8 +10,10 @@ class BotsController < ApplicationController
 
   def show
     @today_chats_count = @bot.chats.today_count_of_guests
-    @chats_limit = current_user.chats_limit_per_day
-    @progress = ((@today_chats_count.to_f / @chats_limit.to_f) * 100).round
+    unless current_user.staff?
+      @chats_limit = current_user.chats_limit_per_day(@bot)
+      @progress = ((@today_chats_count.to_f / @chats_limit.to_f) * 100).round
+    end
   end
 
   def reset

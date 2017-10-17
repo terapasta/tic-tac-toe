@@ -2,7 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    @user = user || DummyUser.new
+    @user = user.presence || DummyUser.new
     @record = record
   end
 
@@ -37,6 +37,16 @@ class ApplicationPolicy
   def scope
     Pundit.policy_scope!(user, record.class)
   end
+
+  private
+    def staff_or_owner?
+      return true if user&.staff?
+      user&.has_membership_of?(target_bot)
+    end
+
+    def target_bot
+      fail "you must implement #{self.class.name}#target_bot method"
+    end
 
   class Scope
     attr_reader :user, :scope

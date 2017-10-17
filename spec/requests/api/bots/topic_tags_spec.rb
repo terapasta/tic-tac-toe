@@ -29,6 +29,20 @@ RSpec.describe '/api/bots/:bot_id/topic_tags', type: :request do
     create_list(:topic_tag, 2, bot: other_bot)
   end
 
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
+  let!(:other_organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: other_user)
+      org.bot_ownerships.create(bot: other_bot)
+    end
+  end
+
   let(:response_json) do
     JSON.parse(response.body)
   end

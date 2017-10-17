@@ -50,4 +50,5 @@ class ReplyController(object):
             'question_feature_count': np.count_nonzero(normalized_features),
             'results': results,
             'noun_count': self.factory.get_tokenizer().extract_noun_count(text),
+            'verb_count': self.factory.get_tokenizer().extract_verb_count(text),
         }

@@ -14,11 +14,25 @@ RSpec.describe '/api/bots', type: :request do
   end
 
   let!(:bot) do
-    create(:bot, user: user)
+    create(:bot)
   end
 
   let!(:other_bot) do
-    create(:bot, user: other_user)
+    create(:bot)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
+  let!(:other_organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: other_user)
+      org.bot_ownerships.create(bot: other_bot)
+    end
   end
 
   let(:response_json) do

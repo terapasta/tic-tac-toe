@@ -22,6 +22,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :question_feature_count, :int32, 1
     repeated :results, :message, 2, "gateway.Result"
     optional :noun_count, :int32, 3
+    optional :verb_count, :int32, 4
   end
   add_message "gateway.LearnRequest" do
     optional :bot_id, :int32, 1

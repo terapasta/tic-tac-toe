@@ -79,7 +79,7 @@ class Bot < ActiveRecord::Base
   end
 
   def chats_limit_per_day
-    organizations.first.chats_limit_per_day
+    organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
   private

@@ -7,7 +7,6 @@ import pick from "lodash/pick";
 import findIndex from "lodash/findIndex";
 import isArray from "lodash/isArray";
 import isEmpty from "is-empty";
-import Promise from "promise";
 import { handleActions } from "redux-actions";
 
 import {
@@ -47,6 +46,7 @@ export function classify(data, messages, isLastPage) {
       case Speaker.Bot:
         sections = classifyBotMessage(sections, message);
         break;
+      default: break;
     }
   });
 

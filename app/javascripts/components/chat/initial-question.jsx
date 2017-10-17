@@ -11,6 +11,7 @@ export default class ChatInitialQuestion extends Component {
     return {
       isManager: PropTypes.bool,
       isFirst: PropTypes.bool,
+      isLastPage: PropTypes.bool,
       initialQuestions: PropTypes.array.isRequired,
       onChange: PropTypes.func.isRequired,
     };
@@ -35,11 +36,12 @@ export default class ChatInitialQuestion extends Component {
     const {
       isManager,
       isFirst,
+      isLastPage,
     } = this.props;
 
     return (
       <ChatContainer>
-        {isManager && isFirst && (
+        {isManager && isFirst && isLastPage && (
           <div style={{marginTop:"32px"}}>
             {this.renderEmptyMessage()}
             {this.renderDesc()}

@@ -6105,7 +6105,7 @@ function classifyBotMessage(sections, message) {
   lastSec.answer = pickUp(message);
   secs[secs.length - 1] = lastSec;
 
-  var decisionBranches = (0, _get2.default)(message, "questionAnswer.decisionBranches");
+  var decisionBranches = (0, _get2.default)(message, "questionAnswer.decisionBranches", null) || (0, _get2.default)(message, 'childDecisionBranches');
   if (!(0, _isEmpty2.default)(decisionBranches)) {
     secs.push({ decisionBranches: decisionBranches });
   }

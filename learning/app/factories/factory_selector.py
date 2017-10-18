@@ -1,3 +1,4 @@
+from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.shared.current_bot import CurrentBot
 from app.shared.logger import logger
 from app.shared.constants import Constants
@@ -13,6 +14,10 @@ class FactorySelector:
         if self.bot.algorithm == Constants.ALGORITHM_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Simmilarity Classification')
             return CosineSimilarityFactory()
+
+        if self.bot.algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
+            logger.info('algorithm: Two Step Simmilarity Classification')
+            return TwoStepCosineSimilarityFactory()
 
         if self.bot.algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
             logger.info('algorithm: Logistic Regression')

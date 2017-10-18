@@ -2,6 +2,7 @@ import inject
 import pandas as pd
 from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression as SkLogisticRegression
+from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 from app.shared.datasource.datasource import Datasource
 
@@ -27,6 +28,14 @@ class LogisticRegression:
                 'probability': results[0],
             })
 
+    def before_reply(self, sentences):
+        logger.info('PASS')
+        return sentences
+
+    def after_reply(self, question, data_frame):
+        logger.info('PASS')
+        return data_frame
+
     @property
     def dump_key(self):
-        return 'dump_logistic_regression_estimator'
+        return 'sk_logistic_regression_estimator'

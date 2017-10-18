@@ -6,9 +6,10 @@ from app.shared.datasource.datasource import Datasource
 
 class TfidfVectorizer:
     @inject.params(bot=CurrentBot, datasource=Datasource)
-    def __init__(self, bot=None, datasource=None):
+    def __init__(self, bot=None, datasource=None, dump_key='sk_tfidf_vectorizer'):
         self.bot = bot
         self.persistence = datasource.persistence
+        self._dump_key = dump_key
         self.vectorizer = self.persistence.load(self.dump_key)
         if self.vectorizer is None:
             # Note: token_patternは1文字のデータを除外しない設定
@@ -27,4 +28,4 @@ class TfidfVectorizer:
 
     @property
     def dump_key(self):
-        return 'dump_tfidf_vectorizer'
+        return self._dump_key

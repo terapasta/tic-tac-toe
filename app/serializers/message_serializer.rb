@@ -4,6 +4,11 @@ class MessageSerializer < ActiveModel::Serializer
   attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed, :child_decision_branches, :similar_question_answers
   has_one :question_answer
 
+  def rating
+    return Rating.levels[:nothing] if object.rating.blank?
+    object.rating.level
+  end
+
   def icon_image_url
     case object.speaker
     when 'guest'

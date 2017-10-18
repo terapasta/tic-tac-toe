@@ -12,7 +12,7 @@ class BotThreadsMessagesDecorator < Draper::CollectionDecorator
     chat.messages.order('id asc').each do |message|
       csv << [chat.id, message.id, message.speaker, message.body,
               message.answer_failed? ? '失敗' : '',
-              message.nothing? ? '' : message.rating,
+              message.rating.blank? ? '' : message.rating.level,
               message.created_at,
               message.user_agent]
     end

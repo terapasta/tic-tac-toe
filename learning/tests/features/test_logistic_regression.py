@@ -15,7 +15,6 @@ from app.factories.logistic_regression_factory import LogisticRegressionFactory
 
 class LearningParameter:
     datasource_type = Constants.DATASOURCE_TYPE_FILE
-    use_similarity_classification = False
     algorithm = Constants.ALGORITHM_LOGISTIC_REGRESSION
 
 

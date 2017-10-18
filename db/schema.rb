@@ -136,13 +136,12 @@ ActiveRecord::Schema.define(version: 20171017092327) do
   add_index "guest_users", ["guest_key"], name: "index_guest_users_on_guest_key", using: :btree
 
   create_table "learning_parameters", force: :cascade do |t|
-    t.integer  "bot_id",                        limit: 4
-    t.integer  "algorithm",                     limit: 4,     default: 0,    null: false
-    t.text     "params_for_algorithm",          limit: 65535
-    t.float    "classify_threshold",            limit: 24,    default: 0.5,  null: false
-    t.boolean  "use_similarity_classification",               default: true, null: false
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
+    t.integer  "bot_id",               limit: 4
+    t.integer  "algorithm",            limit: 4,     default: 0,   null: false
+    t.text     "params_for_algorithm", limit: 65535
+    t.float    "classify_threshold",   limit: 24,    default: 0.5, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -176,7 +175,6 @@ ActiveRecord::Schema.define(version: 20171017092327) do
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
-  add_index "messages", ["rating"], name: "index_messages_on_rating", using: :btree
 
   create_table "organization_bot_ownerships", force: :cascade do |t|
     t.integer  "organization_id", limit: 4, null: false

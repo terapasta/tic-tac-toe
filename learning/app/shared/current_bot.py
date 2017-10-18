@@ -12,11 +12,16 @@ class CurrentBot(object):
     def init(self, bot_id, learning_parameter):
         self._bot_id = bot_id
         self._learning_parameter = learning_parameter
+        self._dump_key_prefix = ''
         return self
 
     @property
     def id(self):
         return self._bot_id
+
+    @property
+    def dump_key_prefix(self):
+        return self._dump_key_prefix
 
     @property
     def dump_dirpath(self):
@@ -31,7 +36,4 @@ class CurrentBot(object):
 
     @property
     def algorithm(self):
-        if self._learning_parameter.use_similarity_classification:
-            return Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
-
         return self._learning_parameter.algorithm

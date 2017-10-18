@@ -4,5 +4,5 @@ Bot.seed(:id,
 )
 
 LearningParameter.seed(:id,
-  { id: 1, bot_id: 4, use_similarity_classification: true }
+  { id: 1, bot_id: 4, algorithm: :similarity_classification}
 )

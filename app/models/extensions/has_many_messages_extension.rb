@@ -17,6 +17,6 @@ module HasManyMessagesExtension
 
   private
     def array_select_by(method_name)
-      to_a.select{ |m| m.send(method_name) }.count
+      to_a.select{ |m| m.rating&.send(method_name) }.count
     end
 end

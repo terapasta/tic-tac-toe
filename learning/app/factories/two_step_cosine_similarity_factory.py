@@ -2,20 +2,21 @@ import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-from app.core.estimator.logistic_regression import LogisticRegression
+from app.core.estimator.two_steps_cosine_similarity import TwoStepsCosineSimilarity
+# from app.core.reducer.lsi import LSI
+# from app.core.normalizer.normalizer import Normalizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource
 
 
-class LogisticRegressionFactory:
+class TwoStepCosineSimilarityFactory:
     @inject.params(
         tokenizer=MecabTokenizer,
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,
         datasource=Datasource,
-        estimator=LogisticRegression,
     )
     def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
         self.tokenizer = tokenizer
@@ -23,10 +24,16 @@ class LogisticRegressionFactory:
         self.reducer = reducer
         self.normalizer = normalizer
         self.datasource = datasource
-        self.estimator = estimator
-
-    def get_data_builder(self):
-        return self.data_builder
+        if estimator is not None:
+            self.estimator = estimator
+        else:
+            self.estimator = TwoStepsCosineSimilarity(
+                    self.tokenizer,
+                    self.vectorizer,
+                    self.reducer,
+                    self.normalizer,
+                    self.datasource,
+                )
 
     def get_tokenizer(self):
         return self.tokenizer

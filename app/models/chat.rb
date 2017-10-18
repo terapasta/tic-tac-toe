@@ -83,11 +83,11 @@ class Chat < ActiveRecord::Base
   end
 
   def has_good_answer?
-    messages.any? { |m| m.good? }
+    messages.any? { |m| m.rating&.good? }
   end
 
   def has_bad_answer?
-    messages.any? { |m| m.bad? }
+    messages.any? { |m| m.rating&.bad? }
   end
 
   def has_answer_marked_message?

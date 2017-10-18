@@ -16,7 +16,7 @@ class Persistence:
             'SELECT * FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
             {
                 'bot_id': self.bot.id,
-                'name': name,
+                'name': self.__generate_key(name),
             },
         )
         if len(records) > 0 and records['content'][0] is not None:
@@ -35,16 +35,19 @@ class Persistence:
                         'DELETE FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
                         {
                             'bot_id': self.bot.id,
-                            'name': name,
+                            'name': self.__generate_key(name),
                         },
                     ],
                     [
                         'INSERT INTO dumps (bot_id, name, content) VALUES (%(bot_id)s, %(name)s, %(content)s);',
                         {
                             'bot_id': self.bot.id,
-                            'name': name,
+                            'name': self.__generate_key(name),
                             'content': file.getvalue(),
                         },
                     ],
                 ],
             )
+
+    def __generate_key(self, name):
+        return 'alg{}_{}'.format(self.bot.algorithm, name)

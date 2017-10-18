@@ -28,6 +28,14 @@ class CosineSimilarity:
         result['probability'] = similarities
         return result
 
+    def before_reply(self, sentences):
+        logger.info('PASS')
+        return sentences
+
+    def after_reply(self, question, data_frame):
+        logger.info('PASS')
+        return data_frame
+
     @property
     def dump_key(self):
-        return 'dump_cosine_similarity'
+        return 'sk_cosine_similarity'

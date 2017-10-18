@@ -31,4 +31,4 @@ class LSI:
 
     @property
     def dump_key(self):
-        return 'dump_lsi'
+        return 'sk_lsi'

@@ -3,7 +3,6 @@ syntax = "proto3";
 package gateway;
 
 message LearningParameter {
-    bool use_similarity_classification = 1;
     int32 algorithm = 2;
     string datasource_type = 3;
 }

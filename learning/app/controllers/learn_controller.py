@@ -1,5 +1,7 @@
 import inject
 import numpy as np
+import pandas as pd
+
 from app.shared.logger import logger
 from app.shared.current_bot import CurrentBot
 from app.shared.constants import Constants
@@ -18,7 +20,7 @@ class LearnController:
 
         self._vocabulary_learn()
 
-        self._learn()
+        self._learn_bot()
 
         result = self._evaluate()
 
@@ -28,10 +30,12 @@ class LearnController:
 
     def _vocabulary_learn(self):
         logger.info('load all get_datasource')
-        all_question_answers_data = self._factory.get_datasource().question_answers.all()
+        question_answers = self._factory.get_datasource().question_answers.all()
+        ratings = self._factory.get_datasource().ratings.all()
+        all_questions = pd.concat([question_answers['question'], ratings['question']])
 
         logger.info('tokenize all')
-        tokenized_sentences = self._factory.get_tokenizer().tokenize(all_question_answers_data['question'])
+        tokenized_sentences = self._factory.get_tokenizer().tokenize(all_questions)
 
         logger.info('vectorize all')
         vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)
@@ -42,7 +46,7 @@ class LearnController:
         logger.info('normalize all')
         self._factory.get_normalizer().fit(reduced_features)
 
-    def _learn(self):
+    def _learn_bot(self):
         logger.info('load question_answers')
         bot_question_answers_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
 

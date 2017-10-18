@@ -36,6 +36,8 @@ class TwoStepsCosineSimilarity:
 
         # Note: ratingsテーブルから類似questionを検索する
         ratings = self.datasource.ratings.by_bot(self.bot.id)
+        if len(ratings) == 0:
+            return self.__no_data()
         bot_tokenized_sentences = self.tokenizer.tokenize(ratings['question'])
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
         reduced_vectors = self.reducer.transform(bot_features)

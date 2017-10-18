@@ -110,6 +110,7 @@ gem 'grpc'
 gem 'grpc-tools'
 gem 'google-protobuf', '3.4.0.2'
 gem 'email_validator'
+gem 'webpacker', '~> 3.0'
 
 group :development, :test do
 

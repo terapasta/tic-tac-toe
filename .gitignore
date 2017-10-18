@@ -81,3 +81,6 @@ config/environments/*.local.yml
 
 /.vagrant
 /ansible/VAULT_PASSWORD
+/public/packs
+/public/packs-test
+/node_modules

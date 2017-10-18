@@ -41,6 +41,7 @@ export default class ChatBotMessageRow extends Component {
       section: { question, answer },
       isManager,
       isFirst,
+      isLastPage,
       isActive,
       learnings,
       initialQuestions,
@@ -72,6 +73,7 @@ export default class ChatBotMessageRow extends Component {
         <ChatInitialQuestion
           isManager={isManager}
           isFirst={isFirst}
+          isLastPage={isLastPage}
           initialQuestions={initialQuestions}
           onChange={onChangeInitialQuestions}
         />

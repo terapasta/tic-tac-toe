@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171017071159) do
+ActiveRecord::Schema.define(version: 20171017092327) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -166,9 +166,11 @@ ActiveRecord::Schema.define(version: 20171017071159) do
     t.boolean  "answer_failed",                              default: false, null: false
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
+    t.integer  "rating",                       limit: 4,     default: 0
     t.boolean  "answer_marked",                              default: false, null: false
     t.integer  "question_answer_id",           limit: 4
     t.text     "similar_question_answers_log", limit: 65535
+    t.integer  "decision_branch_id",           limit: 4
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree

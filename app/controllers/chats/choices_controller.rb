@@ -24,12 +24,14 @@ class Chats::ChoicesController < ApplicationController
     def guest_message_params
       {
         speaker: 'guest',
-        body: @decision_branch.body
+        body: @decision_branch.body,
+        created_at: @chat.messages.last.created_at + 1.second,
       }
     end
 
     def bot_message_params
       {
+        decision_branch_id: @decision_branch.id,
         speaker: 'bot',
         body: @decision_branch.answer.presence || @bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text,
         created_at: @message.created_at + 1.second,

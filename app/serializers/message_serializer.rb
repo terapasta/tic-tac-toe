@@ -1,7 +1,8 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed
+  include DeepCamelizeKeys
+
+  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed, :child_decision_branches, :similar_question_answers
   has_one :question_answer
-  has_many :similar_question_answers, serializer: QuestionAnswerSerializer
 
   def rating
     return Rating.levels[:nothing] if object.rating.blank?
@@ -19,5 +20,17 @@ class MessageSerializer < ActiveModel::Serializer
 
   def answer_files
     object.question_answer&.answer_files.as_json(only: [:file, :file_size, :file_type])
+  end
+
+  def child_decision_branches
+    (object.decision_branch&.child_decision_branches || [])
+      .map(&:as_json)
+      .map{ |it| deep_camelize_keys(it) }
+  end
+
+  def similar_question_answers
+    (object.similar_question_answers || object.similar_question_answers_log || [])
+      .map{ |it| it.respond_to?(:as_json) ? it.as_json : it }
+      .map{ |it| deep_camelize_keys(it) }
   end
 end

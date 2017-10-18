@@ -7,7 +7,6 @@ import pick from "lodash/pick";
 import findIndex from "lodash/findIndex";
 import isArray from "lodash/isArray";
 import isEmpty from "is-empty";
-import Promise from "promise";
 import { handleActions } from "redux-actions";
 
 import {
@@ -47,6 +46,7 @@ export function classify(data, messages, isLastPage) {
       case Speaker.Bot:
         sections = classifyBotMessage(sections, message);
         break;
+      default: break;
     }
   });
 
@@ -59,7 +59,7 @@ export function classifyBotMessage(sections, message) {
   lastSec.answer = pickUp(message);
   secs[secs.length - 1] = lastSec;
 
-  const decisionBranches = get(message, "questionAnswer.decisionBranches");
+  const decisionBranches = get(message, "questionAnswer.decisionBranches", null) || get(message, 'childDecisionBranches');
   if (!isEmpty(decisionBranches)) {
     secs.push({ decisionBranches });
   }

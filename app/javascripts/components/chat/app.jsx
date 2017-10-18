@@ -142,6 +142,7 @@ export default class ChatApp extends Component {
                   section,
                   isManager,
                   isFirst,
+                  isLastPage: messages.meta.currentPage === messages.meta.totalPages,
                   isActive,
                   learnings,
                   initialQuestions,

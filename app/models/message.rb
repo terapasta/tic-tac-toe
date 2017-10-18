@@ -7,6 +7,7 @@ class Message < ActiveRecord::Base
   belongs_to :chat
   belongs_to :question_answer
   has_one :rating
+  belongs_to :decision_branch
 
   enum speaker: { bot: 'bot', guest: 'guest' }
 

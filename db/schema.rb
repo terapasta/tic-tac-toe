@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016030200) do
+ActiveRecord::Schema.define(version: 20171017071159) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -136,12 +136,12 @@ ActiveRecord::Schema.define(version: 20171016030200) do
   add_index "guest_users", ["guest_key"], name: "index_guest_users_on_guest_key", using: :btree
 
   create_table "learning_parameters", force: :cascade do |t|
-    t.integer  "bot_id",                        limit: 4
-    t.integer  "algorithm",                     limit: 4,     default: 0,    null: false
-    t.text     "params_for_algorithm",          limit: 65535
-    t.float    "classify_threshold",            limit: 24,    default: 0.5,  null: false
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
+    t.integer  "bot_id",               limit: 4
+    t.integer  "algorithm",            limit: 4,     default: 0,   null: false
+    t.text     "params_for_algorithm", limit: 65535
+    t.float    "classify_threshold",   limit: 24,    default: 0.5, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   add_index "learning_parameters", ["bot_id"], name: "index_learning_parameters_on_bot_id", using: :btree
@@ -173,32 +173,6 @@ ActiveRecord::Schema.define(version: 20171016030200) do
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id", using: :btree
   add_index "messages", ["question_answer_id"], name: "index_messages_on_question_answer_id", using: :btree
-  create_table "organization_bot_ownerships", force: :cascade do |t|
-    t.integer  "organization_id", limit: 4, null: false
-    t.integer  "bot_id",          limit: 4, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "organization_bot_ownerships", ["organization_id", "bot_id"], name: "main_organization_bot_ownership_index", unique: true, using: :btree
-
-  create_table "organization_user_memberships", force: :cascade do |t|
-    t.integer  "user_id",         limit: 4, null: false
-    t.integer  "organization_id", limit: 4, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "organization_user_memberships", ["user_id", "organization_id"], name: "main_organization_user_membership_index", unique: true, using: :btree
-
-  create_table "organizations", force: :cascade do |t|
-    t.string   "name",        limit: 255,               null: false
-    t.string   "image",       limit: 255
-    t.text     "description", limit: 65535
-    t.integer  "plan",        limit: 4,     default: 2, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-  end
 
   create_table "organization_bot_ownerships", force: :cascade do |t|
     t.integer  "organization_id", limit: 4, null: false

@@ -17,6 +17,14 @@ class Message < ActiveRecord::Base
     where(answer_failed: true)
   }
 
+  scope :good, -> {
+    joins(:rating).merge(Rating.good)
+  }
+
+  scope :bad, -> {
+    joins(:rating).merge(Rating.bad)
+  }
+
   validates :body, length: { maximum: 10000 }
 
   def parent

@@ -166,7 +166,6 @@ ActiveRecord::Schema.define(version: 20171017092327) do
     t.boolean  "answer_failed",                              default: false, null: false
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
-    t.integer  "rating",                       limit: 4,     default: 0
     t.boolean  "answer_marked",                              default: false, null: false
     t.integer  "question_answer_id",           limit: 4
     t.text     "similar_question_answers_log", limit: 65535

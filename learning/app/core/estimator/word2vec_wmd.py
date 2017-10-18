@@ -1,27 +1,25 @@
-import gensim
 import inject
 from gensim.similarities import WmdSimilarity
 
 from app.shared.current_bot import CurrentBot
 from app.shared.logger import logger
+from app.shared.word2vec import Word2vec
 
 
 class Word2vecWmd:
-    @inject.params(bot=CurrentBot)
-    def __init__(self, tokenizer, datasource, bot=None):
+    @inject.params(bot=CurrentBot, word2vec=Word2vec)
+    def __init__(self, tokenizer, datasource, bot=None, word2vec=None):
         self.bot = bot if bot is not None else CurrentBot()
         self.tokenizer = tokenizer
         self.bot_question_answers_data = datasource.question_answers.by_bot(self.bot.id)
-        # TODO: modelのロードはシングルトンにしたい
-        self.model = gensim.models.KeyedVectors.load_word2vec_format('dumps/entity_vector.model.bin', binary=True)
+        self.word2vec = word2vec
 
     def fit(self, x, y):
         logger.info('PASS')
 
     def predict(self, question_features):
         bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
-        logger.debug(self.bot_question_answers_data)
-        instance = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
+        instance = WmdSimilarity(bot_tokenized_sentences, self.word2vec.model, num_best=10)
         # NOTE: 形態素解析結果がスペース区切りの文字列になっていると、複数inputの類似検索が出来ないため一旦インデックス0を指定している
         result = instance[question_features[0]]
 

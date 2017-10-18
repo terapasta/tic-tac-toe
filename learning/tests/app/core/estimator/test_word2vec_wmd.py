@@ -9,6 +9,7 @@ from app.shared.config import Config
 from app.shared.constants import Constants
 from app.shared.current_bot import CurrentBot
 from app.shared.datasource.datasource import Datasource
+from app.shared.word2vec import Word2vec
 
 
 class LearningParameter:
@@ -26,6 +27,7 @@ class Word2vecWmdTestCase(TestCase):
     def test_predict(self):
         bot = CurrentBot().init(self.bot_id, self.learning_parameter)
         Datasource().init(bot)
+        Word2vec().init()
         tokenizer = MecabTokenizer()
 
         estimator = Word2vecWmd(tokenizer, Datasource(), bot=bot)

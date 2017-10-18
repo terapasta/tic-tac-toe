@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171017092327) do
+ActiveRecord::Schema.define(version: 20171018074309) do
 
   create_table "accuracy_test_cases", force: :cascade do |t|
     t.text     "question_text",          limit: 65535
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 20171017092327) do
   create_table "ratings", force: :cascade do |t|
     t.integer  "level",              limit: 4,     null: false
     t.integer  "message_id",         limit: 4,     null: false
-    t.integer  "question_answer_id", limit: 4,     null: false
+    t.integer  "question_answer_id", limit: 4
     t.integer  "bot_id",             limit: 4,     null: false
     t.text     "question",           limit: 65535, null: false
     t.text     "answer",             limit: 65535, null: false

@@ -1,4 +1,6 @@
+import gensim
 import inject
+from gensim.similarities import WmdSimilarity
 
 from app.shared.current_bot import CurrentBot
 from app.shared.logger import logger
@@ -6,29 +8,24 @@ from app.shared.logger import logger
 
 class WordMoversDistance:
     @inject.params(bot=CurrentBot)
-    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
+    def __init__(self, tokenizer, datasource, bot=None):
         self.bot = bot if bot is not None else CurrentBot()
         self.tokenizer = tokenizer
-        self.vectorizer = vectorizer
-        self.reducer = reducer
-        self.normalizer = normalizer
-        # self.bot_question_answers_data = datasource.question_answers.by_bot(self.bot.id)
+        self.bot_question_answers_data = datasource.question_answers.by_bot(self.bot.id)
+        # TODO: modelのロードはシングルトンにしたい
+        self.model = gensim.models.KeyedVectors.load_word2vec_format('dumps/entity_vector.model.bin', binary=True)
 
     def fit(self, x, y):
         logger.info('PASS')
 
     def predict(self, question_features):
-        print('predict')
-        # bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
-        # bot_features = self.vectorizer.transform(bot_tokenized_sentences)
-        # reduced_vectors = self.reducer.transform(bot_features)
-        # normalized_vectors = self.normalizer.transform(reduced_vectors)
-        # similarities = cosine_similarity(normalized_vectors, question_features)
-        # similarities = similarities.flatten()
-        # result = self.bot_question_answers_data[['question', 'question_answer_id']].copy()
-        # result['probability'] = similarities
-        # return result
+        bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
+        logger.debug(self.bot_question_answers_data)
+        instance = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
+        # NOTE: 形態素解析結果がスペース区切りの文字列になっていると、複数inputの類似検索が出来ないため一旦インデックス0を指定している
+        result = instance[question_features[0]]
 
-    # @property
-    # def dump_key(self):
-    #     return 'dump_cosine_similarity'
+        indices = [x[0] for x in result]
+        df = self.bot_question_answers_data.iloc[indices].copy()
+        df['probability'] = [x[1] for x in result]
+        return df

@@ -6,7 +6,7 @@ from app.shared.current_bot import CurrentBot
 from app.shared.logger import logger
 
 
-class WordMoversDistance:
+class Word2vecWmd:
     @inject.params(bot=CurrentBot)
     def __init__(self, tokenizer, datasource, bot=None):
         self.bot = bot if bot is not None else CurrentBot()

@@ -71,6 +71,7 @@ class TwoStepsCosineSimilarity:
 
     def after_reply(self, question, data_frame):
         logger.info('second step cosine similarity')
+        logger.debug(data_frame)
         tokenized_questions = None
         tokenized_answers = None
         question_answers = self.datasource.question_answers.by_bot(self.bot.id)

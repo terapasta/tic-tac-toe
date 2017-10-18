@@ -24,7 +24,7 @@ RSpec.configure do |config|
   config.include ActionDispatch::TestProcess
   config.include MlHelper, type: :feature
   config.include Warden::Test::Helpers
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -82,7 +82,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.after(:suite, type: :feature) do
+  config.after(:each, type: :feature) do
     DatabaseCleaner.clean
   end
 end

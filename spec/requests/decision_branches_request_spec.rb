@@ -44,7 +44,7 @@ RSpec.describe 'decision_branch resources', type: :request do
     end
 
     it 'updates the decision_branch record' do
-      put "/bots/#{decision_branch.bot.id}/decision_branches/#{decision_branch.id}.json", decision_branch_params
+      put "/bots/#{decision_branch.bot.id}/decision_branches/#{decision_branch.id}.json", params: decision_branch_params
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)["body"]).to eq(decision_branch_params[:decision_branch][:body])
     end

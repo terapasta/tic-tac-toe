@@ -12,7 +12,7 @@ class TasksController < ApplicationController
       .with_done(params[:done])
       .page(params[:page])
       .per(@per_page)
-      .order(created_at: :asc)
+      .order(created_at: :desc)
   end
 
   def update

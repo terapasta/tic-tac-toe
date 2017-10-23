@@ -2,13 +2,13 @@ import inject
 import os
 from pathlib import Path
 from sklearn.externals import joblib
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 
 
 class Persistence:
-    @inject.params(bot=CurrentBot)
-    def __init__(self, bot=None):
-        self.bot = bot
+    @inject.params(app_status=AppStatus)
+    def __init__(self, app_status=None):
+        self.bot = app_status.current_bot()
 
     def load(self, key):
         path = self.__generate_file_path(key)

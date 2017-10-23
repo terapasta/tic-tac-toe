@@ -1,13 +1,13 @@
 import inject
 from sklearn.decomposition import TruncatedSVD
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
 
 
 class LSI:
-    @inject.params(bot=CurrentBot, datasource=Datasource)
-    def __init__(self, bot=None, datasource=None):
-        self.bot = bot
+    @inject.params(datasource=Datasource, app_status=AppStatus)
+    def __init__(self, datasource=None, app_status=None):
+        self.bot = app_status.current_bot()
         self.persistence = datasource.persistence
         self.reducer = self.persistence.load(self.dump_key)
 

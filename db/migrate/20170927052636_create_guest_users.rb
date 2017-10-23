@@ -1,4 +1,4 @@
-class CreateGuestUsers < ActiveRecord::Migration
+class CreateGuestUsers < ActiveRecord::Migration[4.2]
   def change
     create_table :guest_users do |t|
       t.string :name, null: false

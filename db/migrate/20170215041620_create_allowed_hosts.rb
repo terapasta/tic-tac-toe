@@ -1,4 +1,4 @@
-class CreateAllowedHosts < ActiveRecord::Migration
+class CreateAllowedHosts < ActiveRecord::Migration[4.2]
   def change
     create_table :allowed_hosts do |t|
       t.integer :scheme, default: 0

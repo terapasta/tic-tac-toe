@@ -1,7 +1,7 @@
-class AddColumnQuestionAnswerIdToSentenceSynonyms < ActiveRecord::Migration
+class AddColumnQuestionAnswerIdToSentenceSynonyms < ActiveRecord::Migration[4.2]
   def up
     add_column :sentence_synonyms, :question_answer_id, :integer
-    
+
     add_index :sentence_synonyms, :question_answer_id
 
     sentence_synonyms = SentenceSynonym.all

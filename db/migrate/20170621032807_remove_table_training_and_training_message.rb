@@ -1,4 +1,4 @@
-class RemoveTableTrainingAndTrainingMessage < ActiveRecord::Migration
+class RemoveTableTrainingAndTrainingMessage < ActiveRecord::Migration[4.2]
   def change
     remove_index :sentence_synonyms, :training_message_id
     remove_index :training_messages, :question_answer_id

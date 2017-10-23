@@ -1,4 +1,4 @@
-class DeleteContextColumn < ActiveRecord::Migration
+class DeleteContextColumn < ActiveRecord::Migration[4.2]
   def up
     remove_column :chats, :context
   end

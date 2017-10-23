@@ -1,4 +1,4 @@
-class ChangeDecisionBranches < ActiveRecord::Migration
+class ChangeDecisionBranches < ActiveRecord::Migration[4.2]
   def change
     add_column :decision_branches, :question_answer_id, :integer
     add_column :decision_branches, :answer, :text

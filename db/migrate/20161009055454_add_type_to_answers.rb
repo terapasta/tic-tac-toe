@@ -1,4 +1,4 @@
-class AddTypeToAnswers < ActiveRecord::Migration
+class AddTypeToAnswers < ActiveRecord::Migration[4.2]
   def change
     add_column :answers, :type, :string, after: :transition_to
     add_column :answers, :defined_answer_id, :integer, after: :id

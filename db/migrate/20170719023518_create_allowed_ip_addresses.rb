@@ -1,4 +1,4 @@
-class CreateAllowedIpAddresses < ActiveRecord::Migration
+class CreateAllowedIpAddresses < ActiveRecord::Migration[4.2]
   def change
     create_table :allowed_ip_addresses do |t|
       t.string :value, null: false

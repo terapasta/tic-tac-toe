@@ -1,4 +1,4 @@
-class CreateAccuracyTestCases < ActiveRecord::Migration
+class CreateAccuracyTestCases < ActiveRecord::Migration[4.2]
   def change
     create_table :accuracy_test_cases do |t|
       t.text :question_text

@@ -1,4 +1,4 @@
-class RemoveUseSimilarityClassificationFromLearningParameters < ActiveRecord::Migration
+class RemoveUseSimilarityClassificationFromLearningParameters < ActiveRecord::Migration[4.2]
   def change
     remove_column :learning_parameters, :use_similarity_classification, :boolean, after: :classify_threshold, null: false, default: true
   end

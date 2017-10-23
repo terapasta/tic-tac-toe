@@ -1,4 +1,4 @@
-class CreateOrganizationBotOwnerships < ActiveRecord::Migration
+class CreateOrganizationBotOwnerships < ActiveRecord::Migration[4.2]
   def change
     create_table :organization_bot_ownerships do |t|
       t.integer :organization_id, null: false

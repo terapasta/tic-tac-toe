@@ -3,6 +3,7 @@ import time
 
 import grpc
 
+from app.shared.word2vec import Word2vec
 from gateway_pb2 import ReplyResponse, Result, LearnResponse
 from gateway_pb2_grpc import BotServicer
 from gateway_pb2_grpc import add_BotServicer_to_server
@@ -97,5 +98,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     Config().init(args.env)
     Datasource().init(datasource_type=args.datasource_type)
+    Word2vec().init()
 
     serve(args.port)

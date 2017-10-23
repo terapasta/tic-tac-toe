@@ -1,15 +1,15 @@
 import inject
 from gensim.similarities import WmdSimilarity
 
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 from app.shared.word2vec import Word2vec
 
 
 class Word2vecWmd:
-    @inject.params(bot=CurrentBot, word2vec=Word2vec)
-    def __init__(self, tokenizer, datasource, bot=None, word2vec=None):
-        self.bot = bot if bot is not None else CurrentBot()
+    @inject.params(app_status=AppStatus, word2vec=Word2vec)
+    def __init__(self, tokenizer, datasource, bot=None, word2vec=None, app_status=None):
+        self.bot = app_status.current_bot()
         self.tokenizer = tokenizer
         self.bot_question_answers_data = datasource.question_answers.by_bot(self.bot.id)
         self.word2vec = word2vec
@@ -25,5 +25,14 @@ class Word2vecWmd:
 
         indices = [x[0] for x in result]
         df = self.bot_question_answers_data.iloc[indices].copy()
+        df = df[['question', 'question_answer_id']]
         df['probability'] = [x[1] for x in result]
         return df
+
+    def before_reply(self, sentences):
+        logger.info('PASS')
+        return sentences
+
+    def after_reply(self, question, data_frame):
+        logger.info('PASS')
+        return data_frame

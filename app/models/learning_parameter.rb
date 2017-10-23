@@ -9,6 +9,7 @@ class LearningParameter < ActiveRecord::Base
     :neural_network,
     :similarity_classification,
     :two_step_similarity_classification,
+    :word2vec_wmd,
   ]
 
   def use_similarity_classification?

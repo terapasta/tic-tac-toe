@@ -63,6 +63,14 @@ class QuestionAnswer < ActiveRecord::Base
     end
   }
 
+  before_destroy do
+    break if self.bot.blank?
+    if self.bot.selected_question_answer_ids.include?(self.id)
+      self.bot.selected_question_answer_ids -= [self.id]
+      self.bot.save!
+    end
+  end
+
   def no_classified?
     bot.nil?
   end

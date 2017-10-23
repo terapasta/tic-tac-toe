@@ -4,7 +4,6 @@ package gateway;
 
 message LearningParameter {
     int32 algorithm = 2;
-    string datasource_type = 3;
 }
 
 message Result {

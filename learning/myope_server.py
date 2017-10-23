@@ -15,8 +15,9 @@ import argparse
 from app.shared.logger import logger
 from app.shared.config import Config
 from app.shared.stop_watch import stop_watch
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
+from app.shared.constants import Constants
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
 from app.factories.factory_selector import FactorySelector
@@ -28,8 +29,7 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class RouteGuideServicer(BotServicer):
     def Reply(self, request, context):
         logger.debug('request = %s' % request)
-        bot = CurrentBot().init(request.bot_id, request.learning_parameter)
-        Datasource().init(bot)
+        app_status = AppStatus().set_bot(request.bot_id, request.learning_parameter)
         X = np.array([request.body])
 
         try:
@@ -45,6 +45,7 @@ class RouteGuideServicer(BotServicer):
             context.set_details("Error")
             context.set_code(grpc.StatusCode.INTERNAL)
 
+        app_status.thread_clear()
         return ReplyResponse(
             question_feature_count=reply['question_feature_count'],
             results=[Result(**x) for x in reply['results']],
@@ -55,8 +56,7 @@ class RouteGuideServicer(BotServicer):
     @stop_watch
     def Learn(self, request, context):
         logger.debug('request = %s' % request)
-        bot = CurrentBot().init(request.bot_id, request.learning_parameter)
-        Datasource().init(bot)
+        app_status = AppStatus().set_bot(request.bot_id, request.learning_parameter)
 
         try:
             result = LearnController(factory=FactorySelector().get_factory()).perform()
@@ -71,6 +71,7 @@ class RouteGuideServicer(BotServicer):
             context.set_details("Error")
             context.set_code(grpc.StatusCode.INTERNAL)
 
+        app_status.thread_clear()
         return LearnResponse(**result)
 
 
@@ -92,7 +93,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=6000)
     parser.add_argument('--env', type=str, default='development')
+    parser.add_argument('--datasource_type', type=str, default=Constants.DATASOURCE_TYPE_DATABASE)
     args = parser.parse_args()
     Config().init(args.env)
+    Datasource().init(datasource_type=args.datasource_type)
 
     serve(args.port)

@@ -17,16 +17,13 @@ class LogisticRegressionFactory:
         datasource=Datasource,
         estimator=LogisticRegression,
     )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
+    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
         self.datasource = datasource
         self.estimator = estimator
-
-    def get_data_builder(self):
-        return self.data_builder
 
     def get_tokenizer(self):
         return self.tokenizer

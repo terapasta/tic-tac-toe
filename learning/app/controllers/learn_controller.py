@@ -3,15 +3,15 @@ import numpy as np
 import pandas as pd
 
 from app.shared.logger import logger
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.constants import Constants
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 
 
 class LearnController:
-    @inject.params(bot=CurrentBot, factory=CosineSimilarityFactory)
-    def __init__(self, bot=None, factory=None):
-        self.bot = bot
+    @inject.params(factory=CosineSimilarityFactory, app_status=AppStatus)
+    def __init__(self, factory=None, app_status=None):
+        self.bot = app_status.current_bot()
         self._factory = factory
 
     def perform(self):

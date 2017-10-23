@@ -1,13 +1,13 @@
 import inject
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
 
 
 class TfidfVectorizer:
-    @inject.params(bot=CurrentBot, datasource=Datasource)
-    def __init__(self, bot=None, datasource=None, dump_key='sk_tfidf_vectorizer'):
-        self.bot = bot
+    @inject.params(datasource=Datasource, app_status=AppStatus)
+    def __init__(self, datasource=None, dump_key='sk_tfidf_vectorizer', app_status=None):
+        self.bot = app_status.current_bot()
         self.persistence = datasource.persistence
         self._dump_key = dump_key
         self.vectorizer = self.persistence.load(self.dump_key)

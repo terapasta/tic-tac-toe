@@ -26,4 +26,12 @@ class LearningParameter < ApplicationRecord
   def self.build_with_default
     new(default_attributes)
   end
+
+  def attributes
+    {
+      algorithm: LearningParameter.algorithms[algorithm],
+      params_for_algorithm: params_for_algorithm || {},
+      classify_threshold: classify_threshold,
+    }
+  end
 end

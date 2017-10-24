@@ -4,12 +4,12 @@ Delayed::Worker.max_attempts = 0
 # Delayed::Worker.logger = ActFluentLoggerRails::Logger.new(flush_immediately: true)
 
 module ReserveWithLogSilencer
-  def self.reserve(worker, max_run_time = Worker.max_run_time)
-    Rails.logger.silence { reserve_without_log_silencer(worker, max_run_time) }
+  def reserve(worker, max_run_time = Worker.max_run_time)
+    Rails.logger.silence { super(worker, max_run_time) }
   end
 end
 
-Delayed::Job.prepend(ReserveWithLogSilencer)
+Delayed::Job.singleton_class.prepend(ReserveWithLogSilencer)
 
 # module Delayed
 #   class Job

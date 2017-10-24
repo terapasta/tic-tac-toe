@@ -10,7 +10,6 @@ from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
 from app.controllers.reply_controller import ReplyController
 from app.factories.factory_selector import FactorySelector
-from app.shared.word2vec import Word2vec
 
 
 class LearningParameter:
@@ -23,7 +22,6 @@ class Word2vecWmdClassificationTestCase(TestCase):
         inject.configure_once()
         Config().init('test')
         Datasource().init(Constants.DATASOURCE_TYPE_FILE)
-        Word2vec().init()
         self.bot_id = 1
         self.learning_parameter = LearningParameter()
         self.body = '会社の住所が知りたい'

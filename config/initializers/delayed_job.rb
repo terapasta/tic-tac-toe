@@ -4,7 +4,7 @@ Delayed::Worker.max_attempts = 0
 # Delayed::Worker.logger = ActFluentLoggerRails::Logger.new(flush_immediately: true)
 
 module ReserveWithLogSilencer
-  def reserve(worker, max_run_time = Worker.max_run_time)
+  def reserve(worker, max_run_time = Delayed::Worker.max_run_time)
     Rails.logger.silence { super(worker, max_run_time) }
   end
 end

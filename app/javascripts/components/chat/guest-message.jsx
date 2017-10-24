@@ -43,7 +43,6 @@ export default class ChatGuestMessage extends Component {
             </div>
           )}
         </div>
-        <div className="chat-message__icon" style={iconStyle} />
       </div>
     );
   }

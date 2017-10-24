@@ -1,4 +1,4 @@
-class AnswerFile < ActiveRecord::Base
+class AnswerFile < ApplicationRecord
   belongs_to :question_answer
 
   validates :file, presence: true

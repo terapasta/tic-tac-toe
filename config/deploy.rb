@@ -70,3 +70,9 @@ namespace :deploy do
   after :finished, 'slappy:restart'
   # after :finished, 'update_neologd'
 end
+
+namespace :webpacker do
+  task :yarn_install do
+    # workaround to stop running yarn install after precompile
+  end
+end

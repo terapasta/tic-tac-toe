@@ -1,4 +1,4 @@
-class CreateWordMappingSynonyms < ActiveRecord::Migration
+class CreateWordMappingSynonyms < ActiveRecord::Migration[4.2]
   def change
     create_table :word_mapping_synonyms do |t|
       t.string :value, null: false

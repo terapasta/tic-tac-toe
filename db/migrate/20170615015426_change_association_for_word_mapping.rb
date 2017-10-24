@@ -1,4 +1,4 @@
-class ChangeAssociationForWordMapping < ActiveRecord::Migration
+class ChangeAssociationForWordMapping < ActiveRecord::Migration[4.2]
   def up
     add_column :word_mappings, :bot_id, :integer
     add_index :word_mappings, :bot_id

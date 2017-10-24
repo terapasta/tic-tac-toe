@@ -48,7 +48,7 @@ RSpec.describe 'WordMappings', type: :request do
   describe 'POST #create' do
     subject do
       lambda do
-        post "/api/bots/#{bot_id}/word_mappings.json", params
+        post "/api/bots/#{bot_id}/word_mappings.json", params: params
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe 'WordMappings', type: :request do
   describe 'PUT #update' do
     subject do
       lambda do
-        put "/api/bots/#{bot_id}/word_mappings/#{word_mapping_id}.json", params
+        put "/api/bots/#{bot_id}/word_mappings/#{word_mapping_id}.json", params: params
       end
     end
 

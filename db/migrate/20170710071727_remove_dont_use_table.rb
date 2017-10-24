@@ -1,4 +1,4 @@
-class RemoveDontUseTable < ActiveRecord::Migration
+class RemoveDontUseTable < ActiveRecord::Migration[4.2]
   def change
     drop_table :training_texts
     drop_table :tags if ActiveRecord::Base.connection.table_exists? :tags

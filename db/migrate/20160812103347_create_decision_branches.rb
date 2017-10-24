@@ -1,4 +1,4 @@
-class CreateDecisionBranches < ActiveRecord::Migration
+class CreateDecisionBranches < ActiveRecord::Migration[4.2]
   def change
     create_table :decision_branches do |t|
       t.references :help_answer, index: true

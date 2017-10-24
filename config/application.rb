@@ -24,15 +24,12 @@ module StartDash
     config.i18n.default_locale = :ja
 
     config.autoload_paths += %W(
-      #{config.root}/lib/myope
       #{config.root}/app/policies
       #{config.root}/app/decorators/concerns
       #{config.root}/app/models/extensions
       #{config.root}/app/serializers
     )
-
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    config.paths.add 'lib/myope', eager_load: true
 
     config.active_job.queue_adapter = :delayed_job
 

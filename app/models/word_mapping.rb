@@ -1,4 +1,4 @@
-class WordMapping < ActiveRecord::Base
+class WordMapping < ApplicationRecord
   include ActiveModel::Validations
   validates_with WordMappingValidator
 

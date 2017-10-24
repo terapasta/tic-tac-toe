@@ -1,4 +1,4 @@
-class AnswerFailedToZero < ActiveRecord::Migration
+class AnswerFailedToZero < ActiveRecord::Migration[4.2]
   def change
     # NOTE: DefinedAnswer.classify_failedメソッドがなくなったのでこのmigrationはコメントアウト
     # defined_answer = DefinedAnswer.classify_failed

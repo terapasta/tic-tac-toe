@@ -31,7 +31,7 @@ RSpec.describe ChatsController do
 
     subject do
       cookies[:guest_key] = cookie_guest_key
-      get :show, { token: bot.token }
+      get :show, params: { token: bot.token }
     end
 
     context 'has guest_key' do
@@ -50,14 +50,14 @@ RSpec.describe ChatsController do
       end
 
       it 'redirects to new' do
-        expect(subject).to redirect_to(new_chats_path)
+        expect(subject).to redirect_to("/embed/#{bot.token}/chats/new")
       end
     end
   end
 
   describe 'GET #new' do
     subject do
-      get :new, { token: bot.token }
+      get :new, params: { token: bot.token }
     end
 
     it 'creates new chat' do

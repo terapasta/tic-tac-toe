@@ -1,4 +1,4 @@
-class DropTableAdminUsers < ActiveRecord::Migration
+class DropTableAdminUsers < ActiveRecord::Migration[4.2]
   def change
     drop_table :admin_users
   end

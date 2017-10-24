@@ -1,4 +1,4 @@
-class CreateContactAnswers < ActiveRecord::Migration
+class CreateContactAnswers < ActiveRecord::Migration[4.2]
   def change
     create_table :contact_answers do |t|
       t.text :body

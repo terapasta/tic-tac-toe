@@ -1,4 +1,4 @@
-class GuestUser < ActiveRecord::Base
+class GuestUser < ApplicationRecord
   validates :name,
     presence: true
 

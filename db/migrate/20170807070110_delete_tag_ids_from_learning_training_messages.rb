@@ -1,4 +1,4 @@
-class DeleteTagIdsFromLearningTrainingMessages < ActiveRecord::Migration
+class DeleteTagIdsFromLearningTrainingMessages < ActiveRecord::Migration[4.2]
   def up
     remove_column :learning_training_messages, :tag_ids
   end

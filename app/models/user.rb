@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include OrganizationMembershipable
 
   # Include default devise modules. Others available are:

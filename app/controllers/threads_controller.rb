@@ -6,7 +6,7 @@ class ThreadsController < ApplicationController
   def index
     @per_page = 20
     tmp_chats = @bot.chats
-      .includes(:guest_user, :messages)
+      .includes(:messages)
       .has_multiple_messages
       .not_staff(!current_user.staff?)
       .not_normal(params[:normal].blank?)

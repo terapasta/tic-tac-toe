@@ -1,4 +1,4 @@
-class TopicTagging < ActiveRecord::Base
+class TopicTagging < ApplicationRecord
   belongs_to :question_answer, required: true
   belongs_to :topic_tag, required: true
 

@@ -1,4 +1,4 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   include AnswerMarkable
   paginates_per 50
 

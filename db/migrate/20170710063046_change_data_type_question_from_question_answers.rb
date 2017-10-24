@@ -1,4 +1,4 @@
-class ChangeDataTypeQuestionFromQuestionAnswers < ActiveRecord::Migration
+class ChangeDataTypeQuestionFromQuestionAnswers < ActiveRecord::Migration[4.2]
   def up
     change_column :question_answers, :question, :text
   end

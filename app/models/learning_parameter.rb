@@ -1,4 +1,4 @@
-class LearningParameter < ActiveRecord::Base
+class LearningParameter < ApplicationRecord
   serialize :params_for_algorithm, JSON
 
   belongs_to :bot
@@ -25,5 +25,13 @@ class LearningParameter < ActiveRecord::Base
 
   def self.build_with_default
     new(default_attributes)
+  end
+
+  def attributes
+    {
+      algorithm: LearningParameter.algorithms[algorithm],
+      params_for_algorithm: params_for_algorithm || {},
+      classify_threshold: classify_threshold,
+    }
   end
 end

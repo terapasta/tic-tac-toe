@@ -1,4 +1,4 @@
-class LearnJob < ActiveJob::Base
+class LearnJob < ApplicationJob
   queue_as :default
 
   rescue_from GRPC::BadStatus, with: :handle_error

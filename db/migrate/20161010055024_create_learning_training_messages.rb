@@ -1,4 +1,4 @@
-class CreateLearningTrainingMessages < ActiveRecord::Migration
+class CreateLearningTrainingMessages < ActiveRecord::Migration[4.2]
   def change
     create_table :learning_training_messages do |t|
       t.references :bot, index: true, foreign_key: true

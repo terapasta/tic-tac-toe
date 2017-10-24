@@ -17,6 +17,8 @@
       small ID：#{chat.id}
       = space 10
       small 日時：#{l chat.messages.last.created_at}
+      = space 10
+      small 質問数：#{chat.messages.guest.count}
     div.text-muted
       span.mr-3
         - chat.messages.answer_failed.count.tap do |count|

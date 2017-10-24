@@ -1,4 +1,4 @@
-class ChangeSetNotNullDecisionBranches < ActiveRecord::Migration
+class ChangeSetNotNullDecisionBranches < ActiveRecord::Migration[4.2]
   def change
     DecisionBranch.where(answer_id: nil).destroy_all
     DecisionBranch.where(bot_id: nil).destroy_all

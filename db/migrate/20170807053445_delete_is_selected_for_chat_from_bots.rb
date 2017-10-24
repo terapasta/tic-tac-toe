@@ -1,4 +1,4 @@
-class DeleteIsSelectedForChatFromBots < ActiveRecord::Migration
+class DeleteIsSelectedForChatFromBots < ActiveRecord::Migration[4.2]
   def up
     remove_column :bots, :is_selected_for_chat
   end

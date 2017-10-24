@@ -127,7 +127,7 @@ RSpec.describe '/api/bots/:bot_id/question_answers/:question_answer_id/topic_tag
         let!(:topic_tag) { create(:topic_tag, bot: target_bot) }
 
         it 'creates record' do
-          expect{post resources, params}.to change(TopicTagging, :count).by(1)
+          expect{post resources, params: params}.to change(TopicTagging, :count).by(1)
         end
       end
 
@@ -137,7 +137,7 @@ RSpec.describe '/api/bots/:bot_id/question_answers/:question_answer_id/topic_tag
         let!(:topic_tag) { create(:topic_tag, bot: target_bot) }
 
         it 'returns 403' do
-          post resources, params
+          post resources, params: params
           expect(response.status).to eq(403)
         end
       end

@@ -1,4 +1,4 @@
-class QuestionAnswer < ActiveRecord::Base
+class QuestionAnswer < ApplicationRecord
   include HasManySentenceSynonyms
 
   paginates_per 100

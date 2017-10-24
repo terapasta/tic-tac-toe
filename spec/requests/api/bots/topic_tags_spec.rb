@@ -100,14 +100,14 @@ RSpec.describe '/api/bots/:bot_id/topic_tags', type: :request do
         context 'when new tag name' do
           let(:tag_name) { 'new tag' }
           it 'creates record' do
-            expect{post resource, params}.to change(TopicTag, :count).by(1)
+            expect{post resource, params: params}.to change(TopicTag, :count).by(1)
           end
         end
 
         context 'when exists tag name' do
           let(:tag_name) { topic_tags.first.name }
           it 'returns exsists topic tag' do
-            expect{post resource, params}.to_not change(TopicTag, :count)
+            expect{post resource, params: params}.to_not change(TopicTag, :count)
           end
         end
       end
@@ -129,7 +129,7 @@ RSpec.describe '/api/bots/:bot_id/topic_tags', type: :request do
         let(:tag_name) { 'new tag' }
 
         it 'creates new record' do
-          expect{post resource, params}.to change(TopicTag, :count).by(1)
+          expect{post resource, params: params}.to change(TopicTag, :count).by(1)
         end
       end
     end

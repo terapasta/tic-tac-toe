@@ -7,11 +7,7 @@ class Chats::MessagesController < ApplicationController
 
   def index
     @messages = @chat.messages.order(created_at: :desc).page(params[:page]).per(20)
-
-    @messages.last.tap do |message|
-      message.similar_question_answers = @bot.selected_question_answers
-      @messages[@messages.count - 1] = message
-    end
+    @messages.last.similar_question_answers = @bot.selected_question_answers
 
     respond_to do |format|
       format.json { render_collection_json @messages, reverse: true, include: included_associations }

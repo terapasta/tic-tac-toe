@@ -51,7 +51,7 @@ RSpec.describe '/api/guest_users', type: :request do
     end
 
     subject do
-      -> { post "/api/guest_users", guest_user: guest_user_params }
+      -> { post "/api/guest_users", params: { guest_user: guest_user_params } }
     end
 
     it 'creates guest_user' do
@@ -72,7 +72,7 @@ RSpec.describe '/api/guest_users', type: :request do
     end
 
     subject do
-      -> { put "/api/guest_users/#{guest_key}", guest_user: guest_user_params }
+      -> { put "/api/guest_users/#{guest_key}", params: { guest_user: guest_user_params } }
     end
 
     it 'updates guest_user' do

@@ -1,4 +1,4 @@
-class DecisionBranch < ActiveRecord::Base
+class DecisionBranch < ApplicationRecord
   belongs_to :bot
   belongs_to :question_answer
 

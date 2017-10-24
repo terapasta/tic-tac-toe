@@ -1,4 +1,4 @@
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   has_many :user_memberships, class_name: 'Organization::UserMembership'
   has_many :users, through: :user_memberships
   has_many :bot_ownerships, class_name: 'Organization::BotOwnership'

@@ -1,4 +1,4 @@
-class RemoveForeignKeyBotsLearningTrainingMessages < ActiveRecord::Migration
+class RemoveForeignKeyBotsLearningTrainingMessages < ActiveRecord::Migration[4.2]
   def up
     remove_foreign_key :learning_training_messages, :bots
   end

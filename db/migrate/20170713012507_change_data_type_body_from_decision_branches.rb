@@ -1,4 +1,4 @@
-class ChangeDataTypeBodyFromDecisionBranches < ActiveRecord::Migration
+class ChangeDataTypeBodyFromDecisionBranches < ActiveRecord::Migration[4.2]
   def up
     change_column :decision_branches, :body, :text, default: nil
   end

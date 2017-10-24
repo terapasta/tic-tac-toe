@@ -1,4 +1,4 @@
-class AllowedHost < ActiveRecord::Base
+class AllowedHost < ApplicationRecord
   validates :domain, presence: true
   belongs_to :bot, required: true
   enum scheme: ['http://', 'https://']

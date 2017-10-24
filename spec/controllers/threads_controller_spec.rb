@@ -48,7 +48,7 @@ RSpec.describe ThreadsController, type: :controller do
 
   describe 'GET #index' do
     subject do
-      get :index, bot_id: bot.id, answer_failed: answer_failed
+      get :index, params: { bot_id: bot.id, answer_failed: answer_failed }
       assigns[:chats]
     end
 

@@ -15,8 +15,6 @@ class QuestionAnswer < ApplicationRecord
 
   NO_CLASSIFIED_ID = 0
 
-  serialize :underlayer
-
   validates :question, presence: true
 
   scope :completed_count_for, -> (user_id, target_date) {

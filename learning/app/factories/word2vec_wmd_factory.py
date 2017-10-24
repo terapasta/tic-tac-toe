@@ -1,7 +1,7 @@
 import inject
 
 from app.core.estimator.word2vec_wmd import Word2vecWmd
-from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
+from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.vectorizer.pass_vectorizer import PassVectorizer
@@ -10,7 +10,7 @@ from app.shared.datasource.datasource import Datasource
 
 class Word2vecWmdFactory:
     @inject.params(
-        tokenizer=MecabTokenizer,
+        tokenizer=MecabTokenizerWithSplit,
         vectorizer=PassVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,

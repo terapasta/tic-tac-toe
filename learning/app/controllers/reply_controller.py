@@ -1,5 +1,4 @@
 import inject
-import numpy as np
 from app.shared.logger import logger
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 

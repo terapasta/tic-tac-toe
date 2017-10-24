@@ -51,7 +51,7 @@
             = space
             span 会話ツリー
         li class="nav-item"
-          = active_link_to bot_threads_path(@bot), class: 'nav-link', data: { event: 'chat log' } do
+          = active_link_to bot_threads_path(@bot, format: :html), class: 'nav-link', data: { event: 'chat log' } do
             = material_icon 'history', class: 'text-gray-light mi-sm'
             = space
             span 対話履歴

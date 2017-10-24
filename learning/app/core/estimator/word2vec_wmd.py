@@ -5,6 +5,7 @@ from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 
 
+# Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
 class Word2vecWmd:
     __shared_state = {}
     __initialized = False
@@ -15,8 +16,9 @@ class Word2vecWmd:
         self.datasource = datasource
 
         if not self.__initialized:
+            data_path = self.__prepare_corpus_data()
             logger.info('load word2vec model: start')
-            self.model = KeyedVectors.load_word2vec_format('dumps/entity_vector.model.bin', binary=True)
+            self.model = KeyedVectors.load_word2vec_format(data_path, binary=True)
             logger.info('load word2vec model: end')
             self.wmd_similarities = {}
             self.__initialized = True
@@ -53,3 +55,14 @@ class Word2vecWmd:
         bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
         bot_tokenized_sentences = self.tokenizer.tokenize(bot_question_answers_data['question'])
         self.wmd_similarities[self.__bot_id()] = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
+
+    def __prepare_corpus_data(self):
+        model_path = 'dumps/entity_vector.model.bin'
+        import os
+        if not os.path.exists(model_path):
+            import urllib.request
+            logger.info('download word2vec model: start')
+            urllib.request.urlretrieve('https://s3-ap-northeast-1.amazonaws.com/my-ope.net/datasets/entity_vector.tar.bz2', model_path)
+            logger.info('download word2vec model: end')
+
+        return model_path

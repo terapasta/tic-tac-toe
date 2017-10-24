@@ -7,6 +7,7 @@ from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.vectorizer.pass_vectorizer import PassVectorizer
 from app.shared.datasource.datasource import Datasource
 
+
 class Word2vecWmdFactory:
     @inject.params(
         tokenizer=MecabTokenizer,

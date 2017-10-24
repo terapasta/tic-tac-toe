@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class PassVectorizer:
     def __init__(self):
         pass
@@ -10,6 +13,9 @@ class PassVectorizer:
 
     def fit_transform(self, sentences):
         return sentences
+
+    def extract_feature_count(self, sentences):
+        return np.count_nonzero(self.transform(sentences))
 
     @property
     def dump_key(self):

@@ -47,7 +47,7 @@ class ReplyController(object):
         logger.info('end')
 
         return {
-            'question_feature_count': np.count_nonzero(normalized_features),
+            'question_feature_count': self.factory.get_vectorizer().extract_feature_count(tokenized_sentences),
             'results': results,
             'noun_count': self.factory.get_tokenizer().extract_noun_count(text),
             'verb_count': self.factory.get_tokenizer().extract_verb_count(text),

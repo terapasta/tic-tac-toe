@@ -13,7 +13,6 @@ class AppStatus(object):
 
     def set_bot(self, bot_id, learning_parameter):
         logger.debug('thread count: %s' % str(threading.active_count()))
-        logger.debug('thread id: %s' % str(threading.get_ident()))
         self.bots[threading.get_ident()] = Bot(bot_id=bot_id, learning_parameter=learning_parameter)
         logger.debug(self.bots)
         return self

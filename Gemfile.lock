@@ -635,6 +635,7 @@ DEPENDENCIES
   exception_notification
   factory_girl_rails
   faker
+  faraday
   fog-aws
   foreman
   google-protobuf (= 3.4.0.2)

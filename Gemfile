@@ -113,6 +113,7 @@ gem 'email_validator'
 gem 'webpacker', '~> 3.0'
 gem 'mini_mime'
 gem 'hashie'
+gem 'faraday'
 
 group :development, :test do
 

@@ -1,4 +1,5 @@
 import inject
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
 from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
@@ -25,6 +26,9 @@ class TfidfVectorizer:
     def fit_transform(self, sentences):
         self.fit(sentences)
         return self.transform(sentences)
+
+    def extract_feature_count(self, sentences):
+        return np.count_nonzero(self.transform(sentences).toarray())
 
     @property
     def dump_key(self):

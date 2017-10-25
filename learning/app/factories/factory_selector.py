@@ -1,5 +1,6 @@
 import inject
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
+from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 from app.shared.constants import Constants
@@ -20,6 +21,11 @@ class FactorySelector:
         if self.bot.algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Two Step Simmilarity Classification')
             return TwoStepCosineSimilarityFactory()
+
+        if self.bot.algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
+            logger.info('algorithm: Word2vec WMD')
+            return Word2vecWmdFactory()
+
 
         if self.bot.algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
             logger.info('algorithm: Logistic Regression')

@@ -89,6 +89,7 @@ def serve(port):
 
 
 if __name__ == '__main__':
+    logger.info('initializing')
     inject.configure_once()
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=6000)
@@ -98,4 +99,5 @@ if __name__ == '__main__':
     Config().init(args.env)
     Datasource().init(datasource_type=args.datasource_type)
 
+    logger.info('start server!!')
     serve(args.port)

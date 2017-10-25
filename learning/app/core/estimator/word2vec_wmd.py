@@ -57,12 +57,17 @@ class Word2vecWmd:
         self.wmd_similarities[self.__bot_id()] = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
 
     def __prepare_corpus_data(self):
+        tarfile_path = 'dumps/entity_vector.model.tar.bz2'
         model_path = 'dumps/entity_vector.model.bin'
         import os
         if not os.path.exists(model_path):
             import urllib.request
-            logger.info('download word2vec model: start')
-            urllib.request.urlretrieve('https://s3-ap-northeast-1.amazonaws.com/my-ope.net/datasets/entity_vector.tar.bz2', model_path)
-            logger.info('download word2vec model: end')
+            logger.info('downloading word2vec model')
+            urllib.request.urlretrieve('https://s3-ap-northeast-1.amazonaws.com/my-ope.net/datasets/entity_vector.tar.bz2', tarfile_path)
+            logger.info('extracting word2vec model')
+            import tarfile
+            tar = tarfile.open(tarfile_path, 'r:bz2')
+            tar.extractall('dumps')
+            logger.info('You got word2vec model')
 
         return model_path

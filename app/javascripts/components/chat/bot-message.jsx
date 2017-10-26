@@ -100,7 +100,7 @@ export default class ChatBotMessage extends Component {
                 </a>
               )}
               {!isImage && (
-                <a href={answerFile.file.url} target="_blank">{fileName}</a>
+                <a href={answerFile.file.url} target="_blank">{window.decodeURIComponent(fileName)}</a>
               )}
               <br />
               <small>ファイルタイプ：{answerFile.fileType}, ファイル容量：{bytes(answerFile.fileSize)}</small>

@@ -31,8 +31,7 @@ class Word2vecWmd:
     def predict(self, question_features):
         bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
 
-        # NOTE: 形態素解析結果がスペース区切りの文字列になっていると、複数inputの類似検索が出来ないため一旦インデックス0を指定している
-        result = self.wmd_similarities[self.__bot_id()][question_features[0]]
+        result = self.wmd_similarities[self.__bot_id()][question_features]
 
         indices = [x[0] for x in result]
         df = bot_question_answers_data.iloc[indices].copy()

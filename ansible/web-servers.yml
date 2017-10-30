@@ -3,7 +3,7 @@
   gather_facts: no
   become: yes
   vars:
-    ruby_version: 2.3.4
+    ruby_version: 2.4.2
     python_version: 3.5.2
     node_version: 6.9.1
     cert_fqdn: staging.my-ope.net

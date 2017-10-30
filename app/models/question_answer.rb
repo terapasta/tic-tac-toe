@@ -1,4 +1,4 @@
-class QuestionAnswer < ActiveRecord::Base
+class QuestionAnswer < ApplicationRecord
   include HasManySentenceSynonyms
 
   paginates_per 100
@@ -14,8 +14,6 @@ class QuestionAnswer < ActiveRecord::Base
   accepts_nested_attributes_for :decision_branches
 
   NO_CLASSIFIED_ID = 0
-
-  serialize :underlayer
 
   validates :question, presence: true
 
@@ -62,6 +60,14 @@ class QuestionAnswer < ActiveRecord::Base
       where('answer LIKE ?', _kw)
     end
   }
+
+  before_destroy do
+    break if self.bot.blank?
+    if self.bot.selected_question_answer_ids.include?(self.id)
+      self.bot.selected_question_answer_ids -= [self.id]
+      self.bot.save!
+    end
+  end
 
   def no_classified?
     bot.nil?

@@ -1,4 +1,4 @@
-class AddAnyTablesUserIdAndBotId < ActiveRecord::Migration
+class AddAnyTablesUserIdAndBotId < ActiveRecord::Migration[4.2]
   def change
     add_column :answers, :bot_id, :integer, before: :context, null: false
     add_column :chats, :bot_id, :integer, before: :context, null: false

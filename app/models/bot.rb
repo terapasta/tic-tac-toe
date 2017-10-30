@@ -1,4 +1,4 @@
-class Bot < ActiveRecord::Base
+class Bot < ApplicationRecord
   include Bot::HasSuggestsMessage
 
   belongs_to :user, required: false
@@ -51,6 +51,7 @@ class Bot < ActiveRecord::Base
 
   def reset_training_data!
     transaction do
+      self.selected_question_answer_ids = []
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all

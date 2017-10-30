@@ -1,4 +1,4 @@
-class CreateHelpAnswers < ActiveRecord::Migration
+class CreateHelpAnswers < ActiveRecord::Migration[4.2]
   def change
     create_table :help_answers do |t|
       t.references :bot, index: true

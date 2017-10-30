@@ -1,15 +1,15 @@
 import inject
 import io
 from sklearn.externals import joblib
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.datasource.database.database import Database
 
 
 class Persistence:
-    @inject.params(database=Database, bot=CurrentBot)
-    def __init__(self, database=None, bot=None):
+    @inject.params(database=Database, app_status=AppStatus)
+    def __init__(self, database=None, app_status=None):
+        self.bot = app_status.current_bot()
         self.database = database
-        self.bot = bot
 
     def load(self, name):
         records = self.database.select(

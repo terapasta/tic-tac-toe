@@ -2,9 +2,9 @@ module User::OrganizationMembershipable
   extend ActiveSupport::Concern
 
   included do
-    has_many :bots, through: :organizations
     has_many :organization_memberships, class_name: 'Organization::UserMembership'
     has_many :organizations, through: :organization_memberships
+    has_many :bots, through: :organizations
   end
 
   def plan(bot)

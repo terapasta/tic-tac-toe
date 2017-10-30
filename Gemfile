@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.3.4'
+ruby '2.4.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '5.1.4'
 gem 'rake', '< 11'
 
 # select DB for local server
@@ -13,8 +13,7 @@ gem 'mysql2', '~> 0.3.20'
 
 # Use SCSS for stylesheets
 gem 'sass'
-gem 'sass-rails', '~> 5.0'
-gem 'font-awesome-rails'
+gem 'sass-rails'
 
 # easy to write a form
 gem 'bootstrap', '~> 4.0.0.beta'
@@ -23,16 +22,16 @@ gem 'bootstrap', '~> 4.0.0.beta'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', '0.12.3', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+# gem 'jbuilder', '~> 2.0' TODO
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -51,7 +50,7 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 
 # admin pages
-gem 'rails_admin', '~> 1.1.1'
+gem 'rails_admin'
 
 # enum with i18n
 gem 'enum_help'
@@ -69,15 +68,14 @@ gem 'virtus'
 # gem 'capistrano-rails', group: :development
 
 # Seed Data Management
-gem 'seed-fu', '~> 2.3'
+gem 'seed-fu'
 gem 'active_hash'
-gem 'msgpack-rpc', '~> 0.5.4'
 gem 'dotenv-rails'
 gem 'rails_autolink'
 gem 'twitter'
 gem 'http'
 gem 'whenever', require: false
-gem 'carrierwave', '~> 1.1.0'
+gem 'carrierwave'
 gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
@@ -92,7 +90,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'compass'
 gem 'autoprefixer-rails', '~> 6.7.7.2'
-gem 'draper'
+gem 'draper', '>= 3.0.0.pre1'
 gem 'pundit'
 gem 'slappy', git: 'https://github.com/kozo002/slappy.git', branch: 'fix_respond'
 gem 'nested_form'
@@ -112,6 +110,8 @@ gem 'grpc'
 gem 'grpc-tools'
 gem 'google-protobuf', '3.4.0.2'
 gem 'email_validator'
+gem 'webpacker', '~> 3.0'
+gem 'mini_mime'
 
 group :development, :test do
 
@@ -126,10 +126,9 @@ group :development, :test do
   # 現時点では、better_errorsの方が使いやすい
 #  gem 'web-console', '~> 2.0'
   # Debug
-  gem 'better_errors'
+  gem 'better_errors', '~> 2.4.0'
   gem 'binding_of_caller'
   gem 'meta_request'
-  gem 'quiet_assets'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -142,13 +141,12 @@ group :development, :test do
   gem 'tapp'
 
   # rspec
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.5.0.beta'
   gem 'factory_girl_rails'
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'capybara', '~> 2.15.4'
+  gem 'selenium-webdriver', '~> 3.6.0'
   gem 'rspec_junit_formatter'
+  gem 'rails-controller-testing'
 
   # dummy data
   gem 'faker'

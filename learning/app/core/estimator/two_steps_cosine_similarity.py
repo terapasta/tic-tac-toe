@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 from app.shared.constants import Constants
 
 
@@ -13,9 +13,9 @@ class TwoStepsCosineSimilarity:
     FIRST_STEP_THRESHOLD = 0.5
     BAD_QA_ID = '0'
 
-    @inject.params(bot=CurrentBot)
-    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
-        self.bot = bot if bot is not None else CurrentBot()
+    @inject.params(app_status=AppStatus)
+    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, app_status=None):
+        self.bot = app_status.current_bot()
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.vectorizer_for_qaid = vectorizer.__class__(dump_key='two_steps_tfidf_vectorizer')

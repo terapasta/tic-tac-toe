@@ -81,7 +81,6 @@ GET question_answers/_search
  bot_id: 1,
  question: "オフィスはどこにあるの？",
  answer_id: 2,
- underlayer: nil,
  created_at: Tue, 27 Jun 2017 08:53:36 JST +09:00,
  updated_at: Tue, 27 Jun 2017 08:53:36 JST +09:00,
  selection: false>

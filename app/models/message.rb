@@ -1,4 +1,4 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   include AnswerMarkable
   paginates_per 50
 
@@ -15,6 +15,14 @@ class Message < ActiveRecord::Base
 
   scope :answer_failed, -> {
     where(answer_failed: true)
+  }
+
+  scope :good, -> {
+    joins(:rating).merge(Rating.good)
+  }
+
+  scope :bad, -> {
+    joins(:rating).merge(Rating.bad)
   }
 
   validates :body, length: { maximum: 10000 }

@@ -1,4 +1,4 @@
-class AllowedIpAddress < ActiveRecord::Base
+class AllowedIpAddress < ApplicationRecord
   require 'resolv'
 
   belongs_to :bot

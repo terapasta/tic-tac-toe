@@ -1,4 +1,4 @@
-class LearningParameter < ActiveRecord::Base
+class LearningParameter < ApplicationRecord
   serialize :params_for_algorithm, JSON
 
   belongs_to :bot
@@ -9,6 +9,7 @@ class LearningParameter < ActiveRecord::Base
     :neural_network,
     :similarity_classification,
     :two_step_similarity_classification,
+    :word2vec_wmd,
   ]
 
   def use_similarity_classification?
@@ -25,5 +26,13 @@ class LearningParameter < ActiveRecord::Base
 
   def self.build_with_default
     new(default_attributes)
+  end
+
+  def attributes
+    {
+      algorithm: LearningParameter.algorithms[algorithm],
+      params_for_algorithm: params_for_algorithm || {},
+      classify_threshold: classify_threshold,
+    }
   end
 end

@@ -1,4 +1,4 @@
-class AccuracyTestCase < ActiveRecord::Base
+class AccuracyTestCase < ApplicationRecord
   belongs_to :bot
 
   validates :question_text, presence: true

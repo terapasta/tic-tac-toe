@@ -5,6 +5,7 @@
   vars:
     ruby_version: 2.3.4
     python_version: 3.5.2
+    node_version: 6.9.1
     cert_fqdn: staging.my-ope.net
   vars_files:
     - private.yml
@@ -13,6 +14,7 @@
     - base
     - rbenv
     - pyenv
+    - ndenv
     - nginx
     - mysql
     - app

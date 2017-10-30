@@ -1,4 +1,4 @@
-class RemoveAnswersTableAndForeignKeys < ActiveRecord::Migration
+class RemoveAnswersTableAndForeignKeys < ActiveRecord::Migration[4.2]
   def change
     drop_table :answers
     remove_column :answer_files, :answer_id, :integer

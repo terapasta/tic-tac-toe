@@ -13,25 +13,25 @@ class Datasource:
     def __init__(self, persistence=None, question_answers=None):
         self.__dict__ = self.__shared_state
 
-    def init(self, bot=None):
-        if bot.datasource_type == Constants.DATASOURCE_TYPE_FILE:
-            self._persistence = PersistenceFromFile()
-            self._question_answers = QuestionAnswersFromFile()
-            self._ratings = RatingsFromFile()
+    def init(self, datasource_type):
+        if datasource_type == Constants.DATASOURCE_TYPE_FILE:
+            self._persistence = PersistenceFromFile
+            self._question_answers = QuestionAnswersFromFile
+            self._ratings = RatingsFromFile
         else:
-            self._persistence = PersistenceFromDb()
-            self._question_answers = QuestionAnswersFromDb()
-            self._ratings = RatingsFromDb()
+            self._persistence = PersistenceFromDb
+            self._question_answers = QuestionAnswersFromDb
+            self._ratings = RatingsFromDb
 
     @property
     def persistence(self):
-        return self._persistence
+        return self._persistence()
 
     @property
     def question_answers(self):
-        return self._question_answers
+        return self._question_answers()
 
     @property
     def ratings(self):
-        return self._ratings
+        return self._ratings()
 

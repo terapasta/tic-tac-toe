@@ -1,4 +1,11 @@
 = render layout: 'bots/layout' do
+  - if @bot.errors.any?
+    .alert.alert-danger
+      button.close data-dismiss="alert" &times;
+      - @bot.errors.messages.values.each do |messages|
+        - messages.each do |message|
+          = message
+          br
   .row: .col-8.offset-2
     .mb-3
       = link_to bot_question_answers_path(@bot), class: 'text-muted' do

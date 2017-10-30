@@ -6,7 +6,7 @@ class ThreadsController < ApplicationController
   def index
     @per_page = 20
     tmp_chats = @bot.chats
-      .includes(:guest_user, :messages)
+      .includes(:messages)
       .has_multiple_messages
       .not_staff(!current_user.staff?)
       .not_normal(params[:normal].blank?)
@@ -25,7 +25,7 @@ class ThreadsController < ApplicationController
       .per(@per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render 'index' }
       format.csv do
         send_data BotThreadsMessagesDecorator.new(@chats).to_csv(encoding: :sjis),
                   filename: "myope-threads-exports-#{params[:encoding]}-#{Time.zone.now.strftime('%Y-%m-%d-%H%M%S')}.csv",

@@ -23,7 +23,7 @@
 .chat-message {
   @extend %base-chat-message;
   $-arrow-size: 6px;
-  $-icon-size: 32px;
+  $-icon-size: 48px;
   $-balloon-spacing: 16px;
 
   &--my {
@@ -37,7 +37,7 @@
 
     .chat-message__balloon {
       margin-left: 0;
-      margin-right: $-icon-size + $-balloon-spacing;
+      margin-right: $-balloon-spacing;
       background-color: $blue;
       color: $white;
       word-break: break-all;
@@ -297,7 +297,7 @@
 .chat-message__mark-button {
   position: absolute;
   top: 50%;
-  left: -90px;
+  left: -105px;
   transform: translateY(-50%);
   display: block;
   width: 24px;

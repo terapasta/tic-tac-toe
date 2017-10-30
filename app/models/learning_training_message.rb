@@ -1,4 +1,4 @@
-class LearningTrainingMessage < ActiveRecord::Base
+class LearningTrainingMessage < ApplicationRecord
   belongs_to :bot
 
   validates :answer_body, length: { maximum: 10000 }

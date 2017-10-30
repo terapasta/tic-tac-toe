@@ -1,4 +1,4 @@
-class DestroyHelpAnswers < ActiveRecord::Migration
+class DestroyHelpAnswers < ActiveRecord::Migration[4.2]
   def change
     drop_table :help_answers
     drop_table :training_help_messages

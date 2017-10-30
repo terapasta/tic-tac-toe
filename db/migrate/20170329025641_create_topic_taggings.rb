@@ -1,4 +1,4 @@
-class CreateTopicTaggings < ActiveRecord::Migration
+class CreateTopicTaggings < ActiveRecord::Migration[4.2]
   def change
     create_table :topic_taggings do |t|
       t.integer :question_answer_id, null: false

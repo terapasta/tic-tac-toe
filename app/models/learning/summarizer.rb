@@ -7,7 +7,6 @@ class Learning::Summarizer
     ActiveRecord::Base.transaction do
       LearningTrainingMessage.where(bot: @bot).delete_all
       convert_question_answers!
-      convert_decision_branches!
     end
   end
 
@@ -39,28 +38,5 @@ class Learning::Summarizer
       res
     }
     LearningTrainingMessage.import!(data, on_duplicate_key_update: [:id])
-  end
-
-  def convert_decision_branches!
-    @bot.question_answers.find_each do |qa|
-      next if qa.answer.blank? || qa.underlayer.blank?
-
-      current_answer = qa.answer
-      qa.underlayer.each_slice(2) do |db_body, a_body|
-        db = current_answer.decision_branches.find_or_initialize_by(
-          body: db_body,
-          bot_id: @bot.id
-        )
-        if a_body.present?
-          # NOTE current_answerを更新して次のループに渡す
-          current_answer = @bot.answers.find_or_initialize_by(
-            body: a_body,
-            bot_id: @bot.id
-          )
-          db.next_answer = current_answer
-        end
-        db.save!
-      end
-    end
   end
 end

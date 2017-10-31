@@ -5,11 +5,18 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
   include CapybaraHelpers
 
   let!(:bot) do
-    create(:bot, user: owner)
+    create(:bot)
   end
 
   let!(:owner) do
-    create(:user, plan: plan)
+    create(:user)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: plan).tap do |org|
+      org.user_memberships.create(user: owner)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:question_answer) do
@@ -35,7 +42,6 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
           fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
           click_link '添付ファイルを追加'
           within '#answer-files' do
-            page.save_screenshot
             locator = all('input[type="file"]').first['name']
             attach_file locator, Rails.root.join('spec/fixtures/images/sample_naoki.jpg').to_s
           end

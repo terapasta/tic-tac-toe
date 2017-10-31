@@ -1,4 +1,4 @@
-class CreateTrainingMessages < ActiveRecord::Migration
+class CreateTrainingMessages < ActiveRecord::Migration[4.2]
   def change
     create_table :training_messages do |t|
       t.references :training, index: true, null: false

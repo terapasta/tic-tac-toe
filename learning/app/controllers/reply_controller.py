@@ -1,5 +1,4 @@
 import inject
-import numpy as np
 from app.shared.logger import logger
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 
@@ -13,8 +12,11 @@ class ReplyController(object):
         logger.info('start')
         logger.debug('question: %s' % text)
 
+        logger.info('before action')
+        texts = self.factory.get_estimator().before_reply([text])
+
         logger.info('tokenize question')
-        tokenized_sentences = self.factory.get_tokenizer().tokenize([text])
+        tokenized_sentences = self.factory.get_tokenizer().tokenize(texts)
         logger.debug(tokenized_sentences)
 
         logger.info('vectorize question')
@@ -32,7 +34,11 @@ class ReplyController(object):
 
         logger.info('sort')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
-        results = data_frame.to_dict('records')[:10]
+
+        logger.info('after action')
+        results = self.factory.get_estimator().after_reply(text, data_frame)
+
+        results = results.to_dict('records')[:10]
 
         for row in results:
             logger.debug(row)
@@ -40,7 +46,8 @@ class ReplyController(object):
         logger.info('end')
 
         return {
-            'question_feature_count': np.count_nonzero(normalized_features),
+            'question_feature_count': self.factory.get_vectorizer().extract_feature_count(tokenized_sentences),
             'results': results,
             'noun_count': self.factory.get_tokenizer().extract_noun_count(text),
+            'verb_count': self.factory.get_tokenizer().extract_verb_count(text),
         }

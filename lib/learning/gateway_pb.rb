@@ -5,9 +5,7 @@ require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "gateway.LearningParameter" do
-    optional :use_similarity_classification, :bool, 1
     optional :algorithm, :int32, 2
-    optional :datasource_type, :string, 3
   end
   add_message "gateway.Result" do
     optional :question_answer_id, :int32, 1
@@ -23,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :question_feature_count, :int32, 1
     repeated :results, :message, 2, "gateway.Result"
     optional :noun_count, :int32, 3
+    optional :verb_count, :int32, 4
   end
   add_message "gateway.LearnRequest" do
     optional :bot_id, :int32, 1

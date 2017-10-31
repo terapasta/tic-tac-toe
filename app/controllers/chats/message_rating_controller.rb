@@ -16,8 +16,8 @@ class Chats::MessageRatingController < ApplicationController
   end
 
   def nothing
-    @message.nothing!
-    render json: @message, adapter: :json
+    @message.no_rating!
+    render json: @message.reload, adapter: :json
   end
 
   private

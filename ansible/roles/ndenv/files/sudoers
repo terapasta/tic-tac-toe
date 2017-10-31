@@ -1,0 +1,2 @@
+Defaults !secure_path
+Defaults env_keep += "PATH NDENV_ROOT"

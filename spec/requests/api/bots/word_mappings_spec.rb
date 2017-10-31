@@ -27,6 +27,20 @@ RSpec.describe 'WordMappings', type: :request do
     create(:word_mapping, bot: other_bot)
   end
 
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
+  let!(:other_organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: other_user)
+      org.bot_ownerships.create(bot: other_bot)
+    end
+  end
+
   before do
     sign_in user
   end
@@ -34,7 +48,7 @@ RSpec.describe 'WordMappings', type: :request do
   describe 'POST #create' do
     subject do
       lambda do
-        post "/api/bots/#{bot_id}/word_mappings.json", params
+        post "/api/bots/#{bot_id}/word_mappings.json", params: params
       end
     end
 
@@ -54,7 +68,7 @@ RSpec.describe 'WordMappings', type: :request do
   describe 'PUT #update' do
     subject do
       lambda do
-        put "/api/bots/#{bot_id}/word_mappings/#{word_mapping_id}.json", params
+        put "/api/bots/#{bot_id}/word_mappings/#{word_mapping_id}.json", params: params
       end
     end
 

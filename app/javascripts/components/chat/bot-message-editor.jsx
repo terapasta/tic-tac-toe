@@ -3,9 +3,10 @@ import TextArea from "react-textarea-autosize";
 import isEmpty from 'is-empty';
 import debounce from 'lodash/debounce';
 import styled from 'styled-components';
+import uuid from 'uuid/v4';
 
 import PreventWheelScrollOfParent from '../prevent-wheel-scroll-of-parent';
-import * as AnswerAPI from '../../api/answer';
+import * as QuestionAnswerAPI from '../../api/question-answer';
 
 const SuggestItem = styled.div`
   cursor: pointer;
@@ -87,9 +88,9 @@ class ChatBotMessageEditor extends Component {
           {!isEmpty(searchedAnswers) && (
             <PreventWheelScrollOfParent className="chat-message__suggestions">
               {searchedAnswers.map((a) => (
-                <div className="panel panel-default stacked-close" key={a.id}>
+                <div className="panel panel-default stacked-close" key={uuid()}>
                   <SuggestItem onClick={(e) => this.selectAnswer(a, e)}>
-                    {a.body}
+                    {a}
                   </SuggestItem>
                 </div>
               ))}
@@ -102,9 +103,9 @@ class ChatBotMessageEditor extends Component {
 
   searchAnswerIfNeeded(text) {
     if (isEmpty(text)) { return this.setState({ searchedAnswers: [] }); }
-    AnswerAPI.findAll(window.currentBot.id, { q: text }).then((res) => {
+    QuestionAnswerAPI.findAll(window.currentBot.id, { q: text }).then((res) => {
       if (!this._mounted) { return; }
-      const searchedAnswers = res.data.answers;
+      const searchedAnswers = res.data.questionAnswers.map(qa => qa.answer);
       this.setState({ searchedAnswers });
     }).catch(console.error);
   }
@@ -123,7 +124,7 @@ class ChatBotMessageEditor extends Component {
     onChangeLearning({
       questionId,
       answerId,
-      answerBody: answer.body,
+      answerBody: answer,
     });
 
     this.setState({ searchedAnswers: [] });

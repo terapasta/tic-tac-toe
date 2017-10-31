@@ -13,6 +13,13 @@ RSpec.describe ThreadsController, type: :controller do
     create(:bot, user: normal_user)
   end
 
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: normal_user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
   let!(:succeeded_chat) do
     create(:chat, bot: bot).tap do |chat|
       create_list(:message, 2, chat: chat)
@@ -41,7 +48,7 @@ RSpec.describe ThreadsController, type: :controller do
 
   describe 'GET #index' do
     subject do
-      get :index, bot_id: bot.id, answer_failed: answer_failed
+      get :index, params: { bot_id: bot.id, answer_failed: answer_failed }
       assigns[:chats]
     end
 

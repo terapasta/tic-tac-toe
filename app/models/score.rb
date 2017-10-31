@@ -1,3 +1,3 @@
-class Score < ActiveRecord::Base
+class Score < ApplicationRecord
   belongs_to :bot
 end

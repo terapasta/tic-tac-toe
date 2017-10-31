@@ -6,7 +6,7 @@ class SendBadRateMailService
 
   def send_mail
     return if @current_user
-    if @message.bot? && @message.bad?
+    if @message.bot? && @message.rating&.bad?
       BadRateMailer.create(@message).deliver_later
     end
   end

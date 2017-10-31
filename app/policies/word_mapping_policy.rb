@@ -47,7 +47,7 @@ class WordMappingPolicy < ApplicationPolicy
       return true if user.staff?
       # ここから下はnormalユーザー
       return false if record.bot_id.nil?
-      return true if record.bot.user == user
+      return true if user.has_membership_of?(record.bot)
       false
     end
 end

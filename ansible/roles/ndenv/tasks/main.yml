@@ -1,0 +1,61 @@
+# install ndenv to systemwide
+---
+- stat: path=/usr/local/ndenv
+  register: ndenv_dir
+- stat: path=/usr/local/ndenv/plugins/node-build
+  register: node_build_dir
+
+- name: git clone ndenv
+  git: repo=https://github.com/riywo/ndenv dest=/usr/local/ndenv accept_hostkey=yes
+  become: yes
+  when: not ndenv_dir.stat.exists
+
+- name: mkdir ndenv/shims
+  file: dest=/usr/local/ndenv/shims state=directory
+  when: not ndenv_dir.stat.exists
+
+- name: mkdir ndenv/versions
+  file: dest=/usr/local/ndenv/versions state=directory
+  when: not ndenv_dir.stat.exists
+
+- name: git clone node-build
+  git: repo=https://github.com/riywo/node-build.git dest=/usr/local/ndenv/plugins/node-build accept_hostkey=yes
+  become: yes
+  when: not node_build_dir.stat.exists
+
+# - name: install node-build
+#   shell: cd /usr/local/ndenv/plugins/node-build && ./install.sh
+#   when: not node_build_dir.stat.exists
+
+- name: check /etc/profile.d/ndenv.sh is exists
+  stat: path=/etc/profile.d/ndenv.sh
+  register: ndenv_sh
+
+- name: add /etc/profile.d/ndenv.sh
+  shell: |
+    echo 'export NDENV_ROOT="/usr/local/ndenv"' >> /etc/profile.d/ndenv.sh
+    echo 'export PATH="/usr/local/ndenv/bin:$PATH"' >> /etc/profile.d/ndenv.sh
+    echo 'eval "$(ndenv init -)"' >> /etc/profile.d/ndenv.sh
+  when: not ndenv_sh.stat.exists
+
+- name: checks if target node is installed
+  shell: cd; bash -lc "ndenv versions | grep {{ node_version }} | tr '*' ' ' | sed -e 's/\s\+//' | cut -f1 -d' '"
+  register: node_is_installed
+
+- name: install global node
+  shell: bash -lc "ndenv install {{ node_version }}"
+  when: node_is_installed.stdout != node_version
+
+- name: set global node version
+  shell: bash -lc "ndenv global {{ node_version }} && ndenv rehash"
+
+- name: check yarn
+  stat: path=/usr/local/ndenv/shims/yarn
+  register: yarn_bin
+
+- name: install yarn
+  shell: npm install -g yarn
+  when: not yarn_bin.stat.exists
+
+- name: use custom sudoers
+  copy: src=sudoers dest=/etc/sudoers.d/ndenv backup=yes owner=root group=root mode=0440

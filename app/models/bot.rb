@@ -1,7 +1,7 @@
-class Bot < ActiveRecord::Base
-  include HasSuggestsMessage
+class Bot < ApplicationRecord
+  include Bot::HasSuggestsMessage
 
-  belongs_to :user
+  belongs_to :user, required: false
   has_many :chats, -> { extending HasManyChatsExtension }
   has_many :messages, through: :chats
   has_many :learning_training_messages
@@ -17,6 +17,8 @@ class Bot < ActiveRecord::Base
   has_many :accuracy_test_cases, dependent: :destroy
   has_many :exports, dependent: :destroy
   has_many :allowed_ip_addresses, dependent: :destroy
+  has_many :organization_ownerships, class_name: 'Organization::BotOwnership'
+  has_many :organizations, through: :organization_ownerships
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
   accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true
@@ -37,7 +39,7 @@ class Bot < ActiveRecord::Base
       attrs = LearningParameter.default_attributes
     end
     # TODO フィールドが変わる度に修正が必要になってしまう
-    attrs.slice(:algorithm, :use_similarity_classification).symbolize_keys
+    attrs.slice(:algorithm).symbolize_keys
   end
 
   def use_similarity_classification?
@@ -49,13 +51,11 @@ class Bot < ActiveRecord::Base
 
   def reset_training_data!
     transaction do
+      self.selected_question_answer_ids = []
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
-
-      # FIXME: ディレクトリが存在しない場合に例外になってしまう
-      model_dir = Rails.root.join('learning', 'dumps', Rails.env, "#{id}")
-      FileUtils.rm_r(model_dir)
+      ActiveRecord::Base.connection.execute("DELETE FROM dumps WHERE bot_id = #{id}")
     end
   end
 
@@ -77,6 +77,10 @@ class Bot < ActiveRecord::Base
 
   def learn_later
     LearnJob.perform_later(self.id)
+  end
+
+  def chats_limit_per_day
+    organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
   private

@@ -1,4 +1,4 @@
-class AddTokenToBots < ActiveRecord::Migration
+class AddTokenToBots < ActiveRecord::Migration[4.2]
   def up
     add_column :bots, :token, :string, limit: 64, null: false, after: :no_classified_answer_id
     Bot.find_each do |bot|

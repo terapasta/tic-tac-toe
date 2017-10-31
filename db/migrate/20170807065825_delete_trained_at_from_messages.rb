@@ -1,4 +1,4 @@
-class DeleteTrainedAtFromMessages < ActiveRecord::Migration
+class DeleteTrainedAtFromMessages < ActiveRecord::Migration[4.2]
   def up
     remove_column :messages, :trained_at
   end

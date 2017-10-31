@@ -12,6 +12,15 @@ RUN apt-get -qqy update \
         mecab-utils \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
+RUN echo 'userdic = /usr/src/app/dict/custom.dic' >> /etc/mecabrc
+
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
+
+RUN cd /tmp \
+    && mkdir -p `mecab-config --dicdir` \
+    && git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
+    && cd mecab-ipadic-neologd \
+    && ./bin/install-mecab-ipadic-neologd -n -y
+
+COPY . .

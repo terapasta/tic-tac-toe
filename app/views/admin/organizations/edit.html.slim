@@ -1,0 +1,9 @@
+.container.pt-5
+  = link_to admin_organizations_path, class: 'text-muted d-block mb-4' do
+    = material_icon 'keyboard_arrow_left'
+    = space
+    span Back to index
+
+  h3 Edit Organization
+
+  = render 'form'

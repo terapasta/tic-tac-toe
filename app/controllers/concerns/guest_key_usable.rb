@@ -3,17 +3,16 @@ module GuestKeyUsable
 
   private
     def set_guest_key
-      if cookies.encrypted[:guest_key].blank?
-        cookies.encrypted[:guest_key] = {
-          value: SecureRandom.hex(64),
+      if cookies[:guest_key]&.length.to_i > 255 || guest_key.blank?
+        cookies[:guest_key] = {
+          value: SecureRandom.hex(64)[0...255],
           path: '/',
-          expires: 45.days.from_now,
-          secure: Rails.env.production?
+          expires: 45.days.from_now
         }
       end
     end
 
     def guest_key
-      cookies.encrypted[:guest_key]
+      cookies[:guest_key]
     end
 end

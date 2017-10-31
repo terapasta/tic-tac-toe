@@ -4,7 +4,14 @@ class Chats::TrainingsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @question_answer = @bot.question_answers.create!(permitted_attributes(QuestionAnswer))
+      attrs = permitted_attributes(QuestionAnswer)
+      if @answer_message&.question_answer&.question == attrs[:question]
+        @question_answer = @answer_message.question_answer
+        @question_answer.assign_attributes(attrs)
+      else
+        @question_answer = @bot.question_answers.build(attrs)
+      end
+      @question_answer.save!
       @question_message.update_for_training_with!(@question_answer)
       @answer_message.update_for_training_with!(@question_answer)
     end

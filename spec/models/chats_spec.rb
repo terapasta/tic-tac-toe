@@ -12,7 +12,7 @@ RSpec.describe Chat, type: :model do
   describe 'scope' do
     describe 'has_multiple_messages' do
       subject do
-        Chat.has_multiple_messages.find_by(chat.id)
+        Chat.has_multiple_messages.find_by(id: chat.id)
       end
 
       let!(:bot_message_greeting) do
@@ -37,10 +37,6 @@ RSpec.describe Chat, type: :model do
         it '取得できる結果クラスはchatモデルであること' do
           expect(subject.kind_of?(Chat)).to be
         end
-
-        it '取得結果に対話セット数を含むこと' do
-          expect(subject.has_attribute?(:exchanging_messages_count)).to be
-        end
       end
 
       context '対話が繰り返されたメッセージがある場合(3件以上のメッセージ）' do
@@ -58,7 +54,7 @@ RSpec.describe Chat, type: :model do
 
         it '対話セット数はゲストメッセージと同数であること' do
           # 質問1つに回答が1つ返ってきた状態を対話数とカウントするのでguestの質問数=対話数とみなす。
-          expect(subject[:exchanging_messages_count]).to eq(count)
+          expect(subject.messages.guest.count).to eq(count)
         end
       end
     end

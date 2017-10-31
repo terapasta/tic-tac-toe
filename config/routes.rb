@@ -69,18 +69,21 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :admin do
-    resources :word_mappings
-    resources :bots, only: [] do
-      resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
-        collection do
-          resource :execution, only: [:create], module: :accuracy_test_cases, as: :accuracy_test_cases_execution
+  authenticated :user, ->(u) { u.staff? } do
+    namespace :admin do
+      resources :word_mappings
+      resources :bots, only: [] do
+        resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
+          collection do
+            resource :execution, only: [:create], module: :accuracy_test_cases, as: :accuracy_test_cases_execution
+          end
         end
       end
+      resources :organizations
     end
-  end
 
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+    mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  end
 
   namespace :api, { format: 'json' } do
     resources :messages, only: :create
@@ -104,6 +107,7 @@ Rails.application.routes.draw do
       resources :word_mappings, only: [:create, :update, :destroy], module: :bots
     end
     resources :word_mappings, only: [:create, :update, :destroy]
+    resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
   end
 
   resource :contacts, only: [:new, :create]

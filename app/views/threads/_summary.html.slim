@@ -1,5 +1,7 @@
 .card.mb-4
   .card-block
+    - if chat.guest_user.present?
+      = render 'messages/guest_user', guest_user: chat.guest_user
     .text-center.mb-3= link_to 'これ以前の発言もすべて見る', bot_thread_messages_path(bot, chat), data: { event: 'check all chat log' }
     .row
       - chat.messages.order(created_at: :desc).limit(2).reverse.tap do |messages|
@@ -15,6 +17,8 @@
       small ID：#{chat.id}
       = space 10
       small 日時：#{l chat.messages.last.created_at}
+      = space 10
+      small 質問数：#{chat.messages.guest.count}
     div.text-muted
       span.mr-3
         - chat.messages.answer_failed.count.tap do |count|

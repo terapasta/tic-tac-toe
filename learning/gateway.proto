@@ -3,9 +3,7 @@ syntax = "proto3";
 package gateway;
 
 message LearningParameter {
-    bool use_similarity_classification = 1;
     int32 algorithm = 2;
-    string datasource_type = 3;
 }
 
 message Result {
@@ -24,6 +22,7 @@ message ReplyResponse {
     int32 question_feature_count = 1;
     repeated Result results = 2;
     int32 noun_count = 3;
+    int32 verb_count = 4;
 }
 
 message LearnRequest {

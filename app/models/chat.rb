@@ -1,16 +1,16 @@
-class Chat < ActiveRecord::Base
+class Chat < ApplicationRecord
   paginates_per 50
 
-  has_many :messages
+  has_many :messages, -> { extending HasManyMessagesExtension }
   belongs_to :bot
-  has_one :bot_user, through: :bot, source: :user
+  has_many :organizations, through: :bot
+  has_many :users, through: :organizations
+  belongs_to :guest_user, foreign_key: :guest_key, primary_key: :guest_key
 
   scope :has_multiple_messages, -> {
     joins(:messages)
-      .select('chats.*',
-              "SUM(CASE WHEN speaker = 'guest' THEN 1 ELSE 0 END) as exchanging_messages_count")
-      .group('chat_id')
-      .having('count(chat_id) > 1')
+      .group('messages.speaker, chats.id, messages.id')
+      .having(messages: { speaker: :guest })
       .order('chats.id desc')
   }
 
@@ -64,7 +64,11 @@ class Chat < ActiveRecord::Base
   scope :in_today_by_unique_user, -> {
     now = Time.current
     joins(:messages)
-      .where(messages: { created_at: (now.beginning_of_day..now.end_of_day) })
+      .where(messages: {
+        speaker: :guest,
+        created_at: (now.beginning_of_day..now.end_of_day)
+      })
+      .distinct
   }
 
   def build_start_message
@@ -77,11 +81,11 @@ class Chat < ActiveRecord::Base
   end
 
   def has_good_answer?
-    messages.any? { |m| m.good? }
+    messages.any? { |m| m.rating&.good? }
   end
 
   def has_bad_answer?
-    messages.any? { |m| m.bad? }
+    messages.any? { |m| m.rating&.bad? }
   end
 
   def has_answer_marked_message?

@@ -1,4 +1,4 @@
-class CreateLearningParameters < ActiveRecord::Migration
+class CreateLearningParameters < ActiveRecord::Migration[4.2]
   def change
     create_table :learning_parameters do |t|
       t.references :bot, index: true

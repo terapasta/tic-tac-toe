@@ -27,7 +27,7 @@
     .form-group
       .card: .card-block
         label 回答添付ファイル
-        - if policy(@question_answer).attachable_answer_file?
+        - if policy(@question_answer).attachable_answer_file?(@bot)
           #answer-files
             = f.fields_for :answer_files, wrapper: false do |nf|
               .fields.mb-3
@@ -51,7 +51,7 @@
                       = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
           = f.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
         - else
-          p.mb-0 ※現在のプラン「#{current_user.plan.capitalize}」では回答添付ファイルはご利用いただけません
+          p.mb-0 ※現在のプラン「#{current_user.plan(@bot).capitalize}」では回答添付ファイルはご利用いただけません
 
     span(
       data-component="QuestionAnswerTagForm"

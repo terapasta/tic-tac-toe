@@ -47,8 +47,8 @@
       span CSVエクスポート
 
   - ec_alert = capture do
-    - if current_user.ec_plan?
-      .alert.alert-warning.mb-1 ※ #{current_user.plan.capitalize}プランでは#{current_user.histories_limit_days}日前までの履歴が表示されます
+    - if current_user.ec_plan?(@bot)
+      .alert.alert-warning.mb-1 ※ #{current_user.plan(@bot).capitalize}プランでは#{current_user.histories_limit_days(@bot)}日前までの履歴が表示されます
   - pagination = capture do
     = render 'shared/pagination', resources: @chats, per_page: @per_page
 

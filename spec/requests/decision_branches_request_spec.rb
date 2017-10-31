@@ -8,7 +8,14 @@ RSpec.describe 'decision_branch resources', type: :request do
   end
 
   let!(:bot) do
-    create(:bot, user: user)
+    create(:bot)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:decision_branch) do
@@ -37,7 +44,7 @@ RSpec.describe 'decision_branch resources', type: :request do
     end
 
     it 'updates the decision_branch record' do
-      put "/bots/#{decision_branch.bot.id}/decision_branches/#{decision_branch.id}.json", decision_branch_params
+      put "/bots/#{decision_branch.bot.id}/decision_branches/#{decision_branch.id}.json", params: decision_branch_params
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)["body"]).to eq(decision_branch_params[:decision_branch][:body])
     end

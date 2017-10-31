@@ -1,13 +1,13 @@
 import inject
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
-from app.shared.current_bot import CurrentBot
+from app.shared.app_status import AppStatus
 
 
 class CosineSimilarity:
-    @inject.params(bot=CurrentBot)
-    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, bot=None):
-        self.bot = bot if bot is not None else CurrentBot()
+    @inject.params(app_status=AppStatus)
+    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, app_status=None):
+        self.bot = app_status.current_bot()
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
@@ -28,6 +28,14 @@ class CosineSimilarity:
         result['probability'] = similarities
         return result
 
+    def before_reply(self, sentences):
+        logger.info('PASS')
+        return sentences
+
+    def after_reply(self, question, data_frame):
+        logger.info('PASS')
+        return data_frame
+
     @property
     def dump_key(self):
-        return 'dump_cosine_similarity'
+        return 'sk_cosine_similarity'

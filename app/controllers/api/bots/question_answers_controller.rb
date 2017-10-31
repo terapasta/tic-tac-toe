@@ -2,6 +2,12 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
   before_action :set_bot
   before_action :set_question_answer, only: [:update, :destroy]
 
+
+  def index
+    @question_answers = @bot.question_answers.keyword_for_answer(params[:q])
+    render json: @question_answers, adapter: :json
+  end
+
   def show
     @question_answer = @bot.question_answers.find(params[:id])
     authorize @question_answer

@@ -1,6 +1,6 @@
-class WordMappingSynonym < ActiveRecord::Base
+class WordMappingSynonym < ApplicationRecord
   belongs_to :word_mapping
-  
+
   validates :value,
     presence: true,
     length: { maximum: 20 }

@@ -1,4 +1,4 @@
-class Export < ActiveRecord::Base
+class Export < ApplicationRecord
   belongs_to :bot
   enum encoding: [:utf8, :sjis]
   mount_uploader :file, ExportFileUploader

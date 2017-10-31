@@ -2,11 +2,18 @@ require 'rails_helper'
 
 RSpec.describe ChatsController do
   let!(:bot) do
-    create(:bot, user: owner)
+    create(:bot)
   end
 
   let!(:owner) do
     create(:user)
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: owner)
+      org.bot_ownerships.create(bot: bot)
+    end
   end
 
   let!(:chat) do
@@ -23,8 +30,8 @@ RSpec.describe ChatsController do
     end
 
     subject do
-      cookies.encrypted[:guest_key] = cookie_guest_key
-      get :show, { token: bot.token }
+      cookies[:guest_key] = cookie_guest_key
+      get :show, params: { token: bot.token }
     end
 
     context 'has guest_key' do
@@ -43,14 +50,14 @@ RSpec.describe ChatsController do
       end
 
       it 'redirects to new' do
-        expect(subject).to redirect_to(new_chats_path)
+        expect(subject).to redirect_to("/embed/#{bot.token}/chats/new")
       end
     end
   end
 
   describe 'GET #new' do
     subject do
-      get :new, { token: bot.token }
+      get :new, params: { token: bot.token }
     end
 
     it 'creates new chat' do

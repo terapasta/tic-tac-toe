@@ -57,7 +57,7 @@ RSpec.describe Bot do
         bot.has_suggests_message
       end
 
-      it { is_expected.to eq("{question}についてですね。\nどのような質問ですか？\n以下から選択して下さい。") }
+      it { is_expected.to eq("{question}についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？") }
     end
 
     describe '#render_has_suggests_message' do
@@ -69,7 +69,7 @@ RSpec.describe Bot do
         bot.render_has_suggests_message('test')
       end
 
-      it { is_expected.to eq("「test」についてですね。\nどのような質問ですか？\n以下から選択して下さい。") }
+      it { is_expected.to eq("「test」についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？") }
     end
   end
 end

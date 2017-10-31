@@ -1,4 +1,4 @@
-class IncludeFailedDataDefaultFalse < ActiveRecord::Migration
+class IncludeFailedDataDefaultFalse < ActiveRecord::Migration[4.2]
   def change
     change_column :learning_parameters, :include_failed_data, :boolean, default: false
   end

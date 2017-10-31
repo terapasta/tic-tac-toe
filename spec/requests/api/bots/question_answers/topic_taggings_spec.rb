@@ -14,11 +14,11 @@ RSpec.describe '/api/bots/:bot_id/question_answers/:question_answer_id/topic_tag
   end
 
   let!(:bot) do
-    create(:bot, user: user)
+    create(:bot)
   end
 
   let!(:other_bot) do
-    create(:bot, user: other_user)
+    create(:bot)
   end
 
   let!(:topic_tags) do
@@ -47,6 +47,20 @@ RSpec.describe '/api/bots/:bot_id/question_answers/:question_answer_id/topic_tag
     other_topic_tags.map{ |topic_tag|
       other_question_answer.topic_taggings.create(topic_tag: topic_tag)
     }
+  end
+
+  let!(:organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: user)
+      org.bot_ownerships.create(bot: bot)
+    end
+  end
+
+  let!(:other_organization) do
+    create(:organization, plan: :professional).tap do |org|
+      org.user_memberships.create(user: other_user)
+      org.bot_ownerships.create(bot: other_bot)
+    end
   end
 
   let(:response_json) do
@@ -113,7 +127,7 @@ RSpec.describe '/api/bots/:bot_id/question_answers/:question_answer_id/topic_tag
         let!(:topic_tag) { create(:topic_tag, bot: target_bot) }
 
         it 'creates record' do
-          expect{post resources, params}.to change(TopicTagging, :count).by(1)
+          expect{post resources, params: params}.to change(TopicTagging, :count).by(1)
         end
       end
 
@@ -123,7 +137,7 @@ RSpec.describe '/api/bots/:bot_id/question_answers/:question_answer_id/topic_tag
         let!(:topic_tag) { create(:topic_tag, bot: target_bot) }
 
         it 'returns 403' do
-          post resources, params
+          post resources, params: params
           expect(response.status).to eq(403)
         end
       end

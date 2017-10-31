@@ -95,6 +95,7 @@ class TwoStepsWord2vecWmd:
                 tokenized_questions = self._tokenize_with_qaid([question], [self.BAD_QA_ID])
         logger.debug(tokenized_questions)
 
+        # FIXME: good/bad評価の影響を与えられていない。(おそらくvocabとしてMYOPE_QA_IDが存在しないために単語として無視されている)
         result = self.wmd_similarities[self.__bot_id()]['question_answers'][tokenized_questions]
 
         bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())

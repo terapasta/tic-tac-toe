@@ -2,7 +2,7 @@ import inject
 from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 from app.shared.constants import Constants
-from app.factories.cosine_similarity_with_wiki_corpus_factory import CosineSimilarityWithWikiCorpusFactory
+from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
@@ -16,7 +16,7 @@ class FactorySelector:
     def get_factory(self):
         if self.bot.algorithm == Constants.ALGORITHM_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Simmilarity Classification')
-            return CosineSimilarityWithWikiCorpusFactory()
+            return CosineSimilarityFactory()
 
         if self.bot.algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Two Steps Simmilarity Classification')

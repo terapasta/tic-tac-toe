@@ -42,8 +42,8 @@ class RouteGuideServicer(BotServicer):
                 'noun_count': 0,
                 'verb_count': 0,
             }
-            context.set_details("Error")
             context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(traceback.format_exc())
 
         app_status.thread_clear()
         return ReplyResponse(
@@ -68,8 +68,8 @@ class RouteGuideServicer(BotServicer):
                 'recall': 0,
                 'f1': 0,
             }
-            context.set_details("Error")
             context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(traceback.format_exc())
 
         app_status.thread_clear()
         return LearnResponse(**result)

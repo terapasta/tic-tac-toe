@@ -93,6 +93,8 @@ class TwoStepsCosineSimilarity:
                 tokenized_questions = self.__tokenize_with_qaid([question], [self.BAD_QA_ID])
             tokenized_answers = self.__tokenize_with_qaid(question_answers['question'], question_answers['question_answer_id'].astype(str))
         logger.debug(tokenized_questions)
+        if len(tokenized_answers) == 0:
+            return self.__no_data
 
         question_features = self.__get_features(tokenized_questions)
         answer_features = self.__get_features(tokenized_answers)

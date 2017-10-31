@@ -1,4 +1,5 @@
 import inject
+import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
 from app.shared.app_status import AppStatus
@@ -19,6 +20,8 @@ class CosineSimilarity:
 
     def predict(self, question_features):
         bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
+        if len(bot_tokenized_sentences) == 0:
+            return self.__no_data
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
         reduced_vectors = self.reducer.transform(bot_features)
         normalized_vectors = self.normalizer.transform(reduced_vectors)
@@ -39,3 +42,10 @@ class CosineSimilarity:
     @property
     def dump_key(self):
         return 'sk_cosine_similarity'
+
+    def __no_data(self):
+        return pd.DataFrame({
+            'question': [],
+            'question_answer_id': [],
+            'probability': [],
+        })

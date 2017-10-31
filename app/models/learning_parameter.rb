@@ -10,6 +10,7 @@ class LearningParameter < ApplicationRecord
     :similarity_classification,
     :two_step_similarity_classification,
     :word2vec_wmd,
+    :two_steps_word2vec_wmd,
   ]
 
   def use_similarity_classification?

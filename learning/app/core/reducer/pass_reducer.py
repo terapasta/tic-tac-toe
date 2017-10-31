@@ -9,8 +9,7 @@ class PassReducer:
         return features
 
     def fit_transform(self, features):
-        self.fit(features)
-        return self.transform(features)
+        return features
 
     @property
     def dump_path(self):

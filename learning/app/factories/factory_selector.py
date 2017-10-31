@@ -30,4 +30,4 @@ class FactorySelector:
             logger.info('algorithm: Logistic Regression')
             return LogisticRegressionFactory()
 
-        return CosineSimilarityWithWikiCorpusFactory()
+        return CosineSimilarityFactory()

@@ -1,8 +1,10 @@
+import inject
 from gensim.models import KeyedVectors
 from gensim.similarities import WmdSimilarity
 
 from app.shared.app_status import AppStatus
 from app.shared.logger import logger
+from app.shared.config import Config
 
 
 # Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
@@ -10,8 +12,10 @@ class Word2vecWmd:
     __shared_state = {}
     __initialized = False
 
-    def __init__(self, tokenizer, datasource):
+    @inject.params(config=Config)
+    def __init__(self, tokenizer, datasource, config=None):
         self.__dict__ = self.__shared_state
+        self.config = config
         self.tokenizer = tokenizer
         self.datasource = datasource
 
@@ -56,13 +60,14 @@ class Word2vecWmd:
         self.wmd_similarities[self.__bot_id()] = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
 
     def __prepare_corpus_data(self):
-        tarfile_path = 'dumps/entity_vector.model.tar.bz2'
-        model_path = 'dumps/entity_vector.model.bin'
+        filename = self.config.get('word2vec_model_name')
+        tarfile_path = 'dumps/{}.tar.bz2'.format(filename)
+        model_path = 'dumps/{}'.format(filename)
         import os
         if not os.path.exists(model_path):
             import urllib.request
             logger.info('downloading word2vec model')
-            urllib.request.urlretrieve('https://s3-ap-northeast-1.amazonaws.com/my-ope.net/datasets/entity_vector.tar.bz2', tarfile_path)
+            urllib.request.urlretrieve('https://s3-ap-northeast-1.amazonaws.com/my-ope.net/datasets/{}.tar.bz2'.format(filename), tarfile_path)
             logger.info('extracting word2vec model')
             import tarfile
             tar = tarfile.open(tarfile_path, 'r:bz2')

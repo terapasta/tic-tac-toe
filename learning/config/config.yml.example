@@ -8,6 +8,7 @@ default: &default
   dicdir: /usr/local/lib/mecab/dic/ipadic
   # dicdir: /var/lib/mecab/dic/debian
   # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
+  word2vec_model_name: entity_vector.model.bin
 
 development:
   <<: *default

@@ -63,6 +63,7 @@ class Word2vecWmd:
         filename = self.config.get('word2vec_model_name')
         tarfile_path = 'dumps/{}.tar.bz2'.format(filename)
         model_path = 'dumps/{}'.format(filename)
+        logger.debug('word2vec model path:{}'.format(model_path))
         import os
         if not os.path.exists(model_path):
             import urllib.request

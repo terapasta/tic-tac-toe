@@ -67,7 +67,9 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-  after :finished, 'slappy:restart'
+  on roles(:slappy) do
+    after :finished, 'slappy:restart'
+  end
   # after :finished, 'update_neologd'
 end
 

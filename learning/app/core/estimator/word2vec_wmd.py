@@ -22,7 +22,7 @@ class Word2vecWmd:
         if not self.__initialized:
             data_path = self.__prepare_corpus_data()
             logger.info('load word2vec model: start')
-            self.model = KeyedVectors.load_word2vec_format(data_path, binary=True)
+            self.model = KeyedVectors.load_word2vec_format(data_path, binary=self.config.get('word2vec_model_is_binaly'))
             logger.info('load word2vec model: end')
             self.wmd_similarities = {}
             self.__initialized = True

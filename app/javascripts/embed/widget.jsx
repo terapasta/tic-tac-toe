@@ -32,7 +32,7 @@ import {
 } from "./styled";
 
 const Origin = process.env.NODE_ENV === "development" ?
-  "http://donusagi-bot.192.168.0.2.xip.io" : "https://app.my-ope.net";
+  "http://donusagi-bot2.dev" : "https://app.my-ope.net";
 
 export default class Widget extends Component {
   constructor(props) {
@@ -52,6 +52,7 @@ export default class Widget extends Component {
       this.setState({
         name: get(res, "data.bot.name"),
         avatarURL: get(res, "data.bot.image.thumb.url"),
+        subtitle: get(res, "data.bot.widgetSubtitle"),
         isDeniedAccess: false,
       });
     }).catch(console.error);
@@ -93,6 +94,7 @@ export default class Widget extends Component {
       isDeniedAccess,
       name,
       avatarURL,
+      subtitle,
     } = this.state;
 
     if (isDeniedAccess) { return <span />; }
@@ -113,13 +115,13 @@ export default class Widget extends Component {
             <DummyInput>ご質問にお答えします</DummyInput>
           )}
           {isActive && (
-            <StatusLabel>AIチャットボットがご対応します</StatusLabel>
+            <StatusLabel>{subtitle}</StatusLabel>
           )}
           <Arrow className={activeClassName}>
             <ArrowSVG />
           </Arrow>
           <Logo className={activeClassName}>
-            <LogoSVG />
+            {name}
           </Logo>
         </Header>
         <IframeContainer>

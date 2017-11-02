@@ -1,5 +1,4 @@
 from app.shared.datasource.database.database import Database
-from app.shared.constants import Constants
 
 
 class Ratings:

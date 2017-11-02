@@ -11,6 +11,7 @@ import traceback
 import inject
 import numpy as np
 import argparse
+from sklearn.exceptions import NotFittedError
 
 from app.shared.logger import logger
 from app.shared.config import Config
@@ -34,16 +35,18 @@ class RouteGuideServicer(BotServicer):
 
         try:
             reply = ReplyController(factory=FactorySelector().get_factory()).perform(X[0])
+        except NotFittedError:
+            detail = 'bot_id:%s wasn\'t trained' % str(app_status.current_bot().id)
+            logger.error(detail)
+            logger.error(traceback.format_exc())
+            reply = self._empty_reply()
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(detail)
         except:
             logger.error(traceback.format_exc())
-            reply = {
-                'question_feature_count': 0,
-                'results': [],
-                'noun_count': 0,
-                'verb_count': 0,
-            }
-            context.set_details("Error")
+            reply = self._empty_reply()
             context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(traceback.format_exc())
 
         app_status.thread_clear()
         return ReplyResponse(
@@ -68,11 +71,19 @@ class RouteGuideServicer(BotServicer):
                 'recall': 0,
                 'f1': 0,
             }
-            context.set_details("Error")
             context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(traceback.format_exc())
 
         app_status.thread_clear()
         return LearnResponse(**result)
+
+    def _empty_reply(self):
+        return {
+            'question_feature_count': 0,
+            'results': [],
+            'noun_count': 0,
+            'verb_count': 0,
+        }
 
 
 def serve(port):

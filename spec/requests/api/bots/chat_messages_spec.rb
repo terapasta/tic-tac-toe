@@ -39,6 +39,10 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
     }
   end
 
+  subject(:response_messages_size) do
+    JSON.parse(response.body)['messages'].size
+  end
+
   describe 'POST /api/bots/:token/chat_messages' do
     context 'when answer has decision_branches' do
       let(:question_answer) do
@@ -47,7 +51,7 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
       it 'create new message record' do
         expect{
           post_api_bot_chat_messages
-          expect(JSON.parse(response.body)['messages'].size).to eq 2
+          expect(response_messages_size).to eq 2
         }.to change(Message, :count).by(1)
       end
     end
@@ -59,7 +63,7 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
       it 'create new message record' do
         expect{
           post_api_bot_chat_messages
-          expect(JSON.parse(response.body)['messages'].size).to eq 2
+          expect(response_messages_size).to eq 2
         }.to change(Message, :count).by(1)
       end
     end

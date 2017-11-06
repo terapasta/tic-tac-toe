@@ -130,6 +130,7 @@ Rails.application.routes.draw do
 <<<<<<< HEAD
 =======
     resources :bots, param: :token, only: [], module: :bots do
+      post 'chats', to: 'chats#create', as: :chats
       post 'chat_messages', to: 'chat_messages#create', as: :chat_messages
       post 'chat_choices/:id', to: 'chat_choices#create', as: :chat_choices
     end

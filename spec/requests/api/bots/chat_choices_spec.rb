@@ -42,23 +42,15 @@ RSpec.describe '/api/bots/:token/chat_choices', type: :request do
     }
   end
 
-  subject(:response_messages_size) do
-    JSON.parse(response.body)['messages'].size
-  end
-  subject(:response_guest_message) do
-    JSON.parse(response.body)['messages'].first
-  end
   subject(:response_bot_message) do
-    JSON.parse(response.body)['messages'].last
+    JSON.parse(response.body)
   end
 
   describe 'POST /api/bots/:token/chat_choices/:id' do
     it 'create new message records' do
       expect{
         post_api_bot_chat_choices
-        expect(response_messages_size).to eq 2
-        expect(response_guest_message['body']).to eq decision_branch.body
-        expect(response_bot_message['body']).to eq decision_branch.answer
+        expect(response_bot_message['message']['body']).to eq decision_branch.answer
       }.to change(Message, :count).by(2)
     end
   end

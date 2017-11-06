@@ -22,7 +22,7 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
   let(:answer_message) do
     create(:message,
       speaker: :bot,
-      body: question_answer.question,
+      body: question_answer.answer,
       question_answer: question_answer,
       chat: chat,
     )
@@ -39,31 +39,34 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
     }
   end
 
-  subject(:response_messages_size) do
-    JSON.parse(response.body)['messages'].size
+  subject(:response_bot_message) do
+    JSON.parse(response.body)['message']
   end
 
   describe 'POST /api/bots/:token/chat_messages' do
     context 'when answer has decision_branches' do
       let(:question_answer) do
-        create(:question_answer, bot: bot)
+        create(:question_answer, :with_decision_branches, bot: bot)
       end
+
       it 'create new message record' do
         expect{
           post_api_bot_chat_messages
-          expect(response_messages_size).to eq 2
+          expect(response_bot_message['body']).to eq(answer_message.body)
+          expect(response_bot_message['questionAnswer']['decisionBranches']).to be_present
         }.to change(Message, :count).by(1)
       end
     end
 
     context 'when answer does not have decision_branches' do
       let(:question_answer) do
-        create(:question_answer, :with_decision_branches, bot: bot)
+        create(:question_answer, bot: bot)
       end
+
       it 'create new message record' do
         expect{
           post_api_bot_chat_messages
-          expect(response_messages_size).to eq 2
+          expect(response_bot_message['body']).to eq(answer_message.body)
         }.to change(Message, :count).by(1)
       end
     end

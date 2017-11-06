@@ -9,7 +9,7 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     message = params.require(:message)
 
     bot = Bot.find_by!(token: token)
-    chat_service_user = ChatServiceUser.find_by!(bot: bot, guest_key: guest_key)
+    chat_service_user = bot.chat_service_users.find_by!(guest_key: guest_key)
     chat = bot.chats.find_by!(guest_key: chat_service_user.guest_key)
 
     bot_messages = {}
@@ -21,12 +21,11 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       bot_messages = receive_and_reply!(chat, message)
     end
 
-    SendAnswerFailedMailService.new(bot_messages, current_user).send_mail
-    TaskCreateService.new(bot_messages, bot, current_user).process
+    SendAnswerFailedMailService.new(bot_messages, nil).send_mail
+    TaskCreateService.new(bot_messages, bot, nil).process
 
     respond_to do |format|
-      format.js
-      format.json { render_collection_json [message, *bot_messages], include: included_associations }
+      format.json { render json: bot_messages.first, adapter: :json, include: included_associations }
     end
 
   rescue => e

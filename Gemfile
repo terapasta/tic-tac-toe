@@ -72,15 +72,12 @@ gem 'seed-fu'
 gem 'active_hash'
 gem 'dotenv-rails'
 gem 'rails_autolink'
-gem 'twitter'
 gem 'http'
 gem 'whenever', require: false
 gem 'carrierwave'
 gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
-# gem 'twitter-bootswatch-rails', '~> 3.1.1'
-# gem 'twitter-bootswatch-rails-helpers'
 gem 'slack-api'
 gem 'activerecord-import'
 gem 'exception_notification'
@@ -113,7 +110,7 @@ gem 'email_validator'
 gem 'webpacker', '~> 3.0'
 gem 'mini_mime'
 gem 'hashie'
-gem 'faraday'
+gem 'faraday', '~> 0.12.1'
 
 group :development, :test do
 

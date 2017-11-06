@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20171127062442) do
+=======
+ActiveRecord::Schema.define(version: 20171102053525) do
+>>>>>>> [WIP] Implement skype bot
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -65,7 +69,22 @@ ActiveRecord::Schema.define(version: 20171127062442) do
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
+<<<<<<< HEAD
   create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+=======
+  create_table "chat_service_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "bot_id", null: false
+    t.integer "service_type", default: 0, null: false
+    t.string "uid", null: false
+    t.string "name"
+    t.string "guest_key", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "service_type", "uid"], name: "index_chat_service_users_on_bot_id_and_service_type_and_uid", unique: true
+  end
+
+  create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+>>>>>>> [WIP] Implement skype bot
     t.string "guest_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

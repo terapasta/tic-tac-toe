@@ -2,7 +2,7 @@ const axios = require('axios')
 
 const { MYOPE_API_URL } = process.env
 
-export const createChat = ({
+module.exports.createChat = ({
   botToken,
   uid,
   service_type,
@@ -15,7 +15,7 @@ export const createChat = ({
   })
 )
 
-export const createMessage = ({
+module.exports.createMessage = ({
   botToken,
   guestKey,
   message
@@ -26,7 +26,7 @@ export const createMessage = ({
   })
 )
 
-export const createChoice = ({
+module.exports.createChoice = ({
   botToken,
   guestKey,
   choiceId

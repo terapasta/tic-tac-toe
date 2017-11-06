@@ -1,7 +1,5 @@
 const path = require('path')
 const dotenv = require('dotenv')
-const get = require('lodash/get')
-const isEmpty = require('is-empty')
 
 const {
   ChatConnector,

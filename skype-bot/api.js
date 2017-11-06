@@ -3,29 +3,35 @@ const axios = require('axios')
 const { MYOPE_API_URL } = process.env
 
 export const createChat = ({
-  token,
+  botToken,
   uid,
   service_type,
   name
 }) => (
-  axios.post(`${MYOPE_API_URL}/api/chats`, {
-    token,
-    uid,
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chats`, {
     service_type,
+    uid,
     name
   })
 )
 
 export const createMessage = ({
-  token,
-  uid,
-  service_type,
+  botToken,
+  guestKey,
   message
 }) => (
-  axios.post(`${MYOPE_API_URL}/api/chats/messages`, {
-    token,
-    uid,
-    service_type,
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_messages`, {
+    guest_key: guestKey,
     message
+  })
+)
+
+export const createChoice = ({
+  botToken,
+  guestKey,
+  choiceId
+}) => (
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_choices/${choiceId}`, {
+    guest_key: guestKey
   })
 )

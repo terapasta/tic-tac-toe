@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/chats', type: :request do
+RSpec.describe '/api/bots/:token/chats', type: :request do
   let!(:bot) do
     create(:bot)
   end
@@ -13,21 +13,20 @@ RSpec.describe '/api/chats', type: :request do
     '山形 孝造'
   end
 
-  def post_api_chats
-    post '/api/chats.json', params: {
-      token: bot.token,
+  def post_api_bot_chats
+    post api_bot_chats_path(bot.token), params: {
       uid: uid,
       service_type: 'skype',
       name: name
     }
   end
 
-  describe 'POST /api/chats' do
+  describe 'POST /api/bots/:token/chats' do
     context 'when first time' do
       it 'creates new user and chat records' do
         expect{
           expect{
-            post_api_chats
+            post_api_bot_chats
             expect(JSON.parse(response.body)).to eq(
               'chat' => {
                 'guestKey' => Chat.last.guest_key
@@ -40,9 +39,9 @@ RSpec.describe '/api/chats', type: :request do
 
     context 'when second time' do
       it 'not creates new user and chat records' do
-        post_api_chats
+        post_api_bot_chats
         expect{
-          expect{ post_api_chats }.to_not change(ChatServiceUser, :count)
+          expect{ post_api_bot_chats }.to_not change(ChatServiceUser, :count)
         }.to_not change(Chat, :count)
       end
     end

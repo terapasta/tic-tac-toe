@@ -1,15 +1,16 @@
-class Api::Bots::Chats::MessagesController < Api::BaseController
+class Api::Bots::ChatMessagesController < Api::BaseController
   skip_before_action :authenticate_user!
   include Replyable
   include ApiRespondable
 
   def create
-    chat_id = params.require(:chat_id)
+    guest_key = params.require(:guest_key)
     token = params.require(:bot_token)
     message = params.require(:message)
 
     bot = Bot.find_by!(token: token)
-    chat = bot.chats.find(chat_id)
+    chat_service_user = ChatServiceUser.find_by!(bot: bot, guest_key: guest_key)
+    chat = bot.chats.find_by!(guest_key: chat_service_user.guest_key)
 
     bot_messages = {}
     ActiveRecord::Base.transaction do

@@ -1,12 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe '/api/bots/:token/chats/:chat_id/messages', type: :request do
+RSpec.describe '/api/bots/:token/chat_messages', type: :request do
   let!(:bot) do
     create(:bot)
   end
 
   let!(:chat_service_user) do
-    create(:chat_service_user, bot_id: bot.id)
+    create(:chat_service_user, bot_id: bot.id, service_type: :skype).tap do |c|
+      c.make_guest_key_if_needed!
+    end
   end
 
   let!(:chat) do
@@ -27,16 +29,17 @@ RSpec.describe '/api/bots/:token/chats/:chat_id/messages', type: :request do
   end
 
   before do
-    allow_any_instance_of(Api::Bots::Chats::MessagesController).to receive(:receive_and_reply!).and_return([answer_message])
+    allow_any_instance_of(Api::Bots::ChatMessagesController).to receive(:receive_and_reply!).and_return([answer_message])
   end
 
   def post_api_bot_chat_messages
-    post api_bot_chat_messages_path(bot.token, chat.id), params: {
+    post api_bot_chat_messages_path(bot.token), params: {
+      guest_key: chat_service_user.guest_key,
       message: message,
     }
   end
 
-  describe 'POST /api/bots/:token/chats/:chat_id/messages' do
+  describe 'POST /api/bots/:token/chat_messages' do
     context 'when answer has decision_branches' do
       let(:question_answer) do
         create(:question_answer, bot: bot)

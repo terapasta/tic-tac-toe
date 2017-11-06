@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20171127062442) do
     t.integer "bot_id", null: false
     t.boolean "is_staff", default: false
     t.boolean "is_normal", default: false, null: false
+    t.index ["guest_key"], name: "index_chats_on_guest_key"
     t.index ["is_normal"], name: "index_chats_on_is_normal"
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end

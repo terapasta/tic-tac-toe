@@ -127,6 +127,32 @@ Rails.application.routes.draw do
     resources :messages, only: :create
     resources :question_answers
     resources :public_bots, param: :token, only: [:show]
+<<<<<<< HEAD
+=======
+    resources :bots, param: :token, only: [], module: :bots do
+      resources :chats, only: :create, module: :chats do
+        resources :messages, only: :create
+      end
+    end
+    resources :bots do
+      resources :topic_tags, module: :bots
+      resources :question_answers, module: :bots do
+        resources :topic_taggings, module: :question_answers
+        resources :decision_branches, module: :question_answers
+        resource :child_decision_branches, only: [:destroy], module: :question_answers
+      end
+      resources :decision_branches, module: :bots do
+        resource :child_decision_branches, only: [:destroy], module: :decision_branches
+      end
+      resources :answers, module: :bots
+      resources :messages, module: :bots, only: [] do
+        resource :mark, module: :messages, only: [:create, :destroy]
+      end
+
+      resources :word_mappings, only: [:create, :update, :destroy], module: :bots
+    end
+    resources :word_mappings, only: [:create, :update, :destroy]
+>>>>>>> Implement message-api
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
   end
 end

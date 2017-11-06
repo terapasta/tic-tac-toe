@@ -131,6 +131,7 @@ Rails.application.routes.draw do
 =======
     resources :bots, param: :token, only: [], module: :bots do
       post 'chat_messages', to: 'chat_messages#create', as: :chat_messages
+      post 'chat_choices/:id', to: 'chat_choices#create', as: :chat_choices
     end
     resources :bots do
       resources :topic_tags, module: :bots

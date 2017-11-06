@@ -10,7 +10,7 @@ FactoryGirl.define do
 
       after(:build) do |qa, evaluator|
         evaluator.branch_count.times do
-          qa.decision_branches << build(:decision_branch)
+          qa.decision_branches << build(:decision_branch, bot_id: qa.bot_id)
         end
       end
     end

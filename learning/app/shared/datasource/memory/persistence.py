@@ -9,7 +9,9 @@ class Persistence:
         self.data = {}
 
     def load(self, key):
-        return self.data[self.__generate_key(key)]
+        if self.__generate_key(key) in self.data:
+            return self.data[self.__generate_key(key)]
+        return None
 
     def dump(self, obj, key):
         self.data[self.__generate_key(key)] = obj

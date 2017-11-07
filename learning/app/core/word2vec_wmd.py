@@ -7,7 +7,7 @@ from app.shared.logger import logger
 from app.shared.config import Config
 
 from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
-from app.shared.datasource.file.question_answers import QuestionAnswers
+from app.shared.datasource.datasource import Datasource
 
 
 # Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
@@ -18,13 +18,13 @@ class Word2vecWmd:
     @inject.params(
         config=Config,
         tokenizer=MecabTokenizerWithSplit,
-        question_answers=QuestionAnswers,
+        datasource=Datasource,
     )
-    def __init__(self, tokenizer=None, question_answers=None, config=None):
+    def __init__(self, tokenizer=None, datasource=None, config=None):
         self.__dict__ = self.__shared_state
         self.config = config
         self.tokenizer = tokenizer
-        self.question_answers = question_answers
+        self.question_answers = datasource.question_answers
 
         if not self.__initialized:
             data_path = self.__prepare_corpus_data()

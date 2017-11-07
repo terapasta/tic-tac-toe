@@ -7,7 +7,6 @@ from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
-from app.shared.datasource.datasource import Datasource
 
 
 from tests.support.helper import Helper
@@ -16,7 +15,7 @@ from tests.support.helper import Helper
 class FactorySelectorTestCase(TestCase):
 
     def setUp(self):
-        Datasource().init(datasource_type=Constants.DATASOURCE_TYPE_FILE)
+        pass
 
     def test_logistic_regression(self):
         Helper.init(bot_id=1, algorithm=Constants.ALGORITHM_LOGISTIC_REGRESSION)

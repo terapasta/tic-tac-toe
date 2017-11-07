@@ -27,7 +27,8 @@ class Word2vecWmdFactory:
         else:
             self.estimator = Word2vecWmd(
                 tokenizer=self.tokenizer,
-                question_answers=self.datasource.question_answers)
+                datasource=self.datasource
+            )
 
     def get_tokenizer(self):
         return self.tokenizer

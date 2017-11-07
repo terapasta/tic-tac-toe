@@ -32,8 +32,7 @@ class TwoStepCosineSimilarityFactory:
                     vectorizer=self.vectorizer,
                     reducer=self.reducer,
                     normalizer=self.normalizer,
-                    question_answers=self.datasource.question_answers,
-                    ratings=self.datasource.ratings,
+                    datasource=self.datasource,
                 )
 
     def get_tokenizer(self):

@@ -10,8 +10,7 @@ from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
-from app.shared.datasource.file.question_answers import QuestionAnswers
-from app.shared.datasource.file.ratings import Ratings
+from app.shared.datasource.datasource import Datasource
 
 
 # Note: ユーザーの評価を検索結果に反映したコサイン類似検索
@@ -25,19 +24,18 @@ class TwoStepsCosineSimilarity:
         vectorizer=TfidfVectorizer,
         reducer=PassReducer,
         normalizer=PassNormalizer,
-        question_answers=QuestionAnswers,
-        ratings=Ratings,
+        datasource=Datasource,
         app_status=AppStatus,
     )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, question_answers=None, ratings=None, app_status=None):
+    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, app_status=None):
         self.bot = app_status.current_bot()
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.vectorizer_for_qaid = vectorizer.__class__(dump_key='two_steps_tfidf_vectorizer')
         self.reducer = reducer
         self.normalizer = normalizer
-        self.question_answers = question_answers
-        self.ratings = ratings
+        self.question_answers = datasource.question_answers
+        self.ratings = datasource.ratings
 
     def fit(self, x, y):
         logger.info('learn vocabulary with question_id')

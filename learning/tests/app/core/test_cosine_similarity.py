@@ -3,8 +3,8 @@ from nose.tools import ok_
 
 from app.core.cosine_similarity import CosineSimilarity
 from app.shared.constants import Constants
-from tests.support.empty_question_answers import EmptyQuestionAnswers
-
+from app.shared.datasource.datasource import Datasource
+from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
 from tests.support.helper import Helper
 
 
@@ -14,8 +14,10 @@ class CosineSimilarityTestCase(TestCase):
         Helper.init(bot_id=9, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
 
     def test_predict_when_data_is_empty(self):
+        datasource = Datasource(question_answers=EmptyQuestionAnswers)
+
         # データが存在しない場合
-        estimator = CosineSimilarity(question_answers=EmptyQuestionAnswers())
+        estimator = CosineSimilarity(datasource=datasource)
 
         estimator.predict([])
 

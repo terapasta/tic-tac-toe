@@ -30,7 +30,7 @@ class CosineSimilarityFactory:
                     vectorizer=self.vectorizer,
                     reducer=self.reducer,
                     normalizer=self.normalizer,
-                    question_answers=self.datasource.question_answers,
+                    datasource=self.datasource,
                 )
 
     def get_tokenizer(self):

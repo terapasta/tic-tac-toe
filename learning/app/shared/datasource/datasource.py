@@ -10,8 +10,14 @@ from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
 class Datasource:
     __shared_state = {}
 
-    def __init__(self, persistence=None, question_answers=None):
+    def __init__(self, persistence=None, question_answers=None, ratings=None):
         self.__dict__ = self.__shared_state
+        if persistence is not None:
+            self._persistence = persistence
+        if question_answers is not None:
+            self._question_answers = question_answers
+        if ratings is not None:
+            self._ratings = ratings
 
     def init(self, datasource_type):
         if datasource_type == Constants.DATASOURCE_TYPE_FILE:
@@ -22,6 +28,7 @@ class Datasource:
             self._persistence = PersistenceFromDb
             self._question_answers = QuestionAnswersFromDb
             self._ratings = RatingsFromDb
+        return self
 
     @property
     def persistence(self):
@@ -34,4 +41,3 @@ class Datasource:
     @property
     def ratings(self):
         return self._ratings()
-

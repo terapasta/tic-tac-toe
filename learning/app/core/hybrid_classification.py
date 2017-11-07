@@ -54,8 +54,23 @@ class HybridClassification:
         return sentences
 
     def after_reply(self, question, data_frame):
-        logger.info('PASS')
-        return data_frame
+        sentences = self.tokenizer.tokenize([question])
+        vectors = self.vectorizer.transform(sentences)
+        reduced_vectors = self.reducer.transform(vectors)
+        normalized_vectors = self.normalizer.transform(reduced_vectors)
+
+        results = self.estimator.predict(normalized_vectors)
+
+        merged_data = data_frame.add(results).fillna(data_frame)
+
+        logger.info('sort')
+        merged_data = merged_data.sort_values(by='probability', ascending=False)
+        merged_data = merged_data.to_dict('records')[:10]
+
+        for row in merged_data:
+            logger.debug(row)
+
+        return merged_data
 
     def __no_data(self):
         return pd.DataFrame({

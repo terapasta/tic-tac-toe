@@ -11,6 +11,10 @@ from app.shared.datasource.datasource import Datasource
 from tests.support.empty_question_answers import EmptyQuestionAnswers
 
 
+from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
+from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
+
+
 class LearningParameter:
     algorithm = Constants.ALGORITHM_SIMILARITY_CLASSIFICATION
 
@@ -25,7 +29,7 @@ class CosineSimilarityTestCase(TestCase):
     def test_predict_when_data_is_empty(self):
         AppStatus().set_bot(bot_id=1, learning_parameter=LearningParameter())
         # データが存在しない場合
-        estimator = CosineSimilarity(question_answers=EmptyQuestionAnswers)
+        estimator = CosineSimilarity(question_answers=EmptyQuestionAnswers())
 
         estimator.predict([])
 
@@ -38,7 +42,9 @@ class CosineSimilarityTestCase(TestCase):
         estimator = CosineSimilarity()
 
         def action():
-            estimator.predict(['ピアノ 始める 年齢'])
+            sentences = MecabTokenizer().tokenize(['ピアノ 始める 年齢'])
+            features = TfidfVectorizer().transform(sentences)
+            estimator.predict(features)
 
         # エラーになること
         assert_raises(NotFittedError, action)

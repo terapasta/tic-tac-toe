@@ -2,14 +2,14 @@ import inject
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
 from app.shared.app_status import AppStatus
-from app.shared.datasource.datasource import Datasource
+from app.shared.datasource.file.persistence import Persistence
 
 
 class TfidfVectorizer:
-    @inject.params(datasource=Datasource, app_status=AppStatus)
-    def __init__(self, datasource=None, dump_key='sk_tfidf_vectorizer', app_status=None):
+    @inject.params(persistence=Persistence, app_status=AppStatus)
+    def __init__(self, persistence=None, dump_key='sk_tfidf_vectorizer', app_status=None):
         self.bot = app_status.current_bot()
-        self.persistence = datasource.persistence
+        self.persistence = persistence
         self._dump_key = dump_key
         self.vectorizer = self.persistence.load(self.dump_key)
         if self.vectorizer is None:

@@ -1,7 +1,3 @@
-const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config({ path: path.dirname(__dirname) + '/.env' })
-
 const {
   ChatConnector,
 } = require('botbuilder')
@@ -12,7 +8,7 @@ const Server = require('./server')
 const {
   MICROSOFT_APP_ID,
   MICROSOFT_APP_PASSWORD,
-} = process.env
+} = require('./env')
 
 const connector = new ChatConnector({
   appId: MICROSOFT_APP_ID,

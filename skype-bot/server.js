@@ -1,11 +1,4 @@
 const restify = require('restify')
-const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config({ path: path.dirname(__dirname) + '/.env' })
-
-const {
-  port
-} = process.env
 
 class Server {
   constructor (connector) {
@@ -30,7 +23,7 @@ class Server {
         })
       }
     })
-    this.server.listen(port || 3978, () => {
+    this.server.listen(process.env.PORT || 3978, () => {
       console.log('%s listening to %s', this.server.name, this.server.url)
     })
   }

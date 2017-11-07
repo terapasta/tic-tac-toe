@@ -72,19 +72,24 @@ namespace :deploy do
   end
   # after :finished, 'update_neologd'
 
-  desc 'skype-botを起動'
-  task :run_skype_bot do
+  desc 'skype-botのライブラリをインストール'
+  task :install_packages_for_skype_bot do
     on roles(:app) do
-      within current_path.join('skype-bot') do
-        execute :npm, :install
-        execute :node, 'index.js'
+      within release_path.join('skype-bot') do
+        execute :npm, :install, '--silent'
       end
     end
   end
+
+  after :finished, 'deploy:move_engine'
+  after :finished, 'slappy:restart'
+  after :finished, 'skype_bot:restart'
+  # after :finished, 'update_neologd'
+  after 'bundler:install', 'deploy:install_packages_for_skype_bot'
 end
 
 namespace :webpacker do
-  task :yarn_install do
+  task :disable_yarn_install => :yarn_install do
     # workaround to stop running yarn install after precompile
   end
 end

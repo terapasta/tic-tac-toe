@@ -1,4 +1,7 @@
 const restify = require('restify')
+const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config({ path: path.dirname(__dirname) + '/.env' })
 
 const {
   port
@@ -12,9 +15,20 @@ class Server {
   }
 
   run () {
-    const { listen, name, url } = this.server
-    listen(port || 3978, () => {
-      console.log('%s listening to %s', name, url)
+    this.server.post('/:botToken', (req, res) => {
+      if (req.body) {
+        this.passToChatListener(req, res)
+      } else {
+        let requestData = ''
+        req.on('data', (chunk) => requestData += chunk)
+        req.on('end', () => {
+          req.body = requestData
+          this.passToChatListener(req, res);
+        })
+      }
+    })
+    this.server.listen(port || 3978, () => {
+      console.log('%s listening to %s', this.server.name, this.server.url)
     })
   }
 
@@ -24,6 +38,8 @@ class Server {
     })
     this.chatListener(req, res)
   }
+
+
 }
 
 module.exports = Server

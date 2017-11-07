@@ -1,9 +1,15 @@
+const path = require('path')
 const get = require('lodash/get')
 const isEmpty = require('is-empty')
 const {
   UniversalBot,
   Prompts,
-  ListStyle
+  ListStyle,
+  Message,
+  AttachmentLayout,
+  HeroCard,
+  CardImage,
+  CardAction
 } = require('botbuilder')
 
 const {
@@ -13,11 +19,16 @@ const {
 } = require('./api')
 
 const service_type = 'skype'
+const s3 = 'https://my-ope-assets-dev.s3.amazonaws.com'
 
 class Bot {
   constructor(connector) {
     this.connector = connector
-    this.bot = new UniversalBot(this.connector)
+    this.bot = new UniversalBot(this.connector, {
+      localizerSettings: {
+        defaultLocale: 'ja'
+      }
+    })
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }
@@ -25,22 +36,26 @@ class Bot {
   handleAnswerMessage({ session, res }) {
     const body = get(res, 'data.message.body')
     const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches')
+    const childDecisionBranches = get(res, 'data.message.childDecisionBranches')
     const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers')
+    const answerFiles = get(res, 'data.message.answerFiles', [])
 
-    if (!isEmpty(decisionBranches)) {
+    if (!isEmpty(decisionBranches) || !isEmpty(childDecisionBranches)) {
+      this.sendMessageWithAttachments(session, body, answerFiles)
       // Disaptch decisionBranches Dialog
       return session.beginDialog('decisionBranches', {
-        message: body,
-        decisionBranches
+        decisionBranches: decisionBranches || childDecisionBranches,
+        isSuggestion: false
       })
     } else if (!isEmpty(similarQuestionAnswers)) {
-      session.send(body)
+      this.sendMessageWithAttachments(session, body, answerFiles)
       // Disaptch decisionBranches Dialog as suggestion
       return session.beginDialog('decisionBranches', {
-        decisionBranches: similarQuestionAnswers
+        decisionBranches: similarQuestionAnswers,
+        isSuggestion: true
       })
     } else {
-      return session.send(body)
+      this.sendMessageWithAttachments(session, body, answerFiles)
     }
   }
 
@@ -60,7 +75,7 @@ class Bot {
       // POST /api/bots/:token/chats/:id/messages.json
       createMessage({
         botToken,
-        chatId: res.data.chat.id,
+        guestKey: res.data.chat.guestKey,
         message: session.message.text
       }).then((res) => {
         this.handleAnswerMessage({ session, res })
@@ -71,24 +86,36 @@ class Bot {
     })
   }
 
-  handleDecisionBranchesDialog() {
+  handleDecisionBranchesDialogSteps() {
     return [
       // Show choices
-      (session, { message, decisionBranches}) => {
+      (session, { message, decisionBranches, isSuggestion }) => {
         session.privateConversationData.decisionBranches = decisionBranches
-        const choices = decisionBranches.map(it => it.body)
+        session.privateConversationData.isSuggestion = isSuggestion
 
-        Prompts.choice(session, message, choices, {
-          listStyle: ListStyle.list
+        const attrName = isSuggestion ? 'question' : 'body'
+        const choices = decisionBranches.map(it => it[attrName])
+        let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : ''
+        _message = !isEmpty(message) ? `${message}<br/>` : _message
+
+        Prompts.choice(session, _message + "※半角数字で解答して下さい", choices, {
+          listStyle: ListStyle.list,
+          maxRetries: isSuggestion ? 0 : 1
         })
       },
       // Handle selected choice
       (session, results) => {
         const { botToken } = session.message
         const { uid, name } = session.message.user
-        const { decisionBranches } = session.privateConversationData
-        const selected = decisionBranches[results.response.index]
+        const { decisionBranches, isSuggestion } = session.privateConversationData
+        const selected = decisionBranches[get(results, 'response.index')]
 
+        if (selected == null) {
+          session.endDialog()
+          return this.handleDefaultDialog(session)
+        }
+
+        session.privateConversationData = {}
         session.sendTyping()
 
         createChat({
@@ -97,20 +124,56 @@ class Bot {
           name,
           service_type
         }).then((res) => {
-          createChoice({
-            botToken,
-            guestKey: res.data.chat.guestKey,
-            choiceId: selected.id
-          }).then((res) => {
-            session.endDialog()
-            this.handleAnswerMessage({ session, res })
-          })
+          const { guestKey } = res.data.chat
+          if (isSuggestion) {
+            createMessage({
+              botToken,
+              guestKey,
+              message: results.response.entity
+            }).then((res) => {
+              session.endDialog()
+              this.handleAnswerMessage({ session, res })
+            })
+          } else {
+            createChoice({
+              botToken,
+              guestKey,
+              choiceId: selected.id
+            }).then((res) => {
+              session.endDialog()
+              this.handleAnswerMessage({ session, res })
+            })
+          }
         }).catch((err) => {
           console.error(err)
           session.send('エラーが発生しました: ' + err.message)
         })
       }
     ]
+  }
+
+  sendMessageWithAttachments(session, message, answerFiles) {
+    if (isEmpty(answerFiles)) { return session.send(message) }
+
+    const imageFiles = answerFiles
+      .filter(it => /image/.test(it.fileType))
+      .map(it => (new HeroCard(session)
+        .title(path.basename(it.file.url))
+        .images([CardImage.create(session, s3 + it.file.url)])
+        .buttons([CardAction.openUrl(session, s3 + it.file.url, '画像を開く')])))
+
+    const otherFiles = answerFiles
+      .filter(it => !/image/.test(it.fileType))
+      .map(it => (new HeroCard(session)
+        .title(decodeURIComponent(path.basename(it.file.url)))
+        .buttons([CardAction.openUrl(session, s3 + it.file.url, 'ダンロード')])))
+
+    const msg = new Message(session)
+      .attachmentLayout(AttachmentLayout.carousel)
+      .attachments(imageFiles.concat(otherFiles))
+
+    session.send(message)
+    session.send(msg)
   }
 }
 

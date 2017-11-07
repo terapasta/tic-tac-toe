@@ -1,4 +1,7 @@
 const axios = require('axios')
+const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config({ path: path.dirname(__dirname) + '/.env' })
 
 const { MYOPE_API_URL } = process.env
 
@@ -10,7 +13,7 @@ module.exports.createChat = ({
 }) => (
   axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chats`, {
     service_type,
-    uid,
+    uid: 'hogehoge',
     name
   })
 )

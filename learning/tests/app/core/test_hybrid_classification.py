@@ -3,7 +3,7 @@ import pandas as pd
 from nose.tools import ok_
 
 from app.core.hybrid_classification import HybridClassification
-from app.core.estimator.logistic_regression import LogisticRegression
+from app.core.estimator.naive_bayes import NaiveBayes
 from app.shared.constants import Constants
 from app.shared.datasource.datasource import Datasource
 from tests.support.helper import Helper
@@ -38,13 +38,12 @@ class HybridClassificationTestCase(TestCase):
             'うんち', 'ふがふが', 'よちよち',
             'あかちゃんはハイハイする', 'おかあさんと一緒', 'お義父さんは芝刈りにいきました',
         ])
-        # Note: 各クラスのサンプルが3つ以上ないとエラーになる
         answer_ids = [
-            100, 100, 100,
-            200, 200, 200,
-            300, 300, 300,
+            100, 200, 300,
+            400, 500, 600,
+            700, 800, 900,
         ]
-        estimator = LogisticRegression()
+        estimator = NaiveBayes()
         estimator.fit(answers.vectors, answer_ids)
         hc = HybridClassification(vectorizer=answers.vectorizer, estimator=estimator)
         first_step_result = pd.DataFrame({
@@ -53,7 +52,7 @@ class HybridClassificationTestCase(TestCase):
             'probability': [0.6],
         })
         results = hc.after_reply(self.question.text, first_step_result)
-        result = results[results['question_answer_id'] == 100]
+        most_similar = results[0]
 
         # probabilityが加算されること
-        ok_(result['probability'] > 0.6)
+        ok_(most_similar['probability'] > 0.6)

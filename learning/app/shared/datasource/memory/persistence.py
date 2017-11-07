@@ -1,12 +1,12 @@
-import inject
 from app.shared.app_status import AppStatus
 
 
 class Persistence:
-    @inject.params(app_status=AppStatus)
-    def __init__(self, app_status=None):
-        self.bot = app_status.current_bot()
-        self.data = {}
+    __shared_state = {}
+    data = {}
+
+    def __init__(self):
+        self.__dict__ = self.__shared_state
 
     def load(self, key):
         if self.__generate_key(key) in self.data:
@@ -17,4 +17,5 @@ class Persistence:
         self.data[self.__generate_key(key)] = obj
 
     def __generate_key(self, key):
-        return '{}/alg{}_{}'.format(self.bot.dump_dirpath, self.bot.algorithm, key)
+        bot = AppStatus().current_bot()
+        return '{}/alg{}_{}'.format(bot.dump_dirpath, bot.algorithm, key)

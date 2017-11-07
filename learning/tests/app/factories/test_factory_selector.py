@@ -7,6 +7,7 @@ from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
+from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
 
 from tests.support.helper import Helper
@@ -40,3 +41,9 @@ class FactorySelectorTestCase(TestCase):
         factory = FactorySelector().get_factory()
 
         eq_(factory.__class__.__name__, Word2vecWmdFactory.__name__)
+
+    def test_hybrid_classification(self):
+        Helper.init(bot_id=1, algorithm=Constants.ALGORITHM_HYBRID_CLASSIFICATION)
+        factory = FactorySelector().get_factory()
+
+        eq_(factory.__class__.__name__, HybridClassificationFactory.__name__)

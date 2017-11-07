@@ -6,6 +6,7 @@ from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
+from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
 
 class FactorySelector:
@@ -25,6 +26,10 @@ class FactorySelector:
         if self.bot.algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
             logger.info('algorithm: Word2vec WMD')
             return Word2vecWmdFactory()
+
+        if self.bot.algorithm == Constants.ALGORITHM_HYBRID_CLASSIFICATION:
+            logger.info('algorithm: Hybrid Classification')
+            return HybridClassificationFactory()
 
         if self.bot.algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
             logger.info('algorithm: Logistic Regression')

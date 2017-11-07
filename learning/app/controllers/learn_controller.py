@@ -47,17 +47,19 @@ class LearnController:
         self._factory.get_normalizer().fit(reduced_features)
 
     def _learn_bot(self):
-        logger.info('load question_answers')
-        bot_question_answers_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
+        logger.info('load question_answers and ratings')
+        bot_qa_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
+        bot_ratings_data = self._factory.get_datasource().ratings.by_bot(self.bot.id)
+
+        all_questions = np.array(pd.concat([bot_qa_data['question'], bot_ratings_data['question']]))
+        all_answer_ids = np.array(pd.concat([bot_qa_data['question_answer_id'], bot_ratings_data['question_answer_id']]), dtype=np.int)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
-        questions = np.array(bot_question_answers_data['question'])
-        questions = np.append(questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
-        question_answer_ids = np.array(bot_question_answers_data['question_answer_id'], dtype=np.int)
-        question_answer_ids = np.append(question_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
+        all_questions = np.append(all_questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
+        all_answer_ids = np.append(all_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
         logger.info('tokenize question_answers')
-        bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(questions)
+        bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(all_questions)
 
         logger.info('vectorize get_datasource')
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
@@ -65,7 +67,7 @@ class LearnController:
         logger.info('fit')
         self._factory.get_estimator().fit(
                 bot_features,
-                question_answer_ids,
+                all_answer_ids,
             )
 
     def _evaluate(self):

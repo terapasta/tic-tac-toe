@@ -2,7 +2,7 @@ import inject
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MinMaxScaler
-from app.core.estimator.logistic_regression import LogisticRegression as LogisticRegressionEstimator
+from app.core.estimator.naive_bayes import NaiveBayes
 from app.shared.logger import logger
 from app.shared.app_status import AppStatus
 
@@ -21,7 +21,7 @@ class HybridClassification:
         reducer=PassReducer,
         normalizer=PassNormalizer,
         datasource=Datasource,
-        estimator=LogisticRegressionEstimator,
+        estimator=NaiveBayes,
         app_status=AppStatus,
     )
     def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, app_status=None):

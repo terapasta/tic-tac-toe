@@ -1,9 +1,10 @@
 from unittest import TestCase
 import pandas as pd
-from nose.tools import ok_
+from nose.tools import ok_, assert_raises
 
 from app.core.hybrid_classification import HybridClassification
 from app.core.estimator.naive_bayes import NaiveBayes
+from app.core.estimator.logistic_regression import LogisticRegression
 from app.shared.constants import Constants
 from app.shared.datasource.datasource import Datasource
 from tests.support.helper import Helper
@@ -32,7 +33,23 @@ class HybridClassificationTestCase(TestCase):
         # エラーにならないこと
         ok_(True)
 
-    def test_after_reply(self):
+    def test_after_reply_by_naive_bayes(self):
+        estimator = NaiveBayes()
+        most_similar = self.__after_reply(estimator)
+
+        # probabilityが加算されること
+        ok_(most_similar['probability'] > 0.6)
+
+    def test_after_reply_by_logistic_regression(self):
+        estimator = LogisticRegression()
+
+        def action():
+            self.__after_reply(estimator)
+
+        # クラス毎のサンプル数が足りないためエラーになる
+        assert_raises(ValueError, action)
+
+    def __after_reply(self, estimator):
         answers = Helper.vectrize_for_test([
             '田舎のヤンキーはコンビニの前に座ってるの', 'コンビニのゴミ箱には捨てては行けない', 'どんどんどんドンキホーテ',
             'うんち', 'ふがふが', 'よちよち',
@@ -43,7 +60,6 @@ class HybridClassificationTestCase(TestCase):
             400, 500, 600,
             700, 800, 900,
         ]
-        estimator = NaiveBayes()
         estimator.fit(answers.vectors, answer_ids)
         hc = HybridClassification(vectorizer=answers.vectorizer, estimator=estimator)
         first_step_result = pd.DataFrame({
@@ -52,7 +68,4 @@ class HybridClassificationTestCase(TestCase):
             'probability': [0.6],
         })
         results = hc.after_reply(self.question.text, first_step_result)
-        most_similar = results[0]
-
-        # probabilityが加算されること
-        ok_(most_similar['probability'] > 0.6)
+        return results[0]

@@ -1,26 +1,16 @@
 from unittest import TestCase
-import inject
 import pandas as pd
 from nose.tools import ok_
 
 from app.core.word2vec_wmd import Word2vecWmd
-from app.shared.config import Config
 from app.shared.constants import Constants
-from app.shared.app_status import AppStatus
-from app.shared.datasource.datasource import Datasource
-
-
-class LearningParameter:
-    algorithm = Constants.ALGORITHM_WORD2VEC_WMD
+from tests.support.helper import Helper
 
 
 class Word2vecWmdTestCase(TestCase):
 
     def setUp(self):
-        inject.configure_once()
-        Config().init('test')
-        Datasource().init(datasource_type=Constants.DATASOURCE_TYPE_FILE)
-        AppStatus().set_bot(bot_id=1, learning_parameter=LearningParameter())
+        Helper.init(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
 
     def test_predict(self):
         estimator = Word2vecWmd()

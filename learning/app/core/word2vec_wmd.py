@@ -6,18 +6,25 @@ from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 from app.shared.config import Config
 
+from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
+from app.shared.datasource.file.question_answers import QuestionAnswers
+
 
 # Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
 class Word2vecWmd:
     __shared_state = {}
     __initialized = False
 
-    @inject.params(config=Config)
-    def __init__(self, tokenizer, datasource, config=None):
+    @inject.params(
+        config=Config,
+        tokenizer=MecabTokenizerWithSplit,
+        question_answers=QuestionAnswers,
+    )
+    def __init__(self, tokenizer=None, question_answers=None, config=None):
         self.__dict__ = self.__shared_state
         self.config = config
         self.tokenizer = tokenizer
-        self.datasource = datasource
+        self.question_answers = question_answers
 
         if not self.__initialized:
             data_path = self.__prepare_corpus_data()
@@ -33,7 +40,7 @@ class Word2vecWmd:
         self.__build_wmd_similarity()
 
     def predict(self, question_features):
-        bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
+        bot_question_answers_data = self.question_answers.by_bot(self.__bot_id())
 
         result = self.wmd_similarities[self.__bot_id()][question_features]
 
@@ -55,7 +62,7 @@ class Word2vecWmd:
         return AppStatus().current_bot().id
 
     def __build_wmd_similarity(self):
-        bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
+        bot_question_answers_data = self.question_answers.by_bot(self.__bot_id())
         bot_tokenized_sentences = self.tokenizer.tokenize(bot_question_answers_data['question'])
         self.wmd_similarities[self.__bot_id()] = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
 

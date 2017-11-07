@@ -28,11 +28,12 @@ class TwoStepCosineSimilarityFactory:
             self.estimator = estimator
         else:
             self.estimator = TwoStepsCosineSimilarity(
-                    self.tokenizer,
-                    self.vectorizer,
-                    self.reducer,
-                    self.normalizer,
-                    self.datasource,
+                    tokenizer=self.tokenizer,
+                    vectorizer=self.vectorizer,
+                    reducer=self.reducer,
+                    normalizer=self.normalizer,
+                    question_answers=self.datasource.question_answers,
+                    ratings=self.datasource.ratings,
                 )
 
     def get_tokenizer(self):

@@ -4,14 +4,17 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression as SkLogisticRegression
 from app.shared.logger import logger
 from app.shared.app_status import AppStatus
-from app.shared.datasource.datasource import Datasource
+from app.shared.datasource.file.persistence import Persistence
 
 
 class LogisticRegression:
-    @inject.params(datasource=Datasource, app_status=AppStatus)
-    def __init__(self, bot=None, datasource=None, app_status=None):
+    @inject.params(
+        persistence=Persistence,
+        app_status=AppStatus,
+    )
+    def __init__(self, bot=None, persistence=None, app_status=None):
         self.bot = app_status.current_bot()
-        self.persistence = datasource.persistence
+        self.persistence = persistence
         self.estimator = self.persistence.load(self.dump_key)
 
     def fit(self, x, y):

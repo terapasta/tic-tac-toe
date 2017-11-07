@@ -26,11 +26,11 @@ class CosineSimilarityFactory:
             self.estimator = estimator
         else:
             self.estimator = CosineSimilarity(
-                    self.tokenizer,
-                    self.vectorizer,
-                    self.reducer,
-                    self.normalizer,
-                    self.datasource,
+                    tokenizer=self.tokenizer,
+                    vectorizer=self.vectorizer,
+                    reducer=self.reducer,
+                    normalizer=self.normalizer,
+                    question_answers=self.datasource.question_answers,
                 )
 
     def get_tokenizer(self):

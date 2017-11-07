@@ -25,7 +25,9 @@ class Word2vecWmdFactory:
         if estimator is not None:
             self.estimator = estimator
         else:
-            self.estimator = Word2vecWmd(self.tokenizer, self.datasource)
+            self.estimator = Word2vecWmd(
+                tokenizer=self.tokenizer,
+                question_answers=self.datasource.question_answers)
 
     def get_tokenizer(self):
         return self.tokenizer

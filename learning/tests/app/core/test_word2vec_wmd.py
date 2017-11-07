@@ -4,7 +4,6 @@ import pandas as pd
 from nose.tools import ok_
 
 from app.core.word2vec_wmd import Word2vecWmd
-from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.shared.config import Config
 from app.shared.constants import Constants
 from app.shared.app_status import AppStatus
@@ -24,9 +23,7 @@ class Word2vecWmdTestCase(TestCase):
         AppStatus().set_bot(bot_id=1, learning_parameter=LearningParameter())
 
     def test_predict(self):
-        tokenizer = MecabTokenizerWithSplit()
-
-        estimator = Word2vecWmd(tokenizer, Datasource())
+        estimator = Word2vecWmd()
         result = estimator.predict(['田舎 ドンキホーテ'])
 
         # データが10件以下のオブジェクトが返ること

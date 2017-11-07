@@ -1,6 +1,7 @@
 import inject
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.preprocessing import MinMaxScaler
 from app.core.estimator.logistic_regression import LogisticRegression as LogisticRegressionEstimator
 from app.shared.logger import logger
 from app.shared.app_status import AppStatus
@@ -60,7 +61,10 @@ class HybridClassification:
         normalized_vectors = self.normalizer.transform(reduced_vectors)
 
         results = self.estimator.predict(normalized_vectors)
+        mms = MinMaxScaler(feature_range=(0, 0.3))
+        results['probability'] = mms.fit_transform(results['probability'])
 
+        # TODO: question_answer_idをキーにして加算する
         merged_data = data_frame.add(results).fillna(data_frame)
 
         logger.info('sort')

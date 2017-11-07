@@ -8,4 +8,6 @@ const env = fs.readFileSync(envFile, { encoding: 'UTF-8' })
   .map(it => it.split('='))
   .reduce((acc, it) => { acc[it[0]] = it[1]; return acc }, {})
 
-module.exports = env
+module.exports = Object.assign(env, {
+  NODE_ENV: process.env.NODE_ENV || 'development'
+})

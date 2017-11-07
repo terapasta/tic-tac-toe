@@ -1,9 +1,5 @@
 const axios = require('axios')
-const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config({ path: path.dirname(__dirname) + '/.env' })
-
-const { MYOPE_API_URL } = process.env
+const { MYOPE_API_URL } = require('./env')
 
 module.exports.createChat = ({
   botToken,

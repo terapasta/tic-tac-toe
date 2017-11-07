@@ -13,13 +13,18 @@ const {
 } = require('botbuilder')
 
 const {
+  NODE_ENV
+} = require('./env')
+
+const {
   createChat,
   createMessage,
   createChoice
 } = require('./api')
 
 const service_type = 'skype'
-const s3 = 'https://my-ope-assets-dev.s3.amazonaws.com'
+const s3 = NODE_ENV === 'development' ?
+  'https://my-ope-assets-dev.s3.amazonaws.com' : ''
 
 class Bot {
   constructor(connector) {

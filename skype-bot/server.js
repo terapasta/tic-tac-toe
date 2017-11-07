@@ -15,6 +15,9 @@ class Server {
   }
 
   run () {
+    this.server.get('/healthcheck', (req, res) => {
+      res.send('OK')
+    })
     this.server.post('/:botToken', (req, res) => {
       if (req.body) {
         this.passToChatListener(req, res)

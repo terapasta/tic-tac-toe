@@ -71,6 +71,16 @@ namespace :deploy do
     after :finished, 'slappy:restart'
   end
   # after :finished, 'update_neologd'
+
+  desc 'skype-botを起動'
+  task :run_skype_bot do
+    on roles(:app) do
+      within current_path.join('skype-bot') do
+        execute :npm, :install
+        execute :node, 'index.js'
+      end
+    end
+  end
 end
 
 namespace :webpacker do

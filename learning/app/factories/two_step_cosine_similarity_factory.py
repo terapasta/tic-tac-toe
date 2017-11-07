@@ -2,7 +2,7 @@ import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-from app.core.estimator.two_steps_cosine_similarity import TwoStepsCosineSimilarity
+from app.core.two_steps_cosine_similarity import TwoStepsCosineSimilarity
 # from app.core.reducer.lsi import LSI
 # from app.core.normalizer.normalizer import Normalizer
 from app.core.reducer.pass_reducer import PassReducer

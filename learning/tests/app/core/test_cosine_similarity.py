@@ -5,7 +5,7 @@ from nose.tools import ok_, assert_raises
 from sklearn.exceptions import NotFittedError
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-from app.core.estimator.cosine_similarity import CosineSimilarity
+from app.core.cosine_similarity import CosineSimilarity
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.config import Config

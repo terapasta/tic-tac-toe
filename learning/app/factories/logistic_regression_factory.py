@@ -2,7 +2,7 @@ import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-from app.core.estimator.logistic_regression import LogisticRegression
+from app.core.logistic_regression import LogisticRegression
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource

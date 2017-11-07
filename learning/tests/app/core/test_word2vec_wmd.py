@@ -3,7 +3,7 @@ import inject
 import pandas as pd
 from nose.tools import ok_
 
-from app.core.estimator.word2vec_wmd import Word2vecWmd
+from app.core.word2vec_wmd import Word2vecWmd
 from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.shared.config import Config
 from app.shared.constants import Constants

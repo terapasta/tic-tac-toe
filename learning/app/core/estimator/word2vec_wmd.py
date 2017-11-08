@@ -1,4 +1,5 @@
 import inject
+import pandas as pd
 from gensim.models import KeyedVectors
 from gensim.similarities import WmdSimilarity
 
@@ -10,6 +11,7 @@ from app.shared.config import Config
 # Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
 class Word2vecWmd:
     __shared_state = {}
+    __initialiging = False
     __initialized = False
 
     @inject.params(config=Config)
@@ -19,12 +21,16 @@ class Word2vecWmd:
         self.tokenizer = tokenizer
         self.datasource = datasource
 
+        if self.__initialiging:
+            return
         if not self.__initialized:
+            self.__initialiging = True
             data_path = self.__prepare_corpus_data()
             logger.info('load word2vec model: start')
             self.model = KeyedVectors.load_word2vec_format(data_path, binary=self.config.get('word2vec_model_is_binaly'))
             logger.info('load word2vec model: end')
             self.wmd_similarities = {}
+            self.__initialiging = False
             self.__initialized = True
         if self.__bot_id() not in self.wmd_similarities:
             self.__build_wmd_similarity()
@@ -33,6 +39,9 @@ class Word2vecWmd:
         self.__build_wmd_similarity()
 
     def predict(self, question_features):
+        if self.__initialiging:
+            return self.__no_data()
+
         bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
 
         result = self.wmd_similarities[self.__bot_id()][question_features]
@@ -76,3 +85,10 @@ class Word2vecWmd:
             logger.info('You got word2vec model')
 
         return model_path
+
+    def __no_data(self):
+        return pd.DataFrame({
+            'question': [],
+            'question_answer_id': [],
+            'probability': [],
+        })

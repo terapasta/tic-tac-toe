@@ -2,9 +2,10 @@ import inject
 from app.shared.logger import logger
 from app.shared.datasource.datasource import Datasource
 from app.core.estimator.logistic_regression import LogisticRegression as LogisticRegressionEstimator
+from app.core.base_core import BaseCore
 
 
-class LogisticRegression:
+class LogisticRegression(BaseCore):
     @inject.params(
         datasource=Datasource,
         estimator=LogisticRegressionEstimator,

@@ -2,9 +2,10 @@ import inject
 from sklearn.preprocessing import Normalizer as SkNormalizer
 from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
+from app.core.normalizer.base_normalizer import BaseNormalizer
 
 
-class Normalizer:
+class Normalizer(BaseNormalizer):
     @inject.params(datasource=Datasource, app_status=AppStatus)
     def __init__(self, datasource=None, app_status=None):
         self.bot = app_status.current_bot()

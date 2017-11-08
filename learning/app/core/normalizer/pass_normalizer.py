@@ -1,4 +1,7 @@
-class PassNormalizer:
+from app.core.normalizer.base_normalizer import BaseNormalizer
+
+
+class PassNormalizer(BaseNormalizer):
     def __init__(self):
         pass
 

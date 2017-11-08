@@ -1,7 +1,8 @@
 import numpy as np
+from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
-class PassVectorizer:
+class PassVectorizer(BaseVectorizer):
     def __init__(self):
         pass
 

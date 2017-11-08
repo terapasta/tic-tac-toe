@@ -1,13 +1,13 @@
-class BaseEstimator:
-    def __init__(self, persistence=None):
+class BaseReducer:
+    def fit(self, features):
         raise NotImplementedError()
 
-    def fit(self, x, y):
+    def transform(self, features):
         raise NotImplementedError()
 
-    def predict(self, question_features):
+    def fit_transform(self, features):
         raise NotImplementedError()
 
     @property
-    def dump_key(self):
+    def dump_path(self):
         raise NotImplementedError()

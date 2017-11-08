@@ -1,4 +1,7 @@
-class PassReducer:
+from app.core.reducer.base_reducer import BaseReducer
+
+
+class PassReducer(BaseReducer):
     def __init__(self):
         pass
 

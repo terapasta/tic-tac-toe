@@ -2,9 +2,10 @@ import inject
 from sklearn.decomposition import TruncatedSVD
 from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
+from app.core.reducer.base_reducer import BaseReducer
 
 
-class LSI:
+class LSI(BaseReducer):
     @inject.params(datasource=Datasource, app_status=AppStatus)
     def __init__(self, datasource=None, app_status=None):
         self.bot = app_status.current_bot()

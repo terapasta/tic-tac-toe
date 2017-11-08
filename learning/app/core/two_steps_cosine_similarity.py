@@ -11,11 +11,12 @@ from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource
+from app.core.base_core import BaseCore
 
 
 # Note: ユーザーの評価を検索結果に反映したコサイン類似検索
 #     ratingsテーブル内を類似検索し類似度の高いレコードのquestion_answer_idを使ってquestion_answersに類似検索をかける
-class TwoStepsCosineSimilarity:
+class TwoStepsCosineSimilarity(BaseCore):
     FIRST_STEP_THRESHOLD = 0.5
     BAD_QA_ID = '0'
 

@@ -3,9 +3,10 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
 from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
+from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
-class TfidfVectorizer:
+class TfidfVectorizer(BaseVectorizer):
     @inject.params(datasource=Datasource, app_status=AppStatus)
     def __init__(self, datasource=None, dump_key='sk_tfidf_vectorizer', app_status=None):
         self.bot = app_status.current_bot()

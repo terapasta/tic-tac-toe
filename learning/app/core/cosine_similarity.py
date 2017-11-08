@@ -9,9 +9,10 @@ from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource
+from app.core.base_core import BaseCore
 
 
-class CosineSimilarity:
+class CosineSimilarity(BaseCore):
     @inject.params(
         tokenizer=MecabTokenizer,
         vectorizer=TfidfVectorizer,

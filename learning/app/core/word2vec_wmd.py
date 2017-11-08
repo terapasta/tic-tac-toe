@@ -8,10 +8,11 @@ from app.shared.config import Config
 
 from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.shared.datasource.datasource import Datasource
+from app.core.base_core import BaseCore
 
 
 # Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
-class Word2vecWmd:
+class Word2vecWmd(BaseCore):
     __shared_state = {}
     __initialized = False
 

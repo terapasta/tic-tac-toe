@@ -49,7 +49,7 @@ class LearnController:
     def _learn_bot(self):
         logger.info('load question_answers and ratings')
         bot_qa_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
-        bot_ratings_data = self._factory.get_datasource().ratings.by_bot(self.bot.id)
+        bot_ratings_data = self._factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
 
         all_questions = np.array(pd.concat([bot_qa_data['question'], bot_ratings_data['question']]))
         all_answer_ids = np.array(pd.concat([bot_qa_data['question_answer_id'], bot_ratings_data['question_answer_id']]), dtype=np.int)

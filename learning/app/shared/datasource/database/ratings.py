@@ -1,4 +1,5 @@
 from app.shared.datasource.database.database import Database
+from app.shared.constants import Constants
 
 
 class Ratings:
@@ -15,6 +16,12 @@ class Ratings:
         return self.database.select(
                 "select * from ratings where bot_id = %(bot_id)s;",
                 params={"bot_id": bot_id},
+            )
+
+    def with_good_by_bot(self, bot_id):
+        return self.database.select(
+                "select * from ratings where bot_id = %(bot_id)s and level = %(level)s;",
+                params={"bot_id": bot_id, "level": Constants.RATING_GOOD},
             )
 
     def higher_rate_by_bot_question(self, bot_id, question):

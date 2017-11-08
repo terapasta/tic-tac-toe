@@ -69,13 +69,6 @@ class HybridClassification:
         merged_data['probability'] = merged_data['probability_x'] + merged_data['probability_y']
         merged_data = merged_data[['question_answer_id', 'question', 'probability']]
 
-        logger.info('sort')
-        merged_data = merged_data.sort_values(by='probability', ascending=False)
-        merged_data = merged_data.to_dict('records')[:10]
-
-        for row in merged_data:
-            logger.debug(row)
-
         return merged_data
 
     def __no_data(self):

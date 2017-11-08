@@ -35,7 +35,7 @@ class HybridClassificationTestCase(TestCase):
 
     def test_after_reply_by_naive_bayes(self):
         estimator = NaiveBayes()
-        most_similar = self.__after_reply(estimator)
+        most_similar = self.__after_reply(estimator)[0]
 
         # probabilityが加算されること
         ok_(most_similar['probability'] > 0.6)
@@ -68,4 +68,7 @@ class HybridClassificationTestCase(TestCase):
             'probability': [0.6, 0.2, 0.1],
         })
         results = hc.after_reply(self.question.text, first_step_result)
-        return results[0]
+        results = results.sort_values(by='probability', ascending=False)
+        results = results.to_dict('records')[:10]
+
+        return results

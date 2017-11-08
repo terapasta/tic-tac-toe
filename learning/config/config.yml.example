@@ -26,9 +26,9 @@ test:
 production:
   <<: *default
   database:
-    endpoint: 
-    host: 
-    name: 
-    user: 
-    password: 
+    endpoint:
+    host:
+    name:
+    user:
+    password:
   dicdir:

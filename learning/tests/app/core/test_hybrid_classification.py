@@ -46,7 +46,7 @@ class HybridClassificationTestCase(TestCase):
         def action():
             self.__after_reply(estimator)
 
-        # クラス毎のサンプル数が足りないためエラーになる
+        # クラス毎のサンプル数が足りないためエラーになる(各クラス3サンプル以上あれば大丈夫)
         assert_raises(ValueError, action)
 
     def __after_reply(self, estimator):

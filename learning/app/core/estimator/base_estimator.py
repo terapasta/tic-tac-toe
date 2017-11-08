@@ -2,13 +2,19 @@ from abc import ABCMeta, abstractmethod
 
 
 class BaseEstimator(metaclass=ABCMeta):
-    """
-    Base of Estimator class
-    """
+    @abstractmethod
+    def __init__(self, persistence=None):
+        pass
 
     @abstractmethod
     def fit(self, x, y):
-        """
-        fitting method
-        """
+        pass
+
+    @abstractmethod
+    def predict(self, question_features):
+        pass
+
+    @property
+    @abstractmethod
+    def dump_key(self):
         pass

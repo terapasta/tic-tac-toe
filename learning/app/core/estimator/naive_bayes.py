@@ -2,9 +2,10 @@ import inject
 import pandas as pd
 from sklearn.naive_bayes import MultinomialNB
 from app.shared.datasource.file.persistence import Persistence
+from app.core.estimator.base_estimator import BaseEstimator
 
 
-class NaiveBayes:
+class NaiveBayes(BaseEstimator):
     @inject.params(
         persistence=Persistence,
     )

@@ -64,8 +64,10 @@ class HybridClassification:
         mms = MinMaxScaler(feature_range=(0, 0.3))
         results['probability'] = mms.fit_transform(results['probability'])
 
-        # TODO: question_answer_idをキーにして加算する
-        merged_data = data_frame.add(results).fillna(data_frame)
+        # question_answer_idをキーにしてprobabilityを加算する
+        merged_data = data_frame.merge(results, on='question_answer_id', how='left', suffix=('x', 'y'))
+        merged_data['probability'] = merged_data['probability_x'] + merged_data['probability_y']
+        merged_data = merged_data[['question_answer_id', 'question', 'probability']]
 
         logger.info('sort')
         merged_data = merged_data.sort_values(by='probability', ascending=False)

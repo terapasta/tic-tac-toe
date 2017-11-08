@@ -51,7 +51,7 @@ class HybridClassificationTestCase(TestCase):
 
     def __after_reply(self, estimator):
         answers = Helper.vectrize_for_test([
-            '田舎のヤンキーはコンビニの前に座ってるの', 'コンビニのゴミ箱には捨てては行けない', 'どんどんどんドンキホーテ',
+            '田舎のヤンキーはコンビニの前に座ってるの', 'コンビニのゴミ箱には捨ててはいけない', 'どんどんどんドンキホーテ',
             'うんち', 'ふがふが', 'よちよち',
             'あかちゃんはハイハイする', 'おかあさんと一緒', 'お義父さんは芝刈りにいきました',
         ])
@@ -63,9 +63,9 @@ class HybridClassificationTestCase(TestCase):
         estimator.fit(answers.vectors, answer_ids)
         hc = HybridClassification(vectorizer=answers.vectorizer, estimator=estimator)
         first_step_result = pd.DataFrame({
-            'question': ['賑わってる'],
-            'question_answer_id': [100],
-            'probability': [0.6],
+            'question': ['賑わってる', 'うんちブリブリ', 'ヤンキーくんはメガネをかけている'],
+            'question_answer_id': [300, 400, 100],
+            'probability': [0.6, 0.2, 0.1],
         })
         results = hc.after_reply(self.question.text, first_step_result)
         return results[0]

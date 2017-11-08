@@ -65,7 +65,7 @@ class LearnController:
         bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
 
         logger.info('fit')
-        self._factory.get_estimator().fit(
+        self._factory.core.fit(
                 bot_features,
                 all_answer_ids,
             )

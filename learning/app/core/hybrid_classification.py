@@ -65,7 +65,7 @@ class HybridClassification:
         results['probability'] = mms.fit_transform(results['probability'])
 
         # question_answer_idをキーにしてprobabilityを加算する
-        merged_data = data_frame.merge(results, on='question_answer_id', how='left', suffix=('x', 'y'))
+        merged_data = data_frame.merge(results, on='question_answer_id', how='left')
         merged_data['probability'] = merged_data['probability_x'] + merged_data['probability_y']
         merged_data = merged_data[['question_answer_id', 'question', 'probability']]
 

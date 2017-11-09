@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024062352) do
+ActiveRecord::Schema.define(version: 20171109070733) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.text "question_text"
@@ -61,7 +61,19 @@ ActiveRecord::Schema.define(version: 20171024062352) do
     t.text "selected_question_answer_ids"
     t.text "has_suggests_message"
     t.boolean "enable_guest_user_registration", default: false
+    t.string "widget_subtitle"
     t.index ["user_id"], name: "index_bots_on_user_id"
+  end
+
+  create_table "chat_service_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "bot_id", null: false
+    t.integer "service_type", default: 0, null: false
+    t.string "uid", null: false
+    t.string "name"
+    t.string "guest_key", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "service_type", "uid"], name: "index_chat_service_users_on_bot_id_and_service_type_and_uid", unique: true
   end
 
   create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -71,6 +83,7 @@ ActiveRecord::Schema.define(version: 20171024062352) do
     t.integer "bot_id", null: false
     t.boolean "is_staff", default: false
     t.boolean "is_normal", default: false, null: false
+    t.index ["guest_key"], name: "index_chats_on_guest_key"
     t.index ["is_normal"], name: "index_chats_on_is_normal"
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end
@@ -159,6 +172,7 @@ ActiveRecord::Schema.define(version: 20171024062352) do
     t.integer "question_answer_id"
     t.text "similar_question_answers_log"
     t.integer "decision_branch_id"
+    t.boolean "is_show_similar_question_answers", default: true
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["question_answer_id"], name: "index_messages_on_question_answer_id"
   end

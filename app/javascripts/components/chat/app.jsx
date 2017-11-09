@@ -123,6 +123,7 @@ export default class ChatApp extends Component {
                   index: i,
                   section,
                   learnings,
+                  scrollableElement: this.area,
                   onClick(index) {
                     dispatch(a.toggleActiveSection(index));
                   },

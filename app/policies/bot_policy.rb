@@ -48,6 +48,7 @@ class BotPolicy < ApplicationPolicy
       :start_message,
       :has_suggests_message,
       :enable_guest_user_registration,
+      :widget_subtitle,
       {
         allowed_hosts_attributes: [
           :id,

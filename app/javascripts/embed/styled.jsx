@@ -135,6 +135,7 @@ export const Logo = styled.div`
   position: absolute;
   top: 10px;
   left: 65px;
+  color: #fff;
 
   svg {
     vertical-align: top;

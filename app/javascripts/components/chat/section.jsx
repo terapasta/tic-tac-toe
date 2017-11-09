@@ -42,13 +42,13 @@ export default class ChatSection extends Component {
   }
 
   scrollToRootIfChangedToActive(prevProps) {
+    const { scrollableElement } = this.props;
     const isChangedToActive = !prevProps.isActive && this.props.isActive;
     const isChangedToShowingUpSQA = !prevProps.section.isShowSimilarQuestionAnswers && this.props.section.isShowSimilarQuestionAnswers;
 
     if (isChangedToActive || isChangedToShowingUpSQA) {
-      const { top } = getOffset(findDOMNode(this.refs.root));
-      const scrollableElement = this.props.scrollableElement || window;
-      const scrollTargetY = top - HeaderHeight;
+      const { top } = getOffset(this.root);
+      const scrollTargetY = top - HeaderHeight + scrollableElement.scrollTop;
       scrollableElement.scrollTo(0, scrollTargetY);
     }
   }
@@ -84,7 +84,7 @@ export default class ChatSection extends Component {
     return (
       <div
         className={className}
-        ref="root"
+        ref={node => this.root = node}
         data-decision-branch={isDecisionBranch || isSQA}
       >
         <div className="chat-section__inner">

@@ -18,7 +18,7 @@ module Replyable
         created_at: guest_message.created_at + 1.second,
       )
       if responder.present?
-        responder.similar_question_answers_in(reply.question_answer_ids).compact.tap do |suggests|
+        responder.similar_question_answers_in(reply.question_answer_ids, without_id: qa.id).compact.tap do |suggests|
           bot_message.similar_question_answers = suggests
           bot_message.update!(
             similar_question_answers_log: suggests.as_json(only: [:question, :answer]),

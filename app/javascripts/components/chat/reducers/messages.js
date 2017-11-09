@@ -182,7 +182,7 @@ export function changeRatingHandler(state, action) {
   const tailSections = state.classifiedData.slice(index + 1);
 
   times(2, (n) => {
-    if (!isEmpty(tailSections[n].similarQuestionAnswers)) {
+    if (!isEmpty((tailSections[n] || {}).similarQuestionAnswers)) {
       tailSections[n] = assign({}, tailSections[n], { isShowSimilarQuestionAnswers: true });
     }
   })

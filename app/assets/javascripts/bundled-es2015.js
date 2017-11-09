@@ -6401,7 +6401,7 @@ function changeRatingHandler(state, action) {
   var tailSections = state.classifiedData.slice(index + 1);
 
   (0, _times2.default)(2, function (n) {
-    if (!(0, _isEmpty2.default)(tailSections[n].similarQuestionAnswers)) {
+    if (!(0, _isEmpty2.default)((tailSections[n] || {}).similarQuestionAnswers)) {
       tailSections[n] = (0, _assign2.default)({}, tailSections[n], { isShowSimilarQuestionAnswers: true });
     }
   });
@@ -6601,21 +6601,24 @@ var ChatSection = function (_Component) {
   }, {
     key: "scrollToRootIfChangedToActive",
     value: function scrollToRootIfChangedToActive(prevProps) {
+      var scrollableElement = this.props.scrollableElement;
+
       var isChangedToActive = !prevProps.isActive && this.props.isActive;
       var isChangedToShowingUpSQA = !prevProps.section.isShowSimilarQuestionAnswers && this.props.section.isShowSimilarQuestionAnswers;
 
       if (isChangedToActive || isChangedToShowingUpSQA) {
-        var _getOffset = (0, _getOffset3.default)((0, _reactDom.findDOMNode)(this.refs.root)),
+        var _getOffset = (0, _getOffset3.default)(this.root),
             top = _getOffset.top;
 
-        var scrollableElement = this.props.scrollableElement || window;
-        var scrollTargetY = top - HeaderHeight;
+        var scrollTargetY = top - HeaderHeight + scrollableElement.scrollTop;
         scrollableElement.scrollTo(0, scrollTargetY);
       }
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           children = _props.children,
           isManager = _props.isManager,
@@ -6648,7 +6651,9 @@ var ChatSection = function (_Component) {
         "div",
         {
           className: className,
-          ref: "root",
+          ref: function ref(node) {
+            return _this2.root = node;
+          },
           "data-decision-branch": isDecisionBranch || isSQA
         },
         _react2.default.createElement(

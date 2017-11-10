@@ -5,7 +5,7 @@ describe Replyable do
   let(:klass) { Struct.new(:replayable) { include Replyable } }
   let(:replayable) { klass.new }
 
-  describe '#enabled_suggest_question?' do
+  describe '#show_similar question_answers?' do
     let(:bot) { create(:bot) }
     let(:chat) { create(:chat, bot: bot) }
     let(:question) { '質問です。ほげほげ、もげもげ' }
@@ -18,7 +18,7 @@ describe Replyable do
     ) }
 
     # HACK privateメソッドをテストしてしまっているためクラス設計がよくない
-    subject { replayable.send(:enabled_suggest_question?, reply, chat) }
+    subject { replayable.send(:show_similar_question_answers?, reply) }
 
     it { is_expected.to be_truthy }
 

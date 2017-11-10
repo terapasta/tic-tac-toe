@@ -4,7 +4,11 @@ $chat-section-switch-size: 36px;
 $chat-section-switch-size-xs: 32px;
 
 %base-chat-section {
+  // transition-property: padding max-height;
+  // transition-duration: 1000ms;
   position: relative;
+  max-height: 1000px;
+  overflow: hidden;
 
   &.active {
     .chat-section__switch {
@@ -15,6 +19,12 @@ $chat-section-switch-size-xs: 32px;
       display: block;
     }
   }
+
+  &.collapsed {
+    // padding: 0;
+    max-height: 0;
+    border-bottom: 0 !important;
+  }
 }
 
 .chat-section {
@@ -22,7 +32,6 @@ $chat-section-switch-size-xs: 32px;
 
   &--bordered {
     @extend %base-chat-section;
-    padding-top: 16px;
     padding-left: $chat-section-switch-container-width;
     border-bottom: 1px solid darken($gray-lighter, 10%);
 
@@ -41,6 +50,10 @@ $chat-section-switch-size-xs: 32px;
     .chat-section__switch-container {
       display: block;
     }
+  }
+
+  &__inner {
+    padding-top: 16px;
   }
 
   &__switch-container {

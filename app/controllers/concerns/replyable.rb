@@ -18,14 +18,15 @@ module Replyable
         created_at: guest_message.created_at + 1.second,
       )
       if responder.present?
-        if enabled_suggest_question?(reply, parent)
-          responder.similar_question_answers_in(reply.question_answer_ids).compact.tap do |suggests|
-            bot_message.similar_question_answers = suggests
-            bot_message.update!(similar_question_answers_log: suggests.as_json(only: [:question, :answer]))
-            if suggests.count > 0 && qa.no_classified?
-              bot_message.body = parent.bot.render_has_suggests_message(guest_message.body)
-              bot_message.update!(answer_failed: false)
-            end
+        responder.similar_question_answers_in(reply.question_answer_ids, without_id: qa.id).compact.tap do |suggests|
+          bot_message.similar_question_answers = suggests
+          bot_message.update!(
+            similar_question_answers_log: suggests.as_json(only: [:question, :answer]),
+            is_show_similar_question_answers: show_similar_question_answers?(reply)
+          )
+          if suggests.count > 0 && qa.no_classified?
+            bot_message.body = parent.bot.render_has_suggests_message(guest_message.body)
+            bot_message.update!(answer_failed: false)
           end
         end
       end
@@ -41,10 +42,8 @@ module Replyable
       params[:auto] == '1'
     end
 
-    # HACK questionはreplyが持っているので引数に必要ない？
-    def enabled_suggest_question?(reply, parent)
-      return false unless parent.is_a?(Chat)
-      (reply.probability < MyOpeConfig.threshold_of_suggest_similar_questions) ||
+    def show_similar_question_answers?(reply)
+      reply.probability < MyOpeConfig.threshold_of_suggest_similar_questions ||
       (reply.probability < 0.9 && reply.question.length <= 5) ||
       (reply.probability < 0.9 && reply.question_feature_count <= 2)
     end

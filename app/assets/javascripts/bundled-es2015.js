@@ -6611,7 +6611,11 @@ var ChatSection = function (_Component) {
             top = _getOffset.top;
 
         var scrollTargetY = top - HeaderHeight + scrollableElement.scrollTop;
-        scrollableElement.scrollTo(0, scrollTargetY);
+        if (typeof scrollableElement.scrollTo === 'function') {
+          scrollableElement.scrollTo(0, scrollTargetY);
+        } else {
+          scrollableElement.scrollTop = scrollTargetY;
+        }
       }
     }
   }, {

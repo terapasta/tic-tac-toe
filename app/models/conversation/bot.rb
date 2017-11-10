@@ -58,8 +58,9 @@ class Conversation::Bot
     reply
   end
 
-  def similar_question_answers_in(question_answer_ids)
+  def similar_question_answers_in(question_answer_ids, without_id: nil)
     question_answers = @bot.question_answers.where(id: question_answer_ids)
+    question_answers = question_answers.where.not(id: [without_id]) if without_id.present?
     question_answer_ids.map{|id| question_answers.find{|x| id == x.id}}
   end
 

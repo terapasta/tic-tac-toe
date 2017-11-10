@@ -1,11 +1,11 @@
 import assign from "lodash/assign";
-import chunk from "lodash/chunk";
 import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import last from "lodash/last";
 import pick from "lodash/pick";
 import findIndex from "lodash/findIndex";
 import isArray from "lodash/isArray";
+import times from "lodash/times";
 import isEmpty from "is-empty";
 import { handleActions } from "redux-actions";
 
@@ -39,9 +39,10 @@ export function classify(data, messages, isLastPage) {
   }
 
   messages.forEach((message) => {
+    const { isShowSimilarQuestionAnswers } = message;
     switch(message.speaker) {
       case Speaker.Guest:
-        sections.push({ question: message });
+        sections.push({ question: message, isShowSimilarQuestionAnswers });
         break;
       case Speaker.Bot:
         sections = classifyBotMessage(sections, message);
@@ -59,14 +60,15 @@ export function classifyBotMessage(sections, message) {
   lastSec.answer = pickUp(message);
   secs[secs.length - 1] = lastSec;
 
+  const { similarQuestionAnswers, isShowSimilarQuestionAnswers } = message;
   const decisionBranches = get(message, "questionAnswer.decisionBranches", null) || get(message, 'childDecisionBranches');
+
   if (!isEmpty(decisionBranches)) {
-    secs.push({ decisionBranches });
+    secs.push({ decisionBranches, isShowSimilarQuestionAnswers: true });
   }
 
-  const { similarQuestionAnswers } = message;
   if (!isEmpty(similarQuestionAnswers)) {
-    secs.push({ similarQuestionAnswers });
+    secs.push({ similarQuestionAnswers, isShowSimilarQuestionAnswers });
   }
 
   return secs;
@@ -140,7 +142,7 @@ export default handleActions({
       initialQuestionsSection = { similarQuestionAnswers: payload };
     } else if (isArray(initialQuestionsSection.similarQuestionAnswers)) {
       initialQuestionsSection.similarQuestionAnswers = payload;
-    } else if (initialQuestionsSection.similarQuestionAnswers == null) {
+    } else if (isEmpty(initialQuestionsSection.similarQuestionAnswers)) {
       initialQuestionsSection = { similarQuestionAnswers: payload };
       sliceIndex = 1;
     }
@@ -177,10 +179,18 @@ export function changeRatingHandler(state, action) {
     return get(section, "answer.id") === message.id;
   });
   const section = state.classifiedData[index];
+  const tailSections = state.classifiedData.slice(index + 1);
+
+  times(2, (n) => {
+    if (!isEmpty((tailSections[n] || {}).similarQuestionAnswers)) {
+      tailSections[n] = assign({}, tailSections[n], { isShowSimilarQuestionAnswers: true });
+    }
+  })
+
   const classifiedData =[
     ...state.classifiedData.slice(0, index),
     assign(section, { answer: pickUp(message) }),
-    ...state.classifiedData.slice(index + 1),
+    ...tailSections
   ];
   return assign({}, state, { classifiedData });
 }
@@ -204,8 +214,8 @@ export function doneDecisionBranchesOtherThanLast(classifiedData) {
   };
 
   return data.map((section, i) => {
-    const isLast = i == lastIndex;
-    const isBeforeLast = i == beforeLastIndex;
+    const isLast = i === lastIndex;
+    const isBeforeLast = i === beforeLastIndex;
 
     if (hasDBorSQL(section) && !isLast) {
       // 最後から２つのsectionが両方共選択系だったらdoneしない

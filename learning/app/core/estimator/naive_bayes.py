@@ -1,23 +1,21 @@
 import inject
 import pandas as pd
-from sklearn.grid_search import GridSearchCV
-from sklearn.linear_model import LogisticRegression as SkLogisticRegression
+from sklearn.naive_bayes import MultinomialNB
 from app.shared.datasource.datasource import Datasource
 
 
-class LogisticRegression:
+class NaiveBayes:
     @inject.params(
         datasource=Datasource,
     )
     def __init__(self, datasource=None):
         self.persistence = datasource.persistence
         self.estimator = self.persistence.load(self.dump_key)
+        if self.estimator is None:
+            self.estimator = MultinomialNB()
 
     def fit(self, x, y):
-        params = {'C': [10, 100, 140, 200]}
-        grid = GridSearchCV(SkLogisticRegression(), param_grid=params)
-        grid.fit(x, y)
-        self.estimator = grid.best_estimator_
+        self.estimator.fit(x, y)
         self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, question_features):
@@ -29,4 +27,4 @@ class LogisticRegression:
 
     @property
     def dump_key(self):
-        return 'sk_logistic_regression_estimator'
+        return 'sk_naive_bayes_estimator'

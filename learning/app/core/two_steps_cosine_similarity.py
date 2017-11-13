@@ -6,6 +6,12 @@ from app.shared.logger import logger
 from app.shared.app_status import AppStatus
 from app.shared.constants import Constants
 
+from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
+from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
+from app.core.reducer.pass_reducer import PassReducer
+from app.core.normalizer.pass_normalizer import PassNormalizer
+from app.shared.datasource.datasource import Datasource
+
 
 # Note: ユーザーの評価を検索結果に反映したコサイン類似検索
 #     ratingsテーブル内を類似検索し類似度の高いレコードのquestion_answer_idを使ってquestion_answersに類似検索をかける
@@ -13,20 +19,28 @@ class TwoStepsCosineSimilarity:
     FIRST_STEP_THRESHOLD = 0.5
     BAD_QA_ID = '0'
 
-    @inject.params(app_status=AppStatus)
-    def __init__(self, tokenizer, vectorizer, reducer, normalizer, datasource, app_status=None):
+    @inject.params(
+        tokenizer=MecabTokenizer,
+        vectorizer=TfidfVectorizer,
+        reducer=PassReducer,
+        normalizer=PassNormalizer,
+        datasource=Datasource,
+        app_status=AppStatus,
+    )
+    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, app_status=None):
         self.bot = app_status.current_bot()
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.vectorizer_for_qaid = vectorizer.__class__(dump_key='two_steps_tfidf_vectorizer')
         self.reducer = reducer
         self.normalizer = normalizer
-        self.datasource = datasource
+        self.question_answers = datasource.question_answers
+        self.ratings = datasource.ratings
 
     def fit(self, x, y):
         logger.info('learn vocabulary with question_id')
-        question_answers = self.datasource.question_answers.all()
-        ratings = self.datasource.ratings.all()
+        question_answers = self.question_answers.all()
+        ratings = self.ratings.all()
         all_questions = pd.concat([question_answers[['question', 'question_answer_id']], ratings[['question', 'question_answer_id']]])
         sentences = self.__tokenize_with_qaid(all_questions['question'], all_questions['question_answer_id'].astype(str))
         self.vectorizer_for_qaid.fit(sentences)
@@ -35,7 +49,7 @@ class TwoStepsCosineSimilarity:
         logger.info('first step cosine similarity')
 
         # Note: ratingsテーブルから類似questionを検索する
-        ratings = self.datasource.ratings.by_bot(self.bot.id)
+        ratings = self.ratings.by_bot(self.bot.id)
         if len(ratings) == 0:
             return self.__no_data()
         bot_tokenized_sentences = self.tokenizer.tokenize(ratings['question'])
@@ -53,7 +67,7 @@ class TwoStepsCosineSimilarity:
         if len(result) == 0 or top_probability < self.FIRST_STEP_THRESHOLD:
             return self.__no_data()
         most_similar_question = result['question'].values[0]
-        higher_ratings = self.datasource.ratings.higher_rate_by_bot_question(self.bot.id, most_similar_question)
+        higher_ratings = self.ratings.higher_rate_by_bot_question(self.bot.id, most_similar_question)
         if len(higher_ratings) == 0:
             return self.__no_data()
         top_rating_qaid = higher_ratings['question_answer_id'].values[0]
@@ -74,7 +88,7 @@ class TwoStepsCosineSimilarity:
         logger.debug(data_frame)
         tokenized_questions = None
         tokenized_answers = None
-        question_answers = self.datasource.question_answers.by_bot(self.bot.id)
+        question_answers = self.question_answers.by_bot(self.bot.id)
 
         if len(data_frame) == 0:
             # Note: ratingが付いた類似解答が見つからなかった場合は通常のコサイン類似検索を行う

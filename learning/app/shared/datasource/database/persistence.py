@@ -6,16 +6,16 @@ from app.shared.datasource.database.database import Database
 
 
 class Persistence:
-    @inject.params(database=Database, app_status=AppStatus)
-    def __init__(self, database=None, app_status=None):
-        self.bot = app_status.current_bot()
+    @inject.params(database=Database)
+    def __init__(self, database=None):
         self.database = database
 
     def load(self, name):
+        bot = AppStatus().current_bot()
         records = self.database.select(
             'SELECT * FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
             {
-                'bot_id': self.bot.id,
+                'bot_id': bot.id,
                 'name': self.__generate_key(name),
             },
         )
@@ -26,6 +26,7 @@ class Persistence:
         return None
 
     def dump(self, obj, name):
+        bot = AppStatus().current_bot()
         file = io.BytesIO()
         joblib.dump(obj, file)
         file.seek(0)
@@ -34,14 +35,14 @@ class Persistence:
                     [
                         'DELETE FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
                         {
-                            'bot_id': self.bot.id,
+                            'bot_id': bot.id,
                             'name': self.__generate_key(name),
                         },
                     ],
                     [
                         'INSERT INTO dumps (bot_id, name, content) VALUES (%(bot_id)s, %(name)s, %(content)s);',
                         {
-                            'bot_id': self.bot.id,
+                            'bot_id': bot.id,
                             'name': self.__generate_key(name),
                             'content': file.getvalue(),
                         },
@@ -50,4 +51,5 @@ class Persistence:
             )
 
     def __generate_key(self, name):
-        return 'alg{}_{}'.format(self.bot.algorithm, name)
+        bot = AppStatus().current_bot()
+        return 'alg{}_{}'.format(bot.algorithm, name)

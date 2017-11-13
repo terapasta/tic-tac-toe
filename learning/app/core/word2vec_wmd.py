@@ -43,6 +43,9 @@ class Word2vecWmd:
             self.__build_wmd_similarity()
 
     def fit(self, x, y):
+        if self.__initialiging:
+            return
+
         self.__build_wmd_similarity()
 
     def predict(self, question_features):

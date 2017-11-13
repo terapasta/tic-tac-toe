@@ -1,10 +1,10 @@
 import inject
 
-from app.core.estimator.word2vec_wmd import Word2vecWmd
 from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.vectorizer.pass_vectorizer import PassVectorizer
+from app.core.word2vec_wmd import Word2vecWmd
 from app.shared.datasource.datasource import Datasource
 
 
@@ -16,16 +16,20 @@ class Word2vecWmdFactory:
         normalizer=PassNormalizer,
         datasource=Datasource,
     )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None):
+    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, core=None):
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer
         self.normalizer = normalizer
         self.datasource = datasource
-        if estimator is not None:
-            self.estimator = estimator
+        self.estimator = estimator
+        if core is not None:
+            self._core = core
         else:
-            self.estimator = Word2vecWmd(self.tokenizer, self.datasource)
+            self._core = Word2vecWmd(
+                tokenizer=self.tokenizer,
+                datasource=self.datasource
+            )
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -44,3 +48,7 @@ class Word2vecWmdFactory:
 
     def get_estimator(self):
         return self.estimator
+
+    @property
+    def core(self):
+        return self._core

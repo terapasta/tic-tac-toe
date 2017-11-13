@@ -7,6 +7,9 @@ from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 from app.shared.config import Config
 
+from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
+from app.shared.datasource.datasource import Datasource
+
 
 # Note: modelデータとWmdSimilarityインスタンスをメモリ上に保持するためにシングルトンで実装している
 class Word2vecWmd:
@@ -14,12 +17,16 @@ class Word2vecWmd:
     __initialiging = False
     __initialized = False
 
-    @inject.params(config=Config)
-    def __init__(self, tokenizer, datasource, config=None):
+    @inject.params(
+        config=Config,
+        tokenizer=MecabTokenizerWithSplit,
+        datasource=Datasource,
+    )
+    def __init__(self, tokenizer=None, datasource=None, config=None):
         self.__dict__ = self.__shared_state
         self.config = config
         self.tokenizer = tokenizer
-        self.datasource = datasource
+        self.question_answers = datasource.question_answers
 
         if self.__initialiging:
             return
@@ -36,13 +43,16 @@ class Word2vecWmd:
             self.__build_wmd_similarity()
 
     def fit(self, x, y):
+        if self.__initialiging:
+            return
+
         self.__build_wmd_similarity()
 
     def predict(self, question_features):
         if self.__initialiging:
             return self.__no_data()
 
-        bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
+        bot_question_answers_data = self.question_answers.by_bot(self.__bot_id())
 
         result = self.wmd_similarities[self.__bot_id()][question_features]
 
@@ -64,7 +74,7 @@ class Word2vecWmd:
         return AppStatus().current_bot().id
 
     def __build_wmd_similarity(self):
-        bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
+        bot_question_answers_data = self.question_answers.by_bot(self.__bot_id())
         bot_tokenized_sentences = self.tokenizer.tokenize(bot_question_answers_data['question'])
         self.wmd_similarities[self.__bot_id()] = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
 

@@ -5,17 +5,17 @@ import numpy as np
 from app.shared.constants import Constants
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
-from app.factories.cosine_similarity_factory import CosineSimilarityFactory
+from app.factories.hybrid_classification_factory import HybridClassificationFactory
 from tests.support.helper import Helper
 
 
-class CosineSimilarityClassificationTestCase(TestCase):
+class HybridClassificationTestCase(TestCase):
 
     def setUp(self):
         Helper.init(bot_id=1, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
 
     def test_learn_and_reply(self):
-        factory = CosineSimilarityFactory()
+        factory = HybridClassificationFactory()
 
         LearnController(factory=factory).perform()
 

@@ -5,6 +5,7 @@ class Chats::MessageRatingController < ApplicationController
 
   def good
     @message.good!
+    @bot.learn_later
     render json: @message, adapter: :json
   end
 

@@ -61,12 +61,11 @@ class Chat < ApplicationRecord
     find_by(id: chat_id).messages.guest.where('id < ?', answer_message_id).order(:id).last
   }
 
-  scope :in_today_by_unique_user, -> {
-    now = Time.current
+  scope :in_date_by_unique_user, -> (date) {
     joins(:messages)
       .where(messages: {
         speaker: :guest,
-        created_at: (now.beginning_of_day..now.end_of_day)
+        created_at: (date.beginning_of_day..date.end_of_day)
       })
       .distinct
   }

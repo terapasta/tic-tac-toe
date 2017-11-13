@@ -14,6 +14,15 @@ class BotsController < ApplicationController
       @chats_limit = current_user.chats_limit_per_day(@bot)
       @progress = ((@today_chats_count.to_f / @chats_limit.to_f) * 100).round
     end
+
+    if current_user.staff?
+      @recent_30days_users_count = 30.times.map{ |n|
+        @bot.chats.count_of_guests_in(n.days.ago)
+      }.reduce(:+)
+      @total_reducted_minutes = @recent_30days_users_count * 5
+      @reducted_hours = @total_reducted_minutes / 60
+      @reducted_minutes = @total_reducted_minutes % 60
+    end
   end
 
   def reset

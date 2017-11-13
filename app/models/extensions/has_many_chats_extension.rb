@@ -22,6 +22,10 @@ module HasManyChatsExtension
   end
 
   def today_count_of_guests
-    not_staff(true).not_normal(true).in_today_by_unique_user.count
+    count_of_guests_in(Time.current)
+  end
+
+  def count_of_guests_in(date)
+    not_staff(true).not_normal(true).in_date_by_unique_user(date).count
   end
 end

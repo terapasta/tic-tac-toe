@@ -42,9 +42,14 @@ export default class ChatSection extends Component {
   }
 
   scrollToRootIfChangedToActive(prevProps) {
-    if (!prevProps.isActive && this.props.isActive) {
-      const { top } = getOffset(findDOMNode(this.refs.root));
-      window.scrollTo(0, top - HeaderHeight);
+    const { scrollableElement } = this.props;
+    const isChangedToActive = !prevProps.isActive && this.props.isActive;
+    const isChangedToShowingUpSQA = !prevProps.section.isShowSimilarQuestionAnswers && this.props.section.isShowSimilarQuestionAnswers;
+
+    if (isChangedToActive || isChangedToShowingUpSQA) {
+      const { top } = getOffset(this.root);
+      const scrollTargetY = top - HeaderHeight + scrollableElement.scrollTop;
+      scrollableElement.scrollTo(0, scrollTargetY);
     }
   }
 
@@ -61,6 +66,7 @@ export default class ChatSection extends Component {
     const {
       decisionBranches,
       similarQuestionAnswers,
+      isShowSimilarQuestionAnswers,
       isDone,
     } = section;
     const isDecisionBranch = !isEmpty(decisionBranches);
@@ -72,45 +78,48 @@ export default class ChatSection extends Component {
       "chat-section": !isManager,
       "chat-section--bordered": isManager,
       "active": isActive,
+      "collapsed": !isShowSimilarQuestionAnswers && !isFirst
     });
 
     return (
       <div
         className={className}
-        ref="root"
+        ref={node => this.root = node}
         data-decision-branch={isDecisionBranch || isSQA}
       >
-        <div className="chat-section__switch-container">
-          {!isFirst && !isDecisionBranch && !isSQA && (
-            <a href="#"
-              className="chat-section__switch"
-              onClick={this.onClick.bind(this)}
-              disabled={get(this.learning, "isDisabled")}>
-              <i className="material-icons">school</i>
-              {!isActive && (
-                <div className="chat-section__tooltip">
-                  回答が正しくない場合、クリックして別の回答を教えられます
-                </div>
-              )}
-            </a>
+        <div className="chat-section__inner">
+          <div className="chat-section__switch-container">
+            {!isFirst && !isDecisionBranch && !isSQA && (
+              <a href="#"
+                className="chat-section__switch"
+                onClick={this.onClick.bind(this)}
+                disabled={get(this.learning, "isDisabled")}>
+                <i className="material-icons">school</i>
+                {!isActive && (
+                  <div className="chat-section__tooltip">
+                    回答が正しくない場合、クリックして別の回答を教えられます
+                  </div>
+                )}
+              </a>
+            )}
+          </div>
+          {children}
+          {isActive && (
+            <div className="chat-section__actions">
+              <a className="btn btn-link btn-xs-sm"
+                href="#"
+                onClick={this.onClick.bind(this)}
+                disabled={this.learning.isDisabled}>キャンセル</a>
+              <a className="btn btn-primary btn-xs-sm"
+                href="#"
+                onClick={this.onSaveLearning.bind(this)}
+                disabled={this.learning.isDisabled}>この内容で教える</a>
+            </div>
+          )}
+          {isDisabled && (
+            <div className="chat-section__disable-cover" />
           )}
         </div>
-        {children}
-        {isActive && (
-          <div className="chat-section__actions">
-            <a className="btn btn-link btn-xs-sm"
-              href="#"
-              onClick={this.onClick.bind(this)}
-              disabled={this.learning.isDisabled}>キャンセル</a>
-            <a className="btn btn-primary btn-xs-sm"
-              href="#"
-              onClick={this.onSaveLearning.bind(this)}
-              disabled={this.learning.isDisabled}>この内容で教える</a>
-          </div>
-        )}
-        {isDisabled && (
-          <div className="chat-section__disable-cover" />
-        )}
       </div>
     );
   }

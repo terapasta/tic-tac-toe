@@ -181,11 +181,13 @@ export function changeRatingHandler(state, action) {
   const section = state.classifiedData[index];
   const tailSections = state.classifiedData.slice(index + 1);
 
-  times(2, (n) => {
-    if (!isEmpty((tailSections[n] || {}).similarQuestionAnswers)) {
-      tailSections[n] = assign({}, tailSections[n], { isShowSimilarQuestionAnswers: true });
-    }
-  })
+  if (message.rating === Ratings.Bad) {
+    times(2, (n) => {
+      if (!isEmpty((tailSections[n] || {}).similarQuestionAnswers)) {
+        tailSections[n] = assign({}, tailSections[n], { isShowSimilarQuestionAnswers: true });
+      }
+    })
+  }
 
   const classifiedData =[
     ...state.classifiedData.slice(0, index),

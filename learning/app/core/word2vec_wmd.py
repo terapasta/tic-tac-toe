@@ -49,7 +49,7 @@ class Word2vecWmd:
         if self.__initialiging:
             return self.__no_data()
 
-        bot_question_answers_data = self.datasource.question_answers.by_bot(self.__bot_id())
+        bot_question_answers_data = self.question_answers.by_bot(self.__bot_id())
 
         result = self.wmd_similarities[self.__bot_id()][question_features]
 

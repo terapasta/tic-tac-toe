@@ -13,7 +13,7 @@ class ReplyController(object):
         logger.debug('question: %s' % text)
 
         logger.info('before action')
-        texts = self.factory.get_estimator().before_reply([text])
+        texts = self.factory.core.before_reply([text])
 
         logger.info('tokenize question')
         tokenized_sentences = self.factory.get_tokenizer().tokenize(texts)
@@ -30,13 +30,13 @@ class ReplyController(object):
         normalized_features = self.factory.get_normalizer().transform(reduced_features)
 
         logger.info('predict')
-        data_frame = self.factory.get_estimator().predict(normalized_features)
+        data_frame = self.factory.core.predict(normalized_features)
 
         logger.info('sort')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
 
         logger.info('after action')
-        results = self.factory.get_estimator().after_reply(text, data_frame)
+        results = self.factory.core.after_reply(text, data_frame)
 
         results = results.to_dict('records')[:10]
 

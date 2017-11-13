@@ -4,7 +4,7 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
   include CapybaraHelpers
 
   let!(:bot) do
-    create(:bot)
+    create(:bot, enable_guest_user_registration: false)
   end
 
   let!(:users) do

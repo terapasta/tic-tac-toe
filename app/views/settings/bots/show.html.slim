@@ -49,5 +49,11 @@
           br
           |※ ユーザー情報は45日間保存されます
 
+      .form-group
+        = f.label :widget_subtitle
+        = f.text_field :widget_subtitle, class: 'form-control', placeholder: "デフォルト：#{Bot::DefaultWidgetSubtitle}"
+        .p-2.text-muted
+          p チャットウィジェットを開いた際にボット名の下に表示されるテキストです
+
       .form-group.text-right
         = f.submit class: 'btn btn-success', data: { event: 'update bot account' }

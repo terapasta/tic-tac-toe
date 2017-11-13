@@ -35,7 +35,7 @@ class CosineSimilarity(BaseCore):
     def predict(self, question_features):
         bot_tokenized_sentences = self.tokenizer.tokenize(self.bot_question_answers_data['question'])
         if len(bot_tokenized_sentences) == 0:
-            return self.__no_data
+            return self.__no_data()
         bot_features = self.vectorizer.transform(bot_tokenized_sentences)
         reduced_vectors = self.reducer.transform(bot_features)
         normalized_vectors = self.normalizer.transform(reduced_vectors)

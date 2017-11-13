@@ -5,3 +5,4 @@ ja:
     attributes:
       bot:
         has_suggests_message: サジェスト質問を表示する時のメッセージ
+        widget_subtitle: ウィジェットサブタイトル

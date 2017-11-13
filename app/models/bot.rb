@@ -1,6 +1,8 @@
 class Bot < ApplicationRecord
   include Bot::HasSuggestsMessage
 
+  DefaultWidgetSubtitle = 'AIチャットボットがご対応します'
+
   belongs_to :user, required: false
   has_many :chats, -> { extending HasManyChatsExtension }
   has_many :messages, through: :chats

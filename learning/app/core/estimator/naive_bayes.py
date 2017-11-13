@@ -1,20 +1,21 @@
 import inject
 import pandas as pd
 from sklearn.naive_bayes import MultinomialNB
-from app.shared.datasource.file.persistence import Persistence
 from app.core.estimator.base_estimator import BaseEstimator
+from app.shared.datasource.datasource import Datasource
 
 
 class NaiveBayes(BaseEstimator):
     @inject.params(
-        persistence=Persistence,
+        datasource=Datasource,
     )
-    def __init__(self, persistence=None):
-        self.persistence = persistence
+    def __init__(self, datasource=None):
+        self.persistence = datasource.persistence
         self.estimator = self.persistence.load(self.dump_key)
+        if self.estimator is None:
+            self.estimator = MultinomialNB()
 
     def fit(self, x, y):
-        self.estimator = MultinomialNB()
         self.estimator.fit(x, y)
         self.persistence.dump(self.estimator, self.dump_key)
 

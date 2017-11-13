@@ -19,6 +19,10 @@ symbolic-links=0
 # instructions in http://fedoraproject.org/wiki/Systemd
 # skip-grant-tables
 
+max_allowed_packet = 33554432
+innodb_buffer_pool_size = 1073741824
+innodb_log_file_size= 536870912
+
 [mysqld_safe]
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid

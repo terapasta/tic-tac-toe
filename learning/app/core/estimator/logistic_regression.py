@@ -2,15 +2,15 @@ import inject
 import pandas as pd
 from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression as SkLogisticRegression
-from app.shared.datasource.file.persistence import Persistence
+from app.shared.datasource.datasource import Datasource
 
 
 class LogisticRegression:
     @inject.params(
-        persistence=Persistence,
+        datasource=Datasource,
     )
-    def __init__(self, persistence=None):
-        self.persistence = persistence
+    def __init__(self, datasource=None):
+        self.persistence = datasource.persistence
         self.estimator = self.persistence.load(self.dump_key)
 
     def fit(self, x, y):

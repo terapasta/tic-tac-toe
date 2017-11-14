@@ -1,0 +1,16 @@
+= render layout: 'my/shared/layout' do
+  = form_for @user, url: my_password_path, html: { class: 'form' } do |f|
+    .form-group
+      = f.label :current_password
+      = f.password_field :current_password, class: 'form-control'
+
+    .form-group
+      = f.label :password
+      = f.password_field :password, class: 'form-control'
+
+    .form-group
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, class: 'form-control'
+
+    .form-group.text-right
+      = f.submit '更新', class: 'btn btn-success'

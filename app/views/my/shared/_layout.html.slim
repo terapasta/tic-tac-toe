@@ -1,0 +1,38 @@
+.py-5
+  .container
+    .bot-header__title.d-flex.justify-content-between
+      h4.d-inline-block ユーザー情報変更
+
+.container
+  .row
+    .col-3
+      nav: ul.nav.nav-pills.flex-column
+        li.nav-item
+          = active_link_to edit_my_password_path, class: 'nav-link', active: params[:controller] == 'my/passwords' do
+            = material_icon 'lock_outline', class: 'mi-xs'
+            = space
+            span パスワード変更
+        li.nav-item
+          = active_link_to edit_my_email_path, class: 'nav-link', active: params[:controller] == 'my/emails' do
+            = material_icon 'mail_outline', class: 'mi-xs'
+            = space
+            span メールアドレス変更
+        li.nav-item
+          = active_link_to edit_my_notification_path, class: 'nav-link', active: params[:controller] == 'my/notifications' do
+            = material_icon 'notifications', class: 'mi-xs'
+            = space
+            span 通知変更
+    .col-9
+      - if notice
+        .alert.alert-success.mb-4= notice
+      - if alert
+        .alert.alert-danger.mb-4= alert
+
+      - if @user.errors.any?
+        .mb-4.text-danger
+          h6 #{@user.errors.count}件のエラー
+          ul
+            - @user.errors.full_messages.each do |message|
+              li= message
+
+      = yield

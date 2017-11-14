@@ -49,7 +49,11 @@ export default class ChatSection extends Component {
     if (isChangedToActive || isChangedToShowingUpSQA) {
       const { top } = getOffset(this.root);
       const scrollTargetY = top - HeaderHeight + scrollableElement.scrollTop;
-      scrollableElement.scrollTo(0, scrollTargetY);
+      if (typeof scrollableElement.scrollTo === 'function') {
+        scrollableElement.scrollTo(0, scrollTargetY);
+      } else {
+        scrollableElement.scrollTop = scrollTargetY;
+      }
     }
   }
 

@@ -16,9 +16,7 @@ class BotsController < ApplicationController
     end
 
     if current_user.staff?
-      @recent_30days_users_count = 30.times.map{ |n|
-        @bot.chats.count_of_guests_in(n.days.ago)
-      }.reduce(:+)
+      @recent_30days_users_count = @bot.chats.count_of_guests_within(30.days.ago, Time.current)
       @total_reducted_minutes = @recent_30days_users_count * 5
       @reducted_hours = @total_reducted_minutes / 60
       @reducted_minutes = @total_reducted_minutes % 60

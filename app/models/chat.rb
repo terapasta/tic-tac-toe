@@ -70,6 +70,15 @@ class Chat < ApplicationRecord
       .distinct
   }
 
+  scope :within_date_by_unique_user, -> (start_date, end_date) {
+    joins(:messages)
+      .where(messages: {
+        speaker: :guest,
+        created_at: (start_date.beginning_of_day..end_date.end_of_day)
+      })
+      .distinct
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting_text
     self.messages << Message.new(speaker: 'bot', body: body)

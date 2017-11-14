@@ -17,14 +17,14 @@ class TasksController < ApplicationController
 
   def update
     @task = @bot.tasks.find(params[:id])
-    if @task.update(is_done: true)
+    if @task.update(is_done: (params[:is_done] || true).to_bool)
       if params[:redirect_to_new_question_answer_form].to_bool
         redirect_to new_bot_question_answer_path(@bot, question: @task.guest_message, answer: @task.bot_message)
       else
         redirect_to bot_tasks_path(@bot)
       end
     else
-      redirect_to bot_tasks_path(@bot), alert: '対応済みにできませんでした'
+      redirect_to bot_tasks_path(@bot), alert: '対応状態を変更できませんでした'
     end
   end
 

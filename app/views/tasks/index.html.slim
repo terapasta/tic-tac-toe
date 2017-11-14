@@ -53,6 +53,8 @@
           small.text-muted 日時：#{l task.created_at}
         .text-align
           - if task.is_done?
+            = link_to '未対応に戻す', bot_task_path(@bot, task, is_done: 'false'), data: { method: :put }, class: 'btn btn-secondary btn-sm'
+            = space 5
             span.badge.badge-success 対応済み
           - else
             span.badge.badge-warning 未対応

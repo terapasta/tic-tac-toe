@@ -19,12 +19,12 @@ class CosineSimilarityFactory:
         datasource=Datasource,
     )
     def __init__(self, context, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, estimator=None, datasource=None):
-        bot = context.current_bot
-        self.tokenizer = tokenizer.init_by_bot(bot)
-        self.vectorizer = vectorizer.init_by_bot(bot)
-        self.reducer = reducer.init_by_bot(bot)
-        self.normalizer = normalizer.init_by_bot(bot)
-        self.estimator = estimator.init_by_bot(bot)
+        persistence = datasource.persistence.init_by_bot(context.current_bot)
+        self.tokenizer = tokenizer.set_persistence(persistence)
+        self.vectorizer = vectorizer.set_persistence(persistence)
+        self.reducer = reducer.set_persistence(persistence)
+        self.normalizer = normalizer.set_persistence(persistence)
+        self.estimator = estimator.set_persistence(persistence)
         self.datasource = datasource
         self.__core = CosineSimilarity(
             bot=context.current_bot,

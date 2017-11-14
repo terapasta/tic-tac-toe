@@ -1,5 +1,5 @@
 class BaseTokenizer:
-    def init_by_bot(self, bot):
+    def set_persistence(self, persistence, key):
         raise NotImplementedError()
 
     def tokenize(self, texts):

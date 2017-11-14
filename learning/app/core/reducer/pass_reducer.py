@@ -5,7 +5,7 @@ class PassReducer(BaseReducer):
     def __init__(self):
         pass
 
-    def init_by_bot(self, bot, key=''):
+    def set_persistence(self, persistence, key=None):
         return self
 
     def fit(self, features):

@@ -11,13 +11,13 @@ from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
 class Datasource:
     def __init__(self, persistence=None, question_answers=None, ratings=None):
         if Config().get('datasource_type') == Constants.DATASOURCE_TYPE_FILE:
-            self._persistence = PersistenceFromFile
-            self._question_answers = QuestionAnswersFromFile
-            self._ratings = RatingsFromFile
+            self._persistence = PersistenceFromFile()
+            self._question_answers = QuestionAnswersFromFile()
+            self._ratings = RatingsFromFile()
         else:
-            self._persistence = PersistenceFromDb
-            self._question_answers = QuestionAnswersFromDb
-            self._ratings = RatingsFromDb
+            self._persistence = PersistenceFromDb()
+            self._question_answers = QuestionAnswersFromDb()
+            self._ratings = RatingsFromDb()
 
         if persistence is not None:
             self._persistence = persistence
@@ -28,12 +28,12 @@ class Datasource:
 
     @property
     def persistence(self):
-        return self._persistence()
+        return self._persistence
 
     @property
     def question_answers(self):
-        return self._question_answers()
+        return self._question_answers
 
     @property
     def ratings(self):
-        return self._ratings()
+        return self._ratings

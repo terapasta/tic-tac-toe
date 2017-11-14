@@ -1,5 +1,5 @@
 class BaseVectorizer:
-    def init_by_bot(self, bot, key):
+    def set_persistence(self, persistence, key):
         raise NotImplementedError()
 
     def fit(self, sentences):

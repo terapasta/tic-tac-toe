@@ -1,5 +1,5 @@
 class BaseEstimator:
-    def __init__(self, persistence=None):
+    def set_persistence(self, persistence, key):
         raise NotImplementedError()
 
     def init_by_bot(self, bot, key):

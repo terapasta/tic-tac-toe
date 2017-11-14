@@ -7,6 +7,3 @@ class EmptyPersistence:
 
     def dump(self, obj, key):
         pass
-
-    def __generate_file_path(self, key):
-        return ''

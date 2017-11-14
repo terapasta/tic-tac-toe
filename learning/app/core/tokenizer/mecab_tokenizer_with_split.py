@@ -12,10 +12,7 @@ class MecabTokenizerWithSplit(BaseTokenizer):
         # Note: node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         self.tagger.parse('')
 
-    def init(self):
-        return self
-
-    def init_by_bot(self, bot):
+    def set_persistence(self, persistence, key=None):
         return self
 
     def tokenize(self, texts):

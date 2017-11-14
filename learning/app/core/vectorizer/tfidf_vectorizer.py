@@ -1,8 +1,10 @@
 import inject
 import numpy as np
+from sklearn.exceptions import NotFittedError
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
 from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
+from app.shared.custom_errors import NotTrainedError
 from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
@@ -22,7 +24,10 @@ class TfidfVectorizer(BaseVectorizer):
         self.persistence.dump(self.vectorizer, self.dump_key)
 
     def transform(self, sentences):
-        return self.vectorizer.transform(sentences)
+        try:
+            return self.vectorizer.transform(sentences)
+        except NotFittedError as e:
+            raise NotTrainedError(e)
 
     def fit_transform(self, sentences):
         self.fit(sentences)

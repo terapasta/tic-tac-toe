@@ -6,6 +6,7 @@ from gensim.similarities import WmdSimilarity
 from app.shared.app_status import AppStatus
 from app.shared.logger import logger
 from app.shared.config import Config
+from app.shared.custom_errors import NotTrainedError
 
 from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.shared.datasource.datasource import Datasource
@@ -30,7 +31,7 @@ class Word2vecWmd(BaseCore):
         self.question_answers = datasource.question_answers
 
         if self.__initialiging:
-            return
+            raise NotTrainedError()
         if not self.__initialized:
             self.__initialiging = True
             data_path = self.__prepare_corpus_data()
@@ -44,15 +45,9 @@ class Word2vecWmd(BaseCore):
             self.__build_wmd_similarity()
 
     def fit(self, x, y):
-        if self.__initialiging:
-            return
-
         self.__build_wmd_similarity()
 
     def predict(self, question_features):
-        if self.__initialiging:
-            return self.__no_data()
-
         bot_question_answers_data = self.question_answers.by_bot(self.__bot_id())
 
         result = self.wmd_similarities[self.__bot_id()][question_features]

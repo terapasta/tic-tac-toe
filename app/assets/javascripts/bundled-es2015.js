@@ -3361,6 +3361,7 @@ var ChatApp = function (_Component) {
               }),
               _react2.default.createElement(_botMessageRow2.default, {
                 section: section,
+                isAdmin: isAdmin,
                 isManager: isManager,
                 isFirst: isFirst,
                 isLastPage: messages.meta.currentPage === messages.meta.totalPages,
@@ -3797,6 +3798,8 @@ var ChatBotMessageRow = function (_Component) {
           _props2$section = _props2.section,
           question = _props2$section.question,
           answer = _props2$section.answer,
+          topProbability = _props2$section.topProbability,
+          isAdmin = _props2.isAdmin,
           isManager = _props2.isManager,
           isFirst = _props2.isFirst,
           isLastPage = _props2.isLastPage,
@@ -3815,7 +3818,7 @@ var ChatBotMessageRow = function (_Component) {
         questionId: (0, _get2.default)(question, "id"),
         answerId: (0, _get2.default)(answer, "id")
       });
-      var _props = (0, _assign2.default)({ isFirst: isFirst, onChangeRatingTo: onChangeRatingTo }, answer);
+      var _props = (0, _assign2.default)({ isAdmin: isAdmin, isFirst: isFirst, onChangeRatingTo: onChangeRatingTo, topProbability: topProbability }, answer);
 
       return _react2.default.createElement(
         _row2.default,
@@ -3848,6 +3851,7 @@ var ChatBotMessageRow = function (_Component) {
             rating: _react.PropTypes.oneOf((0, _values2.default)(_constants.Ratings))
           })
         }),
+        isAdmin: _react.PropTypes.bool,
         isManager: _react.PropTypes.bool,
         isFirst: _react.PropTypes.bool,
         isActive: _react.PropTypes.bool,
@@ -3948,6 +3952,7 @@ var ChatBotMessage = function (_Component) {
     key: "propTypes",
     get: function get() {
       return {
+        isAdmin: _react.PropTypes.bool.isRequired,
         isFirst: _react.PropTypes.bool.isRequired,
         isLoading: _react.PropTypes.bool,
         iconImageUrl: _react.PropTypes.string,
@@ -3955,7 +3960,8 @@ var ChatBotMessage = function (_Component) {
         body: _react.PropTypes.string.isRequired,
         rating: _react.PropTypes.oneOf((0, _values2.default)(c.Ratings)),
         onChangeRatingTo: _react.PropTypes.func.isRequired,
-        answerFailed: _react.PropTypes.bool.isRequired
+        answerFailed: _react.PropTypes.bool.isRequired,
+        topProbability: _react.PropTypes.number
       };
     }
   }]);
@@ -3984,6 +3990,7 @@ var ChatBotMessage = function (_Component) {
     key: "render",
     value: function render() {
       var _props = this.props,
+          isAdmin = _props.isAdmin,
           isFirst = _props.isFirst,
           isLoading = _props.isLoading,
           iconImageUrl = _props.iconImageUrl,
@@ -3991,7 +3998,8 @@ var ChatBotMessage = function (_Component) {
           rating = _props.rating,
           body = _props.body,
           onChangeRatingTo = _props.onChangeRatingTo,
-          answerFailed = _props.answerFailed;
+          answerFailed = _props.answerFailed,
+          topProbability = _props.topProbability;
       var isFaded = this.state.isFaded;
 
       var className = (0, _classnames2.default)("chat-message", { "faded": isFaded });
@@ -4031,6 +4039,12 @@ var ChatBotMessage = function (_Component) {
             rating: rating,
             onChangeRatingTo: onChangeRatingTo
           })
+        ),
+        isAdmin && !(0, _isEmpty2.default)(topProbability) && _react2.default.createElement(
+          "div",
+          { className: "chat-message__rating", key: "probability" },
+          "Probability: ",
+          topProbability
         )
       );
     }
@@ -6397,7 +6411,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
 
 
 function pickUp(message) {
-  var result = (0, _pick2.default)(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers", "answerFiles", "answerFailed"]);
+  var result = (0, _pick2.default)(message, ["id", "body", "createdAt", "rating", "iconImageUrl", "similarQuestionAnswers", "answerFiles", "answerFailed", "topProbability"]);
   return result;
 }
 

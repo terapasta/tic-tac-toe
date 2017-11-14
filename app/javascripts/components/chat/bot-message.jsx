@@ -16,6 +16,7 @@ import ImageFileTypes from "../../modules/image-file-types";
 export default class ChatBotMessage extends Component {
   static get propTypes() {
     return {
+      isAdmin: PropTypes.bool.isRequired,
       isFirst: PropTypes.bool.isRequired,
       isLoading: PropTypes.bool,
       iconImageUrl: PropTypes.string,
@@ -24,6 +25,7 @@ export default class ChatBotMessage extends Component {
       rating: PropTypes.oneOf(values(c.Ratings)),
       onChangeRatingTo: PropTypes.func.isRequired,
       answerFailed: PropTypes.bool.isRequired,
+      topProbability: PropTypes.number,
     };
   }
 
@@ -40,6 +42,7 @@ export default class ChatBotMessage extends Component {
 
   render() {
     const {
+      isAdmin,
       isFirst,
       isLoading,
       iconImageUrl,
@@ -48,6 +51,7 @@ export default class ChatBotMessage extends Component {
       body,
       onChangeRatingTo,
       answerFailed,
+      topProbability,
     } = this.props;
 
     const { isFaded } = this.state;
@@ -61,7 +65,11 @@ export default class ChatBotMessage extends Component {
         <div className="chat-message__icon" style={iconStyle} key="icon" />
         <div className="chat-message__balloon" key="balloon">
           {answerFailed && <i className="material-icons mi-xs text-muted mr-1">error_outline</i>}
-          {!isLoading && <Linkify properties={{ target: "_blank" }}>{nl2br(body)}</Linkify>}
+          {!isLoading && (
+            <Linkify properties={{ target: "_blank" }}>
+              {nl2br(body)}
+            </Linkify>
+          )}
           {isLoading && (
             <div className="chat-message__balloon-loader">
               <Loading type="spin" color="#e3e3e3" height={32} width={32} />
@@ -78,6 +86,11 @@ export default class ChatBotMessage extends Component {
             }} />
           )}
         </div>
+        {isAdmin && !isEmpty(topProbability) && (
+          <div className="chat-message__rating" key="probability">
+            Probability: {topProbability}
+          </div>
+        )}
       </div>
     );
   }

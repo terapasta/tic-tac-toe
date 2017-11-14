@@ -1,7 +1,19 @@
 class MessageSerializer < ActiveModel::Serializer
   include DeepCamelizeKeys
 
-  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed, :child_decision_branches, :similar_question_answers, :is_show_similar_question_answers
+  attributes :id,
+    :speaker,
+    :rating,
+    :created_at,
+    :body,
+    :icon_image_url,
+    :answer_files,
+    :answer_failed,
+    :child_decision_branches,
+    :similar_question_answers,
+    :is_show_similar_question_answers,
+    :top_probability
+
   has_one :question_answer
 
   def rating
@@ -36,5 +48,10 @@ class MessageSerializer < ActiveModel::Serializer
   def is_show_similar_question_answers
     return true if object.is_show_similar_question_answers.nil?
     !!object.is_show_similar_question_answers
+  end
+
+  def top_probability
+    return nil if object.guest?
+    object.reply_log&.dig('results')&.first&.dig('probability')
   end
 end

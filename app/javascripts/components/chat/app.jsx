@@ -141,6 +141,7 @@ export default class ChatApp extends Component {
                 }} />
                 <ChatBotMessageRow {...{
                   section,
+                  isAdmin,
                   isManager,
                   isFirst,
                   isLastPage: messages.meta.currentPage === messages.meta.totalPages,

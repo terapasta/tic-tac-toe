@@ -2,7 +2,6 @@ import inject
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
-from app.shared.app_status import AppStatus
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
@@ -19,10 +18,9 @@ class CosineSimilarity(BaseCore):
         reducer=PassReducer,
         normalizer=PassNormalizer,
         datasource=Datasource,
-        app_status=AppStatus,
     )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, app_status=None, question_answers=None):
-        self.bot = app_status.current_bot()
+    def __init__(self, bot, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None):
+        self.bot = bot
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer

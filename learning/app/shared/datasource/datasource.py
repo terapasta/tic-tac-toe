@@ -1,3 +1,4 @@
+from app.shared.config import Config
 from app.shared.constants import Constants
 from app.shared.datasource.database.persistence import Persistence as PersistenceFromDb
 from app.shared.datasource.database.question_answers import QuestionAnswers as QuestionAnswersFromDb
@@ -8,19 +9,8 @@ from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
 
 
 class Datasource:
-    __shared_state = {}
-
     def __init__(self, persistence=None, question_answers=None, ratings=None):
-        self.__dict__ = self.__shared_state
-        if persistence is not None:
-            self._persistence = persistence
-        if question_answers is not None:
-            self._question_answers = question_answers
-        if ratings is not None:
-            self._ratings = ratings
-
-    def init(self, datasource_type):
-        if datasource_type == Constants.DATASOURCE_TYPE_FILE:
+        if Config().get('datasource_type') == Constants.DATASOURCE_TYPE_FILE:
             self._persistence = PersistenceFromFile
             self._question_answers = QuestionAnswersFromFile
             self._ratings = RatingsFromFile
@@ -28,7 +18,13 @@ class Datasource:
             self._persistence = PersistenceFromDb
             self._question_answers = QuestionAnswersFromDb
             self._ratings = RatingsFromDb
-        return self
+
+        if persistence is not None:
+            self._persistence = persistence
+        if question_answers is not None:
+            self._question_answers = question_answers
+        if ratings is not None:
+            self._ratings = ratings
 
     @property
     def persistence(self):

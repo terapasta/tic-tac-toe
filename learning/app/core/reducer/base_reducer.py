@@ -1,4 +1,7 @@
 class BaseReducer:
+    def init_by_bot(self, bot, key):
+        raise NotImplementedError()
+
     def fit(self, features):
         raise NotImplementedError()
 

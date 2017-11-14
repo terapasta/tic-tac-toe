@@ -1,12 +1,9 @@
-import inject
 from app.shared.logger import logger
-from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 
 
 class ReplyController(object):
-    @inject.params(factory=CosineSimilarityFactory)
-    def __init__(self, factory=None):
-        self.factory = factory
+    def __init__(self, context=None):
+        self.factory = context.factory(context)
 
     def perform(self, text):
         logger.info('start')

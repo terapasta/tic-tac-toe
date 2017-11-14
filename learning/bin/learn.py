@@ -3,21 +3,18 @@ import argparse
 import inject
 
 from app.controllers.learn_controller import LearnController
-from app.factories.factory_selector import FactorySelector
 from app.shared.config import Config
 from app.shared.constants import Constants
-from app.shared.app_status import AppStatus
-from app.shared.datasource.datasource import Datasource
+from app.shared.context import Context
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)
 parser.add_argument('--env', type=str, default='development')
-parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION)
-parser.add_argument('--datasource', type=str, default=Constants.DATASOURCE_TYPE_DATABASE)
+parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
 args = parser.parse_args()
-Config().init(args.env)
-Datasource().init(datasource_type=args.datasource)
+
 inject.configure_once()
+Config().init(args.env)
 
 
 # FIXME: fileを使うと以下のエラーが出る
@@ -26,6 +23,6 @@ class LearningParameter:
     algorithm = args.algorithm
 
 
-AppStatus().set_bot(args.bot_id, LearningParameter())
-result = LearnController(factory=FactorySelector().get_factory()).perform()
+context = Context(args.bot_id, LearningParameter(), {})
+result = LearnController(context=context).perform()
 print(result)

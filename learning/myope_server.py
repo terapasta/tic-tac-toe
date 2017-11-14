@@ -11,7 +11,6 @@ import traceback
 import inject
 import numpy as np
 import argparse
-from sklearn.exceptions import NotFittedError
 
 from app.shared.logger import logger
 from app.shared.config import Config
@@ -19,6 +18,7 @@ from app.shared.stop_watch import stop_watch
 from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
 from app.shared.constants import Constants
+from app.shared.custom_errors import NotTrainedError
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
 from app.factories.factory_selector import FactorySelector
@@ -35,12 +35,12 @@ class RouteGuideServicer(BotServicer):
 
         try:
             reply = ReplyController(factory=FactorySelector().get_factory()).perform(X[0])
-        except NotFittedError:
+        except NotTrainedError:
             detail = 'bot_id:%s wasn\'t trained' % str(app_status.current_bot().id)
             logger.error(detail)
             logger.error(traceback.format_exc())
             reply = self._empty_reply()
-            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_code(grpc.StatusCode.UNAVAILABLE)
             context.set_details(detail)
         except:
             logger.error(traceback.format_exc())

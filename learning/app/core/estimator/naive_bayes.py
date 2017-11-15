@@ -1,6 +1,7 @@
 import inject
 import pandas as pd
 from sklearn.naive_bayes import MultinomialNB
+from app.shared.logger import logger
 from app.shared.datasource.datasource import Datasource
 
 
@@ -19,6 +20,8 @@ class NaiveBayes:
         self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, question_features):
+        logger.debug(self.estimator.feature_count_.shape)
+        logger.debug(question_features.shape)
         results = self.estimator.predict_proba(question_features)
         return pd.DataFrame({
                 'question_answer_id': self.estimator.classes_,

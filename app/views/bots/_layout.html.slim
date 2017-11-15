@@ -15,11 +15,8 @@
         span(
           data-component="LearningButton"
           data-bot-id=@bot.id
+          data-is-admin=(current_user.present? && current_user.staff?).to_json
         )
-        /= link_to '#', class: 'btn btn-outline-warning btn-sm' do
-          = material_icon 'trending_up', class: 'mi-xs'
-          = space
-          span 学習を実行
         = space 2
         = active_link_to bot_settings_bot_path(@bot), class: 'btn btn-outline-gray btn-sm', active: :exact, data: { event: 'Settings' } do
           = material_icon 'settings', class: 'mi-xs'

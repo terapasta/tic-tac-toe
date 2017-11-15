@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from "react";
 
+const LengthThreshold = 20
+
 export default class ChatDecisionBranches extends Component {
   static get propTypes() {
     return {
@@ -8,6 +10,11 @@ export default class ChatDecisionBranches extends Component {
       onChoose: PropTypes.func.isRequired,
       selectAttribute: PropTypes.string.isRequired,
     };
+  }
+
+  itemClassName (body) {
+    const align = (body || '').length > LengthThreshold ? 'text-left' : ''
+    return `chat-decision-branches__item ${align}`
   }
 
   render() {
@@ -26,7 +33,7 @@ export default class ChatDecisionBranches extends Component {
           </div>
           <div className="chat-decision-branches__items">
             {items.map((item, i) => (
-              <a className="chat-decision-branches__item"
+              <a className={this.itemClassName(item.body)}
                 href="#"
                 key={i}
                 onClick={(e) => {

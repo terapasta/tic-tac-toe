@@ -5,6 +5,18 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', as: 'user_registration'
   end
 
+  authenticate :user do
+    scope :my do
+      get '/' => redirect('/my/password/edit')
+      get 'password/edit' => 'my/passwords#edit', as: 'edit_my_password'
+      patch 'password' => 'my/passwords#update', as: 'my_password'
+      get 'email/edit' => 'my/emails#edit', as: 'edit_my_email'
+      patch 'email' => 'my/emails#update', as: 'my_email'
+      get 'notification/edit' => 'my/notifications#edit', as: 'edit_my_notification'
+      patch 'notification' => 'my/notifications#update', as: 'my_notification'
+    end
+  end
+
   resources :bots, only: [:show, :index] do
     namespace :settings do
       get 'embed', to: 'pages#embed'

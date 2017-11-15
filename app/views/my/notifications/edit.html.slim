@@ -1,0 +1,11 @@
+= render layout: 'my/shared/layout' do
+  = form_for @user, url: my_notification_path, html: { class: 'form' } do |f|
+    .form-group.form-check
+      = f.label :email_notification, class: 'form-check-label' do
+        = f.check_box :email_notification, class: 'form-check-input'
+        span メール通知
+      .form-text.text-muted
+        |ボットが質問に回答できなかった場合、ボットの回答にBad評価がついた時にメールでお知らせする機能です
+
+    .form-group.text-right
+      = f.submit '更新', class: 'btn btn-success'

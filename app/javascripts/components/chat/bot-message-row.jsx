@@ -39,7 +39,7 @@ export default class ChatBotMessageRow extends Component {
 
   render() {
     const {
-      section: { question, answer, topProbability },
+      section: { question, answer, replyLog },
       isAdmin,
       isManager,
       isFirst,
@@ -57,7 +57,7 @@ export default class ChatBotMessageRow extends Component {
       questionId: get(question, "id"),
       answerId: get(answer, "id"),
     });
-    const _props = assign({ isAdmin, isFirst, onChangeRatingTo, topProbability }, answer);
+    const _props = assign({ isAdmin, isFirst, onChangeRatingTo, replyLog }, answer);
 
     return (
       <ChatRow>

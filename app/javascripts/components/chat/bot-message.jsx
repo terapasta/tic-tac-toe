@@ -12,6 +12,7 @@ import * as c from "./constants";
 
 import MessageRatingButtons from "./message-rating-buttons";
 import ImageFileTypes from "../../modules/image-file-types";
+import CollapsibleLog from './collapsible-log';
 
 export default class ChatBotMessage extends Component {
   static get propTypes() {
@@ -25,7 +26,7 @@ export default class ChatBotMessage extends Component {
       rating: PropTypes.oneOf(values(c.Ratings)),
       onChangeRatingTo: PropTypes.func.isRequired,
       answerFailed: PropTypes.bool.isRequired,
-      topProbability: PropTypes.number,
+      replyLog: PropTypes.object,
     };
   }
 
@@ -51,7 +52,7 @@ export default class ChatBotMessage extends Component {
       body,
       onChangeRatingTo,
       answerFailed,
-      topProbability,
+      replyLog,
     } = this.props;
 
     const { isFaded } = this.state;
@@ -86,9 +87,9 @@ export default class ChatBotMessage extends Component {
             }} />
           )}
         </div>
-        {isAdmin && !isEmpty(topProbability) && (
+        {isAdmin && !isEmpty(replyLog) && (
           <div className="chat-message__rating" key="probability">
-            Probability: {topProbability}
+            <CollapsibleLog obj={replyLog} />
           </div>
         )}
       </div>

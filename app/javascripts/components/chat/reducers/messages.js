@@ -169,7 +169,7 @@ function pickUp(message) {
     "similarQuestionAnswers",
     "answerFiles",
     "answerFailed",
-    "topProbability",
+    "replyLog",
   ]);
   return result;
 }

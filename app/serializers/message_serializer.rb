@@ -12,7 +12,7 @@ class MessageSerializer < ActiveModel::Serializer
     :child_decision_branches,
     :similar_question_answers,
     :is_show_similar_question_answers,
-    :top_probability
+    :reply_log
 
   has_one :question_answer
 
@@ -48,10 +48,5 @@ class MessageSerializer < ActiveModel::Serializer
   def is_show_similar_question_answers
     return true if object.is_show_similar_question_answers.nil?
     !!object.is_show_similar_question_answers
-  end
-
-  def top_probability
-    return nil if object.guest?
-    object.reply_log&.dig('results')&.first&.dig('probability')
   end
 end

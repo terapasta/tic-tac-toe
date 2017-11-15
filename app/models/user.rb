@@ -10,4 +10,13 @@ class User < ApplicationRecord
   enum role: { normal: 0, worker: 1, staff: 2 }
 
   has_many :sentence_synonyms, foreign_key: :created_user_id
+
+  def email_notification
+    !!(notification_settings || {})['email']
+  end
+
+  def email_notification=(val)
+    self.notification_settings ||= {}
+    self.notification_settings['email'] = val.to_bool
+  end
 end

@@ -8,7 +8,7 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
   end
 
   let!(:users) do
-    create_list(:user, 2)
+    create_list(:user, 2, email_notification: true)
   end
 
   let!(:organization) do

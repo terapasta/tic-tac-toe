@@ -121,6 +121,7 @@ export default class AnswerTextArea extends Component {
   }
 
   handleTextAreaKeyUp(e) {
+    if (!isIE) { return }
     const { isIMEInputting } = this.state
     const isTargetKeyCode = (
       (e.keyCode === KeyCodes.Enter && isIMEInputting) ||

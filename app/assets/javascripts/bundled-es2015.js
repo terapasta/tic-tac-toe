@@ -2572,6 +2572,9 @@ var AnswerTextArea = function (_Component3) {
   }, {
     key: "handleTextAreaKeyUp",
     value: function handleTextAreaKeyUp(e) {
+      if (!isIE) {
+        return;
+      }
       var isIMEInputting = this.state.isIMEInputting;
 
       var isTargetKeyCode = e.keyCode === KeyCodes.Enter && isIMEInputting || e.keyCode === KeyCodes.Backspace || e.keyCode === KeyCodes.Delete;

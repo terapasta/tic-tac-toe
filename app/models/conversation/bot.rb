@@ -41,12 +41,13 @@ class Conversation::Bot
 
     @question_answer = QuestionAnswer.find_or_null_question_answer(question_answer_id, @bot, probability, classify_threshold)
 
-    reply = Conversation::Reply.new(
+    reply = Hashie::Mash.new(
       question: question,
       question_feature_count: question_feature_count,
       question_answer: @question_answer,
       probability: probability,
-      question_answer_ids: question_answer_ids
+      question_answer_ids: question_answer_ids,
+      raw_data: result
     )
 
     # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい

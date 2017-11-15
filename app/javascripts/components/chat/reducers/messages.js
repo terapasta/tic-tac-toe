@@ -169,6 +169,7 @@ function pickUp(message) {
     "similarQuestionAnswers",
     "answerFiles",
     "answerFailed",
+    "replyLog",
   ]);
   return result;
 }

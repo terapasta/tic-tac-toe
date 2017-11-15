@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113083231) do
+ActiveRecord::Schema.define(version: 20171114064209) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20171113083231) do
     t.text "similar_question_answers_log"
     t.integer "decision_branch_id"
     t.boolean "is_show_similar_question_answers", default: true
+    t.json "reply_log"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["question_answer_id"], name: "index_messages_on_question_answer_id"
   end

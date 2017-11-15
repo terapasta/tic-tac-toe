@@ -4,7 +4,6 @@ FactoryGirl.define do
     password 'hogehoge'
     role :normal
     sequence(:confirmation_token) { |n| "hogehoge#{n}" }
-    email_notification true
 
     trait :staff do
       role :staff

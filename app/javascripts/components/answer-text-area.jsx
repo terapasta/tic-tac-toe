@@ -5,6 +5,14 @@ import uuid from 'uuid/v4';
 
 import * as QuestionAnswerAPI from "../api/question-answer";
 
+const isIE = navigator.userAgent.search("Trident") >= 0
+const KeyCodes = {
+  IMEInputting: 229,
+  Enter: 13,
+  Backspace: 8,
+  Delete: 46
+}
+
 class SuggestWrapper extends Component {
   render() {
     const style = {
@@ -66,10 +74,13 @@ export default class AnswerTextArea extends Component {
     this.state = {
       text: props.defaultValue || "",
       answers: [],
+      isIMEInputting: false,
     };
 
     this.onChangeTextArea = this.onChangeTextArea.bind(this);
     this.debouncedSearchAnswers = debounce(this.searchAnswers.bind(this), 250);
+    this.handleTextAreaKeyDown = this.handleTextAreaKeyDown.bind(this)
+    this.handleTextAreaKeyUp = this.handleTextAreaKeyUp.bind(this)
   }
 
   render() {
@@ -83,6 +94,8 @@ export default class AnswerTextArea extends Component {
           ref={node => { this.textArea = node }}
           rows={5}
           onChange={this.onChangeTextArea}
+          onKeyDown={this.handleTextAreaKeyDown}
+          onKeyUp={this.handleTextAreaKeyUp}
           name={`${baseName}[answer]`}
         />
         {!isEmpty(text) && <input type="hidden" name={`${baseName}[bot_id]`} value={botId} />}
@@ -101,7 +114,31 @@ export default class AnswerTextArea extends Component {
     );
   }
 
+  handleTextAreaKeyDown(e) {
+    this.setState({
+      isIMEInputting: e.keyCode === KeyCodes.IMEInputting && isIE
+    })
+  }
+
+  handleTextAreaKeyUp(e) {
+    const { isIMEInputting } = this.state
+    const isTargetKeyCode = (
+      (e.keyCode === KeyCodes.Enter && isIMEInputting) ||
+      e.keyCode === KeyCodes.Backspace || e.keyCode === KeyCodes.Delete
+    )
+    if (isTargetKeyCode) {
+      this.setState({ isIMEInputting: false })
+      const { value } = this.textArea
+      if (!isEmpty(value)) {
+        this.debouncedSearchAnswers(value);
+      } else {
+        this.setState({ answers: [] });
+      }
+    }
+  }
+
   onChangeTextArea() {
+    if (isIE) { return }
     const { value } = this.textArea;
     // this.setState({ text: value });
     if (!isEmpty(value)) {

@@ -16,6 +16,7 @@ module Replyable
         body: body,
         answer_failed: qa.no_classified?,
         created_at: guest_message.created_at + 1.second,
+        reply_log: reply.raw_data,
       )
       if responder.present?
         responder.similar_question_answers_in(reply.question_answer_ids, without_id: qa.id).compact.tap do |suggests|

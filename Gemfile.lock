@@ -640,6 +640,7 @@ DEPENDENCIES
   google-protobuf (= 3.4.0.2)
   grpc
   grpc-tools
+  hashie
   http
   jquery-rails
   kaminari

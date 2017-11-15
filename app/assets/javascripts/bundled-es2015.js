@@ -2385,6 +2385,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var isIE = navigator.userAgent.search("Trident") >= 0;
+var KeyCodes = {
+  IMEInputting: 229,
+  Enter: 13,
+  Backspace: 8,
+  Delete: 46
+};
+
 var SuggestWrapper = function (_Component) {
   _inherits(SuggestWrapper, _Component);
 
@@ -2490,11 +2498,14 @@ var AnswerTextArea = function (_Component3) {
 
     _this4.state = {
       text: props.defaultValue || "",
-      answers: []
+      answers: [],
+      isIMEInputting: false
     };
 
     _this4.onChangeTextArea = _this4.onChangeTextArea.bind(_this4);
     _this4.debouncedSearchAnswers = (0, _debounce2.default)(_this4.searchAnswers.bind(_this4), 250);
+    _this4.handleTextAreaKeyDown = _this4.handleTextAreaKeyDown.bind(_this4);
+    _this4.handleTextAreaKeyUp = _this4.handleTextAreaKeyUp.bind(_this4);
     return _this4;
   }
 
@@ -2525,6 +2536,8 @@ var AnswerTextArea = function (_Component3) {
           },
           rows: 5,
           onChange: this.onChangeTextArea,
+          onKeyDown: this.handleTextAreaKeyDown,
+          onKeyUp: this.handleTextAreaKeyUp,
           name: baseName + "[answer]"
         }),
         !(0, _isEmpty2.default)(text) && _react2.default.createElement("input", { type: "hidden", name: baseName + "[bot_id]", value: botId }),
@@ -2550,8 +2563,35 @@ var AnswerTextArea = function (_Component3) {
       );
     }
   }, {
+    key: "handleTextAreaKeyDown",
+    value: function handleTextAreaKeyDown(e) {
+      this.setState({
+        isIMEInputting: e.keyCode === KeyCodes.IMEInputting && isIE
+      });
+    }
+  }, {
+    key: "handleTextAreaKeyUp",
+    value: function handleTextAreaKeyUp(e) {
+      var isIMEInputting = this.state.isIMEInputting;
+
+      var isTargetKeyCode = e.keyCode === KeyCodes.Enter && isIMEInputting || e.keyCode === KeyCodes.Backspace || e.keyCode === KeyCodes.Delete;
+      if (isTargetKeyCode) {
+        this.setState({ isIMEInputting: false });
+        var value = this.textArea.value;
+
+        if (!(0, _isEmpty2.default)(value)) {
+          this.debouncedSearchAnswers(value);
+        } else {
+          this.setState({ answers: [] });
+        }
+      }
+    }
+  }, {
     key: "onChangeTextArea",
     value: function onChangeTextArea() {
+      if (isIE) {
+        return;
+      }
       var value = this.textArea.value;
       // this.setState({ text: value });
 

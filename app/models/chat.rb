@@ -9,7 +9,7 @@ class Chat < ApplicationRecord
 
   scope :has_multiple_messages, -> {
     joins(:messages)
-      .group('messages.speaker, chats.id, messages.id')
+      .group('messages.speaker, chats.id, messages.id, guest_users.id')
       .having(messages: { speaker: :guest })
       .order('chats.id desc')
   }

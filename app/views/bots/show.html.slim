@@ -1,32 +1,31 @@
 = render layout: 'bots/layout' do
   - if current_user.staff?
-    .my-4
-      h6.mb-4
+    .card: .card-block
+      h6.card-title
         = material_icon 'trending_down', class: 'mi-sm mi-v-sub text-muted'
         = space
         span 削減効果予測
-
-      .row
-        .col-6
-          table.table
-            thead: tr
-              th 過去30日間にチャットを使用したユーザー数
-              th 削減予測時間
-            tbody: tr
-              td
-                span.h3 #{@recent_30days_users_count}
-                = space
-                span ユーザー
-              td
-                - if @reducted_hours > 0
-                  span.h3 #{@reducted_hours.to_s(:delimited)}
-                  = space
-                  span 時間
-                  = space
-                - if @reducted_minutes > 0
-                  span.h3 #{@reducted_minutes.to_s(:delimited)}
-                  = space
-                  span 分
+        = space 5
+        small.text-sm.badge.badge-success STAFF ONLY
+      table.table.mb-0 style="width: auto"
+        thead: tr
+          th 過去30日間にチャットを使用したユーザー数
+          th 削減予測時間
+        tbody: tr
+          td
+            span.h3 #{@recent_30days_users_count}
+            = space
+            span ユーザー
+          td
+            - if @reducted_hours > 0
+              span.h3 #{@reducted_hours.to_s(:delimited)}
+              = space
+              span 時間
+              = space
+            - if @reducted_minutes > 0
+              span.h3 #{@reducted_minutes.to_s(:delimited)}
+              = space
+              span 分
 
   .my-4
     h6.mb-4

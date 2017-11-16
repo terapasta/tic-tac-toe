@@ -2510,6 +2510,13 @@ var AnswerTextArea = function (_Component3) {
   }
 
   _createClass(AnswerTextArea, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.textArea) {
+        this.textArea.value = this.props.defaultValue;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this5 = this;

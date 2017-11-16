@@ -83,6 +83,12 @@ export default class AnswerTextArea extends Component {
     this.handleTextAreaKeyUp = this.handleTextAreaKeyUp.bind(this)
   }
 
+  componentDidMount() {
+    if (this.textArea) {
+      this.textArea.value = this.props.defaultValue
+    }
+  }
+
   render() {
     const { baseName, botId } = this.props;
     const { text, answers } = this.state;

@@ -43,3 +43,7 @@
 every 1.day, at: '2:58' do
   rake 'learn:tag'
 end
+
+every 1.day, at: '18:00' do
+  rake 'organization:check_finising_trial'
+end

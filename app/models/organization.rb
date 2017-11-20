@@ -51,4 +51,8 @@ class Organization < ApplicationRecord
   def finished_trial?
     trial? && Time.current > trial_finished_at
   end
+
+  def before_1week_of_finishing_trial?
+    trial? && (trial_finished_at - 7.days).strftime('%Y%m%d') == Time.current.strftime('%Y%m%d')
+  end
 end

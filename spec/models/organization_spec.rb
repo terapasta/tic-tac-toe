@@ -19,4 +19,28 @@ RSpec.describe Organization, :type => :model do
       end
     end
   end
+
+  describe '#before_1week_of_finishing_trial?' do
+    subject do
+      organization.before_1week_of_finishing_trial?
+    end
+
+    context 'when before 1 week of finishing trial day' do
+      before do
+        organization.update(plan: :trial)
+        organization.update(trial_finished_at: 1.week.since)
+      end
+
+      it { is_expected.to be }
+    end
+
+    context 'when before 2 weeks of finishing trial day' do
+      before do
+        organization.update(plan: :trial)
+        organization.update(trial_finished_at: 2.weeks.since)
+      end
+
+      it { is_expected.to_not be }
+    end
+  end
 end

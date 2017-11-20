@@ -56,7 +56,7 @@ export default class ChatBotMessage extends Component {
     } = this.props;
 
     const { isFaded } = this.state;
-    const className = classNames("chat-message", { "faded": isFaded });
+    const className = classNames("chat-message wide", { "faded": isFaded });
     const iconStyle = {
       backgroundImage: `url(${iconImageUrl})`,
     };

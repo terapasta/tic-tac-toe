@@ -18,6 +18,12 @@
     @extend %base-chat-message;
     width: 100%;
   }
+
+  &.wide {
+    @include media-breakpoint-up(sm) {
+      width: 70%;
+    }
+  }
 }
 
 .chat-message {

@@ -4122,7 +4122,7 @@ var ChatBotMessage = function (_Component) {
           replyLog = _props.replyLog;
       var isFaded = this.state.isFaded;
 
-      var className = (0, _classnames2.default)("chat-message", { "faded": isFaded });
+      var className = (0, _classnames2.default)("chat-message wide", { "faded": isFaded });
       var iconStyle = {
         backgroundImage: "url(" + iconImageUrl + ")"
       };

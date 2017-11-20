@@ -16,12 +16,14 @@ class Organization < ApplicationRecord
     lite: 3,
     standard: 7,
     professional: Float::INFINITY,
+    trial: 3,
   }.with_indifferent_access.freeze
 
   ChatsLimitPerDay = {
     lite: 30,
     standard: 60,
     professional: Float::INFINITY,
+    trial: 30,
   }.with_indifferent_access.freeze
 
   def histories_limit_days
@@ -44,5 +46,9 @@ class Organization < ApplicationRecord
     if plan_was != 'trial' && trial?
       self.trial_finished_at = 2.months.since.end_of_day
     end
+  end
+
+  def finished_trial?
+    trial? && Time.current > trial_finished_at
   end
 end

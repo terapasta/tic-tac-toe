@@ -7,7 +7,7 @@ class Organization < ApplicationRecord
   accepts_nested_attributes_for :user_memberships, allow_destroy: true
   accepts_nested_attributes_for :bot_ownerships, allow_destroy: true
 
-  enum plan: { lite: 0, standard: 1, professional: 2 }
+  enum plan: { lite: 0, standard: 1, professional: 2, trial: 3 }
 
   mount_uploader :image, ImageUploader
 

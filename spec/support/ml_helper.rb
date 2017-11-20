@@ -5,11 +5,6 @@ module MlHelper
     LearnJob.new.perform(bot.id)
   end
 
-  def learn_tag_model
-    engine = Ml::Engine.new(nil)
-    engine.learn_tag_model
-  end
-
   def add_tag_to_question_answer(bot, body, tags)
     question_answer = bot.question_answers.find_by!(question: body)
     question_answer.update(tag_list: tags)

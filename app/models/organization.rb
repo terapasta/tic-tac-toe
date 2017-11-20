@@ -10,6 +10,7 @@ class Organization < ApplicationRecord
   enum plan: { lite: 0, standard: 1, professional: 2, trial: 3 }
 
   mount_uploader :image, ImageUploader
+  before_validation :set_trial_finished_at_if_needed
 
   HistoriesLimitDays = {
     lite: 3,
@@ -37,5 +38,11 @@ class Organization < ApplicationRecord
 
   def ec_plan?
     lite? || standard?
+  end
+
+  def set_trial_finished_at_if_needed
+    if plan_was != 'trial' && trial?
+      self.trial_finished_at = 2.months.since.end_of_day
+    end
   end
 end

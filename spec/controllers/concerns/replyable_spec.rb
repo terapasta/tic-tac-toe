@@ -11,7 +11,7 @@ describe Replyable do
     let(:question) { '質問です。ほげほげ、もげもげ' }
     let(:question_feature_count) { 3 }
     let(:probability) { MyOpeConfig.threshold_of_suggest_similar_questions - 0.01 }
-    let(:reply) { Conversation::Reply.new(
+    let(:reply) { Hashie::Mash.new(
       probability: probability,
       question: question,
       question_feature_count: question_feature_count

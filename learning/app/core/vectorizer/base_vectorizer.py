@@ -5,9 +5,6 @@ class BaseVectorizer(BaseCls):
     def __init__(self, datasource=None, dump_key=''):
         raise NotImplementedError()
 
-    def set_persistence(self, persistence, key):
-        raise NotImplementedError()
-
     def fit(self, sentences):
         raise NotImplementedError()
 

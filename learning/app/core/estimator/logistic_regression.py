@@ -13,12 +13,6 @@ class LogisticRegression(BaseEstimator):
         self._dump_key = dump_key
         self.estimator = None
 
-    def set_persistence(self, persistence, key=None):
-        if key is not None:
-            self._dump_key = key
-        self.persistence = persistence
-        return self
-
     def fit(self, x, y):
         params = {'C': [10, 100, 140, 200]}
         grid = GridSearchCV(SkLogisticRegression(), param_grid=params)

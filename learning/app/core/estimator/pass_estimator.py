@@ -6,9 +6,6 @@ class PassEstimator(BaseEstimator):
     def __init__(self, datasource=None, dump_key=None):
         pass
 
-    def set_persistence(self, persistence, key=None):
-        return self
-
     def fit(self, x, y):
         pass
 

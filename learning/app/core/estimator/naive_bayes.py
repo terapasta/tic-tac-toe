@@ -13,12 +13,6 @@ class NaiveBayes(BaseEstimator):
         self._dump_key = dump_key
         self.estimator = None
 
-    def set_persistence(self, persistence, key=None):
-        if key is not None:
-            self._dump_key = key
-        self.persistence = persistence
-        return self
-
     def fit(self, x, y):
         self._prepare_instance_if_needed()
         self.estimator.fit(x, y)

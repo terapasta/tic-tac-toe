@@ -5,9 +5,6 @@ class BaseNormalizer(BaseCls):
     def __init__(self, datasource=None, dump_key=None):
         raise NotImplementedError()
 
-    def set_persistence(self, persistence, key):
-        raise NotImplementedError()
-
     def fit(self, features):
         raise NotImplementedError()
 

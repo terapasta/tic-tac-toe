@@ -14,13 +14,6 @@ class TfidfVectorizer(BaseVectorizer):
         self._dump_key = dump_key
         self.vectorizer = None
 
-    def set_persistence(self, persistence, key=None):
-        if key is not None:
-            self._dump_key = key
-        self.persistence = persistence
-        self.vectorizer = None
-        return self
-
     def fit(self, sentences):
         self._prepare_instance_if_needed()
         self.vectorizer.fit(sentences)

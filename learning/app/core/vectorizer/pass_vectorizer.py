@@ -6,9 +6,6 @@ class PassVectorizer(BaseVectorizer):
     def __init__(self, datasource=None, dump_key=''):
         pass
 
-    def set_persistence(self, persistence, key=None):
-        return self
-
     def fit(self, sentences):
         pass
 

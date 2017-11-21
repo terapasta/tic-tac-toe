@@ -5,9 +5,6 @@ class BaseTokenizer(BaseCls):
     def __init__(self):
         raise NotImplementedError()
 
-    def set_persistence(self, persistence, key):
-        raise NotImplementedError()
-
     def tokenize(self, texts):
         raise NotImplementedError()
 

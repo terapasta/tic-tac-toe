@@ -5,9 +5,6 @@ class BaseEstimator(BaseCls):
     def __init__(self, datasource=None, dump_key=None):
         raise NotImplementedError()
 
-    def set_persistence(self, persistence, key):
-        raise NotImplementedError()
-
     def fit(self, x, y):
         raise NotImplementedError()
 

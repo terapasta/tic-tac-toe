@@ -11,12 +11,6 @@ class LSI(BaseReducer):
         self._dump_key = dump_key
         self.estimator = None
 
-    def set_persistence(self, persistence, key=None):
-        if key is not None:
-            self._dump_key = key
-        self.persistence = persistence
-        return self
-
     def fit(self, features):
         # NOTE:
         #   n_componentsは削減後の次元数。

@@ -1,4 +1,7 @@
-class Persistence:
+from app.shared.base_cls import BaseCls
+
+
+class Persistence(BaseCls):
     __shared_state = {}
     data = {}
 

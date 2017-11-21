@@ -7,10 +7,11 @@ from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
+from app.shared.base_cls import BaseCls
 
 
 # Note: リクエストされたコンテキスト情報を保持する
-class Context(object):
+class Context(BaseCls):
     def __init__(self, bot_id, learning_parameter, grpc_context=None):
         self._bot = Bot(bot_id=bot_id, learning_parameter=learning_parameter)
         self._grpc_context = grpc_context

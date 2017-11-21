@@ -6,10 +6,11 @@ from app.core.estimator.naive_bayes import NaiveBayes
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.hybrid_classification import HybridClassification
+from app.shared.base_cls import BaseCls
 from app.shared.datasource.datasource import Datasource
 
 
-class HybridClassificationFactory:
+class HybridClassificationFactory(BaseCls):
     @inject
     def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource, estimator: NaiveBayes):
         persistence = datasource.persistence.init_by_bot(context.current_bot)

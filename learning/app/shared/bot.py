@@ -1,7 +1,8 @@
 from app.shared.config import Config
+from app.shared.base_cls import BaseCls
 
 
-class Bot(object):
+class Bot(BaseCls):
     def __init__(self, bot_id, learning_parameter, config=None):
         self._bot_id = bot_id
         self._learning_parameter = learning_parameter

@@ -3,9 +3,10 @@ from injector import inject
 from pathlib import Path
 from sklearn.externals import joblib
 from app.shared.config import Config
+from app.shared.base_cls import BaseCls
 
 
-class Persistence:
+class Persistence(BaseCls):
     @inject
     def __init__(self):
         self.id = 0

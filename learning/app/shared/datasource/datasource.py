@@ -1,5 +1,6 @@
 from app.shared.config import Config
 from app.shared.constants import Constants
+from app.shared.base_cls import BaseCls
 from app.shared.datasource.database.persistence import Persistence as PersistenceFromDb
 from app.shared.datasource.database.question_answers import QuestionAnswers as QuestionAnswersFromDb
 from app.shared.datasource.database.ratings import Ratings as RatingsFromDb
@@ -8,16 +9,16 @@ from app.shared.datasource.file.question_answers import QuestionAnswers as Quest
 from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
 
 
-class Datasource:
+class Datasource(BaseCls):
     def __init__(self, persistence=None, question_answers=None, ratings=None):
         if Config().get('datasource_type') == Constants.DATASOURCE_TYPE_FILE:
-            self._persistence = PersistenceFromFile()
-            self._question_answers = QuestionAnswersFromFile()
-            self._ratings = RatingsFromFile()
+            self._persistence = PersistenceFromFile.new()
+            self._question_answers = QuestionAnswersFromFile.new()
+            self._ratings = RatingsFromFile.new()
         else:
-            self._persistence = PersistenceFromDb()
-            self._question_answers = QuestionAnswersFromDb()
-            self._ratings = RatingsFromDb()
+            self._persistence = PersistenceFromDb.new()
+            self._question_answers = QuestionAnswersFromDb.new()
+            self._ratings = RatingsFromDb.new()
 
         if persistence is not None:
             self._persistence = persistence

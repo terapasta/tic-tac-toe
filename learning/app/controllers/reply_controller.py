@@ -1,7 +1,8 @@
 from app.shared.logger import logger
+from app.shared.base_cls import BaseCls
 
 
-class ReplyController(object):
+class ReplyController(BaseCls):
     def __init__(self, context):
         self.factory = context.get_factory()
 

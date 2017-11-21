@@ -1,9 +1,10 @@
 import io
 from sklearn.externals import joblib
 from app.shared.datasource.database.database import Database
+from app.shared.base_cls import BaseCls
 
 
-class Persistence:
+class Persistence(BaseCls):
     def __init__(self):
         self.database = Database()
         self.id = 0

@@ -9,7 +9,6 @@ from gateway_pb2_grpc import add_BotServicer_to_server
 
 import traceback
 import inject
-import numpy as np
 import argparse
 
 from app.shared.logger import logger
@@ -28,11 +27,10 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class RouteGuideServicer(BotServicer):
     def Reply(self, request, context):
         logger.debug('request = %s' % request)
-        myope_context = Context(request.bot_id, request.learning_parameter, context)
-        X = np.array([request.body])
+        myope_context = Context.new(request.bot_id, request.learning_parameter, context)
 
         try:
-            reply = ReplyController(context=myope_context).perform(X[0])
+            reply = ReplyController.new(context=myope_context).perform(request.body)
         except NotTrainedError:
             detail = 'bot_id:%s wasn\'t trained' % str(myope_context.current_bot.id)
             logger.error(detail)
@@ -56,10 +54,10 @@ class RouteGuideServicer(BotServicer):
     @stop_watch
     def Learn(self, request, context):
         logger.debug('request = %s' % request)
-        myope_context = Context(request.bot_id, request.learning_parameter, context)
+        myope_context = Context.new(request.bot_id, request.learning_parameter, context)
 
         try:
-            result = LearnController(context=myope_context).perform()
+            result = LearnController.new(context=myope_context).perform()
         except:
             logger.error(traceback.format_exc())
             result = {

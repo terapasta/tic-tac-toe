@@ -6,10 +6,11 @@ from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.estimator.pass_estimator import PassEstimator
 from app.core.two_steps_cosine_similarity import TwoStepsCosineSimilarity
+from app.shared.base_cls import BaseCls
 from app.shared.datasource.datasource import Datasource
 
 
-class TwoStepCosineSimilarityFactory:
+class TwoStepCosineSimilarityFactory(BaseCls):
     @inject
     def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource, estimator: PassEstimator):
         persistence = datasource.persistence.init_by_bot(context.current_bot)

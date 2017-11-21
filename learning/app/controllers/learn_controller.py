@@ -3,9 +3,10 @@ import pandas as pd
 
 from app.shared.logger import logger
 from app.shared.constants import Constants
+from app.shared.base_cls import BaseCls
 
 
-class LearnController:
+class LearnController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()

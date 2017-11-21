@@ -41,7 +41,6 @@ class Helper:
 
     @classmethod
     def vectrize_for_test(cls, texts, tokenizer=None, vectorizer=None):
-        # HACK: inject使えない?
         tokenizer = MecabTokenizer.new() if tokenizer is None else tokenizer
         vectorizer = TfidfVectorizer.new() if vectorizer is None else vectorizer
         sentences = tokenizer.tokenize(texts)

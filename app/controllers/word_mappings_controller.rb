@@ -40,7 +40,7 @@ class WordMappingsController < ApplicationController
   end
 
   def destroy
-    @word_mapping.destroy
+    @word_mapping.destroy!
     @bot.learn_later
     redirect_to bot_word_mappings_path(@bot), notice: '同義語を削除しました。'
   end

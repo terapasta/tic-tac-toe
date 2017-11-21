@@ -6,7 +6,7 @@
   when: stage == "development" or stage == "staging"
 
 - name: install MySQL
-  yum: name=mysql-server state=installed
+  yum: name=mysql57-server state=latest
   when: stage == "development" or stage == "staging"
 
 - name: Auto starting MySQL

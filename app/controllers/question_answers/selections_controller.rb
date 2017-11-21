@@ -2,7 +2,6 @@ class QuestionAnswers::SelectionsController < ApplicationController
   include BotUsable
   include QuestionAnswersSearchable
 
-  before_action :authenticate_user!
   before_action :set_question_answer, only: [:create, :destroy]
   before_action :set_bot
 

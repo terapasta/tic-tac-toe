@@ -7,12 +7,18 @@ from app.shared.datasource.database.ratings import Ratings as RatingsFromDb
 from app.shared.datasource.file.persistence import Persistence as PersistenceFromFile
 from app.shared.datasource.file.question_answers import QuestionAnswers as QuestionAnswersFromFile
 from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
+from app.shared.datasource.memory.persistence import Persistence as PersistenceFromMemory
 
 
 class Datasource(BaseCls):
     def __init__(self, persistence=None, question_answers=None, ratings=None):
-        if Config().get('datasource_type') == Constants.DATASOURCE_TYPE_FILE:
+        datasource_type = Config().get('datasource_type')
+        if datasource_type == Constants.DATASOURCE_TYPE_FILE:
             self._persistence = PersistenceFromFile.new()
+            self._question_answers = QuestionAnswersFromFile.new()
+            self._ratings = RatingsFromFile.new()
+        elif datasource_type == Constants.DATASOURCE_TYPE_MEMORY:
+            self._persistence = PersistenceFromMemory.new()
             self._question_answers = QuestionAnswersFromFile.new()
             self._ratings = RatingsFromFile.new()
         else:

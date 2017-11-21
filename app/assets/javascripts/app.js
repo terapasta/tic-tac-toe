@@ -32,4 +32,9 @@ window.jQuery(function($) {
       $button.toggleClass('active');
     });
   });
+
+  $('[data-role="collapsible').on('dblclick', function(e) {
+    e.preventDefault()
+    $(e.currentTarget).toggleClass('active')
+  })
 });

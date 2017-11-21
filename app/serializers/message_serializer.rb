@@ -1,7 +1,19 @@
 class MessageSerializer < ActiveModel::Serializer
   include DeepCamelizeKeys
 
-  attributes :id, :speaker, :rating, :created_at, :body, :icon_image_url, :answer_files, :answer_failed, :child_decision_branches, :similar_question_answers, :is_show_similar_question_answers
+  attributes :id,
+    :speaker,
+    :rating,
+    :created_at,
+    :body,
+    :icon_image_url,
+    :answer_files,
+    :answer_failed,
+    :child_decision_branches,
+    :similar_question_answers,
+    :is_show_similar_question_answers,
+    :reply_log
+
   has_one :question_answer
 
   def rating

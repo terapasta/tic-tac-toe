@@ -61,6 +61,9 @@ class HybridClassification(BaseCore):
         merged_data['probability'] = merged_data['probability_x'] + merged_data['probability_y']
         merged_data = merged_data[['question_answer_id', 'question', 'probability']]
 
+        merged_data = merged_data.drop_duplicates(subset='question_answer_id', keep='first')
+        merged_data = merged_data.sort_values(by='probability', ascending=False)
+
         return merged_data
 
     def __no_data(self):

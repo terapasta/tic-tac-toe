@@ -16,8 +16,12 @@
         = space 2
         small 回答不可
     .chat-message__rating
-      .chat-message__rating-title この返答の評価
+      .chat-message__rating-title この回答の評価
       span.chat-message__rating-button.good class=('active' if message.rating&.good?)
         = material_icon 'thumb_up'
       span.chat-message__rating-button.bad class=('active' if message.rating&.bad?)
         = material_icon 'thumb_down'
+  - if current_user.staff? && message.reply_log.present? && params[:controller] == 'messages'
+    div.collapsible data-role="collapsible" data-toggle="tooltip" title="ダブルクリックで開閉します"
+      pre= JSON.pretty_generate message.reply_log
+

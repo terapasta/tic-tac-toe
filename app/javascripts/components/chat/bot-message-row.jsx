@@ -20,6 +20,7 @@ export default class ChatBotMessageRow extends Component {
           rating: PropTypes.oneOf(values(Ratings)),
         }),
       }),
+      isAdmin: PropTypes.bool,
       isManager: PropTypes.bool,
       isFirst: PropTypes.bool,
       isActive: PropTypes.bool,
@@ -38,7 +39,8 @@ export default class ChatBotMessageRow extends Component {
 
   render() {
     const {
-      section: { question, answer },
+      section: { question, answer, replyLog },
+      isAdmin,
       isManager,
       isFirst,
       isLastPage,
@@ -55,7 +57,7 @@ export default class ChatBotMessageRow extends Component {
       questionId: get(question, "id"),
       answerId: get(answer, "id"),
     });
-    const _props = assign({ isFirst, onChangeRatingTo }, answer);
+    const _props = assign({ isAdmin, isFirst, onChangeRatingTo, replyLog }, answer);
 
     return (
       <ChatRow>

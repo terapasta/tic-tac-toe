@@ -1,0 +1,8 @@
+= render layout: 'my/shared/layout' do
+  = form_for @user, url: my_email_path, html: { class: 'form' } do |f|
+    .form-group
+      = f.label :email
+      = f.email_field :email, class: 'form-control'
+
+    .form-group.text-right
+      = f.submit '更新', class: 'btn btn-success'

@@ -1,5 +1,5 @@
-from injector import inject
 import pandas as pd
+from injector import inject
 from sklearn.naive_bayes import MultinomialNB
 from app.shared.logger import logger
 from app.core.estimator.base_estimator import BaseEstimator

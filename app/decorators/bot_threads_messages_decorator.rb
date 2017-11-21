@@ -9,12 +9,18 @@ class BotThreadsMessagesDecorator < Draper::CollectionDecorator
   end
 
   def put_rows_to_csv(csv, chat)
-    chat.messages.order('id asc').each do |message|
-      csv << [chat.id, message.id, message.speaker, message.body,
-              message.answer_failed? ? '失敗' : '',
-              message.rating.blank? ? '' : message.rating.level,
-              message.created_at,
-              message.user_agent]
+    return if chat.messages.length <= 1
+    chat.messages.each do |message|
+      csv << [
+        chat.id,
+        message.id,
+        message.speaker,
+        message.body,
+        message.answer_failed? ? '失敗' : '',
+        message.rating.blank? ? '' : message.rating.level,
+        message.created_at,
+        message.user_agent
+      ]
     end
   end
 end

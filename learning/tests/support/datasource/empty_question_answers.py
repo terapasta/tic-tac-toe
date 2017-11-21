@@ -1,7 +1,8 @@
 import pandas as pd
+from app.shared.base_cls import BaseCls
 
 
-class EmptyQuestionAnswers:
+class EmptyQuestionAnswers(BaseCls):
     def __init__(self):
         pass
 

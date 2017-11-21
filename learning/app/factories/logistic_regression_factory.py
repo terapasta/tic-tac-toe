@@ -1,4 +1,4 @@
-import inject
+from injector import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
@@ -6,27 +6,25 @@ from app.core.estimator.logistic_regression import LogisticRegression as Logisti
 from app.core.logistic_regression import LogisticRegression
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
+from app.shared.base_cls import BaseCls
 from app.shared.datasource.datasource import Datasource
 
 
-class LogisticRegressionFactory:
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        datasource=Datasource,
-        estimator=LogisticRegressionEstimator,
-        core=LogisticRegression,
-    )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, core=None):
-        self.tokenizer = tokenizer
-        self.vectorizer = vectorizer
-        self.reducer = reducer
-        self.normalizer = normalizer
+class LogisticRegressionFactory(BaseCls):
+    @inject
+    def __init__(self, context, datasource: Datasource):
+        datasource.persistence.init_by_bot(context.current_bot)
         self.datasource = datasource
-        self.estimator = estimator
-        self._core = core
+        self.tokenizer = MecabTokenizer.new()
+        self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
+        self.reducer = PassReducer.new(datasource=self.datasource)
+        self.normalizer = PassNormalizer.new(datasource=self.datasource)
+        self.estimator = LogisticRegressionEstimator.new(datasource=self.datasource)
+        self.__core = LogisticRegression.new(
+            bot=context.current_bot,
+            datasource=self.datasource,
+            estimator=self.estimator,
+        )
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -48,4 +46,4 @@ class LogisticRegressionFactory:
 
     @property
     def core(self):
-        return self._core
+        return self.__core

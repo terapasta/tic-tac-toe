@@ -1,22 +1,23 @@
-import inject
+from injector import inject
 from sklearn.preprocessing import Normalizer as SkNormalizer
-from app.shared.app_status import AppStatus
 from app.shared.datasource.datasource import Datasource
+from app.core.normalizer.base_normalizer import BaseNormalizer
 
 
-class Normalizer:
-    @inject.params(datasource=Datasource, app_status=AppStatus)
-    def __init__(self, datasource=None, app_status=None):
-        self.bot = app_status.current_bot()
+class Normalizer(BaseNormalizer):
+    @inject
+    def __init__(self, datasource: Datasource, dump_key='sk_normalizer'):
         self.persistence = datasource.persistence
-        self.normalizer = self.persistence.load(self.dump_key)
+        self._dump_key = dump_key
+        self.estimator = None
 
     def fit(self, features):
-        self.normalizer = SkNormalizer(copy=False)
+        self._prepare_instance_if_needed()
         self.normalizer.fit(features)
-        self.persistence.dump(self.normalizer, self.dump_key)
+        self.persistence.dump(self.normalizer, self.bot_id, self.dump_key)
 
     def transform(self, features):
+        self._prepare_instance_if_needed()
         return self.normalizer.transform(features)
 
     def fit_transform(self, features):
@@ -25,4 +26,10 @@ class Normalizer:
 
     @property
     def dump_key(self):
-        return 'sk_normalizer'
+        return self._dump_key
+
+    def _prepare_instance_if_needed(self):
+        if self.normalizer is None:
+            self.normalizer = self.persistence.load(self.dump_key)
+        if self.normalizer is None:
+            self.normalizer = SkNormalizer(copy=False)

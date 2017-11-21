@@ -8,20 +8,15 @@ from gateway_pb2_grpc import BotServicer
 from gateway_pb2_grpc import add_BotServicer_to_server
 
 import traceback
-import inject
-import numpy as np
 import argparse
-from sklearn.exceptions import NotFittedError
 
 from app.shared.logger import logger
 from app.shared.config import Config
 from app.shared.stop_watch import stop_watch
-from app.shared.app_status import AppStatus
-from app.shared.datasource.datasource import Datasource
-from app.shared.constants import Constants
+from app.shared.context import Context
+from app.shared.custom_errors import NotTrainedError
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
-from app.factories.factory_selector import FactorySelector
 
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
@@ -30,17 +25,20 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class RouteGuideServicer(BotServicer):
     def Reply(self, request, context):
         logger.debug('request = %s' % request)
-        app_status = AppStatus().set_bot(request.bot_id, request.learning_parameter)
-        X = np.array([request.body])
+        myope_context = Context.new(
+            bot_id=request.bot_id,
+            learning_parameter=request.learning_parameter,
+            grpc_context=context
+        )
 
         try:
-            reply = ReplyController(factory=FactorySelector().get_factory()).perform(X[0])
-        except NotFittedError:
-            detail = 'bot_id:%s wasn\'t trained' % str(app_status.current_bot().id)
+            reply = ReplyController.new(context=myope_context).perform(request.body)
+        except NotTrainedError:
+            detail = 'bot_id:%s wasn\'t trained' % str(myope_context.current_bot.id)
             logger.error(detail)
             logger.error(traceback.format_exc())
             reply = self._empty_reply()
-            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_code(grpc.StatusCode.UNAVAILABLE)
             context.set_details(detail)
         except:
             logger.error(traceback.format_exc())
@@ -48,7 +46,6 @@ class RouteGuideServicer(BotServicer):
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(traceback.format_exc())
 
-        app_status.thread_clear()
         return ReplyResponse(
             question_feature_count=reply['question_feature_count'],
             results=[Result(**x) for x in reply['results']],
@@ -59,10 +56,14 @@ class RouteGuideServicer(BotServicer):
     @stop_watch
     def Learn(self, request, context):
         logger.debug('request = %s' % request)
-        app_status = AppStatus().set_bot(request.bot_id, request.learning_parameter)
+        myope_context = Context.new(
+            bot_id=request.bot_id,
+            learning_parameter=request.learning_parameter,
+            grpc_context=context
+        )
 
         try:
-            result = LearnController(factory=FactorySelector().get_factory()).perform()
+            result = LearnController.new(context=myope_context).perform()
         except:
             logger.error(traceback.format_exc())
             result = {
@@ -74,7 +75,6 @@ class RouteGuideServicer(BotServicer):
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(traceback.format_exc())
 
-        app_status.thread_clear()
         return LearnResponse(**result)
 
     def _empty_reply(self):
@@ -101,14 +101,11 @@ def serve(port):
 
 if __name__ == '__main__':
     logger.info('initializing')
-    inject.configure_once()
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=6000)
     parser.add_argument('--env', type=str, default='development')
-    parser.add_argument('--datasource_type', type=str, default=Constants.DATASOURCE_TYPE_DATABASE)
     args = parser.parse_args()
     Config().init(args.env)
-    Datasource().init(datasource_type=args.datasource_type)
 
     logger.info('start server!!')
     serve(args.port)

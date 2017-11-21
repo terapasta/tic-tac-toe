@@ -12,15 +12,15 @@ from app.shared.datasource.datasource import Datasource
 
 class CosineSimilarityFactory(BaseCls):
     @inject
-    def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, estimator: PassEstimator, datasource: Datasource):
-        persistence = datasource.persistence.init_by_bot(context.current_bot)
-        self.tokenizer = tokenizer.set_persistence(persistence)
-        self.vectorizer = vectorizer.set_persistence(persistence)
-        self.reducer = reducer.set_persistence(persistence)
-        self.normalizer = normalizer.set_persistence(persistence)
-        self.estimator = estimator.set_persistence(persistence)
+    def __init__(self, context, datasource: Datasource):
+        datasource.persistence.init_by_bot(context.current_bot)
         self.datasource = datasource
-        self.__core = CosineSimilarity(
+        self.tokenizer = MecabTokenizer.new()
+        self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
+        self.reducer = PassReducer.new(datasource=self.datasource)
+        self.normalizer = PassNormalizer.new(datasource=self.datasource)
+        self.estimator = PassEstimator.new(datasource=self.datasource)
+        self.__core = CosineSimilarity.new(
             bot=context.current_bot,
             tokenizer=self.tokenizer,
             vectorizer=self.vectorizer,

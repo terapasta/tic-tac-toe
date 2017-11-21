@@ -12,15 +12,16 @@ from app.shared.datasource.datasource import Datasource
 
 class LogisticRegressionFactory(BaseCls):
     @inject
-    def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource, estimator: LogisticRegressionEstimator):
-        persistence = datasource.persistence.init_by_bot(context.current_bot)
-        self.tokenizer = tokenizer.set_persistence(persistence)
-        self.vectorizer = vectorizer.set_persistence(persistence)
-        self.reducer = reducer.set_persistence(persistence)
-        self.normalizer = normalizer.set_persistence(persistence)
-        self.estimator = estimator.set_persistence(persistence)
+    def __init__(self, context, datasource: Datasource):
+        datasource.persistence.init_by_bot(context.current_bot)
         self.datasource = datasource
-        self.__core = LogisticRegression(
+        self.tokenizer = MecabTokenizer.new()
+        self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
+        self.reducer = PassReducer.new(datasource=self.datasource)
+        self.normalizer = PassNormalizer.new(datasource=self.datasource)
+        self.estimator = LogisticRegressionEstimator.new(datasource=self.datasource)
+        self.datasource = datasource
+        self.__core = LogisticRegression.new(
             bot=context.current_bot,
             datasource=self.datasource,
             estimator=self.estimator,

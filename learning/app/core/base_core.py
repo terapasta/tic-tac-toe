@@ -1,4 +1,7 @@
-class BaseCore:
+from app.shared.base_cls import BaseCls
+
+
+class BaseCore(BaseCls):
     def fit(self, x, y):
         raise NotImplementedError()
 

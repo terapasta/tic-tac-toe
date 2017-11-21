@@ -1,4 +1,4 @@
-import inject
+from injector import inject
 from app.shared.logger import logger
 from app.shared.datasource.datasource import Datasource
 from app.core.estimator.logistic_regression import LogisticRegression as LogisticRegressionEstimator
@@ -6,11 +6,8 @@ from app.core.base_core import BaseCore
 
 
 class LogisticRegression(BaseCore):
-    @inject.params(
-        datasource=Datasource,
-        estimator=LogisticRegressionEstimator,
-    )
-    def __init__(self, datasource=None, estimator=None):
+    @inject
+    def __init__(self, bot, datasource: Datasource, estimator: LogisticRegressionEstimator):
         self.persistence = datasource.persistence
         self.estimator = estimator
 

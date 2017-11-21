@@ -1,13 +1,11 @@
-import inject
 import io
 from sklearn.externals import joblib
 from app.shared.datasource.database.database import Database
 
 
 class Persistence:
-    @inject.params(database=Database)
-    def __init__(self, database=None):
-        self.database = database
+    def __init__(self):
+        self.database = Database()
         self.id = 0
         self.algorithm = 'none'
 

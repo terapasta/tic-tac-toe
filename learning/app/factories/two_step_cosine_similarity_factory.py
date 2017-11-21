@@ -1,38 +1,32 @@
-import inject
+from injector import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
+from app.core.estimator.pass_estimator import PassEstimator
 from app.core.two_steps_cosine_similarity import TwoStepsCosineSimilarity
 from app.shared.datasource.datasource import Datasource
 
 
 class TwoStepCosineSimilarityFactory:
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        datasource=Datasource,
-    )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, core=None):
-        self.tokenizer = tokenizer
-        self.vectorizer = vectorizer
-        self.reducer = reducer
-        self.normalizer = normalizer
+    @inject
+    def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource, estimator: PassEstimator):
+        persistence = datasource.persistence.init_by_bot(context.current_bot)
+        self.tokenizer = tokenizer.set_persistence(persistence)
+        self.vectorizer = vectorizer.set_persistence(persistence)
+        self.reducer = reducer.set_persistence(persistence)
+        self.normalizer = normalizer.set_persistence(persistence)
+        self.estimator = estimator.set_persistence(persistence)
         self.datasource = datasource
-        self.estimator = estimator
-        if core is not None:
-            self._core = core
-        else:
-            self._core = TwoStepsCosineSimilarity(
-                    tokenizer=self.tokenizer,
-                    vectorizer=self.vectorizer,
-                    reducer=self.reducer,
-                    normalizer=self.normalizer,
-                    datasource=self.datasource,
-                )
+        self.__core = TwoStepsCosineSimilarity(
+            bot=context.current_bot,
+            tokenizer=self.tokenizer,
+            vectorizer=self.vectorizer,
+            reducer=self.reducer,
+            normalizer=self.normalizer,
+            datasource=self.datasource,
+        )
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -54,4 +48,4 @@ class TwoStepCosineSimilarityFactory:
 
     @property
     def core(self):
-        return self._core
+        return self.__core

@@ -3,7 +3,7 @@ from app.core.estimator.base_estimator import BaseEstimator
 
 
 class PassEstimator(BaseEstimator):
-    def __init__(self):
+    def __init__(self, datasource=None, dump_key=None):
         pass
 
     def set_persistence(self, persistence, key=None):

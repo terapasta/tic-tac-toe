@@ -5,17 +5,12 @@ from app.shared.datasource.datasource import Datasource
 from app.shared.custom_errors import NotTrainedError
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-from tests.support.helper import Helper
 from tests.support.datasource.empty_persistence import EmptyPersistence
 
 
 class TfidfVectorizerTestCase(TestCase):
-
-    def setUp(self):
-        Helper.init()
-
     def test_predict_when_vocabulary_wasnot_fitted(self):
-        datasource = Datasource(persistence=EmptyPersistence)
+        datasource = Datasource(persistence=EmptyPersistence())
         vectorizer = TfidfVectorizer(datasource=datasource)
 
         def action():

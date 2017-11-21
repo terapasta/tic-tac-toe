@@ -1,14 +1,13 @@
 import os
-import inject
+from injector import inject
 from pathlib import Path
 from sklearn.externals import joblib
 from app.shared.config import Config
 
 
 class Persistence:
-    @inject.params(config=Config)
-    def __init__(self, config=None):
-        self.config = config
+    @inject
+    def __init__(self):
         self.id = 0
         self.algorithm = 'none'
 
@@ -33,4 +32,4 @@ class Persistence:
         joblib.dump(obj, path)
 
     def _generate_file_path(self, key):
-        return 'dumps/{}/{}/alg{}_{}'.format(self.config.env, self.id, self.algorithm, key)
+        return 'dumps/{}/{}/alg{}_{}'.format(Config().env, self.id, self.algorithm, key)

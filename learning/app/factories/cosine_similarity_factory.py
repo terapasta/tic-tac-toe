@@ -1,4 +1,4 @@
-import inject
+from injector import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
@@ -10,15 +10,8 @@ from app.shared.datasource.datasource import Datasource
 
 
 class CosineSimilarityFactory:
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        estimator=PassEstimator,
-        datasource=Datasource,
-    )
-    def __init__(self, context, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, estimator=None, datasource=None):
+    @inject
+    def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, estimator: PassEstimator, datasource: Datasource):
         persistence = datasource.persistence.init_by_bot(context.current_bot)
         self.tokenizer = tokenizer.set_persistence(persistence)
         self.vectorizer = vectorizer.set_persistence(persistence)

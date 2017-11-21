@@ -2,8 +2,8 @@ from app.shared.logger import logger
 
 
 class ReplyController(object):
-    def __init__(self, context=None):
-        self.factory = context.factory(context)
+    def __init__(self, context):
+        self.factory = context.get_factory()
 
     def perform(self, text):
         logger.info('start')

@@ -1,3 +1,4 @@
+from injector import Injector, AssistedBuilder
 from app.shared.bot import Bot
 from app.shared.logger import logger
 from app.shared.constants import Constants
@@ -40,6 +41,6 @@ class Context(object):
     def current_bot(self):
         return self._bot
 
-    @property
-    def factory(self):
-        return self._factory
+    def get_factory(self):
+        builder = Injector().get(AssistedBuilder[self._factory])
+        return builder.build(context=self)

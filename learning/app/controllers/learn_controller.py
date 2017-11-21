@@ -6,9 +6,9 @@ from app.shared.constants import Constants
 
 
 class LearnController:
-    def __init__(self, context=None):
+    def __init__(self, context):
         self.bot = context.current_bot
-        self.factory = context.factory(context)
+        self.factory = context.get_factory()
 
     def perform(self):
         logger.info('start')

@@ -3,8 +3,11 @@ from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
 class PassVectorizer(BaseVectorizer):
-    def __init__(self):
+    def __init__(self, datasource=None, dump_key=''):
         pass
+
+    def set_persistence(self, persistence, key=None):
+        return self
 
     def fit(self, sentences):
         pass
@@ -20,4 +23,4 @@ class PassVectorizer(BaseVectorizer):
 
     @property
     def dump_key(self):
-        return self._dump_key
+        return ''

@@ -2,7 +2,7 @@ from app.core.normalizer.base_normalizer import BaseNormalizer
 
 
 class PassNormalizer(BaseNormalizer):
-    def __init__(self):
+    def __init__(self, datasource=None, dump_key=None):
         pass
 
     def set_persistence(self, persistence, key=None):

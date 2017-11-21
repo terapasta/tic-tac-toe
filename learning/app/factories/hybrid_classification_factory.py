@@ -1,4 +1,4 @@
-import inject
+from injector import inject
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
@@ -10,32 +10,24 @@ from app.shared.datasource.datasource import Datasource
 
 
 class HybridClassificationFactory:
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        estimator=NaiveBayes,
-        datasource=Datasource,
-    )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, core=None):
-        self.tokenizer = tokenizer
-        self.vectorizer = vectorizer
-        self.reducer = reducer
-        self.normalizer = normalizer
+    @inject
+    def __init__(self, context, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource, estimator: NaiveBayes):
+        persistence = datasource.persistence.init_by_bot(context.current_bot)
+        self.tokenizer = tokenizer.set_persistence(persistence)
+        self.vectorizer = vectorizer.set_persistence(persistence)
+        self.reducer = reducer.set_persistence(persistence)
+        self.normalizer = normalizer.set_persistence(persistence)
+        self.estimator = estimator.set_persistence(persistence)
         self.datasource = datasource
-        self.estimator = estimator
-        if core is not None:
-            self._core = core
-        else:
-            self._core = HybridClassification(
-                    tokenizer=self.tokenizer,
-                    vectorizer=self.vectorizer,
-                    reducer=self.reducer,
-                    normalizer=self.normalizer,
-                    estimator=self.estimator,
-                    datasource=self.datasource,
-                )
+        self.__core = HybridClassification(
+                bot=context.current_bot,
+                tokenizer=self.tokenizer,
+                vectorizer=self.vectorizer,
+                reducer=self.reducer,
+                normalizer=self.normalizer,
+                estimator=self.estimator,
+                datasource=self.datasource,
+            )
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -57,4 +49,4 @@ class HybridClassificationFactory:
 
     @property
     def core(self):
-        return self._core
+        return self.__core

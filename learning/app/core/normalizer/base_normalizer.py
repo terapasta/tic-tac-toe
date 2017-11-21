@@ -1,4 +1,10 @@
-class BaseNormalizer:
+from app.shared.base_cls import BaseCls
+
+
+class BaseNormalizer(BaseCls):
+    def __init__(self, datasource=None, dump_key=None):
+        raise NotImplementedError()
+
     def set_persistence(self, persistence, key):
         raise NotImplementedError()
 

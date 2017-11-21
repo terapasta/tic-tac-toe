@@ -1,5 +1,5 @@
 class EmptyPersistence:
-    def __init__(self, app_status=None):
+    def __init__(self):
         pass
 
     def load(self, key):

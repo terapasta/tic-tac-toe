@@ -1,4 +1,4 @@
-import inject
+from injector import inject
 import numpy as np
 from sklearn.exceptions import NotFittedError
 from sklearn.feature_extraction.text import TfidfVectorizer as SkTfidfVectorizer
@@ -8,16 +8,17 @@ from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
 class TfidfVectorizer(BaseVectorizer):
-    @inject.params(datasource=Datasource)
-    def __init__(self, datasource=None):
+    @inject
+    def __init__(self, datasource: Datasource, dump_key='tfidf_vectorizer'):
         self.persistence = datasource.persistence
-        self._dump_key = 'tfidf_vectorizer'
+        self._dump_key = dump_key
         self.vectorizer = None
 
     def set_persistence(self, persistence, key=None):
         if key is not None:
             self._dump_key = key
         self.persistence = persistence
+        self.vectorizer = None
         return self
 
     def fit(self, sentences):

@@ -2,7 +2,7 @@ from app.core.reducer.base_reducer import BaseReducer
 
 
 class PassReducer(BaseReducer):
-    def __init__(self):
+    def __init__(self, datasource=None, dump_key=None):
         pass
 
     def set_persistence(self, persistence, key=None):

@@ -1,13 +1,10 @@
 from unittest import TestCase
-from nose.tools import ok_, assert_raises
-
+from nose.tools import ok_
 from app.core.estimator.naive_bayes import NaiveBayes
+from tests.support.helper import Helper
 
-class DummyPersistence:
-    def load(self, dump_key):
-        return 'estimator'
 
 class NaiveBayesTestCase(TestCase):
     def test_initialize(self):
-        naive_bayes = NaiveBayes(persistence=DummyPersistence())
+        NaiveBayes(datasource=Helper.empty_datasource())
         ok_(True)

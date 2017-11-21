@@ -1,8 +1,11 @@
-class BaseEstimator:
-    def set_persistence(self, persistence, key):
+from app.shared.base_cls import BaseCls
+
+
+class BaseEstimator(BaseCls):
+    def __init__(self, datasource=None, dump_key=None):
         raise NotImplementedError()
 
-    def init_by_bot(self, bot, key):
+    def set_persistence(self, persistence, key):
         raise NotImplementedError()
 
     def fit(self, x, y):

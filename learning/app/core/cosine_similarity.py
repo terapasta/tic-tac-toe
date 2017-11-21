@@ -1,4 +1,4 @@
-import inject
+from injector import inject
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
@@ -12,14 +12,8 @@ from app.core.base_core import BaseCore
 
 
 class CosineSimilarity(BaseCore):
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        datasource=Datasource,
-    )
-    def __init__(self, bot, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None):
+    @inject
+    def __init__(self, bot, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource):
         self.bot = bot
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer

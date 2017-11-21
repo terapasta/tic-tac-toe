@@ -1,4 +1,10 @@
-class BaseReducer:
+from app.shared.base_cls import BaseCls
+
+
+class BaseReducer(BaseCls):
+    def __init__(self, datasource=None, dump_key=None):
+        raise NotImplementedError()
+
     def set_persistence(self, persistence, key):
         raise NotImplementedError()
 

@@ -17,6 +17,7 @@ class ThreadsController < ApplicationController
           .has_good_answer(params[:good].to_bool)
           .has_bad_answer(params[:bad].to_bool)
           .has_answer_marked(params[:marked].to_bool)
+          .order('chats.created_at DESC')
 
         if current_user.ec_plan?(@bot) && params[:normal].blank?
           tmp_chats = tmp_chats.where('chats.created_at >= ?', current_user.histories_limit_time(@bot))

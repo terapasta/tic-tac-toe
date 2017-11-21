@@ -8,10 +8,10 @@ class Chat < ApplicationRecord
   belongs_to :guest_user, foreign_key: :guest_key, primary_key: :guest_key
 
   scope :has_multiple_messages, -> {
-    joins(:messages)
-      .group('messages.speaker, chats.id, messages.id')
-      .having(messages: { speaker: :guest })
-      .order('chats.id desc')
+    where(id: Chat.select(:id)
+      .joins(:messages)
+      .group('chats.id')
+      .having('count(messages.chat_id) > 1'))
   }
 
   scope :has_answer_failed, -> (flag) {

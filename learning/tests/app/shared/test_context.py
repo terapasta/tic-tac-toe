@@ -32,11 +32,11 @@ class ContextTestCase(TestCase):
 
         eq_(factory.__class__.__name__, TwoStepCosineSimilarityFactory.__name__)
 
-    # def test_word2vec_wmd(self):
-    #     context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
-    #     factory = context.get_factory()
+    def test_word2vec_wmd(self):
+        context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
+        factory = context.get_factory()
 
-    #     eq_(factory.__class__.__name__, Word2vecWmdFactory.__name__)
+        eq_(factory.__class__.__name__, Word2vecWmdFactory.__name__)
 
     def test_hybrid_classification(self):
         context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_HYBRID_CLASSIFICATION)

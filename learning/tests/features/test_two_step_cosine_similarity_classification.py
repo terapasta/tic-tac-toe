@@ -12,9 +12,9 @@ class TwoStepCosineSimilarityClassificationTestCase(TestCase):
     def test_learn_and_reply(self):
         context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
 
-        LearnController(context=context).perform()
+        LearnController.new(context=context).perform()
 
-        reply = ReplyController(context=context).perform('ここからどれくらいかかりますか')
+        reply = ReplyController.new(context=context).perform('ここからどれくらいかかりますか')
 
         # 結果が1件以上であること
         ok_(len(reply['results']) > 0)

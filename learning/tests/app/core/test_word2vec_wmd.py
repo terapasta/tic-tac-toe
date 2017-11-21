@@ -9,11 +9,9 @@ from tests.support.helper import Helper
 
 class Word2vecWmdTestCase(TestCase):
 
-    def setUp(self):
-        Helper.init(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
-
     def test_predict(self):
-        estimator = Word2vecWmd()
+        context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
+        estimator = Word2vecWmd.new(bot=context.current_bot)
         result = estimator.predict(['田舎 ドンキホーテ'])
 
         # データが10件以下のオブジェクトが返ること

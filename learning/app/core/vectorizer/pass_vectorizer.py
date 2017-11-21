@@ -1,8 +1,9 @@
 import numpy as np
+from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
-class PassVectorizer:
-    def __init__(self):
+class PassVectorizer(BaseVectorizer):
+    def __init__(self, datasource=None, dump_key=''):
         pass
 
     def fit(self, sentences):
@@ -19,4 +20,4 @@ class PassVectorizer:
 
     @property
     def dump_key(self):
-        return self._dump_key
+        return ''

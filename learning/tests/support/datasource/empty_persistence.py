@@ -1,5 +1,8 @@
-class EmptyPersistence:
-    def __init__(self, app_status=None):
+from app.shared.base_cls import BaseCls
+
+
+class EmptyPersistence(BaseCls):
+    def __init__(self):
         pass
 
     def load(self, key):
@@ -7,6 +10,3 @@ class EmptyPersistence:
 
     def dump(self, obj, key):
         pass
-
-    def __generate_file_path(self, key):
-        return ''

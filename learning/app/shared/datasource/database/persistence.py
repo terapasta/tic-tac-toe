@@ -1,22 +1,26 @@
-import inject
 import io
 from sklearn.externals import joblib
-from app.shared.app_status import AppStatus
 from app.shared.datasource.database.database import Database
+from app.shared.base_cls import BaseCls
 
 
-class Persistence:
-    @inject.params(database=Database)
-    def __init__(self, database=None):
-        self.database = database
+class Persistence(BaseCls):
+    def __init__(self):
+        self.database = Database()
+        self.id = 0
+        self.algorithm = 'none'
 
-    def load(self, name):
-        bot = AppStatus().current_bot()
+    def init_by_bot(self, bot):
+        self.id = bot.id
+        self.algorithm = bot.algorithm
+        return self
+
+    def load(self, key):
         records = self.database.select(
             'SELECT * FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
             {
-                'bot_id': bot.id,
-                'name': self.__generate_key(name),
+                'bot_id': self.id,
+                'name': self._generate_name(key),
             },
         )
         if len(records) > 0 and records['content'][0] is not None:
@@ -25,8 +29,7 @@ class Persistence:
 
         return None
 
-    def dump(self, obj, name):
-        bot = AppStatus().current_bot()
+    def dump(self, obj, key):
         file = io.BytesIO()
         joblib.dump(obj, file)
         file.seek(0)
@@ -35,21 +38,20 @@ class Persistence:
                     [
                         'DELETE FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
                         {
-                            'bot_id': bot.id,
-                            'name': self.__generate_key(name),
+                            'bot_id': self.id,
+                            'name': self._generate_name(key),
                         },
                     ],
                     [
                         'INSERT INTO dumps (bot_id, name, content) VALUES (%(bot_id)s, %(name)s, %(content)s);',
                         {
-                            'bot_id': bot.id,
-                            'name': self.__generate_key(name),
+                            'bot_id': self.id,
+                            'name': self._generate_name(key),
                             'content': file.getvalue(),
                         },
                     ],
                 ],
             )
 
-    def __generate_key(self, name):
-        bot = AppStatus().current_bot()
-        return 'alg{}_{}'.format(bot.algorithm, name)
+    def _generate_name(self, key):
+        return 'alg{}_{}'.format(self.algorithm, key)

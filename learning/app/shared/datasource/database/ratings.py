@@ -1,8 +1,9 @@
 from app.shared.datasource.database.database import Database
 from app.shared.constants import Constants
+from app.shared.base_cls import BaseCls
 
 
-class Ratings:
+class Ratings(BaseCls):
     def __init__(self):
         self.database = Database()
 

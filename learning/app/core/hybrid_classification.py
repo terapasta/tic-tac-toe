@@ -1,31 +1,23 @@
-import inject
+from injector import inject
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MinMaxScaler
 from app.core.estimator.naive_bayes import NaiveBayes
 from app.shared.logger import logger
-from app.shared.app_status import AppStatus
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource
+from app.core.base_core import BaseCore
 
 
 # Note: Cosine SimilarityとML Classificationを用いたアルゴリズム
-class HybridClassification:
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        datasource=Datasource,
-        estimator=NaiveBayes,
-        app_status=AppStatus,
-    )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, app_status=None):
-        self.bot = app_status.current_bot()
+class HybridClassification(BaseCore):
+    @inject
+    def __init__(self, bot, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource, estimator: NaiveBayes):
+        self.bot = bot
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
         self.reducer = reducer

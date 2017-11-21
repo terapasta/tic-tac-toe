@@ -1,5 +1,8 @@
-class PassReducer:
-    def __init__(self):
+from app.core.reducer.base_reducer import BaseReducer
+
+
+class PassReducer(BaseReducer):
+    def __init__(self, datasource=None, dump_key=None):
         pass
 
     def fit(self, features):

@@ -1,27 +1,30 @@
 default: &default
+  datasource_type: database
   database:
     endpoint: mysql://root@localhost/donusagi_bot?charset=utf8
     host: localhost
     name: donusagi_bot
     user: root
     password: ""
-  dicdir: /usr/local/lib/mecab/dic/ipadic
+  dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd
   # dicdir: /var/lib/mecab/dic/debian
   # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
-  word2vec_model_name: entity_vector.model.bin
-  word2vec_model_is_binaly: True
+  word2vec_model_name: fasttext_model.vec
+  word2vec_model_is_binaly: False
 
 development:
   <<: *default
 
 test:
   <<: *default
+  datasource_type: memory
   database:
     endpoint: mysql://root@localhost/donusagi_bot_test?charset=utf8
     host: localhost
     name: donusagi_bot_test
     user: root
     password: ""
+  dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd
 
 production:
   <<: *default
@@ -31,4 +34,4 @@ production:
     name: 
     user: 
     password: 
-  dicdir:
+  dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd

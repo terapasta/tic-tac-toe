@@ -1,11 +1,11 @@
 from app.shared.config import Config
+from app.shared.base_cls import BaseCls
 
 
-class Bot(object):
+class Bot(BaseCls):
     def __init__(self, bot_id, learning_parameter, config=None):
         self._bot_id = bot_id
         self._learning_parameter = learning_parameter
-        self._dump_key_prefix = ''
         self.config = config if config is not None else Config()
 
     @property
@@ -14,11 +14,7 @@ class Bot(object):
 
     @property
     def dump_key_prefix(self):
-        return self._dump_key_prefix
-
-    @property
-    def dump_dirpath(self):
-        return 'dumps/%s/%s' % (self.config.env, self._bot_id)
+        return 'alg{}_'.format(self.algorithm)
 
     @property
     def algorithm(self):

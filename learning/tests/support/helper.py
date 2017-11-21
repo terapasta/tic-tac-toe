@@ -1,14 +1,11 @@
-import inject
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
-
 from app.shared.config import Config
-from app.shared.app_status import AppStatus
+from app.shared.context import Context
 from app.shared.datasource.datasource import Datasource
-
-from app.shared.datasource.file.question_answers import QuestionAnswers as QuestionAnswersFromFile
-from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
-from app.shared.datasource.memory.persistence import Persistence as PersistenceFromMemory
+from tests.support.datasource.empty_persistence import EmptyPersistence
+from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
+from tests.support.datasource.empty_ratings import EmptyRatings
 
 
 class LearningParameter:
@@ -27,21 +24,29 @@ class VectorizedValue:
 
 class Helper:
     @classmethod
-    def init(cls, bot_id, algorithm):
-        inject.configure_once()
+    def init(cls):
         Config().init('test')
-        AppStatus().set_bot(bot_id=1, learning_parameter=LearningParameter(algorithm=algorithm))
-        Datasource(
-            persistence=PersistenceFromMemory,
-            question_answers=QuestionAnswersFromFile,
-            ratings=RatingsFromFile,
+
+    @classmethod
+    def test_context(cls, bot_id, algorithm):
+        return Context.new(
+            bot_id=bot_id,
+            learning_parameter=LearningParameter(algorithm=algorithm),
+            grpc_context={},
+        )
+
+    @classmethod
+    def empty_datasource(cls):
+        return Datasource.new(
+            persistence=EmptyPersistence(),
+            question_answers=EmptyQuestionAnswers(),
+            ratings=EmptyRatings(),
         )
 
     @classmethod
     def vectrize_for_test(cls, texts, tokenizer=None, vectorizer=None):
-        # HACK: inject使えない?
-        tokenizer = MecabTokenizer() if tokenizer is None else tokenizer
-        vectorizer = TfidfVectorizer() if vectorizer is None else vectorizer
+        tokenizer = MecabTokenizer.new() if tokenizer is None else tokenizer
+        vectorizer = TfidfVectorizer.new() if vectorizer is None else vectorizer
         sentences = tokenizer.tokenize(texts)
         vectors = vectorizer.fit_transform(sentences)
         return VectorizedValue(

@@ -2,9 +2,10 @@ import MeCab
 import mojimoji
 from app.shared.config import Config
 from app.shared.logger import logger
+from app.core.tokenizer.base_tokenizer import BaseTokenizer
 
 
-class MecabTokenizerWithSplit:
+class MecabTokenizerWithSplit(BaseTokenizer):
     def __init__(self):
         logger.debug('dicdir: ' + Config().get('dicdir'))
         self.tagger = MeCab.Tagger("-u dict/custom.dic -d " + Config().get('dicdir'))
@@ -14,7 +15,7 @@ class MecabTokenizerWithSplit:
     def tokenize(self, texts):
         splited_texts = []
         for text in texts:
-            splited_texts.append(self.tokenize_single_text(text))
+            splited_texts.append(self._tokenize_single_text(text))
         return splited_texts
 
     def extract_noun_count(self, text):
@@ -23,17 +24,7 @@ class MecabTokenizerWithSplit:
     def extract_verb_count(self, text):
         return self.__extract_pos_count('動詞', text)
 
-    def __extract_pos_count(self, target_pos, text):
-        node = self.tagger.parseToNode(text)
-        count = 0
-        while node:
-            pos = node.feature.split(',')[0]
-            if pos == target_pos:
-                count += 1
-            node = node.next
-        return count
-
-    def tokenize_single_text(self, text):
+    def _tokenize_single_text(self, text):
         node = self.tagger.parseToNode(text)
         word_list = []
         while node:
@@ -64,3 +55,13 @@ class MecabTokenizerWithSplit:
                 word_list.append(mojimoji.han_to_zen(lemma))
             node = node.next
         return word_list
+
+    def __extract_pos_count(self, target_pos, text):
+        node = self.tagger.parseToNode(text)
+        count = 0
+        while node:
+            pos = node.feature.split(',')[0]
+            if pos == target_pos:
+                count += 1
+            node = node.next
+        return count

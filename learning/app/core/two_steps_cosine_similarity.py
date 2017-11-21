@@ -1,9 +1,8 @@
-import inject
+from injector import inject
 import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
-from app.shared.app_status import AppStatus
 from app.shared.constants import Constants
 
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
@@ -11,27 +10,21 @@ from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.shared.datasource.datasource import Datasource
+from app.core.base_core import BaseCore
 
 
 # Note: ユーザーの評価を検索結果に反映したコサイン類似検索
 #     ratingsテーブル内を類似検索し類似度の高いレコードのquestion_answer_idを使ってquestion_answersに類似検索をかける
-class TwoStepsCosineSimilarity:
+class TwoStepsCosineSimilarity(BaseCore):
     FIRST_STEP_THRESHOLD = 0.5
     BAD_QA_ID = '0'
 
-    @inject.params(
-        tokenizer=MecabTokenizer,
-        vectorizer=TfidfVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        datasource=Datasource,
-        app_status=AppStatus,
-    )
-    def __init__(self, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, app_status=None):
-        self.bot = app_status.current_bot()
+    @inject
+    def __init__(self, bot, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer, reducer: PassReducer, normalizer: PassNormalizer, datasource: Datasource):
+        self.bot = bot
         self.tokenizer = tokenizer
         self.vectorizer = vectorizer
-        self.vectorizer_for_qaid = vectorizer.__class__(dump_key='two_steps_tfidf_vectorizer')
+        self.vectorizer_for_qaid = vectorizer.__class__(datasource=datasource, dump_key='two_steps_tfidf_vectorizer')
         self.reducer = reducer
         self.normalizer = normalizer
         self.question_answers = datasource.question_answers
@@ -122,10 +115,6 @@ class TwoStepsCosineSimilarity:
         logger.info('sort')
         results = results.sort_values(by='probability', ascending=False)
         return results
-
-    @property
-    def dump_key(self):
-        return 'two_steps_cosine_similarity'
 
     def __get_features(self, tokenized_sentences):
         vectorized_features = self.vectorizer_for_qaid.transform(tokenized_sentences)

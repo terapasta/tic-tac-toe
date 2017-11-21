@@ -1,35 +1,30 @@
-import inject
+from injector import inject
 
 from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.vectorizer.pass_vectorizer import PassVectorizer
+from app.core.estimator.pass_estimator import PassEstimator
 from app.core.word2vec_wmd import Word2vecWmd
+from app.shared.base_cls import BaseCls
 from app.shared.datasource.datasource import Datasource
 
 
-class Word2vecWmdFactory:
-    @inject.params(
-        tokenizer=MecabTokenizerWithSplit,
-        vectorizer=PassVectorizer,
-        reducer=PassReducer,
-        normalizer=PassNormalizer,
-        datasource=Datasource,
-    )
-    def __init__(self, data_builder=None, tokenizer=None, vectorizer=None, reducer=None, normalizer=None, datasource=None, estimator=None, core=None):
-        self.tokenizer = tokenizer
-        self.vectorizer = vectorizer
-        self.reducer = reducer
-        self.normalizer = normalizer
+class Word2vecWmdFactory(BaseCls):
+    @inject
+    def __init__(self, context, datasource: Datasource):
+        datasource.persistence.init_by_bot(context.current_bot)
         self.datasource = datasource
-        self.estimator = estimator
-        if core is not None:
-            self._core = core
-        else:
-            self._core = Word2vecWmd(
-                tokenizer=self.tokenizer,
-                datasource=self.datasource
-            )
+        self.tokenizer = MecabTokenizerWithSplit.new()
+        self.vectorizer = PassVectorizer.new(datasource=self.datasource)
+        self.reducer = PassReducer.new(datasource=self.datasource)
+        self.normalizer = PassNormalizer.new(datasource=self.datasource)
+        self.estimator = PassEstimator.new(datasource=self.datasource)
+        self.__core = Word2vecWmd.new(
+            bot=context.current_bot,
+            tokenizer=self.tokenizer,
+            datasource=self.datasource,
+        )
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -51,4 +46,4 @@ class Word2vecWmdFactory:
 
     @property
     def core(self):
-        return self._core
+        return self.__core

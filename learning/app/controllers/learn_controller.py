@@ -1,18 +1,15 @@
-import inject
 import numpy as np
 import pandas as pd
 
 from app.shared.logger import logger
-from app.shared.app_status import AppStatus
 from app.shared.constants import Constants
-from app.factories.cosine_similarity_factory import CosineSimilarityFactory
+from app.shared.base_cls import BaseCls
 
 
-class LearnController:
-    @inject.params(factory=CosineSimilarityFactory, app_status=AppStatus)
-    def __init__(self, factory=None, app_status=None):
-        self.bot = app_status.current_bot()
-        self._factory = factory
+class LearnController(BaseCls):
+    def __init__(self, context):
+        self.bot = context.current_bot
+        self.factory = context.get_factory()
 
     def perform(self):
         logger.info('start')
@@ -30,26 +27,26 @@ class LearnController:
 
     def _vocabulary_learn(self):
         logger.info('load all get_datasource')
-        question_answers = self._factory.get_datasource().question_answers.all()
-        ratings = self._factory.get_datasource().ratings.all()
+        question_answers = self.factory.get_datasource().question_answers.all()
+        ratings = self.factory.get_datasource().ratings.all()
         all_questions = pd.concat([question_answers['question'], ratings['question']])
 
         logger.info('tokenize all')
-        tokenized_sentences = self._factory.get_tokenizer().tokenize(all_questions)
+        tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
 
         logger.info('vectorize all')
-        vectorized_features = self._factory.get_vectorizer().fit_transform(tokenized_sentences)
+        vectorized_features = self.factory.get_vectorizer().fit_transform(tokenized_sentences)
 
         logger.info('reduce all')
-        reduced_features = self._factory.get_reducer().fit_transform(vectorized_features)
+        reduced_features = self.factory.get_reducer().fit_transform(vectorized_features)
 
         logger.info('normalize all')
-        self._factory.get_normalizer().fit(reduced_features)
+        self.factory.get_normalizer().fit(reduced_features)
 
     def _learn_bot(self):
         logger.info('load question_answers and ratings')
-        bot_qa_data = self._factory.get_datasource().question_answers.by_bot(self.bot.id)
-        bot_ratings_data = self._factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
+        bot_qa_data = self.factory.get_datasource().question_answers.by_bot(self.bot.id)
+        bot_ratings_data = self.factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
 
         all_questions = np.array(pd.concat([bot_qa_data['question'], bot_ratings_data['question']]))
         all_answer_ids = np.array(pd.concat([bot_qa_data['question_answer_id'], bot_ratings_data['question_answer_id']]), dtype=np.int)
@@ -59,13 +56,13 @@ class LearnController:
         all_answer_ids = np.append(all_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
         logger.info('tokenize question_answers')
-        bot_tokenized_sentences = self._factory.get_tokenizer().tokenize(all_questions)
+        bot_tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
 
         logger.info('vectorize get_datasource')
-        bot_features = self._factory.get_vectorizer().transform(bot_tokenized_sentences)
+        bot_features = self.factory.get_vectorizer().transform(bot_tokenized_sentences)
 
         logger.info('fit')
-        self._factory.core.fit(
+        self.factory.core.fit(
                 bot_features,
                 all_answer_ids,
             )

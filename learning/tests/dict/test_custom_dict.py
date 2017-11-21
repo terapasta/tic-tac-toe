@@ -6,10 +6,6 @@ from app.shared.config import Config
 
 class CustomDictTestCase(TestCase):
 
-    def setUp(self):
-        Config().init('test')
-        pass
-
     def test_parse(self):
         tagger = MeCab.Tagger("-u dict/custom.dic -d " + Config().get('dicdir'))
         node = tagger.parseToNode('ねぇほしょうｍｏコムってなに')

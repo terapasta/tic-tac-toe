@@ -38,6 +38,7 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       subject do
         lambda do
           visit "/bots/#{bot.id}/question_answers/new"
+          page.save_screenshot
           fill_in_input name: 'question_answer[question]', value: 'sample question'
           fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
           click_link '添付ファイルを追加'

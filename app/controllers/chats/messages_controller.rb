@@ -17,7 +17,7 @@ class Chats::MessagesController < ApplicationController
   def create
     @bot = Bot.find_by!(token: params[:token])
     ActiveRecord::Base.transaction do
-      @message = @chat.messages.create!(message_params) {|m|
+      @message = @chat.messages.create!(permitted_attributes(Message)) {|m|
         m.speaker = 'guest'
         m.user_agent = request.env['HTTP_USER_AGENT']
       }
@@ -42,10 +42,6 @@ class Chats::MessagesController < ApplicationController
     def set_bot_chat
       @bot = Bot.find_by!(token: params[:token])
       @chat = @bot.chats.find_last_by!(guest_key)
-    end
-
-    def message_params
-      params.require(:message).permit(:body)
     end
 
     def included_associations

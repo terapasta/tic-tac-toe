@@ -1,6 +1,5 @@
 class ImportsController < ApplicationController
   include BotUsable
-  before_action :authenticate_user!
   before_action :set_bot
 
   def show
@@ -27,8 +26,4 @@ class ImportsController < ApplicationController
     def import_options
       { is_utf8: params[:commit]&.include?('UTF-8') }
     end
-
-    # def bot_params
-    #   params.require(:bot).permit(:name, :image)
-    # end
 end

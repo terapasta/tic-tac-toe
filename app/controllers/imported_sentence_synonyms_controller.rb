@@ -1,6 +1,5 @@
 class ImportedSentenceSynonymsController < ApplicationController
   include SentenceSynonymsOperatable
-  before_action :authenticate_user!
   before_action :set_bot
 
   newrelic_ignore_apdex only: [:new] if Rails.env.production?

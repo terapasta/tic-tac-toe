@@ -31,6 +31,7 @@ class DecisionBranchPolicy < ApplicationPolicy
     [
       :body,
       :answer,
+      :next_answer_id,
       :parent_decision_branch_id,
     ]
   end

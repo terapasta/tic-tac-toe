@@ -1,6 +1,5 @@
 class AllowedIpAddressesController < ApplicationController
   include BotUsable
-  before_action :authenticate_user!
   before_action :set_bot
   before_action :set_allowed_ip_address, only: [:edit, :update, :destroy]
 

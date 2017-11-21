@@ -1,7 +1,6 @@
 class Api::BaseController < ApplicationController
   include Pundit
   protect_from_forgery with: :null_session
-  before_action :authenticate_user!
 
   rescue_from StandardError, with: :render_internal_server_error_json
   rescue_from Pundit::NotAuthorizedError, with: :render_forbidden_json

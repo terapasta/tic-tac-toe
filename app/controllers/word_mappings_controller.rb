@@ -1,6 +1,5 @@
 class WordMappingsController < ApplicationController
   include BotUsable
-  before_action :authenticate_user!
   before_action :set_bot
   before_action :set_word_mapping, only: [:show, :edit, :update, :destroy]
 
@@ -41,7 +40,7 @@ class WordMappingsController < ApplicationController
   end
 
   def destroy
-    @word_mapping.destroy
+    @word_mapping.destroy!
     @bot.learn_later
     redirect_to bot_word_mappings_path(@bot), notice: '同義語を削除しました。'
   end

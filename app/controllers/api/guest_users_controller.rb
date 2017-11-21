@@ -1,6 +1,5 @@
 class Api::GuestUsersController < Api::BaseController
   include GuestKeyUsable
-  skip_before_action :authenticate_user!
   before_action :set_guest_user, only: [:show, :update, :destroy]
 
   def show

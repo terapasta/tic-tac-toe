@@ -1,5 +1,4 @@
 class Api::PublicBotsController < Api::BaseController
-  skip_before_action :authenticate_user!
   before_action :set_carrierwave_asset_host
   after_action :remove_carrierwave_asset_host
 

@@ -20,15 +20,15 @@ RSpec.describe Organization, :type => :model do
     end
   end
 
-  describe '#before_1week_of_finishing_trial?' do
+  describe 'before_1week_of_finishing_trial scope' do
     subject do
-      organization.before_1week_of_finishing_trial?
+      Organization.before_1week_of_finishing_trial.to_a.include?(organization)
     end
 
     context 'when before 1 week of finishing trial day' do
       before do
         organization.update(plan: :trial)
-        organization.update(trial_finished_at: 1.week.since)
+        organization.update(trial_finished_at: 1.week.since.end_of_day)
       end
 
       it { is_expected.to be }
@@ -37,7 +37,7 @@ RSpec.describe Organization, :type => :model do
     context 'when before 2 weeks of finishing trial day' do
       before do
         organization.update(plan: :trial)
-        organization.update(trial_finished_at: 2.weeks.since)
+        organization.update(trial_finished_at: 2.weeks.since.end_of_day)
       end
 
       it { is_expected.to_not be }

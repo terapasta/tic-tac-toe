@@ -12,6 +12,12 @@ class Organization < ApplicationRecord
   mount_uploader :image, ImageUploader
   before_validation :set_trial_finished_at_if_needed
 
+  scope :before_1week_of_finishing_trial, -> {
+    where(plan: :trial)
+      .where('(trial_finished_at - INTERVAL 1 WEEK) = ?', Time.current.end_of_day.strftime('%Y-%m-%d %H:%M:%S'))
+      .order(created_at: :asc)
+  }
+
   HistoriesLimitDays = {
     lite: 3,
     standard: 7,
@@ -50,9 +56,5 @@ class Organization < ApplicationRecord
 
   def finished_trial?
     trial? && Time.current > trial_finished_at
-  end
-
-  def before_1week_of_finishing_trial?
-    trial? && (trial_finished_at - 7.days).strftime('%Y%m%d') == Time.current.strftime('%Y%m%d')
   end
 end

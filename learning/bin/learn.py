@@ -1,7 +1,5 @@
 import argparse
 
-import inject
-
 from app.controllers.learn_controller import LearnController
 from app.shared.config import Config
 from app.shared.constants import Constants
@@ -13,7 +11,6 @@ parser.add_argument('--env', type=str, default='development')
 parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
 args = parser.parse_args()
 
-inject.configure_once()
 Config().init(args.env)
 
 

@@ -1,7 +1,5 @@
 import argparse
 
-import inject
-
 from app.controllers.reply_controller import ReplyController
 from app.shared.context import Context
 from app.shared.config import Config
@@ -14,7 +12,6 @@ parser.add_argument('--question', type=str, default='プリン食べたい')
 parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
 args = parser.parse_args()
 
-inject.configure_once()
 Config().init(args.env)
 
 

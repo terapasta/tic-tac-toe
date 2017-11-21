@@ -18,7 +18,7 @@ class DecisionBranchesController < ApplicationController
   end
 
   def create
-    @decision_branch = @bot.decision_branches.build(decision_branch_params)
+    @decision_branch = @bot.decision_branches.build(permitted_attributes(DecisionBranch))
     respond_to do |format|
       if @decision_branch.save
         format.json { render json: @decision_branch.decorate.as_json, status: :created }
@@ -30,7 +30,7 @@ class DecisionBranchesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @decision_branch.update(decision_branch_params)
+      if @decision_branch.update(permitted_attributes(@decision_branch))
         format.json { render json: @decision_branch.decorate.as_json }
       else
         format.json { render json: @decision_branch.decorate.errors_as_json, status: :unprocessable_entity }
@@ -58,9 +58,5 @@ class DecisionBranchesController < ApplicationController
 
     def set_decision_branch
       @decision_branch = @bot.decision_branches.find params[:id]
-    end
-
-    def decision_branch_params
-      params.require(:decision_branch).permit(:answer_id, :body, :next_answer_id)
     end
 end

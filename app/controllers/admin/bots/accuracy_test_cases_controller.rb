@@ -7,7 +7,7 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
   end
 
   def create
-    @accuracy_test_case = @bot.accuracy_test_cases.build(accuracy_test_case_params)
+    @accuracy_test_case = @bot.accuracy_test_cases.build(permitted_attributes(AccracyTestCase)
     message = if @accuracy_test_case.save
       { notice: 'テストの追加に成功しました。' }
     else
@@ -20,7 +20,7 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
   end
 
   def update
-    if @accuracy_test_case.update(accuracy_test_case_params)
+    if @accuracy_test_case.update(permitted_attributes(@accuracy_test_case))
       redirect_to admin_bot_accuracy_test_cases_path(@bot), notice: 'テストを編集しました。'
     else
       redirect_to edit_admin_bot_accuracy_test_case_path(@bot, @accuracy_test_case), alert: 'テストの編集に失敗しました。'
@@ -35,9 +35,5 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
   private
     def set_accuracy_test_case
       @accuracy_test_case = @bot.accuracy_test_cases.find(params[:id])
-    end
-
-    def accuracy_test_case_params
-      params.require(:accuracy_test_case).permit(:question_text, :expected_text, :is_expected_suggestion)
     end
 end

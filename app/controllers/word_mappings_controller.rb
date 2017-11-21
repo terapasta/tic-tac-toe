@@ -1,6 +1,5 @@
 class WordMappingsController < ApplicationController
   include BotUsable
-  before_action :authenticate_user!
   before_action :set_bot
   before_action :set_word_mapping, only: [:show, :edit, :update, :destroy]
 

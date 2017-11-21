@@ -1,6 +1,5 @@
 class DecisionBranchesController < ApplicationController
   include BotUsable
-  before_action :authenticate_user!
   before_action :set_bot
   before_action :set_decision_branch, only: [:show, :update, :destroy]
 

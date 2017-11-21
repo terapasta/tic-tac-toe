@@ -1,6 +1,5 @@
 class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
   include BotUsable
-  before_action :authenticate_user!
   before_action :set_accuracy_test_case, only: [:edit, :update, :destroy]
 
   def index

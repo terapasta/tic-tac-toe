@@ -1,5 +1,4 @@
 class Admin::WordMappingsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_word_mapping, only: [:show, :edit, :update, :destroy]
 
   def index

@@ -6,5 +6,5 @@ from tests.support.helper import Helper
 
 class PassVectorizerTestCase(TestCase):
     def test_initialize(self):
-        PassVectorizer(datasource=Helper.empty_datasource())
+        PassVectorizer.new(datasource=Helper.empty_datasource())
         ok_(True)

@@ -6,5 +6,5 @@ from tests.support.helper import Helper
 
 class NaiveBayesTestCase(TestCase):
     def test_initialize(self):
-        NaiveBayes(datasource=Helper.empty_datasource())
+        NaiveBayes.new(datasource=Helper.empty_datasource())
         ok_(True)

@@ -6,5 +6,5 @@ from tests.support.helper import Helper
 
 class LSITestCase(TestCase):
     def test_initialize(self):
-        LSI(datasource=Helper.empty_datasource())
+        LSI.new(datasource=Helper.empty_datasource())
         ok_(True)

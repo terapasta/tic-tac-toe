@@ -6,5 +6,5 @@ from tests.support.helper import Helper
 
 class NormalizerTestCase(TestCase):
     def test_initialize(self):
-        Normalizer(datasource=Helper.empty_datasource())
+        Normalizer.new(datasource=Helper.empty_datasource())
         ok_(True)

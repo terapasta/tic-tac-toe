@@ -6,5 +6,5 @@ from tests.support.helper import Helper
 
 class PassReducerTestCase(TestCase):
     def test_initialize(self):
-        PassReducer(datasource=Helper.empty_datasource())
+        PassReducer.new(datasource=Helper.empty_datasource())
         ok_(True)

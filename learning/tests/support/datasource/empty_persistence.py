@@ -1,4 +1,7 @@
-class EmptyPersistence:
+from app.shared.base_cls import BaseCls
+
+
+class EmptyPersistence(BaseCls):
     def __init__(self):
         pass
 

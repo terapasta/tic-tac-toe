@@ -27,7 +27,7 @@ class HybridClassificationTestCase(TestCase):
 
     def test_predict_when_data_is_empty(self):
         # データが存在しない場合
-        datasource = Datasource(question_answers=EmptyQuestionAnswers())
+        datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
         hc = HybridClassification.new(bot=self.bot, datasource=datasource)
         hc.predict([])
 

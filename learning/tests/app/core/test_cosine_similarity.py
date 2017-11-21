@@ -11,7 +11,7 @@ from tests.support.helper import Helper
 class CosineSimilarityTestCase(TestCase):
     def test_predict_when_data_is_empty(self):
         context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
-        datasource = Datasource(question_answers=EmptyQuestionAnswers())
+        datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
         estimator = CosineSimilarity.new(bot=context.current_bot, datasource=datasource)
 

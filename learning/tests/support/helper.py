@@ -29,11 +29,15 @@ class Helper:
 
     @classmethod
     def test_context(cls, bot_id, algorithm):
-        return Context(bot_id, LearningParameter(algorithm=algorithm), {})
+        return Context.new(
+            bot_id=bot_id,
+            learning_parameter=LearningParameter(algorithm=algorithm),
+            grpc_context={},
+        )
 
     @classmethod
     def empty_datasource(cls):
-        return Datasource(
+        return Datasource.new(
             persistence=EmptyPersistence(),
             question_answers=EmptyQuestionAnswers(),
             ratings=EmptyRatings(),

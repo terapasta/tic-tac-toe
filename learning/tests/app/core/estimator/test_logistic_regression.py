@@ -6,5 +6,5 @@ from tests.support.helper import Helper
 
 class LogisticRegressionTestCase(TestCase):
     def test_initialize(self):
-        LogisticRegression(datasource=Helper.empty_datasource())
+        LogisticRegression.new(datasource=Helper.empty_datasource())
         ok_(True)

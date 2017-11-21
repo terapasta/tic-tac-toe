@@ -10,11 +10,11 @@ from tests.support.datasource.empty_persistence import EmptyPersistence
 
 class TfidfVectorizerTestCase(TestCase):
     def test_predict_when_vocabulary_wasnot_fitted(self):
-        datasource = Datasource(persistence=EmptyPersistence())
-        vectorizer = TfidfVectorizer(datasource=datasource)
+        datasource = Datasource.new(persistence=EmptyPersistence())
+        vectorizer = TfidfVectorizer.new(datasource=datasource)
 
         def action():
-            sentences = MecabTokenizer().tokenize(['ピアノ 始める 年齢'])
+            sentences = MecabTokenizer.new().tokenize(['ピアノ 始める 年齢'])
             vectorizer.transform(sentences)
 
         # エラーになること

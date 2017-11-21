@@ -1,4 +1,3 @@
-from injector import Injector, AssistedBuilder
 from app.shared.bot import Bot
 from app.shared.logger import logger
 from app.shared.constants import Constants
@@ -16,32 +15,31 @@ class Context(BaseCls):
         self._bot = Bot(bot_id=bot_id, learning_parameter=learning_parameter)
         self._grpc_context = grpc_context
 
-        self._factory = CosineSimilarityFactory
+        self._factory_cls = CosineSimilarityFactory
         algorithm = self._bot.algorithm
         if algorithm == Constants.ALGORITHM_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Simmilarity Classification')
-            self._factory = CosineSimilarityFactory
+            self._factory_cls = CosineSimilarityFactory
 
         if algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Two Steps Simmilarity Classification')
-            self._factory = TwoStepCosineSimilarityFactory
+            self._factory_cls = TwoStepCosineSimilarityFactory
 
         if algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
             logger.info('algorithm: Word2vec WMD')
-            self._factory = Word2vecWmdFactory
+            self._factory_cls = Word2vecWmdFactory
 
         if algorithm == Constants.ALGORITHM_HYBRID_CLASSIFICATION:
             logger.info('algorithm: Hybrid Classification')
-            self._factory = HybridClassificationFactory
+            self._factory_cls = HybridClassificationFactory
 
         if algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
             logger.info('algorithm: Logistic Regression')
-            self._factory = LogisticRegressionFactory
+            self._factory_cls = LogisticRegressionFactory
 
     @property
     def current_bot(self):
         return self._bot
 
     def get_factory(self):
-        builder = Injector().get(AssistedBuilder[self._factory])
-        return builder.build(context=self)
+        return self._factory_cls.new(context=self)

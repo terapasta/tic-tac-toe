@@ -20,7 +20,6 @@ class HybridClassificationFactory(BaseCls):
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = NaiveBayes.new(datasource=self.datasource)
-        self.datasource = datasource
         self.__core = HybridClassification.new(
                 bot=context.current_bot,
                 tokenizer=self.tokenizer,

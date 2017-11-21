@@ -20,7 +20,6 @@ class LogisticRegressionFactory(BaseCls):
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = LogisticRegressionEstimator.new(datasource=self.datasource)
-        self.datasource = datasource
         self.__core = LogisticRegression.new(
             bot=context.current_bot,
             datasource=self.datasource,

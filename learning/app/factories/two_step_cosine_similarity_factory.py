@@ -20,7 +20,6 @@ class TwoStepCosineSimilarityFactory(BaseCls):
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = PassEstimator.new(datasource=self.datasource)
-        self.datasource = datasource
         self.__core = TwoStepsCosineSimilarity.new(
             bot=context.current_bot,
             tokenizer=self.tokenizer,

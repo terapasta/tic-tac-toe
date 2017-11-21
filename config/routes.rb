@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'bots#index'
+  root to: 'pages#home'
+  get '/' => redirect('/users/sign_in')
 
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
 

@@ -39,7 +39,7 @@ class Organization < ApplicationRecord
   end
 
   def ec_plan?
-    lite? || standard?
+    lite? || standard? || trial?
   end
 
   def set_trial_finished_at_if_needed

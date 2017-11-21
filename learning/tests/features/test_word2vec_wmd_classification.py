@@ -1,22 +1,16 @@
-# from unittest import TestCase
-# from nose.tools import ok_
-# import numpy as np
+from unittest import TestCase
+from nose.tools import ok_
 
-# from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
-# from app.shared.constants import Constants
-# from app.controllers.reply_controller import ReplyController
-# from tests.support.helper import Helper
+from app.shared.constants import Constants
+from app.controllers.reply_controller import ReplyController
+from tests.support.helper import Helper
 
 
-# class Word2vecWmdClassificationTestCase(TestCase):
+class Word2vecWmdClassificationTestCase(TestCase):
 
-#     def setUp(self):
-#         Helper.init(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
+    def test_reply(self):
+        context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
+        reply = ReplyController(context=context).perform('会社の住所が知りたい')
 
-#     def test_reply(self):
-#         factory = Word2vecWmdFactory()
-
-#         X = np.array(['会社の住所が知りたい'])
-#         ReplyController(factory=factory).perform(X[0])
-
-#         ok_(True)
+        # 結果が1件以上であること
+        ok_(len(reply['results']) > 0)

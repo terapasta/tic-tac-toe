@@ -1,0 +1,11 @@
+.step class=(done ? 'opacity-50' : '')
+  h6.text-success Step #{step}
+  div class=(local_assigns[:no_mb] ? '' : 'mb-5')
+    h4.card-title
+      - if done
+        = material_icon 'check_box', class: 'mi-v-sub text-success'
+      - else
+        = material_icon 'check_box_outline_blank', class: 'mi-v-sub text-gray-light'
+      = space
+      span= link_to title, link_url, class: 'text-normal-color'
+    = yield

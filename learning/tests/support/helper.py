@@ -14,9 +14,10 @@ class LearningParameter:
 
 
 class VectorizedValue:
-    def __init__(self, texts, sentences, vectorizer, vectors):
+    def __init__(self, texts, tokenizer, sentences, vectorizer, vectors):
         self.texts = texts
         self.text = texts[0]
+        self.tokenizer = tokenizer
         self.sentences = sentences
         self.vectorizer = vectorizer
         self.vectors = vectors
@@ -44,13 +45,14 @@ class Helper:
         )
 
     @classmethod
-    def vectrize_for_test(cls, texts, tokenizer=None, vectorizer=None):
+    def vectorize_for_test(cls, texts, tokenizer=None, vectorizer=None):
         tokenizer = MecabTokenizer.new() if tokenizer is None else tokenizer
         vectorizer = TfidfVectorizer.new() if vectorizer is None else vectorizer
         sentences = tokenizer.tokenize(texts)
-        vectors = vectorizer.fit_transform(sentences)
+        vectors = vectorizer.transform(sentences)
         return VectorizedValue(
             texts=texts,
+            tokenizer=tokenizer,
             sentences=sentences,
             vectorizer=vectorizer,
             vectors=vectors,

@@ -1,6 +1,6 @@
 from unittest import TestCase
 from nose.tools import ok_, assert_raises
-from app.core.expander.rocchio import Rocchio
+from app.core.estimator.rocchio import Rocchio
 from app.shared.custom_errors import NotTrainedError
 from tests.support.helper import Helper
 
@@ -29,10 +29,10 @@ class RocchioTestCase(TestCase):
             ['らく賃について聞きたいのですが誰が担当なのかわかりますか?'],
             value.tokenizer,
             value.vectorizer)
-        vector = rocchio.predict(query.vectors)
 
-        # Note: らく賃の担当者は誰。のベクターと一致すること
-        ok_((vector != value.vectors[1]).nnz == 0)
+        result = rocchio.predict(query.vectors)
+
+        ok_(len(result['question_answer_id']) > 0)
 
     def test_predict_when_not_fitted(self):
         rocchio = Rocchio.new(datasource=Helper.empty_datasource())

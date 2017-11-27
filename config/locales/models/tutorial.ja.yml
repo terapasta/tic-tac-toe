@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    attributes:
+      tutorial:
+        edit_bot_profile: ボットのプロフィールを変更してみましょう
+        fifty_question_answers: Q&Aを50件登録してみましょう
+        ask_question: ボットに質問してみましょう
+        embed_chat: Webサイトに埋め込んでみましょう

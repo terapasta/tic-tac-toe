@@ -1,0 +1,28 @@
+.container.pt-5
+  = link_to admin_tutorials_path, class: 'text-muted d-block mb-4' do
+    = material_icon 'keyboard_arrow_left'
+    = space
+    span Back to index
+
+  h3.mb-4 Tutorials
+  h4.mb-4
+    = space
+    .circle-image-56 style=css_bg_image(@bot.image_url(:thumb))
+    = space
+    = @bot.name
+
+  = form_for @tutorial, url: admin_tutorial_path(@tutorial.id, bot_id: @bot.id) do |f|
+    .form-group
+      - Tutorial.tasks.each do |task|
+        label
+          = f.check_box task
+          = space
+          = Tutorial.human_attribute_name(task)
+        br
+
+    .form-group
+      = f.submit 'Submit', class: 'btn btn-success'
+
+  .card.border-danger
+    .card-block
+      = link_to 'Delete', admin_tutorial_path(@tutorial.id, bot_id: @bot.id), class: 'btn btn-danger', data: { method: :delete, confirm: 'Are you really want to delete?' }

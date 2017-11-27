@@ -7,5 +7,5 @@
       - else
         = material_icon 'check_box_outline_blank', class: 'mi-v-sub text-gray-light'
       = space
-      span= link_to title, link_url, class: 'text-normal-color'
+      span= link_to Tutorial.human_attribute_name(title), link_url, class: 'text-normal-color'
     = yield

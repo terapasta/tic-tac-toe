@@ -1,0 +1,31 @@
+.container.pt-5
+  .d-flex.justify-content-between
+    h3 Tutorials
+
+  table.table.mt-5
+    tbody
+      - @bots.each do |bot|
+        tr
+          td: h4
+            = space
+            .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+            = space
+            = bot.name
+          td
+            - if bot.tutorial.present?
+              ul
+                - Tutorial.tasks.each do |task|
+                  li
+                    - if bot.tutorial.public_send(task)
+                      = check_box_tag :tutorial, task, true, { disabled: true }
+                    - else
+                      = check_box_tag :tutorial, task, false, { disabled: true }
+                    = space
+                    = Tutorial.human_attribute_name(task)
+            - else
+              .badge.badge-default チュートリアルなし
+          td
+            - if bot.tutorial.present?
+              = link_to '編集', edit_admin_tutorial_path(bot.tutorial.id, bot_id: bot.id), class: 'btn btn-secondary'
+            - else
+              = link_to '作成', admin_tutorials_path(bot_id: bot.id), data: { method: :post }, class: 'btn btn-secondary'

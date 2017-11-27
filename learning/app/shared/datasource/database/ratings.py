@@ -25,6 +25,12 @@ class Ratings(BaseCls):
                 params={"bot_id": bot_id, "level": Constants.RATING_GOOD},
             )
 
+    def with_bad_by_bot(self, bot_id):
+        return self.database.select(
+                "select * from ratings where bot_id = %(bot_id)s and level = %(level)s;",
+                params={"bot_id": bot_id, "level": Constants.RATING_BAD},
+            )
+
     def higher_rate_by_bot_question(self, bot_id, question):
         # Note: 以下のratingsを取得する
         #     - 存在するquestion_answer_idを持っている

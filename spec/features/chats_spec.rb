@@ -23,6 +23,10 @@ RSpec.describe 'Chats', type: :features, js: true do
     create(:bot, start_message: start_message)
   end
 
+  let!(:tutorial) do
+    bot.create_tutorial
+  end
+
   let!(:organization) do
     create(:organization, plan: :professional).tap do |org|
       org.user_memberships.create(user: bot_owner)
@@ -88,6 +92,7 @@ RSpec.describe 'Chats', type: :features, js: true do
         end
 
         scenario 'show answer and rating' do
+          expect(bot.tutorial.ask_question).not_to be
           visit "/embed/#{bot.token}/chats/new"
           fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
           expect(find("input[name='chat-message-body']").value).to_not eq('')
@@ -98,6 +103,7 @@ RSpec.describe 'Chats', type: :features, js: true do
           expect(find("input[name='chat-message-body']").value).to eq('')
           expect(page).to have_content('サンプルメッセージ')
           expect(page).to have_content(DefinedAnswer.classify_failed_text)
+          expect(bot.reload.tutorial.ask_question).to be
 
           within find("#message-#{Message.last.id}") do
             find('.chat-message__rating-button.good').click

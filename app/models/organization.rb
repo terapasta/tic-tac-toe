@@ -13,8 +13,10 @@ class Organization < ApplicationRecord
   before_validation :set_trial_finished_at_if_needed
 
   scope :before_1week_of_finishing_trial, -> {
+    after_1week = 1.week.since
     where(plan: :trial)
-      .where('(trial_finished_at - INTERVAL 1 WEEK) = ?', Time.current.end_of_day.strftime('%Y-%m-%d %H:%M:%S'))
+      .where('trial_finished_at BETWEEN ? AND ?',
+        after_1week.beginning_of_day, after_1week.end_of_day)
       .order(created_at: :asc)
   }
 

@@ -18,7 +18,7 @@ class LogisticRegression(BaseEstimator):
         grid = GridSearchCV(SkLogisticRegression(), param_grid=params)
         grid.fit(x, y)
         self.estimator = grid.best_estimator_
-        self.persistence.dump(self.estimator, self.bot_id, self.dump_key)
+        self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, question_features):
         self._prepare_instance_if_needed()

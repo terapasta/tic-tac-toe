@@ -15,7 +15,10 @@ class LearnController(BaseCls):
         logger.info('start')
         logger.debug('bot_id: %s' % self.bot.id)
 
-        self._vocabulary_learn()
+        # HACK: 各種fitをするために_learn_for_vocablaryを必ず最初に実行しないといけない
+        self._learn_for_vocabulary()
+
+        self.learn_for_feedback()
 
         self._learn_bot()
 
@@ -25,23 +28,34 @@ class LearnController(BaseCls):
 
         return result
 
-    def _vocabulary_learn(self):
+    def _learn_for_vocabulary(self):
         logger.info('load all get_datasource')
         question_answers = self.factory.get_datasource().question_answers.all()
         ratings = self.factory.get_datasource().ratings.all()
         all_questions = pd.concat([question_answers['question'], ratings['question']])
 
-        logger.info('tokenize all')
+        logger.info('tokenize')
         tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
 
-        logger.info('vectorize all')
+        logger.info('fit vectorizer')
         vectorized_features = self.factory.get_vectorizer().fit_transform(tokenized_sentences)
 
-        logger.info('reduce all')
+        logger.info('fit reducer')
         reduced_features = self.factory.get_reducer().fit_transform(vectorized_features)
 
-        logger.info('normalize all')
+        logger.info('fit normalizer')
         self.factory.get_normalizer().fit(reduced_features)
+
+    def learn_for_feedback(self):
+        logger.info('process good ratings')
+        good_ratings = self.factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
+        good_rating_vectors = self._transform_to_vector(good_ratings['question'])
+        self.factory.feedback.fit_for_good(good_rating_vectors, good_ratings['question_answer_id'])
+
+        logger.info('process bad ratings')
+        bad_ratings = self.factory.get_datasource().ratings.with_bad_by_bot(self.bot.id)
+        bad_rating_vectors = self._transform_to_vector(bad_ratings['question'])
+        self.factory.feedback.fit_for_bad(bad_rating_vectors, bad_ratings['question_answer_id'])
 
     def _learn_bot(self):
         logger.info('load question_answers and ratings')
@@ -74,3 +88,11 @@ class LearnController(BaseCls):
             'recall': 0,
             'f1': 0,
         }
+
+    def _transform_to_vector(self, sentences):
+        tokenized_sentences = self.factory.get_tokenizer().tokenize(sentences)
+        vectorized_features = self.factory.get_vectorizer().transform(tokenized_sentences)
+        reduced_features = self.factory.get_reducer().transform(vectorized_features)
+        normalized_features = self.factory.get_normalizer().transform(reduced_features)
+
+        return normalized_features

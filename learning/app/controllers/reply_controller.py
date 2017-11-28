@@ -27,8 +27,11 @@ class ReplyController(BaseCls):
         logger.info('normalize question')
         normalized_features = self.factory.get_normalizer().transform(reduced_features)
 
+        logger.info('reflect feedback')
+        reflected_features = self.factory.feedback.transform_query_vector(normalized_features)
+
         logger.info('predict')
-        data_frame = self.factory.core.predict(normalized_features)
+        data_frame = self.factory.core.predict(reflected_features)
 
         logger.info('unique and sort')
         data_frame = data_frame.drop_duplicates(subset='question_answer_id', keep='first')

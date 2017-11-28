@@ -8,6 +8,10 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     create(:bot)
   end
 
+  let!(:tutorial) do
+    bot.create_tutorial
+  end
+
   let!(:owner) do
     create(:user)
   end
@@ -35,10 +39,13 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
     let(:plan) { :professional }
 
     feature 'new action' do
+      before do
+        create_list(:question_answer, 49, bot: bot)
+      end
+
       subject do
         lambda do
           visit "/bots/#{bot.id}/question_answers/new"
-          page.save_screenshot
           fill_in_input name: 'question_answer[question]', value: 'sample question'
           fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
           click_link '添付ファイルを追加'
@@ -57,6 +64,7 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       it { is_expected.to change(TopicTagging, :count).by(1) }
       it { is_expected.to change(TopicTag, :count).by(1) }
       xit { is_expected.to change(AnswerFile, :count).by(1) }
+      it { expect(bot.reload.tutorial.fifty_question_answers).to be }
     end
 
     feature 'edit action' do

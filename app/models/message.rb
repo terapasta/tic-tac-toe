@@ -14,6 +14,12 @@ class Message < ApplicationRecord
 
   serialize :similar_question_answers_log
 
+  after_create do
+    if guest?
+      chat&.bot&.tutorial&.done_ask_question_if_needed!
+    end
+  end
+
   scope :answer_failed, -> {
     where(answer_failed: true)
   }

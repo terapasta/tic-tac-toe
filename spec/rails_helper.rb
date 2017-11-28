@@ -85,4 +85,8 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) do
     DatabaseCleaner.clean
   end
+
+  config.after(:each, type: :request) do
+    DatabaseCleaner.clean
+  end
 end

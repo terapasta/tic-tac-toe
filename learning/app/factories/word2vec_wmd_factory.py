@@ -13,20 +13,19 @@ from app.shared.datasource.datasource import Datasource
 
 class Word2vecWmdFactory(BaseFactory):
     @inject
-    def __init__(self, context, datasource: Datasource):
-        datasource.persistence.init_by_bot(context.current_bot)
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
         self.tokenizer = MecabTokenizerWithSplit.new()
         self.vectorizer = PassVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = PassEstimator.new(datasource=self.datasource)
-        self.__feedback = PassFeedback.new()
         self.__core = Word2vecWmd.new(
-            bot=context.current_bot,
+            bot=bot,
             tokenizer=self.tokenizer,
             datasource=self.datasource,
         )
+        self.__feedback = PassFeedback.new()
 
     def get_tokenizer(self):
         return self.tokenizer

@@ -8,6 +8,9 @@ from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimila
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
+from app.feedback.pass_feedback import PassFeedback
+from app.feedback.rocchio import Rocchio
+
 
 from tests.support.helper import Helper
 
@@ -43,3 +46,15 @@ class ContextTestCase(TestCase):
         factory = context.get_factory()
 
         eq_(factory.__class__.__name__, HybridClassificationFactory.__name__)
+
+    def test_feedback_none(self):
+        context = Helper.test_context(bot_id=1, algorithm_for_feedback=Constants.FEEDBACK_ALGORITHM_NONE)
+        feedback = context.get_feedback()
+
+        eq_(feedback.__class__.__name__, PassFeedback.__name__)
+
+    def test_feedback_rocchio(self):
+        context = Helper.test_context(bot_id=1, algorithm_for_feedback=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
+        feedback = context.get_feedback()
+
+        eq_(feedback.__class__.__name__, Rocchio.__name__)

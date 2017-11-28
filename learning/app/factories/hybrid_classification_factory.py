@@ -1,6 +1,5 @@
 from injector import inject
 
-from app.factories.concerns.rocchio_feedbackable import RocchioFeedbackable
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.naive_bayes import NaiveBayes
@@ -11,10 +10,9 @@ from app.factories.base_factory import BaseFactory
 from app.shared.datasource.datasource import Datasource
 
 
-class HybridClassificationFactory(RocchioFeedbackable, BaseFactory):
+class HybridClassificationFactory(BaseFactory):
     @inject
-    def __init__(self, context, datasource: Datasource):
-        datasource.persistence.init_by_bot(context.current_bot)
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
         self.tokenizer = MecabTokenizer.new()
         self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
@@ -22,7 +20,7 @@ class HybridClassificationFactory(RocchioFeedbackable, BaseFactory):
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = NaiveBayes.new(datasource=self.datasource)
         self.__core = HybridClassification.new(
-                bot=context.current_bot,
+                bot=bot,
                 tokenizer=self.tokenizer,
                 vectorizer=self.vectorizer,
                 reducer=self.reducer,
@@ -30,6 +28,7 @@ class HybridClassificationFactory(RocchioFeedbackable, BaseFactory):
                 estimator=self.estimator,
                 datasource=self.datasource,
             )
+        self.__feedback = feedback
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -52,3 +51,7 @@ class HybridClassificationFactory(RocchioFeedbackable, BaseFactory):
     @property
     def core(self):
         return self.__core
+
+    @property
+    def feedback(self):
+        return self.__feedback

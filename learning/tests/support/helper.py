@@ -4,6 +4,7 @@ from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.shared.base_cls import BaseCls
 from app.shared.config import Config
 from app.shared.context import Context
+from app.shared.constants import Constants
 from app.shared.datasource.datasource import Datasource
 from app.shared.datasource.file.question_answers import QuestionAnswers
 from tests.support.datasource.empty_persistence import EmptyPersistence
@@ -12,8 +13,9 @@ from tests.support.datasource.empty_ratings import EmptyRatings
 
 
 class LearningParameter:
-    def __init__(self, algorithm):
+    def __init__(self, algorithm, algorithm_for_feedback):
         self.algorithm = algorithm
+        self.algorithm_for_feedback = algorithm_for_feedback
 
 
 class TextToVectorHelper(BaseCls):
@@ -47,10 +49,10 @@ class Helper:
         Config().init('test')
 
     @classmethod
-    def test_context(cls, bot_id, algorithm):
+    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION, algorithm_for_feedback=Constants.FEEDBACK_ALGORITHM_NONE):
         return Context.new(
             bot_id=bot_id,
-            learning_parameter=LearningParameter(algorithm=algorithm),
+            learning_parameter=LearningParameter(algorithm=algorithm, algorithm_for_feedback=algorithm_for_feedback),
             grpc_context={},
         )
 

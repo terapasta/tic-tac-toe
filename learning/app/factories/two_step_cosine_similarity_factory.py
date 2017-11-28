@@ -1,6 +1,5 @@
 from injector import inject
 
-from app.factories.concerns.rocchio_feedbackable import RocchioFeedbackable
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.reducer.pass_reducer import PassReducer
@@ -11,10 +10,9 @@ from app.factories.base_factory import BaseFactory
 from app.shared.datasource.datasource import Datasource
 
 
-class TwoStepCosineSimilarityFactory(RocchioFeedbackable, BaseFactory):
+class TwoStepCosineSimilarityFactory(BaseFactory):
     @inject
-    def __init__(self, context, datasource: Datasource):
-        datasource.persistence.init_by_bot(context.current_bot)
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
         self.tokenizer = MecabTokenizer.new()
         self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
@@ -22,13 +20,14 @@ class TwoStepCosineSimilarityFactory(RocchioFeedbackable, BaseFactory):
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = PassEstimator.new(datasource=self.datasource)
         self.__core = TwoStepsCosineSimilarity.new(
-            bot=context.current_bot,
+            bot=bot,
             tokenizer=self.tokenizer,
             vectorizer=self.vectorizer,
             reducer=self.reducer,
             normalizer=self.normalizer,
             datasource=self.datasource,
         )
+        self.__feedback = feedback
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -51,3 +50,7 @@ class TwoStepCosineSimilarityFactory(RocchioFeedbackable, BaseFactory):
     @property
     def core(self):
         return self.__core
+
+    @property
+    def feedback(self):
+        return self.__feedback

@@ -1,6 +1,5 @@
 from injector import inject
 
-from app.factories.concerns.rocchio_feedbackable import RocchioFeedbackable
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.logistic_regression import LogisticRegression as LogisticRegressionEstimator
@@ -11,10 +10,9 @@ from app.factories.base_factory import BaseFactory
 from app.shared.datasource.datasource import Datasource
 
 
-class LogisticRegressionFactory(RocchioFeedbackable, BaseFactory):
+class LogisticRegressionFactory(BaseFactory):
     @inject
-    def __init__(self, context, datasource: Datasource):
-        datasource.persistence.init_by_bot(context.current_bot)
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
         self.tokenizer = MecabTokenizer.new()
         self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
@@ -22,10 +20,14 @@ class LogisticRegressionFactory(RocchioFeedbackable, BaseFactory):
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = LogisticRegressionEstimator.new(datasource=self.datasource)
         self.__core = LogisticRegression.new(
-            bot=context.current_bot,
+            bot=bot,
             datasource=self.datasource,
             estimator=self.estimator,
         )
+        self.__feedback = feedback
+
+    def get_bot(self):
+        return self.bot
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -48,3 +50,7 @@ class LogisticRegressionFactory(RocchioFeedbackable, BaseFactory):
     @property
     def core(self):
         return self.__core
+
+    @property
+    def feedback(self):
+        return self.__feedback

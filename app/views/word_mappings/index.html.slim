@@ -4,6 +4,8 @@
 = render layout: 'bots/layout' do
   h4.mb-4 辞書
 
+  p ※カタカナや英数字の半角・全角は同じように解釈されますので <code>バナナ</code> の同義語に <code>ﾊﾞﾅﾅ</code> 等を登録する必要はありません
+
   span(
     data-component="WordMappings"
     data-form-action-url=bot_word_mappings_path(@bot)

@@ -69,11 +69,7 @@ class LearnController(BaseCls):
         all_questions = np.append(all_questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
         all_answer_ids = np.append(all_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
-        logger.info('tokenize question_answers')
-        bot_tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
-
-        logger.info('vectorize get_datasource')
-        bot_features = self.factory.get_vectorizer().transform(bot_tokenized_sentences)
+        bot_features = self._transform_to_vector(all_questions)
 
         logger.info('fit')
         self.factory.core.fit(

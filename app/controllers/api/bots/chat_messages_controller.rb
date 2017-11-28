@@ -1,5 +1,4 @@
 class Api::Bots::ChatMessagesController < Api::BaseController
-  skip_before_action :authenticate_user!
   include Replyable
   include ApiRespondable
 

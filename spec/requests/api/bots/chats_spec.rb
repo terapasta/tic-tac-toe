@@ -17,7 +17,8 @@ RSpec.describe '/api/bots/:token/chats', type: :request do
     post api_bot_chats_path(bot.token), params: {
       uid: uid,
       service_type: 'skype',
-      name: name
+      name: name,
+      format: :json
     }
   end
 

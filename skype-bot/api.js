@@ -7,7 +7,7 @@ module.exports.createChat = ({
   service_type,
   name
 }) => (
-  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chats`, {
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chats.json`, {
     service_type,
     uid: 'hogehoge',
     name
@@ -19,7 +19,7 @@ module.exports.createMessage = ({
   guestKey,
   message
 }) => (
-  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_messages`, {
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_messages.json`, {
     guest_key: guestKey,
     message
   })
@@ -30,7 +30,7 @@ module.exports.createChoice = ({
   guestKey,
   choiceId
 }) => (
-  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_choices/${choiceId}`, {
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_choices/${choiceId}.json`, {
     guest_key: guestKey
   })
 )

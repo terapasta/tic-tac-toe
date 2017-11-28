@@ -1,5 +1,4 @@
 class Api::Bots::ChatChoicesController < Api::BaseController
-  skip_before_action :authenticate_user!
   include ApiRespondable
   before_action :set_bot_chat_user_decision_branch!, only: [:create]
 

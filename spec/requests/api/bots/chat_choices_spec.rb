@@ -37,8 +37,9 @@ RSpec.describe '/api/bots/:token/chat_choices', type: :request do
   end
 
   def post_api_bot_chat_choices
-    post api_bot_chat_choices_path(bot.token, decision_branch.id), params: {
+    post api_bot_chat_choices_path(bot_token: bot.token, id: decision_branch.id), params: {
       guest_key: chat_service_user.guest_key,
+      format: :json
     }
   end
 

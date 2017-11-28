@@ -1,6 +1,4 @@
 class Api::Bots::ChatsController < Api::BaseController
-  skip_before_action :authenticate_user!
-
   def create
     token = params.require(:bot_token)
     uid = params.require(:uid)

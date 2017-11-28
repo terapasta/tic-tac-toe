@@ -36,6 +36,7 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
     post api_bot_chat_messages_path(bot.token), params: {
       guest_key: chat_service_user.guest_key,
       message: message,
+      format: :json
     }
   end
 

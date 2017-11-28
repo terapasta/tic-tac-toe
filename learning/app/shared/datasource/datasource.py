@@ -17,14 +17,14 @@ class Datasource(BaseCls):
             self._persistence = PersistenceFromFile.new()
             self._question_answers = QuestionAnswersFromFile.new()
             self._ratings = RatingsFromFile.new()
-        elif datasource_type == Constants.DATASOURCE_TYPE_MEMORY:
-            self._persistence = PersistenceFromMemory.new()
-            self._question_answers = QuestionAnswersFromFile.new()
-            self._ratings = RatingsFromFile.new()
         else:
             self._persistence = PersistenceFromDb.new()
             self._question_answers = QuestionAnswersFromDb.new()
             self._ratings = RatingsFromDb.new()
+
+        if Config.env == 'test':
+            # HACK: new(inject)できない?
+            self._persistence = PersistenceFromMemory()
 
         if persistence is not None:
             self._persistence = persistence

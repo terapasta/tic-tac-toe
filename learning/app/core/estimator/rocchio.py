@@ -12,17 +12,17 @@ class Rocchio(BaseEstimator):
     def __init__(self, datasource: Datasource, dump_key='sk_rocchio'):
         self.persistence = datasource.persistence
         self._dump_key = dump_key
-        self.expander = None
+        self.estimator = None
 
     def fit(self, x, y):
         self._prepare_instance_if_needed()
-        self.expander.fit(x, y)
-        self.persistence.dump(self.expander, self.dump_key)
+        self.estimator.fit(x, y)
+        self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, vectors):
         self._prepare_instance_if_needed()
         try:
-            result = self.expander.predict(vectors)
+            result = self.estimator.predict(vectors)
             nearlest_qa_id = result[0]
             return pd.DataFrame({
                 'question_answer_id': [nearlest_qa_id],
@@ -36,7 +36,7 @@ class Rocchio(BaseEstimator):
         return self._dump_key
 
     def _prepare_instance_if_needed(self):
-        if self.expander is None:
-            self.expander = self.persistence.load(self.dump_key)
-        if self.expander is None:
-            self.expander = NearestCentroid()
+        if self.estimator is None:
+            self.estimator = self.persistence.load(self.dump_key)
+        if self.estimator is None:
+            self.estimator = NearestCentroid()

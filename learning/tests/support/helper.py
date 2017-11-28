@@ -1,8 +1,11 @@
+from injector import inject
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
+from app.shared.base_cls import BaseCls
 from app.shared.config import Config
 from app.shared.context import Context
 from app.shared.datasource.datasource import Datasource
+from app.shared.datasource.file.question_answers import QuestionAnswers
 from tests.support.datasource.empty_persistence import EmptyPersistence
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
 from tests.support.datasource.empty_ratings import EmptyRatings
@@ -13,14 +16,29 @@ class LearningParameter:
         self.algorithm = algorithm
 
 
-class VectorizedValue:
-    def __init__(self, texts, tokenizer, sentences, vectorizer, vectors):
-        self.texts = texts
-        self.text = texts[0]
-        self.tokenizer = tokenizer
-        self.sentences = sentences
-        self.vectorizer = vectorizer
-        self.vectors = vectors
+class TextToVectorHelper(BaseCls):
+    @inject
+    def __init__(self, tokenizer: MecabTokenizer, vectorizer: TfidfVectorizer):
+        self._tokenizer = tokenizer
+        self._vectorizer = vectorizer
+        self.fitted = False
+
+    def vectorize(self, text):
+        sentences = self._tokenizer.tokenize(text)
+        if self.fitted is False:
+            qas = QuestionAnswers().all()
+            self._vectorizer.fit(qas['question'])
+            self.fitted = True
+
+        return self._vectorizer.transform(sentences)
+
+    @property
+    def tokenizer(self):
+        return self._tokenizer
+
+    @property
+    def vectorizer(self):
+        return self._vectorizer
 
 
 class Helper:
@@ -42,18 +60,4 @@ class Helper:
             persistence=EmptyPersistence(),
             question_answers=EmptyQuestionAnswers(),
             ratings=EmptyRatings(),
-        )
-
-    @classmethod
-    def vectorize_for_test(cls, texts, tokenizer=None, vectorizer=None):
-        tokenizer = MecabTokenizer.new() if tokenizer is None else tokenizer
-        vectorizer = TfidfVectorizer.new() if vectorizer is None else vectorizer
-        sentences = tokenizer.tokenize(texts)
-        vectors = vectorizer.transform(sentences)
-        return VectorizedValue(
-            texts=texts,
-            tokenizer=tokenizer,
-            sentences=sentences,
-            vectorizer=vectorizer,
-            vectors=vectors,
         )

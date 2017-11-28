@@ -26,7 +26,7 @@ services:
     stdin_open: false
   test:
     <<: *app_base
-    command: bundle exec guard
+    command: bundle exec rspec ./spec
     ports: []
     stdin_open: false
     environment:

@@ -39,6 +39,10 @@ class BotPolicy < ApplicationPolicy
     record.chats.today_count_of_guests >= record.chats_limit_per_day
   end
 
+  def finished_trial?
+    record.organizations.first&.finished_trial?
+  end
+
   def permitted_attributes
     [
       :name,

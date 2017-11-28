@@ -44,4 +44,8 @@ class Tutorial < ApplicationRecord
   def tasks_count
     self.class.tasks.count
   end
+
+  def in_the_middle?
+    done_count < tasks_count
+  end
 end

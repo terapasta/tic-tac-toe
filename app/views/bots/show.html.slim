@@ -1,35 +1,6 @@
 = render layout: 'bots/layout' do
-  - if @bot.tutorial.present?
-    .card.my-3: .card-block
-      h6.mb-4
-        = material_icon 'bookmark_border', class: 'mi-sm mi-v-sub text-muted'
-        = space
-        span チュートリアル
-        = space 2
-        span.badge.badge-info #{@bot.tutorial.done_count} / #{@bot.tutorial.tasks_count}
-        = space
-        span が完了しています
-
-      = render layout: 'bots/step', locals: { step: 1, title: :edit_bot_profile, link_url: bot_settings_bot_path(@bot), done: @bot.tutorial.edit_bot_profile } do
-        p アイコンやチャット開始時のセリフなどを変更しておくと、親しみが湧き質問がしやすくなります。<br />#{link_to 'こちら', bot_settings_bot_path(@bot)}から変更可能です。
-
-      = render layout: 'bots/step', locals: { step: 2, title: :fifty_question_answers, link_url: bot_conversation_tree_path(@bot), done: @bot.tutorial.fifty_question_answers } do
-        p 「こんにちは！」等の雑談系も含めて50件以上のQ&Aがあると質問者の満足度の向上が期待できます。
-        ul
-          li まとめて登録したい場合：#{link_to 'CSV形式での一括インポート', bot_imports_path(@bot)}
-          li 1件づつ登録/編集したい場合：#{link_to 'Q&A管理から', bot_question_answers_path(@bot)}
-          li 選択肢を表示させたい場合：#{link_to '会話ツリー', bot_conversation_tree_path(@bot)}
-
-      = render layout: 'bots/step', locals: { step: 3, title: :ask_question, link_url: new_chats_path(@bot.token), done: @bot.tutorial.ask_question } do
-        p ボットはQ&Aデータを登録/編集すると数分後に自動で学習を行います。#{link_to 'チャット画面', new_chats_path(@bot.token)}から何か質問してみて下さい。
-        ul
-          li ボットが回答できなかったら：質問文と共にメールでお知らせします
-          li ボットの回答にGood/Bad評価をつけると：学習が役立ち精度が向上します
-
-      = render layout: 'bots/step', locals: { step: 4, title: :embed_chat, link_url: bot_settings_embed_path(@bot), done: @bot.tutorial.embed_chat, no_mb: true } do
-        p ボットに質問が出来るようになったら、他の誰かにも使ってみてもらって下さい。<br />質問者の期待する動作をしているかフィードバックを得られます。<br />埋め込みコードは#{link_to 'こちら', bot_settings_embed_path(@bot)}から取得できます。
-        ul
-          li チャットのログは：対話履歴からご確認いただけます
+  - if @bot.tutorial&.in_the_middle? && current_user.staff?
+    = render 'bots/tutorial/tasks'
 
   - if current_user.staff?
     .card: .card-block

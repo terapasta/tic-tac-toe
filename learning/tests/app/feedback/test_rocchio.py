@@ -1,10 +1,9 @@
 from unittest import TestCase
-from nose.tools import ok_, assert_raises
+from nose.tools import ok_
 
 from app.core.estimator.rocchio import Rocchio as RocchioEstimator
 from app.feedback.rocchio import Rocchio
 from app.shared.datasource.datasource import Datasource
-from app.shared.custom_errors import NotTrainedError
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
 from tests.support.helper import TextToVectorHelper
 
@@ -52,8 +51,6 @@ class RocchioTestCase(TestCase):
         )
 
         query_vectors = self.vec_helper.vectorize(['らく賃について聞きたいのですが誰が担当なのかわかりますか?'])
+        new_vectors = instance.transform_query_vector(query_vectors)
 
-        def action():
-            instance.transform_query_vector(query_vectors)
-
-        assert_raises(NotTrainedError, action)
+        ok_(len(list(new_vectors)) > 0)

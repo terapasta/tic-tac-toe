@@ -27,14 +27,17 @@ class Rocchio(BaseFeedback):
         self._dump()
 
     def transform_query_vector(self, query_vector):
-        self._prepare_data()
-        posi_result = self.estimator_for_good.predict(query_vector)
-        positive_vectors = self.data['good'][posi_result['question_answer_id'][0]]
-        nega_result = self.estimator_for_bad.predict(query_vector)
-        negative_vectors = self.data['bad'][nega_result['question_answer_id'][0]]
+        try:
+            self._prepare_data()
+            posi_result = self.estimator_for_good.predict(query_vector)
+            positive_vectors = self.data['good'][posi_result['question_answer_id'][0]]
+            nega_result = self.estimator_for_bad.predict(query_vector)
+            negative_vectors = self.data['bad'][nega_result['question_answer_id'][0]]
 
-        new_vector = (self.QUERY_WAIT * query_vector) + (self.POSITIVE_WAIT * positive_vectors) - (self.NEGATIVE_WAIT * negative_vectors)
-        return new_vector
+            new_vector = (self.QUERY_WAIT * query_vector) + (self.POSITIVE_WAIT * positive_vectors) - (self.NEGATIVE_WAIT * negative_vectors)
+            return new_vector
+        except NotTrainedError:
+            return query_vector
 
     def _dump(self):
         if self._fitted():

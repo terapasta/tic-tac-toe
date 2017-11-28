@@ -1,4 +1,5 @@
 from injector import inject
+import numpy as np
 import pandas as pd
 from sklearn.exceptions import NotFittedError
 from app.core.estimator.base_estimator import BaseEstimator
@@ -15,9 +16,11 @@ class Rocchio(BaseEstimator):
         self.estimator = None
 
     def fit(self, x, y):
-        self._prepare_instance_if_needed()
-        self.estimator.fit(x, y)
-        self.persistence.dump(self.estimator, self.dump_key)
+        # Note: yが少ない場合はエラーになる
+        if len(y) >= 3:
+            self._prepare_instance_if_needed()
+            self.estimator.fit(x, y)
+            self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, vectors):
         self._prepare_instance_if_needed()

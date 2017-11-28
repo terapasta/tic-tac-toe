@@ -1,0 +1,22 @@
+description "skype-bot"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+chdir /var/www/donusagi-bot/current/skype-bot
+env NODE_ENV={{ stage }}
+
+script
+  exec /usr/local/ndenv/shims/node index.js
+end script
+
+post-start script
+  PID=`status skype-bot | egrep -oi '([0-9]+)$' | head -n1`
+  echo $PID > /var/www/donusagi-bot/shared/tmp/pids/skype-bot.pid
+end script
+
+post-stop script
+  rm -f /var/www/donusagi-bot/shared/tmp/pids/skype-bot.pid
+end script
+
+respawn

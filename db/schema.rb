@@ -65,13 +65,25 @@ ActiveRecord::Schema.define(version: 20171127062442) do
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
-  create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "chat_service_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "bot_id", null: false
+    t.integer "service_type", default: 0, null: false
+    t.string "uid", null: false
+    t.string "name"
+    t.string "guest_key", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "service_type", "uid"], name: "index_chat_service_users_on_bot_id_and_service_type_and_uid", unique: true
+  end
+
+  create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "guest_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id", null: false
     t.boolean "is_staff", default: false
     t.boolean "is_normal", default: false, null: false
+    t.index ["guest_key"], name: "index_chats_on_guest_key"
     t.index ["is_normal"], name: "index_chats_on_is_normal"
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end

@@ -150,3 +150,8 @@ command=/usr/local/rbenv/shims/rake slack:listen
 directory=/var/www/donusagi-bot/current
 environment=RAILS_ENV="production"
 user=deploy
+
+[program:skype_bot]
+command=/usr/local/ndenv/shims/node index.js
+directory=/var/www/donusagi-bot/current/skype-bot
+user=deploy

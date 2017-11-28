@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114064209) do
+ActiveRecord::Schema.define(version: 20171128075352) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -130,7 +130,9 @@ ActiveRecord::Schema.define(version: 20171114064209) do
   create_table "learning_parameters", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id"
     t.integer "algorithm", default: 0, null: false
-    t.text "params_for_algorithm"
+    t.json "parameters"
+    t.integer "feedback_algorithm", default: 0, null: false
+    t.json "parameters_for_feedback"
     t.float "classify_threshold", limit: 24, default: 0.5, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,4 +1,7 @@
 = render layout: 'bots/layout' do
+  - if @bot.tutorial&.in_the_middle? && current_user.staff?
+    = render 'bots/tutorial/tasks'
+
   - if current_user.staff?
     .card: .card-block
       h6.card-title

@@ -6,7 +6,7 @@ class AnswerFailedMailer < ApplicationMailer
     @bot_message = message
     @guest_message = Chat.question_message(message.chat_id, message.id)
     unless @bot_users.length.zero?
-      mail(to: @bot_users.map(&:email), subject: '[My-ope office] チャットで回答に失敗しました')
+      mail(to: @bot_users.map(&:email), subject: '[My-ope] チャットで回答に失敗しました')
     end
   end
 end

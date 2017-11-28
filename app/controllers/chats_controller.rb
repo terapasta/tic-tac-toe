@@ -20,6 +20,8 @@ class ChatsController < ApplicationController
     iframe_support @bot
     if policy(@bot).exceeded_chats_count?
       render :exceeded, status: :too_many_requests and return
+    elsif policy(@bot).finished_trial?
+      render :finished_trial, status: :service_unavailable and return
     end
     @chat = @bot.chats.create_by(guest_key: guest_key) do |chat|
       authorize chat

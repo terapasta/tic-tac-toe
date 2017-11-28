@@ -17,6 +17,10 @@ class QuestionAnswer < ApplicationRecord
 
   validates :question, presence: true
 
+  after_create do
+    self.bot&.tutorial&.done_fifty_question_answers_if_needed!
+  end
+
   scope :completed_count_for, -> (user_id, target_date) {
     joins(:sentence_synonyms)
       .merge(SentenceSynonym.target_user(user_id))

@@ -21,5 +21,10 @@
                 .circle-image-56 style=css_bg_image(org.image_url(:thumb))
           td= org.name
           td= org.description
-          td= org.plan_i18n
+          td
+            = org.plan_i18n
+            - if org.trial?
+              = space
+              |(expire at: #{l org.trial_finished_at})
+
           td= link_to 'Edit', edit_admin_organization_path(org), class: 'btn btn-secondary'

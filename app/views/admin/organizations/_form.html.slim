@@ -3,6 +3,11 @@
 - if alert
   .my-4.alert.alert-danger= alert
 
+- if @organization.errors.any?
+  ul.text-danger
+    - @organization.errors.full_messages.each do |message|
+      li= message
+
 = nested_form_for [:admin, @organization], html: { class: 'form my-5' } do |f|
   - if @organization.image?
     .form-group
@@ -32,6 +37,10 @@
     = f.label :plan
     .form-inline
       = f.select :plan, Organization.plans_i18n.invert, {}, class: 'form-control'
+    - if @organization.persisted? && @organization.trial?
+      .form-text
+        |(expire at: #{l @organization.trial_finished_at})
+
 
   .form-group.mb-4
     h4.mb-4 User Memberships

@@ -3,7 +3,8 @@ syntax = "proto3";
 package gateway;
 
 message LearningParameter {
-    int32 algorithm = 2;
+    int32 algorithm = 1;
+    int32 feedback_algorithm = 2;
 }
 
 message Result {

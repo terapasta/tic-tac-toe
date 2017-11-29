@@ -54,7 +54,9 @@ class HybridClassification(BaseCore):
 
         results = self.estimator.predict(normalized_vectors)
         mms = MinMaxScaler(feature_range=(0, 0.3))
-        results['probability'] = mms.fit_transform(results['probability'])
+        train_data = results['probability']
+        train_data = train_data.reshape(-1, 1)
+        results['probability'] = mms.fit_transform(train_data)
 
         # question_answer_idをキーにしてprobabilityを加算する
         merged_data = data_frame.merge(results, on='question_answer_id', how='left').fillna(0)

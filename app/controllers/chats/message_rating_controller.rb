@@ -13,13 +13,13 @@ class Chats::MessageRatingController < ApplicationController
     @message.bad!
     SendBadRateMailService.new(@message, current_user).send_mail
     TaskCreateService.new(@message, @bot, current_user).process
-    @bot.learn_later if @is_good
+    @bot.learn_later
     render json: @message, adapter: :json
   end
 
   def nothing
     @message.no_rating!
-    @bot.learn_later if @is_good
+    @bot.learn_later
     render json: @message.reload, adapter: :json
   end
 

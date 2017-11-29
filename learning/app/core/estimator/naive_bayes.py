@@ -1,9 +1,11 @@
 import pandas as pd
 from injector import inject
+from sklearn.exceptions import NotFittedError
 from sklearn.naive_bayes import MultinomialNB
 from app.shared.logger import logger
 from app.core.estimator.base_estimator import BaseEstimator
 from app.shared.datasource.datasource import Datasource
+from app.shared.custom_errors import NotTrainedError
 
 
 class NaiveBayes(BaseEstimator):
@@ -20,13 +22,15 @@ class NaiveBayes(BaseEstimator):
 
     def predict(self, question_features):
         self._prepare_instance_if_needed()
-        logger.debug(self.estimator.feature_count_.shape)
         logger.debug(question_features.shape)
-        results = self.estimator.predict_proba(question_features)
-        return pd.DataFrame({
-                'question_answer_id': self.estimator.classes_,
-                'probability': results[0],
-            })
+        try:
+            results = self.estimator.predict_proba(question_features)
+            return pd.DataFrame({
+                    'question_answer_id': self.estimator.classes_,
+                    'probability': results[0],
+                })
+        except NotFittedError as e:
+            raise NotTrainedError(e)
 
     @property
     def dump_key(self):

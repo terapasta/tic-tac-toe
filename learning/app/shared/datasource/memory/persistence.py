@@ -16,12 +16,12 @@ class Persistence(BaseCls):
         return self
 
     def load(self, key):
-        if self.__generate_key(key) in self.data:
-            return self.data[self.__generate_key(key)]
+        if self._generate_key(key) in self.data:
+            return self.data[self._generate_key(key)]
         return None
 
     def dump(self, obj, key):
-        self.data[self.__generate_key(key)] = obj
+        self.data[self._generate_key(key)] = obj
 
-    def __generate_key(self, key):
+    def _generate_key(self, key):
         return 'bot{}_alg{}_{}'.format(self.id, self.algorithm, key)

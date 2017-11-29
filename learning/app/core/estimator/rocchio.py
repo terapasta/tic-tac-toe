@@ -1,34 +1,36 @@
-import pandas as pd
 from injector import inject
+import numpy as np
+import pandas as pd
 from sklearn.exceptions import NotFittedError
-from sklearn.naive_bayes import MultinomialNB
-from app.shared.logger import logger
 from app.core.estimator.base_estimator import BaseEstimator
 from app.shared.datasource.datasource import Datasource
 from app.shared.custom_errors import NotTrainedError
+from sklearn.neighbors.nearest_centroid import NearestCentroid
 
 
-class NaiveBayes(BaseEstimator):
+class Rocchio(BaseEstimator):
     @inject
-    def __init__(self, datasource: Datasource, dump_key='sk_naive_bayes_estimator'):
+    def __init__(self, datasource: Datasource, dump_key='sk_rocchio'):
         self.persistence = datasource.persistence
         self._dump_key = dump_key
         self.estimator = None
 
     def fit(self, x, y):
-        self._prepare_instance_if_needed()
-        self.estimator.fit(x, y)
-        self.persistence.dump(self.estimator, self.dump_key)
+        # Note: yが少ない場合はエラーになる
+        if len(y) >= 3:
+            self._prepare_instance_if_needed()
+            self.estimator.fit(x, y)
+            self.persistence.dump(self.estimator, self.dump_key)
 
-    def predict(self, question_features):
+    def predict(self, vectors):
         self._prepare_instance_if_needed()
-        logger.debug(question_features.shape)
         try:
-            results = self.estimator.predict_proba(question_features)
+            result = self.estimator.predict(vectors)
+            nearlest_qa_id = result[0]
             return pd.DataFrame({
-                    'question_answer_id': self.estimator.classes_,
-                    'probability': results[0],
-                })
+                'question_answer_id': [nearlest_qa_id],
+                'probability': [1],
+            })
         except NotFittedError as e:
             raise NotTrainedError(e)
 
@@ -40,4 +42,4 @@ class NaiveBayes(BaseEstimator):
         if self.estimator is None:
             self.estimator = self.persistence.load(self.dump_key)
         if self.estimator is None:
-            self.estimator = MultinomialNB()
+            self.estimator = NearestCentroid()

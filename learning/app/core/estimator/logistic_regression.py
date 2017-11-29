@@ -1,6 +1,6 @@
 from injector import inject
 import pandas as pd
-from sklearn.grid_search import GridSearchCV
+# from sklearn.grid_search import GridSearchCV
 from sklearn.linear_model import LogisticRegression as SkLogisticRegression
 from app.core.estimator.base_estimator import BaseEstimator
 from app.shared.datasource.datasource import Datasource
@@ -14,11 +14,14 @@ class LogisticRegression(BaseEstimator):
         self.estimator = None
 
     def fit(self, x, y):
-        params = {'C': [10, 100, 140, 200]}
-        grid = GridSearchCV(SkLogisticRegression(), param_grid=params)
-        grid.fit(x, y)
-        self.estimator = grid.best_estimator_
-        self.persistence.dump(self.estimator, self.bot_id, self.dump_key)
+        # Note: This module will be removed in 0.20.", DeprecationWarning) が発生するのでgridsearchは一旦止める
+        #
+        # params = {'C': [10, 100, 140, 200]}
+        # grid = GridSearchCV(SkLogisticRegression(), param_grid=params)
+        # grid.fit(x, y)
+        # self.estimator = grid.best_estimator_
+        self.estimator = SkLogisticRegression()
+        self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, question_features):
         self._prepare_instance_if_needed()

@@ -1,6 +1,4 @@
 class LearningParameter < ApplicationRecord
-  serialize :params_for_algorithm, JSON
-
   belongs_to :bot
 
   enum algorithm: [
@@ -13,6 +11,11 @@ class LearningParameter < ApplicationRecord
     :hybrid_classification,
   ]
 
+  enum feedback_algorithm: [
+    :disable,
+    :rocchio,
+  ]
+
   def use_similarity_classification?
     similarity_classification? or two_step_similarity_classification?
   end
@@ -20,7 +23,9 @@ class LearningParameter < ApplicationRecord
   def self.default_attributes
       {
         algorithm: algorithms[:similarity_classification],
-        params_for_algorithm: {},
+        parameters: {},
+        feedback_algorithm: feedback_algorithms[:rocchio],
+        parameters_for_feedback: {},
         classify_threshold: 0.5,
       }
   end
@@ -32,8 +37,7 @@ class LearningParameter < ApplicationRecord
   def attributes
     {
       algorithm: LearningParameter.algorithms[algorithm],
-      params_for_algorithm: params_for_algorithm || {},
-      classify_threshold: classify_threshold,
+      feedback_algorithm: LearningParameter.feedback_algorithms[feedback_algorithm],
     }
   end
 end

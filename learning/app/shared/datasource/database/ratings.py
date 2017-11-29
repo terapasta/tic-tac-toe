@@ -21,13 +21,29 @@ class Ratings(BaseCls):
 
     def with_good_by_bot(self, bot_id):
         return self.database.select(
-                "select * from ratings where bot_id = %(bot_id)s and level = %(level)s;",
+                """
+                select *
+                from ratings
+                where
+                    bot_id = %(bot_id)s and
+                    level = %(level)s and
+                    question_answer_id is not null
+                ;
+                """,
                 params={"bot_id": bot_id, "level": Constants.RATING_GOOD},
             )
 
     def with_bad_by_bot(self, bot_id):
         return self.database.select(
-                "select * from ratings where bot_id = %(bot_id)s and level = %(level)s;",
+                """
+                select *
+                from ratings
+                where
+                    bot_id = %(bot_id)s and
+                    level = %(level)s and
+                    question_answer_id is not null
+                ;
+                """,
                 params={"bot_id": bot_id, "level": Constants.RATING_BAD},
             )
 

@@ -5,17 +5,19 @@ from app.core.estimator.rocchio import Rocchio as RocchioEstimator
 from app.feedback.rocchio import Rocchio
 from app.shared.datasource.datasource import Datasource
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
-from tests.support.helper import TextToVectorHelper
+from tests.support.helper import Helper, TextToVectorHelper
 
 
 class RocchioTestCase(TestCase):
     def setUp(self):
         self.vec_helper = TextToVectorHelper.new()
+        self.context = Helper.test_context(bot_id=1)
 
     def test_transform_query_vector_when_fitted(self):
         datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
         instance = Rocchio.new(
+            bot=self.context.current_bot,
             estimator_for_good=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_good'),
             estimator_for_bad=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_bad'),
             datasource=datasource,
@@ -45,6 +47,7 @@ class RocchioTestCase(TestCase):
         datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
         instance = Rocchio.new(
+            bot=self.context.current_bot,
             estimator_for_good=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_good_not_fitted'),
             estimator_for_bad=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_bad_not_fitted'),
             datasource=datasource,

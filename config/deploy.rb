@@ -67,9 +67,6 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-  on roles(:slappy) do
-    after :finished, 'slappy:restart'
-  end
   # after :finished, 'update_neologd'
 
   desc 'skype-botのライブラリをインストール'
@@ -82,8 +79,12 @@ namespace :deploy do
   end
 
   after :finished, 'deploy:move_engine'
-  after :finished, 'slappy:restart'
-  after :finished, 'skype_bot:restart'
+  on roles(:slappy) do
+    after :finished, 'slappy:restart'
+  end
+  on roles(:skype) do
+    after :finished, 'skype_bot:restart'
+  end
   # after :finished, 'update_neologd'
   after 'bundler:install', 'deploy:install_packages_for_skype_bot'
 end

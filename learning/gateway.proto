@@ -4,7 +4,7 @@ package gateway;
 
 message LearningParameter {
     int32 algorithm = 1;
-    int32 algorithm_for_feedback = 2;
+    int32 feedback_algorithm = 2;
 }
 
 message Result {

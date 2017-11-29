@@ -11,8 +11,8 @@ class LearningParameter < ApplicationRecord
     :hybrid_classification,
   ]
 
-  enum alrorithm_for_feedback: [
-    :none,
+  enum feedback_algorithm: [
+    :disable,
     :rocchio,
   ]
 
@@ -24,7 +24,7 @@ class LearningParameter < ApplicationRecord
       {
         algorithm: algorithms[:similarity_classification],
         parameters: {},
-        alrorithm_for_feedback: alrorithm_for_feedbacks[:rocchio],
+        feedback_algorithm: feedback_algorithms[:rocchio],
         parameters_for_feedback: {},
         classify_threshold: 0.5,
       }
@@ -37,7 +37,7 @@ class LearningParameter < ApplicationRecord
   def attributes
     {
       algorithm: LearningParameter.algorithms[algorithm],
-      alrorithm_for_feedback: LearningParameter.alrorithm_for_feedbacks[alrorithm_for_feedback],
+      feedback_algorithm: LearningParameter.feedback_algorithms[feedback_algorithm],
     }
   end
 end

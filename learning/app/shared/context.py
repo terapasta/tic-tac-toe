@@ -60,12 +60,18 @@ class Context(BaseCls):
         )
 
     def get_feedback(self):
-        feedback = PassFeedback.new()
-        algorithm = self.current_bot.algorithm_for_feedback
+        feedback_cls = PassFeedback
+        algorithm = self.current_bot.feedback_algorithm
+        good_estimator = None
+        bad_estimator = None
         if algorithm == Constants.FEEDBACK_ALGORITHM_ROCCHIO:
-            feedback = Rocchio.new(
-                estimator_for_good=RocchioEstimator.new(datasource=self._datasource, dump_key='sk_rocchio_good'),
-                estimator_for_bad=RocchioEstimator.new(datasource=self._datasource, dump_key='sk_rocchio_bad'),
-                datasource=self._datasource,
-            )
-        return feedback
+            feedback_cls = Rocchio
+            good_estimator = RocchioEstimator.new(datasource=self._datasource, dump_key='sk_rocchio_good')
+            bad_estimator = RocchioEstimator.new(datasource=self._datasource, dump_key='sk_rocchio_bad')
+
+        return feedback_cls.new(
+            bot=self.current_bot,
+            estimator_for_good=good_estimator,
+            estimator_for_bad=bad_estimator,
+            datasource=self._datasource,
+        )

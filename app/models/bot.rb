@@ -44,7 +44,7 @@ class Bot < ApplicationRecord
       attrs = LearningParameter.default_attributes
     end
     # TODO フィールドが変わる度に修正が必要になってしまう
-    attrs.slice(:algorithm).symbolize_keys
+    attrs.slice(:algorithm, :feedback_algorithm).symbolize_keys
   end
 
   def use_similarity_classification?

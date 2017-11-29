@@ -48,13 +48,13 @@ class ContextTestCase(TestCase):
         eq_(factory.__class__.__name__, HybridClassificationFactory.__name__)
 
     def test_feedback_none(self):
-        context = Helper.test_context(bot_id=1, algorithm_for_feedback=Constants.FEEDBACK_ALGORITHM_NONE)
+        context = Helper.test_context(bot_id=1, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NONE)
         feedback = context.get_feedback()
 
         eq_(feedback.__class__.__name__, PassFeedback.__name__)
 
     def test_feedback_rocchio(self):
-        context = Helper.test_context(bot_id=1, algorithm_for_feedback=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
+        context = Helper.test_context(bot_id=1, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
         feedback = context.get_feedback()
 
         eq_(feedback.__class__.__name__, Rocchio.__name__)

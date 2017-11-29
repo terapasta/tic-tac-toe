@@ -6,7 +6,7 @@ require 'google/protobuf'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "gateway.LearningParameter" do
     optional :algorithm, :int32, 1
-    optional :algorithm_for_feedback, :int32, 2
+    optional :feedback_algorithm, :int32, 2
   end
   add_message "gateway.Result" do
     optional :question_answer_id, :int32, 1

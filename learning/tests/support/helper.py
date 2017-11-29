@@ -13,9 +13,9 @@ from tests.support.datasource.empty_ratings import EmptyRatings
 
 
 class LearningParameter:
-    def __init__(self, algorithm, algorithm_for_feedback):
+    def __init__(self, algorithm, feedback_algorithm):
         self.algorithm = algorithm
-        self.algorithm_for_feedback = algorithm_for_feedback
+        self.feedback_algorithm = feedback_algorithm
 
 
 class TextToVectorHelper(BaseCls):
@@ -49,10 +49,10 @@ class Helper:
         Config().init('test')
 
     @classmethod
-    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION, algorithm_for_feedback=Constants.FEEDBACK_ALGORITHM_NONE):
+    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NONE):
         return Context.new(
             bot_id=bot_id,
-            learning_parameter=LearningParameter(algorithm=algorithm, algorithm_for_feedback=algorithm_for_feedback),
+            learning_parameter=LearningParameter(algorithm=algorithm, feedback_algorithm=feedback_algorithm),
             grpc_context={},
         )
 

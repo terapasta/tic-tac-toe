@@ -1,4 +1,4 @@
-class AccuracyTestCase < ApplicationPolicy
+class AccuracyTestCasePolicy < ApplicationPolicy
   def permitted_attributes
     [
       :question_text,

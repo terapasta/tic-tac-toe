@@ -8,6 +8,7 @@ from app.shared.datasource.database.learning_parameters import LearningParameter
 from app.shared.datasource.file.persistence import Persistence as PersistenceFromFile
 from app.shared.datasource.file.question_answers import QuestionAnswers as QuestionAnswersFromFile
 from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
+from app.shared.datasource.file.learning_parameters import LearningParameters as LearningParametersFromFile
 from app.shared.datasource.memory.persistence import Persistence as PersistenceFromMemory
 
 
@@ -18,10 +19,12 @@ class Datasource(BaseCls):
             self._persistence = PersistenceFromFile.new()
             self._question_answers = QuestionAnswersFromFile.new()
             self._ratings = RatingsFromFile.new()
+            self._learning_parameters = LearningParametersFromFile()
         else:
             self._persistence = PersistenceFromDb.new()
             self._question_answers = QuestionAnswersFromDb.new()
             self._ratings = RatingsFromDb.new()
+            self._learning_parameters = LearningParametersFromDb()
 
         if Config.env == 'test':
             # HACK: new(inject)できない?
@@ -33,9 +36,6 @@ class Datasource(BaseCls):
             self._question_answers = question_answers
         if ratings is not None:
             self._ratings = ratings
-
-        # TODO: file version
-        self._learning_parameters = LearningParametersFromDb()
 
     @property
     def persistence(self):

@@ -2,6 +2,9 @@ from app.shared.base_cls import BaseCls
 
 
 class BaseFeedback(BaseCls):
+    def __init__(self, bot, estimator_for_good, estimator_for_bad, datasource):
+        raise NotImplementedError()
+
     def fit(self, x, y):
         raise NotImplementedError()
 

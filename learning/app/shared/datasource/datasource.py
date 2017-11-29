@@ -4,6 +4,7 @@ from app.shared.base_cls import BaseCls
 from app.shared.datasource.database.persistence import Persistence as PersistenceFromDb
 from app.shared.datasource.database.question_answers import QuestionAnswers as QuestionAnswersFromDb
 from app.shared.datasource.database.ratings import Ratings as RatingsFromDb
+from app.shared.datasource.database.learning_parameters import LearningParameters as LearningParametersFromDb
 from app.shared.datasource.file.persistence import Persistence as PersistenceFromFile
 from app.shared.datasource.file.question_answers import QuestionAnswers as QuestionAnswersFromFile
 from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
@@ -33,6 +34,9 @@ class Datasource(BaseCls):
         if ratings is not None:
             self._ratings = ratings
 
+        # TODO: file version
+        self._learning_parameters = LearningParametersFromDb()
+
     @property
     def persistence(self):
         return self._persistence
@@ -44,3 +48,7 @@ class Datasource(BaseCls):
     @property
     def ratings(self):
         return self._ratings
+
+    @property
+    def learning_parameters(self):
+        return self._learning_parameters

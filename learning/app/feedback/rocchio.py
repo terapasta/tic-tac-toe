@@ -1,20 +1,27 @@
+import collections
 from app.feedback.base_feedback import BaseFeedback
 from app.core.estimator.rocchio import Rocchio as RocchioEstimator
 from app.shared.datasource.datasource import Datasource
 from app.shared.custom_errors import NotTrainedError
+from app.shared.constants import Constants
 
 
 class Rocchio(BaseFeedback):
     # Note: ハイパーパラメータ
-    QUERY_WAIT = 1
-    POSITIVE_WAIT = 0.5
-    NEGATIVE_WAIT = 0.3
+    DEFAULT_PARAMS = {
+        'query_wait': 1,
+        'positive_wait': 0.5,
+        'negative_wait': 0.3,
+    }
 
-    def __init__(self, estimator_for_good: RocchioEstimator, estimator_for_bad: RocchioEstimator, datasource: Datasource):
+    def __init__(self, bot, estimator_for_good: RocchioEstimator, estimator_for_bad: RocchioEstimator, datasource: Datasource):
+        self.bot = bot
         self.estimator_for_good = estimator_for_good
         self.estimator_for_bad = estimator_for_bad
         self.persistence = datasource.persistence
         self.data = {'good': None, 'bad': None}
+        fromDb = datasource.learning_parameters.feedback_parameters(self.bot.id, Constants.FEEDBACK_ALGORITHM_ROCCHIO)
+        self.parameters = collections.ChainMap(self.DEFAULT_PARAMS, fromDb)
 
     def fit_for_good(self, x, y):
         self.data['good'] = dict(zip(y, x))
@@ -34,7 +41,10 @@ class Rocchio(BaseFeedback):
             nega_result = self.estimator_for_bad.predict(query_vector)
             negative_vectors = self.data['bad'][nega_result['question_answer_id'][0]]
 
-            new_vector = (self.QUERY_WAIT * query_vector) + (self.POSITIVE_WAIT * positive_vectors) - (self.NEGATIVE_WAIT * negative_vectors)
+            new_query = query_vector * self.parameters['query_wait']
+            new_positive = positive_vectors * self.parameters['positive_wait']
+            new_negative = negative_vectors * self.parameters['negative_wait']
+            new_vector = new_query + new_positive - new_negative
             return new_vector
         except NotTrainedError:
             return query_vector

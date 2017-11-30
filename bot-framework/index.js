@@ -1,19 +1,36 @@
 const {
   ChatConnector,
 } = require('botbuilder')
+const line = require('@line/bot-sdk')
 
-const Bot = require('./bot')
-const Server = require('./server')
+const LineBot = require('./bots/line')
+const SkypeBot = require('./bots/skype')
+
+const AllServer = require('./servers/all')
+const LineServer = require('./servers/line')
+const SkypeServer = require('./servers/skype')
 
 const {
   MICROSOFT_APP_ID,
   MICROSOFT_APP_PASSWORD,
+  LINE_CHANNEL_SECRET,
+  LINE_CHANNEL_ACCESS_TOKEN
 } = require('./env')
 
-const connector = new ChatConnector({
+const skypeConnector = new ChatConnector({
   appId: MICROSOFT_APP_ID,
   appPassword: MICROSOFT_APP_PASSWORD
 })
 
-new Bot(connector)
-new Server(connector).run()
+const lineConfig = {
+  channelSecret: LINE_CHANNEL_SECRET,
+  channelAccessToken: LINE_CHANNEL_ACCESS_TOKEN
+}
+const lineClient = new line.Client(lineConfig)
+
+const lineBot = new LineBot(lineClient)
+new SkypeBot(skypeConnector)
+
+const lineServer = new LineServer(lineClient, lineBot)
+const skypeServer = new SkypeServer(skypeConnector.listen())
+new AllServer({ skypeServer, lineServer }).run()

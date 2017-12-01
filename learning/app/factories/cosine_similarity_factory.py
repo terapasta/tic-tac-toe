@@ -6,14 +6,13 @@ from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.estimator.pass_estimator import PassEstimator
 from app.core.cosine_similarity import CosineSimilarity
-from app.shared.base_cls import BaseCls
+from app.factories.base_factory import BaseFactory
 from app.shared.datasource.datasource import Datasource
 
 
-class CosineSimilarityFactory(BaseCls):
+class CosineSimilarityFactory(BaseFactory):
     @inject
-    def __init__(self, context, datasource: Datasource):
-        datasource.persistence.init_by_bot(context.current_bot)
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
         self.tokenizer = MecabTokenizer.new()
         self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
@@ -21,13 +20,14 @@ class CosineSimilarityFactory(BaseCls):
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = PassEstimator.new(datasource=self.datasource)
         self.__core = CosineSimilarity.new(
-            bot=context.current_bot,
+            bot=bot,
             tokenizer=self.tokenizer,
             vectorizer=self.vectorizer,
             reducer=self.reducer,
             normalizer=self.normalizer,
             datasource=self.datasource,
         )
+        self.__feedback = feedback
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -50,3 +50,7 @@ class CosineSimilarityFactory(BaseCls):
     @property
     def core(self):
         return self.__core
+
+    @property
+    def feedback(self):
+        return self.__feedback

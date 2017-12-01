@@ -4,9 +4,11 @@ from app.shared.base_cls import BaseCls
 from app.shared.datasource.database.persistence import Persistence as PersistenceFromDb
 from app.shared.datasource.database.question_answers import QuestionAnswers as QuestionAnswersFromDb
 from app.shared.datasource.database.ratings import Ratings as RatingsFromDb
+from app.shared.datasource.database.learning_parameters import LearningParameters as LearningParametersFromDb
 from app.shared.datasource.file.persistence import Persistence as PersistenceFromFile
 from app.shared.datasource.file.question_answers import QuestionAnswers as QuestionAnswersFromFile
 from app.shared.datasource.file.ratings import Ratings as RatingsFromFile
+from app.shared.datasource.file.learning_parameters import LearningParameters as LearningParametersFromFile
 from app.shared.datasource.memory.persistence import Persistence as PersistenceFromMemory
 
 
@@ -17,14 +19,16 @@ class Datasource(BaseCls):
             self._persistence = PersistenceFromFile.new()
             self._question_answers = QuestionAnswersFromFile.new()
             self._ratings = RatingsFromFile.new()
-        elif datasource_type == Constants.DATASOURCE_TYPE_MEMORY:
-            self._persistence = PersistenceFromMemory.new()
-            self._question_answers = QuestionAnswersFromFile.new()
-            self._ratings = RatingsFromFile.new()
+            self._learning_parameters = LearningParametersFromFile()
         else:
             self._persistence = PersistenceFromDb.new()
             self._question_answers = QuestionAnswersFromDb.new()
             self._ratings = RatingsFromDb.new()
+            self._learning_parameters = LearningParametersFromDb()
+
+        if Config.env == 'test':
+            # HACK: new(inject)できない?
+            self._persistence = PersistenceFromMemory()
 
         if persistence is not None:
             self._persistence = persistence
@@ -44,3 +48,7 @@ class Datasource(BaseCls):
     @property
     def ratings(self):
         return self._ratings
+
+    @property
+    def learning_parameters(self):
+        return self._learning_parameters

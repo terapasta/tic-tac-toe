@@ -6,14 +6,14 @@ from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.vectorizer.pass_vectorizer import PassVectorizer
 from app.core.estimator.pass_estimator import PassEstimator
 from app.core.word2vec_wmd import Word2vecWmd
-from app.shared.base_cls import BaseCls
+from app.factories.base_factory import BaseFactory
+from app.feedback.pass_feedback import PassFeedback
 from app.shared.datasource.datasource import Datasource
 
 
-class Word2vecWmdFactory(BaseCls):
+class Word2vecWmdFactory(BaseFactory):
     @inject
-    def __init__(self, context, datasource: Datasource):
-        datasource.persistence.init_by_bot(context.current_bot)
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
         self.tokenizer = MecabTokenizerWithSplit.new()
         self.vectorizer = PassVectorizer.new(datasource=self.datasource)
@@ -21,10 +21,11 @@ class Word2vecWmdFactory(BaseCls):
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = PassEstimator.new(datasource=self.datasource)
         self.__core = Word2vecWmd.new(
-            bot=context.current_bot,
+            bot=bot,
             tokenizer=self.tokenizer,
             datasource=self.datasource,
         )
+        self.__feedback = PassFeedback.new()
 
     def get_tokenizer(self):
         return self.tokenizer
@@ -47,3 +48,7 @@ class Word2vecWmdFactory(BaseCls):
     @property
     def core(self):
         return self.__core
+
+    @property
+    def feedback(self):
+        return self.__feedback

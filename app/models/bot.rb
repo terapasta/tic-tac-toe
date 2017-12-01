@@ -22,6 +22,7 @@ class Bot < ApplicationRecord
   has_many :organization_ownerships, class_name: 'Organization::BotOwnership'
   has_many :organizations, through: :organization_ownerships
   has_one :tutorial
+  has_many :chat_service_users
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
   accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true
@@ -43,7 +44,7 @@ class Bot < ApplicationRecord
       attrs = LearningParameter.default_attributes
     end
     # TODO フィールドが変わる度に修正が必要になってしまう
-    attrs.slice(:algorithm).symbolize_keys
+    attrs.slice(:algorithm, :feedback_algorithm).symbolize_keys
   end
 
   def use_similarity_classification?

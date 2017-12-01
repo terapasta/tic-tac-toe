@@ -12,6 +12,7 @@ default: &default
   pool: 5
   username: root
   password:
+  collation: utf8_general_ci
 
 development:
   <<: *default

@@ -125,7 +125,14 @@ Rails.application.routes.draw do
   end
 
   namespace :api, { format: 'json' } do
+    resources :messages, only: :create
+    resources :question_answers
     resources :public_bots, param: :token, only: [:show]
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
+    resources :bots, param: :token do
+      resources :chats, module: :bots, only: [:create]
+      resources :chat_messages, module: :bots, only: [:create]
+      resources :chat_choices, module: :bots, only: [:create]
+    end
   end
 end

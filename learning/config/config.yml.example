@@ -17,7 +17,7 @@ development:
 
 test:
   <<: *default
-  datasource_type: memory
+  datasource_type: file
   database:
     endpoint: mysql://root@localhost/donusagi_bot_test?charset=utf8
     host: localhost

@@ -19,3 +19,7 @@ class Bot(BaseCls):
     @property
     def algorithm(self):
         return self._learning_parameter.algorithm
+
+    @property
+    def feedback_algorithm(self):
+        return self._learning_parameter.feedback_algorithm

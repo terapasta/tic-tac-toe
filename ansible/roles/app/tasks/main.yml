@@ -99,6 +99,10 @@
     src: database.yml.j2
     dest: /var/www/donusagi-bot/shared/config/database.yml
 
+- template:
+    src: skype-bot.conf.j2
+    dest: /etc/init/skype-bot.conf
+
 - name: supervisord config rails local
   template:
     src: supervisord.conf.j2

@@ -5,11 +5,16 @@ class Api::Bots::ChatMessagesController < Api::BaseController
   def create
     guest_key = params.require(:guest_key)
     token = params.require(:bot_token)
-    message = params.require(:message)
+    message = params[:message]
+    question_answer_id = params[:question_answer_id]
 
     bot = Bot.find_by!(token: token)
     chat_service_user = bot.chat_service_users.find_by!(guest_key: guest_key)
     chat = bot.chats.find_by!(guest_key: chat_service_user.guest_key)
+
+    if message.blank? && question_answer_id.present?
+      message = bot.question_answers.find(question_answer_id).question
+    end
 
     bot_messages = {}
     ActiveRecord::Base.transaction do

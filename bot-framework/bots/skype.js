@@ -1,5 +1,5 @@
 const path = require('path')
-const get = require('lodash/get')
+const get = require('lodash.get')
 const isEmpty = require('is-empty')
 const {
   UniversalBot,

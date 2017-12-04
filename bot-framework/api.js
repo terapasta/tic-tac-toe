@@ -1,6 +1,10 @@
 const axios = require('axios')
 const { MYOPE_API_URL } = require('./env')
 
+module.exports.fetchPublicBot = ({ botToken }) => (
+  axios.get(`${MYOPE_API_URL}/api/public_bots/${botToken}.json`)
+)
+
 module.exports.createChat = ({
   botToken,
   uid,
@@ -9,7 +13,7 @@ module.exports.createChat = ({
 }) => (
   axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chats.json`, {
     service_type,
-    uid: 'hogehoge',
+    uid,
     name
   })
 )
@@ -17,11 +21,13 @@ module.exports.createChat = ({
 module.exports.createMessage = ({
   botToken,
   guestKey,
-  message
+  message,
+  questionAnswerId
 }) => (
   axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_messages.json`, {
     guest_key: guestKey,
-    message
+    message,
+    question_answer_id: questionAnswerId
   })
 )
 
@@ -30,7 +36,8 @@ module.exports.createChoice = ({
   guestKey,
   choiceId
 }) => (
-  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_choices/${choiceId}.json`, {
+  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_choices.json`, {
+    id: choiceId,
     guest_key: guestKey
   })
 )

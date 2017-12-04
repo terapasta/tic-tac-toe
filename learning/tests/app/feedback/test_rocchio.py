@@ -1,7 +1,6 @@
 from unittest import TestCase
 from nose.tools import ok_
 
-from app.core.estimator.rocchio import Rocchio as RocchioEstimator
 from app.feedback.rocchio import Rocchio
 from app.shared.datasource.datasource import Datasource
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
@@ -18,8 +17,6 @@ class RocchioTestCase(TestCase):
 
         instance = Rocchio.new(
             bot=self.context.current_bot,
-            estimator_for_good=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_good'),
-            estimator_for_bad=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_bad'),
             datasource=datasource,
         )
         self.vec_helper = TextToVectorHelper.new()
@@ -48,8 +45,6 @@ class RocchioTestCase(TestCase):
 
         instance = Rocchio.new(
             bot=self.context.current_bot,
-            estimator_for_good=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_good_not_fitted'),
-            estimator_for_bad=RocchioEstimator.new(datasource=datasource, dump_key='sk_rocchio_bad_not_fitted'),
             datasource=datasource,
         )
 

@@ -13,7 +13,6 @@ class Rocchio(BaseFeedback):
         'query_wait': 1,
         'positive_wait': 0.5,
         'negative_wait': 0.3,
-        'query_threshold': 0.1,
     }
 
     def __init__(self, bot, datasource: Datasource):

@@ -24,7 +24,7 @@ class LearningParameter < ApplicationRecord
       {
         algorithm: algorithms[:similarity_classification],
         parameters: {},
-        feedback_algorithm: feedback_algorithms[:rocchio],
+        feedback_algorithm: feedback_algorithms[:disable],
         parameters_for_feedback: {},
         classify_threshold: 0.5,
       }

@@ -5,14 +5,11 @@ class BaseFeedback(BaseCls):
     def __init__(self, bot, estimator_for_good, estimator_for_bad, datasource):
         raise NotImplementedError()
 
-    def fit(self, x, y):
+    def fit_for_good(self, x, y):
         raise NotImplementedError()
 
-    def predict(self, question_features):
+    def fit_for_bad(self, x, y):
         raise NotImplementedError()
 
-    def before_reply(self, sentences):
-        raise NotImplementedError()
-
-    def after_reply(self, question, data_frame):
+    def transform_query_vector(self, question_features):
         raise NotImplementedError()

@@ -10,7 +10,6 @@ from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimila
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
-from app.core.estimator.rocchio import Rocchio as RocchioEstimator
 from app.feedback.rocchio import Rocchio
 from app.feedback.pass_feedback import PassFeedback
 
@@ -22,10 +21,15 @@ class Context(BaseCls):
         self._grpc_context = grpc_context
         self._datasource = datasource if datasource is not None else Datasource.new()
         self._datasource.persistence.init_by_bot(self.current_bot)
+        self._pass_feedback = False
 
     @property
     def current_bot(self):
         return self._bot
+
+    @property
+    def pass_feedback(self):
+        return self._pass_feedback
 
     def get_datasource(self):
         return self._datasource
@@ -44,6 +48,7 @@ class Context(BaseCls):
         if algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
             logger.info('algorithm: Word2vec WMD')
             factory_cls = Word2vecWmdFactory
+            self._pass_feedback = True
 
         if algorithm == Constants.ALGORITHM_HYBRID_CLASSIFICATION:
             logger.info('algorithm: Hybrid Classification')
@@ -62,16 +67,14 @@ class Context(BaseCls):
     def get_feedback(self):
         feedback_cls = PassFeedback
         algorithm = self.current_bot.feedback_algorithm
-        good_estimator = None
-        bad_estimator = None
         if algorithm == Constants.FEEDBACK_ALGORITHM_ROCCHIO:
+            logger.info('feedback algorithm: Rocchio')
             feedback_cls = Rocchio
-            good_estimator = RocchioEstimator.new(datasource=self._datasource, dump_key='sk_rocchio_good')
-            bad_estimator = RocchioEstimator.new(datasource=self._datasource, dump_key='sk_rocchio_bad')
+        else:
+            logger.info('feedback algorithm: None')
+            self._pass_feedback = True
 
         return feedback_cls.new(
             bot=self.current_bot,
-            estimator_for_good=good_estimator,
-            estimator_for_bad=bad_estimator,
             datasource=self._datasource,
         )

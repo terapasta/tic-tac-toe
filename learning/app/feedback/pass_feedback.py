@@ -3,7 +3,7 @@ from app.shared.logger import logger
 
 
 class PassFeedback(BaseFeedback):
-    def __init__(self, bot=None, estimator_for_good=None, estimator_for_bad=None, datasource=None):
+    def __init__(self, bot=None, datasource=None):
         pass
 
     def fit_for_good(self, x, y):

@@ -1,6 +1,7 @@
+import json
+from app.shared.logger import logger
 from app.shared.datasource.database.database import Database
 from app.shared.base_cls import BaseCls
-import json
 
 
 class LearningParameters(BaseCls):
@@ -15,6 +16,7 @@ class LearningParameters(BaseCls):
 
         try:
             data = json.loads(parameters['parameters_for_feedback'][0])
-            return data[algorithm]
+            return data[str(algorithm)]
         except:
+            logger.debug('no learning parameter for feedback')
             return {}

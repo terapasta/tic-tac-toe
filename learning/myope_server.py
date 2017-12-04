@@ -24,7 +24,9 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class RouteGuideServicer(BotServicer):
     def Reply(self, request, context):
-        logger.debug('request = %s' % request)
+        logger.debug('bot_id = %s' % request.bot_id)
+        logger.debug('body = %s' % request.body)
+        logger.debug('learning_parameter = %s' % request.learning_parameter)
         myope_context = Context.new(
             bot_id=request.bot_id,
             learning_parameter=request.learning_parameter,

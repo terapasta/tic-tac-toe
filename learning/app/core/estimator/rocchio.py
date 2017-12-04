@@ -1,10 +1,10 @@
 from injector import inject
 import pandas as pd
 from sklearn.exceptions import NotFittedError
+from sklearn.neighbors.nearest_centroid import NearestCentroid
 from app.core.estimator.base_estimator import BaseEstimator
 from app.shared.datasource.datasource import Datasource
 from app.shared.custom_errors import NotTrainedError
-from sklearn.neighbors.nearest_centroid import NearestCentroid
 
 
 class Rocchio(BaseEstimator):
@@ -16,14 +16,9 @@ class Rocchio(BaseEstimator):
 
     def fit(self, x, y):
         # Note: yが少ない場合はエラーになる
-        try:
-            if len(y) >= 3:
-                self._prepare_instance_if_needed()
-                self.estimator.fit(x, y)
-                self.persistence.dump(self.estimator, self.dump_key)
-        except:
-            # TODO: エラーの原因を解消する
-            pass
+        self._prepare_instance_if_needed()
+        self.estimator.fit(x, y)
+        self.persistence.dump(self.estimator, self.dump_key)
 
     def predict(self, vectors):
         self._prepare_instance_if_needed()

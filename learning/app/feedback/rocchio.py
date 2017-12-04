@@ -1,4 +1,5 @@
 import collections
+import traceback
 from app.feedback.base_feedback import BaseFeedback
 from app.core.estimator.rocchio import Rocchio as RocchioEstimator
 from app.shared.datasource.datasource import Datasource
@@ -25,16 +26,22 @@ class Rocchio(BaseFeedback):
         self.parameters = dict(**collections.ChainMap(fromDb, self.DEFAULT_PARAMS))
 
     def fit_for_good(self, x, y):
-        logger.debug(x.shape)
-        self.data['good'] = dict(zip(y, x))
-        self.estimator_for_good.fit(x, y)
-        self._dump()
+        try:
+            logger.debug(x.shape)
+            self.data['good'] = dict(zip(y, x))
+            self.estimator_for_good.fit(x, y)
+            self._dump()
+        except:
+            logger.debug(traceback.format_exc())
 
     def fit_for_bad(self, x, y):
-        logger.debug(x.shape)
-        self.data['bad'] = dict(zip(y, x))
-        self.estimator_for_bad.fit(x, y)
-        self._dump()
+        try:
+            logger.debug(x.shape)
+            self.data['bad'] = dict(zip(y, x))
+            self.estimator_for_bad.fit(x, y)
+            self._dump()
+        except:
+            logger.debug(traceback.format_exc())
 
     def transform_query_vector(self, query_vector):
         try:
@@ -52,6 +59,7 @@ class Rocchio(BaseFeedback):
             return new_vector
         except NotTrainedError:
             logger.debug('no feedback')
+            logger.debug(traceback.format_exc())
             return query_vector
 
     def _dump(self):

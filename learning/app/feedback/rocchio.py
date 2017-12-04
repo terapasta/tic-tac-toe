@@ -1,5 +1,6 @@
 import collections
 import traceback
+from sklearn.exceptions import NotFittedError
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from app.feedback.base_feedback import BaseFeedback
 from app.shared.datasource.datasource import Datasource
@@ -26,7 +27,6 @@ class Rocchio(BaseFeedback):
 
     def fit_for_good(self, x, y):
         try:
-            logger.debug(x.shape)
             self.estimator_for_good.fit(x, y)
             self.data['good'] = dict(zip(y, x))
         except:
@@ -34,7 +34,6 @@ class Rocchio(BaseFeedback):
 
     def fit_for_bad(self, x, y):
         try:
-            logger.debug(x.shape)
             self.estimator_for_bad.fit(x, y)
             self.data['bad'] = dict(zip(y, x))
         except:
@@ -46,22 +45,24 @@ class Rocchio(BaseFeedback):
 
         try:
             posi_result = self.estimator_for_good.predict(query_vector)
-            logger.debug('nearlest positive qaid: {}'.format(posi_result['question_answer_id'][0]))
-            positive_vectors = self.data['good'][posi_result['question_answer_id'][0]]
+            logger.debug('nearlest positive qaid: {}'.format(posi_result[0]))
+            positive_vectors = self.data['good'][posi_result[0]]
             new_positive = positive_vectors * self.parameters['positive_wait']
             new_vector = new_vector + new_positive
-            logger.info('reflect positive vector')
-        except:
+            logger.info('reflected positive vector')
+        except NotFittedError as e:
+            logger.debug(traceback.format_exc())
             logger.debug('no good feedback')
 
         try:
             nega_result = self.estimator_for_bad.predict(query_vector)
-            logger.debug('nearlest negative qaid: {}'.format(nega_result['question_answer_id'][0]))
-            negative_vectors = self.data['bad'][nega_result['question_answer_id'][0]]
+            logger.debug('nearlest negative qaid: {}'.format(nega_result[0]))
+            negative_vectors = self.data['bad'][nega_result[0]]
             new_negative = negative_vectors * self.parameters['negative_wait']
             new_vector = new_vector - new_negative
-            logger.info('reflect negative vector')
-        except:
+            logger.info('reflected negative vector')
+        except NotFittedError as e:
+            logger.debug(traceback.format_exc())
             logger.debug('no bad feedback')
 
         return new_vector

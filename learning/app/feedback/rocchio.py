@@ -47,8 +47,10 @@ class Rocchio(BaseFeedback):
         try:
             self._prepare_data()
             posi_result = self.estimator_for_good.predict(query_vector)
+            logger.debug('nearlest positive qaid: {}'.format(posi_result['question_answer_id'][0]))
             positive_vectors = self.data['good'][posi_result['question_answer_id'][0]]
             nega_result = self.estimator_for_bad.predict(query_vector)
+            logger.debug('nearlest negative qaid: {}'.format(nega_result['question_answer_id'][0]))
             negative_vectors = self.data['bad'][nega_result['question_answer_id'][0]]
 
             logger.debug('parameters : {}'.format(self.parameters))

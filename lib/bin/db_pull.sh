@@ -32,6 +32,7 @@ dump 'accuracy_test_cases' "bot_id IN (${BOT_IDS})"
 dump 'decision_branches' "bot_id IN (${BOT_IDS})"
 dump 'learning_parameters' "bot_id IN (${BOT_IDS})"
 dump 'topic_taggings' "bot_id IN (${BOT_IDS})"
+dump 'ratings' "bot_id IN (${BOT_IDS})"
 
 # clean
 rm .mysqldumpconfig

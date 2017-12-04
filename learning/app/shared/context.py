@@ -68,8 +68,10 @@ class Context(BaseCls):
         feedback_cls = PassFeedback
         algorithm = self.current_bot.feedback_algorithm
         if algorithm == Constants.FEEDBACK_ALGORITHM_ROCCHIO:
+            logger.info('feedback algorithm: Rocchio')
             feedback_cls = Rocchio
         else:
+            logger.info('feedback algorithm: None')
             self._pass_feedback = True
 
         return feedback_cls.new(

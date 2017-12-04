@@ -18,9 +18,17 @@ class Api::Bots::ChatChoicesController < Api::BaseController
       token = params.require(:bot_token)
 
       @bot = Bot.find_by!(token: token)
+      logger.info '---------->'
+      logger.info @bot
       @chat_service_user = ChatServiceUser.find_by!(bot: @bot, guest_key: guest_key)
+      logger.info '---------->'
+      logger.info @chat_service_user
       @chat = @bot.chats.find_by!(guest_key: @chat_service_user.guest_key)
+      logger.info '---------->'
+      logger.info @chat
       @decision_branch = @chat.bot.decision_branches.find(params[:id])
+      logger.info '---------->'
+      logger.info @decision_branch
     end
 
     def guest_message_params

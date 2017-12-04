@@ -18,8 +18,6 @@ class LearnController(BaseCls):
         # HACK: 各種fitをするために_learn_for_vocablaryを必ず最初に実行しないといけない
         self._learn_for_vocabulary()
 
-        self.learn_for_feedback()
-
         self._learn_bot()
 
         result = self._evaluate()
@@ -45,19 +43,6 @@ class LearnController(BaseCls):
 
         logger.info('fit normalizer')
         self.factory.get_normalizer().fit(reduced_features)
-
-    def learn_for_feedback(self):
-        logger.info('process good ratings')
-        good_ratings = self.factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
-        if len(good_ratings) > 0:
-            good_rating_vectors = self._transform_to_vector(good_ratings['question'])
-            self.factory.feedback.fit_for_good(good_rating_vectors, good_ratings['question_answer_id'])
-
-        logger.info('process bad ratings')
-        bad_ratings = self.factory.get_datasource().ratings.with_bad_by_bot(self.bot.id)
-        if len(bad_ratings) > 0:
-            bad_rating_vectors = self._transform_to_vector(bad_ratings['question'])
-            self.factory.feedback.fit_for_bad(bad_rating_vectors, bad_ratings['question_answer_id'])
 
     def _learn_bot(self):
         logger.info('load question_answers and ratings')

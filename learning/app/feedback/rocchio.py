@@ -50,9 +50,9 @@ class Rocchio(BaseFeedback):
             positive_vectors = self.data['good'][posi_result['question_answer_id'][0]]
             new_positive = positive_vectors * self.parameters['positive_wait']
             new_vector = new_vector + new_positive
-            logger.info('complete: += positive vector')
+            logger.info('reflect positive vector')
         except:
-            pass
+            logger.debug('no good feedback')
 
         try:
             nega_result = self.estimator_for_bad.predict(query_vector)
@@ -60,8 +60,8 @@ class Rocchio(BaseFeedback):
             negative_vectors = self.data['bad'][nega_result['question_answer_id'][0]]
             new_negative = negative_vectors * self.parameters['negative_wait']
             new_vector = new_vector - new_negative
-            logger.info('complete: -= negative vector')
+            logger.info('reflect negative vector')
         except:
-            pass
+            logger.debug('no bad feedback')
 
         return new_vector

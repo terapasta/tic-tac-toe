@@ -1,6 +1,8 @@
 from concurrent import futures
+import inspect
+import signal
+import sys
 import time
-
 import grpc
 
 from gateway_pb2 import ReplyResponse, Result, LearnResponse
@@ -101,6 +103,13 @@ def serve(port):
         server.stop(0)
 
 
+def on_sigsegv(signum, frame):
+    logger.error('segmentation fault!!!')
+    logger.error(signum)
+    logger.error(inspect.getframeinfo(frame))
+    sys.exit()
+
+
 if __name__ == '__main__':
     logger.info('initializing')
     parser = argparse.ArgumentParser()
@@ -108,6 +117,8 @@ if __name__ == '__main__':
     parser.add_argument('--env', type=str, default='development')
     args = parser.parse_args()
     Config().init(args.env)
+
+    signal.signal(signal.SIGSEGV, on_sigsegv)
 
     logger.info('start server!!')
     serve(args.port)

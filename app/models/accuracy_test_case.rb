@@ -4,13 +4,16 @@ class AccuracyTestCase < ApplicationRecord
   validates :question_text, presence: true
 
   def success_result?(bot_messages)
-    success = false
+    answer_is_success = false
     if expected_text.present?
-      success = bot_messages.map{ |m| m.body.gsub(/(\s)/, '') }.any? { |b| b == expected_text.gsub(/(\s)/, '') }
+      answer_is_success = bot_messages.map{ |m| m.body.gsub(/(\s)/, '') }.any? { |b| b == expected_text.gsub(/(\s)/, '') }
     end
+
+    # Note: サジェストを期待しない場合はサジェストされたかどうかはチェックしない
+    suggestion_is_success = true
     if is_expected_suggestion
-      success = bot_messages.any?{ |m| m.similar_question_answers.present? }
+      suggestion_is_success = bot_messages.any?{ |m| m.similar_question_answers.present? }
     end
-    success
+    answer_is_success and suggestion_is_success
   end
 end

@@ -7,11 +7,7 @@ class Admin::Bots::AccuracyTestCasesController < Admin::Bots::BaseController
   end
 
   def create
-<<<<<<< HEAD
     @accuracy_test_case = @bot.accuracy_test_cases.build(permitted_attributes(AccuracyTestCase))
-=======
-    @accuracy_test_case = @bot.accuracy_test_cases.build(permitted_attributes(AccracyTestCase))
->>>>>>> Implement line bot
     message = if @accuracy_test_case.save
       { notice: 'テストの追加に成功しました。' }
     else

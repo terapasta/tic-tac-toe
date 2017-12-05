@@ -54,8 +54,7 @@ namespace :deploy do
     end
   end
 
-  desc 'python engineを移動'
-  task :move_engine do
+  task :restart_python do
     on roles(:app) do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
@@ -66,27 +65,21 @@ namespace :deploy do
     end
   end
 
-  after :finished, 'deploy:move_engine'
   # after :finished, 'update_neologd'
 
-  desc 'skype-botのライブラリをインストール'
-  task :install_packages_for_skype_bot do
-    on roles(:app) do
-      within release_path.join('skype-bot') do
-        execute :npm, :install, '--silent'
+  task :restart_botapi do
+    on roles(:bot_framework) do
+      within release_path.join('bot-framework') do
+        execute :yarn, :install, '--silent'
       end
+      sudo :supervisorctl, :restart, :botapi, '-c /etc/supervisord.conf'
     end
   end
 
-  after :finished, 'deploy:move_engine'
-  on roles(:slappy) do
-    after :finished, 'slappy:restart'
-  end
-  on roles(:skype) do
-    after :finished, 'skype_bot:restart'
-  end
+  after :finished, 'deploy:restart_python'
+  after :finished, 'deploy:restart_botapi'
+  after :finished, 'slappy:restart'
   # after :finished, 'update_neologd'
-  after 'bundler:install', 'deploy:install_packages_for_skype_bot'
 end
 
 namespace :webpacker do

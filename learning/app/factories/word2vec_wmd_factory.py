@@ -1,6 +1,6 @@
 from injector import inject
 
-from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
+from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.vectorizer.pass_vectorizer import PassVectorizer
@@ -15,7 +15,7 @@ class Word2vecWmdFactory(BaseFactory):
     @inject
     def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
-        self.tokenizer = MecabTokenizer.new()
+        self.tokenizer = MecabTokenizerWithSplit.new()
         self.vectorizer = PassVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)

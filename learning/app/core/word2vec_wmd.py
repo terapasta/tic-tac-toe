@@ -2,7 +2,7 @@ from injector import inject
 
 from app.shared.logger import logger
 
-from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
+from app.core.tokenizer.mecab_tokenizer_with_split import MecabTokenizerWithSplit
 from app.shared.datasource.datasource import Datasource
 from app.core.base_core import BaseCore
 from app.shared.on_memory_learning.word2vec_wmd_store import Word2vecWmdStore
@@ -11,7 +11,7 @@ from app.shared.on_memory_learning.word2vec_wmd_store import Word2vecWmdStore
 class Word2vecWmd(BaseCore):
 
     @inject
-    def __init__(self, bot, tokenizer: MecabTokenizer, datasource: Datasource, store=None):
+    def __init__(self, bot, tokenizer: MecabTokenizerWithSplit, datasource: Datasource, store=None):
         self.bot = bot
         self.tokenizer = tokenizer
         self.question_answers = datasource.question_answers

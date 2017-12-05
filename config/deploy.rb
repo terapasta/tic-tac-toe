@@ -69,7 +69,7 @@ namespace :deploy do
 
   task :restart_botapi do
     on roles(:bot_framework) do
-      within release_path.join('bot-framework') do
+      within current_path.join('bot-framework') do
         execute :yarn, :install, '--silent'
       end
       sudo :supervisorctl, :restart, :botapi, '-c /etc/supervisord.conf'
@@ -78,7 +78,7 @@ namespace :deploy do
 
   after :finished, 'deploy:restart_python'
   after :finished, 'deploy:restart_botapi'
-  after :finished, 'slappy:restart'
+  # after :finished, 'slappy:restart'
   # after :finished, 'update_neologd'
 end
 

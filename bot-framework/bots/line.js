@@ -140,8 +140,12 @@ class LineBot {
   }
 
   messageWithAttachments(message, answerFiles) {
-    if (isEmpty(answerFiles) && !isEmpty(message)) {
-      return [{ type: 'text', text: message }]
+    if (isEmpty(answerFiles)) {
+      if (!isEmpty(message)) {
+        return [{ type: 'text', text: message }]
+      } else {
+        return []
+      }
     }
 
     const imageFiles = answerFiles

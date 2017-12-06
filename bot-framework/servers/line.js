@@ -1,22 +1,31 @@
 const get = require('lodash.get')
+const line = require('@line/bot-sdk')
 
+const api = require('../api')
 const Base = require('./base')
-
-const {
-  LINE_CHANNEL_SECRET,
-} = require('../env')
 
 class LineServer extends Base {
   get name () { return 'line' }
 
-  constructor (lineClient, lineBot) {
+  constructor (lineBot) {
     super([])
-    this.lineClient = lineClient
     this.lineBot = lineBot
     this.chatListeners = [
-      this.createSignatureValidator('x-line-signature', LINE_CHANNEL_SECRET),
+      this.beforeSignatureValidation.bind(this),
       this.handleEvents.bind(this)
     ]
+  }
+
+  beforeSignatureValidation (req, res, next) {
+    const { botToken } = req.body
+    api.fetchLineCredential({ botToken }).then(res => {
+      this.lineClient = new line.Client(res.data['bot::LineCredential'])
+      this.lineBot.lineClient = this.lineClient
+
+      const { channelSecret } = res.data['bot::LineCredential']
+      const validator = this.createSignatureValidator('x-line-signature', channelSecret)
+      validator(req, res, next)
+    }).catch(console.error)
   }
 
   handleEvents (req, res) {

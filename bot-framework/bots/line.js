@@ -39,8 +39,7 @@ const toActionData = ({ questionAnswer, decisionBranch }) => {
 }
 
 class LineBot {
-  constructor(lineClient) {
-    this.lineClient = lineClient
+  constructor() {
     this.handleEvent = this.handleEvent.bind(this)
   }
 

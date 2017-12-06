@@ -23,7 +23,7 @@ RSpec.describe '/api/public_bots', type: :request do
         get resource
         expect(response).to be_success
         json_data['bot'].tap do |bot_data|
-          expect(bot_data.keys).to match_array(['name', 'image', 'widgetSubtitle'])
+          expect(bot_data.keys).to match_array(['name', 'image', 'widgetSubtitle', 'classifyFailedMessage'])
         end
       end
     end

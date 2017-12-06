@@ -1,5 +1,5 @@
 = render layout: 'bots/layout' do
-  - if @bot.tutorial&.in_the_middle? && current_user.staff?
+  - if @bot.tutorial&.in_the_middle?
     = render 'bots/tutorial/tasks'
 
   - if current_user.staff?

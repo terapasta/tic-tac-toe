@@ -1,5 +1,5 @@
 const path = require('path')
-const get = require('lodash/get')
+const get = require('lodash.get')
 const isEmpty = require('is-empty')
 const {
   UniversalBot,
@@ -14,13 +14,13 @@ const {
 
 const {
   NODE_ENV
-} = require('./env')
+} = require('../env')
 
 const {
   createChat,
   createMessage,
   createChoice
-} = require('./api')
+} = require('../api')
 
 const service_type = 'skype'
 const s3 = NODE_ENV === 'development' ?
@@ -65,6 +65,7 @@ class Bot {
   }
 
   handleDefaultDialog(session) {
+    console.log('default dialog')
     const { botToken } = session.message
     const { uid, name } = session.message.user
 

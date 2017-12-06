@@ -22,3 +22,8 @@ serverurl=unix:///tmp/supervisor.sock ; use a unix:// URL  for a unix socket
 command=/usr/local/pyenv/shims/python3 myope_server.py --env production
 directory=/var/www/donusagi-bot/current/learning
 user=deploy
+
+[program:botapi]
+command=/usr/local/ndenv/shims/node index.js NODE_ENV=production
+directory=/var/www/donusagi-bot/current/bot-framework
+user=deploy

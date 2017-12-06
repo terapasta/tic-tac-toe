@@ -1,5 +1,6 @@
 const api = require('../api')
 const get = require('lodash.get')
+const includes = require('lodash.includes')
 const isEmpty = require('is-empty')
 
 const {
@@ -44,6 +45,10 @@ class LineBot {
   }
 
   handleEvent (botToken, event) {
+    if (includes(['follow', 'unfollow', 'join', 'leave', 'beacon'], event.type)) {
+      return
+    }
+
     if (event.type === 'postback') {
       return this.handlePostbackEvent(botToken, event)
     }

@@ -56,9 +56,12 @@ class ReplyController(BaseCls):
         }
 
     def _transform_query_vector(self, query_vector, data_frame):
+        logger.info('feedback to query')
+        threshold = self.factory.get_datasource().learning_parameters.feedback_threshold(self.bot.id)
+        logger.debug('feedback threshold: {}'.format(threshold))
         data_frame = data_frame.drop_duplicates(subset='question_answer_id', keep='first')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
-        data_frame = data_frame[data_frame['probability'] > 0.1]
+        data_frame = data_frame[data_frame['probability'] > threshold]
 
         # for debug
         logger.info('first step results')

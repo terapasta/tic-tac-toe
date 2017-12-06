@@ -2513,7 +2513,7 @@ var AnswerTextArea = function (_Component3) {
     key: "componentDidMount",
     value: function componentDidMount() {
       if (this.textArea) {
-        this.textArea.value = this.props.defaultValue;
+        this.textArea.value = this.props.defaultValue || '';
       }
     }
   }, {

@@ -85,7 +85,7 @@ export default class AnswerTextArea extends Component {
 
   componentDidMount() {
     if (this.textArea) {
-      this.textArea.value = this.props.defaultValue
+      this.textArea.value = this.props.defaultValue || ''
     }
   }
 

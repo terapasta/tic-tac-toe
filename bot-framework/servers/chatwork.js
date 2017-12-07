@@ -6,14 +6,14 @@ class Chatwork extends Base {
   constructor () {
     super()
     this.chatListeners = [
-      this.signatureValidator.bind(this),
+      this.beforeSignatureValidation.bind(this),
       this.handleEvents.bind(this)
     ]
   }
 
-  signatureValidator (req, res, next) {
+  beforeSignatureValidation (req, res, next) {
     console.log(req.headers['x-chatworkwebhooksignature'], req.body)
-    res.status(200).send('OK')
+    res.send('OK')
   }
 
   handleEvents (req, res, next) {

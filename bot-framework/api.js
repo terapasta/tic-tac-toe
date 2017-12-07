@@ -42,11 +42,7 @@ module.exports.createChoice = ({
   guestKey,
   choiceId
 }) => (
-<<<<<<< HEAD
   axios.post(`/api/bots/${botToken}/chat_choices.json`, {
-=======
-  axios.post(`${MYOPE_API_URL}/api/bots/${botToken}/chat_choices.json`, {
->>>>>>> Implement line bot
     id: choiceId,
     guest_key: guestKey
   })

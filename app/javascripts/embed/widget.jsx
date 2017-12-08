@@ -1,38 +1,21 @@
-import React, { Component, PropTypes, createElement } from "react";
-import styled from "styled-components";
-import classNames from "classnames";
+import React, { Component, PropTypes } from "react";
 import get from "lodash/get";
 import forEach from 'lodash/forEach';
 
 import * as PublicBotAPI from '../api/public_bot';
 
-import ArrowSVG from "./arrow-svg";
-import LogoSVG from "./logo-svg";
-
 import {
-  HeaderHeight,
-  Width,
-  Height,
   MobileMaxWidth,
+  Position
 } from './constants';
 
 import {
-  Wrapper,
-  LeftWrapper,
-  Header,
-  Arrow,
-  Avatar,
-  DummyInput,
-  StatusLabel,
-  Logo,
-  IframeContainer,
-  Iframe,
-  Loading,
-  LoadingMessage
+  LoadingMessage,
+  FloatWrapper
 } from "./styled";
 
 const Origin = process.env.NODE_ENV === "development" ?
-  "http://donusagi-bot2.dev" : "https://app.my-ope.net";
+  "http://10.0.2.2:3000" : "https://app.my-ope.net";
 
 export default class Widget extends Component {
   constructor(props) {
@@ -42,9 +25,11 @@ export default class Widget extends Component {
       isLoadingIframe: false,
       isLoadedIframe: false,
       isDeniedAccess: true,
+      position: Position.Right
     };
 
     this.fetchPulicBot(props.token);
+    this.onLoadIframe = this.onLoadIframe.bind(this)
   }
 
   fetchPulicBot(token) {
@@ -83,7 +68,6 @@ export default class Widget extends Component {
 
   render() {
     const {
-      position,
       token,
     } = this.props;
 
@@ -94,61 +78,43 @@ export default class Widget extends Component {
       isDeniedAccess,
       name,
       avatarURL,
-      subtitle,
+      position
     } = this.state;
 
     if (isDeniedAccess) { return <span />; }
 
-    const activeClassName = classNames({
-      active: isActive,
-    });
-
-    const chatURL = `${Origin}/embed/${token}/chats`;
-
+    const chatURL = `${Origin}/embed/${token}/chats?noheader=true`;
     const isShowIframe = isLoadingIframe || isLoadedIframe;
 
-    const result = (
+    return (
       <span>
-        <Header onClick={this.onClickHeader.bind(this)}>
-          <Avatar alt={name} style={{ backgroundImage: `url(${avatarURL})` }} />
-          {!isActive && (
-            <DummyInput>ご質問にお答えします</DummyInput>
-          )}
-          {isActive && (
-            <StatusLabel>{subtitle}</StatusLabel>
-          )}
-          <Arrow className={activeClassName}>
-            <ArrowSVG />
-          </Arrow>
-          <Logo className={activeClassName}>
-            {name}
-          </Logo>
-        </Header>
-        <IframeContainer>
+        <FloatWrapper
+          avatarURL={avatarURL}
+          name={name}
+          isActive={isActive}
+          isDisableBorderRadius={true}
+          position={position}
+          onOpen={() => this.setState({ isActive: true, isLoadingIframe: true })}
+          onClose={() => this.setState({ isActive: false })}
+          onMove={() => this.setState({ position: this.state.position === Position.Left ? Position.Right : Position.Left })}
+        >
           {isShowIframe && (
             <iframe
               src={chatURL}
-              onLoad={this.onLoadIframe.bind(this)}
+              onLoad={this.onLoadIframe}
               scrolling="no"
               frameBorder="0"
               title="My-ope office"
-              style={this.getIframeStyle()}
+              style={{ width: '100%', height: '100%' }}
               ref={(node) => this.iframe = node}
             />
           )}
           {isLoadingIframe && !isLoadedIframe && (
-            <Loading>
-              <LoadingMessage>読み込み中。少々お待ち下さい...</LoadingMessage>
-            </Loading>
+            <LoadingMessage>読み込み中。少々お待ち下さい...</LoadingMessage>
           )}
-        </IframeContainer>
+        </FloatWrapper>
       </span>
-    );
-
-    const wrapperComponent = position === "left" ? LeftWrapper : Wrapper;
-    return createElement(wrapperComponent, {
-      className: activeClassName,
-    }, result);
+    )
   }
 
   onClickHeader() {
@@ -160,13 +126,5 @@ export default class Widget extends Component {
 
   onLoadIframe() {
     this.setState({ isLoadingIframe: false, isLoadedIframe: true });
-  }
-
-  getIframeStyle() {
-    const { innerWidth, innerHeight } = window;
-    const isMobile = innerWidth <= MobileMaxWidth;
-    const width = `${isMobile ? innerWidth : Width}px`;
-    const height = `${(isMobile ? innerHeight : Height) - HeaderHeight}px`;
-    return { width, height };
   }
 }

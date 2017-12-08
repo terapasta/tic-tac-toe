@@ -725,7 +725,7 @@ readable-stream@^2.0.1, readable-stream@^2.2.9:
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
-request@^2.69.0:
+request@^2.69.0, request@^2.83.0:
   version "2.83.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.83.0.tgz#ca0b65da02ed62935887808e6f510381034e3356"
   dependencies:

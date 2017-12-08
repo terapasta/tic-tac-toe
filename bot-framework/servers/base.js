@@ -80,7 +80,8 @@ class Base {
   validateSignature ({ signature, secretKey, strBody, algorithm, encoding }) {
     const verification = crypto
       .createHmac((algorithm || 'sha256'), secretKey)
-      .update(Buffer.from(strBody))
+      // .update(Buffer.from(strBody))
+      .update(strBody)
       .digest(encoding || 'base64')
     return signature === verification
   }

@@ -2,7 +2,6 @@ const {
   ChatConnector,
 } = require('botbuilder')
 
-const LineBot = require('./bots/line')
 const SkypeBot = require('./bots/skype')
 
 const AllServer = require('./servers/all')
@@ -20,10 +19,9 @@ const skypeConnector = new ChatConnector({
   appPassword: MICROSOFT_APP_PASSWORD
 })
 
-const lineBot = new LineBot()
 new SkypeBot(skypeConnector)
 
 const chatworkServer = new ChatworkServer()
-const lineServer = new LineServer(lineBot)
+const lineServer = new LineServer()
 const skypeServer = new SkypeServer(skypeConnector.listen())
 new AllServer({ skypeServer, lineServer, chatworkServer }).run()

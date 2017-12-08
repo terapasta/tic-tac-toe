@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20171207012504) do
 
-  create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
     t.text "expected_text"
     t.boolean "is_expected_suggestion", default: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "allowed_hosts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "allowed_hosts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "scheme", default: 0
     t.string "domain", null: false
     t.integer "bot_id", null: false
@@ -30,14 +30,14 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["scheme", "domain", "bot_id"], name: "index_allowed_hosts_on_scheme_and_domain_and_bot_id", unique: true
   end
 
-  create_table "allowed_ip_addresses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "allowed_ip_addresses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "value", null: false
     t.integer "bot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "answer_files", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "answer_files", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "file", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
   end
 
-  create_table "bot_chatwork_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "bot_chatwork_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "api_token", null: false
     t.string "webhook_token", null: false
     t.integer "bot_id", null: false
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "bot_line_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "bot_line_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "channel_id", null: false
     t.string "channel_secret", null: false
     t.string "channel_access_token", null: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "bots", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "bots", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
     t.string "name"
     t.string "token", limit: 64, null: false
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
-  create_table "chat_service_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "chat_service_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id", null: false
     t.integer "service_type", default: 0, null: false
     t.string "uid", null: false
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["bot_id", "service_type", "uid"], name: "index_chat_service_users_on_bot_id_and_service_type_and_uid", unique: true
   end
 
-  create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "chats", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "guest_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end
 
-  create_table "decision_branches", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "decision_branches", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["question_answer_id", "parent_decision_branch_id"], name: "main_decision_branches_index"
   end
 
-  create_table "delayed_jobs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "delayed_jobs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -132,13 +132,13 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "dumps", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "dumps", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id", null: false
     t.string "name", null: false
     t.binary "content", limit: 4294967295
   end
 
-  create_table "exports", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "exports", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "file", null: false
     t.integer "bot_id", null: false
     t.integer "encoding", null: false
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["bot_id"], name: "index_exports_on_bot_id"
   end
 
-  create_table "guest_users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "guest_users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.string "email"
     t.string "guest_key", null: false
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["guest_key"], name: "index_guest_users_on_guest_key"
   end
 
-  create_table "learning_parameters", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "learning_parameters", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id"
     t.integer "algorithm", default: 0, null: false
     t.json "parameters"
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["bot_id"], name: "index_learning_parameters_on_bot_id"
   end
 
-  create_table "learning_training_messages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "learning_training_messages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id"
     t.text "question"
     t.text "answer_body"
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["question_answer_id"], name: "index_learning_training_messages_on_question_answer_id"
   end
 
-  create_table "messages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "messages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "chat_id"
     t.string "speaker", null: false
     t.text "body"
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["question_answer_id"], name: "index_messages_on_question_answer_id"
   end
 
-  create_table "organization_bot_ownerships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "organization_bot_ownerships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "organization_id", null: false
     t.integer "bot_id", null: false
     t.datetime "created_at", null: false
@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["organization_id", "bot_id"], name: "main_organization_bot_ownership_index", unique: true
   end
 
-  create_table "organization_user_memberships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "organization_user_memberships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", null: false
     t.integer "organization_id", null: false
     t.datetime "created_at", null: false
@@ -213,7 +213,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["user_id", "organization_id"], name: "main_organization_user_membership_index", unique: true
   end
 
-  create_table "organizations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "organizations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.string "image"
     t.text "description"
@@ -223,7 +223,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "trial_finished_at"
   end
 
-  create_table "question_answers", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "question_answers", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id"
     t.text "question"
     t.datetime "created_at", null: false
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
 
-  create_table "ratings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "ratings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "level", null: false
     t.integer "message_id", null: false
     t.integer "question_answer_id"
@@ -243,7 +243,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "scores", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "scores", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id", null: false
     t.float "accuracy", limit: 24
     t.float "precision", limit: 24
@@ -254,7 +254,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["bot_id"], name: "index_scores_on_bot_id"
   end
 
-  create_table "sentence_synonyms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "sentence_synonyms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "created_user_id", null: false
     t.text "body", null: false
     t.datetime "created_at", null: false
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id"
   end
 
-  create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "guest_message"
     t.text "bot_message"
     t.boolean "is_done", default: false
@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "topic_taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "topic_taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "question_answer_id", null: false
     t.integer "topic_tag_id", null: false
     t.datetime "created_at", null: false
@@ -281,7 +281,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["question_answer_id", "topic_tag_id"], name: "index_topic_taggings_on_question_answer_id_and_topic_tag_id", unique: true
   end
 
-  create_table "topic_tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "topic_tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.integer "bot_id", null: false
     t.datetime "created_at", null: false
@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["name", "bot_id"], name: "index_topic_tags_on_name_and_bot_id", unique: true
   end
 
-  create_table "tutorials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "tutorials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "bot_id", null: false
     t.boolean "edit_bot_profile", default: false, null: false
     t.boolean "fifty_question_answers", default: false, null: false
@@ -299,7 +299,7 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -324,14 +324,14 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "word_mapping_synonyms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "word_mapping_synonyms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "value", null: false
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "word", limit: 20, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

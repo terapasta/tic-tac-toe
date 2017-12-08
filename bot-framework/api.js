@@ -11,6 +11,10 @@ module.exports.fetchLineCredential = ({ botToken }) => (
   axios.get(`/api/bots/${botToken}/line_credential.json`)
 )
 
+module.exports.fetchChatworkCredential = ({ botToken }) => (
+  axios.get(`/api/bots/${botToken}/chatwork_credential.json`)
+)
+
 module.exports.createChat = ({
   botToken,
   uid,

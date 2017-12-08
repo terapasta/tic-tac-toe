@@ -1,6 +1,7 @@
 const get = require('lodash.get')
 const line = require('@line/bot-sdk')
 
+const LineBot = require('../bots/line')
 const api = require('../api')
 const Base = require('./base')
 
@@ -19,8 +20,9 @@ class LineServer extends Base {
   beforeSignatureValidation (req, res, next) {
     const { botToken } = req.body
     api.fetchLineCredential({ botToken }).then(res => {
-      this.lineClient = new line.Client(res.data['bot::LineCredential'])
-      this.lineBot.lineClient = this.lineClient
+      req.lineClient = new line.Client(res.data['bot::LineCredential'])
+      req.lineBot = new LineBot()
+      req.lineBot.lineClient = req.lineClient
 
       const { channelSecret } = res.data['bot::LineCredential']
       const validator = this.createSignatureValidator('x-line-signature', channelSecret)
@@ -32,7 +34,7 @@ class LineServer extends Base {
     const events = get(req, 'body.events', [])
     const botToken = get(req, 'body.botToken', null)
     const promises = events.map(event => (
-      this.lineBot.handleEvent(botToken, event)
+      req.lineBot.handleEvent(botToken, event)
     ))
     Promise.all(promises)
       .then(result => res.json(result))

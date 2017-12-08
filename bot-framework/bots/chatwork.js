@@ -59,7 +59,7 @@ class ChatworkBot {
   sendReply(reqBody, userName, text, answerFiles) {
     const { room_id, from_account_id } = reqBody.webhook_event
     const url = `${BASE_URL}/rooms/${room_id}/messages`
-    const answerFileUrls = answerFiles.map(it => s3 + it.file.url).join("\n")
+    const answerFileUrls = (answerFiles || []).map(it => s3 + it.file.url).join("\n")
     const answerFileText = answerFileUrls.length > 0 ? `\n\n<添付ファイル>\n${answerFileUrls}` : ''
     const formData = {
       body: `[To:${from_account_id}] ${userName}さん\n${text}${answerFileText}`

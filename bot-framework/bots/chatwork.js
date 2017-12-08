@@ -37,7 +37,7 @@ class ChatworkBot {
       }).then(res => {
         const { body, answerFiles } = res.data.message
         this.sendReply(reqBody, user.name, body, answerFiles)
-      })
+      }).catch(console.error)
     })
   }
 

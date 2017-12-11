@@ -1,7 +1,5 @@
 from concurrent import futures
-import inspect
 import signal
-import sys
 import time
 import grpc
 
@@ -119,7 +117,6 @@ if __name__ == '__main__':
     Config().init(args.env)
 
     signal.signal(signal.SIGSEGV, on_sigsegv)
-    signal.signal(signal.SIGTERM, on_sigsegv)
 
     logger.info('start server!!')
     serve(args.port)

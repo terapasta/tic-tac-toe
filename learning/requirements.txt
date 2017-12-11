@@ -1,4 +1,4 @@
-gensim==2.3.0
+gensim==3.1.0
 grpcio-tools==1.6.0
 injector==0.13.3
 mecab-python3==0.7

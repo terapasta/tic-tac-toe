@@ -6,6 +6,7 @@ import isArray from "lodash/isArray";
 import classNames from "classnames";
 import isEmpty from "is-empty";
 import getOffset from "../../modules/get-offset";
+import queryParams from "../../modules/query-params";
 
 const HeaderHeight = 47;
 
@@ -19,8 +20,15 @@ export default class ChatSection extends Component {
       section: PropTypes.object.isRequired,
       index: PropTypes.number.isRequired,
       onClick: PropTypes.func.isRequired,
-      onSaveLearning: PropTypes.func.isRequired,
+      onSaveLearning: PropTypes.func.isRequired
     };
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isNoHeader: queryParams().noheader === 'true'
+    }
   }
 
   get learning() {
@@ -85,13 +93,18 @@ export default class ChatSection extends Component {
       "collapsed": !isShowSimilarQuestionAnswers && !isFirst
     });
 
+    let innerStyle = {}
+    if (isFirst && this.state.isNoHeader) {
+      innerStyle.paddingTop = '0px'
+    }
+
     return (
       <div
         className={className}
         ref={node => this.root = node}
         data-decision-branch={isDecisionBranch || isSQA}
       >
-        <div className="chat-section__inner">
+        <div className="chat-section__inner" style={innerStyle}>
           <div className="chat-section__switch-container">
             {!isFirst && !isDecisionBranch && !isSQA && (
               <a href="#"

@@ -2,173 +2,225 @@ import React from "react";
 import styled from "styled-components";
 
 import {
-  Width,
-  Height,
-  HeaderHeight,
-  HeaderBGColor,
-  HeaderBGColorHover,
-  HiddenBottomValue,
-  Margin,
   MobileMaxWidth,
-  WidthMobileHidden,
+  Position
 } from "./constants";
 
-export const Wrapper = styled.div`
-  overflow: hidden;
-  position: fixed;
-  bottom: -${HiddenBottomValue}px;
-  right: ${Margin}px;
-  height: ${Height}px;
-  z-index: 99995000;
-  border-radius: 3px 3px 0 0;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,.5);
-  transition-property: bottom, margin;
-  transition-duration: .25s;
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
+const OrangeColor = '#F36B30'
+const handleClickBy = func => ((e) => {
+  e.preventDefault()
+  e.stopPropagation()
+  func()
+})
 
-  &.active {
-    bottom: 0;
+export const FloatWrapper = props => (
+  <FloatWrapperBase
+    position={props.position}
+    onClick={handleClickBy(props.onOpen)}
+    isActive={props.isActive}
+  >
+    <MoveButton isActive={props.isActive} onClick={handleClickBy(props.onMove)}>
+      {props.position === 'left' ? '右へ移動' : '左へ移動'}
+    </MoveButton>
+    <FloatInner isActive={props.isActive}>
+      <FloatButtonLabel>
+        チャットを開く
+      </FloatButtonLabel>
+      <FloatButtonAvatar isActive={props.isActive} avatarURL={props.avatarURL} />
+      {props.isActive && (
+        <CloseButton onClick={handleClickBy(props.onClose)}>&times;</CloseButton>
+      )}
+      {props.children}
+    </FloatInner>
+  </FloatWrapperBase>
+)
+
+const ActiveSize = {
+  Width: 300,
+  Height: 500
+}
+const MoveButtonSize = 24
+const MoveButtonMargin = 10
+const transition = 'transition: all 0.15s;'
+const lightShadow = `
+  box-shadow: 0 24px 38px 3px rgba(0,0,0,0.08),
+              0 9px 46px 8px rgba(0,0,0,0.06),
+              0 11px 15px -7px rgba(0,0,0,0.1);
+`
+const darkShadow = `
+  box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14),
+              0 9px 46px 8px rgba(0,0,0,0.12),
+              0 11px 15px -7px rgba(0,0,0,0.2);
+`
+
+const MoveButton = styled.a.attrs({
+  'data-name': 'MoveButton'
+})`
+  ${transition}
+  ${lightShadow}
+  display: inline-block;
+  opacity: 0;
+  margin: 0 auto ${MoveButtonMargin}px;
+  padding: 0 8px;
+  // width: ${MoveButtonSize}px;
+  height: ${MoveButtonSize}px;
+  border-radius: ${MoveButtonSize / 2}px;
+  background-color: #fff;
+  text-align: center;
+  color: #444;
+  line-height: ${MoveButtonSize + 1}px;
+  font-size: 12px;
+  &:hover {
+    color: #444;
+    text-decoration: none;
+    background-color: #ddd;
   }
 
   @media (max-width: ${MobileMaxWidth}px) {
-    width: ${WidthMobileHidden}px;
+    ${props => props.isActive && `
+      display: none;
+    `}
+  }
+`
 
-    &.active {
-      top: 0;
-      left: 0;
+const FloatButtonAvatar = styled.div`
+  position: relative;
+  z-index: 101;
+  transition-property: all;
+  transition-duration: 0.25s;
+  width: 64px;
+  height: 64px;
+  // border: 2px solid #ccc;
+  border: 2px solid #fff;
+  border-radius: 32px;
+  background-image: url(${props => props.avatarURL});
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #fff;
+
+  ${props => props.isActive && `
+    display: none;
+  `}
+`
+
+const position = 20
+const FloatWrapperBase = styled.div.attrs({
+  'data-name': 'FloatButtonWrapper'
+})`
+  transition: all 0.25s;
+  opacity: 1;
+  cursor: pointer;
+  position: fixed;
+  ${props => props.position === Position.Left && `
+    left: ${position}px;
+    right: auto;
+  `}
+  ${props => props.position === Position.Right && `
+    left: auto;
+    right: ${position}px;
+  `}
+  bottom: ${position + 10}px;
+  z-index: 99995000;
+  height: 84px;
+  text-align: center;
+
+  &:hover [data-name=FloatInner] {
+    width: 165px;
+  }
+  &:hover [data-name=MoveButton] {
+    opacity: 1;
+  }
+
+  ${props => props.isActive && `
+    @media (min-width: ${MobileMaxWidth + 1}px) {
+      bottom: ${position}px;
+      width: ${ActiveSize.Width}px !important;
+      height: ${ActiveSize.Height + MoveButtonSize + MoveButtonMargin}px !important;
+    }
+    @media (max-width: ${MobileMaxWidth}px) {
+      left: auto;
       right: 0;
       bottom: 0;
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
     }
-  }
-
-  @media (min-width: ${MobileMaxWidth + 1}px) {
-    width: ${Width}px;
-  }
-`;
-
-export const LeftWrapper = styled(Wrapper)`
-  right: auto;
-  left: ${Margin}px;
-`;
-
-export const Header = styled.div`
-  height: ${HeaderHeight}px;
-  background-color: ${HeaderBGColor};
+  `}
+`
+const FloatInner = styled.div.attrs({
+  'data-name': 'FloatInner'
+})`
+  ${transition}
   position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  cursor: pointer;
+  overflow: hidden;
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  background-color: #fff;
+  ${lightShadow}
+
+  ${props => props.isActive && `
+    border-radius: 16px;
+    cursor: default;
+    @media (min-width: ${MobileMaxWidth + 1}px) {
+      width: ${ActiveSize.Width}px !important;
+      height: ${ActiveSize.Height}px !important;
+    }
+    @media (max-width: ${MobileMaxWidth}px) {
+      right: 0;
+      bottom: 0;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 0;
+    }
+
+    [data-name=FloatButtonLabel] {
+      display: none;
+    }
+    ${darkShadow}
+  `}
+`
+
+const FloatButtonLabel = styled.div.attrs({
+  'data-name': 'FloatButtonLabel'
+})`
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  z-index: 100;
+  transform: translateY(-50%);
+  width: 85px;
+  color: ${OrangeColor};
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px;
+  letter-spacing:0;
+`
+
+const OneLineText = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+const CloseButton = styled.a.attrs({
+  href: '#'
+})`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: block;
+  width: 32px;
+  height: 32px;
+  color: #ccc;
+  font-size: 42px;
+  line-height: 0.85;
+  text-align: center;
 
   &:hover {
-    background-color: ${HeaderBGColorHover};
+    text-decoration: none;
+    color: #aaa;
   }
-`;
-
-export const Arrow = styled.div`
-  position: absolute;
-  top: 27px;
-  right: 11px;
-
-  transform: rotate(0deg);
-
-  &.active {
-    transform: rotate(180deg);
-
-    svg {
-      vertical-align: bottom;
-    }
-  }
-
-  svg {
-    vertical-align: top;
-  }
-`;
-
-export const Avatar = styled.div`
-  position: absolute;
-  top: 7px;
-  left: 8px;
-  width: 48px;
-  height: 48px;
-  border-radius: 24px;
-  background-color: #fff;
-  background-position: center center;
-  background-size: contain;
-  background-repeat: no-repeat;
-`;
-
-export const DummyInput = styled.div`
-  cursor: text;
-  position: absolute;
-  padding-top: 4px;
-  padding-left: 5px;
-  top: 31px;
-  left: 65px;
-  width: 250px;
-  height: 24px;
-  border-radius: 3px;
-  background-color: #fff;
-  color: #999;
-
-  @media (max-width: ${MobileMaxWidth}px) {
-    width: 190px;
-  }
-`;
-
-export const StatusLabel = styled.div`
-  position: absolute;
-  padding-top: 4px;
-  top: 31px;
-  left: 65px;
-  width: 250px;
-  height: 24px;
-  color: #fff;
-`;
-
-export const Logo = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 65px;
-  color: #fff;
-
-  svg {
-    vertical-align: top;
-  }
-`;
-
-
-export const IframeContainer = styled.div`
-  position: absolute;
-  top: ${HeaderHeight}px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
-export const Iframe = styled.iframe`
-  display: block;
-  border: 0;
-  height: ${Height - HeaderHeight}px;
-  width: 100%;
-
-  @media (max-width: ${MobileMaxWidth}px) {
-    height: 100%;
-  }
-`;
-
-export const Loading = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
+`
 
 export const LoadingMessage = styled.div`
   position: absolute;
@@ -177,4 +229,5 @@ export const LoadingMessage = styled.div`
   right: 16px;
   transform: translateY(-50%);
   text-align: center;
+  color: #999;
 `;

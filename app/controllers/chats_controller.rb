@@ -10,7 +10,7 @@ class ChatsController < ApplicationController
     iframe_support @bot
     @chat = @bot.chats.where(guest_key: guest_key).order(created_at: :desc).first
     if @chat.nil?
-      redirect_to new_chats_path(token: params[:token])
+      redirect_to new_chats_path(token: params[:token], noheader: params[:noheader])
     else
       authorize @chat
     end

@@ -106,8 +106,8 @@ def serve(port):
 def on_sigsegv(signum, frame):
     logger.error('segmentation fault!!!')
     logger.error(signum)
-    logger.error(inspect.getframeinfo(frame))
-    sys.exit()
+    logger.error(traceback.format_stack(frame))
+    raise ValueError('segmentation fault!!!')
 
 
 if __name__ == '__main__':
@@ -119,6 +119,7 @@ if __name__ == '__main__':
     Config().init(args.env)
 
     signal.signal(signal.SIGSEGV, on_sigsegv)
+    signal.signal(signal.SIGTERM, on_sigsegv)
 
     logger.info('start server!!')
     serve(args.port)

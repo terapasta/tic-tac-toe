@@ -20,3 +20,4 @@
     - app
     - mecab
     - logrotate
+    - { role: awslogs, when: stage == 'production' }

@@ -1,0 +1,22 @@
+- name: install awslogs
+  yum:
+    name: awslogs
+    state: installed
+
+- name: update awscli config
+  template:
+    src: awscli.conf
+    dest: /etc/awslogs/awscli.conf
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart awslogs
+
+- name: update awslogs config
+  template:
+    src: awslogs.conf
+    dest: /etc/awslogs/awslogs.conf
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart awslogs

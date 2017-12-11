@@ -3,27 +3,28 @@
   yum: name={{ item }} state=installed
   with_items:
     - MySQL-python27
-  when: stage == "development" or stage == "staging"
+    - mysql57.x86_64
+    - mysql57-devel.x86_64
 
 - name: install MySQL
   yum: name=mysql57-server state=latest
-  when: stage == "development" or stage == "staging"
+  when: 'stage != "production"'
 
 - name: Auto starting MySQL
   service: name=mysqld state=started enabled=yes
   tags: mysqld
-  when: stage == "development" or stage == "staging"
+  when: 'stage != "production"'
 
 - mysql_db:
     name: '{{ secrets.db_name }}'
     state: present
     login_user: root
     login_password: ''
-  when: stage == "development" or stage == "staging"
+  when: 'stage != "production"'
 
 - name: set up default encoding
   template:
     src: my.cnf.general
     dest: /etc/my.cnf
   notify: restart mysql
-  when: stage == "development" or stage == "staging"
+  when: 'stage != "production"'

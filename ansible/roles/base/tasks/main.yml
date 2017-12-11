@@ -40,17 +40,28 @@
     - python-devel
 
 - name: install supervisor
-  shell: /usr/bin/pip-2.7 install supervisor
-- name: change use python version in supervisord
-  lineinfile: >-
-    dest='/usr/bin/supervisord'
-    regexp='#!/usr/bin/python'
-    line='#!/usr/bin/python27'
-- name: change use python version in supervisorctl
-  lineinfile: >-
-    dest='/usr/bin/supervisorctl'
-    regexp='#!/usr/bin/python'
-    line='#!/usr/bin/python27'
+  yum:
+    name: supervisor
+    state: installed
+    enablerepo: epel
+  # shell: /usr/bin/pip-2.7 install supervisor
+# - name: change use python version in supervisord
+#   lineinfile: >-
+#     dest='/usr/bin/supervisord'
+#     regexp='#!/usr/bin/python'
+#     line='#!/usr/bin/python27'
+# - name: change use python version in supervisorctl
+#   lineinfile: >-
+#     dest='/usr/bin/supervisorctl'
+#     regexp='#!/usr/bin/python'
+#     line='#!/usr/bin/python27'
+- name: supervisord config
+  template:
+    src: supervisord.conf
+    dest: /etc/supervisord.conf
+    owner: root
+    group: root
+    mode: 0644
 - name: supervisord service
   service: name=supervisord enabled=yes
 

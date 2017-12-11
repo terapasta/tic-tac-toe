@@ -59,7 +59,7 @@ namespace :deploy do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
       within current_path.join('learning') do
-        sudo :pip, :install, '-r requirements.txt'
+        sudo :pip, :install, '-r requirements.txt --no-binary :all:'
       end
       sudo :supervisorctl, :restart, :engine, '-c /etc/supervisord.conf'
     end

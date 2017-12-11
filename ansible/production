@@ -1,5 +1,6 @@
 [web-servers]
-54.249.124.201
+13.230.166.26
+52.193.239.222
 
 [production:children]
 web-servers

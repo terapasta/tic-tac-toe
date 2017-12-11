@@ -16,7 +16,7 @@
 - stat: path=/usr/local/lib/mecab/dic/ipadic
   register: d
 - name: 'install mecab ipadic'
-  when: not d.stat.isdir
+  when: not d.stat.exists
   shell: |
     cd /tmp
     wget -O mecab-ipadic.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"

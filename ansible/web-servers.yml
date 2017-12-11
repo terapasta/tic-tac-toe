@@ -20,4 +20,3 @@
     - app
     - mecab
     - logrotate
-    - { role: slappy, when: stage == 'production' }

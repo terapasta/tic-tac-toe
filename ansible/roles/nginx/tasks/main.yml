@@ -35,7 +35,7 @@
     src=my-ope.conf
     dest=/etc/nginx/conf.d/my-ope.conf
   notify: restart nginx
-  when: stage == "development" and stage == "production"
+  when: stage != "staging"
 
 - name: deploy nginx config file for myope (https)
   template: >

@@ -26,7 +26,7 @@ class Word2vecWmd(BaseCore):
     def predict(self, question_features):
         bot_question_answers_data = self.question_answers.by_bot(self.bot.id)
 
-        result = self.store[self.bot.id][question_features]
+        result = self.store[self.bot.id][question_features[0]]
 
         indices = [x[0] for x in result]
         df = bot_question_answers_data.iloc[indices].copy()

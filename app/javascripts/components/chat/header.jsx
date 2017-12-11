@@ -6,6 +6,7 @@ import { LearningStatus } from "./constants";
 import * as LearningAPI from "../../api/bot-learning";
 import Modal from '../modal';
 import GuestUserForm from './guest-user-form';
+import queryParams from '../../modules/query-params';
 
 const POLLING_INTERVAL = 1000 * 2;
 
@@ -17,6 +18,7 @@ class ChatHeader extends Component {
       learningStatus: null,
       isShowGuestUserForm: !props.isRegisteredGuestUser,
       isRegisteredGuestUser: props.isRegisteredGuestUser,
+      isNoHeader: queryParams().noheader === 'true'
     };
     this.onClickLearning = this.onClickLearning.bind(this);
   }
@@ -40,8 +42,10 @@ class ChatHeader extends Component {
   }
 
   render() {
-    const { botName, isAdmin, isManager, isEnableGuestUserRegistration } = this.props;
-    const { isShowGuestUserForm, isRegisteredGuestUser } = this.state;
+    const { botName, isAdmin, isManager } = this.props;
+    const { isNoHeader } = this.state;
+
+    if (isNoHeader) { return this.renderGuestUserParts() }
 
     return (
       <header className="chat-header">
@@ -58,13 +62,13 @@ class ChatHeader extends Component {
 
   renderGuestUserParts() {
     const { isManager, isEnableGuestUserRegistration } = this.props;
-    const { isShowGuestUserForm, isRegisteredGuestUser } = this.state;
+    const { isNoHeader, isShowGuestUserForm, isRegisteredGuestUser } = this.state;
 
     if (!isEnableGuestUserRegistration) { return null; }
 
     return (
       <span>
-        {!isManager && (
+        {!isManager && !isNoHeader && (
           <div className="chat-header__left">
             <a
               id="guest-user-modal-button"

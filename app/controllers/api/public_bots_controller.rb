@@ -15,7 +15,7 @@ class Api::PublicBotsController < Api::BaseController
     def set_carrierwave_asset_host
       return unless Rails.env.development?
       CarrierWave.configure do |config|
-        config.asset_host = "#{request.scheme}://#{request.host}"
+        config.asset_host = "#{request.scheme}://#{request.host}:#{request.port}"
       end
     end
 

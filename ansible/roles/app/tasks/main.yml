@@ -93,7 +93,7 @@
 
 - template:
     src: python-config.yml.j2
-    dest: /var/www/donusagi-bot/shared/learning/learning/config/config.yml
+    dest: /var/www/donusagi-bot/shared/learning/config/config.yml
 
 - template:
     src: database.yml.j2

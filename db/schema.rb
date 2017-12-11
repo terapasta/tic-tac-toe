@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207012504) do
+ActiveRecord::Schema.define(version: 20171211032505) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -317,7 +317,6 @@ ActiveRecord::Schema.define(version: 20171207012504) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "role", default: 0
-    t.integer "plan", default: 2, null: false
     t.json "notification_settings"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

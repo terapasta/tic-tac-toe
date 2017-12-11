@@ -3628,7 +3628,7 @@ var ChatArea = function (_Component) {
 
       return _react2.default.createElement(
         _preventWheelScrollOfParent2.default,
-        { className: "chat-area", ref: innerRef },
+        { className: "chat-area", innerRef: innerRef },
         children
       );
     }
@@ -11184,7 +11184,7 @@ var PreventWheelScrollOfParent = function (_Component) {
   _createClass(PreventWheelScrollOfParent, [{
     key: 'onWheelWrapper',
     value: function onWheelWrapper(e) {
-      var wrapper = (0, _reactDom.findDOMNode)(this.refs.wrapper);
+      var wrapper = (0, _reactDom.findDOMNode)(this.wrapper);
       var offsetHeight = wrapper.offsetHeight,
           scrollHeight = wrapper.scrollHeight,
           scrollTop = wrapper.scrollTop;
@@ -11201,6 +11201,8 @@ var PreventWheelScrollOfParent = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           children = _props.children,
           type = _props.type;
@@ -11211,7 +11213,12 @@ var PreventWheelScrollOfParent = function (_Component) {
       });
 
       var resolvedProps = (0, _assign2.default)({}, customProps, {
-        ref: 'wrapper',
+        ref: function ref(node) {
+          _this2.wrapper = node;
+          if (typeof customProps.innerRef === 'function') {
+            customProps.innerRef(node);
+          }
+        },
         onWheel: this.onWheelWrapper
       });
 

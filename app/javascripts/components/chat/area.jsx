@@ -11,7 +11,7 @@ class ChatArea extends Component {
     const { children, innerRef } = this.props;
 
     return (
-      <PreventWheelScrollOfParent className="chat-area" ref={innerRef}>
+      <PreventWheelScrollOfParent className="chat-area" innerRef={innerRef}>
         {children}
       </PreventWheelScrollOfParent>
     );

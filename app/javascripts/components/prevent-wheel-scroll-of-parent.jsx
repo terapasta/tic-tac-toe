@@ -12,7 +12,7 @@ class PreventWheelScrollOfParent extends Component {
   }
 
   onWheelWrapper(e) {
-    const wrapper = findDOMNode(this.refs.wrapper);
+    const wrapper = findDOMNode(this.wrapper);
     const { offsetHeight, scrollHeight, scrollTop } = wrapper;
     const isDown = e.deltaY > 0;
     const isUp = !isDown;
@@ -32,7 +32,12 @@ class PreventWheelScrollOfParent extends Component {
     });
 
     const resolvedProps = assign({}, customProps, {
-      ref: 'wrapper',
+      ref: node => {
+        this.wrapper = node
+        if (typeof customProps.innerRef === 'function') {
+          customProps.innerRef(node)
+        }
+      },
       onWheel: this.onWheelWrapper,
     });
 

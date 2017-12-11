@@ -65,7 +65,7 @@ const MoveButton = styled.a.attrs({
   // width: ${MoveButtonSize}px;
   height: ${MoveButtonSize}px;
   border-radius: ${MoveButtonSize / 2}px;
-  background-color: #ccc;
+  background-color: #fff;
   text-align: center;
   color: #444;
   line-height: ${MoveButtonSize + 1}px;
@@ -73,7 +73,7 @@ const MoveButton = styled.a.attrs({
   &:hover {
     color: #444;
     text-decoration: none;
-    background-color: #aaa;
+    background-color: #ddd;
   }
 
   @media (max-width: ${MobileMaxWidth}px) {

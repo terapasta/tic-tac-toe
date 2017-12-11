@@ -15,7 +15,7 @@ import {
 } from "./styled";
 
 const Origin = process.env.NODE_ENV === "development" ?
-  "http://10.0.2.2:3000" : "https://app.my-ope.net";
+  "http://localhost:3000" : "https://app.my-ope.net";
 
 export default class Widget extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class Widget extends Component {
       isLoadingIframe: false,
       isLoadedIframe: false,
       isDeniedAccess: true,
-      position: Position.Right
+      position: Position.from(props.position)
     };
 
     this.fetchPulicBot(props.token);
@@ -41,15 +41,6 @@ export default class Widget extends Component {
         isDeniedAccess: false,
       });
     }).catch(console.error);
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', () => {
-      if (this.iframe == null) { return; }
-      forEach(this.getIframeStyle(), (val, key) => {
-        this.iframe.style[key] = val;
-      });
-    });
   }
 
   componentWillUpdate(nextProps, nextState) {

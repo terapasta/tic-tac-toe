@@ -105,7 +105,14 @@ var Namespace = exports.Namespace = 'MyOpeChatWidget';
 var MobileMaxWidth = exports.MobileMaxWidth = 767;
 var Position = exports.Position = {
   Left: 'left',
-  Right: 'right'
+  Right: 'right',
+  from: function from(literal) {
+    if (literal === this.Left) {
+      return this.Left;
+    } else if (literal === this.Right) {
+      return this.Right;
+    }
+  }
 };
 
 },{}],5:[function(require,module,exports){
@@ -116,7 +123,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LoadingMessage = exports.FloatWrapper = undefined;
 
-var _templateObject = _taggedTemplateLiteral(["\n  ", "\n  ", "\n  display: inline-block;\n  opacity: 0;\n  margin: 0 auto ", "px;\n  padding: 0 8px;\n  // width: ", "px;\n  height: ", "px;\n  border-radius: ", "px;\n  background-color: #ccc;\n  text-align: center;\n  color: #444;\n  line-height: ", "px;\n  font-size: 12px;\n  &:hover {\n    color: #444;\n    text-decoration: none;\n    background-color: #aaa;\n  }\n\n  @media (max-width: ", "px) {\n    ", "\n  }\n"], ["\n  ", "\n  ", "\n  display: inline-block;\n  opacity: 0;\n  margin: 0 auto ", "px;\n  padding: 0 8px;\n  // width: ", "px;\n  height: ", "px;\n  border-radius: ", "px;\n  background-color: #ccc;\n  text-align: center;\n  color: #444;\n  line-height: ", "px;\n  font-size: 12px;\n  &:hover {\n    color: #444;\n    text-decoration: none;\n    background-color: #aaa;\n  }\n\n  @media (max-width: ", "px) {\n    ", "\n  }\n"]),
+var _templateObject = _taggedTemplateLiteral(["\n  ", "\n  ", "\n  display: inline-block;\n  opacity: 0;\n  margin: 0 auto ", "px;\n  padding: 0 8px;\n  // width: ", "px;\n  height: ", "px;\n  border-radius: ", "px;\n  background-color: #fff;\n  text-align: center;\n  color: #444;\n  line-height: ", "px;\n  font-size: 12px;\n  &:hover {\n    color: #444;\n    text-decoration: none;\n    background-color: #ddd;\n  }\n\n  @media (max-width: ", "px) {\n    ", "\n  }\n"], ["\n  ", "\n  ", "\n  display: inline-block;\n  opacity: 0;\n  margin: 0 auto ", "px;\n  padding: 0 8px;\n  // width: ", "px;\n  height: ", "px;\n  border-radius: ", "px;\n  background-color: #fff;\n  text-align: center;\n  color: #444;\n  line-height: ", "px;\n  font-size: 12px;\n  &:hover {\n    color: #444;\n    text-decoration: none;\n    background-color: #ddd;\n  }\n\n  @media (max-width: ", "px) {\n    ", "\n  }\n"]),
     _templateObject2 = _taggedTemplateLiteral(["\n  position: relative;\n  z-index: 101;\n  transition-property: all;\n  transition-duration: 0.25s;\n  width: 64px;\n  height: 64px;\n  // border: 2px solid #ccc;\n  border: 2px solid #fff;\n  border-radius: 32px;\n  background-image: url(", ");\n  background-position: center center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-color: #fff;\n\n  ", "\n"], ["\n  position: relative;\n  z-index: 101;\n  transition-property: all;\n  transition-duration: 0.25s;\n  width: 64px;\n  height: 64px;\n  // border: 2px solid #ccc;\n  border: 2px solid #fff;\n  border-radius: 32px;\n  background-image: url(", ");\n  background-position: center center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-color: #fff;\n\n  ", "\n"]),
     _templateObject3 = _taggedTemplateLiteral(["\n  transition: all 0.25s;\n  opacity: 1;\n  cursor: pointer;\n  position: fixed;\n  ", "\n  ", "\n  bottom: ", "px;\n  z-index: 99995000;\n  height: 84px;\n  text-align: center;\n\n  &:hover [data-name=FloatInner] {\n    width: 165px;\n  }\n  &:hover [data-name=MoveButton] {\n    opacity: 1;\n  }\n\n  ", "\n"], ["\n  transition: all 0.25s;\n  opacity: 1;\n  cursor: pointer;\n  position: fixed;\n  ", "\n  ", "\n  bottom: ", "px;\n  z-index: 99995000;\n  height: 84px;\n  text-align: center;\n\n  &:hover [data-name=FloatInner] {\n    width: 165px;\n  }\n  &:hover [data-name=MoveButton] {\n    opacity: 1;\n  }\n\n  ", "\n"]),
     _templateObject4 = _taggedTemplateLiteral(["\n  ", "\n  position: relative;\n  overflow: hidden;\n  width: 64px;\n  height: 64px;\n  border-radius: 32px;\n  background-color: #fff;\n  ", "\n\n  ", "\n"], ["\n  ", "\n  position: relative;\n  overflow: hidden;\n  width: 64px;\n  height: 64px;\n  border-radius: 32px;\n  background-color: #fff;\n  ", "\n\n  ", "\n"]),
@@ -268,7 +275,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Origin = "production" === "development" ? "http://10.0.2.2:3000" : "https://app.my-ope.net";
+var Origin = "production" === "development" ? "http://localhost:3000" : "https://app.my-ope.net";
 
 var Widget = function (_Component) {
   _inherits(Widget, _Component);
@@ -283,7 +290,7 @@ var Widget = function (_Component) {
       isLoadingIframe: false,
       isLoadedIframe: false,
       isDeniedAccess: true,
-      position: _constants.Position.Right
+      position: _constants.Position.from(props.position)
     };
 
     _this.fetchPulicBot(props.token);
@@ -306,20 +313,6 @@ var Widget = function (_Component) {
       }).catch(console.error);
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this3 = this;
-
-      window.addEventListener('resize', function () {
-        if (_this3.iframe == null) {
-          return;
-        }
-        (0, _forEach2.default)(_this3.getIframeStyle(), function (val, key) {
-          _this3.iframe.style[key] = val;
-        });
-      });
-    }
-  }, {
     key: "componentWillUpdate",
     value: function componentWillUpdate(nextProps, nextState) {
       var isMobile = window.innerWidth <= _constants.MobileMaxWidth;
@@ -339,7 +332,7 @@ var Widget = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var token = this.props.token;
       var _state = this.state,
@@ -371,13 +364,13 @@ var Widget = function (_Component) {
             isDisableBorderRadius: true,
             position: position,
             onOpen: function onOpen() {
-              return _this4.setState({ isActive: true, isLoadingIframe: true });
+              return _this3.setState({ isActive: true, isLoadingIframe: true });
             },
             onClose: function onClose() {
-              return _this4.setState({ isActive: false });
+              return _this3.setState({ isActive: false });
             },
             onMove: function onMove() {
-              return _this4.setState({ position: _this4.state.position === _constants.Position.Left ? _constants.Position.Right : _constants.Position.Left });
+              return _this3.setState({ position: _this3.state.position === _constants.Position.Left ? _constants.Position.Right : _constants.Position.Left });
             }
           },
           isShowIframe && _react2.default.createElement("iframe", {
@@ -388,7 +381,7 @@ var Widget = function (_Component) {
             title: "My-ope office",
             style: { width: '100%', height: '100%' },
             ref: function ref(node) {
-              return _this4.iframe = node;
+              return _this3.iframe = node;
             }
           }),
           isLoadingIframe && !isLoadedIframe && _react2.default.createElement(

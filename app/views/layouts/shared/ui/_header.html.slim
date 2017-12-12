@@ -23,13 +23,14 @@ header
 
               = link_to 'ログアウト', destroy_user_session_path, class: 'dropdown-item', data: { method: :delete, event: 'logout' }
 
-              .dropdown-divider
-
               - if current_user&.staff?
+                .dropdown-divider
+
                 h6.dropdown-header Staffメニュー
                 = link_to 'システム辞書', admin_word_mappings_path, class: 'dropdown-item'
                 - if @bot.present?
                   = link_to '精度テスト', admin_bot_accuracy_test_cases_path(@bot), class: 'dropdown-item'
+                = link_to 'CloudWatch Logs', 'https://ap-northeast-1.console.aws.amazon.com/cloudwatch/home?region=ap-northeast-1#logs:prefix=/var/www/donusagi-bot', target: '_blank', class: 'dropdown-item'
 
       - else
         = link_to 'ログイン', new_user_session_path, class: 'btn btn-sm btn-primary'

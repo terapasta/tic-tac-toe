@@ -47,7 +47,7 @@ respond '.*' do |e|
     end
   rescue Ml::Engine::NotTrainedError => e
     Slappy.logger.error e.message + e.backtrace.join("\n")
-    e.reply_to(e.user, "今学習中してます。ちょっとまってね`#{e.message}`")
+    e.reply_to(e.user, "今学習してます。ちょっとまってね`#{e.message}`")
   rescue => e
     Slappy.logger.error e.message + e.backtrace.join("\n")
     e.reply_to(e.user, "エラーしたみたいです `#{e.message}`")

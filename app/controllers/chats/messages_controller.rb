@@ -31,6 +31,11 @@ class Chats::MessagesController < ApplicationController
       format.js
       format.json { render_collection_json [@message, *@bot_messages], include: included_associations }
     end
+  rescue Ml::Engine::NotTrainedError => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.json { render json: { error: e.message }, status: :service_unavailable }
+    end
   rescue => e
     logger.error e.message + e.backtrace.join("\n")
     respond_to do |format|

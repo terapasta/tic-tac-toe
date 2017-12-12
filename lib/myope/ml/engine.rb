@@ -2,6 +2,7 @@ require 'learning/gateway_pb'
 require 'learning/gateway_services_pb'
 
 class Ml::Engine
+  class NotTrainedError < StandardError; end
 
   def initialize(bot)
     host = ENV.fetch('RPC_HOST'){ '127.0.0.1' }
@@ -17,6 +18,8 @@ class Ml::Engine
         body: body,
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       )).as_json.with_indifferent_access
+  rescue GRPC::Unavailable => e
+    raise NotTrainedError
   rescue => e
     log_error(e)
     raise e

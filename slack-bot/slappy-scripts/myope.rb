@@ -45,6 +45,9 @@ respond '.*' do |e|
       text = messages.map(&:body).join("\n")
       e.reply_to(e.user, text) if text.present?
     end
+  rescue Ml::Engine::NotTrainedError => e
+    Slappy.logger.error e.message + e.backtrace.join("\n")
+    e.reply_to(e.user, "今学習中してます。ちょっとまってね`#{e.message}`")
   rescue => e
     Slappy.logger.error e.message + e.backtrace.join("\n")
     e.reply_to(e.user, "エラーしたみたいです `#{e.message}`")

@@ -8,7 +8,7 @@ from app.shared.constants import Constants
 from app.shared.logger import logger
 
 
-class Rocchio(BaseFeedback):
+class NearestCentroidFeedback(BaseFeedback):
     # Note: ハイパーパラメータ
     DEFAULT_PARAMS = {
         'query_wait': 1,
@@ -20,7 +20,6 @@ class Rocchio(BaseFeedback):
         self.bot = bot
         self.estimator_for_good = NearestCentroid()
         self.estimator_for_bad = NearestCentroid()
-        self.persistence = datasource.persistence
         self.data = {'good': None, 'bad': None}
         fromDb = datasource.learning_parameters.feedback_parameters(self.bot.id, Constants.FEEDBACK_ALGORITHM_ROCCHIO)
         self.parameters = dict(**collections.ChainMap(fromDb, self.DEFAULT_PARAMS))

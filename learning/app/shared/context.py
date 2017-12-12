@@ -10,7 +10,7 @@ from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimila
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
-from app.feedback.rocchio import Rocchio
+from app.feedback.rocchio_feedback import RocchioFeedback
 from app.feedback.pass_feedback import PassFeedback
 
 
@@ -69,7 +69,7 @@ class Context(BaseCls):
         algorithm = self.current_bot.feedback_algorithm
         if algorithm == Constants.FEEDBACK_ALGORITHM_ROCCHIO:
             logger.info('feedback algorithm: Rocchio')
-            feedback_cls = Rocchio
+            feedback_cls = RocchioFeedback
         else:
             logger.info('feedback algorithm: None')
             self._pass_feedback = True

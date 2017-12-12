@@ -2,7 +2,14 @@
  *= require toastr
  */
 
-@import 'bootstrap-v4.0.0-alpha.6-scss/bootstrap';
+@import 'bootstrap';
+
+$gray: $gray-900;
+$gray-light: $gray-700;
+$gray-lighter: $gray-500;
+$brand-primary: $primary;
+$brand-success: $success;
+$brand-danger: $danger;
 
 
 html {

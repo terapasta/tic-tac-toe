@@ -10,7 +10,7 @@ message LearningParameter {
 message Result {
     int32 question_answer_id = 1;
     float probability = 2;
-    string question =3;
+    string question = 3;
 }
 
 message ReplyRequest {
@@ -24,6 +24,8 @@ message ReplyResponse {
     repeated Result results = 2;
     int32 noun_count = 3;
     int32 verb_count = 4;
+    int32 algorithm = 5;
+    int32 feedback_algorithm = 6;
 }
 
 message LearnRequest {

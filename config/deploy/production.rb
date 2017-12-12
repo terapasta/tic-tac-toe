@@ -1,6 +1,14 @@
 set :branch, ENV['BRANCH'] || 'master'
-server '13.230.166.26', user: 'deploy', roles: %w{web app batch bot_framework}
-server '52.193.239.222', user: 'deploy', roles: %w{web app bot_framework}
+
+MyOpeProductionA = '13.230.166.26'
+MyOpeProductionB = '52.193.239.222'
+
+server MyOpeProductionA,
+  user: 'deploy',
+  roles: %w{web app batch bot_framework}
+server MyOpeProductionB,
+  user: 'deploy',
+  roles: %w{web app bot_framework}
 
 namespace :deploy do
   task :prepare_bundle_config do

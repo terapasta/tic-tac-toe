@@ -85,4 +85,38 @@ RSpec.describe QuestionAnswer do
       end
     end
   end
+
+  describe 'for_suggestion scope' do
+    let!(:bot) do
+      create(:bot)
+    end
+
+    let!(:question_answers) do
+      create_list(:question_answer, 3, bot: bot)
+    end
+
+    let!(:topic_tags) do
+      create_list(:topic_tag, 2, bot: bot)
+    end
+
+    before do
+      topic_tags.first.tap do |t|
+        t.topic_taggings.create(question_answer: question_answers.first)
+      end
+
+      topic_tags.second.tap do |t|
+        t.topic_taggings.create(question_answer: question_answers.second)
+        t.is_show_in_suggestion = false
+        t.save
+      end
+    end
+
+    subject do
+      bot.question_answers.for_suggestion
+    end
+
+    it 'returns records those only for suggestion' do
+      expect(subject).to match_array([question_answers.first, question_answers.third])
+    end
+  end
 end

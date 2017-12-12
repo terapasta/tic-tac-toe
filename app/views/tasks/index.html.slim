@@ -2,7 +2,7 @@
   = render 'shared/pagination', resources: @tasks, per_page: @per_page
 
 = render layout: 'bots/layout' do
-  .card.card-outline-secondary.mb-3: .card-block
+  .card.card-outline-secondary.mb-3: .card-body
     |対話タスクとは、うまくいかなかった対話（回答不可かBad評価の付いたもの）の記録をタスク形式で表示する機能です。
     br
     |この対話記録を元に新しくQ&Aを作成していただくか、対応済みにすることでタスクを消化できます。
@@ -21,14 +21,14 @@
   = pagination
 
   - if @tasks.empty?
-    .card: .card-block.text-center
+    .card: .card-body.text-center
       = material_icon 'check', class: 'text-success mi-lg'
       br
       span 現在、未対応の対話タスクはありません
 
   - @tasks.each do |task|
     .card.mb-5
-      .card-block.p-4
+      .card-body.p-4
         .row
           .col-sm-6.push-6
             .chat-message--my.full-width

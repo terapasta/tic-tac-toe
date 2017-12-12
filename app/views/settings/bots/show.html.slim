@@ -29,7 +29,7 @@
       .form-group
         = f.label :has_suggests_message
         = f.text_area :has_suggests_message, rows: 3, class: 'form-control'
-        .card-block.p-2.text-muted
+        .card-body.p-2.text-muted
           p
             |※<code>{question}</code>の部分に質問文が埋め込まれて表示されます
             br
@@ -37,7 +37,7 @@
           p 例：質問が"会社"のみだった場合
           blockquote「会社」についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？
 
-      .form-group: .card: .card-block
+      .form-group: .card: .card-body
         = f.label :enable_guest_user_registration do
           = f.check_box :enable_guest_user_registration
           = space

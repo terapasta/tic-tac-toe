@@ -11356,7 +11356,7 @@ var QuestionAnswerTagFrom = function (_Component) {
             { className: "card" },
             _react2.default.createElement(
               "div",
-              { className: "card-block" },
+              { className: "card-body" },
               _react2.default.createElement(
                 "div",
                 { className: "d-flex justify-content-between" },

@@ -28,3 +28,9 @@
     dest: /etc/my.cnf
   notify: restart mysql
   when: 'stage != "production"'
+
+- name: make symlink for libmysqlclient.so.1020
+  file:
+    state: link
+    dest: /usr/lib64/libmysqlclient.so.1020
+    src: /usr/lib64/mysql57/libmysqlclient.so.1020

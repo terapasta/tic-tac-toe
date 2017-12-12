@@ -45,5 +45,5 @@ every 1.day, at: 'am 2:58' do
 end
 
 every 1.day, at: 'am 8:00' do
-  rake 'organization:check_finising_trial'
+  rake 'organization:check_finishing_trial'
 end

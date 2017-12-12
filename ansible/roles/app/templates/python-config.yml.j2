@@ -1,12 +1,12 @@
-production:
+{{ stage }}:
   datasource_type: database
   database:
-    endpoint: mysql://{{ secrets.db_user }}:{{ secrets.db_password }}@{{ secrets.db_host }}/{{ secrets.db_name }}?charset=utf8
-    host: {{ secrets.db_host }}
+    endpoint: mysql://{{ secrets.db_user }}:{{ secrets.db_password }}@{{ secrets.db_host[stage] }}/{{ secrets.db_name }}?charset=utf8
+    host: {{ secrets.db_host[stage] }}
     name: {{ secrets.db_name }}
     user: {{ secrets.db_user }}
     password: {{ secrets.db_password }}
-  dicdir: /usr/lib64/mecab/dic/mecab-ipadic-neologd
+  dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd
   word2vec_model_name: fasttext_model.vec
   word2vec_model_is_binaly: False
   # word2vec_model_name: entity_vector.model.bin

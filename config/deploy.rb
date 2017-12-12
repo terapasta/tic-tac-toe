@@ -65,8 +65,6 @@ namespace :deploy do
     end
   end
 
-  # after :finished, 'update_neologd'
-
   task :restart_botapi do
     on roles(:bot_framework) do
       within current_path.join('bot-framework') do

@@ -19,6 +19,7 @@ class Ml::Engine
         learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
       )).as_json.with_indifferent_access
   rescue GRPC::Unavailable => e
+    log_error(e)
     raise NotTrainedError
   rescue => e
     log_error(e)

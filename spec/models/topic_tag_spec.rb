@@ -24,4 +24,18 @@ RSpec.describe TopicTag do
       expect(topic_tag).to be_valid
     end
   end
+
+  describe 'without_by_id scope' do
+    let!(:topic_tags) do
+      create_list(:topic_tag, 2, bot: bot)
+    end
+
+    subject do
+      TopicTag.without_by_id(topic_tags.first.id)
+    end
+
+    it 'returns records that without specified id' do
+      expect(subject).to match_array([topic_tags.second])
+    end
+  end
 end

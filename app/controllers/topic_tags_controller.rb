@@ -3,6 +3,7 @@ class TopicTagsController < ApplicationController
   before_action :set_bot
 
   def update
+    # render json: permitted_attributes(@bot) and return
     if @bot.update(permitted_attributes(@bot))
       redirect_to bot_topic_tags_path(@bot), notice: '更新しました。'
     else

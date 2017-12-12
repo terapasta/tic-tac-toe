@@ -68,6 +68,7 @@ class BotPolicy < ApplicationPolicy
         topic_tags_attributes: [
           :id,
           :name,
+          :is_show_in_suggestion,
           :_destroy,
         ]
       },

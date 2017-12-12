@@ -6,10 +6,10 @@
     .row
       - chat.messages.order(created_at: :desc).limit(2).reverse.tap do |messages|
         - messages.first.tap do |message|
-          .col-sm-6.push-sm-6
+          .col-sm-6.order-12
             = render 'messages/guest_balloon', message: message
         - messages.second.tap do |message|
-          .col-sm-6.pull-sm-6 style="padding-top:16px"
+          .col-sm-6.order-1 style="padding-top:16px"
             = render 'messages/bot_balloon', bot: @bot, message: message
 
   .card-footer.d-flex.justify-content-between

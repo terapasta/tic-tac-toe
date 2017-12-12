@@ -5835,7 +5835,7 @@ var ChatInitialQuestion = function (_Component) {
               onClick: this.openSelector },
             _react2.default.createElement(
               "i",
-              { className: "material-icons text-gray-light" },
+              { className: "material-icons" },
               "playlist_add_check"
             ),
             " ",

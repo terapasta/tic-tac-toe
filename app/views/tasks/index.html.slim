@@ -30,10 +30,10 @@
     .card.mb-5
       .card-body.p-4
         .row
-          .col-sm-6.push-6
+          .col-sm-6.order-12
             .chat-message--my.full-width
               .chat-message__balloon= task.guest_message
-          .col-sm-6.pull-6 style="padding-top:16px"
+          .col-sm-6.order-1 style="padding-top:16px"
             .chat-message.full-width
               .chat-message__icon style=("background-image:url(#{@bot.image_url});")
               .chat-message__balloon

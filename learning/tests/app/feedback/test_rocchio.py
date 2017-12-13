@@ -1,7 +1,7 @@
 from unittest import TestCase
 from nose.tools import ok_
 
-from app.feedback.rocchio import Rocchio
+from app.feedback.rocchio_feedback import RocchioFeedback
 from app.shared.datasource.datasource import Datasource
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
 from tests.support.helper import Helper, TextToVectorHelper
@@ -15,11 +15,10 @@ class RocchioTestCase(TestCase):
     def test_transform_query_vector_when_fitted(self):
         datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
-        instance = Rocchio.new(
+        instance = RocchioFeedback.new(
             bot=self.context.current_bot,
             datasource=datasource,
         )
-        self.vec_helper = TextToVectorHelper.new()
 
         positive_vectors = self.vec_helper.vectorize([
             '周辺商品でらく賃（受託）の担当者は誰。',
@@ -43,7 +42,7 @@ class RocchioTestCase(TestCase):
     def test_transform_query_vector_when_not_fitted(self):
         datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
-        instance = Rocchio.new(
+        instance = RocchioFeedback.new(
             bot=self.context.current_bot,
             datasource=datasource,
         )

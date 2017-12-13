@@ -41,10 +41,12 @@ class RocchioFeedback(BaseFeedback):
         new_positive = []
         if self.data['good'] is not None:
             new_positive = self.data['good'] * self.parameters['positive_wait']
+            new_vector = new_vector + new_positive
+            logger.info('reflected positive vector')
         new_negative = []
         if self.data['bad'] is not None:
             new_negative = self.data['bad'] * self.parameters['negative_wait']
-        new_vector = new_vector + new_positive - new_negative
-        logger.info('reflected vector')
+            new_vector = new_vector - new_negative
+            logger.info('reflected negative vector')
 
         return new_vector

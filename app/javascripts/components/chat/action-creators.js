@@ -71,6 +71,10 @@ export function postMessage(token, messageBody, dispatch) {
     })
     .catch((err) => {
       console.error(err);
+      if (err.response['status'] === 503) {
+        toastr.warning(c.BotIsNotTrainedErrorMessage, c.BotIsNotTrainedErrorTitle);
+        return;
+      }
       toastr.error(c.ErrorCreateMessage, c.ErrorTitle);
     });
 }

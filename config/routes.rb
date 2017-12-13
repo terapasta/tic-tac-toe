@@ -135,6 +135,7 @@ Rails.application.routes.draw do
       resources :chat_choices, module: :bots, only: [:create]
       resource :line_credential, module: :bots, only: [:show]
       resource :chatwork_credential, module: :bots, only: [:show]
+      resource :microsoft_credential, module: :bots, only: [:show]
     end
   end
 end

@@ -3,7 +3,7 @@
     = render 'bots/tutorial/tasks'
 
   - if current_user.staff?
-    .card: .card-block
+    .card: .card-body
       h6.card-title
         = material_icon 'trending_down', class: 'mi-sm mi-v-sub text-muted'
         = space
@@ -51,7 +51,7 @@
       i.material-icons keyboard_arrow_right
 
   - if current_user.ec_plan?(@bot)
-    .card: .card-block
+    .card: .card-body
       h5.mb-3: strong 今日のチャット数（上限#{@chats_limit}）
       .progress.mb-3
         .progress-bar style=("width:#{@progress}%") #{@today_chats_count}

@@ -122,7 +122,7 @@
     position: relative;
     margin-left: $-icon-size + $-balloon-spacing;
     padding: 10px;
-    background-color: $gray-lighter;
+    background-color: $gray-200;
     border-radius: 3px;
     font-size: 14px;
     letter-spacing: 1px;
@@ -135,7 +135,7 @@
       content: "";
       width: 0;
       height: 0;
-      border-right: $-arrow-size solid $gray-lighter;
+      border-right: $-arrow-size solid $gray-200;
       border-top: $-arrow-size solid transparent;
       border-bottom: $-arrow-size solid transparent;
     }

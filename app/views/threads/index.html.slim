@@ -42,7 +42,7 @@
           span ピン
 
     = link_to bot_threads_path(format: :csv, normal: params[:normal].nil? || params[:normal] == 'true' ? 'true' : 'false'), class: 'btn btn-secondary btn-text-sm', data: { event: 'chat log export' } do
-      = material_icon 'file_download', class: 'mi-sm text-muted'
+      = material_icon 'file_download', class: 'mi-sm'
       = space
       span CSVエクスポート
 

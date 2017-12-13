@@ -1,7 +1,7 @@
 = render layout: 'settings/shared/layout' do
   = nested_form_for @bot, url: bot_settings_allowed_hosts_path do |f|
     .form-group.form-inline
-      .card: .card-block
+      .card: .card-body
         h5.mb-3: strong チャット埋め込みの許可ホスト
         #bot-allowed-hosts
           = f.fields_for :allowed_hosts do |nf|

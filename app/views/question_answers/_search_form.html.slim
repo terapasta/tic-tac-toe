@@ -16,7 +16,7 @@
   - if params[:headless].blank?
     div
       = link_to bot_topic_tags_path(@bot), class: 'btn btn-secondary', data: { event: 'control topic tag' } do
-        = material_icon 'label', class: 'mi-sm mi-label-rotate text-gray-light'
+        = material_icon 'label', class: 'mi-sm mi-label-rotate'
         span トピックタグ管理
       = space
       = link_to 'Q&A新規登録', new_bot_question_answer_path(@bot), class: 'btn btn-success', data: { event: 'click new create q&a' }

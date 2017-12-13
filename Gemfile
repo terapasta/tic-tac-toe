@@ -12,11 +12,11 @@ gem 'mysql2', '~> 0.3.20'
 
 
 # Use SCSS for stylesheets
-gem 'sass'
+gem 'sass', '~> 3.5.2'
 gem 'sass-rails'
 
 # easy to write a form
-gem 'bootstrap', '~> 4.0.0.beta'
+gem 'bootstrap', '~> 4.0.0.beta2.1'
 #gem 'simple_form' #代替案
 
 # Use Uglifier as compressor for JavaScript assets
@@ -85,7 +85,6 @@ gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'compass'
 gem 'autoprefixer-rails', '~> 6.7.7.2'
 gem 'draper', '>= 3.0.0.pre1'
 gem 'pundit'

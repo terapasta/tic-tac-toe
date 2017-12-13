@@ -1,5 +1,5 @@
 .card.mb-4
-  .card-block
+  .card-body
     - if question_answer.topic_tags.any?
       .row style="padding-bottom:15px;": .col-sm-12
         - question_answer.topic_tags.each do |topic_tag|
@@ -23,7 +23,7 @@
             - if question_answer.answer_files&.any?
               - question_answer.answer_files.each do |answer_file|
                 .card class=('mb-2' if answer_file != question_answer.answer_files.last)
-                  .card-block.p-2
+                  .card-body.p-2
                     - if answer_file.image?
                       .text-center= link_to image_tag(answer_file.file_url, width: 200), answer_file.file_url, target: '_blank'
                     - else

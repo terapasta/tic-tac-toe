@@ -5841,7 +5841,7 @@ var ChatInitialQuestion = function (_Component) {
               onClick: this.openSelector },
             _react2.default.createElement(
               "i",
-              { className: "material-icons text-gray-light" },
+              { className: "material-icons" },
               "playlist_add_check"
             ),
             " ",
@@ -11362,7 +11362,7 @@ var QuestionAnswerTagFrom = function (_Component) {
             { className: "card" },
             _react2.default.createElement(
               "div",
-              { className: "card-block" },
+              { className: "card-body" },
               _react2.default.createElement(
                 "div",
                 { className: "d-flex justify-content-between" },

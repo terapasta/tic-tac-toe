@@ -20,7 +20,7 @@ class LSI(BaseReducer):
             n_components = (n_components - 1)
         self.reducer = TruncatedSVD(n_components=n_components, algorithm='randomized', n_iter=10, random_state=42)
         self.reducer.fit(features)
-        self.persistence.dump(self.reducer, self.bot_id, self.dump_key)
+        self.persistence.dump(self.reducer, self.dump_key)
 
     def transform(self, features):
         self._prepare_instance_if_needed()

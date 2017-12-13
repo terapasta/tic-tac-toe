@@ -1,7 +1,7 @@
 = render layout: 'settings/shared/layout' do
   = nested_form_for @bot, url: bot_settings_allowed_ip_addresses_path(@bot) do |f|
     .form-group
-      .card: .card-block
+      .card: .card-body
         h5.mb-3: strong チャット埋め込みの許可IPアドレス
         #bot-allowed-ip-addresses.form-inline
           = f.fields_for :allowed_ip_addresses do |nf|

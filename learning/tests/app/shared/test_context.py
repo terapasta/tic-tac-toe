@@ -9,7 +9,8 @@ from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
 from app.feedback.pass_feedback import PassFeedback
-from app.feedback.rocchio import Rocchio
+from app.feedback.rocchio_feedback import RocchioFeedback
+from app.feedback.nearest_centroid_feedback import NearestCentroidFeedback
 
 
 from tests.support.helper import Helper
@@ -57,4 +58,10 @@ class ContextTestCase(TestCase):
         context = Helper.test_context(bot_id=1, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
         feedback = context.get_feedback()
 
-        eq_(feedback.__class__.__name__, Rocchio.__name__)
+        eq_(feedback.__class__.__name__, RocchioFeedback.__name__)
+
+    def test_feedback_nearest_centroid(self):
+        context = Helper.test_context(bot_id=1, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NEAREST_CENTROID)
+        feedback = context.get_feedback()
+
+        eq_(feedback.__class__.__name__, NearestCentroidFeedback.__name__)

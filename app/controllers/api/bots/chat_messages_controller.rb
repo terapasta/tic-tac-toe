@@ -32,6 +32,11 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       format.json { render json: bot_messages.first, adapter: :json, include: included_associations }
     end
 
+  rescue Ml::Engine::NotTrainedError => e
+    logger.error e.message + e.backtrace.join("\n")
+    respond_to do |format|
+      format.json { render json: { error: e.message }, status: :service_unavailable }
+    end
   rescue => e
     logger.error e.message + e.backtrace.join("\n")
     respond_to do |format|

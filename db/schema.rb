@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211032505) do
+ActiveRecord::Schema.define(version: 20171212032151) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -286,6 +286,7 @@ ActiveRecord::Schema.define(version: 20171211032505) do
     t.integer "bot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_show_in_suggestion", default: true
     t.index ["name", "bot_id"], name: "index_topic_tags_on_name_and_bot_id", unique: true
   end
 

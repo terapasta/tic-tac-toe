@@ -7,9 +7,15 @@ class TopicTag < ApplicationRecord
 
   validate :must_be_unique
 
+  scope :without_by_id, -> (target_id) {
+    where.not(id: target_id)
+  }
+
   def must_be_unique
-    if bot.present?
-      errors.add(:base, "タグ名「#{name}」は重複しています") if bot.topic_tags.pluck(:name).include?(name)
+    return if bot.blank?
+    if (persisted? && bot.topic_tags.without_by_id(id).pluck(:name).include?(name)) ||
+       (!persisted? && bot.topic_tags.pluck(:name).include?(name))
+      errors.add(:base, "タグ名「#{name}」は重複しています")
     end
   end
 end

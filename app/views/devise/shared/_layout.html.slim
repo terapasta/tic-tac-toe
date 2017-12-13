@@ -6,7 +6,7 @@
     h1.mb-4= link_to image_tag('logo--orange--no-office.svg', width: 100), root_path, data: { event: 'login home' }
     h5= title
   .card
-    .card-block
+    .card-body
       - if resource.errors.any? || alert
         .alert.alert-danger
           - if alert

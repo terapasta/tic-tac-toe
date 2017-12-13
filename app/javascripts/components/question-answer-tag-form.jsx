@@ -49,7 +49,7 @@ export default class QuestionAnswerTagFrom extends Component {
       <div>
         <div className="form-group">
           <div className="card">
-            <div className="card-block">
+            <div className="card-body">
               <div className="d-flex justify-content-between">
                 <label>トピックタグ</label>
                 &nbsp;&nbsp;

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from "react";
-import { findDOMNode } from "react-dom";
 import classNames from "classnames";
 import values from "lodash/values";
 
@@ -19,6 +18,14 @@ export default class MessageRatingButtons extends Component {
     };
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      isAnimatingLeft: false,
+      isAnimatingRight: false
+    }
+  }
+
   render() {
     const { rating } = this.props;
     const goodClassName = classNames(ButtonClasses.Good, {
@@ -27,18 +34,19 @@ export default class MessageRatingButtons extends Component {
     const badClassName = classNames(ButtonClasses.Bad, {
       active: rating === c.Ratings.Bad,
     });
+    const { isAnimatingLeft, isAnimatingRight } = this.state
 
     return (
       <span>
         <div className="chat-message__rating-title">この返答を評価してください</div>
         <a href="#" className={goodClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Good)}>
-          <i className="material-icons">thumb_up</i>
+          <i className={classNames('material-icons', { scaleUp: isAnimatingLeft })}>thumb_up</i>
         </a>
         {" "}
         <a href="#" className={badClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Bad)}>
-          <i className="material-icons">thumb_down</i>
+          <i className={classNames('material-icons', { scaleUp: isAnimatingRight })}>thumb_down</i>
         </a>
       </span>
     );
@@ -47,6 +55,19 @@ export default class MessageRatingButtons extends Component {
   onClick(newRating, e) {
     e.preventDefault();
     const { messageId, rating, onChangeRatingTo } = this.props;
+
+    switch (newRating) {
+      case c.Ratings.Good:
+        this.setState({ isAnimatingLeft: true })
+        break
+      case c.Ratings.Bad:
+        this.setState({ isAnimatingRight: true })
+        break
+      default: break
+    }
+    setTimeout(() => {
+      this.setState({ isAnimatingLeft: false, isAnimatingRight: false })
+    }, 1000)
 
     if (newRating === rating) {
       onChangeRatingTo(c.Ratings.Nothing, messageId);

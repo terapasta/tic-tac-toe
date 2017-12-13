@@ -5965,8 +5965,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require("react-dom");
-
 var _classnames = require("classnames");
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -5997,10 +5995,27 @@ var ButtonClasses = {
 var MessageRatingButtons = function (_Component) {
   _inherits(MessageRatingButtons, _Component);
 
-  function MessageRatingButtons() {
+  _createClass(MessageRatingButtons, null, [{
+    key: "propTypes",
+    get: function get() {
+      return {
+        messageId: _react.PropTypes.number.isRequired,
+        rating: _react.PropTypes.oneOf((0, _values2.default)(c.Ratings)).isRequired,
+        onChangeRatingTo: _react.PropTypes.func.isRequired
+      };
+    }
+  }]);
+
+  function MessageRatingButtons(props) {
     _classCallCheck(this, MessageRatingButtons);
 
-    return _possibleConstructorReturn(this, (MessageRatingButtons.__proto__ || Object.getPrototypeOf(MessageRatingButtons)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (MessageRatingButtons.__proto__ || Object.getPrototypeOf(MessageRatingButtons)).call(this, props));
+
+    _this.state = {
+      isAnimatingLeft: false,
+      isAnimatingRight: false
+    };
+    return _this;
   }
 
   _createClass(MessageRatingButtons, [{
@@ -6014,6 +6029,10 @@ var MessageRatingButtons = function (_Component) {
       var badClassName = (0, _classnames2.default)(ButtonClasses.Bad, {
         active: rating === c.Ratings.Bad
       });
+      var _state = this.state,
+          isAnimatingLeft = _state.isAnimatingLeft,
+          isAnimatingRight = _state.isAnimatingRight;
+
 
       return _react2.default.createElement(
         "span",
@@ -6029,7 +6048,7 @@ var MessageRatingButtons = function (_Component) {
             ref: "root", onClick: this.onClick.bind(this, c.Ratings.Good) },
           _react2.default.createElement(
             "i",
-            { className: "material-icons" },
+            { className: (0, _classnames2.default)('material-icons', { scaleUp: isAnimatingLeft }) },
             "thumb_up"
           )
         ),
@@ -6040,7 +6059,7 @@ var MessageRatingButtons = function (_Component) {
             ref: "root", onClick: this.onClick.bind(this, c.Ratings.Bad) },
           _react2.default.createElement(
             "i",
-            { className: "material-icons" },
+            { className: (0, _classnames2.default)('material-icons', { scaleUp: isAnimatingRight }) },
             "thumb_down"
           )
         )
@@ -6049,6 +6068,8 @@ var MessageRatingButtons = function (_Component) {
   }, {
     key: "onClick",
     value: function onClick(newRating, e) {
+      var _this2 = this;
+
       e.preventDefault();
       var _props = this.props,
           messageId = _props.messageId,
@@ -6056,20 +6077,25 @@ var MessageRatingButtons = function (_Component) {
           onChangeRatingTo = _props.onChangeRatingTo;
 
 
+      switch (newRating) {
+        case c.Ratings.Good:
+          this.setState({ isAnimatingLeft: true });
+          break;
+        case c.Ratings.Bad:
+          this.setState({ isAnimatingRight: true });
+          break;
+        default:
+          break;
+      }
+      setTimeout(function () {
+        _this2.setState({ isAnimatingLeft: false, isAnimatingRight: false });
+      }, 1000);
+
       if (newRating === rating) {
         onChangeRatingTo(c.Ratings.Nothing, messageId);
       } else {
         onChangeRatingTo(newRating, messageId);
       }
-    }
-  }], [{
-    key: "propTypes",
-    get: function get() {
-      return {
-        messageId: _react.PropTypes.number.isRequired,
-        rating: _react.PropTypes.oneOf((0, _values2.default)(c.Ratings)).isRequired,
-        onChangeRatingTo: _react.PropTypes.func.isRequired
-      };
     }
   }]);
 
@@ -6078,7 +6104,7 @@ var MessageRatingButtons = function (_Component) {
 
 exports.default = MessageRatingButtons;
 
-},{"./constants":33,"classnames":125,"lodash/values":611,"react":798,"react-dom":621}],46:[function(require,module,exports){
+},{"./constants":33,"classnames":125,"lodash/values":611,"react":798}],46:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

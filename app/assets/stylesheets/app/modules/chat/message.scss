@@ -267,11 +267,11 @@
         transition-property: all;
       }
 
-      &:active {
-        .material-icons {
-          transform: scale(1.25);
-        }
-      }
+      // &:active {
+      //   .material-icons {
+      //     transform: scale(1.25);
+      //   }
+      // }
 
       &.good.active {
         color: $brand-success;

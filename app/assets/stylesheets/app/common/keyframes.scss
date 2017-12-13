@@ -17,3 +17,16 @@
   animation-name: fadeInOut;
   animation-iteration-count: infinite;
 }
+
+@keyframes scaleUp {
+  from {
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.scaleUp {
+  animation: scaleUp 0.5s linear;
+}

@@ -44,6 +44,7 @@ class Bot {
     const childDecisionBranches = get(res, 'data.message.childDecisionBranches')
     const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers')
     const answerFiles = get(res, 'data.message.answerFiles', [])
+    const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers')
 
     if (!isEmpty(decisionBranches) || !isEmpty(childDecisionBranches)) {
       this.sendMessageWithAttachments(session, body, answerFiles)
@@ -52,7 +53,7 @@ class Bot {
         decisionBranches: decisionBranches || childDecisionBranches,
         isSuggestion: false
       })
-    } else if (!isEmpty(similarQuestionAnswers)) {
+    } else if (!isEmpty(similarQuestionAnswers) && isShowSimilarQuestionAnswers) {
       this.sendMessageWithAttachments(session, body, answerFiles)
       // Disaptch decisionBranches Dialog as suggestion
       return session.beginDialog('decisionBranches', {
@@ -65,18 +66,18 @@ class Bot {
   }
 
   handleDefaultDialog(session) {
-    console.log('default dialog')
-    const { botToken } = session.message
-    const { uid, name } = session.message.user
+    const { botToken, source } = session.message
+    const { id, uid, name } = session.message.user
+    const _uid = source === 'slack' ? id : uid
 
     session.sendTyping()
 
     // POST /api/bots/:token/chats.json
     createChat({
       botToken,
-      uid,
+      uid: _uid,
       name,
-      service_type
+      service_type: source
     }).then((res) => (
       // POST /api/bots/:token/chats/:id/messages.json
       createMessage({
@@ -104,17 +105,18 @@ class Bot {
         let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : ''
         _message = !isEmpty(message) ? `${message}<br/>` : _message
 
-        Prompts.choice(session, _message + "※半角数字で解答して下さい", choices, {
-          listStyle: ListStyle.list,
+        Prompts.choice(session, _message/* + "※半角数字で解答して下さい"*/, choices, {
+          listStyle: ListStyle.button,
           maxRetries: isSuggestion ? 0 : 1
         })
       },
       // Handle selected choice
       (session, results) => {
-        const { botToken } = session.message
-        const { uid, name } = session.message.user
+        const { botToken, source } = session.message
+        const { id, uid, name } = session.message.user
         const { decisionBranches, isSuggestion } = session.privateConversationData
         const selected = decisionBranches[get(results, 'response.index')]
+        const _uid = source === 'slack' ? id : uid
 
         if (selected == null) {
           session.endDialog()
@@ -126,9 +128,9 @@ class Bot {
 
         createChat({
           botToken,
-          uid,
+          uid: _uid,
           name,
-          service_type
+          service_type: source
         }).then((res) => {
           const { guestKey } = res.data.chat
           if (isSuggestion) {

@@ -18,6 +18,21 @@
   animation-iteration-count: infinite;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.Animate-fadeIn {
+  animation-duration: 0.5s;
+  animation-name: fadeIn;
+}
+
 @keyframes scaleUp {
   from {
     transform: scale(1.5);

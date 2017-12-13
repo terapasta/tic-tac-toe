@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from "react";
 import classNames from "classnames";
 import values from "lodash/values";
+import isEmpty from "is-empty";
 
 import * as c from "./constants";
+import BadReasonForm from './bad-reason-form';
 
 const ButtonClasses = {
   Good: "chat-message__rating-button good",
@@ -22,19 +24,25 @@ export default class MessageRatingButtons extends Component {
     super(props)
     this.state = {
       isAnimatingLeft: false,
-      isAnimatingRight: false
+      isAnimatingRight: false,
+      isShowBadReasonForm: false
     }
+    this.handleCancelBadReason = this.handleCancelBadReason.bind(this)
   }
 
   render() {
-    const { rating } = this.props;
+    const { rating, messageId } = this.props;
     const goodClassName = classNames(ButtonClasses.Good, {
       active: rating === c.Ratings.Good,
     });
     const badClassName = classNames(ButtonClasses.Bad, {
       active: rating === c.Ratings.Bad,
     });
-    const { isAnimatingLeft, isAnimatingRight } = this.state
+    const {
+      isAnimatingLeft,
+      isAnimatingRight,
+      isShowBadReasonForm
+    } = this.state
 
     return (
       <span>
@@ -44,9 +52,19 @@ export default class MessageRatingButtons extends Component {
           <i className={classNames('material-icons', { scaleUp: isAnimatingLeft })}>thumb_up</i>
         </a>
         {" "}
-        <a href="#" className={badClassName}
-          ref="root" onClick={this.onClick.bind(this, c.Ratings.Bad)}>
+        <a
+          href="#"
+          className={badClassName}
+          ref={node => this.badButton = node}
+          onClick={this.onClick.bind(this, c.Ratings.Bad)}
+        >
           <i className={classNames('material-icons', { scaleUp: isAnimatingRight })}>thumb_down</i>
+          {!isEmpty(this.badButton) && isShowBadReasonForm && (
+            <BadReasonForm
+              messageId={messageId}
+              onCancel={this.handleCancelBadReason}
+            />
+          )}
         </a>
       </span>
     );
@@ -66,13 +84,23 @@ export default class MessageRatingButtons extends Component {
       default: break
     }
     setTimeout(() => {
-      this.setState({ isAnimatingLeft: false, isAnimatingRight: false })
-    }, 1000)
+      this.setState({
+        isAnimatingLeft: false,
+        isAnimatingRight: false,
+      })
+      if (newRating !== rating && newRating === c.Ratings.Bad) {
+        this.setState({ isShowBadReasonForm: true })
+      }
+    }, 500)
 
     if (newRating === rating) {
       onChangeRatingTo(c.Ratings.Nothing, messageId);
     } else {
       onChangeRatingTo(newRating, messageId);
     }
+  }
+
+  handleCancelBadReason () {
+    this.setState({ isShowBadReasonForm: false })
   }
 }

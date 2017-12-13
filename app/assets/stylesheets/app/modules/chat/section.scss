@@ -7,7 +7,7 @@ $chat-section-switch-size-xs: 32px;
   // transition-property: padding max-height;
   // transition-duration: 1000ms;
   position: relative;
-  overflow: hidden;
+  // overflow: hidden; DEBUG
 
   &.active {
     .chat-section__switch {

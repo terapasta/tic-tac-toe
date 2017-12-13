@@ -1,13 +1,13 @@
 from unittest import TestCase
 from nose.tools import ok_
 
-from app.feedback.rocchio_feedback import RocchioFeedback
+from app.feedback.nearest_centroid_feedback import NearestCentroidFeedback
 from app.shared.datasource.datasource import Datasource
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
 from tests.support.helper import Helper, TextToVectorHelper
 
 
-class RocchioTestCase(TestCase):
+class NearestCentroidFeedbackTestCase(TestCase):
     def setUp(self):
         self.vec_helper = TextToVectorHelper.new()
         self.context = Helper.test_context(bot_id=1)
@@ -15,7 +15,7 @@ class RocchioTestCase(TestCase):
     def test_transform_query_vector_when_fitted(self):
         datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
-        instance = RocchioFeedback.new(
+        instance = NearestCentroidFeedback.new(
             bot=self.context.current_bot,
             datasource=datasource,
         )
@@ -42,7 +42,7 @@ class RocchioTestCase(TestCase):
     def test_transform_query_vector_when_not_fitted(self):
         datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
 
-        instance = RocchioFeedback.new(
+        instance = NearestCentroidFeedback.new(
             bot=self.context.current_bot,
             datasource=datasource,
         )

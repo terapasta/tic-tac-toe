@@ -44,7 +44,7 @@ class NearestCentroidFeedback(BaseFeedback):
 
         try:
             posi_result = self.estimator_for_good.predict(query_vector)
-            logger.debug('nearlest positive qaid: {}'.format(posi_result[0]))
+            logger.debug('nearest positive qaid: {}'.format(posi_result[0]))
             positive_vectors = self.data['good'][posi_result[0]]
             new_positive = positive_vectors * self.parameters['positive_wait']
             new_vector = new_vector + new_positive
@@ -55,7 +55,7 @@ class NearestCentroidFeedback(BaseFeedback):
 
         try:
             nega_result = self.estimator_for_bad.predict(query_vector)
-            logger.debug('nearlest negative qaid: {}'.format(nega_result[0]))
+            logger.debug('nearest negative qaid: {}'.format(nega_result[0]))
             negative_vectors = self.data['bad'][nega_result[0]]
             new_negative = negative_vectors * self.parameters['negative_wait']
             new_vector = new_vector - new_negative

@@ -65,6 +65,12 @@ class QuestionAnswer < ApplicationRecord
     end
   }
 
+  scope :for_suggestion, -> () {
+    left_joins(:topic_tags)
+      .where(topic_tags: { is_show_in_suggestion: true })
+      .or(left_joins(:topic_tags).where(topic_tags: { id: nil }))
+  }
+
   before_destroy do
     break if self.bot.blank?
     if self.bot.selected_question_answer_ids.include?(self.id)

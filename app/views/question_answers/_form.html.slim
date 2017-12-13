@@ -25,14 +25,14 @@
       )
 
     .form-group
-      .card: .card-block
+      .card: .card-body
         label 回答添付ファイル
         - if policy(@question_answer).attachable_answer_file?(@bot)
           #answer-files
             = f.fields_for :answer_files, wrapper: false do |nf|
               .fields.mb-3
                 - if nf.object.file?
-                  .card: .card-block.p-3
+                  .card: .card-body.p-3
                     .row
                       .col-10
                         - if nf.object.image?

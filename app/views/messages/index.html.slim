@@ -30,7 +30,7 @@
             = space
             = count
 
-    .card-block.padding-left-64
+    .card-body.padding-left-64
       - if @guest_user.present?
         = render 'guest_user', guest_user: @guest_user
       - @messages.each do |message|

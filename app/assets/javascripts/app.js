@@ -37,4 +37,6 @@ window.jQuery(function($) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
+
+  $('[data-toggle="popover"]').popover()
 });

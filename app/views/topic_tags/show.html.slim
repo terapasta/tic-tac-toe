@@ -15,15 +15,24 @@
 
     = nested_form_for @bot, url: bot_topic_tags_path(@bot) do |f|
       .form-group
-        .card: .card-block
-          h5.mb-3: strong Q&Aトピックタグ
+        .card: .card-body
+          h5.mb-3
+            strong Q&Aトピックタグ
+            = space 4
+            small: a href="#" data-toggle="popover" title="サジェストに表示するとは？" data-content="チャットの回答時に「こちらの質門ではないですか？」というリストがサジェスト機能です。ここではサジェストに表示させたくない回答をまとめて指定するためにトピックタグ毎に設定ができます。例えば雑談系等にお使い下さい。" data-placement="right" サジェストに表示するとは？
           #bot-topic-tags
             = f.fields_for :topic_tags do |nf|
-              .input-group.mb-3
-                = nf.text_field :name, class: 'form-control form-control-sm'
-                span.input-group-btn
-                  = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete topic tag' }
-          = f.link_to_add 'トピックタグを追加', :topic_tags, class: 'btn btn-secondary btn-sm mb-3', data: { target: '#bot-topic-tags' }
+              = nf.hidden_field :id
+              .mb-3.d-flex.justify-content-between
+                .input-group
+                  = nf.text_field :name, class: 'form-control form-control-sm'
+                  span.input-group-btn
+                    = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？', event: 'delete topic tag' }
+                label.ml-3 style="display:block; width: 250px;"
+                  = nf.check_box :is_show_in_suggestion
+                  = space
+                  span サジェストに表示する
+          = f.link_to_add 'トピックタグを追加', :topic_tags, class: 'btn btn-light btn-sm mb-3', data: { target: '#bot-topic-tags' }
 
       .form-group.text-right
         = f.submit class: 'btn btn-success'

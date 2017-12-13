@@ -1,15 +1,15 @@
 .card.mb-4
-  .card-block
+  .card-body
     - if chat.guest_user.present?
       = render 'messages/guest_user', guest_user: chat.guest_user
     .text-center.mb-3= link_to 'これ以前の発言もすべて見る', bot_thread_messages_path(bot, chat), data: { event: 'check all chat log' }
     .row
       - chat.messages.order(created_at: :desc).limit(2).reverse.tap do |messages|
         - messages.first.tap do |message|
-          .col-sm-6.push-sm-6
+          .col-sm-6.order-12
             = render 'messages/guest_balloon', message: message
         - messages.second.tap do |message|
-          .col-sm-6.pull-sm-6 style="padding-top:16px"
+          .col-sm-6.order-1 style="padding-top:16px"
             = render 'messages/bot_balloon', bot: @bot, message: message
 
   .card-footer.d-flex.justify-content-between

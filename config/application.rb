@@ -44,8 +44,6 @@ module StartDash
       #g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    config.assets.paths << Compass::Core.base_directory + '/stylesheets'
-
     config.action_view.field_error_proc = Proc.new do |html_tag, instance|
       %Q(#{html_tag}).html_safe
     end

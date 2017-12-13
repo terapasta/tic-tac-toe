@@ -5,14 +5,20 @@ import forEach from 'lodash/forEach';
 import * as PublicBotAPI from '../api/public_bot';
 
 import {
-  MobileMaxWidth,
-  Position
-} from './constants';
-
-import {
   LoadingMessage,
   FloatWrapper
 } from "./styled";
+
+import {
+  MobileMaxWidth,
+  Position,
+  MaxHeight,
+  Margin,
+  MoveButtonSize,
+  MoveButtonMargin
+} from './constants';
+const MaxHeightSpace = Margin * 2 + MaxHeight + MoveButtonSize + MoveButtonMargin
+
 
 const Origin = process.env.NODE_ENV === "development" ?
   "http://localhost:3000" : "https://app.my-ope.net";
@@ -25,7 +31,8 @@ export default class Widget extends Component {
       isLoadingIframe: false,
       isLoadedIframe: false,
       isDeniedAccess: true,
-      position: Position.from(props.position)
+      position: Position.from(props.position),
+      height: MaxHeight
     };
 
     this.fetchPulicBot(props.token);
@@ -57,6 +64,23 @@ export default class Widget extends Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.reviseHeight.bind(this))
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.isActive && this.state.isActive) {
+      this.reviseHeight()
+    }
+  }
+
+  reviseHeight() {
+    if (window.innerHeight < MaxHeightSpace && this.state.isActive) {
+      const newHeight = window.innerHeight - Margin * 2 - MoveButtonSize - MoveButtonMargin
+      this.setState({ height: newHeight })
+    }
+  }
+
   render() {
     const {
       token,
@@ -69,7 +93,8 @@ export default class Widget extends Component {
       isDeniedAccess,
       name,
       avatarURL,
-      position
+      position,
+      height
     } = this.state;
 
     if (isDeniedAccess) { return <span />; }
@@ -88,6 +113,8 @@ export default class Widget extends Component {
           onOpen={() => this.setState({ isActive: true, isLoadingIframe: true })}
           onClose={() => this.setState({ isActive: false })}
           onMove={() => this.setState({ position: this.state.position === Position.Left ? Position.Right : Position.Left })}
+          innerRef={node => this.wrapper = node}
+          height={height}
         >
           {isShowIframe && (
             <iframe

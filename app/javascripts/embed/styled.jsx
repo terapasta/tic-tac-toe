@@ -3,7 +3,11 @@ import styled from "styled-components";
 
 import {
   MobileMaxWidth,
-  Position
+  Position,
+  MaxHeight,
+  Margin,
+  MoveButtonSize,
+  MoveButtonMargin
 } from "./constants";
 
 const OrangeColor = '#F36B30'
@@ -18,11 +22,12 @@ export const FloatWrapper = props => (
     position={props.position}
     onClick={handleClickBy(props.onOpen)}
     isActive={props.isActive}
+    height={props.height}
   >
     <MoveButton isActive={props.isActive} onClick={handleClickBy(props.onMove)}>
       {props.position === 'left' ? '右へ移動' : '左へ移動'}
     </MoveButton>
-    <FloatInner isActive={props.isActive}>
+    <FloatInner isActive={props.isActive} height={props.height}>
       <FloatButtonLabel>
         チャットを開く
       </FloatButtonLabel>
@@ -37,10 +42,8 @@ export const FloatWrapper = props => (
 
 const ActiveSize = {
   Width: 300,
-  Height: 500
+  Height: MaxHeight
 }
-const MoveButtonSize = 24
-const MoveButtonMargin = 10
 const transition = 'transition: all 0.15s;'
 const lightShadow = `
   box-shadow: 0 24px 38px 3px rgba(0,0,0,0.08),
@@ -104,7 +107,6 @@ const FloatButtonAvatar = styled.div`
   `}
 `
 
-const position = 20
 const FloatWrapperBase = styled.div.attrs({
   'data-name': 'FloatButtonWrapper'
 })`
@@ -113,14 +115,14 @@ const FloatWrapperBase = styled.div.attrs({
   cursor: pointer;
   position: fixed;
   ${props => props.position === Position.Left && `
-    left: ${position}px;
+    left: ${Margin}px;
     right: auto;
   `}
   ${props => props.position === Position.Right && `
     left: auto;
-    right: ${position}px;
+    right: ${Margin}px;
   `}
-  bottom: ${position + 10}px;
+  bottom: ${Margin + 10}px;
   z-index: 99995000;
   height: 84px;
   text-align: center;
@@ -134,9 +136,9 @@ const FloatWrapperBase = styled.div.attrs({
 
   ${props => props.isActive && `
     @media (min-width: ${MobileMaxWidth + 1}px) {
-      bottom: ${position}px;
+      bottom: ${Margin}px;
       width: ${ActiveSize.Width}px !important;
-      height: ${ActiveSize.Height + MoveButtonSize + MoveButtonMargin}px !important;
+      height: ${props.height + MoveButtonSize + MoveButtonMargin}px !important;
     }
     @media (max-width: ${MobileMaxWidth}px) {
       left: auto;
@@ -164,7 +166,7 @@ const FloatInner = styled.div.attrs({
     cursor: default;
     @media (min-width: ${MobileMaxWidth + 1}px) {
       width: ${ActiveSize.Width}px !important;
-      height: ${ActiveSize.Height}px !important;
+      height: ${props.height}px !important;
     }
     @media (max-width: ${MobileMaxWidth}px) {
       right: 0;

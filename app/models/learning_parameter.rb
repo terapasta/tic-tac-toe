@@ -14,6 +14,7 @@ class LearningParameter < ApplicationRecord
   enum feedback_algorithm: [
     :disable,
     :rocchio,
+    :rocchio_nearlest_centroid,
   ]
 
   def use_similarity_classification?

@@ -10,7 +10,8 @@ from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimila
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
-from app.feedback.rocchio import Rocchio
+from app.feedback.rocchio_feedback import RocchioFeedback
+from app.feedback.nearest_centroid_feedback import NearestCentroidFeedback
 from app.feedback.pass_feedback import PassFeedback
 
 
@@ -41,20 +42,20 @@ class Context(BaseCls):
             logger.info('algorithm: Simmilarity Classification')
             factory_cls = CosineSimilarityFactory
 
-        if algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
+        elif algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Two Steps Simmilarity Classification')
             factory_cls = TwoStepCosineSimilarityFactory
 
-        if algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
+        elif algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
             logger.info('algorithm: Word2vec WMD')
             factory_cls = Word2vecWmdFactory
             self._pass_feedback = True
 
-        if algorithm == Constants.ALGORITHM_HYBRID_CLASSIFICATION:
+        elif algorithm == Constants.ALGORITHM_HYBRID_CLASSIFICATION:
             logger.info('algorithm: Hybrid Classification')
             factory_cls = HybridClassificationFactory
 
-        if algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
+        elif algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
             logger.info('algorithm: Logistic Regression')
             factory_cls = LogisticRegressionFactory
 
@@ -69,7 +70,10 @@ class Context(BaseCls):
         algorithm = self.current_bot.feedback_algorithm
         if algorithm == Constants.FEEDBACK_ALGORITHM_ROCCHIO:
             logger.info('feedback algorithm: Rocchio')
-            feedback_cls = Rocchio
+            feedback_cls = RocchioFeedback
+        elif algorithm == Constants.FEEDBACK_ALGORITHM_NEAREST_CENTROID:
+            logger.info('feedback algorithm: Rocchio (use NearestCentroid)')
+            feedback_cls = NearestCentroidFeedback
         else:
             logger.info('feedback algorithm: None')
             self._pass_feedback = True

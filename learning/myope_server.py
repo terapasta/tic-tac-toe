@@ -53,6 +53,8 @@ class RouteGuideServicer(BotServicer):
             results=[Result(**x) for x in reply['results']],
             noun_count=reply['noun_count'],
             verb_count=reply['verb_count'],
+            algorithm=myope_context.current_bot.algorithm,
+            feedback_algorithm=myope_context.current_bot.feedback_algorithm,
         )
 
     @stop_watch

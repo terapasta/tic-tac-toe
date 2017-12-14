@@ -8,7 +8,7 @@ server MyOpeProductionA,
   roles: %w{web app batch bot_framework}
 server MyOpeProductionB,
   user: 'deploy',
-  roles: %w{web app bot_framework}
+  roles: %w{app bot_framework}
 
 namespace :deploy do
   task :prepare_bundle_config do

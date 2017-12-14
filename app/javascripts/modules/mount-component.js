@@ -55,7 +55,7 @@ export function getMountNodes(component) {
 
 function getReduxMiddlewares() {
   let middlewareList = [thunk];
-  if (process.env.NODE_ENV !== "production" && !/PhantomJS/.test(window.navigator.userAgent)) {
+  if (process.env.NODE_ENV !== "production") {
     middlewareList.push(createLogger());
   }
   return middlewareList;

@@ -11762,7 +11762,7 @@ function getMountNodes(component) {
 
 function getReduxMiddlewares() {
   var middlewareList = [_reduxThunk2.default];
-  if ("production" !== "production" && !/PhantomJS/.test(window.navigator.userAgent)) {
+  if ("production" !== "production") {
     middlewareList.push((0, _reduxLogger2.default)());
   }
   return middlewareList;

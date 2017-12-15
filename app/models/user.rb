@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   has_many :sentence_synonyms, foreign_key: :created_user_id
 
+  validates :role, presence: true
+
   def email_notification
     !!(notification_settings || {})['email']
   end

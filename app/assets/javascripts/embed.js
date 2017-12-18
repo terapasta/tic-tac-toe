@@ -114,6 +114,10 @@ var Position = exports.Position = {
     }
   }
 };
+var MaxHeight = exports.MaxHeight = 500;
+var Margin = exports.Margin = 20;
+var MoveButtonSize = exports.MoveButtonSize = 24;
+var MoveButtonMargin = exports.MoveButtonMargin = 10;
 
 },{}],5:[function(require,module,exports){
 "use strict";
@@ -161,7 +165,8 @@ var FloatWrapper = exports.FloatWrapper = function FloatWrapper(props) {
     {
       position: props.position,
       onClick: handleClickBy(props.onOpen),
-      isActive: props.isActive
+      isActive: props.isActive,
+      height: props.height
     },
     _react2.default.createElement(
       MoveButton,
@@ -170,7 +175,7 @@ var FloatWrapper = exports.FloatWrapper = function FloatWrapper(props) {
     ),
     _react2.default.createElement(
       FloatInner,
-      { isActive: props.isActive },
+      { isActive: props.isActive, height: props.height },
       _react2.default.createElement(
         FloatButtonLabel,
         null,
@@ -189,17 +194,15 @@ var FloatWrapper = exports.FloatWrapper = function FloatWrapper(props) {
 
 var ActiveSize = {
   Width: 300,
-  Height: 500
+  Height: _constants.MaxHeight
 };
-var MoveButtonSize = 24;
-var MoveButtonMargin = 10;
 var transition = 'transition: all 0.15s;';
 var lightShadow = "\n  box-shadow: 0 24px 38px 3px rgba(0,0,0,0.08),\n              0 9px 46px 8px rgba(0,0,0,0.06),\n              0 11px 15px -7px rgba(0,0,0,0.1);\n";
 var darkShadow = "\n  box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14),\n              0 9px 46px 8px rgba(0,0,0,0.12),\n              0 11px 15px -7px rgba(0,0,0,0.2);\n";
 
 var MoveButton = _styledComponents2.default.a.attrs({
   'data-name': 'MoveButton'
-})(_templateObject, transition, lightShadow, MoveButtonMargin, MoveButtonSize, MoveButtonSize, MoveButtonSize / 2, MoveButtonSize + 1, _constants.MobileMaxWidth, function (props) {
+})(_templateObject, transition, lightShadow, _constants.MoveButtonMargin, _constants.MoveButtonSize, _constants.MoveButtonSize, _constants.MoveButtonSize / 2, _constants.MoveButtonSize + 1, _constants.MobileMaxWidth, function (props) {
   return props.isActive && "\n      display: none;\n    ";
 });
 
@@ -209,20 +212,19 @@ var FloatButtonAvatar = _styledComponents2.default.div(_templateObject2, functio
   return props.isActive && "\n    display: none;\n  ";
 });
 
-var position = 20;
 var FloatWrapperBase = _styledComponents2.default.div.attrs({
   'data-name': 'FloatButtonWrapper'
 })(_templateObject3, function (props) {
-  return props.position === _constants.Position.Left && "\n    left: " + position + "px;\n    right: auto;\n  ";
+  return props.position === _constants.Position.Left && "\n    left: " + _constants.Margin + "px;\n    right: auto;\n  ";
 }, function (props) {
-  return props.position === _constants.Position.Right && "\n    left: auto;\n    right: " + position + "px;\n  ";
-}, position + 10, function (props) {
-  return props.isActive && "\n    @media (min-width: " + (_constants.MobileMaxWidth + 1) + "px) {\n      bottom: " + position + "px;\n      width: " + ActiveSize.Width + "px !important;\n      height: " + (ActiveSize.Height + MoveButtonSize + MoveButtonMargin) + "px !important;\n    }\n    @media (max-width: " + _constants.MobileMaxWidth + "px) {\n      left: auto;\n      right: 0;\n      bottom: 0;\n      width: 100% !important;\n      height: 100% !important;\n    }\n  ";
+  return props.position === _constants.Position.Right && "\n    left: auto;\n    right: " + _constants.Margin + "px;\n  ";
+}, _constants.Margin + 10, function (props) {
+  return props.isActive && "\n    @media (min-width: " + (_constants.MobileMaxWidth + 1) + "px) {\n      bottom: " + _constants.Margin + "px;\n      width: " + ActiveSize.Width + "px !important;\n      height: " + (props.height + _constants.MoveButtonSize + _constants.MoveButtonMargin) + "px !important;\n    }\n    @media (max-width: " + _constants.MobileMaxWidth + "px) {\n      left: auto;\n      right: 0;\n      bottom: 0;\n      width: 100% !important;\n      height: 100% !important;\n    }\n  ";
 });
 var FloatInner = _styledComponents2.default.div.attrs({
   'data-name': 'FloatInner'
 })(_templateObject4, transition, lightShadow, function (props) {
-  return props.isActive && "\n    border-radius: 16px;\n    cursor: default;\n    @media (min-width: " + (_constants.MobileMaxWidth + 1) + "px) {\n      width: " + ActiveSize.Width + "px !important;\n      height: " + ActiveSize.Height + "px !important;\n    }\n    @media (max-width: " + _constants.MobileMaxWidth + "px) {\n      right: 0;\n      bottom: 0;\n      width: 100% !important;\n      height: 100% !important;\n      border-radius: 0;\n    }\n\n    [data-name=FloatButtonLabel] {\n      display: none;\n    }\n    " + darkShadow + "\n  ";
+  return props.isActive && "\n    border-radius: 16px;\n    cursor: default;\n    @media (min-width: " + (_constants.MobileMaxWidth + 1) + "px) {\n      width: " + ActiveSize.Width + "px !important;\n      height: " + props.height + "px !important;\n    }\n    @media (max-width: " + _constants.MobileMaxWidth + "px) {\n      right: 0;\n      bottom: 0;\n      width: 100% !important;\n      height: 100% !important;\n      border-radius: 0;\n    }\n\n    [data-name=FloatButtonLabel] {\n      display: none;\n    }\n    " + darkShadow + "\n  ";
 });
 
 var FloatButtonLabel = _styledComponents2.default.div.attrs({
@@ -261,9 +263,9 @@ var _public_bot = require("../api/public_bot");
 
 var PublicBotAPI = _interopRequireWildcard(_public_bot);
 
-var _constants = require("./constants");
-
 var _styled = require("./styled");
+
+var _constants = require("./constants");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -274,6 +276,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MaxHeightSpace = _constants.Margin * 2 + _constants.MaxHeight + _constants.MoveButtonSize + _constants.MoveButtonMargin;
 
 var Origin = "production" === "development" ? "http://localhost:3000" : "https://app.my-ope.net";
 
@@ -290,7 +294,8 @@ var Widget = function (_Component) {
       isLoadingIframe: false,
       isLoadedIframe: false,
       isDeniedAccess: true,
-      position: _constants.Position.from(props.position)
+      position: _constants.Position.from(props.position),
+      height: _constants.MaxHeight
     };
 
     _this.fetchPulicBot(props.token);
@@ -330,6 +335,26 @@ var Widget = function (_Component) {
       }
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      window.addEventListener('resize', this.reviseHeight.bind(this));
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (!prevState.isActive && this.state.isActive) {
+        this.reviseHeight();
+      }
+    }
+  }, {
+    key: "reviseHeight",
+    value: function reviseHeight() {
+      if (window.innerHeight < MaxHeightSpace && this.state.isActive) {
+        var newHeight = window.innerHeight - _constants.Margin * 2 - _constants.MoveButtonSize - _constants.MoveButtonMargin;
+        this.setState({ height: newHeight });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -342,7 +367,8 @@ var Widget = function (_Component) {
           isDeniedAccess = _state.isDeniedAccess,
           name = _state.name,
           avatarURL = _state.avatarURL,
-          position = _state.position;
+          position = _state.position,
+          height = _state.height;
 
 
       if (isDeniedAccess) {
@@ -371,7 +397,11 @@ var Widget = function (_Component) {
             },
             onMove: function onMove() {
               return _this3.setState({ position: _this3.state.position === _constants.Position.Left ? _constants.Position.Right : _constants.Position.Left });
-            }
+            },
+            innerRef: function innerRef(node) {
+              return _this3.wrapper = node;
+            },
+            height: height
           },
           isShowIframe && _react2.default.createElement("iframe", {
             src: chatURL,

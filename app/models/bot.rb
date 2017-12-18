@@ -25,6 +25,7 @@ class Bot < ApplicationRecord
   has_many :chat_service_users
   has_one :line_credential
   has_one :chatwork_credential
+  has_one :microsoft_credential
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
   accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true

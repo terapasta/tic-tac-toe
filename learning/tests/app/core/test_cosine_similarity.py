@@ -5,13 +5,14 @@ from app.core.cosine_similarity import CosineSimilarity
 from app.shared.constants import Constants
 from app.shared.datasource.datasource import Datasource
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
+from tests.support.datasource.empty_ratings import EmptyRatings
 from tests.support.helper import Helper
 
 
 class CosineSimilarityTestCase(TestCase):
     def test_predict_when_data_is_empty(self):
         context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
-        datasource = Datasource.new(question_answers=EmptyQuestionAnswers())
+        datasource = Datasource.new(question_answers=EmptyQuestionAnswers(), ratings=EmptyRatings())
 
         estimator = CosineSimilarity.new(bot=context.current_bot, datasource=datasource)
 

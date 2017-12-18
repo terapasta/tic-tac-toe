@@ -49,11 +49,14 @@ class Helper:
         Config().init('test')
 
     @classmethod
-    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NONE):
+    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NONE, datasource=None):
+        if datasource is None:
+            datasource = Datasource()
         return Context.new(
             bot_id=bot_id,
             learning_parameter=LearningParameter(algorithm=algorithm, feedback_algorithm=feedback_algorithm),
             grpc_context={},
+            datasource=datasource,
         )
 
     @classmethod

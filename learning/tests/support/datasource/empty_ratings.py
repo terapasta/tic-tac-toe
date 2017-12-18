@@ -12,6 +12,16 @@ class EmptyRatings(BaseCls):
     def by_bot(self, bot_id):
         return self._empty()
 
+    def with_good_by_bot(self, bot_id):
+        result = self._empty()
+        result['original_question'] = []
+        return result
+
+    def with_bad_by_bot(self, bot_id):
+        result = self._empty()
+        result['original_question'] = []
+        return result
+
     def higher_rate_by_bot_question(self, bot_id, question):
         return self._empty()
 

@@ -41,12 +41,13 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
         expect(task.bot_message).to be_blank
       end
 
+      expect(BadRateMailer).to receive_message_chain(:create, :deliver_later).with(wait: 3.minutes)
       find('.chat-message__rating-button.bad').click
       sleep 1
-      ActionMailer::Base.deliveries.last.tap do |email|
-        expect(email.subject).to include('回答によくない評価がつきました')
-        expect(email.to).to match_array(users.map(&:email))
-      end
+      # ActionMailer::Base.deliveries.last.tap do |email|
+      #   expect(email.subject).to include('回答によくない評価がつきました')
+      #   expect(email.to).to match_array(users.map(&:email))
+      # end
 
       Task.last.tap do |task|
         expect(task.guest_message).to eq('サンプルメッセージ')

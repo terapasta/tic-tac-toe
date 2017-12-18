@@ -1,5 +1,4 @@
 from injector import inject
-import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
@@ -21,8 +20,9 @@ class CosineSimilarity(BaseCore):
         self.reducer = reducer
         self.normalizer = normalizer
         question_answers = datasource.question_answers.by_bot(self.bot.id)
-        ratings = datasource.with_good_by_bot(self.bot.id)
-        self.bot_question_answers_data = np.array(pd.concat([question_answers['question'], ratings['question']]))
+        ratings = datasource.ratings.with_good_by_bot(self.bot.id)
+        columns = ['question', 'question_answer_id']
+        self.bot_question_answers_data = pd.concat([question_answers[columns], ratings[columns]])
 
     def fit(self, x, y):
         logger.info('PASS')
@@ -36,7 +36,7 @@ class CosineSimilarity(BaseCore):
         normalized_vectors = self.normalizer.transform(reduced_vectors)
         similarities = cosine_similarity(normalized_vectors, question_features)
         similarities = similarities.flatten()
-        result = self.bot_question_answers_data[['question', 'question_answer_id']].copy()
+        result = self.bot_question_answers_data.copy()
         result['probability'] = similarities
         return result
 

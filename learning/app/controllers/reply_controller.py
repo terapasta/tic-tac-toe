@@ -72,7 +72,7 @@ class ReplyController(BaseCls):
         good_ratings = good_ratings[good_ratings['similarity'] > threshold]
         logger.debug('good ratings count: {}'.format(len(good_ratings)))
         if len(good_ratings) > 0:
-            good_rating_vectors = self._transform_texts_to_vector(good_ratings['question'])
+            good_rating_vectors = self._transform_texts_to_vector(good_ratings['original_question'])
             logger.debug(good_rating_vectors.shape)
             self.factory.feedback.fit_for_good(good_rating_vectors, good_ratings['question_answer_id'])
 
@@ -84,7 +84,7 @@ class ReplyController(BaseCls):
         bad_ratings = bad_ratings[bad_ratings['similarity'] > threshold]
         logger.debug('bad ratings count: {}'.format(len(bad_ratings)))
         if len(bad_ratings) > 0:
-            bad_rating_vectors = self._transform_texts_to_vector(bad_ratings['question'])
+            bad_rating_vectors = self._transform_texts_to_vector(bad_ratings['original_question'])
             logger.debug(bad_rating_vectors.shape)
             self.factory.feedback.fit_for_bad(bad_rating_vectors, bad_ratings['question_answer_id'])
 
@@ -98,7 +98,6 @@ class ReplyController(BaseCls):
 
         similarities = cosine_similarity(vectors, query_vector)
         similarities = similarities.flatten()
-        data_frame = data_frame[['question', 'question_answer_id']]
         data_frame['similarity'] = similarities
         return data_frame
 

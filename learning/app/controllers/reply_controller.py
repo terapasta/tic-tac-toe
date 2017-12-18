@@ -42,6 +42,7 @@ class ReplyController(BaseCls):
 
         logger.info('after action')
         results = self.factory.core.after_reply(text, data_frame)
+        results['question_answer_id'] = results['question_answer_id'].astype(int)
 
         results = results.to_dict('records')[:10]
 

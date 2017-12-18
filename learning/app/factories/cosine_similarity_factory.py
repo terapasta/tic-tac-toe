@@ -21,10 +21,6 @@ class CosineSimilarityFactory(BaseFactory):
         self.estimator = PassEstimator.new(datasource=self.datasource)
         self.__core = CosineSimilarity.new(
             bot=bot,
-            tokenizer=self.tokenizer,
-            vectorizer=self.vectorizer,
-            reducer=self.reducer,
-            normalizer=self.normalizer,
             datasource=self.datasource,
         )
         self.__feedback = feedback

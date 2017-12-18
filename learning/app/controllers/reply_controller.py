@@ -66,27 +66,28 @@ class ReplyController(BaseCls):
         logger.info('process good ratings')
         # TODO: ratingsのquestionとquestion_answersのquestionを区別する
         good_ratings = ratings.with_good_by_bot(self.bot.id)
-        good_ratings = self._get_similarity_from_rating(good_ratings, query_vector)
-
-        logger.info('feedback to query')
-        good_ratings = good_ratings[good_ratings['similarity'] > threshold]
-        logger.debug('good ratings count: {}'.format(len(good_ratings)))
         if len(good_ratings) > 0:
-            good_rating_vectors = self._transform_texts_to_vector(good_ratings['original_question'])
-            logger.debug(good_rating_vectors.shape)
-            self.factory.feedback.fit_for_good(good_rating_vectors, good_ratings['question_answer_id'])
+            good_ratings = self._get_similarity_from_rating(good_ratings, query_vector)
+            logger.info('feedback to query')
+            good_ratings = good_ratings[good_ratings['similarity'] > threshold]
+            logger.debug('good ratings count: {}'.format(len(good_ratings)))
+            if len(good_ratings) > 0:
+                good_rating_vectors = self._transform_texts_to_vector(good_ratings['original_question'])
+                logger.debug(good_rating_vectors.shape)
+                self.factory.feedback.fit_for_good(good_rating_vectors, good_ratings['question_answer_id'])
 
         logger.info('process bad ratings')
         bad_ratings = ratings.with_bad_by_bot(self.bot.id)
-        bad_ratings = self._get_similarity_from_rating(bad_ratings, query_vector)
-
-        logger.info('feedback to query')
-        bad_ratings = bad_ratings[bad_ratings['similarity'] > threshold]
-        logger.debug('bad ratings count: {}'.format(len(bad_ratings)))
         if len(bad_ratings) > 0:
-            bad_rating_vectors = self._transform_texts_to_vector(bad_ratings['original_question'])
-            logger.debug(bad_rating_vectors.shape)
-            self.factory.feedback.fit_for_bad(bad_rating_vectors, bad_ratings['question_answer_id'])
+            bad_ratings = self._get_similarity_from_rating(bad_ratings, query_vector)
+
+            logger.info('feedback to query')
+            bad_ratings = bad_ratings[bad_ratings['similarity'] > threshold]
+            logger.debug('bad ratings count: {}'.format(len(bad_ratings)))
+            if len(bad_ratings) > 0:
+                bad_rating_vectors = self._transform_texts_to_vector(bad_ratings['original_question'])
+                logger.debug(bad_rating_vectors.shape)
+                self.factory.feedback.fit_for_bad(bad_rating_vectors, bad_ratings['question_answer_id'])
 
         logger.info('reflect feedback')
         reflected_features = self.factory.feedback.transform_query_vector(query_vector)

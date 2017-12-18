@@ -3801,7 +3801,7 @@ var BadReasonForm = function (_Component) {
         { title: 'Bad\u8A55\u4FA1\u306E\u7406\u7531\u3092\u6559\u3048\u3066\u3044\u305F\u3060\u3051\u307E\u305B\u3093\u304B\uFF1F', fadeIn: true },
         isSelectedOther && _react2.default.createElement('textarea', {
           className: 'form-control',
-          placeholder: '\u4F8B\uFF1A\u898B\u5F53\u9055\u3044\u306E\u56DE\u7B54\u3060\u3063\u305F',
+          placeholder: '\u305D\u306E\u4ED6\u306E\u5185\u5BB9\u3092\u6559\u3048\u3066\u304F\u3060\u3055\u3044',
           value: text,
           onChange: function onChange(e) {
             return _this3.setState({ text: e.target.value });

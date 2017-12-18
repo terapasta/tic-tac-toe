@@ -69,7 +69,7 @@ class BadReasonForm extends Component {
         {isSelectedOther && (
           <textarea
             className="form-control"
-            placeholder="例：見当違いの回答だった"
+            placeholder="その他の内容を教えてください"
             value={text}
             onChange={e => this.setState({ text: e.target.value })}
             disabled={isSubmitting}

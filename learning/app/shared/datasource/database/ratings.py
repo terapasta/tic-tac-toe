@@ -63,7 +63,7 @@ class Ratings(BaseCls):
             ratings.*,
             question_answers.question as original_question
         from ratings
-            left join question_answers
+            right join question_answers
             on ratings.question_answer_id = question_answers.id
         where
             ratings.bot_id = %(bot_id)s and

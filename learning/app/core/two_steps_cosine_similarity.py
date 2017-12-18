@@ -30,7 +30,7 @@ class TwoStepsCosineSimilarity(BaseCore):
         self.question_answers = datasource.question_answers
         self.ratings = datasource.ratings
 
-    def fit(self, x, y):
+    def fit(self, x, y, labels):
         logger.info('learn vocabulary with question_id')
         question_answers = self.question_answers.all()
         ratings = self.ratings.all()

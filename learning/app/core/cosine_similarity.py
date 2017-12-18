@@ -15,10 +15,11 @@ class CosineSimilarity(BaseCore):
         self.persistence = datasource.persistence
         self.data = self.persistence.load(self.dump_key)
 
-    def fit(self, x, y):
+    def fit(self, x, y, labels):
         self.data = {
           'x': x,
           'y': y,
+          'labels': labels,
         }
         self.persistence.dump(self.data, self.dump_key)
 
@@ -29,6 +30,7 @@ class CosineSimilarity(BaseCore):
         similarities = similarities.flatten()
         result = pd.DataFrame({
             'question_answer_id': self.data['y'],
+            'question': self.data['labels'],
             'probability': similarities
         })
         return result

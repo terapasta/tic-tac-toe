@@ -8,3 +8,6 @@ class LearningParameters(BaseCls):
     def feedback_parameters(self, bot_id, algorithm):
         # TODO: fileをでパラメータを設定できるようにする
         return {}
+
+    def feedback_threshold(self, bot_id):
+        return 0.1

@@ -9,6 +9,13 @@
 「<%= @bot_message.body %>」
 (！)よくない評価
 
+<%- if @bot_message.bad_reasons.any? -%>
+理由
+<%- @bot_message.bad_reasons.each do |br| -%>
+・<%= br.body %>
+<%- end -%>
+
+<%- end -%>
 このチャットの日時：<%= @guest_message.created_at %>
 
 この質問に対応できるように以下のページから登録と学習をしてみてください。

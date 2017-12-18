@@ -7,7 +7,7 @@ class SendBadRateMailService
   def send_mail
     return if @current_user
     if @message.bot? && @message.rating&.bad?
-      BadRateMailer.create(@message).deliver_later
+      BadRateMailer.create(@message).deliver_later(wait: 3.minutes)
     end
   end
 end

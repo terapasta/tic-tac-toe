@@ -3,7 +3,6 @@ class QuestionAnswer::CsvImporter
   ModeEncForSJIS = 'rb:Shift_JIS:UTF-8'
 
   class EmptyQuestionError < StandardError; end
-  class EmptyAnswerError < StandardError; end
 
   attr_reader :succeeded, :current_row, :error_message
 
@@ -48,8 +47,6 @@ class QuestionAnswer::CsvImporter
     @succeeded = true
   rescue EmptyQuestionError => e
     @error_message = '質問を入力してください'
-  rescue EmptyAnswerError => e
-    @error_message = '回答を入力してください'
   rescue => e
     Rails.logger.debug(e)
     Rails.logger.debug(e.backtrace.join("\n"))
@@ -134,7 +131,6 @@ class QuestionAnswer::CsvImporter
 
     bot_had = @bot.question_answers.detect{ |qa| qa.id == id }.present?
     fail EmptyQuestionError.new if q.blank?
-    fail EmptyAnswerError.new if a.blank?
 
     {
       key: bot_had ? id : "#{q}-#{a}",

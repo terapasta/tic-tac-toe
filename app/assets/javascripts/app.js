@@ -9,7 +9,6 @@
 
 window.jQuery(function($) {
   $('[data-toggle="tooltip"]').tooltip();
-  $('[data-toggle="popover"]').popover()
 
   $('select[data-role="url-switcher"]').on('change', function() {
     var $select = $(this);
@@ -38,4 +37,6 @@ window.jQuery(function($) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
+
+  $('[data-toggle="popover"]').popover()
 });

@@ -33,6 +33,7 @@ Rails.application.configure do
   config.public_file_server.enabled = true
 
   # Compress JavaScripts and CSS.
+  config.assets.compress = true
   config.assets.js_compressor = NoCompression.new
   # config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass

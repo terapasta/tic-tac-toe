@@ -32,7 +32,7 @@
 
       - if @error_row.present?
         .form-group
-          .alert.alert-danger #{ @error_row }行目でエラーが発生しました
+          .alert.alert-danger #{ @error_row }行目でエラーが発生しました: #{@error_message}
 
       .form-group
         = file_field_tag :file, label: 'ファイル', class: 'form-control'

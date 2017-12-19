@@ -40,10 +40,6 @@
 #   rake 'twitter:clone_tweets'
 # end
 
-every 1.day, at: 'am 2:58' do
-  rake 'learn:tag'
-end
-
 every 1.day, at: 'am 8:00' do
   rake 'organization:check_finising_trial'
 end

@@ -26,7 +26,7 @@ header
                 = link_to 'システム辞書', admin_word_mappings_path, class: 'dropdown-item'
                 - if @bot.present?
                   = link_to '精度テスト', admin_bot_accuracy_test_cases_path(@bot), class: 'dropdown-item'
-                = link_to '全bot精度テスト実行', admin_accuracy_test_cases_execution_path, method: :post, class: 'dropdown-item'
+                = link_to '全bot精度テスト実行', admin_accuracy_test_cases_execution_path, method: :post, class: 'dropdown-item', data: {confirm: "実行します"}
                 = link_to 'CloudWatch Logs', 'https://ap-northeast-1.console.aws.amazon.com/cloudwatch/home?region=ap-northeast-1#logs:prefix=/var/www/donusagi-bot', target: '_blank', class: 'dropdown-item'
 
       - else

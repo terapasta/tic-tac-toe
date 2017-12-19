@@ -4,7 +4,8 @@ module QuestionAnswersCsvGeneratable
   include CsvGeneratable
 
   def to_csv(encoding: :utf8)
-    super(encoding: encoding.to_sym) do |csv, item|
+    headers = [:id, :topic_tags, :question, :answer, :decision_branches].map{|x| QuestionAnswer.human_attribute_name x}
+    super(encoding: encoding.to_sym, header_columns: headers) do |csv, item|
       recursive_put_rows_to_csv(csv,
         [
           item.id,

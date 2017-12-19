@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    attributes:
+      question_answer:
+        id: ID
+        topic_tags: トピックタグ
+        question: 質問
+        answer: 回答
+        decision_branches: 選択肢

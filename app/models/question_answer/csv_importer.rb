@@ -58,7 +58,7 @@ class QuestionAnswer::CsvImporter
   def parse
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
     CSV.new(raw_data).drop(1).each_with_index.inject({}) { |out, (row, index)|
-      @current_row = index + 1
+      @current_row = index + 2
       data = detect_or_initialize_by_row(row)
 
       decision_branches = Array(out[data[:key]].try(:dig, :decision_branches_attributes))

@@ -26,7 +26,7 @@ class HybridClassification(BaseCore):
         self.bot_question_answers_data = datasource.question_answers.by_bot(self.bot.id)
         self.bot_ratings_data = datasource.ratings.by_bot(self.bot.id)
 
-    def fit(self, x, y):
+    def fit(self, x, y, labels):
         self.estimator.fit(x, y)
 
     def predict(self, question_features):

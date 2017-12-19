@@ -62,6 +62,7 @@ class LearnController(BaseCls):
         self.factory.core.fit(
                 bot_features,
                 all_answer_ids,
+                all_questions,
             )
 
     def _evaluate(self):

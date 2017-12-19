@@ -42,9 +42,10 @@ class ReplyController(BaseCls):
 
         logger.info('after action')
         results = self.factory.core.after_reply(text, data_frame)
-        results['question_answer_id'] = results['question_answer_id'].astype(int)
 
-        results = results.to_dict('records')[:10]
+        # Note: to_dictだとすべてのカラムがfloatになってしまうためリスト内包表記で変換している
+        results = [{col: getattr(row, col) for col in results} for row in results.itertuples()]
+        results = results[:10]
 
         for row in results:
             logger.debug(row)

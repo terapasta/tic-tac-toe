@@ -8,7 +8,6 @@
 //= require app/selection-checkboxes
 
 window.jQuery(function($) {
-  console.log('test')
   $('[data-toggle="tooltip"]').tooltip();
 
   $('select[data-role="url-switcher"]').on('change', function() {

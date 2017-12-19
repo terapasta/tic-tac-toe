@@ -83,7 +83,8 @@
     basic_auth_pass: ''
   when: stage == 'production'
 
-- template:
+- name: set env vars
+  template:
     src: .env.j2
     dest: /var/www/donusagi-bot/shared/.env
 

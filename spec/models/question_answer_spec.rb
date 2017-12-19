@@ -32,7 +32,7 @@ RSpec.describe QuestionAnswer do
         result = importing.call
         expect(result).to be_an_instance_of(QuestionAnswer::CsvImporter)
         expect(result.succeeded).to_not be
-        expect(result.current_row).to eq(2)
+        expect(result.current_row).to eq(3)
       end
 
       it 'not creates QuestionAnswer record' do

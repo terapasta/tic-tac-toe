@@ -1,9 +1,9 @@
-import React, { createElement } from "react";
-import { render } from "react-dom";
-import { Provider, connect } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import createLogger from "redux-logger";
+import React, { createElement } from 'react'
+import { render } from 'react-dom'
+import { Provider, connect } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
 
 import getData from "./getData";
 

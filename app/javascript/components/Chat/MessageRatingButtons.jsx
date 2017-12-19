@@ -48,13 +48,13 @@ export default class MessageRatingButtons extends Component {
     return (
       <span>
         <div className="chat-message__rating-title">この返答を評価してください</div>
-        <a href="#" className={goodClassName}
+        <div
+          className={goodClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Good)}>
           <i className={classNames('material-icons', { scaleUp: isAnimatingLeft })}>thumb_up</i>
-        </a>
+        </div>
         {" "}
-        <a
-          href="#"
+        <div
           className={badClassName}
           ref={node => this.badButton = node}
           onClick={this.onClick.bind(this, c.Ratings.Bad)}
@@ -66,7 +66,7 @@ export default class MessageRatingButtons extends Component {
               onCancel={this.handleCancelBadReason}
             />
           )}
-        </a>
+        </div>
       </span>
     );
   }

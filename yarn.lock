@@ -6607,9 +6607,9 @@ react-linkify@^0.2.0:
     prop-types "^15.5.8"
     tlds "^1.57.0"
 
-react-loading@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-0.0.9.tgz#e9fba6948915ba7742a508193828b6c73eb04956"
+react-loading@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-1.0.3.tgz#48c2cc9a83916853e4c166dd2e4ee07884823b68"
 
 react-nl2br@^0.2.0:
   version "0.2.0"

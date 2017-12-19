@@ -101,7 +101,7 @@ export default class ChatApp extends Component {
           isEnableGuestUserRegistration,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
-        <ChatArea innerRef={node => this.area = node}>
+        <ChatArea innerref={node => this.area = node}>
           <ChatFlashMessage flashMessage={flashMessage} />
           <ChatReadMore {...assign({
             isManager,

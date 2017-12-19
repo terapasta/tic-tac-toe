@@ -53,16 +53,30 @@ export const decisionBranchesRepoType = shape({
 })
 
 function treePropType(baseShape, childKey) {
+  const lazyType = lazyFunction(() => arrayOf(type))
   const nodeShape = assign({}, baseShape, {
     [childKey]: arrayOf(lazyType),
   })
   const type = shape(nodeShape)
-  const lazyType = lazyFunction(() => arrayOf(type))
   return lazyType
 }
 
-function lazyFunction(f) {
-  return function (...args) {
-    return f().apply(this, args)
+// function lazyFunction(f) {
+//   return function (...args) {
+//     return f().apply(this, args)
+//   }
+// }
+
+function lazyFunction(f, _lazyCheckerHasSeen) {
+  return function () {
+    if (_lazyCheckerHasSeen !== undefined &&
+        _lazyCheckerHasSeen.indexOf(arguments[0]) !== -1) {
+      return true;
+    }
+
+    if (_lazyCheckerHasSeen !== undefined) {
+      _lazyCheckerHasSeen.push(arguments[0])
+    }
+    return f().apply(this, arguments)
   }
 }

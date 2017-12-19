@@ -34,52 +34,52 @@ import DecisionBranchAnswerForm from './components/DecisionBranchAnswerForm'
 import AddingNode from './components/AddingNode'
 
 function adjustHeight(targetRef) {
-  const targetNode = findDOMNode(targetRef);
-  const offset = getOffset(targetNode);
-  const winHeight = window.innerHeight;
-  const height = winHeight - offset.top - 20;
-  targetNode.style.height = `${height}px`;
+  const targetNode = findDOMNode(targetRef)
+  const offset = getOffset(targetNode)
+  const winHeight = window.innerHeight
+  const height = winHeight - offset.top - 20
+  targetNode.style.height = `${height}px`
 }
 
 class ConversationTree extends Component {
   constructor(props) {
-    super(props);
-    bindAll(this, ['handleWindowResize']);
+    super(props)
+    bindAll(this, ['handleWindowResize'])
   }
 
   componentDidMount() {
-    adjustHeight(this.refs.masterDetailPanel);
-    window.addEventListener('resize', this.handleWindowResize);
+    adjustHeight(this.refs.masterDetailPanel)
+    window.addEventListener('resize', this.handleWindowResize)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.handleWindowResize)
   }
 
   handleWindowResize() {
-    adjustHeight(this.refs.masterDetailPanel);
+    adjustHeight(this.refs.masterDetailPanel)
   }
 
   onClickNode(type, node) {
-    const { dispatch } = this.props;
-    let nodeKey;
+    const { dispatch } = this.props
+    let nodeKey
     switch(type) {
       case 'question':
-        nodeKey = questionNodeKey(node.id);
-        break;
+        nodeKey = questionNodeKey(node.id)
+        break
       case 'answer':
-        nodeKey = answerNodeKey(node.id);
-        break;
+        nodeKey = answerNodeKey(node.id)
+        break
       case 'decisionBranch':
-        nodeKey = decisionBranchNodeKey(node.id);
-        break;
+        nodeKey = decisionBranchNodeKey(node.id)
+        break
       case 'decisionBranchAnswer':
-        nodeKey = decisionBranchAnswerNodeKey(node.id);
-        break;
-      default: break;
+        nodeKey = decisionBranchAnswerNodeKey(node.id)
+        break
+      default: break
     }
-    dispatch(actions.setActiveItem({ type, nodeKey, node }));
-    dispatch(actions.toggleNode({ nodeKey }));
+    dispatch(actions.setActiveItem({ type, nodeKey, node }))
+    dispatch(actions.toggleNode({ nodeKey }))
   }
 
   render() {
@@ -90,7 +90,7 @@ class ConversationTree extends Component {
       decisionBranchesRepo,
       openedNodes,
       activeItem,
-    } = this.props;
+    } = this.props
 
     return (
       <MasterDetailPanel title="会話ツリー" ref="masterDetailPanel">
@@ -203,18 +203,18 @@ class ConversationTree extends Component {
           )}
         </Detail>
       </MasterDetailPanel>
-    );
+    )
   }
 }
 
-ConversationTree.componentName = 'ConversationTree';
+ConversationTree.componentName = 'ConversationTree'
 
 ConversationTree.propTypes = {
   questionsTree: questionsTreeType.isRequired,
   questionsRepo: questionsRepoType.isRequired,
   decisionBranchesRepo: decisionBranchesRepoType.isRequired,
   openedNodes: openedNodesType.isRequired,
-  activeItem: activeItemType.isRequired,
-};
+  activeItem: activeItemType.isRequired
+}
 
-export default ConversationTree;
+export default ConversationTree

@@ -73,7 +73,7 @@
     "react-dom": "^16.2.0",
     "react-highlight-words": "^0.8.1",
     "react-linkify": "^0.2.0",
-    "react-loading": "^0.0.9",
+    "react-loading": "^1.0.3",
     "react-nl2br": "^0.2.0",
     "react-radio-group": "^3.0.1",
     "react-redux": "^5.0.6",

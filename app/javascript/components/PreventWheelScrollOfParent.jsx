@@ -35,12 +35,16 @@ class PreventWheelScrollOfParent extends Component {
     const resolvedProps = assign({}, customProps, {
       ref: node => {
         this.wrapper = node
-        if (typeof customProps.innerRef === 'function') {
-          customProps.innerRef(node)
+        const { innerref, innerRef } = customProps
+        if (typeof innerref === 'function') {
+          innerref(node)
+        } else if (typeof innerRef === 'function') {
+          innerRef(node)
         }
       },
       onWheel: this.onWheelWrapper,
     });
+    delete resolvedProps.innerref
 
     return React.createElement(type, resolvedProps, children);
   }
@@ -50,6 +54,7 @@ PreventWheelScrollOfParent.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
+    PropTypes.array
   ]).isRequired,
   type: PropTypes.string,
 };

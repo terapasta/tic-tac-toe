@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213035400) do
+ActiveRecord::Schema.define(version: 20171214011732) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 20171213035400) do
     t.integer "file_size", default: 0
     t.integer "question_answer_id"
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
+  end
+
+  create_table "bad_reasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "message_id", null: false
+    t.text "body"
+    t.integer "guest_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "bot_chatwork_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

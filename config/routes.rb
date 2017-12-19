@@ -100,6 +100,7 @@ Rails.application.routes.draw do
               put :nothing
             end
           end
+          resources :bad_reasons, only: [:create]
         end
         resources :trainings, only: [:create]
         post 'choices/:id', to: 'choices#create', as: :choices

@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from "react";
-import { findDOMNode } from "react-dom";
 import classNames from "classnames";
 import values from "lodash/values";
+import isEmpty from "is-empty";
 
 import * as c from "./constants";
+import BadReasonForm from './bad-reason-form';
 
 const ButtonClasses = {
   Good: "chat-message__rating-button good",
@@ -19,26 +20,51 @@ export default class MessageRatingButtons extends Component {
     };
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      isAnimatingLeft: false,
+      isAnimatingRight: false,
+      isShowBadReasonForm: false
+    }
+    this.handleCancelBadReason = this.handleCancelBadReason.bind(this)
+  }
+
   render() {
-    const { rating } = this.props;
+    const { rating, messageId } = this.props;
     const goodClassName = classNames(ButtonClasses.Good, {
       active: rating === c.Ratings.Good,
     });
     const badClassName = classNames(ButtonClasses.Bad, {
       active: rating === c.Ratings.Bad,
     });
+    const {
+      isAnimatingLeft,
+      isAnimatingRight,
+      isShowBadReasonForm
+    } = this.state
 
     return (
       <span>
         <div className="chat-message__rating-title">この返答を評価してください</div>
         <a href="#" className={goodClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Good)}>
-          <i className="material-icons">thumb_up</i>
+          <i className={classNames('material-icons', { scaleUp: isAnimatingLeft })}>thumb_up</i>
         </a>
         {" "}
-        <a href="#" className={badClassName}
-          ref="root" onClick={this.onClick.bind(this, c.Ratings.Bad)}>
-          <i className="material-icons">thumb_down</i>
+        <a
+          href="#"
+          className={badClassName}
+          ref={node => this.badButton = node}
+          onClick={this.onClick.bind(this, c.Ratings.Bad)}
+        >
+          <i className={classNames('material-icons', { scaleUp: isAnimatingRight })}>thumb_down</i>
+          {!isEmpty(this.badButton) && isShowBadReasonForm && (
+            <BadReasonForm
+              messageId={messageId}
+              onCancel={this.handleCancelBadReason}
+            />
+          )}
         </a>
       </span>
     );
@@ -48,10 +74,33 @@ export default class MessageRatingButtons extends Component {
     e.preventDefault();
     const { messageId, rating, onChangeRatingTo } = this.props;
 
+    switch (newRating) {
+      case c.Ratings.Good:
+        this.setState({ isAnimatingLeft: true })
+        break
+      case c.Ratings.Bad:
+        this.setState({ isAnimatingRight: true })
+        break
+      default: break
+    }
+    setTimeout(() => {
+      this.setState({
+        isAnimatingLeft: false,
+        isAnimatingRight: false,
+      })
+      if (newRating !== rating && newRating === c.Ratings.Bad) {
+        this.setState({ isShowBadReasonForm: true })
+      }
+    }, 500)
+
     if (newRating === rating) {
       onChangeRatingTo(c.Ratings.Nothing, messageId);
     } else {
       onChangeRatingTo(newRating, messageId);
     }
+  }
+
+  handleCancelBadReason () {
+    this.setState({ isShowBadReasonForm: false })
   }
 }

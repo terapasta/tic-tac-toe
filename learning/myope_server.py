@@ -1,5 +1,6 @@
 from concurrent import futures
 import signal
+import sys
 import time
 import grpc
 
@@ -107,14 +108,14 @@ def on_sigsegv(signum, frame):
     logger.error('signal segmentation fault!!!')
     logger.error(signum)
     logger.error(traceback.format_stack(frame))
-    raise ValueError('segmentation fault!!!')
+    sys.exit()
 
 
 def on_abort(signum, frame):
     logger.error('signal abort!!!')
     logger.error(signum)
     logger.error(traceback.format_stack(frame))
-    raise ValueError('abort!!!')
+    sys.exit()
 
 
 if __name__ == '__main__':

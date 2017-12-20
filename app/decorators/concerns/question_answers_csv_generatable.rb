@@ -4,7 +4,7 @@ module QuestionAnswersCsvGeneratable
   include CsvGeneratable
 
   def to_csv(encoding: :utf8)
-    headers = [:id, :topic_tags, :question, :answer].map{|x| QuestionAnswer.human_attribute_name x}
+    headers = [:id, :topic_tags, :question, :answer].map{|x| I18n.t("question_answer.csv_headers.#{x}") }
     super(encoding: encoding.to_sym, header_columns: headers) do |csv, item|
       csv << [
         item.id,

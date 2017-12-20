@@ -1,3 +1,0 @@
-- template:
-    src: slappy.conf.j2
-    dest: /etc/init/slappy.conf

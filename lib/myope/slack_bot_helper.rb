@@ -14,7 +14,7 @@ class SlackBotHelper
         text: (x.result.accuracy * 100).to_s + '%',
         color: score_color(x.result.accuracy),
       }
-    }.to_json
+    }
   end
 
   def score_color(score)

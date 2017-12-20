@@ -174,7 +174,7 @@ class Bot {
       .filter(it => !/image/.test(it.fileType))
       .map(it => (new HeroCard(session)
         .title(decodeURIComponent(path.basename(it.file.url)))
-        .buttons([CardAction.openUrl(session, s3 + it.file.url, 'ダンロード')])))
+        .buttons([CardAction.openUrl(session, s3 + it.file.url, 'ダウンロード')])))
 
     const msg = new Message(session)
       .attachmentLayout(AttachmentLayout.carousel)

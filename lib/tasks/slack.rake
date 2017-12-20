@@ -1,60 +1,14 @@
-require 'slack'
-
 namespace :slack do
+  task notify_accuracy: :environment do
+    include ReplyTestable
 
-  task listen: :environment do
-    Slack.configure do |config|
-      config.token = ENV['SLACK_API_TOKEN']
-    end
+    helper = SlackBotHelper.new
+    attachments = helper.generate_attachments(all_bot_accuracy_test!)
+    notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
+    notifier.post text: '定期投稿です。 各ボットの正答率', channel: '#dev', attachments: attachments
+  end
 
-    auth = Slack.auth_test
-    user_id = auth['user_id']
-
-    client = Slack.realtime
-
-    client.on :hello do
-      puts 'Successfully connected.'
-    end
-
-    client.on :message do |data|
-      if data['subtype'] != 'bot_message' && data['text'].include?("@#{user_id}") && data['user'] != user_id
-        text = data['text'].delete("<@#{user_id}> ")
-
-        # endpoint = Rails.application.routes.url_helpers.api_v1_messages_url  # production環境でAPI経由のアクセスが出来ない
-        # # endpoint = 'https://app.my-ope.net/api/v1/messages'
-        # response = HTTP.headers('Content-Type' => "application/json")
-        #  .post(endpoint, json: { message: text, bot_id: 1 })  # HACK bot_idを指定できるようにする
-        # messages = response.parse.with_indifferent_access[:messages]
-        # messages.each do |message|
-        #   body = "#{message[:body]}"
-        #
-        #   params = {
-        #     token: ENV['SLACK_API_TOKEN'],
-        #     channel: data['channel'],
-        #     text: "<@#{data['user']}> #{body}",
-        #     as_user: true,
-        #   }
-        #   Slack.chat_postMessage params
-        # end
-
-        # HACK replyableのreceive_and_reply!メソッドを呼び出す必要がある
-        # chat = Chat.create(bot_id: 1, guest_key: SecureRandom.hex(64))
-        # message = chat.messages.build(body: text, speaker: 'guest')
-        # messages = receive_and_reply!(chat, message)
-        #
-        # messages.each do |message|
-        #   body = "#{message[:body]}"
-        #   params = {
-        #     token: ENV['SLACK_API_TOKEN'],
-        #     channel: data['channel'],
-        #     text: "<@#{data['user']}> #{body}",
-        #     as_user: true,
-        #   }
-        #   Slack.chat_postMessage params
-        # end
-      end
-    end
-
-    client.start
+  def session
+    { states: {} }
   end
 end

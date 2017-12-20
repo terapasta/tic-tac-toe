@@ -58,7 +58,7 @@ class QuestionAnswer::CsvImporter
   def parse
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
     CSV.new(raw_data).drop(1).each_with_index.inject({}) { |out, (row, index)|
-      @current_row = index + 2
+      @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
       data = detect_or_initialize_by_row(row)
 
       decision_branches = Array(out[data[:key]].try(:dig, :decision_branches_attributes))

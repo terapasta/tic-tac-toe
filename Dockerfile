@@ -10,10 +10,10 @@ RUN apt-get update -qq \
                     mecab-ipadic \
                     mecab-ipadic-utf8 \
                     mecab-utils \
-                    nodejs \
-                    npm \
-                    nodejs-legacy \
     && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+    && apt-get install -y nodejs
 
 WORKDIR /tmp
 RUN apt-get update \

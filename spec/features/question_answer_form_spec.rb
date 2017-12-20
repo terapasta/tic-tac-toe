@@ -48,8 +48,6 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
           visit "/bots/#{bot.id}/question_answers/new"
           find('[name="question_answer[question]"]').set('sample question')
           find('[name="question_answer[answer]"]').set('sample answer body')
-          # fill_in_input name: 'question_answer[question]', value: 'sample question'
-          # fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
           click_link '添付ファイルを追加'
           within '#answer-files' do
             locator = all('input[type="file"]').first['name']

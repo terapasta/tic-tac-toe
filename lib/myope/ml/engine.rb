@@ -41,10 +41,6 @@ class Ml::Engine
     @client.call(:predict_tags, bodies)
   end
 
-  def learn_tag_model
-    @client.call(:learn_tag_model)
-  end
-
   private
     def log_error(e)
       ExceptionNotifier.notify_exception e

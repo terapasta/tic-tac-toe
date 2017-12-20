@@ -40,7 +40,7 @@ RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
       expect{
         visit bot_topic_tags_path(bot)
         click_on 'トピックタグを追加'
-        fill_in_input selector: '[type="text"][name^="bot[topic_tags_attributes]"]', value: topic_tag_attrs[:name]
+        find('[type="text"][name^="bot[topic_tags_attributes]"]').set(topic_tag_attrs[:name])
         click_on '更新する'
       }.to change(TopicTag, :count).by(1)
     end
@@ -55,7 +55,7 @@ RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
     xscenario 'Delete item' do
       visit bot_topic_tags_path(bot)
       click_on 'トピックタグを追加'
-      fill_in_input selector: '[type="text"][name^="bot[topic_tags_attributes]"]', value: topic_tag_attrs[:name]
+      find('[type="text"][name^="bot[topic_tags_attributes]"]').set(topic_tag_attrs[:name])
       click_on '更新する'
       expect{
         click_on '削除'
@@ -67,9 +67,9 @@ RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
     scenario 'Update item'  do
       visit bot_topic_tags_path(bot)
       click_on 'トピックタグを追加'
-      fill_in_input selector: '[type="text"][name^="bot[topic_tags_attributes]"]', value: topic_tag_attrs[:name]
+      find('[type="text"][name^="bot[topic_tags_attributes]"]').set(topic_tag_attrs[:name])
       click_on '更新する'
-      fill_in_input selector: '[type="text"][name^="bot[topic_tags_attributes]"]', value: 'fugafuga'
+      find('[type="text"][name^="bot[topic_tags_attributes]"]').set('fugafuga')
       click_on '更新する'
       expect(page).to have_content '更新しました'
       updated_topic_tag = TopicTag.last

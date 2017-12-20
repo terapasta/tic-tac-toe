@@ -51,8 +51,10 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
 
   scenario 'creates question with answer'  do
     find('#adding').click
-    fill_in_input name: 'question-question', value: 'new question'
-    fill_in_input name: 'question-answer', value: 'new answer'
+    find('[name=question-question]').set('new question')
+    find('[name=question-answer]').set('new answer')
+    # fill_in_input name: 'question-question', value: 'new question'
+    # fill_in_input name: 'question-answer', value: 'new answer'
     click_link '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('new question')
@@ -64,7 +66,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find("#question-#{question_answers.first.id}").click
     find("#answer-#{question_answers.first.id}").click
     find('#add-decision-branch-button').click
-    fill_in_input name: 'decision-branch-body', value: 'new decision branch'
+    find('[name=decision-branch-body]').set('new decision branch')
+    # fill_in_input name: 'decision-branch-body', value: 'new decision branch'
     find('span.btn.btn-success').click
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
@@ -74,7 +77,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   scenario 'updates answer' do
     find("#question-#{question_answers.first.id}").click
     find("#answer-#{question_answers.first.id}").click
-    fill_in_input name: 'answer-body', value: 'updated answer'
+    find('[name=answer-body]').set('updated answer')
+    # fill_in_input name: 'answer-body', value: 'updated answer'
     click_link '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated answer')
@@ -88,7 +92,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
       find('.btn').click
     end
     within "#decision-branch-item-#{decision_branches.first.id}" do
-      fill_in_input name: 'decision-branch-body', value: 'updated decision branch'
+      find('[name=decision-branch-body]').set('updated decision branch')
+      # fill_in_input name: 'decision-branch-body', value: 'updated decision branch'
       find('.btn-success').click
     end
     within '.master-detail-panel__master' do

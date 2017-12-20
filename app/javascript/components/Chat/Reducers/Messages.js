@@ -147,6 +147,8 @@ export default handleActions({
       sliceIndex = 1
     }
 
+    initialQuestionsSection.isShowSimilarQuestionAnswers = true
+
     return assign({}, state, { classifiedData: [
       data[0],
       initialQuestionsSection,

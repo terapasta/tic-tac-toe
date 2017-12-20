@@ -18,8 +18,11 @@ class QuestionAnswers::SelectionsController < ApplicationController
           q: params[:q],
           page: @current_page,
           per_page: @per_page,
+          without_ids: Array(@bot.selected_question_answers)
         )
         @question_answers = @q.result
+        @selected_question_answers = current_page == 1 ?
+          @bot.selected_question_answers.to_a : []
       end
 
       format.json do

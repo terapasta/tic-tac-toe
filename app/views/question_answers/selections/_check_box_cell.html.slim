@@ -1,0 +1,6 @@
+td style="width: 80px;"
+  label
+    input type="checkbox" checked=is_selected data-role="select-question-answer" data-question-answer-id=question_answer.id data-event="choice first question" data-bot-id=bot.id
+    = space
+    span.label class=("label-#{is_selected ? 'success' : 'default'}") data-role="select-question-answer-label" data-question-answer-id=question_answer.id
+      = is_selected ? "選択済" : "未選択"

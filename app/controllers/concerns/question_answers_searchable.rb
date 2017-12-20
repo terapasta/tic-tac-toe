@@ -6,15 +6,16 @@ module QuestionAnswersSearchable
   end
 
   private
-    def search_question_answers(bot:, topic_id:, keyword:, q:, page:, per_page:)
-      bot.question_answers
+    def search_question_answers(bot:, topic_id:, keyword:, q:, page:, per_page:, without_ids: [])
+      result = bot.question_answers
         .topic_tag(topic_id)
         .includes(:decision_branches)
         .order(created_at: :desc)
         .page(page)
         .per(per_page)
         .keyword(keyword)
-        .search(q)
+      result = result.where.not(id: without_ids) if without_ids.present?
+      result.search(q)
     end
 
     def sorting_url(condition)

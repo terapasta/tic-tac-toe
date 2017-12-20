@@ -13,7 +13,8 @@ RUN apt-get update -qq \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs \
+    && npm install -g yarn
 
 WORKDIR /tmp
 RUN apt-get update \

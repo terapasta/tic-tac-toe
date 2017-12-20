@@ -7020,6 +7020,8 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _define
     sliceIndex = 1;
   }
 
+  initialQuestionsSection.isShowSimilarQuestionAnswers = true;
+
   return (0, _assign2.default)({}, state, { classifiedData: [data[0], initialQuestionsSection].concat(_toConsumableArray(data.slice(sliceIndex))) });
 }), _handleActions), {
   data: [],

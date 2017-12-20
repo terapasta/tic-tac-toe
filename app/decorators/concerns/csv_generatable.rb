@@ -1,10 +1,11 @@
 module CsvGeneratable
   extend ActiveSupport::Concern
 
-  def to_csv(encoding: :utf8, &block)
-    csv = CSV.generate(force_quotes: false, row_sep: "\r\n") { |csv|
+  def to_csv(encoding: :utf8, header_columns: [], &block)
+    csv = CSV.generate(force_quotes: false, row_sep: "\r\n") { |c|
+      c << header_columns
       object.find_each do |item|
-        block.call(csv, item)
+        block.call(c, item)
       end
     }
     convert_csv_encoding(csv, encoding)

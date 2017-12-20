@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    attributes:
+      message:
+        chat_id: チャットID
+        id: ID
+        speaker: 発言者
+        body: 発言
+        answer_failed: 回答不可
+        rating_level: 評価
+        created_at: 日時
+        user_agent: User agent

@@ -47,3 +47,14 @@
         = space 5
         .d-inline-block.align-top
           = submit_tag 'UTF-8でインポート', class: 'btn btn-success', data: { event: 'import with UTF_8' }
+
+      .card.mb-5: .card-body
+        .mb-2: strong テストデータ作成の注意点
+        .mb-2
+          |Excel等の表計算ソフトにてデータを作成する場合、<br />
+          |下図のように入力してファイルを作成してください。
+
+        = image_tag 'example-qa-csv.png', style: 'border: 1px solid #999;'
+        br
+        = link_to 'サンプルCSVをダウンロード', 'https://my-ope-assets.s3.amazonaws.com/myope-example-qa.csv', target: '_blank'
+

@@ -8,4 +8,8 @@ class AllBotAccuracyTestsJob < ApplicationJob
     notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
     notifier.post text: '現在の各ボットの正答率ですよ', channel: '#dev', attachments: attachments
   end
+
+  def session
+    { states: {} }
+  end
 end

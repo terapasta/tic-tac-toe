@@ -6,7 +6,7 @@ import includes from 'lodash/includes'
 import findLastIndex from 'lodash/findLastIndex'
 import takeRight from 'lodash/takeRight'
 import isEmpty from 'is-empty'
-import imagesLoaded from 'imagesLoaded'
+import imagesLoaded from 'imagesloaded'
 
 import Mixpanel, { makeEvent } from '../../analytics/mixpanel'
 

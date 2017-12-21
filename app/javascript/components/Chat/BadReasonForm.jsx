@@ -4,7 +4,7 @@ import toastr from 'toastr'
 import isEmpty from 'is-empty'
 import find from 'lodash/find'
 
-import Popover from './popover'
+import Popover from './Popover'
 import * as API from '../../api/chatBadReasons'
 
 const PreparedReasons = [

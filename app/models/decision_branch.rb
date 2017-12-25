@@ -2,6 +2,20 @@ class DecisionBranch < ApplicationRecord
   belongs_to :bot
   belongs_to :question_answer
 
+  # 自分からリンクする
+  has_one :answer_link
+  has_one :dest_question_answer,
+    through: :answer_link,
+    source: :answer_record,
+    source_type: 'QuestionAnswer'
+  has_one :dest_decision_branch,
+    through: :answer_link,
+    source: :answer_record,
+    source_type: 'DecisionBranch'
+
+  # 他のdecision_branchからの被リンク
+  has_many :answer_links, as: :answer
+
   has_many :child_decision_branches,
     class_name: 'DecisionBranch',
     foreign_key: :parent_decision_branch_id,

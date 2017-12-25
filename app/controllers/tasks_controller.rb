@@ -21,11 +21,8 @@ class TasksController < ApplicationController
   def update
     @task = @bot.tasks.find(params[:id])
     if @task.update(is_done: (params[:is_done] || true).to_bool)
-      if params[:redirect_path].present?
-        redirect_to params[:redirect_path]
-      else
-        redirect_to bot_tasks_path(@bot)
-      end
+      redirect_path = params[:redirect_path].presence || bot_tasks_path(@bot)
+      redirect_to redirect_path
     else
       redirect_to bot_tasks_path(@bot), alert: '対応状態を変更できませんでした'
     end

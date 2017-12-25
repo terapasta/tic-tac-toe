@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
 
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   authenticate :user do
     as :user do
       get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'

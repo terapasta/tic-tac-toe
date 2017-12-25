@@ -38,6 +38,9 @@ class QuestionAnswer::CsvImporter
         end
 
         if topic_tag_names.present?
+          topic_tag_names.each do |tag_name|
+            @bot.topic_tags.find_or_create_by!(name: tag_name)
+          end
           target_topic_tags = @bot.topic_tags.where(name: topic_tag_names)
           new_topic_tags = target_topic_tags - question_answer.topic_tags
           data = new_topic_tags.map{ |t| { topic_tag_id: t.id } }

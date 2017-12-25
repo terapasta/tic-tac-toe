@@ -91,5 +91,25 @@ RSpec.describe QuestionAnswer::CsvImporter do
       end
 
     end
+
+    context 'トピックタグのインポートをする場合' do
+      let(:csv_path) { 'sjis_valid-5_question_answers.csv' }
+      let(:import_options) do
+        { is_utf8: false }
+      end
+
+      let!(:topic_tag) do
+        create(:topic_tag, bot: bot, name: 'hoge')
+      end
+
+      it '正常終了すること' do
+        expect(subject.succeeded).to be_truthy
+      end
+
+      it '新しいトピックタグが登録されること' do
+        expect { subject }.to change(bot.topic_tags, :count).from(1).to(2)
+        expect(QuestionAnswer.first.topic_tags.count).to eq 2
+      end
+    end
   end
 end

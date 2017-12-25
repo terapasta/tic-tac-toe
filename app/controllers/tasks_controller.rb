@@ -23,6 +23,8 @@ class TasksController < ApplicationController
     if @task.update(is_done: (params[:is_done] || true).to_bool)
       if params[:redirect_to_new_question_answer_form].to_bool
         redirect_to new_bot_question_answer_path(@bot, question: @task.guest_message, answer: @task.bot_message)
+      elsif params[:redirect_to_show].to_bool
+        redirect_to bot_task_path(@bot, @task)
       else
         redirect_to bot_tasks_path(@bot)
       end

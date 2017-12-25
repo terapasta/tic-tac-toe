@@ -20,7 +20,7 @@ class Word2vecWmd(BaseCore):
         else:
             self.store = store
 
-    def fit(self, x, y):
+    def fit(self, x, y, labels):
         self.store.fit(self.bot.id)
 
     def predict(self, question_features):

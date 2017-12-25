@@ -63,7 +63,6 @@ namespace :deploy do
 
   after :finished, 'deploy:restart_python'
   after :finished, 'deploy:restart_botapi'
-  # after :finished, 'slappy:restart'
   # after :finished, 'update_neologd'
 end
 

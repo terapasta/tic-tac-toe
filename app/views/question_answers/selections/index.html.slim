@@ -12,15 +12,10 @@
   = pagination
 
   table.table.table-hover: tbody
-    - @question_answers.each do |question_answer|
+    - @selected_question_answers.concat(@question_answers.to_a).each do |question_answer|
       - is_selected = @bot.selected_question_answer_ids.include?(question_answer.id)
       tr
-        td style="width: 80px;"
-          label
-            input type="checkbox" checked=is_selected data-role="select-question-answer" data-question-answer-id=question_answer.id data-event="choice first question" data-bot-id=@bot.id
-            = space
-            span.label class=("label-#{is_selected ? 'success' : 'default'}") data-role="select-question-answer-label" data-question-answer-id=question_answer.id
-              = is_selected ? "選択済" : "未選択"
+        = render 'question_answers/selections/check_box_cell', bot: @bot, question_answer: question_answer, is_selected: is_selected
         td
           = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot, hide_buttons: true
 

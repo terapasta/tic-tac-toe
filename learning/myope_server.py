@@ -1,5 +1,6 @@
 from concurrent import futures
 import signal
+import sys
 import time
 import grpc
 
@@ -104,10 +105,17 @@ def serve(port):
 
 
 def on_sigsegv(signum, frame):
-    logger.error('segmentation fault!!!')
+    logger.error('signal segmentation fault!!!')
     logger.error(signum)
     logger.error(traceback.format_stack(frame))
-    raise ValueError('segmentation fault!!!')
+    sys.exit()
+
+
+def on_abort(signum, frame):
+    logger.error('signal abort!!!')
+    logger.error(signum)
+    logger.error(traceback.format_stack(frame))
+    sys.exit()
 
 
 if __name__ == '__main__':
@@ -119,6 +127,7 @@ if __name__ == '__main__':
     Config().init(args.env)
 
     signal.signal(signal.SIGSEGV, on_sigsegv)
+    signal.signal(signal.SIGABRT, on_sigsegv)
 
     logger.info('start server!!')
     serve(args.port)

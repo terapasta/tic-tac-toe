@@ -2,7 +2,7 @@ from app.shared.base_cls import BaseCls
 
 
 class BaseCore(BaseCls):
-    def fit(self, x, y):
+    def fit(self, x, y, labels):
         raise NotImplementedError()
 
     def predict(self, question_features):

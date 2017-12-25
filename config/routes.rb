@@ -100,6 +100,7 @@ Rails.application.routes.draw do
               put :nothing
             end
           end
+          resources :bad_reasons, only: [:create]
         end
         resources :trainings, only: [:create]
         post 'choices/:id', to: 'choices#create', as: :choices
@@ -110,6 +111,9 @@ Rails.application.routes.draw do
   authenticated :user, ->(u) { u.staff? } do
     namespace :admin do
       resources :word_mappings
+      namespace :accuracy_test_cases do
+        resource :execution, only: [:create]
+      end
       resources :bots, only: [] do
         resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
           collection do

@@ -21,6 +21,14 @@
         = material_icon 'thumb_up'
       span.chat-message__rating-button.bad class=('active' if message.rating&.bad?)
         = material_icon 'thumb_down'
+
+  - if message.bad_reasons.any?
+    .card: .card-body.p-2
+      .card-title Bad評価の理由
+      ul.mb-0
+        - message.bad_reasons.each do |br|
+          li= br.body
+
   - if current_user.staff? && message.reply_log.present? && params[:controller] == 'messages'
     div.collapsible data-role="collapsible" data-toggle="tooltip" title="ダブルクリックで開閉します"
       pre= JSON.pretty_generate message.reply_log

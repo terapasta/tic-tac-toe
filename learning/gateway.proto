@@ -13,6 +13,9 @@ message Result {
     string question = 3;
 }
 
+message SetupRequest {}
+message SetupResponse {}
+
 message ReplyRequest {
     int32 bot_id = 1;
     string body = 2;
@@ -41,6 +44,7 @@ message LearnResponse {
 }
 
 service Bot {
+    rpc Setup (SetupRequest) returns (SetupResponse) {}
     rpc Reply (ReplyRequest) returns (ReplyResponse) {}
     rpc Learn (LearnRequest) returns (LearnResponse) {}
 }

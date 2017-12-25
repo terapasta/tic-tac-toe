@@ -2,6 +2,10 @@ class TasksController < ApplicationController
   include BotUsable
   before_action :set_bot
 
+  def show
+    @task = @bot.tasks.find(params[:id])
+  end
+
   def index
     @unstarted_tasks_count = Task.unstarted(@bot).count
     @done_tasks_count = Task.where(bot_id: @bot.id).with_done(true).count

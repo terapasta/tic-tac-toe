@@ -16,11 +16,12 @@ class TaskCreateService
       guest_message = Message.find_pair_message_from(bot_message)
       next if guest_message.nil?
 
-      Task.create(
+      task = Task.create(
         bot_message: (bot_message.body if bot_message.rating&.bad?),
         guest_message: guest_message.body,
         bot_id: @bot.id,
       )
+      yield task
     end
   end
 end

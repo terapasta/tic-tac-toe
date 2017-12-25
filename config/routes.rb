@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       member do
         post :reset
       end
-      resources :tasks, only: [:index, :update]
+      resources :tasks, only: [:index, :update, :show]
       resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :question_answers do

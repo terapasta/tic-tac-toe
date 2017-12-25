@@ -52,6 +52,14 @@ namespace :deploy do
     end
   end
 
+  after :restart_python do
+    within release_path do
+      with rails_env: fetch(:rails_env) do
+        execute :rake, 'ml_engine:setup'
+      end
+    end
+  end
+
   task :restart_botapi do
     on roles(:bot_framework) do
       within current_path.join('bot-framework') do

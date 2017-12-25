@@ -13,7 +13,7 @@ class Word2vecWmdStore:
     __initialized = False
 
     @inject
-    def __init__(self, question_answers, tokenizer):
+    def __init__(self, question_answers):
         self.__dict__ = self.__shared_state
 
         if self.__initialiging:
@@ -21,26 +21,26 @@ class Word2vecWmdStore:
         if not self.__initialized:
             self.__initialiging = True
             self.question_answers = question_answers
-            self.tokenizer = tokenizer
             data_path = self.__prepare_corpus_data()
             logger.info('load word2vec model: start')
             self.model = KeyedVectors.load_word2vec_format(data_path, binary=Config().get('word2vec_model_is_binaly'))
             logger.info('load word2vec model: end')
             self.wmd_similarities = {}
+            self.tokenizers = {}
             self.__initialiging = False
             self.__initialized = True
 
-    def __getitem__(self, bot_id):
+    def get_similarities(self, bot_id, tokenizer):
         if bot_id not in self.wmd_similarities:
-            self.__build_wmd_similarity(bot_id)
+            self.__build_wmd_similarity(bot_id, tokenizer)
         return self.wmd_similarities[bot_id]
 
-    def fit(self, bot_id):
-        self.__build_wmd_similarity(bot_id)
+    def fit(self, bot_id, tokenizer):
+        self.__build_wmd_similarity(bot_id, tokenizer)
 
-    def __build_wmd_similarity(self, bot_id):
+    def __build_wmd_similarity(self, bot_id, tokenizer):
         bot_question_answers_data = self.question_answers.by_bot(bot_id)
-        bot_tokenized_sentences = self.tokenizer.tokenize(bot_question_answers_data['question'])
+        bot_tokenized_sentences = tokenizer.tokenize(bot_question_answers_data['question'])
         self.wmd_similarities[bot_id] = WmdSimilarity(bot_tokenized_sentences, self.model, num_best=10)
 
     def __prepare_corpus_data(self):

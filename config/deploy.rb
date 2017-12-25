@@ -49,13 +49,11 @@ namespace :deploy do
         sudo :pip, :install, '-r requirements.txt'
       end
       sudo :supervisorctl, :restart, :engine, '-c /etc/supervisord.conf'
-    end
-  end
 
-  after :restart_python do
-    within release_path do
-      with rails_env: fetch(:rails_env) do
-        execute :rake, 'ml_engine:setup'
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'ml_engine:setup'
+        end
       end
     end
   end

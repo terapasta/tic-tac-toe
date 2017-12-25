@@ -6,42 +6,4 @@
       span 対話タスク一覧へ戻る
   = render('message')
 
-  .card.mb-5
-    .card-body.p-4
-      .row
-        .col-sm-6.order-12
-          .chat-message--my.full-width
-            .chat-message__balloon= @task.guest_message
-        .col-sm-6.order-1 style="padding-top:16px"
-          .chat-message.full-width
-            .chat-message__icon style=("background-image:url(#{@bot.image_url});")
-            .chat-message__balloon
-              - if @task.bot_message.blank?
-                = material_icon 'error_outline', class: 'mi-sm text-muted'
-                = space 2
-                span 回答不可
-              - else
-                = material_icon 'thumb_down', class: 'mi-sm text-danger'
-                = space 2
-                span Bad評価
-                br
-                = @task.bot_message
-
-    .card-footer.d-flex.justify-content-between
-      div
-        small.text-muted 日時：#{l @task.created_at}
-      .text-align
-        - if @task.is_done?
-          = link_to '未対応に戻す', bot_task_path(@bot, @task, is_done: 'false', redirect_to_show: true), data: { method: :put }, class: 'btn btn-secondary btn-sm'
-          = space 5
-          span.badge.badge-success 対応済み
-        - else
-          span.badge.badge-warning 未対応
-          = space 5
-          = link_to "対応済みにする", bot_task_path(@bot, @task, redirect_to_show: true), method: :patch, class: "btn btn-secondary btn-sm", data: { event: 'to be processed' }
-
-          = space 5
-          = link_to bot_task_path(@bot, @task, redirect_to_new_question_answer_form: true), method: :patch, class: 'btn btn-info btn-sm', data: { event: 'create questions from task' }
-            i.fa.fa-arrow-right
-            = space
-            span これを元にQ&Aを登録する
+  = render('card', { bot: @bot, task: @task, redirect_path: bot_task_path(@bot, @task) })

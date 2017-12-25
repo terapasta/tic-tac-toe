@@ -13,6 +13,7 @@ import {
 } from '../types'
 
 import Modal from '../../Modal'
+import { TabNav, TabTextareaContent, TabSelectorContent } from './DecisionBranchForm/Tab'
 
 const getBodyAndAnswer = (props, { exists, empty }) => {
   const { activeItem, decisionBranchesRepo } = props
@@ -93,7 +94,7 @@ class DecisionBranchForm extends Component {
   }
 
   render() {
-    const { answer, body, isShowConfirmDelete } = this.state;
+    const { answer, body, isShowConfirmDelete, currentType } = this.state;
 
     return (
       <div>
@@ -107,13 +108,21 @@ class DecisionBranchForm extends Component {
           />
         </div>
         <div className="form-group">
-          <label><i className="material-icons" title="質問">chat_bubble_outline</i> 回答</label>
-          <TextArea
-            className="form-control"
-            value={answer}
-            onChange={e => this.setState({ answer: e.target.value })}
-            rows={3}
+          <TabNav
+            currentType={currentType}
+            onClick={type => this.setState({ currentType: type })}
           />
+          <TabTextareaContent currentType={currentType}>
+            <TextArea
+              className="form-control"
+              value={answer}
+              onChange={e => this.setState({ answer: e.target.value })}
+              minRows={3}
+            />
+          </TabTextareaContent>
+          <TabSelectorContent currentType={currentType}>
+            ほげほげ
+          </TabSelectorContent>
         </div>
 
         <div className="form-group text-right">

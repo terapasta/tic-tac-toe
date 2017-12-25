@@ -95,7 +95,6 @@ gem 'natto'
 gem 'config'
 gem 'active_model_serializers'
 gem 'non-stupid-digest-assets'
-gem 'asset_sync'
 gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
@@ -167,4 +166,5 @@ group :production, :staging do
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
   gem 'rollbar'
+  gem 'asset_sync'
 end

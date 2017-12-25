@@ -3,7 +3,6 @@
 //= require jquery_nested_form
 //= require popper
 //= require bootstrap-sprockets
-//= require bundled-es2015
 //= require app/threads
 //= require app/selection-checkboxes
 

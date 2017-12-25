@@ -26,8 +26,10 @@ RSpec.describe 'Login', typre: :feature, js: true do
     scenario do
       visit '/users/sign_in'
       expect(page).to have_content('ログイン')
-      fill_in_input name: 'user[email]', value: user.email
-      fill_in_input name: 'user[password]', value: 'hogehoge'
+      find('[name="user[email]"]').set(user.email)
+      find('[name="user[password]"]').set('hogehoge')
+      # fill_in_input name: 'user[email]', value: user.email
+      # fill_in_input name: 'user[password]', value: 'hogehoge'
       click_on 'ログイン'
       expect(page).to_not have_content('Bot一覧')
       expect(page).to have_content(bot.name)
@@ -42,8 +44,10 @@ RSpec.describe 'Login', typre: :feature, js: true do
     scenario do
       visit '/users/sign_in'
       expect(page).to have_content('ログイン')
-      fill_in_input name: 'user[email]', value: user.email
-      fill_in_input name: 'user[password]', value: 'hogehoge'
+      find('[name="user[email]"]').set(user.email)
+      find('[name="user[password]"]').set('hogehoge')
+      # fill_in_input name: 'user[email]', value: user.email
+      # fill_in_input name: 'user[password]', value: 'hogehoge'
       click_on 'ログイン'
       expect(page).to have_content('Bot一覧')
       click_on bot.name

@@ -130,7 +130,6 @@ Rails.application.routes.draw do
 
   namespace :api, { format: 'json' } do
     resources :messages, only: :create
-    resources :question_answers
     resources :public_bots, param: :token, only: [:show]
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
     resources :bots, param: :token do
@@ -140,6 +139,9 @@ Rails.application.routes.draw do
       resource :line_credential, module: :bots, only: [:show]
       resource :chatwork_credential, module: :bots, only: [:show]
       resource :microsoft_credential, module: :bots, only: [:show]
+      resources :decision_branches, module: :bots do
+        resource :answer_link, only: [:create, :destroy], module: :decision_branches
+      end
     end
   end
 end

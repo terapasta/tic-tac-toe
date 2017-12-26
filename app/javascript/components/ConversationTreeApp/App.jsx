@@ -181,6 +181,8 @@ class ConversationTree extends Component {
                 });
               }}
               onNestedDelete={(parentId, id) => dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id))}
+              onSelectLinkedAnswer={(...args) => console.log('select', args)}
+              onDeselectLinkedAnswer={(...args) => console.log('deselect', args)}
             />
           )}
           {activeItem.type === 'decisionBranchAnswer' && (

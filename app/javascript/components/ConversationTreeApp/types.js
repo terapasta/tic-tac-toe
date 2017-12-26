@@ -10,9 +10,6 @@ const {
   array,
 } = PropTypes
 
-// export const decisionBranchTreePropType = treePropType({
-//   id: number.isRequired,
-// }, 'childDecisionBranches')
 export const decisionBranchTreePropType = arrayOf(shape({
   id: number.isRequired,
   childDecisionBranches: array

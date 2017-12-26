@@ -1,8 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import isEmpty from 'is-empty'
+import get from 'lodash/get'
 
 import {
+  decisionBranchType,
   questionsTreeType,
   questionsRepoType,
   decisionBranchesRepoType
@@ -25,6 +28,9 @@ const Card = styled.div.attrs({
   ${props => props.unclickable && `
     opacity: 0.5;
     border: 0;
+    .card-body {
+      padding-left: 0 !important;
+    }
   `}
 
   ${props => props.selected && `
@@ -58,11 +64,17 @@ const Node = styled.div`
   `}
 `
 
+const isQuestionAnswerLinked = (answerLink, id) => (
+  get(answerLink, 'answerRecordType') === 'QuestionAnswer' &&
+    get(answerLink, 'answerRecordId') === id
+)
+
 const Item = props => (
   <Card
     clickable={props.clickable}
     unclickable={props.unclickable}
     selected={props.selected}
+    onClick={props.onClick}
   >
     <div className="card-body p-2">
       {props.children}
@@ -76,51 +88,92 @@ const QuestionNode = props => (
       <QuestionIcon />{props.data.question}
     </Item>
     <AnswerNode
+      type="QuestionAnswer"
       data={props.data}
       node={props.node}
       decisionBranchesRepo={props.decisionBranchesRepo}
+      subjectData={props.subjectData}
+      onSelectLinkedAnswer={props.onSelectLinkedAnswer}
+      onDeselectLinkedAnswer={props.onDeselectLinkedAnswer}
     />
   </Node>
 )
 
 const AnswerNode = props => {
-  const dbNodes = props.node.decisionBranches || props.node.childDecisionBranches || []
+  const {
+    node: { decisionBranches, childDecisionBranches },
+    decisionBranchesRepo,
+    subjectData,
+    onSelectLinkedAnswer,
+    onDeselectLinkedAnswer,
+    type,
+    data
+  } = props
+  const dbNodes = decisionBranches || childDecisionBranches || []
+  const { answerRecordType, answerRecordId } = get(subjectData, 'answerLink', {})
+  const isSelected = answerRecordType === type && answerRecordId === data.id
+  const clickHandler = isSelected ? onDeselectLinkedAnswer : onSelectLinkedAnswer
+
   return (
     <Node indent>
-      <ToolTip title={'クリックで選択'}>
-        <Item clickable selected>
-          <AnswerIcon />{props.data.answer}
+      <ToolTip title={`クリックで選択${isSelected ? 'を解除' : ''}`}>
+        <Item
+          clickable
+          selected={isSelected}
+          onClick={() => clickHandler(subjectData)}
+        >
+          <AnswerIcon />{data.answer}
         </Item>
       </ToolTip>
       {dbNodes.map(node => {
-        const data = props.decisionBranchesRepo[node.id]
+        const data = decisionBranchesRepo[node.id]
         if (isEmpty(data)) { return null }
         return <DecisionBranchNode
           data={data}
           node={node}
-          decisionBranchesRepo={props.decisionBranchesRepo}
+          decisionBranchesRepo={decisionBranchesRepo}
           key={node.id}
+          subjectData={subjectData}
+          onSelectLinkedAnswer={onSelectLinkedAnswer}
+          onDeselectLinkedAnswer={onDeselectLinkedAnswer}
         />
       })}
     </Node>
   )
 }
 
-const DecisionBranchNode = props => (
-  <Node indent>
-    <Item unclickable>
-      <DecisionBranchIcon />
-      {props.data.body}
-    </Item>
-    {!isEmpty(props.data.answer) && (
-      <AnswerNode
-        data={props.data}
-        node={props.node}
-        decisionBranchesRepo={props.decisionBranchesRepo}
-      />
-    )}
-  </Node>
-)
+const DecisionBranchNode = props => {
+  const {
+    data,
+    node,
+    decisionBranchesRepo,
+    subjectData,
+    onSelectLinkedAnswer,
+    onDeselectLinkedAnswer,
+  } = props
+  const isSelf = data.id === subjectData.id
+
+  return (
+    <Node indent>
+      <Item unclickable>
+        <DecisionBranchIcon />
+        {data.body}
+        {isSelf && (<span><br /><small>現在の選択肢</small></span>)}
+      </Item>
+      {!isEmpty(data.answer) && (
+        <AnswerNode
+          type="DecisionBranch"
+          data={data}
+          node={node}
+          decisionBranchesRepo={decisionBranchesRepo}
+          subjectData={subjectData}
+          onSelectLinkedAnswer={onSelectLinkedAnswer}
+          onDeselectLinkedAnswer={onDeselectLinkedAnswer}
+        />
+      )}
+    </Node>
+  )
+}
 
 const SelectableTree = props => {
   return (
@@ -131,15 +184,21 @@ const SelectableTree = props => {
           data={props.questionsRepo[node.id]}
           node={node}
           decisionBranchesRepo={props.decisionBranchesRepo}
+          subjectData={props.data}
+          onSelectLinkedAnswer={props.onSelectLinkedAnswer}
+          onDeselectLinkedAnswer={props.onDeselectLinkedAnswer}
         />
       ))}
     </div>
   )
 }
 SelectableTree.propTypes = {
+  data: decisionBranchType.isRequired,
   questionsTree: questionsTreeType.isRequired,
   questionsRepo: questionsRepoType.isRequired,
-  decisionBranchesRepo: decisionBranchesRepoType.isRequired
+  decisionBranchesRepo: decisionBranchesRepoType.isRequired,
+  onSelectLinkedAnswer: PropTypes.func.isRequired,
+  onDeselectLinkedAnswer: PropTypes.func.isRequired,
 }
 
 export default SelectableTree

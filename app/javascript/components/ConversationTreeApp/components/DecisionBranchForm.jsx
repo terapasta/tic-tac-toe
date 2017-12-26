@@ -95,8 +95,17 @@ class DecisionBranchForm extends Component {
   }
 
   render() {
-    const { questionsTree, questionsRepo, decisionBranchesRepo } = this.props
+    const {
+      activeItem,
+      questionsTree,
+      questionsRepo,
+      decisionBranchesRepo,
+      onSelectLinkedAnswer,
+      onDeselectLinkedAnswer,
+    } = this.props
     const { answer, body, isShowConfirmDelete, currentType } = this.state;
+
+    const data = decisionBranchesRepo[activeItem.node.id]
 
     return (
       <div>
@@ -125,9 +134,12 @@ class DecisionBranchForm extends Component {
           <TabSelectorContent currentType={currentType}>
             <p>この選択肢から別のQ&Aツリーの回答にリンクさせることができます</p>
             <SelectableTree
+              data={data}
               questionsTree={questionsTree}
               questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
+              onSelectLinkedAnswer={onSelectLinkedAnswer}
+              onDeselectLinkedAnswer={onDeselectLinkedAnswer}
             />
           </TabSelectorContent>
         </div>
@@ -181,6 +193,8 @@ DecisionBranchForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onNestedUpdate: PropTypes.func.isRequired,
   onNestedDelete: PropTypes.func.isRequired,
+  onSelectLinkedAnswer: PropTypes.func.isRequired,
+  onDeselectLinkedAnswer: PropTypes.func.isRequired,
 };
 
 export default DecisionBranchForm;

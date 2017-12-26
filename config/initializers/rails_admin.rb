@@ -35,7 +35,6 @@ RailsAdmin.config do |config|
   end
 
   config.model "User" do
-    exclude_fields :bots
     create do
       field :confirmation_token do
         formatted_value { Devise.token_generator.generate(User, :confirmation_token) }

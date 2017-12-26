@@ -11,7 +11,8 @@ class TaskCreateService
   end
 
   def process
-    return if @current_user.try(:staff?)
+    return [] if @current_user.try(:staff?)
+    tasks = []
     @failed_bot_messages.each do |bot_message|
       guest_message = Message.find_pair_message_from(bot_message)
       next if guest_message.nil?
@@ -21,7 +22,8 @@ class TaskCreateService
         guest_message: guest_message.body,
         bot_id: @bot.id,
       )
-      yield task if block_given?
+      tasks << [task, bot_message]
     end
+    tasks
   end
 end

@@ -34,6 +34,30 @@ RailsAdmin.config do |config|
     # history_show
   end
 
+  config.model "User" do
+    exclude_fields :bots
+    create do
+      field :confirmation_token do
+        formatted_value { Devise.token_generator.generate(User, :confirmation_token) }
+      end
+      field :role do
+        formatted_value { User.roles[:normal] }
+      end
+      include_all_fields
+      exclude_fields :reset_password_sent_at,
+        :bots,
+        :remember_created_at,
+        :sign_in_count,
+        :current_sign_in_at,
+        :last_sign_in_at,
+        :current_sign_in_ip,
+        :last_sign_in_ip,
+        :confirmation_sent_at,
+        :unconfirmed_email,
+        :created_at, :updated_at
+    end
+  end
+
   config.excluded_models += %w(
     Contact
   )

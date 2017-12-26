@@ -14,6 +14,11 @@ class BotStub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.Setup = channel.unary_unary(
+        '/gateway.Bot/Setup',
+        request_serializer=gateway__pb2.SetupRequest.SerializeToString,
+        response_deserializer=gateway__pb2.SetupResponse.FromString,
+        )
     self.Reply = channel.unary_unary(
         '/gateway.Bot/Reply',
         request_serializer=gateway__pb2.ReplyRequest.SerializeToString,
@@ -29,6 +34,13 @@ class BotStub(object):
 class BotServicer(object):
   # missing associated documentation comment in .proto file
   pass
+
+  def Setup(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def Reply(self, request, context):
     # missing associated documentation comment in .proto file
@@ -47,6 +59,11 @@ class BotServicer(object):
 
 def add_BotServicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'Setup': grpc.unary_unary_rpc_method_handler(
+          servicer.Setup,
+          request_deserializer=gateway__pb2.SetupRequest.FromString,
+          response_serializer=gateway__pb2.SetupResponse.SerializeToString,
+      ),
       'Reply': grpc.unary_unary_rpc_method_handler(
           servicer.Reply,
           request_deserializer=gateway__pb2.ReplyRequest.FromString,

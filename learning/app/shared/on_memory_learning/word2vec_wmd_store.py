@@ -26,7 +26,6 @@ class Word2vecWmdStore:
             self.model = KeyedVectors.load_word2vec_format(data_path, binary=Config().get('word2vec_model_is_binaly'))
             logger.info('load word2vec model: end')
             self.wmd_similarities = {}
-            self.tokenizers = {}
             self.__initialiging = False
             self.__initialized = True
 

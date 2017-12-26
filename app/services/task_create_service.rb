@@ -21,7 +21,7 @@ class TaskCreateService
         guest_message: guest_message.body,
         bot_id: @bot.id,
       )
-      yield task
+      yield task if block_given?
     end
   end
 end

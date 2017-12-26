@@ -11,13 +11,20 @@ class Ml::Engine
     @stub = Gateway::Bot::Stub.new("#{host}:#{port}", :this_channel_is_insecure)
   end
 
+  def setup
+    setup_request = Gateway::SetupRequest.new
+    @stub.setup(setup_request)
+  rescue => e
+    log_error(e)
+  end
+
   def reply(body)
-    return @stub.reply(
-      Gateway::ReplyRequest.new(
-        bot_id: @bot.id,
-        body: body,
-        learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
-      )).as_json.with_indifferent_access
+    reply_request = Gateway::ReplyRequest.new(
+      bot_id: @bot.id,
+      body: body,
+      learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
+    )
+    return @stub.reply(reply_request).as_json.with_indifferent_access
   rescue GRPC::Unavailable => e
     log_error(e)
     raise NotTrainedError
@@ -27,11 +34,11 @@ class Ml::Engine
   end
 
   def learn
-    return @stub.learn(
-      Gateway::LearnRequest.new(
-        bot_id: @bot.id,
-        learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
-      )).as_json.with_indifferent_access
+    learn_request = Gateway::LearnRequest.new(
+      bot_id: @bot.id,
+      learning_parameter: Gateway::LearningParameter.new(@bot.learning_parameter_attributes),
+    )
+    return @stub.learn(learn_request).as_json.with_indifferent_access
   rescue => e
     log_error(e)
     raise e

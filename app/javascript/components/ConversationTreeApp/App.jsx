@@ -166,6 +166,7 @@ class ConversationTree extends Component {
             <DecisionBranchForm
               activeItem={activeItem}
               questionsTree={questionsTree}
+              questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
               onUpdate={(answerId, id, body, answer) => {
                 return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer)).then(() => {

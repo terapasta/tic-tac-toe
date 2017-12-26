@@ -14,6 +14,7 @@ import {
 
 import Modal from '../../Modal'
 import { TabNav, TabTextareaContent, TabSelectorContent } from './DecisionBranchForm/Tab'
+import SelectableTree from './SelectableTree'
 
 const getBodyAndAnswer = (props, { exists, empty }) => {
   const { activeItem, decisionBranchesRepo } = props
@@ -94,6 +95,7 @@ class DecisionBranchForm extends Component {
   }
 
   render() {
+    const { questionsTree, questionsRepo, decisionBranchesRepo } = this.props
     const { answer, body, isShowConfirmDelete, currentType } = this.state;
 
     return (
@@ -121,7 +123,12 @@ class DecisionBranchForm extends Component {
             />
           </TabTextareaContent>
           <TabSelectorContent currentType={currentType}>
-            ほげほげ
+            <p>この選択肢から別のQ&Aツリーの回答にリンクさせることができます</p>
+            <SelectableTree
+              questionsTree={questionsTree}
+              questionsRepo={questionsRepo}
+              decisionBranchesRepo={decisionBranchesRepo}
+            />
           </TabSelectorContent>
         </div>
 

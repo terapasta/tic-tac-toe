@@ -40,7 +40,8 @@ RailsAdmin.config do |config|
         formatted_value { Devise.token_generator.generate(User, :confirmation_token) }
       end
       field :role do
-        formatted_value { User.roles[:normal] }
+        formatted_value { :normal }
+        required true
       end
       include_all_fields
       exclude_fields :reset_password_sent_at,

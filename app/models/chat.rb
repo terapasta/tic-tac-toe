@@ -110,9 +110,10 @@ class Chat < ApplicationRecord
     end
   end
 
-  def self.build_with_user_role(bot)
+  def self.build_with_user_role(bot, current_user)
     chat = bot.chats.build(guest_key: SecureRandom.hex(64))
-    chat.is_staff = bot.user.staff?
+    chat.is_staff = true if current_user.try(:staff?)
+    chat.is_normal = true if current_user.try(:normal?)
     chat
   end
 end

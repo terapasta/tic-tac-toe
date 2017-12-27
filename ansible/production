@@ -8,3 +8,4 @@ web-servers
 
 [all:vars]
 stage=production
+ansible_ssh_user=deploy

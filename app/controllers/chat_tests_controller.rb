@@ -15,7 +15,7 @@ class ChatTestsController < ApplicationController
         end
 
         ActiveRecord::Base.transaction do
-          @chat = Chat.build_with_user_role(@bot)
+          @chat = Chat.build_with_user_role(@bot, current_user)
           @chat.save
           encoding = resolve_encoding_from_params(:commit)
           raw_data = FileReader.new(file_path: params[:file].path, encoding: encoding).read

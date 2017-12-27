@@ -54,3 +54,15 @@ module RailsAdmin
     end
   end
 end
+
+module ActiveRecord
+  module RailsAdminEnum
+    def enum(definitions)
+      super
+      definitions.each do |name, values|
+        define_method("#{ name }_enum") { self.class.send(name.to_s.pluralize).map(&:first) }
+      end
+    end
+  end
+end
+ActiveRecord::Base.send(:extend, ActiveRecord::RailsAdminEnum)

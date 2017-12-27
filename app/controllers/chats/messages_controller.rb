@@ -24,8 +24,9 @@ class Chats::MessagesController < ApplicationController
       @bot_messages = receive_and_reply!(@chat, @message)
     end
 
-    SendAnswerFailedMailService.new(@bot_messages, current_user).send_mail
-    TaskCreateService.new(@bot_messages, @bot, current_user).process
+    TaskCreateService.new(@bot_messages, @bot, current_user).process.each do |task, bot_message|
+      SendAnswerFailedMailService.new(bot_message, current_user, task).send_mail
+    end
 
     respond_to do |format|
       format.js

@@ -89,7 +89,9 @@
     "uuid": "^3.0.1",
     "vue": "^2.5.13",
     "vue-loader": "^13.6.1",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.13",
+    "vuex": "^3.0.1",
     "watchify": "^3.7.0",
     "yup": "^0.22.0"
   },

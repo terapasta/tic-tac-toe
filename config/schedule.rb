@@ -40,6 +40,8 @@
 #   rake 'twitter:clone_tweets'
 # end
 
+env 'MECAB_PATH', '/usr/local/lib/libmecab.so'
+
 every 1.day, at: 'am 8:00' do
   rake 'organization:check_finishing_trial'
 end

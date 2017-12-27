@@ -25,8 +25,9 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       bot_messages = receive_and_reply!(chat, message)
     end
 
-    SendAnswerFailedMailService.new(bot_messages, nil).send_mail
-    TaskCreateService.new(bot_messages, bot, nil).process
+    TaskCreateService.new(bot_messages, bot, nil).process.each do |task, bot_message|
+      SendAnswerFailedMailService.new(bot_message, nil, task).send_mail
+    end
 
     respond_to do |format|
       format.json { render json: bot_messages.first, adapter: :json, include: included_associations }

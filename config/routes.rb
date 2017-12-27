@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
 
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   authenticate :user do
     as :user do
       get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
       member do
         post :reset
       end
-      resources :tasks, only: [:index, :update]
+      resources :tasks, only: [:index, :update, :show]
       resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :question_answers do

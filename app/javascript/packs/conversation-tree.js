@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueSweetAlert from 'vue-sweetalert'
 import assign from 'lodash/assign'
 
 import getData from '../helpers/getData'
@@ -10,6 +11,7 @@ import mutations from '../vue/ConversationTree/store/mutations'
 import router from '../vue/ConversationTree/router'
 
 Vue.use(Vuex)
+Vue.use(VueSweetAlert)
 
 document.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('ConversationTree')
@@ -18,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (process.env.NODE_ENV === 'development') {
     console.log('initial state', state)
   }
-
 
   const store = new Vuex.Store({
     actions,

@@ -5,7 +5,7 @@ import Home from './components/Home'
 import QuestionForm from './components/QuestionForm'
 import AnswerForm from './components/AnswerForm'
 import DecisionBranchForm from './components/DecisionBranchForm'
-import DecisionBranchAnswerForm from './components/DecisionBranchAnswerForm'
+// import DecisionBranchAnswerForm from './components/DecisionBranchAnswerForm'
 
 Vue.use(Router)
 
@@ -40,7 +40,7 @@ const router = new Router({
     {
       path: '/decisionBranchAnswer/:id',
       name: 'DecisionBranchAnswer',
-      component: DecisionBranchAnswerForm
+      component: AnswerForm
     }
   ]
 })

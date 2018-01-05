@@ -4,8 +4,13 @@ import isEmpty from 'is-empty'
 
 import QuestionIcon from './QuestionIcon'
 import AnswerIcon from './AnswerIcon'
+import QuestionAnswerFormMixin from '../mixins/QuestionAnswerForm'
 
 export default {
+  mixins: [
+    QuestionAnswerFormMixin
+  ],
+
   components: {
     QuestionIcon,
     AnswerIcon
@@ -29,7 +34,8 @@ export default {
 
   computed: {
     ...mapState([
-      'questionsRepo'
+      'questionsRepo',
+      'questionsTree'
     ])
   },
 
@@ -38,52 +44,7 @@ export default {
       'createQuestionAnswer',
       'updateQuestionAnswer',
       'deleteQuestionAnswer'
-    ]),
-
-    setQuestionAnswer () {
-      const { id } = this.$route.params
-      if (isEmpty(id)) {
-        this.isNew = true
-        this.questionAnswer = {}
-        return
-      }
-      this.questionAnswer = this.questionsRepo[window.parseInt(id)]
-    },
-
-    handleSaveButtonClick () {
-      const { id, question, answer } = this.questionAnswer
-      this.isProcessing = true
-      const verb = this.isNew ? 'create' : 'update'
-      this[`${verb}QuestionAnswer`]({ id, question, answer })
-        .then(newQuestionAnswer => {
-          this.isNew = false
-          this.isProcessing = false
-          this.$router.push(`/question/${newQuestionAnswer.id}`)
-        })
-        .catch(() => this.$swal({
-          title: 'エラー',
-          text: '保存ができませんでした',
-          type: 'error'
-        }))
-    },
-
-    handleDeleteButtonClick () {
-      const { id } = this.questionAnswer
-      this.$swal({
-        title: '本当に削除してよろしいですか？',
-        text: 'この操作は取り消せません。配下の回答や選択肢も削除されます。',
-        type: 'warning',
-        showCancelButton: true
-      }).then(() => {
-        this.deleteQuestionAnswer({ id })
-          .then(() => this.$router.push('/'))
-          .catch(() => this.$swal({
-            title: 'エラー',
-            text: '削除ができませんでした',
-            type: 'error'
-          }))
-      }).catch(this.$swal.noop)
-    }
+    ])
   }
 }
 </script>

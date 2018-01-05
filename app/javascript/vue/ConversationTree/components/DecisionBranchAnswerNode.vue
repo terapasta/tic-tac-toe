@@ -14,7 +14,8 @@ export default {
   },
 
   data: () => ({
-    routeName: 'DecisionBranchAnswer'
+    routeName: 'DecisionBranchAnswer',
+    nodeData: {}
   }),
 
   components: {
@@ -29,11 +30,13 @@ export default {
 
   mounted () {
     this.callOpenNodeIfNeeded(this.$route)
+    this.nodeData = this.decisionBranchesRepo[this.node.id]
   },
 
   watch: {
     $route (to) {
       this.callOpenNodeIfNeeded(to)
+      this.nodeData = this.decisionBranchesRepo[this.node.id]
     }
   },
 
@@ -47,9 +50,9 @@ export default {
       return !isEmpty(this.node.childDecisionBranches)
     },
 
-    nodeData () {
-      return this.decisionBranchesRepo[this.node.id]
-    },
+    // nodeData () {
+    //   return this.decisionBranchesRepo[this.node.id]
+    // },
 
     isOpened () {
       return this.isStoredOpenedNodes || this.currentPageIsChild

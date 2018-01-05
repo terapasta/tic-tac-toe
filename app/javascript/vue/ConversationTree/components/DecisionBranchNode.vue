@@ -16,7 +16,8 @@ export default {
   },
 
   data: () => ({
-    routeName: 'DecisionBranch'
+    routeName: 'DecisionBranch',
+    nodeData: {}
   }),
 
   components: {
@@ -26,11 +27,13 @@ export default {
 
   mounted () {
     this.callOpenNodeIfNeeded(this.$route)
+    this.nodeData = this.decisionBranchesRepo[this.node.id]
   },
 
   watch: {
     $route (to) {
       this.callOpenNodeIfNeeded(to)
+      this.nodeData = this.decisionBranchesRepo[this.node.id]
     }
   },
 
@@ -41,15 +44,20 @@ export default {
     ]),
 
     hasChildren () {
+      if (this.isNew) { return false }
       return !isEmpty(this.nodeData.answer)
     },
 
-    nodeData () {
-      return this.decisionBranchesRepo[this.node.id]
-    },
+    // nodeData () {
+    //   return this.decisionBranchesRepo[this.node.id]
+    // },
 
     isOpened () {
       return this.isStoredOpenedNodes || this.currentPageIsChild
+    },
+
+    isNew () {
+      return isEmpty(this.nodeData)
     }
   },
 
@@ -64,18 +72,20 @@ export default {
 
 <template>
   <li class="tree__node" :id="nodeId">
-    <div :class="itemClassName">
-      <router-link
-        :to="`/decisionBranch/${this.node.id}`"
-        class="tree__item-body"
-        @click.native="handleClick"
-      >
-        <decision-branch-icon />
-        {{nodeData.body}}
-      </router-link>
-    </div>
-    <ol class="tree" v-if="hasChildren" :style="childTreeStyle">
-      <decision-branch-answer-node :node="node" />
-    </ol>
+    <template v-if="!isNew">
+      <div :class="itemClassName">
+        <router-link
+          :to="`/decisionBranch/${this.node.id}`"
+          class="tree__item-body"
+          @click.native="handleClick"
+        >
+          <decision-branch-icon />
+          {{nodeData.body}}
+        </router-link>
+      </div>
+      <ol class="tree" v-if="hasChildren" :style="childTreeStyle">
+        <decision-branch-answer-node :node="node" />
+      </ol>
+    </template>
   </li>
 </teamplte>

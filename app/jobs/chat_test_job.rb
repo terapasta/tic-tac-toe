@@ -15,7 +15,11 @@ class ChatTestJob < ApplicationJob
       @chat = Chat.build_with_user_role(@bot, current_user)
       @chat.save
       CSV.parse(raw_data).each do |csv_data|
-        create_message(csv_data[0])
+        message = @chat.messages.create!(body: csv_data[0]) { |m|
+          m.speaker = 'guest'
+          m.user_agent = 'chat test'
+        }
+        receive_and_reply!(@chat, message)
       end
       raise ActiveRecord::Rollback
     end
@@ -25,13 +29,5 @@ class ChatTestJob < ApplicationJob
       is_chat_test_processing: false
     )
     @bot2.save!
-  end
-
-  def create_message(body)
-    message = @chat.messages.create!(body: body) { |m|
-      m.speaker = 'guest'
-      m.user_agent = 'chat test'
-    }
-    receive_and_reply!(@chat, message)
   end
 end

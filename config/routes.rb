@@ -48,7 +48,7 @@ Rails.application.routes.draw do
       resource :topic_tags, only: [:show, :update]
       resource :imports, only: [:show, :create]
       resources :exports, only: [:index, :create]
-      resources :chat_tests, only: [:new, :create, :show]
+      resource :chat_tests, only: [:new, :create, :show]
       resources :threads, only: :index do
         resources :messages, only: [:index] do
           resource :answer_marked, only: [:create, :destroy], controller: :answer_marked

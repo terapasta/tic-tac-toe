@@ -5,25 +5,35 @@
     |ボットテスト機能は、csv形式の質問を一括投入することで、<br />
     |対応した回答が得られるかをテストし、結果のcsvファイルをダウンロードできます。
 
-  = form_tag bot_chat_tests_path(@bot), multipart: true do
-    .row: .col-8.offset-2
-      .form-group
-        = file_field_tag :file, label: "CSVファイル", class: 'form-control'
+  - if @bot.is_chat_test_processing
+    .alert.alert-warning 只今ボットテストを実行中です。しばらくお待ちください。
+    javascript:
+      setInterval(function(){ window.location.reload() }, 1000 * 10)
+  - else
+    - if @bot.chat_test_results.present?
+      .alert.alert-info
+        |ボットテストの結果をご確認いただけます
+        = space 4
+        = link_to 'ボットテスト結果', bot_chat_tests_path(@bot), class: 'btn btn-secondary'
+    = form_tag bot_chat_tests_path(@bot), multipart: true do
+      .row: .col-8.offset-2
+        .form-group
+          = file_field_tag :file, label: "CSVファイル", class: 'form-control'
 
-      .form-group.text-center
-        .d-inline-block.align-top.text-left
-          = submit_tag 'Shift_JISでアップロード', class: 'btn btn-success', data: { event: 'upload with shift_JIS' }
-          br
-          span.text-muted Excelで作成した場合はこちら
-        = space 2
-        .d-inline-block.align-top
-          = submit_tag 'UTF-8でアップロード', class: 'btn btn-success', data: { event: 'upload with UTF_8' }
+        .form-group.text-center
+          .d-inline-block.align-top.text-left
+            = submit_tag 'Shift_JISでアップロード', class: 'btn btn-success', data: { event: 'upload with shift_JIS' }
+            br
+            span.text-muted Excelで作成した場合はこちら
+          = space 2
+          .d-inline-block.align-top
+            = submit_tag 'UTF-8でアップロード', class: 'btn btn-success', data: { event: 'upload with UTF_8' }
 
-      .card: .card-body
-        .mb-2: strong テストデータ作成の注意点
-        .mb-2
-          |Excel等の表計算ソフトにてデータを作成する場合、<br />
-          |下図のように、A列に質問を入力してファイルを作成してください。<br />
-          |ファイル作成後、CSV形式でアップロードして下さい。
+  .card: .card-body
+    .mb-2: strong テストデータ作成の注意点
+    .mb-2
+      |Excel等の表計算ソフトにてデータを作成する場合、<br />
+      |下図のように、A列に質問を入力してファイルを作成してください。<br />
+      |ファイル作成後、CSV形式でアップロードして下さい。
 
-        = image_tag 'import_file.png', width: 400, style: 'border: 1px solid #999;'
+    = image_tag 'import_file.png', width: 400, style: 'border: 1px solid #999;'

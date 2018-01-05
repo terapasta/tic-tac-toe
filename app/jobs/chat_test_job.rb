@@ -2,8 +2,8 @@ class ChatTestJob < ApplicationJob
   queue_as :default
   include Replyable
 
-  rescue_from ActiveRecord::NotNullViolation do |e|
-    Rails.logger.error e.inspect + e.backtrace.join("\n")
+  rescue_from StandardError do |e|
+    logger.error e.inspect + e.backtrace.join("\n")
     Bot.find(@bot.id).tap do |bot|
       bot.update(is_chat_test_processing: false)
     end

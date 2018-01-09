@@ -9,7 +9,7 @@ class Api::Bots::DecisionBranches::AnswerLinksController < Api::BaseController
     end
     render json: {}, status: :created
   rescue => e
-    logger.error e.message + e.backtrace("\n")
+    logger.error e.message + e.backtrace.join("\n")
     render_unprocessable_entity_error_json(@answer_link)
   end
 

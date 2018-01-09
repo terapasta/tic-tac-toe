@@ -1,6 +1,7 @@
 = render layout: 'bots/layout' do
   #ConversationTree(
     data-bot-id=@bot.id
+    data-bot-token=@bot.token
     data-questions-tree=@question_answers.as_tree_json.to_json
     data-questions-repo=@question_answers.as_repo_json.to_json
     data-decision-branches-repo=DeepCamelizeKeys.deep_camelize_keys(@decision_branches.as_repo_json).to_json

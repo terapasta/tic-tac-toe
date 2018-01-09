@@ -1,3 +1,45 @@
 .card-body {
   word-break: break-all;
 }
+
+.card {
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      border-color: #007bff;
+      background-color: #fff;
+    }
+  }
+
+  &.unclickable {
+    opacity: 0.5;
+    border: 0;
+    .card-body {
+      padding-left: 0 !important;
+    }
+  }
+
+  &.selected {
+    position: relative;
+    border-color: #28a745;
+    &::after {
+      content: "✓";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: -10px;
+      left: -10px;
+      background-color: #28a745;
+      border-radius: 10px;
+      color: #fff;
+      text-align: center;
+      line-height: 20px;
+    }
+    &:hover {
+      border-color: #aaa;
+      &::after {
+        background-color: #aaa;
+      }
+    }
+  }
+}

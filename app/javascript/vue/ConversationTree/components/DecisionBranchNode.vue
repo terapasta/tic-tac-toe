@@ -6,6 +6,7 @@ import classnames from 'classnames'
 
 import DecisionBranchIcon from './DecisionBranchIcon'
 import DecisionBranchAnswerNode from './DecisionBranchAnswerNode'
+import AnswerLinkNode from './AnswerLinkNode'
 import NodeMixin from '../mixins/Node'
 
 export default {
@@ -22,7 +23,8 @@ export default {
 
   components: {
     DecisionBranchIcon,
-    DecisionBranchAnswerNode
+    DecisionBranchAnswerNode,
+    AnswerLinkNode
   },
 
   mounted () {
@@ -45,12 +47,16 @@ export default {
 
     hasChildren () {
       if (this.isNew) { return false }
+      return this.hasAnswer || this.hasAnswerLink
+    },
+
+    hasAnswer () {
       return !isEmpty(this.nodeData.answer)
     },
 
-    // nodeData () {
-    //   return this.decisionBranchesRepo[this.node.id]
-    // },
+    hasAnswerLink () {
+      return !isEmpty(this.nodeData.answerLink)
+    },
 
     isOpened () {
       return this.isStoredOpenedNodes || this.currentPageIsChild
@@ -84,7 +90,8 @@ export default {
         </span>
       </router-link>
       <ol class="tree" v-if="hasChildren" :style="childTreeStyle">
-        <decision-branch-answer-node :node="node" />
+        <decision-branch-answer-node v-if="hasAnswer" :node="node" />
+        <answer-link-node v-if="hasAnswerLink" :answerLink="nodeData.answerLink" />
       </ol>
     </template>
   </li>

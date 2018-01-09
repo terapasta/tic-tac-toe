@@ -6,7 +6,7 @@ export function create({ botToken, decisionBranchId, answerRecordType, answerRec
   return axios.post(path, {
     answer_link: {
       answer_record_type: answerRecordType,
-      answer_recrod_id: answerRecordId
+      answer_record_id: answerRecordId
     }
   }, config())
 }

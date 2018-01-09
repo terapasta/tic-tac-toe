@@ -18,49 +18,17 @@ const Card = styled.div.attrs({
   className: 'card mb-2'
 })`
   ${props => props.clickable && `
-    cursor: pointer;
-    &:hover {
-      border-color: #007bff;
-      background-color: #fff;
-    }
   `}
 
   ${props => props.unclickable && `
-    opacity: 0.5;
-    border: 0;
-    .card-body {
-      padding-left: 0 !important;
-    }
   `}
 
   ${props => props.selected && `
-    position: relative;
-    border-color: #28a745;
-    &::after {
-      content: "✓";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      top: -10px;
-      left: -10px;
-      background-color: #28a745;
-      border-radius: 10px;
-      color: #fff;
-      text-align: center;
-      line-height: 20px;
-    }
-    &:hover {
-      border-color: #aaa;
-      &::after {
-        background-color: #aaa;
-      }
-    }
   `}
 `
 
 const Node = styled.div`
   ${props => props.indent && `
-    margin-left: 24px;
   `}
 `
 

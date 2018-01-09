@@ -18,7 +18,9 @@ import {
   UPDATE_DECISION_BRANCH_OF_DECISION_BRANCH,
   DELETE_DECISION_BRANCH_OF_QUESTION_ANSWER,
   DELETE_DECISION_BRANCH,
-  DELETE_ANSWER_OF_DECISION_BRANCH
+  DELETE_ANSWER_OF_DECISION_BRANCH,
+  SET_ANSWER_LINK,
+  UNSET_ANSWER_LINK
 } from './mutationTypes'
 
 import {
@@ -135,5 +137,14 @@ export default {
       targetNode.childDecisionBranches = []
     })
     state.decisionBranchesRepo[decisionBranchId].answer = ""
-  }
+  },
+
+  [SET_ANSWER_LINK] (state, { decisionBranchId, answerRecordType, answerRecordId }) {
+    const answerLink = { answerRecordType, answerRecordId }
+    state.decisionBranchesRepo[decisionBranchId].answerLink = answerLink
+  },
+
+  [UNSET_ANSWER_LINK] (state, { decisionBranchId }) {
+    state.decisionBranchesRepo[decisionBranchId].answerLink = null
+  },
 }

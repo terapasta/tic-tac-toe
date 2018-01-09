@@ -1,18 +1,23 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import toastr from 'toastr'
+import isEmpty from 'is-empty'
 
 import DecisionBranchFormMixin from '../mixins/DecisionBranchForm'
 
 import AnswerIcon from './AnswerIcon'
 import DecisionBranchIcon from './DecisionBranchIcon'
+import AnswerTab, { TabType } from './DecisionBranchAnswerTab'
+import SelectableTree from './SelectableTree'
 
 export default {
   mixins: [DecisionBranchFormMixin],
 
   components: {
     AnswerIcon,
-    DecisionBranchIcon
+    DecisionBranchIcon,
+    AnswerTab,
+    SelectableTree
   },
 
   data: () => ({
@@ -33,7 +38,8 @@ export default {
   computed: {
     ...mapState([
       'questionsRepo',
-      'decisionBranchesRepo'
+      'decisionBranchesRepo',
+      'questionsTree'
     ]),
 
     currentId () {
@@ -46,13 +52,18 @@ export default {
 
     decisionBranchId () {
       return this.currentId
+    },
+
+    tabType () {
+      return isEmpty(this.nodeData.answerLink) ? TabType.Input : TabType.Select
     }
   },
 
   methods: {
     ...mapActions([
       'updateDecisionBranch',
-      'deleteDecisionBranch'
+      'deleteDecisionBranch',
+      'deselectAnswerLink'
     ]),
 
     setDecisionBranch () {
@@ -61,16 +72,25 @@ export default {
 
     handleSaveButtonClick () {
       const { id, body, answer } = this.decisionBranch
-      this.updateDecisionBranch({
+      let promises = []
+
+      if (!isEmpty(answer)) {
+        promises.push(this.deselectAnswerLink({ decisionBranchId: this.currentId }))
+      }
+
+      promises.push(this.updateDecisionBranch({
         decisionBranchId: id,
         body,
         answer
-      }).then(() => {
-        toastr.success('選択肢を更新しました')
-        this.isEditing = false
-      }).catch(() => {
-        toastr.error('選択肢を更新できませんでした', 'エラー')
-      })
+      }))
+
+      Promise.all(promises)
+        .then(() => {
+          toastr.success('選択肢を更新しました')
+          this.isEditing = false
+        }).catch(() => {
+          toastr.error('選択肢を更新できませんでした', 'エラー')
+        })
     }
   }
 }
@@ -87,12 +107,20 @@ export default {
       />
     </div>
     <div class="form-group">
-      <label><answer-icon />&nbsp;回答</label>
-      <textarea
-        class="form-control"
-        rows="3"
-        v-model="decisionBranch.answer"
-      ></textarea>
+      <answer-tab :tabType="tabType">
+        <textarea
+          class="form-control"
+          rows="3"
+          v-model="decisionBranch.answer"
+          slot="input"
+        ></textarea>
+        <div slot="select">
+          <p>この選択肢から別のQ&Aツリーの回答にリンクさせることができます</p>
+          <selectable-tree
+            :data="decisionBranch"
+          />
+        </div>
+      </answer-tab>
     </div>
     <div class="form-group text-right">
       <button

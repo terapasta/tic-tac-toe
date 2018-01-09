@@ -4,6 +4,7 @@ import find from 'lodash/find'
 
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
+import * as AnswerLinkAPI from '../../../api/answerLink'
 
 import {
   OPEN_NODE,
@@ -18,7 +19,9 @@ import {
   UPDATE_DECISION_BRANCH_OF_QUESTION_ANSWER,
   UPDATE_DECISION_BRANCH_OF_DECISION_BRANCH,
   DELETE_DECISION_BRANCH,
-  DELETE_ANSWER_OF_DECISION_BRANCH
+  DELETE_ANSWER_OF_DECISION_BRANCH,
+  SET_ANSWER_LINK,
+  UNSET_ANSWER_LINK
 } from './mutationTypes'
 import { findDecisionBranchFromTree } from '../helpers';
 
@@ -155,5 +158,27 @@ export default {
           targetDecisionBranchId
         })
       }).catch(logError)
+  },
+
+  selectAnswerLink ({ commit, state }, { decisionBranchId, answerRecordType, answerRecordId }) {
+    const { botToken } = state
+    return AnswerLinkAPI.create({
+      botToken,
+      decisionBranchId,
+      answerRecordType,
+      answerRecordId
+    }).then(() => {
+      commit(SET_ANSWER_LINK, { decisionBranchId, answerRecordType, answerRecordId })
+    }).catch(logError)
+  },
+
+  deselectAnswerLink ({ commit, state }, { decisionBranchId }) {
+    const { botToken } = state
+    return AnswerLinkAPI.destroy({
+      botToken,
+      decisionBranchId
+    }).then(() => {
+      commit(UNSET_ANSWER_LINK, { decisionBranchId })
+    }).catch(logError)
   }
 }

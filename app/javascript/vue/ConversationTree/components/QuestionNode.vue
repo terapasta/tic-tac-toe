@@ -67,16 +67,16 @@ export default {
 
 <template>
   <li class="tree__node" :id="nodeId">
-    <div :class="itemClassName">
-      <router-link
-        :to="`/question/${this.node.id}`"
-        class="tree__item-body"
-        @click.native="handleClick"
-      >
+    <router-link
+      :class="itemClassName"
+      :to="`/question/${this.node.id}`"
+      @click.native="handleClick"
+    >
+      <span class="tree__item-body">
         <question-icon />
         {{nodeData.question}}
-      </router-link>
-    </div>
+      </span>
+    </router-link>
     <ol class="tree" v-if="hasChildren" :style="childTreeStyle">
       <answer-node :node="node" />
     </ol>

@@ -1,6 +1,6 @@
 import Promise from 'promise'
 import isEmpty from 'is-empty'
-import toastr from 'toastr'
+import find from 'lodash/find'
 
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
@@ -10,15 +10,17 @@ import {
   CLOSE_NODE,
   ADD_QUESTION_ANSWER,
   DELETE_QUESTION_ANSWER,
+  DELETE_ANSWER,
   ADD_DECISION_BRANCH_TO_QUESTION_ANSWER,
   ADD_DECISION_BRANCH_TO_DECISION_BRANCH,
   CREATE_DECISION_BRANCH_OF_QUESTION_ANSWER,
   CREATE_DECISION_BRANCH_OF_DECISION_BRANCH,
   UPDATE_DECISION_BRANCH_OF_QUESTION_ANSWER,
   UPDATE_DECISION_BRANCH_OF_DECISION_BRANCH,
-  DELETE_DECISION_BRANCH_OF_QUESTION_ANSWER,
-  DELETE_DECISION_BRANCH_OF_DECISION_BRANCH
+  DELETE_DECISION_BRANCH,
+  DELETE_ANSWER_OF_DECISION_BRANCH
 } from './mutationTypes'
+import { findDecisionBranchFromTree } from '../helpers';
 
 const logError = err => {
   console.log(err)
@@ -47,8 +49,24 @@ export default {
 
   updateQuestionAnswer ({ commit, state }, { id, question, answer }) {
     const { botId } = state
-    return QuestionAnswerAPI.update(botId, id, question, answer)
-      .then(res => res.data.questionAnswer)
+    let promises = []
+    promises.push(QuestionAnswerAPI.update(botId, id, question, answer))
+
+    if (isEmpty(answer)) {
+      const node = find(state.questionsTree, (node) => node.id === id)
+      node.decisionBranches.forEach(db => {
+
+        promises.push(DecisionBranchAPI.nestedDelete(botId, db.id))
+      })
+    }
+
+    return Promise.all(promises)
+      .then((ress) => {
+        if (isEmpty(answer)) {
+          commit(DELETE_ANSWER, { questionAnswerId: id })
+        }
+        return ress[0].data.questionAnswer
+      })
       .catch(logError)
   },
 
@@ -63,6 +81,7 @@ export default {
     if (!isEmpty(questionAnswerId)) {
       commit(ADD_DECISION_BRANCH_TO_QUESTION_ANSWER, { questionAnswerId })
     } else if (!isEmpty(decisionBranchId)) {
+      console.log("test")
       commit(ADD_DECISION_BRANCH_TO_DECISION_BRANCH, { decisionBranchId })
     }
   },
@@ -103,8 +122,24 @@ export default {
           })
         }).catch(logError)
     } else if (!isEmpty(decisionBranchId)) {
-      return DecisionBranchAPI.nestedUpdate(botId, decisionBranchId, body, answer)
-        .then((res) => {
+      let promises = []
+      promises.push(DecisionBranchAPI.nestedUpdate(botId, decisionBranchId, body, answer))
+
+      if (isEmpty(answer)) {
+        findDecisionBranchFromTree(state.questionsTree, decisionBranchId, (targetNode) => {
+          targetNode.childDecisionBranches.forEach(db => {
+            promises.push(DecisionBranchAPI.nestedDelete(botId, db.id))
+          })
+        })
+      }
+
+      return Promise.all(promises)
+        .then((ress) => {
+          if (isEmpty(answer)) {
+            commit(DELETE_ANSWER_OF_DECISION_BRANCH, {
+              decisionBranchId
+            })
+          }
           commit(UPDATE_DECISION_BRANCH_OF_DECISION_BRANCH, {
             decisionBranchId, body, answer
           })
@@ -114,20 +149,11 @@ export default {
 
   deleteDecisionBranch ({ commit, state }, { questionAnswerId, decisionBranchId, targetDecisionBranchId }) {
     const { botId } = state
-    if (!isEmpty(questionAnswerId)) {
-      return DecisionBranchAPI.destroy(botId, questionAnswerId, targetDecisionBranchId)
-        .then(res => {
-          commit(DELETE_DECISION_BRANCH_OF_QUESTION_ANSWER, {
-            questionAnswerId, targetDecisionBranchId
-          })
-        }).catch(logError)
-    } else if (!isEmpty(decisionBranchId)) {
-      return DecisionBranchAPI.nestedDelete(botId, decisionBranchId)
-        .then(res => {
-          commit(DELETE_DECISION_BRANCH_OF_DECISION_BRANCH, {
-            decisionBranchId, targetDecisionBranchId
-          })
-        }).catch(logError)
-    }
+    return DecisionBranchAPI.nestedDelete(botId, targetDecisionBranchId)
+      .then(res => {
+        commit(DELETE_DECISION_BRANCH, {
+          targetDecisionBranchId
+        })
+      }).catch(logError)
   }
 }

@@ -23,12 +23,12 @@ export default {
   }),
 
   mounted () {
-    this.setQuestionAnswer()
+    this.setParent()
   },
 
   watch: {
     $route () {
-      this.setQuestionAnswer()
+      this.setParent()
     }
   },
 

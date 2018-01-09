@@ -1,5 +1,8 @@
 import flatten from 'lodash/flatten'
 import findIndex from 'lodash/findIndex'
+import includes from 'lodash/includes'
+import map from 'lodash/map'
+import find from 'lodash/find'
 import isEmpty from 'is-empty'
 
 export const isDescendantDecisionBranch = (node, id) => {
@@ -31,6 +34,22 @@ export const findDecisionBranchFromTree = (questionsTree, decisionBranchId, foun
   }
   const decisionBranchNodes = flatten(questionsTree.map(n => n.decisionBranches))
   handler(decisionBranchNodes)
+}
+
+export const findDecisionBranchFromTreeWithChildId = (questionsTree, childDecisionBranchId, foundCallback) => {
+  const handler = (targetNode) => {
+    const { decisionBranches, childDecisionBranches } = targetNode
+    const nodes = decisionBranches || childDecisionBranches || []
+    const exists = find(nodes, (decisionBranchNode => (
+      decisionBranchNode.id === childDecisionBranchId
+    )))
+    if (!isEmpty(exists)) {
+      foundCallback(targetNode)
+    } else {
+      nodes.forEach(node => handler(node))
+    }
+  }
+  questionsTree.forEach(node => handler(node))
 }
 
 export const makeNewDecisionBranch = () => ({ id: null, childDecisionBranches: [] })

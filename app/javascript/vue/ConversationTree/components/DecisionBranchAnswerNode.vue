@@ -70,16 +70,16 @@ export default {
 
 <template>
   <li class="tree__node" :id="nodeId">
-    <div :class="itemClassName">
-      <router-link
-        :to="`/decisionBranchAnswer/${this.node.id}`"
-        class="tree__item-body"
-        @click.native="handleClick"
-      >
+    <router-link
+      :class="itemClassName"
+      :to="`/decisionBranchAnswer/${this.node.id}`"
+      @click.native="handleClick"
+    >
+      <span class="tree__item-body">
         <answer-icon />
         {{nodeData.answer}}
-      </router-link>
-    </div>
+      </span>
+    </router-link>
     <ol v-if="hasChildren" class="tree" :style="childTreeStyle">
       <template v-for="node in node.childDecisionBranches">
         <decision-branch-node :node="node" :key="node.id" />

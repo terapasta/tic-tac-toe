@@ -44,7 +44,9 @@ export default {
     ]),
 
     decisionBranches () {
-      const nodes = get(this, 'node.decisionBranches', [])
+      const dbs = get(this, 'node.decisionBranches')
+      const cdbs = get(this, 'node.childDecisionBranches')
+      const nodes = dbs || cdbs || []
       return nodes.map(it => this.decisionBranchesRepo[it.id])
     },
 
@@ -55,7 +57,7 @@ export default {
     },
 
     decisionBranchId () {
-      if (this.$route.name === 'DecisionBranch') {
+      if (this.$route.name === 'DecisionBranchAnswer') {
         return this.currentId
       }
     }

@@ -2,10 +2,14 @@
 import { mapState, mapActions } from 'vuex'
 import toastr from 'toastr'
 
+import DecisionBranchFormMixin from '../mixins/DecisionBranchForm'
+
 import AnswerIcon from './AnswerIcon'
 import DecisionBranchIcon from './DecisionBranchIcon'
 
 export default {
+  mixins: [DecisionBranchFormMixin],
+
   components: {
     AnswerIcon,
     DecisionBranchIcon
@@ -34,6 +38,14 @@ export default {
 
     currentId () {
       return window.parseInt(this.$route.params.id)
+    },
+
+    nodeData () {
+      return this.decisionBranchesRepo[this.currentId]
+    },
+
+    decisionBranchId () {
+      return this.currentId
     }
   },
 
@@ -59,10 +71,6 @@ export default {
       }).catch(() => {
         toastr.error('選択肢を更新できませんでした', 'エラー')
       })
-    },
-
-    handleDeleteButtonClick () {
-
     }
   }
 }

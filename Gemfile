@@ -149,6 +149,7 @@ group :development, :test do
 
   gem 'database_cleaner'
   gem 'letter_opener'
+  gem 'letter_opener_web'
 
   # Capistrano
   gem 'capistrano', '~> 3.6', '>= 3.6.1'

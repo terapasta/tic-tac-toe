@@ -55,6 +55,10 @@ RSpec.describe 'Chats AnswerLink', type: :feature, js: true do
     stub_const('Ml::Engine', DummyMLEngine)
   end
 
+  after do
+    DummyMLEngine.clear_dummy_results
+  end
+
   feature 'Select AnswerLink' do
     before do
       DummyMLEngine.add_dummy_result(

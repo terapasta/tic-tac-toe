@@ -10,6 +10,12 @@ if Rails.env.production? || Rails.env.staging?
     config.manifest = false
     config.fail_silently = true
     config.run_on_precompile = false
+    # webpacker対応
+    config.add_local_file_paths do
+      Dir.chdir(Rails.root.join('public')) do
+        Dir[File.join(Webpacker::Configuration.fetch(:public_output_path), '/**/**')]
+      end
+    end
   end
 
   if Rake::Task.task_defined?("webpacker:compile")

@@ -5,9 +5,15 @@ class ChatsController < ApplicationController
   before_action :set_guest_key
   before_action :set_guest_user
   before_action :set_warning_message
+  before_action :prepare_iframe
+
+  class ExceededError < StandardError; end
+  class FinishedTrialError < StandardError; end
+
+  rescue_from ExceededError, with: :render_exceeded_page
+  rescue_from FinishedTrialError, with: :render_finished_trial_page
 
   def show
-    iframe_support @bot
     @chat = @bot.chats.where(guest_key: guest_key).order(created_at: :desc).first
     if @chat.nil?
       redirect_to new_chats_path(token: params[:token], noheader: params[:noheader])
@@ -17,12 +23,6 @@ class ChatsController < ApplicationController
   end
 
   def new
-    iframe_support @bot
-    if policy(@bot).exceeded_chats_count?
-      render :exceeded, status: :too_many_requests and return
-    elsif policy(@bot).finished_trial?
-      render :finished_trial, status: :service_unavailable and return
-    end
     @chat = @bot.chats.create_by(guest_key: guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)
@@ -43,5 +43,19 @@ class ChatsController < ApplicationController
 
     def set_guest_user
       @guest_user = GuestUser.find_by(guest_key: guest_key)
+    end
+
+    def prepare_iframe
+      iframe_support @bot
+      fail ExceededError.new if policy(@bot).exceeded_chats_count?
+      fail FinishedTrialError if policy(@bot).finished_trial?
+    end
+
+    def render_exceeded_page
+      render :exceeded, status: :too_many_requests
+    end
+
+    def render_finished_trial_page
+      render :finished_trial, status: :service_unavailable
     end
 end

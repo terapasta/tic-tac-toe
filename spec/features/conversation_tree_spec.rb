@@ -40,7 +40,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'display tree nodes' do
-    sleep 3
+
     find("#Question-#{question_answers.first.id}").click
     expect(page).to have_content(question_answers.first.answer)
     find("#Answer-#{question_answers.first.id}").click
@@ -56,7 +56,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find('[name=question-answer]').set('new answer')
     # fill_in_input name: 'question-question', value: 'new question'
     # fill_in_input name: 'question-answer', value: 'new answer'
-    click_link '保存'
+    click_button '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('new question')
       expect(page).to have_content('new answer')
@@ -69,7 +69,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find('#AddDecisionBranchButton').click
     find('[name=decision-branch-body]').set('new decision branch')
     # fill_in_input name: 'decision-branch-body', value: 'new decision branch'
-    find('span.btn.btn-success').click
+    click_button '追加'
+    # find('.btn.btn-success').click
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
     end
@@ -80,7 +81,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find("#Answer-#{question_answers.first.id}").click
     find('[name=answer-body]').set('updated answer')
     # fill_in_input name: 'answer-body', value: 'updated answer'
-    click_link '保存'
+    click_button '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated answer')
     end
@@ -89,10 +90,10 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   scenario 'updates decision branch' do
     find("#Question-#{question_answers.first.id}").click
     find("#Answer-#{question_answers.first.id}").click
-    within "#decision-branch-item-#{decision_branches.first.id}" do
+    within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('.btn').click
     end
-    within "#decision-branch-item-#{decision_branches.first.id}" do
+    within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('[name=decision-branch-body]').set('updated decision branch')
       # fill_in_input name: 'decision-branch-body', value: 'updated decision branch'
       find('.btn-success').click
@@ -119,7 +120,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
       find('.btn').click
     end
     within "#DecisionBranchItem-#{decision_branches.first.id}" do
-      find('.btn-secondary').click
+      find('.btn-danger').click
     end
     find(".swal2-confirm.swal2-styled").click
     within '.master-detail-panel__master' do

@@ -45,6 +45,7 @@ export default {
       .then(res => {
         const { questionAnswer } = res.data
         commit(ADD_QUESTION_ANSWER, { questionAnswer })
+        commit(OPEN_NODE, { nodeId: `Question-${questionAnswer.id}` })
         return questionAnswer
       })
       .catch(logError)

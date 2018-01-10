@@ -36,5 +36,3 @@ if (document.readyState === "complete") {
 } else {
   document.addEventListener("DOMContentLoaded", init)
 }
-
-console.log(new Date())

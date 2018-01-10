@@ -15,8 +15,7 @@ class Api::Bots::DecisionBranches::AnswerLinksController < Api::BaseController
 
   def destroy
     @answer_link = @decision_branch.answer_link
-    render_not_found_json and return if @answer_link.blank?
-    @answer_link.destroy!
+    @answer_link.destroy! if @answer_link.present?
     render json: {}, status: :no_content
   end
 

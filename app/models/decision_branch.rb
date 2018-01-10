@@ -22,4 +22,22 @@ class DecisionBranch < ApplicationRecord
     dependent: :destroy
 
   accepts_nested_attributes_for :child_decision_branches
+
+  def answer_or_answer_link_text
+    if answer_link.present?
+      (dest_question_answer || dest_decision_branch).answer
+    else
+      answer
+    end
+  end
+
+  def child_decision_branches_or_answer_link
+    if answer_link.present?
+      dest_question_answer&.decision_branches.presence ||
+      dest_decision_branch&.child_decision_branches ||
+      []
+    else
+      child_decision_branches
+    end
+  end
 end

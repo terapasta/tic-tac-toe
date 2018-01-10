@@ -9,5 +9,12 @@ if Rails.env.production? || Rails.env.staging?
     config.gzip_compression = true
     config.manifest = false
     config.fail_silently = true
+    config.run_on_precompile = false
+  end
+
+  if Rake::Task.task_defined?("webpacker:compile")
+    Rake::Task['webpacker:compile'].enhance do
+      Rake::Task["assets:sync"].invoke
+    end
   end
 end

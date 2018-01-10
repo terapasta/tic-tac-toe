@@ -167,5 +167,5 @@ group :production, :staging do
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
   gem 'rollbar'
-  gem 'asset_sync'
+  gem 'asset_sync', '~> 2.4.0'
 end

@@ -36,4 +36,3 @@ if (document.readyState === "complete") {
 } else {
   document.addEventListener("DOMContentLoaded", init)
 }
-

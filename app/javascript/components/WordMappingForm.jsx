@@ -1,18 +1,19 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import bindAll from 'lodash/bindAll';
 import get from 'lodash/get';
 import findIndex from 'lodash/findIndex';
 import assign from 'lodash/assign';
 import isEqual from 'lodash/isEqual';
-import isEmpty from 'is-empty';
 import compact from 'lodash/compact';
 import last from 'lodash/last';
 import Highlighter from 'react-highlight-words';
+import isEmpty from 'is-empty';
 
-import * as WordMappingAPI from '../../api/word-mappings';
-import Alert from '../Alert';
+import * as WordMappingAPI from '../api/wordMappings';
+import Alert from './Alert';
 
-import { searchQueryParam } from '../WordMappings';
+import { searchQueryParam } from './WordMappings';
 
 import {
   Wrapper,
@@ -22,10 +23,10 @@ import {
   Word,
   EnterToSaveText,
   Input,
-} from './elements';
+} from './WordMappingForm/elements';
 
-import EditingSynonym from './EditingSynonym';
-import EditingWord from './EditingWord';
+import EditingSynonym from './WordMappingForm/EditingSynonym';
+import EditingWord from './WordMappingForm/EditingWord';
 
 class WordMappingForm extends Component {
   constructor(props) {

@@ -50,13 +50,13 @@ services:
     volumes:
       - bundle:/bundle
       - node_modules:/usr/src/app/node_modules
-  client:
-    image: node:6-slim
-    command: yarn run watch
-    volumes:
-      - .:/usr/src/app
-    volumes_from:
-      - app_data
+  # client:
+  #   image: node:6-slim
+  #   command: yarn run watch
+  #   volumes:
+  #     - .:/usr/src/app
+  #   volumes_from:
+  #     - app_data
   learning:
     build: ./learning
     tty: true
@@ -65,6 +65,11 @@ services:
       - ./learning:/usr/src/app
     depends_on:
       - db
+  webpack:
+    <<: *app_base
+    command: bin/webpack-dev-server
+    ports:
+      - 3035:3035
 
 volumes:
   db:

@@ -46,14 +46,15 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       subject do
         lambda do
           visit "/bots/#{bot.id}/question_answers/new"
-          fill_in_input name: 'question_answer[question]', value: 'sample question'
-          fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
+          find('[name="question_answer[question]"]').set('sample question')
+          find('[name="question_answer[answer]"]').set('sample answer body')
           click_link '添付ファイルを追加'
           within '#answer-files' do
             locator = all('input[type="file"]').first['name']
             attach_file locator, Rails.root.join('spec/fixtures/images/sample_naoki.jpg').to_s
           end
-          fill_in_input id: 'topic-tag-name', value: 'ほげ'
+          find('#topic-tag-name').set('ほげ')
+          # fill_in_input id: 'topic-tag-name', value: 'ほげ'
           click_button '追加'
           check "topic-tag-#{topic_tags.first.id}"
           click_button '登録する'
@@ -71,8 +72,11 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       subject do
         lambda do
           visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-          fill_in_input name: 'question_answer[question]', value: 'updated question'
-          fill_in_input name: 'question_answer[answer]', value: 'updated answer'
+          page.save_screenshot
+          find('[name="question_answer[question]"]').set('updated question')
+          find('[name="question_answer[answer]"]').set('updated answer')
+          # fill_in_input name: 'question_answer[question]', value: 'updated question'
+          # fill_in_input name: 'question_answer[answer]', value: 'updated answer'
           click_button '更新する'
           question_answer.reload
         end
@@ -92,9 +96,12 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
         subject do
           lambda do
             visit "/bots/#{bot.id}/question_answers/new"
-            fill_in_input name: 'question_answer[question]', value: 'sample question'
-            fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
+            find('[name="question_answer[question]"]').set('sample question')
+            find('[name="question_answer[answer]"]').set('sample answer body')
+            # fill_in_input name: 'question_answer[question]', value: 'sample question'
+            # fill_in_input name: 'question_answer[answer]', value: 'sample answer body'
             expect(page.all('input[type="file"]').count).to be_zero
+            find('#topic-tag-name').set('ほげ')
             fill_in_input id: 'topic-tag-name', value: 'ほげ'
             click_button '追加'
             check "topic-tag-#{topic_tags.first.id}"
@@ -112,8 +119,10 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
         subject do
           lambda do
             visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-            fill_in_input name: 'question_answer[question]', value: 'updated question'
-            fill_in_input name: 'question_answer[answer]', value: 'updated answer'
+            find('[name="question_answer[question]"]').set('updated question')
+            find('[name="question_answer[answer]"]').set('updated answer')
+            # fill_in_input name: 'question_answer[question]', value: 'updated question'
+            # fill_in_input name: 'question_answer[answer]', value: 'updated answer'
             click_button '更新する'
             question_answer.reload
           end

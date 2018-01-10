@@ -47,7 +47,7 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
-
+            bundle exec rake assets:precompile
             bundle exec rspec spec \
               --format progress \
               --format RspecJunitFormatter \

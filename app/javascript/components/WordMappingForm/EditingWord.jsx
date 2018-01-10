@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import bindAll from 'lodash/bindAll';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import bindAll from 'lodash/bindAll'
 
-import { Input, EnterToSaveText } from './elements';
+import { Input, EnterToSaveText } from './elements.jsx'
 
 class EditingWord extends Component {
   constructor(props) {

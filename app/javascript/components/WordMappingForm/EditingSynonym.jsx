@@ -1,29 +1,30 @@
-import React, { Component, PropTypes } from 'react';
-import bindAll from 'lodash/bindAll';
-import get from 'lodash/get';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import bindAll from 'lodash/bindAll'
+import get from 'lodash/get'
 
-import setCaretPosition from '../../modules/set-caret-position';
+import setCaretPosition from '../../helpers/setCaretPosition'
 
 import {
   Word,
   Input,
   EnterToSaveText,
-} from './elements';
+} from './elements'
 
 const setCaretToTail = (input) => {
   if (input == null) { return; }
-  setCaretPosition(input, get(input, 'value', '').length);
-};
+  setCaretPosition(input, get(input, 'value', '').length)
+}
 
 class EditingSynonym extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       value: props.synonym.value,
-    };
+    }
     bindAll(this, [
       'handleSubmit',
-    ]);
+    ])
   }
 
   componentDidMount() {

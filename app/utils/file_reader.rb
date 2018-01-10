@@ -5,16 +5,23 @@ class FileReader
   end
 
   def read
-    File.open(@file_path, mode_enc, undef: :replace)
-      .read
+    raw_data = File.open(@file_path, mode_enc).read
+
+    if @encoding == Encoding::Shift_JIS
+      raw_data = IncompatibleChars.new(raw_data).convert
+    end
+
+    raw_data = raw_data
       .gsub(/\r\n/, "\n")
       .gsub(/\r/, "\n")
+
+    raw_data
   end
 
   def mode_enc
     case @encoding
     when Encoding::UTF_8 then 'r'
-    when Encoding::Shift_JIS then 'rb:Shift_JIS:UTF-8'
+    when Encoding::Shift_JIS then 'r:shift_jis:shift_jis'
     end
   end
 end

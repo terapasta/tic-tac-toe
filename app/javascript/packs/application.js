@@ -37,3 +37,4 @@ if (document.readyState === "complete") {
   document.addEventListener("DOMContentLoaded", init)
 }
 
+console.log(new Date())

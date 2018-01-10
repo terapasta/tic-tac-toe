@@ -15,7 +15,7 @@ set :rbenv_roles, :all
 set :migration_role, 'web'
 
 set :linked_files, %w{.env .python-version learning/config/config.yml config/database.yml}
-set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads learning/dumps learning/logs}
+set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads public/packs learning/dumps learning/logs}
 
 set :bundle_jobs, 4
 set :unicorn_pid, "/tmp/unicorn.pid"

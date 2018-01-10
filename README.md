@@ -192,22 +192,6 @@ test:
 docker-compose up
 ```
 
-## Slack 連携
-### Slack bot サーバー立ち上げ
-```
-$ cd slack-bot
-$ bundle exec slappy start
-```
-### 開発用デバッグBOTの設定
-Slack連携はCustom Botとしてslackに登録したBotユーザーデータを利用して行います。
-
-1. https://my.slack.com/services/new/botにアクセスしCustom bot userを作成する。
-2. ENV['SLACK_TOKEN']に取得したAPI Tokenを設定する。環境変数のセットにはdotenv gemが利用できます。
-3. https://slack.com/api/users.list?pretty=1&token={取得したAPI Token}を実行して、登録したCustom bot userのidを表示、slappy_config.rbのconfig.robot.bot_idに指定する。
-
-以上でslack連携を行うことができるようになります。
-
-
 ## Coudwatch Logsの設定
 
 __参考__
@@ -272,33 +256,4 @@ __logrotate__
   copytruncate
   notifempty
 }
-```
-
-__upstart__
-
-```
-description "slappy"
-
-start on runlevel [2345]
-stop on runlevel [016]
-
-chdir /var/www/donusagi-bot/current/slack-bot
-env RAILS_ENV=production
-
-script
-  exec /usr/local/rbenv/shims/bundle exec slappy start
-  exec /bin/chown deploy /var/www/donusagi-bot/releases/*/slack-bot/log/newrelic_agent.log
-  exec /bin/chgrp deploy /var/www/donusagi-bot/releases/*/slack-bot/log/newrelic_agent.log
-end script
-
-post-start script
-  PID=`status slappy | egrep -oi '([0-9]+)$' | head -n1`
-  echo $PID > /var/www/donusagi-bot/shared/tmp/pids/slappy.pid
-end script
-
-post-stop script
-  rm -f /var/www/donusagi-bot/shared/tmp/pids/slappy.pid
-end script
-
-respawn
 ```

@@ -7,6 +7,8 @@ class Chat < ApplicationRecord
   has_many :users, through: :organizations
   belongs_to :guest_user, foreign_key: :guest_key, primary_key: :guest_key
 
+  validates :guest_key, presence: true
+
   scope :has_multiple_messages, -> {
     where(id: Chat.select(:id)
       .joins(:messages)
@@ -110,9 +112,10 @@ class Chat < ApplicationRecord
     end
   end
 
-  def self.build_with_user_role(bot)
-    chat = bot.chats.build(guest_key: SecureRandom.hex(64))
-    chat.is_staff = bot.user.staff?
-    chat
+  def self.build_with_user_role(bot, current_user)
+    bot.chats.build(guest_key: SecureRandom.hex(64)).tap do |chat|
+      chat.is_staff = true if current_user.try(:staff?)
+      chat.is_normal = true if current_user.try(:normal?)
+    end
   end
 end

@@ -11,7 +11,7 @@ class LogisticRegression(BaseCore):
         self.persistence = datasource.persistence
         self.estimator = estimator
 
-    def fit(self, x, y):
+    def fit(self, x, y, labels):
         self.estimator.fit(x, y)
 
     def predict(self, question_features):

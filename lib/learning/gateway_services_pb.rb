@@ -14,6 +14,7 @@ module Gateway
       self.unmarshal_class_method = :decode
       self.service_name = 'gateway.Bot'
 
+      rpc :Setup, SetupRequest, SetupResponse
       rpc :Reply, ReplyRequest, ReplyResponse
       rpc :Learn, LearnRequest, LearnResponse
     end

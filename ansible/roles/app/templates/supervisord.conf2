@@ -19,7 +19,7 @@ serverurl=unix:///tmp/supervisor.sock ; use a unix:// URL  for a unix socket
 
 [program:engine]
 ;command=/usr/local/pyenv/shims/python3 /var/www/donusagi-bot/current/learning/myope_server.py
-command=/usr/local/pyenv/shims/python3 myope_server.py --env production
+command=/usr/local/pyenv/shims/python3 myope_server.py --env {{stage}}
 directory=/var/www/donusagi-bot/current/learning
 user=deploy
 

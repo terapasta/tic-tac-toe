@@ -22,7 +22,6 @@ class Word2vecWmdFactory(BaseFactory):
         self.estimator = PassEstimator.new(datasource=self.datasource)
         self.__core = Word2vecWmd.new(
             bot=bot,
-            tokenizer=self.tokenizer,
             datasource=self.datasource,
         )
         self.__feedback = PassFeedback.new()

@@ -1,9 +1,10 @@
 from unittest import TestCase
-from nose.tools import ok_
+from nose.tools import assert_raises
 
 from app.core.cosine_similarity import CosineSimilarity
 from app.shared.constants import Constants
 from app.shared.datasource.datasource import Datasource
+from app.shared.custom_errors import NotTrainedError
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
 from tests.support.datasource.empty_ratings import EmptyRatings
 from tests.support.helper import Helper
@@ -16,6 +17,7 @@ class CosineSimilarityTestCase(TestCase):
 
         estimator = CosineSimilarity.new(bot=context.current_bot, datasource=datasource)
 
-        results = estimator.predict([])
+        def action():
+            estimator.predict([])
 
-        ok_(len(results['question_answer_id']) == 0)
+        assert_raises(NotTrainedError, action)

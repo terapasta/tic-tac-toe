@@ -1,9 +1,10 @@
 from concurrent import futures
 import signal
+import sys
 import time
 import grpc
 
-from gateway_pb2 import ReplyResponse, Result, LearnResponse
+from gateway_pb2 import ReplyResponse, Result, LearnResponse, SetupResponse
 from gateway_pb2_grpc import BotServicer
 from gateway_pb2_grpc import add_BotServicer_to_server
 
@@ -15,6 +16,7 @@ from app.shared.config import Config
 from app.shared.stop_watch import stop_watch
 from app.shared.context import Context
 from app.shared.custom_errors import NotTrainedError
+from app.controllers.setup_controller import SetupController
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
 
@@ -81,6 +83,10 @@ class RouteGuideServicer(BotServicer):
 
         return LearnResponse(**result)
 
+    def Setup(self, request, context):
+        SetupController.new().perform()
+        return SetupResponse()
+
     def _empty_reply(self):
         return {
             'question_feature_count': 0,
@@ -107,18 +113,18 @@ def on_sigsegv(signum, frame):
     logger.error('signal segmentation fault!!!')
     logger.error(signum)
     logger.error(traceback.format_stack(frame))
-    raise ValueError('segmentation fault!!!')
+    sys.exit()
 
 
 def on_abort(signum, frame):
     logger.error('signal abort!!!')
     logger.error(signum)
     logger.error(traceback.format_stack(frame))
-    raise ValueError('abort!!!')
+    sys.exit()
 
 
 if __name__ == '__main__':
-    logger.info('initializing')
+    logger.info('server starting...')
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=6000)
     parser.add_argument('--env', type=str, default='development')
@@ -128,5 +134,5 @@ if __name__ == '__main__':
     signal.signal(signal.SIGSEGV, on_sigsegv)
     signal.signal(signal.SIGABRT, on_sigsegv)
 
-    logger.info('start server!!')
+    logger.info('server running!!')
     serve(args.port)

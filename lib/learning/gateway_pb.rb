@@ -13,6 +13,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :probability, :float, 2
     optional :question, :string, 3
   end
+  add_message "gateway.SetupRequest" do
+  end
+  add_message "gateway.SetupResponse" do
+  end
   add_message "gateway.ReplyRequest" do
     optional :bot_id, :int32, 1
     optional :body, :string, 2
@@ -41,6 +45,8 @@ end
 module Gateway
   LearningParameter = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearningParameter").msgclass
   Result = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.Result").msgclass
+  SetupRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.SetupRequest").msgclass
+  SetupResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.SetupResponse").msgclass
   ReplyRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.ReplyRequest").msgclass
   ReplyResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.ReplyResponse").msgclass
   LearnRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnRequest").msgclass

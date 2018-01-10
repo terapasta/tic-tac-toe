@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    attributes:
+      question_answer:
+        id: ID
+        topic_tags: トピックタグ
+        question: 質問
+        answer: 回答
+        decision_branches: 選択肢
+  question_answer:
+    csv_headers:
+      id: ID(新規登録は空欄)
+      topic_tags: トピックタグ(スラッシュ区切りで複数登録可能)
+      question: 質問
+      answer: 回答
+
+

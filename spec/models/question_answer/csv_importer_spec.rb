@@ -6,34 +6,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
     QuestionAnswer::CsvImporter.new(csv_file, bot, import_options)
   end
 
-  it 'deep tree test' do
-    bot = create(:bot)
-    topic_tags = [
-      create(:topic_tag, name: 'hoge', bot: bot),
-      create(:topic_tag, name: 'fuga', bot: bot),
-    ]
-    csv = fixture_file_upload('deep-import-test.csv', 'text/csv')
-    importer = QuestionAnswer::CsvImporter.new(csv, bot, { is_utf8: true })
-
-    expect {
-      expect {
-        importer.import
-      }.to change(QuestionAnswer, :count).by(1)
-    }.to change(DecisionBranch, :count).by(7)
-
-    csv = fixture_file_upload('deep-import-test-2.csv', 'text/csv')
-    importer = QuestionAnswer::CsvImporter.new(csv, bot, { is_utf8: true })
-
-    expect {
-      expect {
-        importer.import
-      }.to change(QuestionAnswer, :count).by(0)
-    }.to change(DecisionBranch, :count).by(1)
-
-    expect(bot.decision_branches.find_by(body: 'うそでしょ').id).to_not \
-      eq(bot.decision_branches.last.id)
-  end
-
   describe '#import' do
     let(:bot) { create(:bot, id: 1) }
 
@@ -58,55 +30,11 @@ RSpec.describe QuestionAnswer::CsvImporter do
         it 'QuestionAnserが登録されること' do
           expect(bot.question_answers.count).to eq 2
         end
-        it 'DecisionBranchが登録されること' do
-          expect(bot.decision_branches.count).to eq 4
-        end
       end
 
       context 'id=1のQuestionAnswerが登録済の場合' do
         let!(:question_answer) do
           create(:question_answer, id: 1, bot_id: bot.id)
-        end
-
-        context 'answerの無いDecisionBranchが登録済の場合' do
-          before do
-            create(:decision_branch, bot_id: bot.id, question_answer_id: question_answer.id, body: 'それ以降1-1')
-            question_answer.save
-          end
-          let!(:succeeded) { subject.succeeded }
-
-          it '正常終了すること' do
-            expect(succeeded).to be_truthy
-          end
-
-          it 'QuestionAnserが登録されること' do
-            expect(bot.question_answers.count).to eq 2
-          end
-          it 'DecisionBranchが登録されること' do
-            expect(bot.decision_branches.count).to eq 4
-            expect(question_answer.decision_branches.first.answer).to eq 'それ以降1-2'
-          end
-        end
-
-        context 'answerをもつDecisionBranchが登録済の場合' do
-          let!(:decision_branch) do
-            create(:decision_branch, bot_id: bot.id, question_answer_id: question_answer.id, body: 'それ以降2-1', answer: 'ほげほげ')
-          end
-          let!(:succeeded) { subject.succeeded }
-
-          it '正常終了すること' do
-            expect(succeeded).to be_truthy
-          end
-
-          it 'QuestionAnserが登録されること' do
-            expect(bot.question_answers.count).to eq 2
-          end
-          it 'DecisionBranchが登録されること' do
-            expect(bot.decision_branches.count).to eq 4
-          end
-          it 'DecisionBranchが更新されること' do
-            expect(decision_branch.reload.answer).to eq 'それ以降2-2'
-          end
         end
       end
 
@@ -126,11 +54,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
           expect(bot.question_answers.count).to eq 2
           expect(bot2.question_answers.count).to eq 1
         end
-        it 'DecisionBranchが登録されていること' do
-          expect(bot.decision_branches.count).to eq 4
-        end
       end
-
 
     end
 
@@ -147,9 +71,6 @@ RSpec.describe QuestionAnswer::CsvImporter do
 
       it 'QuestionAnserが登録されないこと' do
         expect(bot.question_answers.count).to eq 0
-      end
-      it 'DecisionBranchが登録されないこと' do
-        expect(bot.decision_branches.count).to eq 0
       end
 
     end
@@ -168,10 +89,27 @@ RSpec.describe QuestionAnswer::CsvImporter do
       it 'QuestionAnserが登録されていること' do
         expect(bot.question_answers.count).to eq 2
       end
-      it 'DecisionBranchが登録されていること' do
-        expect(bot.decision_branches.count).to eq 2
+
+    end
+
+    context 'トピックタグのインポートをする場合' do
+      let(:csv_path) { 'sjis_valid-5_question_answers.csv' }
+      let(:import_options) do
+        { is_utf8: false }
       end
 
+      let!(:topic_tag) do
+        create(:topic_tag, bot: bot, name: 'hoge')
+      end
+
+      it '正常終了すること' do
+        expect(subject.succeeded).to be_truthy
+      end
+
+      it '新しいトピックタグが登録されること' do
+        expect { subject }.to change(bot.topic_tags, :count).from(1).to(2)
+        expect(QuestionAnswer.first.topic_tags.count).to eq 2
+      end
     end
   end
 end

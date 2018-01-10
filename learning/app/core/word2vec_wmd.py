@@ -16,17 +16,17 @@ class Word2vecWmd(BaseCore):
         self.tokenizer = tokenizer
         self.question_answers = datasource.question_answers
         if store is None:
-            self.store = Word2vecWmdStore(question_answers=self.question_answers, tokenizer=self.tokenizer)
+            self.store = Word2vecWmdStore(question_answers=self.question_answers)
         else:
             self.store = store
 
-    def fit(self, x, y):
-        self.store.fit(self.bot.id)
+    def fit(self, x, y, labels):
+        self.store.fit(self.bot.id, self.tokenizer)
 
     def predict(self, question_features):
         bot_question_answers_data = self.question_answers.by_bot(self.bot.id)
 
-        result = self.store[self.bot.id][question_features[0]]
+        result = self.store.get_similarities(self.bot.id, self.tokenizer)[question_features[0]]
 
         indices = [x[0] for x in result]
         df = bot_question_answers_data.iloc[indices].copy()

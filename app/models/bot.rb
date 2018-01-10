@@ -33,6 +33,7 @@ class Bot < ApplicationRecord
   accepts_nested_attributes_for :tutorial
 
   serialize :selected_question_answer_ids, Array
+  serialize :chat_test_results, Array
 
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 

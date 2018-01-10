@@ -51,7 +51,7 @@ export default {
     },
 
     hasAnswer () {
-      return !isEmpty(this.nodeData.answer)
+      return !isEmpty(this.nodeData.answer) && !this.hasAnswerLink
     },
 
     hasAnswerLink () {

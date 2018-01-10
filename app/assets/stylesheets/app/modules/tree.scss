@@ -16,6 +16,7 @@
   }
 
   %base-tree__item {
+    display: inline-block;
     position: relative;
     cursor: pointer;
     margin-bottom: 8px;
@@ -83,7 +84,9 @@
     }
 
     &-body {
+      display: block;
       line-height: 24px;
+      color: $base-text-color;
 
       .material-icons {
         margin-right: 5px;

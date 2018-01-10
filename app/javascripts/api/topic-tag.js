@@ -1,5 +1,5 @@
-import axios from "axios";
-import config from "./config";
+import axios from 'axios'
+import config from './config'
 
 export function findAll(botId) {
   return axios.get(`/api/bots/${botId}/topic_tags.json`, config());

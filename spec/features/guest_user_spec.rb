@@ -39,22 +39,26 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
     scenario do
       visit "/embed/#{bot.token}/chats/new"
       sleep 1
-      page.save_screenshot
-      fill_in_input id: 'guest-user-name', value: name
-      fill_in_input id: 'guest-user-email', value: email
+      find('#guest-user-name').set(name)
+      find('#guest-user-email').set(email)
+      # fill_in_input id: 'guest-user-name', value: name
+      # fill_in_input id: 'guest-user-email', value: email
       find('#guest-user-submit').click
       expect(page).to have_content('ユーザー情報を保存しました')
 
-      fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
+      find('[name=chat-message-body]').set('サンプルメッセージ')
+      # fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
       click_on '質問'
 
       visit "/users/sign_in"
-      fill_in_input name: 'user[email]', value: user.email
-      fill_in_input name: 'user[password]', value: 'hogehoge'
+      find('[name="user[email]"]').set(user.email)
+      find('[name="user[password]"]').set('hogehoge')
+      # fill_in_input name: 'user[email]', value: user.email
+      # fill_in_input name: 'user[password]', value: 'hogehoge'
       click_on 'ログイン'
 
       visit "/bots/#{bot.id}/threads"
-      page.save_screenshot 'guest_user_spec.png'
+      # page.save_screenshot 'guest_user_spec.png'
       click_on 'これ以前の発言もすべて見る'
 
       expect(page).to have_content(name)

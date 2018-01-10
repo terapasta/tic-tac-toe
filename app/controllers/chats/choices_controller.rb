@@ -30,12 +30,13 @@ class Chats::ChoicesController < ApplicationController
     end
 
     def bot_message_params
+      answer = @decision_branch.answer_or_answer_link_text
       {
         decision_branch_id: @decision_branch.id,
         speaker: 'bot',
-        body: @decision_branch.answer.presence || @bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text,
+        body: answer.presence || @bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text,
         created_at: @message.created_at + 1.second,
-        answer_failed: @decision_branch.answer.blank?,
+        answer_failed: answer.blank?,
       }
     end
 end

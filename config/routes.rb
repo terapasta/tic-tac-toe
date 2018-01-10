@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
 
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   authenticate :user do
     as :user do
       get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
       member do
         post :reset
       end
-      resources :tasks, only: [:index, :update]
+      resources :tasks, only: [:index, :update, :show]
       resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :question_answers do
@@ -46,7 +48,7 @@ Rails.application.routes.draw do
       resource :topic_tags, only: [:show, :update]
       resource :imports, only: [:show, :create]
       resources :exports, only: [:index, :create]
-      resources :chat_tests, only: [:new, :create, :show]
+      resource :chat_tests, only: [:new, :create, :show]
       resources :threads, only: :index do
         resources :messages, only: [:index] do
           resource :answer_marked, only: [:create, :destroy], controller: :answer_marked
@@ -130,7 +132,6 @@ Rails.application.routes.draw do
 
   namespace :api, { format: 'json' } do
     resources :messages, only: :create
-    resources :question_answers
     resources :public_bots, param: :token, only: [:show]
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
     resources :bots, param: :token do
@@ -140,6 +141,9 @@ Rails.application.routes.draw do
       resource :line_credential, module: :bots, only: [:show]
       resource :chatwork_credential, module: :bots, only: [:show]
       resource :microsoft_credential, module: :bots, only: [:show]
+      resources :decision_branches, module: :bots do
+        resource :answer_link, only: [:create, :destroy], module: :decision_branches
+      end
     end
   end
 end

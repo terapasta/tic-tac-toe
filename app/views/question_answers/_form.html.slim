@@ -23,6 +23,8 @@
         data-default-value=@question_answer.answer
         data-bot-id=@bot.id
       )
+        label 回答
+        p ...
 
     .form-group
       .card: .card-body
@@ -58,6 +60,9 @@
       data-question-answer-id=@question_answer.id
       data-bot-id=@bot.id
     )
+      .card: .card-body
+        label トピックタグ
+        p ...
 
     .form-group.text-right
       = f.submit class: 'btn btn-success', data: { event: (@question_answer.persisted? ? 'update q&a' : 'new create q&a') }

@@ -95,7 +95,6 @@ gem 'natto'
 gem 'config'
 gem 'active_model_serializers'
 gem 'non-stupid-digest-assets'
-gem 'asset_sync'
 gem 'fog-aws'
 gem 'silencer'
 gem 'foreman'
@@ -150,6 +149,7 @@ group :development, :test do
 
   gem 'database_cleaner'
   gem 'letter_opener'
+  gem 'letter_opener_web'
 
   # Capistrano
   gem 'capistrano', '~> 3.6', '>= 3.6.1'
@@ -167,4 +167,5 @@ group :production, :staging do
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
   gem 'rollbar'
+  gem 'asset_sync', '~> 2.4.0'
 end

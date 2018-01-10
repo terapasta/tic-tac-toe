@@ -2,7 +2,7 @@ module Replyable
   extend ActiveSupport::Concern
 
   def receive_and_reply!(parent, guest_message)
-    responder = Conversation::Switcher.new.responder(guest_message, session[:states])
+    responder = Conversation::Switcher.new.responder(guest_message)
     reply = responder.do_reply
     question_answer = reply.question_answer
     # session[:states] = responder.states

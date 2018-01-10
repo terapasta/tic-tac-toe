@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214011732) do
+ActiveRecord::Schema.define(version: 20180105030521) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -45,6 +45,15 @@ ActiveRecord::Schema.define(version: 20171214011732) do
     t.integer "file_size", default: 0
     t.integer "question_answer_id"
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
+  end
+
+  create_table "answer_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "decision_branch_id", null: false
+    t.integer "answer_record_id", null: false
+    t.string "answer_record_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decision_branch_id", "answer_record_id", "answer_record_type"], name: "answer_links_main_index", unique: true
   end
 
   create_table "bad_reasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -95,6 +104,8 @@ ActiveRecord::Schema.define(version: 20171214011732) do
     t.text "has_suggests_message"
     t.boolean "enable_guest_user_registration", default: false
     t.string "widget_subtitle"
+    t.text "chat_test_results"
+    t.boolean "is_chat_test_processing"
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
@@ -333,7 +344,7 @@ ActiveRecord::Schema.define(version: 20171214011732) do
     t.string "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "role", default: 0
+    t.integer "role", default: 0, null: false
     t.json "notification_settings"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

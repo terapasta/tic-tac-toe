@@ -94,7 +94,8 @@ RSpec.describe 'Chats', type: :features, js: true do
         scenario 'show answer and rating' do
           expect(bot.tutorial.ask_question).not_to be
           visit "/embed/#{bot.token}/chats/new"
-          fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
+          find('[name=chat-message-body]').set('サンプルメッセージ')
+          # fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
           expect(find("input[name='chat-message-body']").value).to_not eq('')
           within 'form' do
             click_on '質問'
@@ -121,7 +122,8 @@ RSpec.describe 'Chats', type: :features, js: true do
           has_decision_branch_answer_message.update(chat: Chat.last)
           allow_any_instance_of(Chats::MessagesController).to receive(:receive_and_reply!).and_return([has_decision_branch_answer_message])
 
-          fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
+          find('[name=chat-message-body]').set('サンプルメッセージ')
+          # fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
           within 'form' do
             click_button '質問'
           end
@@ -138,7 +140,8 @@ RSpec.describe 'Chats', type: :features, js: true do
 
         scenario 'training' do
           visit "/embed/#{bot.token}/chats/new"
-          fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
+          find('[name=chat-message-body]').set('サンプルメッセージ')
+          # fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
           within 'form' do
             click_button '質問'
           end
@@ -149,8 +152,10 @@ RSpec.describe 'Chats', type: :features, js: true do
 
           within all('.chat-section--bordered')[1] do
             find('.chat-section__switch').click
-            fill_in_input name: 'chat-guest-message-body', value: 'トレーニング質問'
-            fill_in_input name: 'chat-bot-message-body', value: 'トレーニング回答'
+            find('[name=chat-guest-message-body]').set('トレーニング質問')
+            find('[name=chat-bot-message-body]').set('トレーニング回答')
+            # fill_in_input name: 'chat-guest-message-body', value: 'トレーニング質問'
+            # fill_in_input name: 'chat-bot-message-body', value: 'トレーニング回答'
             sleep 1
             click_link 'キャンセル'
             sleep 1

@@ -10,10 +10,11 @@ RUN apt-get update -qq \
                     mecab-ipadic \
                     mecab-ipadic-utf8 \
                     mecab-utils \
-                    nodejs \
-                    npm \
-                    nodejs-legacy \
     && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g yarn
 
 WORKDIR /tmp
 RUN apt-get update \
@@ -21,7 +22,7 @@ RUN apt-get update \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb \
     && apt-get -fy install \
-    && wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip \
+    && wget https://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip \
     && unzip chromedriver_linux64.zip \
     && cp chromedriver /usr/local/bin/chromedriver
 

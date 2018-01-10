@@ -1,0 +1,9 @@
+= render layout: 'bots/layout' do
+  .mb-3
+    = link_to bot_tasks_path(@bot), class: 'text-muted' do
+      = material_icon 'keyboard_arrow_left', class: 'mi-xs'
+      = space
+      span 対話タスク一覧へ戻る
+  = render('message')
+
+  = render('card', { bot: @bot, task: @task, redirect_path: bot_task_path(@bot, @task) })

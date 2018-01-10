@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='gateway.proto',
   package='gateway',
   syntax='proto3',
-  serialized_pb=_b('\n\rgateway.proto\x12\x07gateway\"B\n\x11LearningParameter\x12\x11\n\talgorithm\x18\x01 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x02 \x01(\x05\"K\n\x06Result\x12\x1a\n\x12question_answer_id\x18\x01 \x01(\x05\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\x12\x10\n\x08question\x18\x03 \x01(\t\"d\n\x0cReplyRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x62ody\x18\x02 \x01(\t\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"\xa8\x01\n\rReplyResponse\x12\x1e\n\x16question_feature_count\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.gateway.Result\x12\x12\n\nnoun_count\x18\x03 \x01(\x05\x12\x12\n\nverb_count\x18\x04 \x01(\x05\x12\x11\n\talgorithm\x18\x05 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x06 \x01(\x05\"V\n\x0cLearnRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"P\n\rLearnResponse\x12\x10\n\x08\x61\x63\x63uracy\x18\x02 \x01(\x02\x12\x11\n\tprecision\x18\x03 \x01(\x02\x12\x0e\n\x06recall\x18\x04 \x01(\x02\x12\n\n\x02\x66\x31\x18\x05 \x01(\x02\x32y\n\x03\x42ot\x12\x38\n\x05Reply\x12\x15.gateway.ReplyRequest\x1a\x16.gateway.ReplyResponse\"\x00\x12\x38\n\x05Learn\x12\x15.gateway.LearnRequest\x1a\x16.gateway.LearnResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\rgateway.proto\x12\x07gateway\"B\n\x11LearningParameter\x12\x11\n\talgorithm\x18\x01 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x02 \x01(\x05\"K\n\x06Result\x12\x1a\n\x12question_answer_id\x18\x01 \x01(\x05\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\x12\x10\n\x08question\x18\x03 \x01(\t\"\x0e\n\x0cSetupRequest\"\x0f\n\rSetupResponse\"d\n\x0cReplyRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x62ody\x18\x02 \x01(\t\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"\xa8\x01\n\rReplyResponse\x12\x1e\n\x16question_feature_count\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.gateway.Result\x12\x12\n\nnoun_count\x18\x03 \x01(\x05\x12\x12\n\nverb_count\x18\x04 \x01(\x05\x12\x11\n\talgorithm\x18\x05 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x06 \x01(\x05\"V\n\x0cLearnRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"P\n\rLearnResponse\x12\x10\n\x08\x61\x63\x63uracy\x18\x02 \x01(\x02\x12\x11\n\tprecision\x18\x03 \x01(\x02\x12\x0e\n\x06recall\x18\x04 \x01(\x02\x12\n\n\x02\x66\x31\x18\x05 \x01(\x02\x32\xb3\x01\n\x03\x42ot\x12\x38\n\x05Setup\x12\x15.gateway.SetupRequest\x1a\x16.gateway.SetupResponse\"\x00\x12\x38\n\x05Reply\x12\x15.gateway.ReplyRequest\x1a\x16.gateway.ReplyResponse\"\x00\x12\x38\n\x05Learn\x12\x15.gateway.LearnRequest\x1a\x16.gateway.LearnResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -108,6 +108,54 @@ _RESULT = _descriptor.Descriptor(
 )
 
 
+_SETUPREQUEST = _descriptor.Descriptor(
+  name='SetupRequest',
+  full_name='gateway.SetupRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=171,
+  serialized_end=185,
+)
+
+
+_SETUPRESPONSE = _descriptor.Descriptor(
+  name='SetupResponse',
+  full_name='gateway.SetupResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=187,
+  serialized_end=202,
+)
+
+
 _REPLYREQUEST = _descriptor.Descriptor(
   name='ReplyRequest',
   full_name='gateway.ReplyRequest',
@@ -148,8 +196,8 @@ _REPLYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=171,
-  serialized_end=271,
+  serialized_start=204,
+  serialized_end=304,
 )
 
 
@@ -214,8 +262,8 @@ _REPLYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=274,
-  serialized_end=442,
+  serialized_start=307,
+  serialized_end=475,
 )
 
 
@@ -252,8 +300,8 @@ _LEARNREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=444,
-  serialized_end=530,
+  serialized_start=477,
+  serialized_end=563,
 )
 
 
@@ -304,8 +352,8 @@ _LEARNRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=532,
-  serialized_end=612,
+  serialized_start=565,
+  serialized_end=645,
 )
 
 _REPLYREQUEST.fields_by_name['learning_parameter'].message_type = _LEARNINGPARAMETER
@@ -313,6 +361,8 @@ _REPLYRESPONSE.fields_by_name['results'].message_type = _RESULT
 _LEARNREQUEST.fields_by_name['learning_parameter'].message_type = _LEARNINGPARAMETER
 DESCRIPTOR.message_types_by_name['LearningParameter'] = _LEARNINGPARAMETER
 DESCRIPTOR.message_types_by_name['Result'] = _RESULT
+DESCRIPTOR.message_types_by_name['SetupRequest'] = _SETUPREQUEST
+DESCRIPTOR.message_types_by_name['SetupResponse'] = _SETUPRESPONSE
 DESCRIPTOR.message_types_by_name['ReplyRequest'] = _REPLYREQUEST
 DESCRIPTOR.message_types_by_name['ReplyResponse'] = _REPLYRESPONSE
 DESCRIPTOR.message_types_by_name['LearnRequest'] = _LEARNREQUEST
@@ -332,6 +382,20 @@ Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,),
   # @@protoc_insertion_point(class_scope:gateway.Result)
   ))
 _sym_db.RegisterMessage(Result)
+
+SetupRequest = _reflection.GeneratedProtocolMessageType('SetupRequest', (_message.Message,), dict(
+  DESCRIPTOR = _SETUPREQUEST,
+  __module__ = 'gateway_pb2'
+  # @@protoc_insertion_point(class_scope:gateway.SetupRequest)
+  ))
+_sym_db.RegisterMessage(SetupRequest)
+
+SetupResponse = _reflection.GeneratedProtocolMessageType('SetupResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SETUPRESPONSE,
+  __module__ = 'gateway_pb2'
+  # @@protoc_insertion_point(class_scope:gateway.SetupResponse)
+  ))
+_sym_db.RegisterMessage(SetupResponse)
 
 ReplyRequest = _reflection.GeneratedProtocolMessageType('ReplyRequest', (_message.Message,), dict(
   DESCRIPTOR = _REPLYREQUEST,
@@ -369,13 +433,22 @@ _BOT = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=614,
-  serialized_end=735,
+  serialized_start=648,
+  serialized_end=827,
   methods=[
+  _descriptor.MethodDescriptor(
+    name='Setup',
+    full_name='gateway.Bot.Setup',
+    index=0,
+    containing_service=None,
+    input_type=_SETUPREQUEST,
+    output_type=_SETUPRESPONSE,
+    options=None,
+  ),
   _descriptor.MethodDescriptor(
     name='Reply',
     full_name='gateway.Bot.Reply',
-    index=0,
+    index=1,
     containing_service=None,
     input_type=_REPLYREQUEST,
     output_type=_REPLYRESPONSE,
@@ -384,7 +457,7 @@ _BOT = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='Learn',
     full_name='gateway.Bot.Learn',
-    index=1,
+    index=2,
     containing_service=None,
     input_type=_LEARNREQUEST,
     output_type=_LEARNRESPONSE,
@@ -415,6 +488,11 @@ try:
       Args:
         channel: A grpc.Channel.
       """
+      self.Setup = channel.unary_unary(
+          '/gateway.Bot/Setup',
+          request_serializer=SetupRequest.SerializeToString,
+          response_deserializer=SetupResponse.FromString,
+          )
       self.Reply = channel.unary_unary(
           '/gateway.Bot/Reply',
           request_serializer=ReplyRequest.SerializeToString,
@@ -430,6 +508,13 @@ try:
   class BotServicer(object):
     # missing associated documentation comment in .proto file
     pass
+
+    def Setup(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+      context.set_details('Method not implemented!')
+      raise NotImplementedError('Method not implemented!')
 
     def Reply(self, request, context):
       # missing associated documentation comment in .proto file
@@ -448,6 +533,11 @@ try:
 
   def add_BotServicer_to_server(servicer, server):
     rpc_method_handlers = {
+        'Setup': grpc.unary_unary_rpc_method_handler(
+            servicer.Setup,
+            request_deserializer=SetupRequest.FromString,
+            response_serializer=SetupResponse.SerializeToString,
+        ),
         'Reply': grpc.unary_unary_rpc_method_handler(
             servicer.Reply,
             request_deserializer=ReplyRequest.FromString,
@@ -472,6 +562,10 @@ try:
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
     # missing associated documentation comment in .proto file
     pass
+    def Setup(self, request, context):
+      # missing associated documentation comment in .proto file
+      pass
+      context.code(beta_interfaces.StatusCode.UNIMPLEMENTED)
     def Reply(self, request, context):
       # missing associated documentation comment in .proto file
       pass
@@ -490,6 +584,11 @@ try:
     only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0."""
     # missing associated documentation comment in .proto file
     pass
+    def Setup(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
+      # missing associated documentation comment in .proto file
+      pass
+      raise NotImplementedError()
+    Setup.future = None
     def Reply(self, request, timeout, metadata=None, with_call=False, protocol_options=None):
       # missing associated documentation comment in .proto file
       pass
@@ -511,14 +610,17 @@ try:
     request_deserializers = {
       ('gateway.Bot', 'Learn'): LearnRequest.FromString,
       ('gateway.Bot', 'Reply'): ReplyRequest.FromString,
+      ('gateway.Bot', 'Setup'): SetupRequest.FromString,
     }
     response_serializers = {
       ('gateway.Bot', 'Learn'): LearnResponse.SerializeToString,
       ('gateway.Bot', 'Reply'): ReplyResponse.SerializeToString,
+      ('gateway.Bot', 'Setup'): SetupResponse.SerializeToString,
     }
     method_implementations = {
       ('gateway.Bot', 'Learn'): face_utilities.unary_unary_inline(servicer.Learn),
       ('gateway.Bot', 'Reply'): face_utilities.unary_unary_inline(servicer.Reply),
+      ('gateway.Bot', 'Setup'): face_utilities.unary_unary_inline(servicer.Setup),
     }
     server_options = beta_implementations.server_options(request_deserializers=request_deserializers, response_serializers=response_serializers, thread_pool=pool, thread_pool_size=pool_size, default_timeout=default_timeout, maximum_timeout=maximum_timeout)
     return beta_implementations.server(method_implementations, options=server_options)
@@ -533,14 +635,17 @@ try:
     request_serializers = {
       ('gateway.Bot', 'Learn'): LearnRequest.SerializeToString,
       ('gateway.Bot', 'Reply'): ReplyRequest.SerializeToString,
+      ('gateway.Bot', 'Setup'): SetupRequest.SerializeToString,
     }
     response_deserializers = {
       ('gateway.Bot', 'Learn'): LearnResponse.FromString,
       ('gateway.Bot', 'Reply'): ReplyResponse.FromString,
+      ('gateway.Bot', 'Setup'): SetupResponse.FromString,
     }
     cardinalities = {
       'Learn': cardinality.Cardinality.UNARY_UNARY,
       'Reply': cardinality.Cardinality.UNARY_UNARY,
+      'Setup': cardinality.Cardinality.UNARY_UNARY,
     }
     stub_options = beta_implementations.stub_options(host=host, metadata_transformer=metadata_transformer, request_serializers=request_serializers, response_deserializers=response_deserializers, thread_pool=pool, thread_pool_size=pool_size)
     return beta_implementations.dynamic_stub(channel, 'gateway.Bot', cardinalities, options=stub_options)

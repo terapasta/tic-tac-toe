@@ -19,13 +19,14 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
   end
 
   before do
+    ActionMailer::Base.deliveries = []
     stub_const('Ml::Engine', DummyMLEngine)
   end
 
   feature 'failed and bad rating' do
     scenario do
       visit "/embed/#{bot.token}/chats/new"
-      fill_in_input name: 'chat-message-body', value: 'サンプルメッセージ'
+      find('[name=chat-message-body]').set('サンプルメッセージ')
       click_on '質問'
       sleep 1
 
@@ -53,6 +54,7 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
         expect(task.guest_message).to eq('サンプルメッセージ')
         expect(task.bot_message).to_not be_blank
       end
+      page.save_screenshot
     end
   end
 end

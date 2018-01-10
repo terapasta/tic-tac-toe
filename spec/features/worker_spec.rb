@@ -45,7 +45,7 @@ RSpec.describe 'worker作業画面の確認', type: :feature, js: true do
   context '同義文が入力してある場合の登録' do
     scenario 'Message "登録しました。" is displayed' do
       visit new_imported_sentence_synonym_path
-      fill_in_input id: 'question_answer_sentence_synonyms_attributes_0_body', value: 'test'
+      find('#question_answer_sentence_synonyms_attributes_0_body').set('test')
       find('#submit-button').click
       expect(page). to have_content '登録しました。'
     end

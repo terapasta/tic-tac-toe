@@ -40,22 +40,23 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'display tree nodes' do
-    find("#question-#{question_answers.first.id}").click
+
+    find("#Question-#{question_answers.first.id}").click
     expect(page).to have_content(question_answers.first.answer)
-    find("#answer-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
     expect(page).to have_content(decision_branches.first.body)
     expect(page).to have_content(decision_branches.second.body)
-    find("#decision-branch-#{decision_branches.first.id}").click
+    find("#DecisionBranch-#{decision_branches.first.id}").click
     expect(page).to have_content(decision_branches.first.answer)
   end
 
   scenario 'creates question with answer'  do
-    find('#adding').click
+    find('#AddQuestionAnswerButton').click
     find('[name=question-question]').set('new question')
     find('[name=question-answer]').set('new answer')
     # fill_in_input name: 'question-question', value: 'new question'
     # fill_in_input name: 'question-answer', value: 'new answer'
-    click_link '保存'
+    click_button '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('new question')
       expect(page).to have_content('new answer')
@@ -63,35 +64,36 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'creates decision_branch' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
-    find('#add-decision-branch-button').click
+    find("#Question-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
+    find('#AddDecisionBranchButton').click
     find('[name=decision-branch-body]').set('new decision branch')
     # fill_in_input name: 'decision-branch-body', value: 'new decision branch'
-    find('span.btn.btn-success').click
+    click_button '追加'
+    # find('.btn.btn-success').click
     within '.master-detail-panel__master' do
       expect(page).to have_content('new decision branch')
     end
   end
 
   scenario 'updates answer' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
     find('[name=answer-body]').set('updated answer')
     # fill_in_input name: 'answer-body', value: 'updated answer'
-    click_link '保存'
+    click_button '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('updated answer')
     end
   end
 
   scenario 'updates decision branch' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
-    within "#decision-branch-item-#{decision_branches.first.id}" do
+    find("#Question-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
+    within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('.btn').click
     end
-    within "#decision-branch-item-#{decision_branches.first.id}" do
+    within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('[name=decision-branch-body]').set('updated decision branch')
       # fill_in_input name: 'decision-branch-body', value: 'updated decision branch'
       find('.btn-success').click
@@ -102,25 +104,25 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes answer' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
-    find("#delete-answer-button").click
-    find("#alert-delete-button").click
+    find("#Question-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
+    find("#DeleteAnswerButton").click
+    find(".swal2-confirm.swal2-styled").click
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(question_answers.first.answer)
     end
   end
 
   scenario 'deletes decision branch' do
-    find("#question-#{question_answers.first.id}").click
-    find("#answer-#{question_answers.first.id}").click
-    within "#decision-branch-item-#{decision_branches.first.id}" do
+    find("#Question-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
+    within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('.btn').click
     end
-    within "#decision-branch-item-#{decision_branches.first.id}" do
-      find('.btn-secondary').click
+    within "#DecisionBranchItem-#{decision_branches.first.id}" do
+      find('.btn-danger').click
     end
-    find("#alert-delete-button").click
+    find(".swal2-confirm.swal2-styled").click
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)
     end

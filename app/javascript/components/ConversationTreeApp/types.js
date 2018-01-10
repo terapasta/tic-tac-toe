@@ -7,11 +7,13 @@ const {
   number,
   arrayOf,
   object,
+  array,
 } = PropTypes
 
-export const decisionBranchTreePropType = treePropType({
+export const decisionBranchTreePropType = arrayOf(shape({
   id: number.isRequired,
-}, 'childDecisionBranches')
+  childDecisionBranches: array
+}))
 
 export const questionsTreeType = arrayOf(shape({
   id: number.isRequired,
@@ -60,12 +62,6 @@ function treePropType(baseShape, childKey) {
   const type = shape(nodeShape)
   return lazyType
 }
-
-// function lazyFunction(f) {
-//   return function (...args) {
-//     return f().apply(this, args)
-//   }
-// }
 
 function lazyFunction(f, _lazyCheckerHasSeen) {
   return function () {

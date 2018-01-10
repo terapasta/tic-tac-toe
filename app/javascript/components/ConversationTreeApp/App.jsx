@@ -166,6 +166,7 @@ class ConversationTree extends Component {
             <DecisionBranchForm
               activeItem={activeItem}
               questionsTree={questionsTree}
+              questionsRepo={questionsRepo}
               decisionBranchesRepo={decisionBranchesRepo}
               onUpdate={(answerId, id, body, answer) => {
                 return dispatch(decisionBranchActions.updateDecisionBranch(answerId, id, body, answer)).then(() => {
@@ -180,6 +181,8 @@ class ConversationTree extends Component {
                 });
               }}
               onNestedDelete={(parentId, id) => dispatch(decisionBranchActions.deleteNestedDecisionBranch(parentId, id))}
+              onSelectLinkedAnswer={(...args) => console.log('select', args)}
+              onDeselectLinkedAnswer={(...args) => console.log('deselect', args)}
             />
           )}
           {activeItem.type === 'decisionBranchAnswer' && (

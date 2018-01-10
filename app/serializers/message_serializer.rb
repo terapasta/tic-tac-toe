@@ -35,7 +35,7 @@ class MessageSerializer < ActiveModel::Serializer
   end
 
   def child_decision_branches
-    (object.decision_branch&.child_decision_branches || [])
+    (object.decision_branch&.child_decision_branches_or_answer_link || [])
       .map(&:as_json)
       .map{ |it| deep_camelize_keys(it) }
   end

@@ -13,6 +13,8 @@ import {
 } from '../types'
 
 import Modal from '../../Modal'
+import { TabNav, TabTextareaContent, TabSelectorContent } from './DecisionBranchForm/Tab'
+import SelectableTree from './SelectableTree'
 
 const getBodyAndAnswer = (props, { exists, empty }) => {
   const { activeItem, decisionBranchesRepo } = props
@@ -93,7 +95,17 @@ class DecisionBranchForm extends Component {
   }
 
   render() {
-    const { answer, body, isShowConfirmDelete } = this.state;
+    const {
+      activeItem,
+      questionsTree,
+      questionsRepo,
+      decisionBranchesRepo,
+      onSelectLinkedAnswer,
+      onDeselectLinkedAnswer,
+    } = this.props
+    const { answer, body, isShowConfirmDelete, currentType } = this.state;
+
+    const data = decisionBranchesRepo[activeItem.node.id]
 
     return (
       <div>
@@ -107,13 +119,29 @@ class DecisionBranchForm extends Component {
           />
         </div>
         <div className="form-group">
-          <label><i className="material-icons" title="質問">chat_bubble_outline</i> 回答</label>
-          <TextArea
-            className="form-control"
-            value={answer}
-            onChange={e => this.setState({ answer: e.target.value })}
-            rows={3}
+          <TabNav
+            currentType={currentType}
+            onClick={type => this.setState({ currentType: type })}
           />
+          <TabTextareaContent currentType={currentType}>
+            <TextArea
+              className="form-control"
+              value={answer}
+              onChange={e => this.setState({ answer: e.target.value })}
+              minRows={3}
+            />
+          </TabTextareaContent>
+          <TabSelectorContent currentType={currentType}>
+            <p>この選択肢から別のQ&Aツリーの回答にリンクさせることができます</p>
+            <SelectableTree
+              data={data}
+              questionsTree={questionsTree}
+              questionsRepo={questionsRepo}
+              decisionBranchesRepo={decisionBranchesRepo}
+              onSelectLinkedAnswer={onSelectLinkedAnswer}
+              onDeselectLinkedAnswer={onDeselectLinkedAnswer}
+            />
+          </TabSelectorContent>
         </div>
 
         <div className="form-group text-right">
@@ -165,6 +193,8 @@ DecisionBranchForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onNestedUpdate: PropTypes.func.isRequired,
   onNestedDelete: PropTypes.func.isRequired,
+  onSelectLinkedAnswer: PropTypes.func.isRequired,
+  onDeselectLinkedAnswer: PropTypes.func.isRequired,
 };
 
 export default DecisionBranchForm;

@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 20180105030521) do
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
   end
 
+  create_table "answer_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "decision_branch_id", null: false
+    t.integer "answer_record_id", null: false
+    t.string "answer_record_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decision_branch_id", "answer_record_id", "answer_record_type"], name: "answer_links_main_index", unique: true
+  end
+
   create_table "bad_reasons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "message_id", null: false
     t.text "body"
@@ -335,7 +344,7 @@ ActiveRecord::Schema.define(version: 20180105030521) do
     t.string "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "role", default: 0
+    t.integer "role", default: 0, null: false
     t.json "notification_settings"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

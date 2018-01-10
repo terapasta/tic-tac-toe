@@ -115,14 +115,14 @@ export default {
       <div class="text-right">
         <button
           class="btn btn-success"
-          id="save-answer-button"
+          id="SaveAnswerButton"
           @click.prevent="handleSaveButtonClick"
           :disabled="isProcessing"
         >保存</button>
         &nbsp;&nbsp;
         <button
           class="btn btn-link"
-          id="delete-answer-button"
+          id="DeleteAnswerButton"
           @click.prevent="handleDeleteButtonClick"
           :disabled="isProcessing"
         ><span class="text-danger">削除</span></button>
@@ -140,7 +140,7 @@ export default {
       </ul>
       <button
         class="btn btn-link my-3"
-        id="add-decision-branch-button"
+        id="AddDecisionBranchButton"
         @click.prevent="handleAddDecisionBranchButtonClick"
         :disabled="isProcessing"
       >＋この回答に対する選択肢を追加する</button>

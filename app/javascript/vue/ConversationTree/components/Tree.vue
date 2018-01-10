@@ -32,7 +32,11 @@ export default {
   <ol class="tree">
     <li class="tree__node" id="adding">
       <div :class="addButtonClassName">
-        <router-link class="tree__item-body" to="/question/new">＋追加</router-link>
+        <router-link
+          id="AddQuestionAnswerButton"
+          class="tree__item-body"
+          to="/question/new"
+        >＋追加</router-link>
       </div>
     </li>
     <template v-for="node in questionsTree">

@@ -74,7 +74,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div :id="`DecisionBranchItem-${nodeData.id}`">
     <span v-if="!isNew && !isEditing">{{nodeData.body}}</span>
     <button
       v-if="!isNew && !isEditing"

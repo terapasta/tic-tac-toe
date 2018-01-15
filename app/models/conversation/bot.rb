@@ -17,46 +17,55 @@ class Conversation::Bot
       @word_mappings.replace_synonym(@message.body) : @message.body
   end
 
-  def do_reply
-    Rails.logger.debug("Conversation::Bot#reply body: #{@question_text}")
-
-    result = @engine.reply(@question_text)
-    @results = result[:results]
-
-    question = @question_text
-    question_feature_count = result[:question_feature_count]
-    effective_results = @results.select{|x| x[:probability] > 0.1}
-    classify_threshold = resolve_classify_threshold(result[:noun_count], result[:verb_count])
-
-    if effective_results.length == 0
+  def self.extract_results(bot, reply)
+    selected = reply[:results].select{ |it| it[:probability] > 0.1 }
+    if selected.length == 0
       question_answer_ids = [NO_CLASSIFIED_ANSWER_ID]
       question_answer_id = 0
       probability = 1
     else
-      question_answer_ids = effective_results.map{|x| x[:question_answer_id].to_i}
+      question_answer_ids = selected.map{ |it| it[:question_answer_id].to_i }
       question_answer_id = question_answer_ids.first
-      probability = effective_results.first[:probability]
+      probability = selected.first[:probability]
     end
-    Rails.logger.debug(probability)
-
-    @question_answer = QuestionAnswer.find_or_null_question_answer(question_answer_id, @bot, probability, classify_threshold)
-
-    reply = Hashie::Mash.new(
-      question: question,
-      question_feature_count: question_feature_count,
-      question_answer: @question_answer,
-      probability: probability,
+    classify_threshold = resolve_classify_threshold(bot, reply[:noun_count], reply[:verb_count])
+    Hashie::Mash.new(
       question_answer_ids: question_answer_ids,
-      raw_data: result
+      question_answer_id: question_answer_id,
+      probability: probability,
+      classify_threshold: classify_threshold
+    )
+  end
+
+  def self.resolve_classify_threshold(bot, noun_count, verb_count)
+    # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
+    return 0.9 if noun_count == 1 && verb_count == 0
+    learning_parameter = bot.learning_parameter || LearningParameter.build_with_default
+    learning_parameter.classify_threshold
+  end
+
+  def do_reply
+    Rails.logger.debug("Conversation::Bot#reply body: #{@question_text}")
+
+    reply = @engine.reply(@question_text)
+    extract = self.class.extract_results(@bot, reply)
+    Rails.logger.debug(extract.probability)
+
+    @question_answer = QuestionAnswer.find_or_null_question_answer(
+      extract.question_answer_id,
+      @bot,
+      extract.probability,
+      extract.classify_threshold
     )
 
-    # HACK botクラスにcontactに関係するロジックが混ざっているのでリファクタリングしたい
-    # HACK 開発をしやすくするためにcontact機能は一旦コメントアウト
-    # if Answer::PRE_TRANSITION_CONTEXT_CONTACT_ID.include?(answer_id) && Service.contact.last.try(:enabled?)
-    #   answers << ContactAnswer.find(ContactAnswer::TRANSITION_CONTEXT_CONTACT_ID)
-    # end
-
-    reply
+    Hashie::Mash.new(
+      question: @question_text,
+      question_feature_count: reply[:question_feature_count],
+      question_answer: @question_answer,
+      probability: extract.probability,
+      question_answer_ids: extract.question_answer_ids,
+      raw_data: result
+    )
   end
 
   def similar_question_answers_in(question_answer_ids, without_id: nil)
@@ -67,9 +76,6 @@ class Conversation::Bot
 
   private
     def resolve_classify_threshold(noun_count, verb_count)
-      # NOTE 質問文の中に名詞が１つだったらサジェストを積極的に出せるようにする
-      return 0.9 if noun_count == 1 && verb_count == 0
-      learning_parameter = @bot.learning_parameter || LearningParameter.build_with_default
-      learning_parameter.classify_threshold
+      self.class.resolve_classify_threshold(@bot, noun_count, verb_count)
     end
 end

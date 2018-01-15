@@ -4,7 +4,7 @@ import sys
 import time
 import grpc
 
-from gateway_pb2 import ReplyResponse, Result, LearnResponse, SetupResponse
+from gateway_pb2 import ReplyResponse, ReplyResponses, Result, LearnResponse, SetupResponse
 from gateway_pb2_grpc import BotServicer
 from gateway_pb2_grpc import add_BotServicer_to_server
 
@@ -25,6 +25,12 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
 class RouteGuideServicer(BotServicer):
+    def Replies(self, requests, context):
+        results = []
+        for request in requests.data:
+            results.append(self.Reply(request, context))
+        return ReplyResponses(data=results)
+
     def Reply(self, request, context):
         logger.debug('bot_id = %s' % request.bot_id)
         logger.debug('body = %s' % request.body)
@@ -102,6 +108,7 @@ def serve(port):
             RouteGuideServicer(), server)
     server.add_insecure_port('[::]:%s' % port)
     server.start()
+    logger.info('server running!!')
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
@@ -134,5 +141,4 @@ if __name__ == '__main__':
     signal.signal(signal.SIGSEGV, on_sigsegv)
     signal.signal(signal.SIGABRT, on_sigsegv)
 
-    logger.info('server running!!')
     serve(args.port)

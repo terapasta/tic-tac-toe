@@ -64,7 +64,7 @@ class Conversation::Bot
       question_answer: @question_answer,
       probability: extract.probability,
       question_answer_ids: extract.question_answer_ids,
-      raw_data: result
+      raw_data: reply
     )
   end
 

@@ -16,7 +16,7 @@ Vue.use(VueSweetAlert)
 
 document.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('ConversationTree')
-  if (isEmpty(mountNode)) { return }
+  if (mountNode === null) { return }
   const state = assign(baseState, getData(mountNode))
 
   if (process.env.NODE_ENV === 'development') {

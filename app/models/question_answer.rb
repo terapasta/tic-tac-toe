@@ -82,7 +82,8 @@ class QuestionAnswer < ApplicationRecord
   end
 
   def no_classified?
-    bot.nil?
+    # bot.nil?
+    false
   end
 
   def self.import_csv(file, bot, options = {})
@@ -109,5 +110,22 @@ class QuestionAnswer < ApplicationRecord
     else
       QuestionAnswer.find(question_answer_id)
     end
+  end
+
+  def self.find_all_or_null_question_answers(question_answer_ids, bot)
+    qa_ids = question_answer_ids.select{ |id| id > 0 }
+    qas = where(id: qa_ids).to_a
+    index = 0
+    results = []
+    while index < question_answer_ids.count
+      id = question_answer_ids[index]
+      if id != 0
+        results.push(qas.detect{ |qa| qa.id == id })
+      else
+        results.push(NullQuestionAnswer.new(bot))
+      end
+      index += 1
+    end
+    results
   end
 end

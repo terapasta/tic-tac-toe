@@ -9,7 +9,7 @@ class ReplyResponse
 
   def effective_results
     @effective_results ||= @raw_data[:results].select{ |it|
-      it[:probability] > 0.1
+      it[:probability] > @bot.effective_results_threshold || 0.1
     }
   end
 
@@ -81,7 +81,8 @@ class ReplyResponse
   end
 
   def show_similar_question_answers?
-    probability < MyOpeConfig.threshold_of_suggest_similar_questions ||
+    return true if @bot.is_force_show_similar_question_answers
+    probability < threshold_of_suggest_similar_questions ||
     (probability < 0.9 && @question.length <= 5) ||
     (probability < 0.9 && question_feature_count <= 2)
   end
@@ -93,4 +94,10 @@ class ReplyResponse
   def answer_failed
     question_answer.no_classified?
   end
+
+  private
+    def threshold_of_suggest_similar_questions
+      @bot.threshold_of_suggest_similar_questions ||
+        MyOpeConfig.threshold_of_suggest_similar_questions
+    end
 end

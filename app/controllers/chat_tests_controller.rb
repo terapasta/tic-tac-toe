@@ -34,7 +34,7 @@ class ChatTestsController < ApplicationController
     raw_data = FileReader.new(file_path: params[:file].path, encoding: encoding).read
 
     @bot.update(is_chat_test_processing: true, chat_test_results: nil)
-    ChatTestJob.perform_now(@bot, raw_data)
+    ChatTestJob.perform_later(@bot, raw_data)
 
     redirect_to new_bot_chat_tests_path(@bot), notice: 'ボットテストを開始しました'
   end

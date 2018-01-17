@@ -43,21 +43,20 @@
                   span 削除
             td
               - if @result.present?
-                - @result[accuracy_test_case.id].tap do |bot_messages|
-                  - bot_messages.each do |bot_message|
-                    dl style="margin-bottom:16px"
-                      dt 回答
-                      dd
-                        - if bot_message.answer_failed
-                          = material_icon 'error_outline', class: 'mi-sm text-muted'
-                          = space
-                        = nl2br bot_message.body
+                - @result[accuracy_test_case.id].tap do |bot_message|
+                  dl style="margin-bottom:16px"
+                    dt 回答
+                    dd
+                      - if bot_message.answer_failed
+                        = material_icon 'error_outline', class: 'mi-sm text-muted'
+                        = space
+                      = nl2br bot_message.body
 
-                    - if bot_message.similar_question_answers.present?
-                      strong サジェスト
-                      ul
-                        - bot_message.similar_question_answers.each do |qa|
-                          li= qa.question
+                  - if bot_message.similar_question_answers.present?
+                    strong サジェスト
+                    ul
+                      - bot_message.similar_question_answers.each do |qa|
+                        li= qa.question
 
             td.text-center
               - if @result.present?

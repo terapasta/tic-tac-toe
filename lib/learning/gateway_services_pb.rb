@@ -16,6 +16,7 @@ module Gateway
 
       rpc :Setup, SetupRequest, SetupResponse
       rpc :Reply, ReplyRequest, ReplyResponse
+      rpc :Replies, ReplyRequests, ReplyResponses
       rpc :Learn, LearnRequest, LearnResponse
     end
 

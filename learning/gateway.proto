@@ -22,6 +22,10 @@ message ReplyRequest {
     LearningParameter learning_parameter = 3;
 }
 
+message ReplyRequests {
+    repeated ReplyRequest data = 1;
+}
+
 message ReplyResponse {
     int32 question_feature_count = 1;
     repeated Result results = 2;
@@ -29,6 +33,10 @@ message ReplyResponse {
     int32 verb_count = 4;
     int32 algorithm = 5;
     int32 feedback_algorithm = 6;
+}
+
+message ReplyResponses {
+    repeated ReplyResponse data = 1;
 }
 
 message LearnRequest {
@@ -46,5 +54,6 @@ message LearnResponse {
 service Bot {
     rpc Setup (SetupRequest) returns (SetupResponse) {}
     rpc Reply (ReplyRequest) returns (ReplyResponse) {}
+    rpc Replies (ReplyRequests) returns (ReplyResponses) {}
     rpc Learn (LearnRequest) returns (LearnResponse) {}
 }

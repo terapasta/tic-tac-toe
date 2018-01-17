@@ -1,4 +1,8 @@
 class WordMappingsDecorator < Draper::CollectionDecorator
+  def initialize(object, options = {})
+    super(object.includes(:word_mapping_synonyms).to_a, options)
+  end
+
   def replace_synonym(text)
     result = text.dup
     mappings_hash.each do |word, synonyms|

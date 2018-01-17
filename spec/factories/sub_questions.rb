@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :sub_question do
-    question_answer_id 1
-    question "MyText"
+    sequence(:question) { |n| "sub_question.question #{n}" }
   end
 end

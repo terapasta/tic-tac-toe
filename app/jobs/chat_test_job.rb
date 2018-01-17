@@ -1,6 +1,5 @@
 class ChatTestJob < ApplicationJob
   queue_as :default
-  include Replyable
 
   rescue_from StandardError do |e|
     logger.error e.inspect + e.backtrace.join("\n")
@@ -9,23 +8,26 @@ class ChatTestJob < ApplicationJob
     end
   end
 
-  def perform(bot, current_user, raw_data)
+  def perform(bot, raw_data)
     @bot = bot # for error handling
-    ActiveRecord::Base.transaction do
-      @chat = Chat.build_with_user_role(@bot, current_user)
-      @chat.save
-      CSV.parse(raw_data).each do |csv_data|
-        message = @chat.messages.create!(body: csv_data[0]) { |m|
-          m.speaker = 'guest'
-          m.user_agent = 'chat test'
-        }
-        receive_and_reply!(@chat, message)
-      end
-      raise ActiveRecord::Rollback
+    engine = Ml::Engine.new(@bot)
+    word_mappings = WordMapping.for_bot(@bot).decorate
+    data = CSV.parse(raw_data).map(&:first)
+
+    if @bot.use_similarity_classification?
+      data.map!{ |it| word_mappings.replace_synonym(it) }
     end
+
+    reply_responses = engine.replies(data)[:data].map.with_index{ |raw_data, i|
+      ReplyResponse.new(raw_data, @bot, data[i])
+    }
+    ids = reply_responses.map(&:resolved_question_answer_id)
+    qas = QuestionAnswer.find_all_or_null_question_answers(ids, @bot)
+    chat_test_results = qas.map.with_index{ |qa, i| [data[i], qa.answer] }
+
     @bot2 = Bot.find(@bot.id)
     @bot2.assign_attributes(
-      chat_test_results: Message.build_for_bot_test(@chat),
+      chat_test_results: chat_test_results,
       is_chat_test_processing: false
     )
     @bot2.save!

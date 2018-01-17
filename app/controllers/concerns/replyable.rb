@@ -1,51 +1,34 @@
 module Replyable
   extend ActiveSupport::Concern
 
-  def receive_and_reply!(parent, guest_message)
-    responder = Conversation::Switcher.new.responder(guest_message)
-    reply = responder.do_reply
-    question_answer = reply.question_answer
-    # session[:states] = responder.states
+  def receive_and_reply!(chat, guest_message)
+    reply_response = ReplyRequestService.new(chat.bot, [guest_message.body]).process.first
+    bot_message = chat.messages.build(speaker: :bot)
 
-    bot_messages = [question_answer].map do |qa|
-      body = qa.answer
-
-      bot_message = parent.messages.create!(
-        speaker: 'bot',
+    reply_response.question_answer.tap do |qa|
+      bot_message.assign_attributes(
         question_answer_id: qa.id,
-        body: body,
+        body: qa.answer,
         answer_failed: qa.no_classified?,
         created_at: guest_message.created_at + 1.second,
-        reply_log: reply.raw_data,
+        reply_log: reply_response.raw_data,
       )
-      if responder.present?
-        responder.similar_question_answers_in(reply.question_answer_ids, without_id: qa.id).compact.tap do |suggests|
-          bot_message.similar_question_answers = suggests
-          bot_message.update!(
-            similar_question_answers_log: suggests.as_json(only: [:question, :answer]),
-            is_show_similar_question_answers: show_similar_question_answers?(reply)
-          )
-          if suggests.count > 0 && qa.no_classified?
-            bot_message.body = parent.bot.render_has_suggests_message(guest_message.body)
-            bot_message.update!(answer_failed: false)
-          end
+      bot_message.save!
+
+      reply_response.similar_question_answers.tap do |suggests|
+        bot_message.similar_question_answers = suggests
+        bot_message.update!(
+          similar_question_answers_log: suggests.as_json(only: [:question, :answer]),
+          is_show_similar_question_answers: reply_response.show_similar_question_answers?
+        )
+        if suggests.count > 0 && qa.no_classified?
+          bot_message.body = chat.bot.render_has_suggests_message(guest_message.body)
+          bot_message.update!(answer_failed: false)
         end
       end
-      bot_message
     end
 
-    parent.save!
-    bot_messages
+    chat.save!
+    [bot_message]
   end
-
-  private
-    def auto_mode?
-      params[:auto] == '1'
-    end
-
-    def show_similar_question_answers?(reply)
-      reply.probability < MyOpeConfig.threshold_of_suggest_similar_questions ||
-      (reply.probability < 0.9 && reply.question.length <= 5) ||
-      (reply.probability < 0.9 && reply.question_feature_count <= 2)
-    end
 end

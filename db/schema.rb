@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116085935) do
+ActiveRecord::Schema.define(version: 20180117074111) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20180116085935) do
     t.float "classify_threshold", limit: 24, default: 0.5, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "similar_question_answers_threshold", limit: 24
     t.index ["bot_id"], name: "index_learning_parameters_on_bot_id"
   end
 

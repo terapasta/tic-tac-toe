@@ -42,6 +42,7 @@ class RouteGuideServicer(BotServicer):
         )
 
         try:
+            logger.debug("[DEBUG] Perform ReplyController")
             reply = ReplyController.new(context=myope_context).perform(request.body)
         except NotTrainedError:
             detail = 'bot_id:%s wasn\'t trained' % str(myope_context.current_bot.id)
@@ -56,6 +57,7 @@ class RouteGuideServicer(BotServicer):
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(traceback.format_exc())
 
+        logger.debug("[DEBUG] Make ReplyResponse")
         return ReplyResponse(
             question_feature_count=reply['question_feature_count'],
             results=[Result(**x) for x in reply['results']],

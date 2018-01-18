@@ -43,7 +43,8 @@ class ReplyResponse
   end
 
   def similar_question_answers
-    ids = question_answer_ids.drop(1)
+    ids = question_answer_ids
+    ids = ids.drop(1) if (@bot.learning_parameter&.classify_threshold || 0) < 0.9
     qas = @bot.question_answers.where(id: ids).for_suggestion
     question_answer_ids.map{ |id| qas.detect{ |x| id == x.id } }.compact
   end
@@ -65,7 +66,7 @@ class ReplyResponse
       lp = @bot.learning_parameter || LearningParameter.build_with_default
       if noun_count == 1 && verb_count.zero?
         # lp.classify_thresholdが0.9以上だったらこれを返す
-        return lp.classify_threshold if lp.classify_threshold > 0.9
+        return lp.classify_threshold if lp.classify_threshold >= 0.9
         0.9
       else
         lp.classify_threshold

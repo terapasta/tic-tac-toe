@@ -26,7 +26,7 @@ class ChatTestsController < ApplicationController
 
   def create
     if params[:file].blank? || File.extname(params[:file].path) != ".csv"
-      redirect_to new_bot_chat_test_path(@bot), alert: 'csvファイルを選択してください。'
+      redirect_to new_bot_chat_tests_path(@bot), alert: 'csvファイルを選択してください。'
       return
     end
 

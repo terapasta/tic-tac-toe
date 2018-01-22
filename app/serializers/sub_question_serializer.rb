@@ -1,3 +1,3 @@
 class SubQuestionSerializer < ActiveModel::Serializer
-  attributes :question
+  attributes :id, :question
 end

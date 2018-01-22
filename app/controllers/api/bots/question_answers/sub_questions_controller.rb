@@ -14,6 +14,15 @@ class Api::Bots::QuestionAnswers::SubQuestionsController < Api::BaseController
     end
   end
 
+  def update
+    @sub_question = @question_answer.sub_questions.find(params[:id])
+    if @sub_question.update(permitted_attributes(@sub_question))
+      render json: @sub_question, adapter: :json
+    else
+      render_unprocessable_entity_error_json(@sub_question)
+    end
+  end
+
   def destroy
     @sub_question = @question_answer.sub_questions.find(params[:id])
     @sub_question.destroy!

@@ -1,6 +1,12 @@
 class WordMappingsDecorator < Draper::CollectionDecorator
   def initialize(object, options = {})
-    super(object.includes(:word_mapping_synonyms).to_a, options)
+    wms = object.includes(:word_mapping_synonyms).to_a.tap do |wms|
+      # NOTE ユーザーが設定した辞書が後勝ちするように並べ替える
+      system_wms = wms.select{ |it| it.bot_id.blank? }
+      bot_wms = wms.select{ |it| it.bot_id.present? }
+      wms = system_wms + bot_wms
+    end
+    super(wms, options)
   end
 
   def replace_synonym(text)

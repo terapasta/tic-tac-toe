@@ -14,7 +14,20 @@
 
     .form-group
       = f.label :question
-      = f.text_area :question, class: 'form-control', rows: 5
+      = f.text_area :question, class: 'form-control mb-3', rows: 5
+
+      .card: .card-body.p-3
+        label
+          span.pr-2 サブ質問
+          small 言い方の違う質問文を登録すると、回答精度の向上が期待できます
+        #sub-questions
+          = f.fields_for :sub_questions, wrapper: false do |nf|
+            .fields.mb-3
+              = nf.hidden_field :id
+              = nf.text_area :question, class: 'form-control mb-1'
+              .text-right
+                = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除いてよろしいですか？' }
+        = f.link_to_add 'サブ質問を追加', :sub_questions, class: 'btn btn-secondary btn-sm', data: { target: '#sub-questions' }
 
     .form-group
       span(

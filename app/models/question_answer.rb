@@ -14,6 +14,7 @@ class QuestionAnswer < ApplicationRecord
   accepts_nested_attributes_for :topic_taggings, allow_destroy: true
   accepts_nested_attributes_for :answer_files, allow_destroy: true
   accepts_nested_attributes_for :decision_branches
+  accepts_nested_attributes_for :sub_questions, allow_destroy: true
 
   NO_CLASSIFIED_ID = 0
 

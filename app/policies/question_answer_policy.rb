@@ -62,6 +62,11 @@ class QuestionAnswerPolicy < ApplicationPolicy
             :id,
             :topic_tag_id,
             :_destroy
+          ],
+          sub_questions_attributes: [
+            :id,
+            :question,
+            :_destroy
           ]
         }
       ]

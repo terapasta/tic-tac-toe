@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe WordMappingsDecorator do
+RSpec.describe WordMappingsDecorator, type: :model do
   let!(:bot) do
     create(:bot)
   end
 
   let!(:system_word_mapping) do
+    WordMapping.destroy_all
     create(:word_mapping, word: '日程').tap do |wm|
       wm.update(word_mapping_synonyms_attributes: [
         { value: 'スケジュール' }

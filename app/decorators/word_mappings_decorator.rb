@@ -11,8 +11,9 @@ class WordMappingsDecorator < Draper::CollectionDecorator
 
   def replace_synonym(text)
     result = text.dup
-    mappings_hash.each do |word, synonyms|
-      synonyms.each do |synonym|
+    mappings.each do |mapping|
+      word = mapping.first
+      mapping.second.each do |synonym|
         if text.include?(synonym)
           result = text.gsub(/#{synonym}/, word)
         end
@@ -22,11 +23,16 @@ class WordMappingsDecorator < Draper::CollectionDecorator
   end
 
   private
-    def mappings_hash
-      @mappings_hash ||= object.inject({}) { |memo, word_mapping|
+    def mappings
+      @mappings ||= object.inject([]) { |memo, word_mapping|
         word_mapping.word_mapping_synonyms.each do |synonym|
-          memo[word_mapping.word] ||= []
-          memo[word_mapping.word].push(synonym.value)
+          index = memo.index{ |it| it.first == word_mapping.word }
+          if index.blank?
+            memo << [word_mapping.word, [synonym.value]]
+          else
+            memo[index][1] ||= []
+            memo[index][1] << synonym.value
+          end
         end
         memo
       }

@@ -26,7 +26,7 @@ RSpec.describe 'SubQuestions spec', type: :request do
 
   let(:serialized_sub_questions) do
     sub_questions.map{ |sq|
-      { 'question' => sq.question }
+      { 'id' => sq.id, 'question' => sq.question }
     }
   end
 

@@ -8,12 +8,13 @@ class QuestionAnswer < ApplicationRecord
   has_many :topic_taggings, dependent: :destroy, inverse_of: :question_answer
   has_many :topic_tags, through: :topic_taggings
   has_many :answer_files, dependent: :destroy
-
   has_many :answer_links, as: :answer_record
+  has_many :sub_questions, dependent: :destroy
 
   accepts_nested_attributes_for :topic_taggings, allow_destroy: true
   accepts_nested_attributes_for :answer_files, allow_destroy: true
   accepts_nested_attributes_for :decision_branches
+  accepts_nested_attributes_for :sub_questions, allow_destroy: true
 
   NO_CLASSIFIED_ID = 0
 

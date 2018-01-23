@@ -6,4 +6,3 @@ config.resolve.alias = Object.assign({}, {
 })
 
 module.exports = config
-

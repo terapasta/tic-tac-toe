@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117074111) do
+ActiveRecord::Schema.define(version: 20180122061742) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 20180117074111) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "question_answer_id"
+    t.boolean "is_sub_question", default: false
     t.index ["bot_id"], name: "index_learning_training_messages_on_bot_id"
     t.index ["question_answer_id"], name: "index_learning_training_messages_on_question_answer_id"
   end
@@ -290,6 +291,13 @@ ActiveRecord::Schema.define(version: 20180117074111) do
     t.integer "question_answer_id"
     t.index ["created_user_id"], name: "index_sentence_synonyms_on_created_user_id"
     t.index ["question_answer_id"], name: "index_sentence_synonyms_on_question_answer_id"
+  end
+
+  create_table "sub_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "question_answer_id", null: false
+    t.text "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

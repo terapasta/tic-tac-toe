@@ -25,7 +25,7 @@
     &::after {
       content: "";
       position: absolute;
-      top: 50%;
+      top: 12px;
       right: 100%;
       transform: translateY(-50%);
       width: 24px;
@@ -98,6 +98,11 @@
           transform: rotate(180deg);
         }
       }
+    }
+
+    &-sub-body {
+      padding-left: 26px;
+      color: $base-text-color;
     }
 
     &-add {

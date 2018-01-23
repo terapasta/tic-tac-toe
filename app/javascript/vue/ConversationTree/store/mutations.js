@@ -20,7 +20,10 @@ import {
   DELETE_DECISION_BRANCH,
   DELETE_ANSWER_OF_DECISION_BRANCH,
   SET_ANSWER_LINK,
-  UNSET_ANSWER_LINK
+  UNSET_ANSWER_LINK,
+  ADD_SUB_QUESTION,
+  UPDATE_SUB_QUESTION,
+  DELETE_SUB_QUESTION
 } from './mutationTypes'
 
 import {
@@ -147,4 +150,24 @@ export default {
   [UNSET_ANSWER_LINK] (state, { decisionBranchId }) {
     state.decisionBranchesRepo[decisionBranchId].answerLink = null
   },
+
+  [ADD_SUB_QUESTION] (state, { questionAnswerId, subQuestion }) {
+    const qa = state.questionsRepo[questionAnswerId]
+    qa.subQuestions = qa.subQuestions || []
+    qa.subQuestions.push(subQuestion)
+  },
+
+  [UPDATE_SUB_QUESTION] (state, { questionAnswerId, subQuestion }) {
+    const qa = state.questionsRepo[questionAnswerId]
+    const index = findIndex(qa.subQuestions, (it) => it.id === subQuestion.id)
+    if (index < 0) { return }
+    qa.subQuestions.splice(index, 1, subQuestion)
+  },
+
+  [DELETE_SUB_QUESTION] (state, { questionAnswerId, subQuestionId }) {
+    const qa = state.questionsRepo[questionAnswerId]
+    const index = findIndex(qa.subQuestions, (it) => it.id === subQuestionId)
+    if (index < 0) { return }
+    qa.subQuestions.splice(index, 1)
+  }
 }

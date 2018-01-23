@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122061742) do
+ActiveRecord::Schema.define(version: 20180123072704) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -307,6 +307,8 @@ ActiveRecord::Schema.define(version: 20180122061742) do
     t.integer "bot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "bot_message_id"
+    t.integer "guest_message_id"
   end
 
   create_table "topic_taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

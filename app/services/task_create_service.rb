@@ -18,6 +18,8 @@ class TaskCreateService
       next if guest_message.nil?
 
       task = Task.create(
+        bot_message_id: bot_message.id,
+        guest_message_id: guest_message.id,
         bot_message: (bot_message.body if bot_message.rating&.bad?),
         guest_message: guest_message.body,
         bot_id: @bot.id,

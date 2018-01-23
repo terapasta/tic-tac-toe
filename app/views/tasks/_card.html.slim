@@ -5,7 +5,7 @@
         .chat-message--my.full-width
           .chat-message__balloon= task.guest_message
       .col-sm-6.order-1 style="padding-top:16px"
-        .chat-message.full-width
+        .chat-message.full-width style="float:none;"
           .chat-message__icon style=("background-image:url(#{bot.image_url});")
           .chat-message__balloon
             - if task.bot_message.blank?
@@ -18,6 +18,13 @@
               span Bad評価
               br
               = task.bot_message
+
+        - if task.bot_message_record&.bad_reasons&.any?
+          .pt-2: .card: .card-body.p-2
+            .card-title Bad評価の理由
+            ul.mb-0
+              - task.bot_message_record.bad_reasons.each do |br|
+                li= br.body
 
   .card-footer.d-flex.justify-content-between
     div

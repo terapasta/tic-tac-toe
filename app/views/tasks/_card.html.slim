@@ -41,7 +41,30 @@
           = link_to "対応済みにする", bot_task_path(bot, task, redirect_path: redirect_path), method: :patch, class: "btn btn-secondary btn-sm", data: { event: 'to be processed' }
 
           = space 5
-          = link_to bot_task_path(bot, task, redirect_path: new_bot_question_answer_path(bot, question: task.guest_message, answer: task.bot_message)), method: :patch, class: 'btn btn-info btn-sm', data: { event: 'create questions from task' }
-            i.fa.fa-arrow-right
-            = space
-            span これを元にQ&Aを登録する
+          - if task.bot_message_record&.question_answer.present?
+            button.btn.btn-info.btn-sm data-toggle="modal" data-target="#exampleModal"
+              i.material-icons.mi-sm keyboard_arrow_right
+              span これを元にQ&Aを登録する
+          - else
+            = link_to bot_task_path(bot, task, redirect_path: new_bot_question_answer_path(bot, question: task.guest_message, answer: task.bot_message)), method: :patch, class: 'btn btn-info btn-sm', data: { event: 'create questions from task' }
+              i.material-icons.mi-sm keyboard_arrow_right
+              span これを元にQ&Aを登録する
+
+- if task.bot_message_record&.question_answer.present?
+  - task.bot_message_record.question_answer.tap do |question_answer|
+    .modal.fade#exampleModal tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+      .modal-dialog role="document"
+        .modal-content
+          .modal-header
+            h6.modal-title#exampleModalLabel 回答に使用されたQ&Aが存在します
+            button.close type="button" data-dismiss="modal" aria-label="Close"
+              span aria-hidden="true" &times;
+          .modal-body
+            = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot, hide_buttons: true
+            p このQ&Aのサブ質問のみを入力しますか？
+            .card.bg-light: .card-body.text-muted.p-2
+              h6: small サブ質問とは？
+              div 質問と同じ意味の別の言い方を登録する機能です。<br />これにより回答精度の向上が期待できます。
+          .modal-footer
+            = link_to 'Q&Aを新規登録する', bot_task_path(bot, task, redirect_path: new_bot_question_answer_path(bot, question: task.guest_message, answer: task.bot_message)), class: 'btn btn-info', data: { method: :patch, event: 'create questions from task' }
+            = link_to 'サブ質問を入力', bot_task_path(bot, task, redirect_path: edit_bot_question_answer_path(bot, question_answer, only_editable_sub_question: 'true', task_id: task.id)), class: 'btn btn-primary', data: { method: :patch, event: 'create questions from task' }

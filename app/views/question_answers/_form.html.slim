@@ -26,7 +26,7 @@
               = nf.hidden_field :id
               = nf.text_area :question, class: 'form-control mb-1'
               .text-right
-                = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除いてよろしいですか？' }
+                = nf.link_to_remove '削除', class: 'btn btn-danger btn-sm', data: { confirm: '本当に削除してよろしいですか？' }
         = f.link_to_add 'サブ質問を追加', :sub_questions, class: 'btn btn-secondary btn-sm', data: { target: '#sub-questions' }
 
     .form-group

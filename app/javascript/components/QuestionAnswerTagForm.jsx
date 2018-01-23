@@ -4,6 +4,7 @@ import find from "lodash/find";
 import get from "lodash/get";
 import isEmpty from "is-empty";
 
+import queryParams from '../helpers/queryParams'
 import Mixpanel, { makeEvent } from '../analytics/mixpanel';
 import * as TopicTaggingAPI from "../api/topicTagging";
 import * as TopicTagAPI from "../api/topicTag";
@@ -31,6 +32,7 @@ export default class QuestionAnswerTagFrom extends Component {
       topicTaggings: [],
       deletedTopicTaggings: [],
       newTopicTagName: "",
+      onlyEditableSubQuestion: !isEmpty(queryParams().only_editable_sub_question)
     };
     this.onChangeCheckBox = this.onChangeCheckBox.bind(this);
     this.onChangeInputText = this.onChangeInputText.bind(this);
@@ -44,7 +46,7 @@ export default class QuestionAnswerTagFrom extends Component {
   }
 
   render() {
-    const { topicTaggings, topicTags, deletedTopicTaggings, newTopicTagName } = this.state;
+    const { topicTaggings, topicTags, deletedTopicTaggings, newTopicTagName, onlyEditableSubQuestion } = this.state;
 
     return (
       <div>
@@ -73,9 +75,12 @@ export default class QuestionAnswerTagFrom extends Component {
                         onChange={(e) => this.onChangeCheckBox(t, e)}
                         name={`${baseName}[topic_tag_id]`}
                         value={t.id}
+                        disabled={onlyEditableSubQuestion}
                       />
                       {" "}
-                      <span className="badge badge-primary">{t.name}</span>
+                      <span
+                        className={`badge ${onlyEditableSubQuestion ? 'badge-secondary' : 'badge-primary'}`}
+                      >{t.name}</span>
                     </label>
                   </div>
                 );
@@ -95,9 +100,9 @@ export default class QuestionAnswerTagFrom extends Component {
             </div>
             <div className="card-footer">
               <div className="input-group">
-                <input id="topic-tag-name" type="text" className="form-control form-control-sm" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} />
+                <input id="topic-tag-name" type="text" className="form-control form-control-sm" placeholder="トピックタグを追加" onChange={this.onChangeInputText} value={newTopicTagName} disabled={onlyEditableSubQuestion} />
                 <span className="input-group-btn">
-                  <button className="btn btn-primary" onClick={this.onClickButton}>追加</button>
+                  <button className="btn btn-primary" onClick={this.onClickButton} disabled={onlyEditableSubQuestion}>追加</button>
                 </span>
               </div>
             </div>

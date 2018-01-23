@@ -4,6 +4,7 @@ import debounce from "lodash/debounce"
 import isEmpty from "is-empty"
 import uuid from 'uuid/v4'
 
+import queryParams from '../helpers/queryParams'
 import * as QuestionAnswerAPI from "../api/questionAnswer";
 
 const isIE = navigator.userAgent.search("Trident") >= 0
@@ -77,6 +78,7 @@ export default class AnswerTextArea extends Component {
       text: props.defaultValue || "",
       answers: [],
       isIMEInputting: false,
+      onlyEditableSubQuestion: !isEmpty(queryParams().only_editable_sub_question)
     };
 
     this.onChangeTextArea = this.onChangeTextArea.bind(this);
@@ -93,7 +95,7 @@ export default class AnswerTextArea extends Component {
 
   render() {
     const { baseName, botId } = this.props;
-    const { text, answers } = this.state;
+    const { text, answers, onlyEditableSubQuestion } = this.state;
 
     return (
       <div className="form-group" style={{ position: 'relative' }}>
@@ -105,6 +107,7 @@ export default class AnswerTextArea extends Component {
           onKeyDown={this.handleTextAreaKeyDown}
           onKeyUp={this.handleTextAreaKeyUp}
           name={`${baseName}[answer]`}
+          disabled={onlyEditableSubQuestion}
         />
         {!isEmpty(text) && <input type="hidden" name={`${baseName}[bot_id]`} value={botId} />}
         {!isEmpty(answers) && (

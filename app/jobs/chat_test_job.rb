@@ -27,7 +27,7 @@ class ChatTestJob < ApplicationJob
 
     @bot2 = Bot.find(@bot.id)
     @bot2.assign_attributes(
-      chat_test_results: chat_test_results,
+      chat_test_results: chat_test_results.scrub,
       is_chat_test_processing: false
     )
     @bot2.save!

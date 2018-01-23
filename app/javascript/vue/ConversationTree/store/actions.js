@@ -5,6 +5,7 @@ import find from 'lodash/find'
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
 import * as AnswerLinkAPI from '../../../api/answerLink'
+import * as SubQuestionAPI from '../../../api/subQuestion'
 
 import {
   OPEN_NODE,
@@ -21,7 +22,10 @@ import {
   DELETE_DECISION_BRANCH,
   DELETE_ANSWER_OF_DECISION_BRANCH,
   SET_ANSWER_LINK,
-  UNSET_ANSWER_LINK
+  UNSET_ANSWER_LINK,
+  ADD_SUB_QUESTION,
+  UPDATE_SUB_QUESTION,
+  DELETE_SUB_QUESTION
 } from './mutationTypes'
 import { findDecisionBranchFromTree } from '../helpers';
 
@@ -181,5 +185,31 @@ export default {
     }).then(() => {
       commit(UNSET_ANSWER_LINK, { decisionBranchId })
     }).catch(logError)
+  },
+
+  createSubQuestion ({ commit, state }, { questionAnswerId, question }) {
+    const { botId } = state
+    return SubQuestionAPI.create(botId, questionAnswerId, question)
+      .then(res => {
+        const { subQuestion } = res.data
+        commit(ADD_SUB_QUESTION, { questionAnswerId, subQuestion })
+      }).catch(logError)
+  },
+
+  updateSubQuestion ({ commit, state }, { questionAnswerId, subQuestionId, question }) {
+    const { botId } = state
+    return SubQuestionAPI.update(botId, questionAnswerId, subQuestionId, question)
+      .then(res => {
+        const { subQuestion } = res.data
+        commit(UPDATE_SUB_QUESTION, { questionAnswerId, subQuestion })
+      }).catch(logError)
+  },
+
+  deleteSubQuestion ({ commit, state }, { questionAnswerId, subQuestionId }) {
+    const { botId } = state
+    return SubQuestionAPI.destroy(botId, questionAnswerId, subQuestionId)
+      .then(res => {
+        commit(DELETE_SUB_QUESTION, { questionAnswerId, subQuestionId })
+      }).catch(logError)
   }
 }

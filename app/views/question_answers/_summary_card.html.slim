@@ -10,6 +10,11 @@
         dl
           dt: small 質問
           dd= highlight(nl2br(question_answer.question), params[:keyword])
+        - if question_answer.sub_questions.any?
+          .card: .card-body.p-2: dl.mb-0
+            dt: small サブ質問
+            - question_answer.sub_questions.each do |sq|
+              dd= nl2br(sq.question)
       .col-sm-6
         dl.mb-0
           dt: small 回答

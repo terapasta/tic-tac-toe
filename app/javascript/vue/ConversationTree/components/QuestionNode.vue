@@ -2,6 +2,7 @@
 import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 import includes from 'lodash/includes'
+import get from 'lodash/get'
 import classnames from 'classnames'
 
 import QuestionIcon from './QuestionIcon'
@@ -53,6 +54,10 @@ export default {
 
     isOpened () {
       return this.isStoredOpenedNodes || this.currentPageIsChild
+    },
+
+    hasSubQuestions () {
+      return !isEmpty(get(this.nodeData, 'subQuestions'))
     }
   },
 
@@ -76,6 +81,11 @@ export default {
         <question-icon />
         {{nodeData.question}}
       </span>
+      <ul v-if="hasSubQuestions" class="tree__item-sub-body">
+        <li v-for="sq in nodeData.subQuestions">
+          {{sq.question}}
+        </li>
+      </ul>
     </router-link>
     <ol class="tree" v-if="hasChildren" :style="childTreeStyle">
       <answer-node :node="node" />

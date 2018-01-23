@@ -37,8 +37,8 @@ class ReplyController(BaseCls):
         data_frame = self.factory.core.predict(normalized_features)
 
         logger.info('unique and sort')
-        data_frame = data_frame.drop_duplicates(subset='question_answer_id', keep='first')
         data_frame = data_frame.sort_values(by='probability', ascending=False)
+        data_frame = data_frame.drop_duplicates(subset='question_answer_id', keep='first')
 
         logger.info('after action')
         results = self.factory.core.after_reply(text, data_frame)

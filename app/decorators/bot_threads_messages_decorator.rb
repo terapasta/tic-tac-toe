@@ -16,13 +16,30 @@ class BotThreadsMessagesDecorator < Draper::CollectionDecorator
       csv << [
         chat.id,
         message.id,
-        message.speaker,
+        speaker_with_profile(message),
         message.body,
         message.answer_failed? ? '失敗' : '',
-        message.rating.blank? ? '' : message.rating.level,
+        level_with_reasons(message),
         message.created_at,
         message.user_agent
       ]
     end
   end
+
+  private
+    def speaker_with_profile(message)
+      return message.speaker if message.bot? || message.chat.guest_user.nil?
+      [
+        message.speaker.to_s,
+        *message.chat.guest_user.attributes.slice('name', 'email').values
+      ].join(' ')
+    end
+
+    def level_with_reasons(message)
+      return '' if message.rating.blank?
+      [
+        message.rating.level,
+        *message.bad_reasons.pluck(:body)
+      ].compact.join("\n")
+    end
 end

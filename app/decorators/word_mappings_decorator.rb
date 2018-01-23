@@ -1,12 +1,18 @@
 class WordMappingsDecorator < Draper::CollectionDecorator
   def initialize(object, options = {})
-    super(object.includes(:word_mapping_synonyms).to_a, options)
+    wms = object.includes(:word_mapping_synonyms).to_a
+    # NOTE ユーザーが設定した辞書が後勝ちするように並べ替える
+    system_wms = wms.select{ |it| it.bot_id.blank? }
+    bot_wms = wms.select{ |it| it.bot_id.present? }
+    wms = system_wms + bot_wms
+    super(wms, options)
   end
 
   def replace_synonym(text)
     result = text.dup
-    mappings_hash.each do |word, synonyms|
-      synonyms.each do |synonym|
+    mappings.each do |mapping|
+      word = mapping.first
+      mapping.second.each do |synonym|
         if text.include?(synonym)
           result = text.gsub(/#{synonym}/, word)
         end
@@ -16,11 +22,16 @@ class WordMappingsDecorator < Draper::CollectionDecorator
   end
 
   private
-    def mappings_hash
-      @mappings_hash ||= object.inject({}) { |memo, word_mapping|
+    def mappings
+      @mappings ||= object.inject([]) { |memo, word_mapping|
         word_mapping.word_mapping_synonyms.each do |synonym|
-          memo[word_mapping.word] ||= []
-          memo[word_mapping.word].push(synonym.value)
+          index = memo.index{ |it| it.first == word_mapping.word }
+          if index.blank?
+            memo << [word_mapping.word, [synonym.value]]
+          else
+            memo[index][1] ||= []
+            memo[index][1] << synonym.value
+          end
         end
         memo
       }

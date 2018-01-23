@@ -15,7 +15,7 @@ set :rbenv_roles, :all
 set :migration_role, 'web'
 
 set :linked_files, %w{.env .python-version learning/config/config.yml config/database.yml}
-set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads learning/dumps learning/logs}
+set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads public/packs learning/dumps learning/logs}
 
 set :bundle_jobs, 4
 set :unicorn_pid, "/tmp/unicorn.pid"
@@ -31,6 +31,19 @@ task :update_neologd do
 end
 
 namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'unicorn:restart'
+    end
+  end
+
+  after :publishing, :restart
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+    end
+  end
+
   desc 'python用ファイルアップロード(必要な場合のみ実行しましょう)'
   task :python_upload do
     on roles(:app) do

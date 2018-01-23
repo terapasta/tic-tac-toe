@@ -7,6 +7,7 @@
 //= require app/selection-checkboxes
 
 window.jQuery(function($) {
+  $('[data-toggle="popover"]').popover()
   $('[data-toggle="tooltip"]').tooltip();
 
   $('select[data-role="url-switcher"]').on('change', function() {
@@ -36,6 +37,4 @@ window.jQuery(function($) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
-
-  $('[data-toggle="popover"]').popover()
 });

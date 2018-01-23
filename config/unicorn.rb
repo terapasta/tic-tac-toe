@@ -1,6 +1,6 @@
 working_directory '/var/www/donusagi-bot/current'
 worker_processes 2
-timeout 150
+timeout 300
 
 listen  '/tmp/unicorn.sock'
 pid     '/tmp/unicorn.pid'

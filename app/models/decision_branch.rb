@@ -25,7 +25,7 @@ class DecisionBranch < ApplicationRecord
 
   def answer_or_answer_link_text
     if answer_link.present?
-      (dest_question_answer || dest_decision_branch).answer
+      (dest_question_answer || dest_decision_branch)&.answer
     else
       answer
     end

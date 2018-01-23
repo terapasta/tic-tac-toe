@@ -7,7 +7,6 @@ $chat-section-switch-size-xs: 32px;
   // transition-property: padding max-height;
   // transition-duration: 1000ms;
   position: relative;
-  overflow: hidden;
 
   &.active {
     .chat-section__switch {
@@ -23,6 +22,7 @@ $chat-section-switch-size-xs: 32px;
     // padding: 0;
     max-height: 0;
     border-bottom: 0 !important;
+    overflow: hidden !important;
   }
 }
 

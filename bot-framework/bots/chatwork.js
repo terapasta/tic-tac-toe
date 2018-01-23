@@ -1,12 +1,12 @@
 const request = require('request')
 const api = require('../api')
 
-const {
-  NODE_ENV
-} = require('../env')
+// const {
+//   NODE_ENV
+// } = require('../env')
 
-const s3 = NODE_ENV === 'development' ?
-  'https://my-ope-assets-dev.s3.amazonaws.com' : ''
+// const s3 = NODE_ENV === 'development' ? 'https://my-ope-assets-dev.s3.amazonaws.com' : ''
+const s3 = ''
 const BASE_URL = 'https://api.chatwork.com/v2'
 const service_type = 'chatwork'
 

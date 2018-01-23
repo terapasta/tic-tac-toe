@@ -12,6 +12,7 @@
     "@line/bot-sdk": "^5.0.1",
     "axios": "^0.17.0",
     "botbuilder": "^3.11.0",
+    "is-empty": "^1.2.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
     "lodash.includes": "^4.3.0",

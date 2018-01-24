@@ -1,5 +1,7 @@
 # if Rails.env.production? || Rails.env.staging?
   AssetSync.configure do |config|
+    puts '------------------->'
+    puts Rails.env
     config.fog_provider = 'AWS'
     config.fog_directory = ENV['AWS_S3_BUCKET_NAME']
     config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']

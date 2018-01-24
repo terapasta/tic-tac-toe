@@ -108,6 +108,7 @@ gem 'webpacker', '~> 3.0'
 gem 'mini_mime'
 gem 'hashie'
 gem 'faraday', '~> 0.12.1'
+gem 'asset_sync', '~> 2.4.0'
 
 group :development, :test do
 
@@ -158,7 +159,6 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
-  gem 'asset_sync', '~> 2.4.0'
 end
 
 group :production, :staging do

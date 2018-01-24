@@ -11,8 +11,8 @@ import baseState from '../vue/ConversationTree/store/baseState'
 import mutations from '../vue/ConversationTree/store/mutations'
 import router from '../vue/ConversationTree/router'
 
-Vue.use(VueSweetAlert)
 Vue.use(Vuex)
+Vue.use(VueSweetAlert)
 
 document.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('ConversationTree')

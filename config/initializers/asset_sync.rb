@@ -1,9 +1,11 @@
 # if Rails.env.production? || Rails.env.staging?
   AssetSync.configure do |config|
-    puts '------------------->'
-    puts Rails.env
     config.fog_provider = 'AWS'
-    config.fog_directory = ENV['AWS_S3_BUCKET_NAME']
+    config.fog_directory = case Rails.env
+    when 'production' then 'my-ope-assets'
+    when 'staging' then 'my-ope-assets-stg'
+    when 'development' then 'my-ope-assets-dev'
+    end
     config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']
     config.aws_secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
     config.existing_remote_files = 'delete'

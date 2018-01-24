@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const store = new Vuex.Store({
-    state,
     actions,
-    mutations
+    mutations,
+    state
   })
 
   new Vue({

@@ -1,4 +1,4 @@
-if Rails.env.production? || Rails.env.staging?
+# if Rails.env.production? || Rails.env.staging?
   AssetSync.configure do |config|
     config.fog_provider = 'AWS'
     config.fog_directory = ENV['AWS_S3_BUCKET_NAME']
@@ -27,4 +27,4 @@ if Rails.env.production? || Rails.env.staging?
       Rake::Task["assets:sync"].invoke
     end
   end
-end
+# end

@@ -158,7 +158,7 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
-  gem 'capistrano-local-precompile', '~> 1.0.0', require: false
+  gem 'asset_sync', '~> 2.4.0'
 end
 
 group :production, :staging do
@@ -168,5 +168,4 @@ group :production, :staging do
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
   gem 'rollbar'
-  gem 'asset_sync', '~> 2.4.0'
 end

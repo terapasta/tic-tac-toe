@@ -1,6 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
+set :user, 'deploy'
 set :pty, true
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
@@ -31,6 +32,20 @@ task :update_neologd do
 end
 
 namespace :deploy do
+  Rake::Task['deploy:assets:precompile'].clear_actions
+  namespace :assets do
+    desc 'Run the precompile task locally and rsync with shared'
+    task :precompile do
+      on roles(:web), reject: -> (h) { h.properties.no_release } do
+        rsync_host = "#{fetch(:user)}@#{fetch(:host)}:#{shared_path}/public"
+        %x{bundle exec rake assets:precompile}
+        %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{rsync_host}}
+        %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/packs #{rsync_host}}
+        %x{bundle exec rake assets:clean}
+      end
+    end
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do

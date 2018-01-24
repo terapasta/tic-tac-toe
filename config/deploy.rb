@@ -1,7 +1,6 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :user, 'deploy'
 set :pty, true
 set :application, 'donusagi-bot'
 set :repo_url, 'git@github.com:mofmof/donusagi-bot.git'
@@ -13,7 +12,6 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
-set :migration_role, 'web'
 
 set :linked_files, %w{.env .python-version learning/config/config.yml config/database.yml}
 set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads public/packs learning/dumps learning/logs}
@@ -32,19 +30,38 @@ task :update_neologd do
 end
 
 namespace :deploy do
-  Rake::Task['deploy:assets:precompile'].clear_actions
-  namespace :assets do
-    desc 'Run the precompile task locally and rsync with shared'
-    task :precompile do
-      on roles(:web), reject: -> (h) { h.properties.no_release } do
-        rsync_host = "#{fetch(:user)}@#{fetch(:host)}:#{shared_path}/public"
-        %x{bundle exec rake assets:precompile}
-        %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{rsync_host}}
-        %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/packs #{rsync_host}}
-        %x{bundle exec rake assets:clean}
-      end
+  task :copy_assets_manifest do
+    next unless roles(:web, :app).count > 1
+    assets_manifest_name = nil
+    assets_manifest_contents = nil
+    assets_manifest_path = nil
+    packs_manifest_name = nil
+    packs_manifest_contents = nil
+    packs_manifest_path = nil
+
+    assets_path = release_path.join('public', 'assets')
+    packs_path = release_path.join('public', 'packs')
+    assets_manifest_pattern = assets_path.join('.sprockets-manifest*')
+    packs_manifest_pattern = packs_path.join('manifest*')
+
+    on roles(fetch(:assets_roles)), primary: true do
+      assets_manifest_name = capture(:ls, assets_manifest_pattern).strip
+      assets_manifest_path = assets_path.join(assets_manifest_name)
+      assets_manifest_contents = download! assets_manifest_path
+      packs_manifest_name = capture(:ls, packs_manifest_pattern).strip
+      packs_manifest_path = packs_path.join(packs_manifest_name)
+      packs_manifest_contents = download! packs_manifest_path
+    end
+    on roles(:app) do
+      execute :rm, '-f', assets_manifest_pattern
+      execute :rm, '-f', packs_manifest_pattern
+      upload! StringIO.new(assets_manifest_contents), assets_manifest_path
+      upload! StringIO.new(packs_manifest_contents), packs_manifest_path
     end
   end
+
+  after "deploy:compile_assets", :copy_assets_manifest
+  after "deploy:rollback_assets", :copy_assets_manifest
 
   desc 'Restart application'
   task :restart do

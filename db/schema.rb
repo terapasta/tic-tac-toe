@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20180123072704) do
     t.text "has_suggests_message"
     t.boolean "enable_guest_user_registration", default: false
     t.string "widget_subtitle"
-    t.text "chat_test_results"
+    t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
     t.index ["user_id"], name: "index_bots_on_user_id"
   end

@@ -10,7 +10,7 @@ if Rails.env.production? || Rails.env.staging?
       #endpoint:             'https://s3.example.com:8080'
     }
     config.fog_directory  = ENV['AWS_S3_BUCKET_NAME']
-    config.fog_public     = true
+    config.fog_public     = false
     config.fog_authenticated_url_expiration = 1.day.to_i
     config.storage = :fog
     config.asset_host = "https://#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com"

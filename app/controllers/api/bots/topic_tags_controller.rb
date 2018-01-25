@@ -3,8 +3,7 @@ class Api::Bots::TopicTagsController < Api::BaseController
 
   def index
     authorize TopicTag
-    @topic_tags = policy_scope(@bot.topic_tags).all
-    render json: @topic_tags, adapter: :json
+    render json: @bot.topic_tags, adapter: :json
   end
 
   def create

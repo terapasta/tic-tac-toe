@@ -5,6 +5,14 @@
       = space
       span 一覧へ戻る
 
+  - if @task.present?
+    h6 対応する対話タスク
+    = render 'tasks/card', task: @task, bot: @bot, disable_controls: true
+
+  - if params[:only_editable_sub_question].to_bool
+    .alert.alert-warning.mb-4
+      |サブ質問のみ編集できるモードで表示しています
+
   = nested_form_for [@bot, @question_answer] do |f|
     - if @question_answer.errors.any?
       .form-group.text-danger
@@ -14,7 +22,7 @@
 
     .form-group
       = f.label :question
-      = f.text_area :question, class: 'form-control mb-3', rows: 5
+      = f.text_area :question, class: 'form-control mb-3', rows: 5, disabled: params[:only_editable_sub_question].to_bool
 
       .card: .card-body.p-3
         label
@@ -64,7 +72,10 @@
                     = nf.file_field :file, class: 'form-control'
                     span.input-group-btn
                       = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
-          = f.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
+          - if params[:only_editable_sub_question].to_bool
+            span.btn.btn-secondary.btn-sm.disabled 添付ファイルを追加
+          - else
+            = f.link_to_add '添付ファイルを追加', :answer_files, class: 'btn btn-secondary btn-sm', data: { target: '#answer-files' }
         - else
           p.mb-0 ※現在のプラン「#{current_user.plan(@bot).capitalize}」では回答添付ファイルはご利用いただけません
 

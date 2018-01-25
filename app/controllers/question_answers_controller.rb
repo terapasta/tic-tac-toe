@@ -59,6 +59,10 @@ class QuestionAnswersController < ApplicationController
     end
   end
 
+  def edit
+    @task = @bot.tasks.find_by(id: params[:task_id])
+  end
+
   def update
     if @question_answer.update(question_answer_params)
       @bot.learn_later

@@ -33,16 +33,6 @@ class TopicTagPolicy < ApplicationPolicy
     ]
   end
 
-  class Scope < Scope
-    def resolve
-      if user.staff?
-        scope
-      else
-        scope.where(bot_id: user.bots.first.id)
-      end
-    end
-  end
-
   private
     def target_bot
       record.bot

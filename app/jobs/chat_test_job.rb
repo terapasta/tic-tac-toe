@@ -23,7 +23,7 @@ class ChatTestJob < ApplicationJob
     }
     ids = reply_responses.map(&:resolved_question_answer_id)
     qas = QuestionAnswer.find_all_or_null_question_answers(ids, @bot)
-    chat_test_results = qas.map.with_index{ |qa, i| [data[i], qa.answer] }
+    chat_test_results = qas.map.with_index{ |qa, i| [data[i].scrub, qa.answer.scrub] }
 
     @bot2 = Bot.find(@bot.id)
     @bot2.assign_attributes(

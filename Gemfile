@@ -108,6 +108,7 @@ gem 'webpacker', '~> 3.0'
 gem 'mini_mime'
 gem 'hashie'
 gem 'faraday', '~> 0.12.1'
+gem 'asset_sync', '~> 2.4.0'
 
 group :development, :test do
 
@@ -167,5 +168,4 @@ group :production, :staging do
   #gem 'rails_12factor'
   gem 'newrelic_rpm'
   gem 'rollbar'
-  gem 'asset_sync', '~> 2.4.0'
 end

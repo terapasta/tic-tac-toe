@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = assign(baseState, getData(mountNode))
 
   if (process.env.NODE_ENV === 'development') {
-    console.log('initial state', state)
+    console.log('[initial state]', state)
   }
 
   const store = new Vuex.Store({
+    state,
     actions,
-    mutations,
-    state
+    mutations
   })
 
   new Vue({

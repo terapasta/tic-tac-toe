@@ -53,7 +53,12 @@ export default {
 
     handleMouseWheelMaster (e) {
       const { offsetHeight, scrollHeight, scrollTop } = this.$refs.master
-      const direction = e.deltaY > 0 ? Direction.Down : Direction.Up
+      let direction
+      if (isEmpty(e.deltaY)) {
+        direction = e.wheelDelta < 0 ? Direction.Down : Direction.Up
+      } else {
+        direction = e.deltaY > 0 ? Direction.Down : Direction.Up
+      }
       const percentile = calcPercentile(offsetHeight, scrollHeight, scrollTop)
       this.lastScrollTop = scrollTop
 

@@ -42,10 +42,12 @@
 
 env 'MECAB_PATH', '/usr/local/lib/libmecab.so'
 
-every 1.day, at: 'am 8:00' do
+# 朝8:00
+every 1.day, at: '23:00' do
   rake 'organization:check_finishing_trial'
 end
 
-every 1.day, at: 'pm 6:00' do
+# 夕方18:00
+every 1.day, at: '9:00' do
   rake 'slack:notify_accuracy'
 end

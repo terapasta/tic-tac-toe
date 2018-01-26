@@ -42,19 +42,17 @@ namespace :deploy do
     assets_path = release_path.join('public', 'assets')
     packs_path = release_path.join('public', 'packs')
     assets_manifest_pattern = assets_path.join('.sprockets-manifest*')
-    packs_manifest_pattern = packs_path.join('manifest*')
+    packs_manifest_path = packs_path.join('manifest.json')
 
     on roles(fetch(:assets_roles)), primary: true do
       assets_manifest_name = capture(:ls, assets_manifest_pattern).strip
       assets_manifest_path = assets_path.join(assets_manifest_name)
       assets_manifest_contents = download! assets_manifest_path
-      packs_manifest_name = capture(:ls, packs_manifest_pattern).strip
-      packs_manifest_path = packs_path.join(packs_manifest_name)
       packs_manifest_contents = download! packs_manifest_path
     end
     on roles(:app) do
       execute :rm, '-f', assets_manifest_pattern
-      execute :rm, '-f', packs_manifest_pattern
+      execute :rm, '-f', packs_manifest_path
       upload! StringIO.new(assets_manifest_contents), assets_manifest_path
       upload! StringIO.new(packs_manifest_contents), packs_manifest_path
     end

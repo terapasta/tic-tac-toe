@@ -20,4 +20,28 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
      }
      return Hash[ registration_number.sort ]
   end
+
+  def make_tree(all_decision_branches)
+    object.map do |qa|
+      {
+        id: qa.id,
+        decisionBranches: recursive_decision_branch_tree(qa_id: qa.id, all_db: all_decision_branches)
+      }
+    end
+  end
+
+  def recursive_decision_branch_tree(qa_id: nil, db_id: nil, all_db:)
+    all_db.select{ |db|
+      if qa_id.present?
+        db.question_answer_id == qa_id
+      elsif db_id.present?
+        db.parent_decision_branch_id == db_id
+      end
+    }.map{ |db|
+      {
+        id: db.id,
+        childDecisionBranches: recursive_decision_branch_tree(db_id: db.id, all_db: all_db)
+      }
+    }
+  end
 end

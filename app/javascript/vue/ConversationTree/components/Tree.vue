@@ -1,20 +1,21 @@
 <script>
-import { mapState } from 'vuex'
+import chunk from 'lodash/chunk'
+
 import QuestionNode from './QuestionNode'
 import classnames from 'classnames'
 
 export default {
   name: 'tree',
 
+  props: {
+    currentNodes: { type: Array, default: () => ([]) }
+  },
+
   components: {
     QuestionNode
   },
 
   computed: {
-    ...mapState([
-      'questionsTree'
-    ]),
-
     isActiveAddButton () {
       return this.$route.name === 'QuestionNew'
     },
@@ -39,7 +40,7 @@ export default {
         >＋追加</router-link>
       </div>
     </li>
-    <template v-for="node in questionsTree">
+    <template v-for="node in currentNodes">
       <question-node :node="node" :key="node.id" />
     </template>
   </ol>

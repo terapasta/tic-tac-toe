@@ -111,8 +111,8 @@ export default {
   },
 
   watch: {
-    currentNodes () {
-      console.log(this)
+    questionsTree () {
+      this.updateCurrentNodes()
     }
   },
 

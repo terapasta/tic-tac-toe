@@ -2,13 +2,9 @@
 import { mapState } from 'vuex'
 import isEmpty from 'is-empty'
 import {
-  chunk,
   range,
   includes,
   last,
-  flatten,
-  findIndex,
-  findLastIndex,
   get,
   compact,
   reduce
@@ -98,11 +94,6 @@ export default {
           this.updateCurrentNodes()
         }
       }
-      // console.log(this.showingChunkIndecies, this.chunkedTree().length - 1)
-    },
-
-    chunkedTree () {
-      return chunk(this.questionsTree, this.perPage)
     },
 
     updateCurrentNodes () {

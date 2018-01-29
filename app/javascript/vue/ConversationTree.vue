@@ -12,6 +12,7 @@ import {
 
 import getOffset from '../helpers/getOffset'
 import Tree from './ConversationTree/components/Tree'
+import SearchForm from './ConversationTree/components/SearchForm'
 
 const Direction = {
   Up: 'up',
@@ -28,7 +29,8 @@ export default {
   name: 'conversation-tree',
 
   components: {
-    Tree
+    Tree,
+    SearchForm
   },
 
   data: () => ({
@@ -157,6 +159,7 @@ export default {
         @mousewheel="handleMouseWheelMaster"
         ref="master"
       >
+        <search-form />
         <tree
           :currentNodes="currentNodes"
           ref="tree"

@@ -44,7 +44,9 @@ class ReplyResponse
 
   def similar_question_answers
     ids = question_answer_ids
-    ids = ids.drop(1) if (@bot.learning_parameter&.classify_threshold || 0) < 0.9
+    if (@bot.learning_parameter&.classify_threshold || 0) < 0.9 && !show_similar_question_answers?
+      ids = ids.drop(1)
+    end
     qas = @bot.question_answers.where(id: ids).for_suggestion
     question_answer_ids.map{ |id| qas.detect{ |x| id == x.id } }.compact
   end

@@ -33,5 +33,5 @@
               td style="width:33.3333%"= bot_test_result[1]
               td style="width:33.3333%"
                 ul
-                  - bot_test_result[2].each do |suggest|
+                  - Array(bot_test_result[2]).each do |suggest|
                     li= suggest

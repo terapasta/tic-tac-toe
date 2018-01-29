@@ -105,7 +105,7 @@ class RouteGuideServicer(BotServicer):
 
 
 def serve(port):
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
     add_BotServicer_to_server(
             RouteGuideServicer(), server)
     server.add_insecure_port('[::]:%s' % port)

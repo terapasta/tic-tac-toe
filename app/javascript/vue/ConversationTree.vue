@@ -34,13 +34,24 @@ export default {
   data: () => ({
     rootHeight: 0,
     currentNodes: [],
-    showingIndecies: range(0, 30)
+    showingIndecies: range(0, 30),
+    detailPanelHeight: null,
+    detailPanelWatchTimer: null,
+    originalDetailPanelHeight: null
   }),
 
   mounted () {
-    this.$nextTick(() => this.adjustHeight())
+    this.$nextTick(() => {
+      this.adjustHeight()
+      this.adjustDetailPanelHeight()
+    })
     window.addEventListener('resize', () => this.adjustHeight())
+    this.detailPanelWatchTimer = setInterval(this.adjustDetailPanelHeight, 100)
     this.updateCurrentNodes()
+  },
+
+  beforeDestroy () {
+    clearInterval(this.detailPanelWatchTimer)
   },
 
   methods: {
@@ -49,6 +60,11 @@ export default {
       const winHeight = window.innerHeight
       const height = winHeight - offset.top - 20
       this.rootHeight = height
+    },
+
+    adjustDetailPanelHeight () {
+      const maxHeight = this.rootHeight - 40
+      this.detailPanelHeight = maxHeight
     },
 
     handleMouseWheelMaster (e) {
@@ -121,6 +137,13 @@ export default {
       return {
         height: `${this.rootHeight}px`
       }
+    },
+
+    detailPanelStyle () {
+      return {
+        maxHeight: this.detailPanelHeight ? `${this.detailPanelHeight}px` : 'auto',
+        backgroundColor: `${this.$route.name === 'Home' ? 'rgba(255,255,255,.9)' : '#fff'}`
+      }
     }
   }
 }
@@ -139,7 +162,14 @@ export default {
           ref="tree"
         />
       </div>
-      <div class="master-detail-panel__detail">
+      <div
+        class="master-detail-panel__detail"
+        :style="detailPanelStyle"
+        ref="detailPanel"
+      >
+        <router-link class="master-detail-panel__close-detail" to="/" v-if="$route.name !== 'Home'">
+          <i class="material-icons">close</i>
+        </router-link>
         <router-view />
       </div>
     </div>

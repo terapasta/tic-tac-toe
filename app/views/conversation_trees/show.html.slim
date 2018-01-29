@@ -1,4 +1,4 @@
-= render layout: 'bots/layout' do
+= render layout: 'bots/layout', locals: { full_width: true } do
   #ConversationTree(
     data-bot-id=@bot.id
     data-bot-token=@bot.token

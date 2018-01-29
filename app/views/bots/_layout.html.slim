@@ -74,6 +74,11 @@
               span ボットテスト
 
 .pt-4
-  .container
-    = render 'shared/flash'
-    = yield
+  - if local_assigns[:full_width]
+    .mx-3
+      = render 'shared/flash'
+      = yield
+  - else
+    .container
+      = render 'shared/flash'
+      = yield

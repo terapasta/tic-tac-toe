@@ -20,14 +20,37 @@
     bottom: 0;
     overflow: auto;
     float: left;
-    width: 30%;
+    width: 100%;
     padding: 16px 0;
     background-color: $gray-100;
   }
 
   &__detail {
-    float: right;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #fff;
+    border-radius: 6px;
     padding: 16px;
     width: 70%;
+    overflow-y: auto;
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.08),
+                0 9px 46px 8px rgba(0,0,0,0.06),
+                0 11px 15px -7px rgba(0,0,0,0.1);
+  }
+
+  &__close-detail {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: 0;
+    padding: 8px;
+    cursor: pointer;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
   }
 }

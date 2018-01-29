@@ -14,8 +14,9 @@ class ChatTestsController < ApplicationController
           force_quotes: true,
           encoding: resolve_encoding_from_params(:encode)
         ) { |csv|
+          csv << ['テスト質問', '得られた回答', 'サジェスト質問']
           @bot.chat_test_results.each do |data|
-            set_data = [data[0], data[1]]
+            set_data = [data[0], data[1], data[2].map{ |it| "* #{it}" }.join("\r\n")]
             csv << set_data
           end
         }

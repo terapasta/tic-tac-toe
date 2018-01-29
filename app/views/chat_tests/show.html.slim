@@ -19,14 +19,19 @@
 
     = link_to 'UTF-8でダウンロード', bot_chat_tests_path({format: :csv, encode: "UTF-8"}), class: 'btn btn-success', data: { event: 'bot test import with UTF-8' }
 
-  table.table.table-striped
+  table.table.table-striped style="table-layout:fixed;"
     thead
       tr
-        th style="width:200px" テスト質問
-        th 得られた回答
+        th style="width:33.3333%" テスト質問
+        th style="width:33.3333%"得られた回答
+        th style="width:33.3333%" サジェスト質問
 
         tbody#chat-test-results
           - @bot_test_results.each do |bot_test_result|
             tr
-              td = bot_test_result[0]
-              td = bot_test_result[1]
+              td style="width:33.3333%"= bot_test_result[0]
+              td style="width:33.3333%"= bot_test_result[1]
+              td style="width:33.3333%"
+                ul
+                  - bot_test_result[2].each do |suggest|
+                    li= suggest

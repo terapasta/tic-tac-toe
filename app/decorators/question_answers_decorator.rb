@@ -47,14 +47,16 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
 
   def make_index_json(tree, decision_branches)
     tree.reduce([]) { |acc, node|
+      node_ids, _node_ids = nil, nil
       qa = object.detect{ |qa| qa.id == node[:id] }
       node_ids = ["Question-#{qa.id}"]
       acc << { text: qa.question, relatedNodeIds: node_ids }
       if qa.answer.present?
-        acc << { text: qa.answer, relatedNodeIds: node_ids + ["Answer-#{qa.id}"] }
+        _node_ids = node_ids + ["Answer-#{qa.id}"]
+        acc << { text: qa.answer, relatedNodeIds: _node_ids }
       end
       node[:decisionBranches].each do |db_node|
-        acc += recursive_make_decision_branch_indcies(db_node, node_ids, decision_branches)
+        acc += recursive_make_decision_branch_indcies(db_node, (_node_ids || node_ids), decision_branches)
       end
       acc
     }

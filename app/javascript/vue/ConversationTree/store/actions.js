@@ -27,9 +27,15 @@ import {
   UPDATE_SUB_QUESTION,
   DELETE_SUB_QUESTION,
   SET_FILTERED_QUESTIONS_TREE,
-  SET_SEARCHING_KEYWORD
+  SET_SEARCHING_KEYWORD,
+  ADD_SEARCH_INDEX
 } from './mutationTypes'
-import { findDecisionBranchFromTree } from '../helpers';
+
+import {
+  findQuestionAnswerFromTree,
+  findDecisionBranchFromTree,
+  getFlatTreeFromDecisionBranchId
+} from '../helpers';
 
 const logError = err => {
   console.log(err)
@@ -50,8 +56,14 @@ export default {
     return QuestionAnswerAPI.create(botId, question, answer)
       .then(res => {
         const { questionAnswer } = res.data
+        const nodeId = `Question-${questionAnswer.id}`
+        if (!isEmpty(questionAnswer.answer)) {
+          const _nodeIds = [nodeId].concat([`Answer-${questionAnswer.id}`])
+          commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds: _nodeIds, text: questionAnswer.answer } })
+        }
+        commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds: [nodeId], text: questionAnswer.question } })
         commit(ADD_QUESTION_ANSWER, { questionAnswer })
-        commit(OPEN_NODE, { nodeId: `Question-${questionAnswer.id}` })
+        commit(OPEN_NODE, { nodeId: nodeId })
         return questionAnswer
       })
       .catch(logError)
@@ -101,17 +113,31 @@ export default {
     if (!isEmpty(questionAnswerId)) {
       return DecisionBranchAPI.create(botId, questionAnswerId, body)
         .then(res => {
+          const { decisionBranch } = res.data
           commit(CREATE_DECISION_BRANCH_OF_QUESTION_ANSWER, {
             questionAnswerId,
-            newDecisionBranch: res.data.decisionBranch
+            newDecisionBranch: decisionBranch
           })
+          const targetNode = findQuestionAnswerFromTree(state.questionsTree, questionAnswerId)
+          const relatedNodeIds = [
+            `Question-${targetNode.id}`,
+            `Answer-${targetNode.id}`,
+            `DecisionBranch-${decisionBranch.id}`
+          ]
+          commit(ADD_SEARCH_INDEX, { relatedNodeIds, text: body })
         }).catch(logError)
+
     } else if (!isEmpty(decisionBranchId)) {
       return DecisionBranchAPI.nestedCreate(botId, decisionBranchId, body)
         .then(res => {
           commit(CREATE_DECISION_BRANCH_OF_DECISION_BRANCH, {
             decisionBranchId,
             newDecisionBranch: res.data.decisionBranch
+          })
+
+          getFlatTreeFromDecisionBranchId(state.questionsTree, decisionBranchId).then(nodes => {
+            // TODO nodesからnodeIdsを作ってADD_SEARCH_INDEXする
+            console.log(nodes)
           })
         }).catch(logError)
     }

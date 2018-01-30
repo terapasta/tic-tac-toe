@@ -40,6 +40,8 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
     }.map{ |db|
       {
         id: db.id,
+        parentQuestionAnswerId: qa_id,
+        parentDecisionBranchId: db_id,
         childDecisionBranches: recursive_decision_branch_tree(db_id: db.id, all_db: all_db)
       }
     }

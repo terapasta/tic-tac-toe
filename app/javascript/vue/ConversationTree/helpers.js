@@ -24,7 +24,7 @@ export const findQuestionAnswerFromTree = (tree, id) => (
 
 export const findDecisionBranchFromTree = (questionsTree, decisionBranchId, foundCallback) => {
   const handler = (decisionBranchNodes) => {
-    decisionBranchNodes.forEach((decisionBranchNode) => {
+    decisionBranchNodes.forEach(decisionBranchNode => {
       if (decisionBranchNode.id === decisionBranchId) {
         foundCallback(decisionBranchNode)
       } else {
@@ -34,6 +34,22 @@ export const findDecisionBranchFromTree = (questionsTree, decisionBranchId, foun
   }
   const decisionBranchNodes = flatten(questionsTree.map(n => n.decisionBranches))
   handler(decisionBranchNodes)
+}
+
+export const findDecisionBranchFromTreePromise = (tree, decisionBranchId) => {
+  return new Promise((resolve, reject) => {
+    const handler = (decisionBranchNodes) => {
+      decisionBranchNodes.forEach(decisionBranchNode => {
+        if (decisionBranchNode.id === decisionBranchId) {
+          resolve(decisionBranchNode)
+        } else {
+          handler(decisionBranchNode.childDecisionBranches)
+        }
+      })
+    }
+    const decisionBranchNodes = flatten(tree.map(n => n.decisionBranches))
+    handler(decisionBranchNodes)
+  })
 }
 
 export const findDecisionBranchFromTreeWithChildId = (questionsTree, childDecisionBranchId, foundCallback) => {
@@ -50,6 +66,33 @@ export const findDecisionBranchFromTreeWithChildId = (questionsTree, childDecisi
     }
   }
   questionsTree.forEach(node => handler(node))
+}
+
+export const getFlatTreeFromDecisionBranchId = (tree, decisionBranchId) => {
+  return new Promise((resolve, reject) => {
+    findDecisionBranchFromTreePromise(tree, decisionBranchId)
+      .then(targetNode => {
+        if (!isEmpty(targetNode.parentQuestionAnswerId)) {
+          const qNode = findQuestionAnswerFromTree(tree, targetNode.parentQuestionAnswerId)
+          resolve([qNode, targetNode])
+        }
+        else if (!isEmpty(targetNode.parentDecisionBranchId)) {
+          let nodes = [targetNode]
+          let handler = (parentDBId) => {
+            findDecisionBranchFromTreePromise(tree, parentDBId).then(node => {
+              nodes.push(node)
+              if (!isEmpty(node.parentDecisionBranchId)) {
+                handler(node.parentDecisionBranchId)
+              } else if (!isEmpty(node.parentQuestionAnswerId)) {
+                nodes.push(findQuestionAnswerFromTree(tree, node.parentQuestionAnswerId))
+                resolve(nodes)
+              }
+            })
+          }
+          handler(targetNode.parentDecisionBranchId)
+        }
+      })
+  })
 }
 
 export const makeNewDecisionBranch = () => ({ id: null, childDecisionBranches: [] })

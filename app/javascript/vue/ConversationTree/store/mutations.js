@@ -25,7 +25,8 @@ import {
   UPDATE_SUB_QUESTION,
   DELETE_SUB_QUESTION,
   SET_FILTERED_QUESTIONS_TREE,
-  SET_SEARCHING_KEYWORD
+  SET_SEARCHING_KEYWORD,
+  ADD_SEARCH_INDEX
 } from './mutationTypes'
 
 import {
@@ -81,6 +82,7 @@ export default {
   [CREATE_DECISION_BRANCH_OF_QUESTION_ANSWER] (state, { questionAnswerId, newDecisionBranch }) {
     const targetNode = findQuestionAnswerFromTree(state.questionsTree, questionAnswerId)
     if (isEmpty(targetNode)) { return }
+    newDecisionBranch.parentQuestionAnswerId = questionAnswerId
     setDecisionBranch(targetNode, 'decisionBranches', newDecisionBranch)
     state.decisionBranchesRepo[newDecisionBranch.id] = newDecisionBranch
   },
@@ -88,6 +90,7 @@ export default {
   [CREATE_DECISION_BRANCH_OF_DECISION_BRANCH] (state, { decisionBranchId, newDecisionBranch }) {
     findDecisionBranchFromTree(state.questionsTree, decisionBranchId, (targetNode) => {
       if (isEmpty(targetNode)) { return }
+      newDecisionBranch.parentDecisionBranchId = decisionBranchId
       setDecisionBranch(targetNode, 'childDecisionBranches', newDecisionBranch)
     })
     state.decisionBranchesRepo[newDecisionBranch.id] = newDecisionBranch
@@ -179,5 +182,9 @@ export default {
 
   [SET_SEARCHING_KEYWORD] (state, { searchingKeyword }) {
     state.searchingKeyword = searchingKeyword
+  },
+
+  [ADD_SEARCH_INDEX] (state, { indexItem }) {
+    state.searchIndex = state.searchIndex.concat([indexItem])
   }
 }

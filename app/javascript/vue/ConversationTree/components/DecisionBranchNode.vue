@@ -8,9 +8,10 @@ import DecisionBranchIcon from './DecisionBranchIcon'
 import DecisionBranchAnswerNode from './DecisionBranchAnswerNode'
 import AnswerLinkNode from './AnswerLinkNode'
 import NodeMixin from '../mixins/Node'
+import HighlightTextMixin from '../mixins/HighlightText'
 
 export default {
-  mixins: [NodeMixin],
+  mixins: [NodeMixin, HighlightTextMixin],
 
   props: {
     node: { type: Object, default: () => ({}) }
@@ -42,7 +43,8 @@ export default {
   computed: {
     ...mapState([
       'decisionBranchesRepo',
-      'openedNodes'
+      'openedNodes',
+      'searchingKeyword'
     ]),
 
     hasChildren () {
@@ -86,7 +88,7 @@ export default {
       >
         <span class="tree__item-body">
           <decision-branch-icon />
-          {{nodeData.body}}
+          <span v-html="highlight(nodeData.body, searchingKeyword)" />
         </span>
       </router-link>
       <ol class="tree" v-if="hasChildren" :style="childTreeStyle">

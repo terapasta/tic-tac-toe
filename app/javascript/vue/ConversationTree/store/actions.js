@@ -1,6 +1,6 @@
 import Promise from 'promise'
 import isEmpty from 'is-empty'
-import find from 'lodash/find'
+import { find, includes, uniq, flatten } from 'lodash'
 
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
@@ -25,7 +25,9 @@ import {
   UNSET_ANSWER_LINK,
   ADD_SUB_QUESTION,
   UPDATE_SUB_QUESTION,
-  DELETE_SUB_QUESTION
+  DELETE_SUB_QUESTION,
+  SET_FILTERED_QUESTIONS_TREE,
+  SET_SEARCHING_KEYWORD
 } from './mutationTypes'
 import { findDecisionBranchFromTree } from '../helpers';
 
@@ -211,5 +213,23 @@ export default {
       .then(res => {
         commit(DELETE_SUB_QUESTION, { questionAnswerId, subQuestionId })
       }).catch(logError)
+  },
+
+  searchTree ({ commit, state }, { keyword }) {
+    const hitted = state.searchIndex.filter(it => includes(it.text, keyword))
+    const nodeIdsList = hitted.map(it => it.relatedNodeIds)
+    const nodeIds = uniq(flatten(nodeIdsList))
+    const questionNodeIds = nodeIdsList.map(it => it.filter(it => /^Question-[0-9]+$/.test(it)))
+    const uniqQuestionNodeIds = uniq(flatten(questionNodeIds))
+    const filteredQuestionsTree = state.questionsTree.filter(it => includes(uniqQuestionNodeIds, `Question-${it.id}`))
+    commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree })
+    commit(SET_SEARCHING_KEYWORD, { searchingKeyword: keyword})
+    nodeIds.forEach(it => commit(OPEN_NODE, { nodeId: it }))
+  },
+
+  clearSearchTree ({ commit, state }) {
+    const { questionsTree } = state
+    commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree: questionsTree })
+    commit(SET_SEARCHING_KEYWORD, { searchingKeyword: '' })
   }
 }

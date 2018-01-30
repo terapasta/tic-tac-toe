@@ -1,5 +1,7 @@
 <script>
 import isEmpty from 'is-empty'
+import { mapActions } from 'vuex'
+import debounce from 'lodash/debounce'
 
 export default {
   data: () => ({
@@ -8,8 +10,19 @@ export default {
   }),
 
   methods: {
-    handleInputKeyUp (e) {
-      this.isShowClearButton = !isEmpty(e.target.value)
+    ...mapActions(['searchTree', 'clearSearchTree']),
+
+    handleInputKeyUp: debounce(function (e) {
+      const isKeywordExists = !isEmpty(e.target.value)
+      this.isShowClearButton = isKeywordExists
+      if (!isKeywordExists) { return this.clearSearchTree() }
+      this.searchTree({ keyword: this.keyword })
+    }, 500),
+
+    handleClearButtonClick () {
+      this.clearSearchTree()
+      this.isShowClearButton = false
+      this.keyword = ''
     }
   }
 }
@@ -28,6 +41,7 @@ export default {
       <button
         v-if="isShowClearButton"
         class="input-group-append btn btn-secondary btn-sm"
+        @click.prevent="handleClearButtonClick"
       >
         <div class="input-group-text">解除</div>
       </button>

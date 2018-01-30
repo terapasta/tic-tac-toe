@@ -23,7 +23,9 @@ import {
   UNSET_ANSWER_LINK,
   ADD_SUB_QUESTION,
   UPDATE_SUB_QUESTION,
-  DELETE_SUB_QUESTION
+  DELETE_SUB_QUESTION,
+  SET_FILTERED_QUESTIONS_TREE,
+  SET_SEARCHING_KEYWORD
 } from './mutationTypes'
 
 import {
@@ -169,5 +171,13 @@ export default {
     const index = findIndex(qa.subQuestions, (it) => it.id === subQuestionId)
     if (index < 0) { return }
     qa.subQuestions.splice(index, 1)
+  },
+
+  [SET_FILTERED_QUESTIONS_TREE] (state, { filteredQuestionsTree }) {
+    state.filteredQuestionsTree = filteredQuestionsTree
+  },
+
+  [SET_SEARCHING_KEYWORD] (state, { searchingKeyword }) {
+    state.searchingKeyword = searchingKeyword
   }
 }

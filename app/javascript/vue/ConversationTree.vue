@@ -142,7 +142,7 @@ export default {
     detailPanelStyle () {
       return {
         maxHeight: this.detailPanelHeight ? `${this.detailPanelHeight}px` : 'auto',
-        backgroundColor: `${this.$route.name === 'Home' ? 'rgba(255,255,255,.9)' : '#fff'}`
+        backgroundColor: this.$route.name === 'Home' ? 'rgba(255,255,255,.9)' : '#fff'
       }
     }
   }

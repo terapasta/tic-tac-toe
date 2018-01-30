@@ -1,9 +1,11 @@
 = render layout: 'bots/layout', locals: { full_width: true } do
+  - tree = @question_answers.make_tree(@decision_branches)
   #ConversationTree(
     data-bot-id=@bot.id
     data-bot-token=@bot.token
-    data-questions-tree=@question_answers.make_tree(@decision_branches).to_json
+    data-questions-tree=tree.to_json
     data-questions-repo=@question_answers.as_repo_json.to_json
+    data-search-index=@question_answers.make_index_json(tree, @decision_branches).to_json
     data-decision-branches-repo=DeepCamelizeKeys.deep_camelize_keys(@decision_branches.as_repo_json).to_json
   )
 

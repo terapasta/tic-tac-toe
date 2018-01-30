@@ -44,4 +44,35 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
       }
     }
   end
+
+  def make_index_json(tree, decision_branches)
+    tree.reduce([]) { |acc, node|
+      qa = object.detect{ |qa| qa.id == node[:id] }
+      node_ids = ["Question-#{qa.id}"]
+      acc << { text: qa.question, relatedNodeIds: node_ids }
+      if qa.answer.present?
+        acc << { text: qa.answer, relatedNodeIds: node_ids + ["Answer-#{qa.id}"] }
+      end
+      node[:decisionBranches].each do |db_node|
+        acc += recursive_make_decision_branch_indcies(db_node, node_ids, decision_branches)
+      end
+      acc
+    }
+  end
+
+  def recursive_make_decision_branch_indcies(db_node, node_ids, decision_branches)
+    result = []
+    _node_ids, __node_ids = nil, nil
+    db = decision_branches.detect{ |db| db.id == db_node[:id] }
+    _node_ids = node_ids + ["DecisionBranch-#{db.id}"]
+    result << { text: db.body, relatedNodeIds: _node_ids }
+    if db.answer.present?
+      __node_ids = _node_ids + ["DecisionBranchAnswer-#{db.id}"]
+      result << { text: db.answer, relatedNodeIds: __node_ids }
+    end
+    db_node[:childDecisionBranches].each do |child_db_node|
+      result += recursive_make_decision_branch_indcies(child_db_node, (__node_ids || _node_ids), decision_branches)
+    end
+    result
+  end
 end

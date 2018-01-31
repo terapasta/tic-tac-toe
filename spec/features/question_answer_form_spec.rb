@@ -57,6 +57,7 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
           # fill_in_input id: 'topic-tag-name', value: 'ほげ'
           click_button '追加'
           check "topic-tag-#{topic_tags.first.id}"
+          page.execute_script "window.scrollBy(0, window.innerHeight)"
           click_button '登録する'
         end
       end
@@ -72,11 +73,11 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       subject do
         lambda do
           visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-          page.save_screenshot
           find('[name="question_answer[question]"]').set('updated question')
           find('[name="question_answer[answer]"]').set('updated answer')
           # fill_in_input name: 'question_answer[question]', value: 'updated question'
           # fill_in_input name: 'question_answer[answer]', value: 'updated answer'
+          page.execute_script "window.scrollBy(0, window.innerHeight)"
           click_button '更新する'
           question_answer.reload
         end
@@ -105,6 +106,7 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
             fill_in_input id: 'topic-tag-name', value: 'ほげ'
             click_button '追加'
             check "topic-tag-#{topic_tags.first.id}"
+            page.execute_script "window.scrollBy(0, window.innerHeight)"
             click_button '登録する'
           end
         end
@@ -123,6 +125,7 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
             find('[name="question_answer[answer]"]').set('updated answer')
             # fill_in_input name: 'question_answer[question]', value: 'updated question'
             # fill_in_input name: 'question_answer[answer]', value: 'updated answer'
+            page.execute_script "window.scrollBy(0, window.innerHeight)"
             click_button '更新する'
             question_answer.reload
           end

@@ -37,3 +37,9 @@
       |ファイル作成後、CSV形式でアップロードして下さい。
 
     = image_tag 'import_file.png', width: 400, style: 'border: 1px solid #999;'
+
+
+  - if current_user.staff? && @bot.chat_test_job_error.present?
+    .card: .card-body
+      h5 Staff専用
+      pre.pre-scrollable: code=@bot.chat_test_job_error

@@ -2,9 +2,10 @@ class ChatTestJob < ApplicationJob
   queue_as :default
 
   rescue_from StandardError do |e|
-    logger.error e.inspect + e.backtrace.join("\n")
+    error = e.inspect + e.backtrace.join("\n")
+    logger.error error
     Bot.find(@bot.id).tap do |bot|
-      bot.update(is_chat_test_processing: false)
+      bot.update(is_chat_test_processing: false, chat_test_job_error: error)
     end
   end
 

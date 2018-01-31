@@ -1,5 +1,5 @@
 gensim==3.1.0
-grpcio-tools==1.6.0
+grpcio-tools==1.6.3
 injector==0.13.3
 mecab-python3==0.7
 mojimoji==0.0.5

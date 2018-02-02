@@ -59,6 +59,7 @@ class QuestionAnswer::CsvImporter
   end
 
   def parse
+    base_updated_at = Time.current
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
     CSV.new(raw_data).drop(1).each_with_index.inject({}) { |out, (row, index)|
       @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
@@ -73,6 +74,7 @@ class QuestionAnswer::CsvImporter
         question: data[:question],
         answer: data[:answer],
         topic_tag_names: topic_tag_names,
+        updated_at: base_updated_at + index
       }
       out
     }.values

@@ -1,7 +1,7 @@
 from injector import inject
 
-from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
-from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
+from app.core.tokenizer.topic_tokenizer import TopicTokenizer
+from app.core.vectorizer.topic_vectorizer import TopicVectorizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
 from app.core.estimator.pass_estimator import PassEstimator
@@ -10,12 +10,12 @@ from app.factories.base_factory import BaseFactory
 from app.shared.datasource.datasource import Datasource
 
 
-class CosineSimilarityFactory(BaseFactory):
+class TopicCosineSimilarityFactory(BaseFactory):
     @inject
     def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
-        self.tokenizer = MecabTokenizer.new()
-        self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
+        self.tokenizer = TopicTokenizer.new()
+        self.vectorizer = TopicVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
         self.estimator = PassEstimator.new(datasource=self.datasource)

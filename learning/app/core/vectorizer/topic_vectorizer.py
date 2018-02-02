@@ -10,6 +10,14 @@ from app.core.vectorizer.base_vectorizer import BaseVectorizer
 
 
 class TopicVectorizer(BaseVectorizer):
+    DUMP_KEY_FOR_SUBJECT = 'subject'
+    DUMP_KEY_FOR_PREDICATE = 'predicate'
+    DUMP_KEY_FOR_RAW_DATA = 'raw_data'
+
+    COEFF_SUBJECT = 1.0
+    COEFF_PREDICATE = 1.0
+    COEFF_RAW_DATA = 1.0
+
     @inject
     def __init__(self, datasource: Datasource, dump_key='topic_vectorizer'):
         self.persistence = datasource.persistence
@@ -52,8 +60,14 @@ class TopicVectorizer(BaseVectorizer):
             fv_predicate = self.predicate_vectorizer.transform(sentences_for_predicate)
             fv_raw_data = self.raw_data_vectorizer.transform(sentences_for_raw_data)
 
+            # 各ベクトルの次元数で重み付け
+            d_sum = fv_subject.shape[1] + fv_predicate.shape[1] + fv_raw_data.shape[1]
+            w_sub = self.COEFF_SUBJECT * fv_subject.shape[1] / d_sum
+            w_pre = self.COEFF_PREDICATE * fv_predicate.shape[1] / d_sum
+            w_raw = self.COEFF_RAW_DATA * fv_raw_data.shape[1] / d_sum
+
             # 各特徴ベクトルの結合
-            fv = sp.hstack((fv_subject, fv_predicate, fv_raw_data))
+            fv = sp.hstack((w_sub * fv_subject, w_pre * fv_predicate, w_raw * fv_raw_data))
 
             return fv
         except NotFittedError as e:
@@ -75,9 +89,9 @@ class TopicVectorizer(BaseVectorizer):
         if self.vectorizers is None:
             vectorizers = self.persistence.load(self.dump_key)
             if not vectorizers is None and isinstance(vectorizers, dict):
-                self.subject_vectorizer = vectorizers['subject']
-                self.predicate_vectorizer = vectorizers['predicate']
-                self.raw_data_vectorizer = vectorizers['raw_data']
+                self.subject_vectorizer = vectorizers[self.DUMP_KEY_FOR_SUBJECT]
+                self.predicate_vectorizer = vectorizers[self.DUMP_KEY_FOR_PREDICATE]
+                self.raw_data_vectorizer = vectorizers[self.DUMP_KEY_FOR_RAW_DATA]
                 self.vectorizers = vectorizers
 
         # 学習済みのものがなければ新規作成
@@ -90,11 +104,10 @@ class TopicVectorizer(BaseVectorizer):
             #       token_patternは1文字のデータを除外しない設定
             self.raw_data_vectorizer = TfidfVectorizer(use_idf=True, token_pattern=u'(?u)\\b\\w+\\b')
 
-            self.vectorizers = {
-                "subject": self.subject_vectorizer,
-                "predicate": self.predicate_vectorizer,
-                "raw_data": self.raw_data_vectorizer,
-            }
+            self.vectorizers = {}
+            self.vectorizers[self.DUMP_KEY_FOR_SUBJECT] = self.subject_vectorizer
+            self.vectorizers[self.DUMP_KEY_FOR_PREDICATE] = self.predicate_vectorizer
+            self.vectorizers[self.DUMP_KEY_FOR_RAW_DATA] = self.raw_data_vectorizer
 
     def _split_sentences(self, sentences_with_pos):
         words_for_subject = []
@@ -110,7 +123,8 @@ class TopicVectorizer(BaseVectorizer):
                     wfs.append(wp['word'])
                 elif wp['pos'] == '動詞':
                     wfp.append(wp['word'])
-                wfr.append(wp['word'])
+                else:
+                    wfr.append(wp['word'])
 
             words_for_subject.append(','.join(wfs))
             words_for_predicate.append(','.join(wfp))

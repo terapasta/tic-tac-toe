@@ -78,6 +78,7 @@ class QuestionAnswer::CsvImporter
       out
     }.values.reverse.map.with_index{ |param, index|
       param.updated_at = base_updated_at + index
+      param
     }
   end
 

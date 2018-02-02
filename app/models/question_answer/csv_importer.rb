@@ -61,23 +61,19 @@ class QuestionAnswer::CsvImporter
   def parse
     base_updated_at = Time.current
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
-    CSV.new(raw_data).drop(1).each_with_index.inject({}) { |out, (row, index)|
+    CSV.new(raw_data).drop(1).map.with_index { |row, index|
       @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
       data = detect_or_initialize_by_row(row)
-      next out if data.nil?
+      next if data.nil?
 
-      topic_tag_names = Array(out[data[:key]].try(:dig, :topic_tag_names))
-      topic_tag_names += Array(data[:topic_tag_names])
-
-      out[data[:key]] = {
+      {
         id: data[:id],
         question: data[:question],
         answer: data[:answer],
-        topic_tag_names: topic_tag_names,
+        topic_tag_names: Array(data[:topic_tag_names]),
       }
-      out
-    }.values.reverse.map.with_index{ |param, index|
-      param[:updated_at] = base_updated_at + index
+    }.compact.reverse.map.with_index{ |param, index|
+      param[:created_at] = base_updated_at + index
       param
     }
   end

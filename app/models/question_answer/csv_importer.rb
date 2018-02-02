@@ -74,10 +74,11 @@ class QuestionAnswer::CsvImporter
         question: data[:question],
         answer: data[:answer],
         topic_tag_names: topic_tag_names,
-        updated_at: base_updated_at + index
       }
       out
-    }.values
+    }.values.reverse.map.with_index{ |param, index|
+      param.updated_at = base_updated_at + index
+    }
   end
 
   ##

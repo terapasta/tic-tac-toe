@@ -63,6 +63,7 @@ class QuestionAnswer::CsvImporter
     CSV.new(raw_data).drop(1).each_with_index.inject({}) { |out, (row, index)|
       @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
       data = detect_or_initialize_by_row(row)
+      next out if data.nil?
 
       topic_tag_names = Array(out[data[:key]].try(:dig, :topic_tag_names))
       topic_tag_names += Array(data[:topic_tag_names])
@@ -80,6 +81,7 @@ class QuestionAnswer::CsvImporter
   ##
   # 行からデータを抽出する
   def detect_or_initialize_by_row(row)
+    return nil if row.nil? || row.compact.count.zero?
     id = sjis_safe(row[0]).to_i
     topic_tag_names = sjis_safe(row[1])&.gsub('／', '/')&.split("/")&.map(&:strip) || []
     q = sjis_safe(row[2])

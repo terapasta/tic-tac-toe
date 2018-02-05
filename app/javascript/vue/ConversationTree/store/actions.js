@@ -34,7 +34,8 @@ import {
 import {
   findQuestionAnswerFromTree,
   findDecisionBranchFromTree,
-  getFlatTreeFromDecisionBranchId
+  getFlatTreeFromDecisionBranchId,
+  makeNodeIdsFromNode
 } from '../helpers';
 
 const logError = err => {
@@ -103,7 +104,6 @@ export default {
     if (!isEmpty(questionAnswerId)) {
       commit(ADD_DECISION_BRANCH_TO_QUESTION_ANSWER, { questionAnswerId })
     } else if (!isEmpty(decisionBranchId)) {
-      console.log("test")
       commit(ADD_DECISION_BRANCH_TO_DECISION_BRANCH, { decisionBranchId })
     }
   },
@@ -124,7 +124,7 @@ export default {
             `Answer-${targetNode.id}`,
             `DecisionBranch-${decisionBranch.id}`
           ]
-          commit(ADD_SEARCH_INDEX, { relatedNodeIds, text: body })
+          commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds, text: body } })
         }).catch(logError)
 
     } else if (!isEmpty(decisionBranchId)) {
@@ -136,8 +136,8 @@ export default {
           })
 
           getFlatTreeFromDecisionBranchId(state.questionsTree, decisionBranchId).then(nodes => {
-            // TODO nodesからnodeIdsを作ってADD_SEARCH_INDEXする
-            console.log(nodes)
+            const relatedNodeIds = flatten(nodes.map(makeNodeIdsFromNode))
+            commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds, text: body } })
           })
         }).catch(logError)
     }

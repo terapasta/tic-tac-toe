@@ -112,3 +112,11 @@ export const addArrayItem = (obj, key, item) => {
   obj[key] = obj[key] || []
   obj[key].push(item)
 }
+
+export const makeNodeIdsFromNode = (node) => {
+  if (Array.isArray(node.decisionBranches)) {
+    return [`Question-${node.id}`, `Answer-${node.id}`]
+  } else if (Array.isArray(node.childDecisionBranches)) {
+    return [`DecisionBranch-${node.id}`, `DecisionBranchAnswer-${node.id}`]
+  }
+}

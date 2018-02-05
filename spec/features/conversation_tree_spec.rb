@@ -40,7 +40,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'display tree nodes' do
-
     find("#Question-#{question_answers.first.id}").click
     expect(page).to have_content(question_answers.first.answer)
     find("#Answer-#{question_answers.first.id}").click
@@ -50,12 +49,19 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(page).to have_content(decision_branches.first.answer)
   end
 
+  scenario 'search tree nodes' do
+    find('input[type=search]').set(question_answers.first.answer)
+    expect(page).to have_content(question_answers.first.question)
+    expect(page).to have_content(question_answers.first.answer)
+    expect(page).to_not have_content(question_answers.second.question)
+    expect(page).to_not have_content(question_answers.second.answer)
+    page.save_screenshot
+  end
+
   scenario 'creates question with answer'  do
     find('#AddQuestionAnswerButton').click
     find('[name=question-question]').set('new question')
     find('[name=question-answer]').set('new answer')
-    # fill_in_input name: 'question-question', value: 'new question'
-    # fill_in_input name: 'question-answer', value: 'new answer'
     click_button '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('new question')

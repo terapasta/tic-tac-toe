@@ -12,9 +12,10 @@ class AccuracyTestCase < ApplicationRecord
     # Note: サジェストを期待しない場合はサジェストされたかどうかはチェックしない
     suggestion_is_success = true
     if is_expected_suggestion
-      suggestion_is_success = bot_messages.any?{ |m| m.similar_question_answers.present? }
+      suggestion_is_success = bot_message.similar_question_answers.present?
     end
-    answer_is_success and suggestion_is_success
+
+    answer_is_success && suggestion_is_success
   end
 
   def success?(reply_response)

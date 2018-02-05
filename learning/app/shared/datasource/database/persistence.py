@@ -17,7 +17,7 @@ class Persistence(BaseCls):
 
     def load(self, key):
         records = self.database.select(
-            'SELECT * FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
+            'SELECT * FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s ORDER BY id DESC LIMIT 1;',
             {
                 'bot_id': self.id,
                 'name': self._generate_name(key),
@@ -36,18 +36,20 @@ class Persistence(BaseCls):
         self.database.execute_with_transaction(
                 [
                     [
-                        'DELETE FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s;',
-                        {
-                            'bot_id': self.id,
-                            'name': self._generate_name(key),
-                        },
-                    ],
-                    [
                         'INSERT INTO dumps (bot_id, name, content) VALUES (%(bot_id)s, %(name)s, %(content)s);',
                         {
                             'bot_id': self.id,
                             'name': self._generate_name(key),
                             'content': file.getvalue(),
+                        },
+                    ],
+                    [
+                        'DELETE FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s AND (SELECT COUNT(id) FROM (SELECT * FROM dumps) AS all_dumps WHERE bot_id = %(bot_id_2)s AND name = %(name_2)s) > 3 ORDER BY id ASC LIMIT 1;',
+                        {
+                            'bot_id': self.id,
+                            'name': self._generate_name(key),
+                            'bot_id_2': self.id,
+                            'name_2': self._generate_name(key),
                         },
                     ],
                 ],

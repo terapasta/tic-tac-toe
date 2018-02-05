@@ -41,7 +41,7 @@ export const findDecisionBranchFromTreePromise = (tree, decisionBranchId) => {
     const handler = (decisionBranchNodes) => {
       decisionBranchNodes.forEach(decisionBranchNode => {
         if (decisionBranchNode.id === decisionBranchId) {
-          resolve(decisionBranchNode)
+          return resolve(decisionBranchNode)
         } else {
           handler(decisionBranchNode.childDecisionBranches)
         }

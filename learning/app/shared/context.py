@@ -42,6 +42,10 @@ class Context(BaseCls):
             logger.info('algorithm: Simmilarity Classification')
             factory_cls = CosineSimilarityFactory
 
+        elif algorithm == Constants.ALGORITHM_TOPIC_SIMILARITY_CLASSIFICATION:
+            logger.info('algorithm: Topic Simmilarity Classification')
+            factory_cls = TopicCosineSimilarityFactory
+
         elif algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Two Steps Simmilarity Classification')
             factory_cls = TwoStepCosineSimilarityFactory

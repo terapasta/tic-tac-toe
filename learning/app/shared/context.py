@@ -5,6 +5,7 @@ from app.shared.datasource.datasource import Datasource
 from app.shared.base_cls import BaseCls
 
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
+from app.factories.topic_cosine_similarity_factory import TopicCosineSimilarityFactory
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
@@ -37,7 +38,7 @@ class Context(BaseCls):
 
     def get_factory(self):
         factory_cls = CosineSimilarityFactory
-        algorithm = self.current_bot.algorithm
+        algorithm = int(self.current_bot.algorithm)  # pythonコマンドから直接実行した場合にstring型になってしまうためintに変換している
         if algorithm == Constants.ALGORITHM_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Simmilarity Classification')
             factory_cls = CosineSimilarityFactory
@@ -62,6 +63,8 @@ class Context(BaseCls):
         elif algorithm == Constants.ALGORITHM_LOGISTIC_REGRESSION:
             logger.info('algorithm: Logistic Regression')
             factory_cls = LogisticRegressionFactory
+        else:
+            logger.info('algorithm: Default')
 
         return factory_cls.new(
             bot=self.current_bot,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123072704) do
+ActiveRecord::Schema.define(version: 20180206142918) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20180123072704) do
     t.string "widget_subtitle"
     t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
+    t.boolean "demo"
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 

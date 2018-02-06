@@ -85,7 +85,13 @@ class Bot < ApplicationRecord
   end
 
   def learn_later
-    LearnJob.perform_later(self.id)
+    my_queue = DelayedJob.all.order(created_at: :asc).to_a.select{ |q|
+      q.job_class == LearnJob && q.arguments == [self.id]
+    }
+    if my_queue.count.zero? ||
+       my_queue.all?{ |q| q.locked_at.present? }
+      LearnJob.perform_later(self.id)
+    end
   end
 
   def chats_limit_per_day

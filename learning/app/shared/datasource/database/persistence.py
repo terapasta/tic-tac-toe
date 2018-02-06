@@ -44,7 +44,17 @@ class Persistence(BaseCls):
                         },
                     ],
                     [
-                        'DELETE FROM dumps WHERE bot_id = %(bot_id)s AND name = %(name)s AND (SELECT COUNT(id) FROM (SELECT * FROM dumps) AS all_dumps WHERE bot_id = %(bot_id_2)s AND name = %(name_2)s) > 3 ORDER BY id ASC LIMIT 1;',
+                        '''
+                        DELETE FROM dumps
+                        WHERE bot_id = %(bot_id)s
+                            AND name = %(name)s
+                            AND (
+                                SELECT COUNT(id) FROM (SELECT * FROM dumps) AS all_dumps
+                                WHERE bot_id = %(bot_id_2)s
+                                AND name = %(name_2)s
+                            ) > 3
+                        ORDER BY id ASC LIMIT 1;
+                        ''',
                         {
                             'bot_id': self.id,
                             'name': self._generate_name(key),

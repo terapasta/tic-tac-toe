@@ -1,27 +1,20 @@
-h1 demo_bots
 .container.pt-5
+  .d-flex.justify-content-between
+    h3 Demo Bots
   table.table.mt-5
     thead
       tr
         th id
         th image
         th name
-        th description
-        th plan
+        th
     tbody
-      - @organizations.each do |org|
+      - @demobot.each do |bot|
         tr
-          td= org.id
+          td= bot.id
           td
-            - if org.image?
-              = link_to org.image_url do
-                .circle-image-56 style=css_bg_image(org.image_url(:thumb))
-          td= org.name
-          td= org.description
-          td
-            = org.plan_i18n
-            - if org.trial?
-              = space
-              |(expire at: #{l org.trial_finished_at})
-
-          td= link_to 'Edit', edit_admin_organization_path(org), class: 'btn btn-secondary'
+            - if bot.image?
+              = link_to bot.image_url do
+                .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+          td= bot.name
+          td= link_to 'Demo End', '#', class: 'btn btn-secondary'

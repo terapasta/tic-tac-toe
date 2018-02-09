@@ -28,7 +28,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
         end
 
         it 'QuestionAnserが登録されること' do
-          expect(bot.question_answers.count).to eq 2
+          expect(bot.question_answers.count).to eq 5
         end
       end
 
@@ -51,7 +51,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
         end
 
         it 'QuestionAnserが登録されていること' do
-          expect(bot.question_answers.count).to eq 2
+          expect(bot.question_answers.count).to eq 5
           expect(bot2.question_answers.count).to eq 1
         end
       end

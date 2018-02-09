@@ -17,4 +17,4 @@
               = link_to bot.image_url do
                 .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
           td= bot.name
-          td= link_to 'Finish demo', '#', class: 'btn btn-secondary'
+          td= link_to 'Finish demo', admin_demo_bot_path(bot), method: :patch, data: { confirm: 'デモを終了しますか？' }, class: 'btn btn-secondary'

@@ -9,7 +9,7 @@
         th name
         th
     tbody
-      - @demobot.each do |bot|
+      - @demobots.each do |bot|
         tr
           td= bot.id
           td
@@ -17,4 +17,4 @@
               = link_to bot.image_url do
                 .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
           td= bot.name
-          td= link_to 'Demo End', '#', class: 'btn btn-secondary'
+          td= link_to 'Finish demo', '#', class: 'btn btn-secondary'

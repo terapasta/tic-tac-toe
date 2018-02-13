@@ -23,7 +23,10 @@ import {
   UNSET_ANSWER_LINK,
   ADD_SUB_QUESTION,
   UPDATE_SUB_QUESTION,
-  DELETE_SUB_QUESTION
+  DELETE_SUB_QUESTION,
+  SET_FILTERED_QUESTIONS_TREE,
+  SET_SEARCHING_KEYWORD,
+  ADD_SEARCH_INDEX
 } from './mutationTypes'
 
 import {
@@ -49,7 +52,15 @@ export default {
   },
 
   [ADD_QUESTION_ANSWER] (state, { questionAnswer }) {
-    state.questionsTree.unshift(pick(questionAnswer, ['id', 'decisionBranches']))
+    const newNode = pick(questionAnswer, ['id', 'decisionBranches'])
+    state.questionsTree = [
+      newNode,
+      ...state.questionsTree
+    ]
+    state.filteredQuestionsTree = [
+      newNode,
+      ...state.filteredQuestionsTree
+    ]
     state.questionsRepo[questionAnswer.id] = questionAnswer
   },
 
@@ -79,6 +90,7 @@ export default {
   [CREATE_DECISION_BRANCH_OF_QUESTION_ANSWER] (state, { questionAnswerId, newDecisionBranch }) {
     const targetNode = findQuestionAnswerFromTree(state.questionsTree, questionAnswerId)
     if (isEmpty(targetNode)) { return }
+    newDecisionBranch.parentQuestionAnswerId = questionAnswerId
     setDecisionBranch(targetNode, 'decisionBranches', newDecisionBranch)
     state.decisionBranchesRepo[newDecisionBranch.id] = newDecisionBranch
   },
@@ -86,6 +98,7 @@ export default {
   [CREATE_DECISION_BRANCH_OF_DECISION_BRANCH] (state, { decisionBranchId, newDecisionBranch }) {
     findDecisionBranchFromTree(state.questionsTree, decisionBranchId, (targetNode) => {
       if (isEmpty(targetNode)) { return }
+      newDecisionBranch.parentDecisionBranchId = decisionBranchId
       setDecisionBranch(targetNode, 'childDecisionBranches', newDecisionBranch)
     })
     state.decisionBranchesRepo[newDecisionBranch.id] = newDecisionBranch
@@ -169,5 +182,17 @@ export default {
     const index = findIndex(qa.subQuestions, (it) => it.id === subQuestionId)
     if (index < 0) { return }
     qa.subQuestions.splice(index, 1)
+  },
+
+  [SET_FILTERED_QUESTIONS_TREE] (state, { filteredQuestionsTree }) {
+    state.filteredQuestionsTree = filteredQuestionsTree
+  },
+
+  [SET_SEARCHING_KEYWORD] (state, { searchingKeyword }) {
+    state.searchingKeyword = searchingKeyword
+  },
+
+  [ADD_SEARCH_INDEX] (state, { indexItem }) {
+    state.searchIndex = state.searchIndex.concat([indexItem])
   }
 }

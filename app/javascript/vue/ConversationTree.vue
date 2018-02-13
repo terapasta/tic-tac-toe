@@ -12,6 +12,7 @@ import {
 
 import getOffset from '../helpers/getOffset'
 import Tree from './ConversationTree/components/Tree'
+import SearchForm from './ConversationTree/components/SearchForm'
 
 const Direction = {
   Up: 'up',
@@ -28,7 +29,8 @@ export default {
   name: 'conversation-tree',
 
   components: {
-    Tree
+    Tree,
+    SearchForm
   },
 
   data: () => ({
@@ -89,7 +91,7 @@ export default {
             return rect.top > top + height
           })
           const hiddenIds = compact(hiddenComponents.map(it => get(it, 'node.id', null)))
-          const hiddableIndecies = reduce(this.questionsTree, (acc, node, i) => {
+          const hiddableIndecies = reduce(this.filteredQuestionsTree, (acc, node, i) => {
             if (includes(hiddenIds, node.id)) { acc.push(i) }
             return acc
           }, [])
@@ -99,7 +101,7 @@ export default {
       }
 
       if (direction === Direction.Down && percentile > 0.8) {
-        if (last(this.showingIndecies) < this.questionsTree.length - 1) {
+        if (last(this.showingIndecies) < this.filteredQuestionsTree.length - 1) {
           this.showingIndecies = this.showingIndecies.concat([last(this.showingIndecies) + 1])
 
           const hiddenComponents = this.$refs.tree.$children.filter((child, i) => {
@@ -107,7 +109,7 @@ export default {
             return top + height < this.$refs.master.getBoundingClientRect().top
           })
           const hiddenIds = compact(hiddenComponents.map(it => get(it, 'node.id', null)))
-          const hiddableIndecies = reduce(this.questionsTree, (acc, node, i) => {
+          const hiddableIndecies = reduce(this.filteredQuestionsTree, (acc, node, i) => {
             if (includes(hiddenIds, node.id)) { acc.push(i) }
             return acc
           }, [])
@@ -118,19 +120,20 @@ export default {
     },
 
     updateCurrentNodes () {
-      this.currentNodes = this.questionsTree.filter((_, i) => includes(this.showingIndecies, i))
+      this.currentNodes = this.filteredQuestionsTree.filter((_, i) => includes(this.showingIndecies, i))
     }
   },
 
   watch: {
-    questionsTree () {
+    filteredQuestionsTree () {
       this.updateCurrentNodes()
     }
   },
 
   computed: {
     ...mapState([
-      'questionsTree'
+      'questionsTree',
+      'filteredQuestionsTree'
     ]),
 
     rootStyle () {
@@ -157,6 +160,7 @@ export default {
         @mousewheel="handleMouseWheelMaster"
         ref="master"
       >
+        <search-form />
         <tree
           :currentNodes="currentNodes"
           ref="tree"

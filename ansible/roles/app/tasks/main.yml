@@ -44,6 +44,13 @@
     mode: 0775
 
 - file:
+    path: /var/www/donusagi-bot/shared/learning/config/
+    state: directory
+    owner: deploy
+    group: deploy
+    mode: 0775
+
+- file:
     path: /var/www/donusagi-bot/shared/learning/learning/config/
     state: directory
     owner: deploy

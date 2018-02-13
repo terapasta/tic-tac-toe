@@ -21,6 +21,7 @@ set :unicorn_pid, "/tmp/unicorn.pid"
 set :unicorn_config_path, 'config/unicorn.rb'
 set :whenever_identifier, ->{"#{fetch(:application)}_#{fetch(:stage)}}"}
 set :whenever_roles, ->{ :batch }
+set :delayed_job_roles, [:worker]
 
 desc 'mecab ipadic neologdをアップデート'
 task :update_neologd do
@@ -85,7 +86,7 @@ namespace :deploy do
   end
 
   task :restart_python do
-    on roles(:app) do
+    on roles(:learning) do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
       within current_path.join('learning') do

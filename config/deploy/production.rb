@@ -2,13 +2,17 @@ set :branch, ENV['BRANCH'] || 'master'
 
 MyOpeProductionA = '13.230.166.26'
 MyOpeProductionB = '52.193.239.222'
+MyOpeProductionC = '13.230.210.84'
 
 server MyOpeProductionA,
   user: 'deploy',
-  roles: %w{web app db batch bot_framework}
+  roles: %w{web app db batch bot_framework learning}
 server MyOpeProductionB,
   user: 'deploy',
-  roles: %w{app bot_framework}
+  roles: %w{app bot_framework learning}
+server MyOpeProductionC,
+  user: 'deploy',
+  roles: %w{worker learning}
 
 namespace :deploy do
   task :prepare_bundle_config do

@@ -9,11 +9,12 @@ import QuestionIcon from './QuestionIcon'
 import AnswerNode from './AnswerNode'
 import { hasChildDecisionBranch } from '../helpers'
 import NodeMixin from '../mixins/Node'
+import HighlightTextMixin from '../mixins/HighlightText'
 
 export default {
   name: 'question-node',
 
-  mixins: [NodeMixin],
+  mixins: [NodeMixin, HighlightTextMixin],
 
   props: {
     node: { type: Object, default: () => ({}) }
@@ -41,7 +42,8 @@ export default {
   computed: {
     ...mapState([
       'questionsRepo',
-      'openedNodes'
+      'openedNodes',
+      'searchingKeyword'
     ]),
 
     hasChildren () {
@@ -79,7 +81,7 @@ export default {
     >
       <span class="tree__item-body">
         <question-icon />
-        {{nodeData.question}}
+        <span v-html="this.highlight(nodeData.question, searchingKeyword)" />
       </span>
       <ul v-if="hasSubQuestions" class="tree__item-sub-body">
         <li v-for="sq in nodeData.subQuestions">

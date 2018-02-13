@@ -52,7 +52,15 @@ export default {
   },
 
   [ADD_QUESTION_ANSWER] (state, { questionAnswer }) {
-    state.questionsTree.unshift(pick(questionAnswer, ['id', 'decisionBranches']))
+    const newNode = pick(questionAnswer, ['id', 'decisionBranches'])
+    state.questionsTree = [
+      newNode,
+      ...state.questionsTree
+    ]
+    state.filteredQuestionsTree = [
+      newNode,
+      ...state.filteredQuestionsTree
+    ]
     state.questionsRepo[questionAnswer.id] = questionAnswer
   },
 

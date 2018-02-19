@@ -20,6 +20,10 @@ export default {
   }),
 
   computed: {
+    ...mapState([
+      'decisionBranchesRepo'
+    ]),
+
     isNew () {
       return isEmpty(this.nodeData.id)
     }
@@ -49,11 +53,13 @@ export default {
     handleUpdateButtonClick () {
       const { questionAnswerId, index } = this
       const { id, body } = this.nodeData
+      const db = this.decisionBranchesRepo[id]
       this.updateDecisionBranch({
         questionAnswerId,
         index,
         body,
-        decisionBranchId: id
+        decisionBranchId: id,
+        answer: db.answer
       }).then(() => {
         toastr.success('選択肢を更新しました')
         this.isEditing = false

@@ -1,4 +1,5 @@
 export default {
   openedNodes: [],
-  searchingKeyword: ''
+  searchingKeyword: '',
+  isOnlyShowHasDecisionBranchesNode: false
 }

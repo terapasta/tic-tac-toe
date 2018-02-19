@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 import {
   range,
@@ -42,6 +42,10 @@ export default {
     originalDetailPanelHeight: null
   }),
 
+  created () {
+    this.toggleIsOnlyShowHasDecisionBranchesNode()
+  },
+
   mounted () {
     this.$nextTick(() => {
       this.adjustHeight()
@@ -57,6 +61,10 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      'toggleIsOnlyShowHasDecisionBranchesNode'
+    ]),
+
     adjustHeight () {
       const offset = getOffset(this.$refs.root)
       const winHeight = window.innerHeight

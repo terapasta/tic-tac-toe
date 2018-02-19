@@ -26,7 +26,8 @@ import {
   DELETE_SUB_QUESTION,
   SET_FILTERED_QUESTIONS_TREE,
   SET_SEARCHING_KEYWORD,
-  ADD_SEARCH_INDEX
+  ADD_SEARCH_INDEX,
+  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE
 } from './mutationTypes'
 
 import {
@@ -194,5 +195,17 @@ export default {
 
   [ADD_SEARCH_INDEX] (state, { indexItem }) {
     state.searchIndex = state.searchIndex.concat([indexItem])
+  },
+
+  [TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE] (state) {
+    state.isOnlyShowHasDecisionBranchesNode = !state.isOnlyShowHasDecisionBranchesNode
+
+    if (state.isOnlyShowHasDecisionBranchesNode) {
+      state.filteredQuestionsTree = state.questionsTree.filter(it => (
+        !isEmpty(it.decisionBranches)
+      ))
+    } else {
+      state.filteredQuestionsTree = state.questionsTree.concat()
+    }
   }
 }

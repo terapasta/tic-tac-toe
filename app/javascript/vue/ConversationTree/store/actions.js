@@ -28,7 +28,8 @@ import {
   DELETE_SUB_QUESTION,
   SET_FILTERED_QUESTIONS_TREE,
   SET_SEARCHING_KEYWORD,
-  ADD_SEARCH_INDEX
+  ADD_SEARCH_INDEX,
+  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE
 } from './mutationTypes'
 
 import {
@@ -257,5 +258,9 @@ export default {
     const { questionsTree } = state
     commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree: questionsTree })
     commit(SET_SEARCHING_KEYWORD, { searchingKeyword: '' })
+  },
+
+  toggleIsOnlyShowHasDecisionBranchesNode ({ commit }) {
+    commit(TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE)
   }
 }

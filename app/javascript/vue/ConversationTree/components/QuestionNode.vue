@@ -50,6 +50,10 @@ export default {
       return !isEmpty(this.nodeData.answer)
     },
 
+    hasDecisionBranches () {
+      return !isEmpty(this.node.decisionBranches)
+    },
+
     nodeData () {
       return this.questionsRepo[this.node.id]
     },
@@ -80,11 +84,11 @@ export default {
       @click.native="handleClick"
     >
       <span class="tree__item-body">
-        <question-icon />
+        <question-icon :has-decision-branches="hasDecisionBranches" />
         <span v-html="this.highlight(nodeData.question, searchingKeyword)" />
       </span>
       <ul v-if="hasSubQuestions" class="tree__item-sub-body">
-        <li v-for="sq in nodeData.subQuestions">
+        <li v-for="(sq, i) in nodeData.subQuestions" :key="i">
           {{sq.question}}
         </li>
       </ul>

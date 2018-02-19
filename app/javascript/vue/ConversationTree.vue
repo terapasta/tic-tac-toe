@@ -157,7 +157,7 @@ export default {
     <div class="master-detail-panel__body">
       <div
         class="master-detail-panel__master"
-        @mousewheel="handleMouseWheelMaster"
+        @wheel="handleMouseWheelMaster"
         ref="master"
       >
         <search-form />

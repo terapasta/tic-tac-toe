@@ -1,4 +1,5 @@
 <script>
+import { mapState, mapActions } from 'vuex'
 import chunk from 'lodash/chunk'
 
 import QuestionNode from './QuestionNode'
@@ -16,6 +17,10 @@ export default {
   },
 
   computed: {
+    ...mapState([
+      'isOnlyShowHasDecisionBranchesNode'
+    ]),
+
     isActiveAddButton () {
       return this.$route.name === 'QuestionNew'
     },
@@ -25,6 +30,16 @@ export default {
         active: this.isActiveAddButton
       })
     }
+  },
+
+  methods: {
+    ...mapActions([
+      'toggleIsOnlyShowHasDecisionBranchesNode'
+    ]),
+
+    handleCheckBoxChange () {
+      this.toggleIsOnlyShowHasDecisionBranchesNode()
+    }
   }
 }
 </script>
@@ -32,6 +47,19 @@ export default {
 <template>
   <ol class="tree">
     <li class="tree__node" id="adding">
+      <label>
+        <input
+          type="checkbox"
+          :checked="isOnlyShowHasDecisionBranchesNode"
+          @change="handleCheckBoxChange"
+        />
+        &nbsp;
+        <span class="icon-circle">
+          <i class="material-icons upside-down" title="選択肢" style="top:-1px">call_split</i>
+        </span>
+        ツリーのみ表示
+      </label>
+      <br />
       <div :class="addButtonClassName">
         <router-link
           id="AddQuestionAnswerButton"

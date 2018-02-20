@@ -106,7 +106,7 @@ export default class ChatBotMessage extends Component {
       <div>
         {answerFiles.map((answerFile, i) => {
           const isImage = includes(ImageFileTypes, answerFile.fileType);
-          const fileName = last(answerFile.file.url.split("/"));
+          const fileName = last(answerFile.file.url.split('?')[0].split("/"));
 
           return (
             <div className="chat-message__file">

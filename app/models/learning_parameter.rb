@@ -10,6 +10,7 @@ class LearningParameter < ApplicationRecord
     :word2vec_wmd,
     :hybrid_classification,
     :topic_similarity_classification,
+    :fuzzy_similarity_classification,
   ]
 
   enum feedback_algorithm: [

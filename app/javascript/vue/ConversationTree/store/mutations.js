@@ -2,6 +2,9 @@ import includes from 'lodash/includes'
 import indexOf from 'lodash/indexOf'
 import pick from 'lodash/pick'
 import findIndex from 'lodash/findIndex'
+import sortBy from 'lodash/sortBy'
+import assign from 'lodash/assign'
+import filter from 'lodash/filter'
 import isEmpty from 'is-empty'
 
 import {
@@ -27,7 +30,9 @@ import {
   SET_FILTERED_QUESTIONS_TREE,
   SET_SEARCHING_KEYWORD,
   ADD_SEARCH_INDEX,
-  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE
+  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
+  MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
+  MOVE_DECISION_BRANCH_TO_LOWER_POSITION
 } from './mutationTypes'
 
 import {
@@ -206,6 +211,66 @@ export default {
       ))
     } else {
       state.filteredQuestionsTree = state.questionsTree.concat()
+    }
+  },
+
+  [MOVE_DECISION_BRANCH_TO_HIGHER_POSITION] (state, { decisionBranchId }) {
+    const { decisionBranchesRepo, questionsTree } = state
+    const db = decisionBranchesRepo[decisionBranchId]
+    const moveToHigher = (dbIds) => {
+      const decisionBranches = filter(decisionBranchesRepo, (it) => includes(dbIds, it.id))
+      const sorted = sortBy(decisionBranches, ['position'])
+      const targetIndex = findIndex(sorted, { id: decisionBranchId })
+      if (targetIndex === -1 || targetIndex === 0) { return }
+      const target = sorted[targetIndex]
+      const prev = sorted[targetIndex - 1]
+      target.position -= 1
+      prev.position += 1
+      state.decisionBranchesRepo = assign(state.decisionBranchesRepo, {
+        [target.id]: target,
+        [prev.id]: prev
+      })
+    }
+    if (db.questionAnswerId) {
+      const qaNode = findQuestionAnswerFromTree(questionsTree, db.questionAnswerId)
+      const dbIds = qaNode.decisionBranches.map(it => it.id)
+      moveToHigher(dbIds)
+
+    } else if (db.parentDecisionBranchId) {
+      findDecisionBranchFromTree(questionsTree, db.parentDecisionBranchId, (dbNode) => {
+        const dbIds = dbNode.childDecisionBranches.map(it => it.id)
+        moveToHigher(dbIds)
+      })
+    }
+  },
+
+  [MOVE_DECISION_BRANCH_TO_LOWER_POSITION] (state, { decisionBranchId }) {
+    const { decisionBranchesRepo, questionsTree } = state
+    const db = decisionBranchesRepo[decisionBranchId]
+    const moveToLower = (dbIds) => {
+      const decisionBranches = filter(decisionBranchesRepo, (it) => includes(dbIds, it.id))
+      const sorted = sortBy(decisionBranches, ['position'])
+      const targetIndex = findIndex(sorted, { id: decisionBranchId })
+      if (targetIndex === sorted.length - 1) { return }
+      const target = sorted[targetIndex]
+      const next = sorted[targetIndex + 1]
+      target.position += 1
+      next.position -= 1
+      state.decisionBranchesRepo = assign(state.decisionBranchesRepo, {
+        [target.id]: target,
+        [next.id]: next
+      })
+    }
+    if (db.questionAnswerId) {
+      const qaNode = findQuestionAnswerFromTree(questionsTree, db.questionAnswerId)
+      const dbIds = qaNode.decisionBranches.map(it => it.id)
+      moveToLower(dbIds)
+
+    } else if (db.parentDecisionBranchId) {
+      findDecisionBranchFromTree(questionsTree, db.parentDecisionBranchId, (dbNode) => {
+        const dbIds = dbNode.childDecisionBranches.map(it => it.id)
+        moveToLower(dbIds)
+      })
     }
   }
 }

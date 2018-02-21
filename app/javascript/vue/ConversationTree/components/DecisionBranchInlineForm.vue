@@ -10,7 +10,8 @@ export default {
 
   props: {
     nodeData: { type: Object, default: () => ({}) },
-    index: { type: Number, default: null },
+    isFirst: { type: Boolean, default: false },
+    isLast: { type: Boolean, default: false },
     questionAnswerId: { type: Number, default: null },
     decisionBranchId: { type: Number, default: null }
   },
@@ -33,7 +34,9 @@ export default {
     ...mapActions([
       'createDecisionBranch',
       'updateDecisionBranch',
-      'deleteDecisionBranch'
+      'deleteDecisionBranch',
+      'moveDecisionBranchToHigherPosition',
+      'moveDecisionBranchToLowerPosition'
     ]),
 
     handleCreateButtonClick () {
@@ -74,6 +77,16 @@ export default {
 
     handleCancelEditButtonClick () {
       this.isEditing = false
+    },
+
+    handleSortUpButtonClick () {
+      const { id } = this.nodeData
+      this.moveDecisionBranchToHigherPosition({ decisionBranchId: id })
+    },
+
+    handleSortDownButtonClick () {
+      const { id } = this.nodeData
+      this.moveDecisionBranchToLowerPosition({ decisionBranchId: id })
     }
   }
 }
@@ -87,6 +100,20 @@ export default {
       class="btn btn-link"
       @click.prevent="handleEditButtonClick"
     ><i class="material-icons mi-xs">edit</i></button>
+    <div class="sort-btns" v-if="!isNew && !isEditing">
+      <button
+        v-if="!isFirst"
+        class="sort-btn-up"
+        @click="handleSortUpButtonClick"
+      ><i class="material-icons">keyboard_arrow_up</i></button>
+      <span v-if="isFirst" class="sort-btn-placeholder-up" />
+      <button
+        v-if="!isLast"
+        class="sort-btn-down"
+        @click="handleSortDownButtonClick"
+      ><i class="material-icons">keyboard_arrow_down</i></button>
+      <span v-if="isLast" class="sort-btn-placeholder-down" />
+    </div>
     <div class="input-group">
       <input
         v-if="isNew || isEditing"
@@ -121,3 +148,50 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.sort-btns {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  %base-sort-btn {
+    border: 0;
+    border-left: 1px solid #efefef;
+    background: transparent;
+    display: block;
+    padding: 0;
+    width: 45px;
+    height: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+
+  .sort-btn-up {
+    @extend %base-sort-btn;
+    border-bottom: 1px solid #efefef;
+  }
+  .sort-btn-down {
+    @extend %base-sort-btn;
+  }
+
+  %base-sort-btn-placeholder {
+    @extend %base-sort-btn;
+    cursor: default;
+    &:hover {
+      background-color: #fff;
+    }
+  }
+  .sort-btn-placeholder-up {
+    @extend %base-sort-btn-placeholder;
+    border-bottom: 1px solid #efefef;
+  }
+  .sort-btn-placeholder-down {
+    @extend %base-sort-btn-placeholder;
+  }
+}
+</style>

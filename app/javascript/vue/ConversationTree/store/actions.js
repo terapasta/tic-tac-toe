@@ -29,7 +29,9 @@ import {
   SET_FILTERED_QUESTIONS_TREE,
   SET_SEARCHING_KEYWORD,
   ADD_SEARCH_INDEX,
-  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE
+  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
+  MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
+  MOVE_DECISION_BRANCH_TO_LOWER_POSITION
 } from './mutationTypes'
 
 import {
@@ -262,5 +264,19 @@ export default {
 
   toggleIsOnlyShowHasDecisionBranchesNode ({ commit }) {
     commit(TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE)
-  }
+  },
+
+  moveDecisionBranchToHigherPosition ({ commit, state }, { decisionBranchId }) {
+    const { botId } = state
+    DecisionBranchAPI.moveHigher(botId, decisionBranchId).then(() => {
+      commit(MOVE_DECISION_BRANCH_TO_HIGHER_POSITION, { decisionBranchId })
+    })
+  },
+
+  moveDecisionBranchToLowerPosition ({ commit, state }, { decisionBranchId }) {
+    const { botId } = state
+    DecisionBranchAPI.moveLower(botId, decisionBranchId).then(() => {
+      commit(MOVE_DECISION_BRANCH_TO_LOWER_POSITION, { decisionBranchId })
+    })
+  },
 }

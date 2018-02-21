@@ -38,7 +38,8 @@ RSpec.describe DecisionBranch, type: :model do
           created_at: decision_branch.created_at,
           parent_decision_branch_id: nil,
           answer_link: nil,
-          child_decision_branches: []
+          child_decision_branches: [],
+          position: 1
         })
       end
     end
@@ -71,7 +72,8 @@ RSpec.describe DecisionBranch, type: :model do
           },
           child_decision_branches: [
             child_decision_branch
-          ]
+          ],
+          position: 1
         })
       end
     end
@@ -104,7 +106,8 @@ RSpec.describe DecisionBranch, type: :model do
           },
           child_decision_branches: [
             child_decision_branch
-          ]
+          ],
+          position: 1
         })
       end
     end

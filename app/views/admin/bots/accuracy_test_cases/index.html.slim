@@ -50,7 +50,10 @@
                       - if bot_message.answer_failed
                         = material_icon 'error_outline', class: 'mi-sm text-muted'
                         = space
-                      = nl2br bot_message.body
+                      - if bot_message.is_need_has_suggests_message?
+                        = nl2br bot_message.render_has_suggests_message
+                      - else
+                        = nl2br bot_message.body
 
                   - if bot_message.similar_question_answers.present?
                     strong サジェスト

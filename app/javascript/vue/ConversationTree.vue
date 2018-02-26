@@ -11,18 +11,13 @@ import {
  } from 'lodash'
 
 import getOffset from '../helpers/getOffset'
+import { calcPercentile } from './ConversationTree/helpers'
 import Tree from './ConversationTree/components/Tree'
 import SearchForm from './ConversationTree/components/SearchForm'
 
 const Direction = {
   Up: 'up',
   Down: 'down'
-}
-
-const calcPercentile = (offsetHeight, scrollHeight, scrollTop) => {
-  if (scrollTop === 0) { return 0 }
-  if (scrollTop + offsetHeight === scrollHeight) { return 1 }
-  return (scrollTop + offsetHeight) / scrollHeight
 }
 
 export default {
@@ -86,7 +81,6 @@ export default {
         direction = e.deltaY > 0 ? Direction.Down : Direction.Up
       }
       const percentile = calcPercentile(offsetHeight, scrollHeight, scrollTop)
-      this.lastScrollTop = scrollTop
 
       if (direction === Direction.Up && percentile < 0.3) {
         if (this.showingIndecies[0] !== 0) {

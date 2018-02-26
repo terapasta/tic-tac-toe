@@ -8,8 +8,11 @@ import Node from './Node'
 import Item from './Item'
 import DecisionBranchNode from './DecisionBranchNode'
 import AnswerIcon from '../AnswerIcon'
+import HighlightTextMixin from '../../mixins/HighlightText'
 
 export default {
+  mixins: [HighlightTextMixin],
+
   components: {
     Node,
     Item,
@@ -26,7 +29,8 @@ export default {
 
   computed: {
     ...mapState([
-      'decisionBranchesRepo'
+      'decisionBranchesRepo',
+      'selectableTreeSearchingKeyword'
     ]),
 
     isSelected () {
@@ -52,7 +56,8 @@ export default {
     },
 
     text () {
-      return this.data.answer.replace(/\n/g, '<br />')
+      const text = this.highlight(this.data.answer, this.selectableTreeSearchingKeyword)
+      return text.replace(/\n/g, '<br />')
     }
   },
 

@@ -27,7 +27,9 @@ import {
   UPDATE_SUB_QUESTION,
   DELETE_SUB_QUESTION,
   SET_FILTERED_QUESTIONS_TREE,
+  SET_FILTERED_QUESTIONS_SELECTABLE_TREE,
   SET_SEARCHING_KEYWORD,
+  SET_SELECTABLE_TREE_SEARCHING_KEYWORD,
   ADD_SEARCH_INDEX,
   TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE
 } from './mutationTypes'
@@ -254,10 +256,28 @@ export default {
     nodeIds.forEach(it => commit(OPEN_NODE, { nodeId: it }))
   },
 
+  searchSelectableTree ({ commit, state }, { keyword }) {
+    const hitted = state.searchIndex.filter(it => includes(it.text, keyword))
+    const nodeIdsList = hitted.map(it => it.relatedNodeIds)
+    const questionNodeIds = nodeIdsList.map(it => it.filter(it => /^Question-[0-9]+$/.test(it)))
+    const uniqQuestionNodeIds = uniq(flatten(questionNodeIds))
+    const filteredQuestionsSelectableTree = state.questionsTree.filter(it => includes(uniqQuestionNodeIds, `Question-${it.id}`))
+    commit(SET_FILTERED_QUESTIONS_SELECTABLE_TREE, {
+      filteredQuestionsSelectableTree
+    })
+    commit(SET_SELECTABLE_TREE_SEARCHING_KEYWORD, { selectableTreeSearchingKeyword: keyword })
+  },
+
   clearSearchTree ({ commit, state }) {
     const { questionsTree } = state
     commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree: questionsTree })
     commit(SET_SEARCHING_KEYWORD, { searchingKeyword: '' })
+  },
+
+  clearSearchSelectableTree ({ commit, state }) {
+    const { questionsTree } = state
+    commit(SET_FILTERED_QUESTIONS_SELECTABLE_TREE, { filteredQuestionsSelectableTree: questionsTree })
+    commit(SET_SELECTABLE_TREE_SEARCHING_KEYWORD, { selectableTreeSearchingKeyword: '' })
   },
 
   toggleIsOnlyShowHasDecisionBranchesNode ({ commit }) {

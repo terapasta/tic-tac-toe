@@ -25,7 +25,9 @@ import {
   UPDATE_SUB_QUESTION,
   DELETE_SUB_QUESTION,
   SET_FILTERED_QUESTIONS_TREE,
+  SET_FILTERED_QUESTIONS_SELECTABLE_TREE,
   SET_SEARCHING_KEYWORD,
+  SET_SELECTABLE_TREE_SEARCHING_KEYWORD,
   ADD_SEARCH_INDEX,
   TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE
 } from './mutationTypes'
@@ -189,8 +191,16 @@ export default {
     state.filteredQuestionsTree = filteredQuestionsTree
   },
 
+  [SET_FILTERED_QUESTIONS_SELECTABLE_TREE] (state, { filteredQuestionsSelectableTree }) {
+    state.filteredQuestionsSelectableTree = filteredQuestionsSelectableTree
+  },
+
   [SET_SEARCHING_KEYWORD] (state, { searchingKeyword }) {
     state.searchingKeyword = searchingKeyword
+  },
+
+  [SET_SELECTABLE_TREE_SEARCHING_KEYWORD] (state, { selectableTreeSearchingKeyword }) {
+    state.selectableTreeSearchingKeyword = selectableTreeSearchingKeyword
   },
 
   [ADD_SEARCH_INDEX] (state, { indexItem }) {

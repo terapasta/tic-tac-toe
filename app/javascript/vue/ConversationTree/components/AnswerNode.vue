@@ -4,6 +4,7 @@ import isEmpty from 'is-empty'
 import includes from 'lodash/includes'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
+import compact from 'lodash/compact'
 import classnames from 'classnames'
 
 import AnswerIcon from './AnswerIcon'
@@ -61,7 +62,7 @@ export default {
     },
 
     orderedDecisionBranches () {
-      const dbIds = map(this.node.decisionBranches, (it) => it.id)
+      const dbIds = compact(map(this.node.decisionBranches, (it) => it.id))
       const dbs = dbIds.map(it => this.decisionBranchesRepo[it])
       const sortedDbs = sortBy(dbs, ['position'])
       const copy = this.node.decisionBranches.concat()

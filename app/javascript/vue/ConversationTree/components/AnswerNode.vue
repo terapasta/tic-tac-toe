@@ -59,15 +59,6 @@ export default {
 
     isOpened () {
       return this.isStoredOpenedNodes || this.currentPageIsChild
-    },
-
-    orderedDecisionBranches () {
-      const dbIds = compact(map(this.node.decisionBranches, (it) => it.id))
-      const dbs = dbIds.map(it => this.decisionBranchesRepo[it])
-      const sortedDbs = sortBy(dbs, ['position'])
-      const copy = this.node.decisionBranches.concat()
-      const ordered = sortedDbs.map(it => copy.filter(nit => nit.id === it.id)[0])
-      return ordered
     }
   },
 

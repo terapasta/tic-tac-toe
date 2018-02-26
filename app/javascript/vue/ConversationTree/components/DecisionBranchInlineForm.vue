@@ -105,12 +105,14 @@ export default {
         v-if="!isFirst"
         class="sort-btn-up"
         @click="handleSortUpButtonClick"
+        :id="`DecisionBranch-${nodeData.id}-moveHigherButton`"
       ><i class="material-icons">keyboard_arrow_up</i></button>
       <span v-if="isFirst" class="sort-btn-placeholder-up" />
       <button
         v-if="!isLast"
         class="sort-btn-down"
         @click="handleSortDownButtonClick"
+        :id="`DecisionBranch-${nodeData.id}-moveLowerButton`"
       ><i class="material-icons">keyboard_arrow_down</i></button>
       <span v-if="isLast" class="sort-btn-placeholder-down" />
     </div>

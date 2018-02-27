@@ -182,6 +182,7 @@ export default {
       this.currentTab = tab
     },
 
+    // TODO: 大きいリストをスクロールしてもDOMの数が増えないコンポーネントとして分割したい
     handleAnswerFormGroupWheel (e) {
       if (this.currentTab !== TabType.Select) { return }
       const { offsetHeight, scrollHeight, scrollTop } = this.$refs.answerFormGroup

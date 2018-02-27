@@ -72,6 +72,7 @@ export default {
       this.detailPanelHeight = maxHeight
     },
 
+    // TODO: 大きいリストをスクロールしてもDOMの数が増えないコンポーネントとして分割したい
     handleMouseWheelMaster (e) {
       const { offsetHeight, scrollHeight, scrollTop } = this.$refs.master
       let direction

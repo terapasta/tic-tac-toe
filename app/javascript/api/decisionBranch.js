@@ -44,3 +44,10 @@ export const nestedDelete = (botId, id) => {
 export const deleteChildren = (botId, id) => {
   return axios.delete(`/api/bots/${botId}/decision_branches/${id}/child_decision_branches.json`, config())
 }
+
+export const moveHigher = (botId, id) => (
+  axios.put(`/api/bots/${botId}/decision_branches/${id}/position/higher`, {}, config())
+)
+export const moveLower = (botId, id) => (
+  axios.put(`/api/bots/${botId}/decision_branches/${id}/position/lower`, {}, config())
+)

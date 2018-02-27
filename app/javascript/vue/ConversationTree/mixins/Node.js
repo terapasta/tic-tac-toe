@@ -1,4 +1,7 @@
 import includes from 'lodash/includes'
+import compact from 'lodash/compact'
+import map from 'lodash/map'
+import sortBy from 'lodash/sortBy'
 import classnames from 'classnames'
 
 import { isDescendantDecisionBranch } from '../helpers'
@@ -61,6 +64,16 @@ export default {
       return {
         display: this.isOpened ? 'block' : 'none'
       }
+    },
+
+    orderedDecisionBranches () {
+      const dbNodes = this.node.childDecisionBranches || this.node.decisionBranches
+      const copy = dbNodes.concat()
+      const dbIds = compact(map(dbNodes, (it) => it.id))
+      const dbs = dbIds.map(it => this.decisionBranchesRepo[it])
+      const sortedDbs = sortBy(dbs, ['position'])
+      const ordered = sortedDbs.map(it => copy.filter(nit => nit.id === it.id)[0])
+      return ordered
     }
   },
 

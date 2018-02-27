@@ -83,7 +83,7 @@ export default {
       </span>
     </router-link>
     <ol v-if="hasChildren" class="tree" :style="childTreeStyle">
-      <template v-for="node in node.childDecisionBranches">
+      <template v-for="node in orderedDecisionBranches">
         <decision-branch-node :node="node" :key="node.id" />
       </template>
     </ol>

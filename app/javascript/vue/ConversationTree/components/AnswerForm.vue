@@ -47,7 +47,13 @@ export default {
       const dbs = get(this, 'node.decisionBranches')
       const cdbs = get(this, 'node.childDecisionBranches')
       const nodes = dbs || cdbs || []
-      return nodes.map(it => this.decisionBranchesRepo[it.id])
+      const dbData = nodes.map(it => this.decisionBranchesRepo[it.id])
+      const sorted = dbData.sort((a, b) => {
+        if( a.position < b.position ) { return -1 }
+        if( a.position > b.position ) { return 1 }
+        return 0
+      })
+      return sorted
     },
 
     questionAnswerId () {
@@ -130,8 +136,14 @@ export default {
     </div>
     <div class="form-group">
       <ul v-if="decisionBranches.length > 0" class="list-group">
-        <div v-for="data in decisionBranches" class="list-group-item" :key="(data || {}).id">
+        <div
+          v-for="(data, index) in decisionBranches"
+          class="list-group-item"
+          :key="(data || {}).id"
+        >
           <decision-branch-inline-form
+            :is-first="index === 0"
+            :is-last="index === decisionBranches.length - 1"
             :questionAnswerId="questionAnswerId"
             :decisionBranchId="decisionBranchId"
             :nodeData="data"

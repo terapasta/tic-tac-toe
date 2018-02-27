@@ -2,6 +2,9 @@
 import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 import includes from 'lodash/includes'
+import map from 'lodash/map'
+import sortBy from 'lodash/sortBy'
+import compact from 'lodash/compact'
 import classnames from 'classnames'
 
 import AnswerIcon from './AnswerIcon'
@@ -42,7 +45,8 @@ export default {
     ...mapState([
       'questionsRepo',
       'openedNodes',
-      'searchingKeyword'
+      'searchingKeyword',
+      'decisionBranchesRepo'
     ]),
 
     hasChildren () {
@@ -80,7 +84,7 @@ export default {
       </span>
     </router-link>
     <ol v-if="hasChildren" class="tree" :style="childTreeStyle">
-      <template v-for="node in node.decisionBranches">
+      <template v-for="node in orderedDecisionBranches">
         <decision-branch-node :node="node" :key="node.id" />
       </template>
     </ol>

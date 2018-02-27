@@ -1,7 +1,5 @@
 import flatten from 'lodash/flatten'
 import findIndex from 'lodash/findIndex'
-import includes from 'lodash/includes'
-import map from 'lodash/map'
 import find from 'lodash/find'
 import isEmpty from 'is-empty'
 
@@ -119,4 +117,10 @@ export const makeNodeIdsFromNode = (node) => {
   } else if (Array.isArray(node.childDecisionBranches)) {
     return [`DecisionBranch-${node.id}`, `DecisionBranchAnswer-${node.id}`]
   }
+}
+
+export const calcPercentile = (offsetHeight, scrollHeight, scrollTop) => {
+  if (scrollTop === 0) { return 0 }
+  if (scrollTop + offsetHeight === scrollHeight) { return 1 }
+  return (scrollTop + offsetHeight) / scrollHeight
 }

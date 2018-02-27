@@ -4,8 +4,11 @@ import { mapState } from 'vuex'
 import Node from './Node'
 import Item from './Item'
 import DecisionBranchIcon from '../DecisionBranchIcon'
+import HighlightTextMixin from '../../mixins/HighlightText'
 
 export default {
+  mixins: [HighlightTextMixin],
+
   components: {
     Node,
     Item,
@@ -31,7 +34,8 @@ export default {
 
   computed: {
     ...mapState([
-      'decisionBranchesRepo'
+      'decisionBranchesRepo',
+      'selectableTreeSearchingKeyword'
     ]),
 
     isSelf () {
@@ -39,7 +43,8 @@ export default {
     },
 
     text () {
-      return this.data.body.replace(/\n/g, '<br />')
+      const text = this.highlight(this.data.body, this.selectableTreeSearchingKeyword)
+      return text.replace(/\n/g, '<br />')
     }
   }
 }

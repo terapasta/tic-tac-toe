@@ -30,10 +30,12 @@ export default {
   methods: {
     handleInputTabClick () {
       this.currentTab = TabType.Input
+      this.$emit('changeTab', TabType.Input)
     },
 
     handleSelectTabClick () {
       this.currentTab = TabType.Select
+      this.$emit('changeTab', TabType.Select)
     }
   }
 }
@@ -41,7 +43,7 @@ export default {
 
 <template>
   <div>
-    <div class="d-flex mb-2">
+    <div class="d-flex" :style="{marginBottom:'10px'}">
       <label class="mb-0" style="width:80px; padding-top: 8px;"><answer-icon />&nbsp;回答</label>
       <ul class="nav nav-tabs" style="width:100%;">
         <li class="nav-item">

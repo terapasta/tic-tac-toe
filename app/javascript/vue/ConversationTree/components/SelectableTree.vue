@@ -9,12 +9,12 @@ export default {
   },
 
   props: {
-    data: { type: Object, default: () => ({}) }
+    data: { type: Object, default: () => ({}) },
+    filteredQuestionsTree: { type: Array, required: true }
   },
 
   computed: {
     ...mapState([
-      'questionsTree',
       'questionsRepo',
       'decisionBranchesRepo'
     ])
@@ -23,9 +23,9 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="selectableTree">
     <question-node
-      v-for="node in questionsTree"
+      v-for="node in filteredQuestionsTree"
       :key="node.id"
       :node="node"
       :data="questionsRepo[node.id]"

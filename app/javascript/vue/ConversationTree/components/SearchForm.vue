@@ -3,33 +3,79 @@ import isEmpty from 'is-empty'
 import { mapActions } from 'vuex'
 import debounce from 'lodash/debounce'
 
+export const Mode = {
+  Global: 'global',
+  Selectable: 'selectable'
+}
+
 export default {
+  props: {
+    mode: { type: String, default: Mode.Global }
+  },
+
   data: () => ({
     keyword: '',
     isShowClearButton: false
   }),
 
   methods: {
-    ...mapActions(['searchTree', 'clearSearchTree']),
+    ...mapActions([
+      'searchTree',
+      'searchSelectableTree',
+      'clearSearchTree',
+      'clearSearchSelectableTree'
+    ]),
 
     handleInputKeyUp: debounce(function (e) {
       const isKeywordExists = !isEmpty(e.target.value)
       this.isShowClearButton = isKeywordExists
-      if (!isKeywordExists) { return this.clearSearchTree() }
-      this.searchTree({ keyword: this.keyword })
+      if (!isKeywordExists) {
+        switch (this.mode) {
+          case Mode.Global:
+            return this.clearSearchTree()
+          case Mode.Selectable:
+            return this.clearSearchSelectableTree()
+        }
+      }
+      switch (this.mode) {
+        case Mode.Global:
+          this.searchTree({ keyword: this.keyword })
+          break
+        case Mode.Selectable:
+          this.searchSelectableTree({ keyword: this.keyword })
+          break
+      }
     }, 500),
 
     handleClearButtonClick () {
-      this.clearSearchTree()
+      switch (this.mode) {
+        case Mode.Global:
+          this.clearSearchTree()
+          break
+        case Mode.Selectable:
+          this.clearSearchSelectableTree()
+          break
+      }
       this.isShowClearButton = false
       this.keyword = ''
+    }
+  },
+
+  computed: {
+    rootClassName () {
+      switch (this.mode) {
+        case Mode.Global:
+          return 'master-detail-panel__search-container'
+        case Mode.Selectable:
+          return ''
+      }
     }
   }
 }
 </script>
 
 <template>
-  <div class="master-detail-panel__search-container">
+  <div :class="rootClassName">
     <div class="input-group btn-group">
       <input
         class="form-control form-control-sm input"

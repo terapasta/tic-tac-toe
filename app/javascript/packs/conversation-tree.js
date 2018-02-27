@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (mountNode === null) { return }
   const state = assign(baseState, getData(mountNode))
   state.filteredQuestionsTree = state.questionsTree.concat()
+  state.filteredQuestionsSelectableTree = state.questionsTree.concat()
 
   if (process.env.NODE_ENV === 'development') {
     console.log('[initial state]', state)

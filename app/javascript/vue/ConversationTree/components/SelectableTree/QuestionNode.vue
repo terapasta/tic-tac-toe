@@ -1,10 +1,15 @@
 <script>
+import { mapState } from 'vuex'
+
 import Node from './Node'
 import Item from './Item'
 import AnswerNode from './AnswerNode'
 import QuestionIcon from '../QuestionIcon'
+import HighlightTextMixin from '../../mixins/HighlightText'
 
 export default {
+  mixins: [HighlightTextMixin],
+
   components: {
     Node,
     Item,
@@ -19,8 +24,11 @@ export default {
   },
 
   computed: {
+    ...mapState(['selectableTreeSearchingKeyword']),
+
     text () {
-      return this.data.question.replace(/\n/g, '<br />')
+      const text = this.highlight(this.data.question, this.selectableTreeSearchingKeyword)
+      return text.replace(/\n/g, '<br />')
     }
   }
 }

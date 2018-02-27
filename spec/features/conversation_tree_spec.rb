@@ -55,7 +55,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(page).to have_content(question_answers.first.answer)
     expect(page).to_not have_content(question_answers.second.question)
     expect(page).to_not have_content(question_answers.second.answer)
-    page.save_screenshot
   end
 
   scenario 'creates question with answer'  do
@@ -132,5 +131,20 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     within '.master-detail-panel__master' do
       expect(page).to_not have_content(decision_branches.first.body)
     end
+  end
+
+  scenario 'order decision branches' do
+    find("#Question-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}").click
+    expect(decision_branches.first.position).to eq(1)
+    expect(decision_branches.second.position).to eq(2)
+    find("#DecisionBranch-#{decision_branches.first.id}-moveLowerButton").click
+    sleep 1
+    expect(decision_branches.first.reload.position).to eq(2)
+    expect(decision_branches.second.reload.position).to eq(1)
+    find("#DecisionBranch-#{decision_branches.first.id}-moveHigherButton").click
+    sleep 1
+    expect(decision_branches.first.reload.position).to eq(1)
+    expect(decision_branches.second.reload.position).to eq(2)
   end
 end

@@ -21,10 +21,7 @@ module Replyable
           similar_question_answers_log: suggests.as_json(only: [:question, :answer]),
           is_show_similar_question_answers: reply_response.show_similar_question_answers?
         )
-        if suggests.count > 0 && qa.no_classified?
-          bot_message.body = chat.bot.render_has_suggests_message(guest_message.body)
-          bot_message.update!(answer_failed: false)
-        end
+        reply_response.update_to_has_suggests_message_if_needed!(bot_message)
       end
     end
 

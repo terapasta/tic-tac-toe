@@ -25,7 +25,18 @@ class ChatTestJob < ApplicationJob
     ids = reply_responses.map(&:resolved_question_answer_id)
     qas = QuestionAnswer.find_all_or_null_question_answers(ids, @bot)
     suggests = reply_responses.map{ |it| it.similar_question_answers.map(&:question) }
-    chat_test_results = qas.map.with_index{ |qa, i| [data[i].scrub, qa.answer.scrub, suggests[i]] }
+    chat_test_results = qas.map.with_index{ |qa, i|
+      reply_response = reply_responses[i]
+      [
+        data[i].scrub,
+        (
+          reply_response.is_need_has_suggests_message? ?
+          reply_response.render_has_suggests_message :
+          qa.answer.scrub
+        ),
+        suggests[i]
+      ]
+    }
 
     @bot2 = Bot.find(@bot.id)
     @bot2.assign_attributes(

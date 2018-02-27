@@ -6,7 +6,8 @@ class DecisionBranchSerializer < ActiveModel::Serializer
     :question_answer_id,
     :created_at,
     :parent_decision_branch_id,
-    :child_decision_branches
+    :child_decision_branches,
+    :position
 
   # has_many :child_decision_branches
   has_one :answer_link

@@ -168,7 +168,7 @@ export default {
     },
 
     calcAndSetAnswerFormGroupHeight () {
-       switch (this.currentTab) {
+      switch (this.currentTab) {
         case TabType.Input:
           this.answerFormGroupHeight = null
           break

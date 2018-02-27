@@ -45,3 +45,18 @@
 .scaleUp {
   animation: scaleUp 0.5s linear;
 }
+
+@keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.infiniteSpinning {
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+  animation-name: infinite-spinning;
+}

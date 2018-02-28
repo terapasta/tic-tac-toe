@@ -21,6 +21,8 @@ class Bot < ApplicationRecord
   has_many :allowed_ip_addresses, dependent: :destroy
   has_many :organization_ownerships, class_name: 'Organization::BotOwnership'
   has_many :organizations, through: :organization_ownerships
+  has_many :organization_memberships, class_name: 'Organization::UserMembership', through: :organizations, source: :user_memberships
+  has_many :organization_users, class_name: 'User', through: :organization_memberships, source: :user
   has_one :tutorial
   has_many :chat_service_users
   has_one :line_credential
@@ -92,9 +94,17 @@ class Bot < ApplicationRecord
     organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
+  def change_token
+    self.update!(token: new_token)
+  end
+
   private
     def generate_token
       self.token = SecureRandom.hex(32) if token.blank?
+    end
+
+    def new_token
+      SecureRandom.hex(32)
     end
 
     def set_learning_status_changed_at_if_needed

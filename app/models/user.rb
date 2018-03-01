@@ -22,7 +22,7 @@ class User < ApplicationRecord
     self.notification_settings['email'] = val.to_bool
   end
 
-  def change_password
+  def change_password!
     new_password = generate_password
     self.update!(password: new_password, password_confirmation: new_password)
   end

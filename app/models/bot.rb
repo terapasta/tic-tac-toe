@@ -41,7 +41,7 @@ class Bot < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  before_validation :generate_token, :set_learning_status_changed_at_if_needed
+  before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
 
   def learning_parameter_attributes
     if learning_parameter.present?
@@ -94,16 +94,16 @@ class Bot < ApplicationRecord
     organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
-  def change_token
-    self.update!(token: new_token)
+  def change_token!
+    self.update!(token: generate_token)
   end
 
   private
-    def generate_token
-      self.token = SecureRandom.hex(32) if token.blank?
+    def set_token_if_needed
+      self.token = generate_token if token.blank?
     end
 
-    def new_token
+    def generate_token
       SecureRandom.hex(32)
     end
 

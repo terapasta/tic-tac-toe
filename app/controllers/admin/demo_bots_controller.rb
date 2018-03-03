@@ -5,7 +5,7 @@ class Admin::DemoBotsController < ApplicationController
   end
 
   def update
-    @demobot = Bot.find(params[:id])
+    @demobot = Bot.where(is_demo: true).find(params[:id])
     ActiveRecord::Base.transaction do
       @demobot.change_token!
       @demobot.organization_users.each(&:change_password!)

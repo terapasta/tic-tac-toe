@@ -61,4 +61,16 @@ RSpec.describe User do
       end
     end
   end
+
+  describe '#change_password!' do
+    subject do
+      lambda do
+        user.change_password!
+      end
+    end
+
+    it 'password must be changed' do
+      expect(subject).to change{ user.reload.password }
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220060345) do
+ActiveRecord::Schema.define(version: 20180305015641) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180220060345) do
     t.string "file_type", null: false
     t.integer "file_size", default: 0
     t.integer "question_answer_id"
+    t.integer "decision_branch_id"
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
   end
 

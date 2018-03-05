@@ -6,6 +6,7 @@ import AnswerIcon from './AnswerIcon'
 import DecisionBranchInlineForm from './DecisionBranchInlineForm'
 import QuestionAnswerFormMixin from '../mixins/QuestionAnswerForm'
 import AnswerFormMixin from '../mixins/AnswerForm'
+import AnswerFiles from './AnswerFiles'
 
 export default {
   mixins: [
@@ -15,7 +16,8 @@ export default {
 
   components: {
     AnswerIcon,
-    DecisionBranchInlineForm
+    DecisionBranchInlineForm,
+    AnswerFiles
   },
 
   data: () => ({
@@ -108,13 +110,17 @@ export default {
     <div class="form-group">
       <label><answer-icon />&nbsp;回答</label>
       <textarea
-        class="form-control"
+        class="form-control mb-3"
         id="answer-body"
         name="answer-body"
         rows="3"
         style="height: 86px;"
         v-model="parent.answer"
         :disabled="isProcessing"
+      />
+      <answer-files
+        :questionAnswerId="questionAnswer.id"
+        :answerFiles="questionAnswer.answerFiles"
       />
     </div>
     <div class="form-group clearfix">

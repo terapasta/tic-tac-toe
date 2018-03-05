@@ -219,6 +219,7 @@ export default {
       />
     </div>
     <answer-files
+      v-if="questionAnswer.id"
       :questionAnswerId="questionAnswer.id"
       :answerFiles="questionAnswer.answerFiles"
     />

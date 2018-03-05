@@ -126,7 +126,9 @@ Rails.application.routes.draw do
       end
       resources :organizations
       resources :tutorials
-      resources :demo_bots, only: [:index, :update]
+      resources :demo_bots, only: [:index] do
+        resource :term, only: [:destroy], module: :demo_bots
+      end
     end
 
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

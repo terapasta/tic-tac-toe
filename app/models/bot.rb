@@ -39,6 +39,8 @@ class Bot < ApplicationRecord
 
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 
+  scope :demos, -> { where(is_demo: true) }
+
   mount_uploader :image, ImageUploader
 
   before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed

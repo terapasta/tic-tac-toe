@@ -96,8 +96,8 @@ class Bot < ApplicationRecord
     organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
-  def change_token!
-    self.update!(token: generate_token)
+  def change_token_and_set_demo_finished_time!
+    self.update!(token: generate_token, demo_finished_at: Time.current)
   end
 
   private

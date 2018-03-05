@@ -10,6 +10,7 @@
         th image
         th name
         th
+        th
     tbody
       - @demobots.each do |bot|
         tr
@@ -20,3 +21,6 @@
                 .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
           td= bot.name
           td= link_to 'Finish demo', admin_demo_bot_path(bot), method: :patch, data: { confirm: 'デモを終了しますか？' }, class: 'btn btn-secondary'
+          td
+            - if bot.demo_finished_at.present?
+              = "#{l bot.demo_finished_at, format: :long}にデモが終了しています"

@@ -5,9 +5,10 @@ import includes from 'lodash/includes'
 
 import AnswerIcon from './AnswerIcon'
 import NodeMixin from '../mixins/Node'
+import HighlightTextMixin from '../mixins/HighlightText'
 
 export default {
-  mixins: [NodeMixin],
+  mixins: [NodeMixin, HighlightTextMixin],
 
   props: {
     node: { type: Object, default: () => ({}) }
@@ -43,7 +44,8 @@ export default {
   computed: {
     ...mapState([
       'decisionBranchesRepo',
-      'openedNodes'
+      'openedNodes',
+      'searchingKeyword'
     ]),
 
     hasChildren () {
@@ -77,11 +79,11 @@ export default {
     >
       <span class="tree__item-body">
         <answer-icon />
-        {{nodeData.answer}}
+        <span v-html="highlight(nodeData.answer, searchingKeyword)" />
       </span>
     </router-link>
     <ol v-if="hasChildren" class="tree" :style="childTreeStyle">
-      <template v-for="node in node.childDecisionBranches">
+      <template v-for="node in orderedDecisionBranches">
         <decision-branch-node :node="node" :key="node.id" />
       </template>
     </ol>

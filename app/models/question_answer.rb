@@ -4,7 +4,9 @@ class QuestionAnswer < ApplicationRecord
   paginates_per 100
 
   belongs_to :bot
-  has_many :decision_branches, dependent: :destroy
+  has_many :decision_branches,
+    -> { order(position: :asc) },
+    dependent: :destroy
   has_many :topic_taggings, dependent: :destroy, inverse_of: :question_answer
   has_many :topic_tags, through: :topic_taggings
   has_many :answer_files, dependent: :destroy

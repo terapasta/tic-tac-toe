@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20180305015624) do
     t.integer "question_answer_id"
     t.text "answer"
     t.integer "parent_decision_branch_id"
+    t.integer "position"
     t.index ["bot_id"], name: "index_decision_branches_on_bot_id"
     t.index ["question_answer_id", "parent_decision_branch_id"], name: "main_decision_branches_index"
   end

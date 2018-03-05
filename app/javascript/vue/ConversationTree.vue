@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 import {
   range,
@@ -11,24 +11,21 @@ import {
  } from 'lodash'
 
 import getOffset from '../helpers/getOffset'
+import { calcPercentile } from './ConversationTree/helpers'
 import Tree from './ConversationTree/components/Tree'
+import SearchForm from './ConversationTree/components/SearchForm'
 
 const Direction = {
   Up: 'up',
   Down: 'down'
 }
 
-const calcPercentile = (offsetHeight, scrollHeight, scrollTop) => {
-  if (scrollTop === 0) { return 0 }
-  if (scrollTop + offsetHeight === scrollHeight) { return 1 }
-  return (scrollTop + offsetHeight) / scrollHeight
-}
-
 export default {
   name: 'conversation-tree',
 
   components: {
-    Tree
+    Tree,
+    SearchForm
   },
 
   data: () => ({
@@ -39,6 +36,10 @@ export default {
     detailPanelWatchTimer: null,
     originalDetailPanelHeight: null
   }),
+
+  created () {
+    this.toggleIsOnlyShowHasDecisionBranchesNode()
+  },
 
   mounted () {
     this.$nextTick(() => {
@@ -55,6 +56,10 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      'toggleIsOnlyShowHasDecisionBranchesNode'
+    ]),
+
     adjustHeight () {
       const offset = getOffset(this.$refs.root)
       const winHeight = window.innerHeight
@@ -67,6 +72,7 @@ export default {
       this.detailPanelHeight = maxHeight
     },
 
+    // TODO: 大きいリストをスクロールしてもDOMの数が増えないコンポーネントとして分割したい
     handleMouseWheelMaster (e) {
       const { offsetHeight, scrollHeight, scrollTop } = this.$refs.master
       let direction
@@ -76,7 +82,6 @@ export default {
         direction = e.deltaY > 0 ? Direction.Down : Direction.Up
       }
       const percentile = calcPercentile(offsetHeight, scrollHeight, scrollTop)
-      this.lastScrollTop = scrollTop
 
       if (direction === Direction.Up && percentile < 0.3) {
         if (this.showingIndecies[0] !== 0) {
@@ -89,7 +94,7 @@ export default {
             return rect.top > top + height
           })
           const hiddenIds = compact(hiddenComponents.map(it => get(it, 'node.id', null)))
-          const hiddableIndecies = reduce(this.questionsTree, (acc, node, i) => {
+          const hiddableIndecies = reduce(this.filteredQuestionsTree, (acc, node, i) => {
             if (includes(hiddenIds, node.id)) { acc.push(i) }
             return acc
           }, [])
@@ -99,7 +104,7 @@ export default {
       }
 
       if (direction === Direction.Down && percentile > 0.8) {
-        if (last(this.showingIndecies) < this.questionsTree.length - 1) {
+        if (last(this.showingIndecies) < this.filteredQuestionsTree.length - 1) {
           this.showingIndecies = this.showingIndecies.concat([last(this.showingIndecies) + 1])
 
           const hiddenComponents = this.$refs.tree.$children.filter((child, i) => {
@@ -107,7 +112,7 @@ export default {
             return top + height < this.$refs.master.getBoundingClientRect().top
           })
           const hiddenIds = compact(hiddenComponents.map(it => get(it, 'node.id', null)))
-          const hiddableIndecies = reduce(this.questionsTree, (acc, node, i) => {
+          const hiddableIndecies = reduce(this.filteredQuestionsTree, (acc, node, i) => {
             if (includes(hiddenIds, node.id)) { acc.push(i) }
             return acc
           }, [])
@@ -118,19 +123,20 @@ export default {
     },
 
     updateCurrentNodes () {
-      this.currentNodes = this.questionsTree.filter((_, i) => includes(this.showingIndecies, i))
+      this.currentNodes = this.filteredQuestionsTree.filter((_, i) => includes(this.showingIndecies, i))
     }
   },
 
   watch: {
-    questionsTree () {
+    filteredQuestionsTree () {
       this.updateCurrentNodes()
     }
   },
 
   computed: {
     ...mapState([
-      'questionsTree'
+      'questionsTree',
+      'filteredQuestionsTree'
     ]),
 
     rootStyle () {
@@ -154,9 +160,10 @@ export default {
     <div class="master-detail-panel__body">
       <div
         class="master-detail-panel__master"
-        @mousewheel="handleMouseWheelMaster"
+        @wheel="handleMouseWheelMaster"
         ref="master"
       >
+        <search-form />
         <tree
           :currentNodes="currentNodes"
           ref="tree"

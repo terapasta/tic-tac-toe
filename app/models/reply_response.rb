@@ -98,6 +98,20 @@ class ReplyResponse
     question_answer.no_classified?
   end
 
+  def render_has_suggests_message
+    @bot.render_has_suggests_message(@question)
+  end
+
+  def is_need_has_suggests_message?
+    similar_question_answers.count > 0 && question_answer.no_classified?
+  end
+
+  def update_to_has_suggests_message_if_needed!(bot_message)
+    return unless is_need_has_suggests_message?
+    bot_message.body = render_has_suggests_message
+    bot_message.update!(answer_failed: false)
+  end
+
   private
     def threshold_of_suggest_similar_questions
       @bot.learning_parameter&.similar_question_answers_threshold ||

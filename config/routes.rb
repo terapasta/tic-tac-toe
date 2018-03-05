@@ -80,6 +80,10 @@ Rails.application.routes.draw do
         end
         resources :decision_branches, module: :bots do
           resource :child_decision_branches, only: [:destroy], module: :decision_branches
+          resource :position, module: :decision_branches do
+            put :higher
+            put :lower
+          end
         end
         resources :answers, module: :bots
         resources :messages, module: :bots, only: [] do

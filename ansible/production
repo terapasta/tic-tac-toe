@@ -1,6 +1,7 @@
 [web-servers]
 13.230.166.26
 52.193.239.222
+13.230.210.84
 
 [production:children]
 web-servers
@@ -8,4 +9,4 @@ web-servers
 
 [all:vars]
 stage=production
-ansible_ssh_user=deploy
+ansible_ssh_user=ec2-user

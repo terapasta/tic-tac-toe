@@ -23,6 +23,8 @@ class DecisionBranch < ApplicationRecord
 
   accepts_nested_attributes_for :child_decision_branches
 
+  acts_as_list scope: [:question_answer_id, :parent_decision_branch_id]
+
   def answer_or_answer_link_text
     if answer_link.present?
       (dest_question_answer || dest_decision_branch)&.answer

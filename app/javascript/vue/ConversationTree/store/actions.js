@@ -1,6 +1,6 @@
 import Promise from 'promise'
 import isEmpty from 'is-empty'
-import find from 'lodash/find'
+import { find, includes, uniq, flatten } from 'lodash'
 
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
@@ -25,9 +25,23 @@ import {
   UNSET_ANSWER_LINK,
   ADD_SUB_QUESTION,
   UPDATE_SUB_QUESTION,
-  DELETE_SUB_QUESTION
+  DELETE_SUB_QUESTION,
+  SET_FILTERED_QUESTIONS_TREE,
+  SET_FILTERED_QUESTIONS_SELECTABLE_TREE,
+  SET_SEARCHING_KEYWORD,
+  SET_SELECTABLE_TREE_SEARCHING_KEYWORD,
+  ADD_SEARCH_INDEX,
+  TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
+  MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
+  MOVE_DECISION_BRANCH_TO_LOWER_POSITION
 } from './mutationTypes'
-import { findDecisionBranchFromTree } from '../helpers';
+
+import {
+  findQuestionAnswerFromTree,
+  findDecisionBranchFromTree,
+  getFlatTreeFromDecisionBranchId,
+  makeNodeIdsFromNode
+} from '../helpers';
 
 const logError = err => {
   console.log(err)
@@ -48,8 +62,14 @@ export default {
     return QuestionAnswerAPI.create(botId, question, answer)
       .then(res => {
         const { questionAnswer } = res.data
+        const nodeId = `Question-${questionAnswer.id}`
+        if (!isEmpty(questionAnswer.answer)) {
+          const _nodeIds = [nodeId].concat([`Answer-${questionAnswer.id}`])
+          commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds: _nodeIds, text: questionAnswer.answer } })
+        }
+        commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds: [nodeId], text: questionAnswer.question } })
         commit(ADD_QUESTION_ANSWER, { questionAnswer })
-        commit(OPEN_NODE, { nodeId: `Question-${questionAnswer.id}` })
+        commit(OPEN_NODE, { nodeId: nodeId })
         return questionAnswer
       })
       .catch(logError)
@@ -89,7 +109,6 @@ export default {
     if (!isEmpty(questionAnswerId)) {
       commit(ADD_DECISION_BRANCH_TO_QUESTION_ANSWER, { questionAnswerId })
     } else if (!isEmpty(decisionBranchId)) {
-      console.log("test")
       commit(ADD_DECISION_BRANCH_TO_DECISION_BRANCH, { decisionBranchId })
     }
   },
@@ -99,17 +118,31 @@ export default {
     if (!isEmpty(questionAnswerId)) {
       return DecisionBranchAPI.create(botId, questionAnswerId, body)
         .then(res => {
+          const { decisionBranch } = res.data
           commit(CREATE_DECISION_BRANCH_OF_QUESTION_ANSWER, {
             questionAnswerId,
-            newDecisionBranch: res.data.decisionBranch
+            newDecisionBranch: decisionBranch
           })
+          const targetNode = findQuestionAnswerFromTree(state.questionsTree, questionAnswerId)
+          const relatedNodeIds = [
+            `Question-${targetNode.id}`,
+            `Answer-${targetNode.id}`,
+            `DecisionBranch-${decisionBranch.id}`
+          ]
+          commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds, text: body } })
         }).catch(logError)
+
     } else if (!isEmpty(decisionBranchId)) {
       return DecisionBranchAPI.nestedCreate(botId, decisionBranchId, body)
         .then(res => {
           commit(CREATE_DECISION_BRANCH_OF_DECISION_BRANCH, {
             decisionBranchId,
             newDecisionBranch: res.data.decisionBranch
+          })
+
+          getFlatTreeFromDecisionBranchId(state.questionsTree, decisionBranchId).then(nodes => {
+            const relatedNodeIds = flatten(nodes.map(makeNodeIdsFromNode))
+            commit(ADD_SEARCH_INDEX, { indexItem: { relatedNodeIds, text: body } })
           })
         }).catch(logError)
     }
@@ -211,5 +244,59 @@ export default {
       .then(res => {
         commit(DELETE_SUB_QUESTION, { questionAnswerId, subQuestionId })
       }).catch(logError)
-  }
+  },
+
+  searchTree ({ commit, state }, { keyword }) {
+    const hitted = state.searchIndex.filter(it => includes(it.text, keyword))
+    const nodeIdsList = hitted.map(it => it.relatedNodeIds)
+    const nodeIds = uniq(flatten(nodeIdsList))
+    const questionNodeIds = nodeIdsList.map(it => it.filter(it => /^Question-[0-9]+$/.test(it)))
+    const uniqQuestionNodeIds = uniq(flatten(questionNodeIds))
+    const filteredQuestionsTree = state.questionsTree.filter(it => includes(uniqQuestionNodeIds, `Question-${it.id}`))
+    commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree })
+    commit(SET_SEARCHING_KEYWORD, { searchingKeyword: keyword})
+    nodeIds.forEach(it => commit(OPEN_NODE, { nodeId: it }))
+  },
+
+  searchSelectableTree ({ commit, state }, { keyword }) {
+    const hitted = state.searchIndex.filter(it => includes(it.text, keyword))
+    const nodeIdsList = hitted.map(it => it.relatedNodeIds)
+    const questionNodeIds = nodeIdsList.map(it => it.filter(it => /^Question-[0-9]+$/.test(it)))
+    const uniqQuestionNodeIds = uniq(flatten(questionNodeIds))
+    const filteredQuestionsSelectableTree = state.questionsTree.filter(it => includes(uniqQuestionNodeIds, `Question-${it.id}`))
+    commit(SET_FILTERED_QUESTIONS_SELECTABLE_TREE, {
+      filteredQuestionsSelectableTree
+    })
+    commit(SET_SELECTABLE_TREE_SEARCHING_KEYWORD, { selectableTreeSearchingKeyword: keyword })
+  },
+
+  clearSearchTree ({ commit, state }) {
+    const { questionsTree } = state
+    commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree: questionsTree })
+    commit(SET_SEARCHING_KEYWORD, { searchingKeyword: '' })
+  },
+
+  clearSearchSelectableTree ({ commit, state }) {
+    const { questionsTree } = state
+    commit(SET_FILTERED_QUESTIONS_SELECTABLE_TREE, { filteredQuestionsSelectableTree: questionsTree })
+    commit(SET_SELECTABLE_TREE_SEARCHING_KEYWORD, { selectableTreeSearchingKeyword: '' })
+  },
+
+  toggleIsOnlyShowHasDecisionBranchesNode ({ commit }) {
+    commit(TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE)
+  },
+
+  moveDecisionBranchToHigherPosition ({ commit, state }, { decisionBranchId }) {
+    const { botId } = state
+    DecisionBranchAPI.moveHigher(botId, decisionBranchId).then(() => {
+      commit(MOVE_DECISION_BRANCH_TO_HIGHER_POSITION, { decisionBranchId })
+    })
+  },
+
+  moveDecisionBranchToLowerPosition ({ commit, state }, { decisionBranchId }) {
+    const { botId } = state
+    DecisionBranchAPI.moveLower(botId, decisionBranchId).then(() => {
+      commit(MOVE_DECISION_BRANCH_TO_LOWER_POSITION, { decisionBranchId })
+    })
+  },
 }

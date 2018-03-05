@@ -32,7 +32,8 @@ export default {
   },
 
   props: {
-    questionAnswerId: { type: Number, required: true },
+    decisionBranchId: { type: Number, default: null },
+    questionAnswerId: { type: Number, default: null },
     answerFile: { type: Object, required: true, validator: answerFileValidator }
   },
 
@@ -75,7 +76,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['removeFileFromQuestionAnswer']),
+    ...mapActions([
+      'removeFileFromQuestionAnswer',
+      'removeFileFromDecisionBranch'
+    ]),
 
     handleDeleteButtonClick () {
       this.$swal({
@@ -84,24 +88,27 @@ export default {
         type: 'warning',
         showCancelButton: true
       }).then(() => {
-        const { questionAnswerId } = this
+        const { questionAnswerId, decisionBranchId } = this
         if (!isEmpty(questionAnswerId)) {
           this.removeFileFromQuestionAnswer({ questionAnswerId, answerFileId: this.answerFile.id })
-            .catch(e => {
-              console.error(e)
-              this.$swal({
-                title: 'エラー',
-                text: '削除できませんでした',
-                type: 'error'
-              })
-            })
+            .catch(e => this.errorAlert())
+        } else if (!isEmpty(decisionBranchId)) {
+          this.removeFileFromDecisionBranch({ decisionBranchId, answerFileId: this.answerFile.id })
+            .catch(e => this.errorAlert())
         }
-
       }).catch(this.$swal.noop)
     },
 
     handleItemClick () {
       window.open(this.answerFile.file.url)
+    },
+
+    errorAlert () {
+      this.$swal({
+        title: 'エラー',
+        text: '削除できませんでした',
+        type: 'error'
+      })
     }
   }
 }

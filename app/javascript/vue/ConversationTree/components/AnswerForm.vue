@@ -68,6 +68,12 @@ export default {
       if (this.$route.name === 'DecisionBranchAnswer') {
         return this.currentId
       }
+    },
+
+    answerFiles () {
+      const qaAnswerFiles = get(this.questionAnswer, 'answerFiles', [])
+      const dbAnswerFiles = get(this.decisionBranch, 'answerFiles', [])
+      return qaAnswerFiles.length > 0 ? qaAnswerFiles : dbAnswerFiles
     }
   },
 
@@ -119,8 +125,9 @@ export default {
         :disabled="isProcessing"
       />
       <answer-files
+        :decisionBranchId="decisionBranch.id"
         :questionAnswerId="questionAnswer.id"
-        :answerFiles="questionAnswer.answerFiles"
+        :answerFiles="answerFiles"
       />
     </div>
     <div class="form-group clearfix">

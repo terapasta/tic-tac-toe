@@ -36,7 +36,9 @@ import {
   MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
   MOVE_DECISION_BRANCH_TO_LOWER_POSITION,
   ADD_ANSWER_FILE_TO_QUESTION_ANSWER,
-  REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER
+  REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER,
+  ADD_ANSWER_FILE_TO_DECISION_BRANCH,
+  REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
 } from './mutationTypes'
 
 import {
@@ -314,6 +316,20 @@ export default {
     const { botId } = state
     return AnswerFileAPI.removeQuestionAnswerFile(botId, questionAnswerId, answerFileId).then(() => {
       commit (REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER, { questionAnswerId, answerFileId })
+    })
+  },
+
+  attachFileToDecisionBranch ({ commit, state }, { decisionBranchId, file }) {
+    const { botId } = state
+    return AnswerFileAPI.attachFileToDecisionBranch(botId, decisionBranchId, file).then(res => {
+      commit(ADD_ANSWER_FILE_TO_DECISION_BRANCH, { decisionBranchId, answerFile: res.data.answerFile })
+    })
+  },
+
+  removeFileFromDecisionBranch ({ commit, state }, { decisionBranchId, answerFileId }) {
+    const { botId } = state
+    return AnswerFileAPI.removeDecisionBranchAnswerFile(botId, decisionBranchId, answerFileId).then(() => {
+      commit (REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH, { decisionBranchId, answerFileId })
     })
   }
 }

@@ -13,24 +13,33 @@ export default {
 
   props: {
     questionAnswerId: { type: Number, default: null },
+    decisionBranchId: { type: Number, default: null },
     answerFiles: { type: Array, default: () => ([]), validator: answerFilesValidator }
   },
 
   methods: {
-    ...mapActions(['attachFileToQuestionAnswer']),
+    ...mapActions([
+      'attachFileToQuestionAnswer',
+      'attachFileToDecisionBranch'
+    ]),
 
     handleFileInputSelectFile (file) {
-      const { questionAnswerId } = this
+      const { questionAnswerId, decisionBranchId } = this
       if (!isEmpty(questionAnswerId)) {
         this.attachFileToQuestionAnswer({ questionAnswerId, file })
-          .catch(() => {
-            this.$swal({
-              title: 'エラー',
-              text: 'アップロードできませんでした',
-              type: 'error'
-            })
-          })
+          .catch(() => this.errorAlert())
+      } else if (!isEmpty(decisionBranchId)) {
+        this.attachFileToDecisionBranch({ decisionBranchId, file })
+          .catch(() => this.errorAlert())
       }
+    },
+
+    errorAlert () {
+      this.$swal({
+        title: 'エラー',
+        text: 'アップロードできませんでした',
+        type: 'error'
+      })
     }
   }
 }
@@ -48,6 +57,7 @@ export default {
           <template v-for="(answerFile, i) in answerFiles">
             <file-item
               :questionAnswerId="questionAnswerId"
+              :decisionBranchId="decisionBranchId"
               :answerFile="answerFile"
               :key="i"
             />

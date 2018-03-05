@@ -2,6 +2,7 @@
 import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 import includes from 'lodash/includes'
+import get from 'lodash/get'
 
 import AnswerIcon from './AnswerIcon'
 import NodeMixin from '../mixins/Node'
@@ -58,6 +59,10 @@ export default {
 
     isOpened () {
       return this.isStoredOpenedNodes || this.currentPageIsChild
+    },
+
+    answerFiles () {
+      return get(this.nodeData, 'answerFiles', [])
     }
   },
 
@@ -79,6 +84,9 @@ export default {
     >
       <span class="tree__item-body">
         <answer-icon />
+        <span class="icon-circle" v-if="answerFiles.length > 0">
+          <i class="material-icons" title="添付ファイル">attachment</i>
+        </span>
         <span v-html="highlight(nodeData.answer, searchingKeyword)" />
       </span>
     </router-link>

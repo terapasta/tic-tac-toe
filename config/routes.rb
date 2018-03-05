@@ -85,6 +85,7 @@ Rails.application.routes.draw do
             put :higher
             put :lower
           end
+          resources :answer_files, module: :decision_branches, only: [:create, :destroy]
         end
         resources :answers, module: :bots
         resources :messages, module: :bots, only: [] do

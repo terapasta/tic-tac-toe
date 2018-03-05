@@ -1,0 +1,26 @@
+.container.pt-5
+  .d-flex.justify-content-between
+    h3 Demo Bots
+  .d-flex
+    = render 'shared/flash'
+  table.table.mt-5
+    thead
+      tr
+        th id
+        th image
+        th name
+        th
+        th
+    tbody
+      - @demobots.each do |bot|
+        tr
+          td= bot.id
+          td
+            - if bot.image?
+              = link_to bot.image_url do
+                .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+          td= bot.name
+          td= link_to 'Finish demo', admin_demo_bot_term_path(bot), method: :delete, data: { confirm: 'デモを終了しますか？' }, class: 'btn btn-secondary'
+          td
+            - if bot.demo_finished_at.present?
+              = "#{l bot.demo_finished_at, format: :long}にデモが終了しています"

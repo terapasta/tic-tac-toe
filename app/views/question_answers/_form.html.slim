@@ -70,6 +70,7 @@
                 - else
                   .input-group
                     = nf.file_field :file, class: 'form-control'
+                    = nf.hidden_field :question_answer_id, value: @question_answer.id
                     span.input-group-btn
                       = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'
           - if params[:only_editable_sub_question].to_bool

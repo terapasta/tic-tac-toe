@@ -4,12 +4,12 @@ class AnswerFile < ApplicationRecord
 
   validates :file, presence: true
   validates :file_type, presence: true
-  validates :question_answer_id,
+  validates :question_answer,
     presence: true,
-    if: -> (it) { it.decision_branch_id.blank? }
-  validates :decision_branch_id,
+    if: -> (it) { it.decision_branch.blank? }
+  validates :decision_branch,
     presence: true,
-    if: -> (it) { it.question_answer_id.blank? }
+    if: -> (it) { it.question_answer.blank? }
 
   mount_uploader :file, AnswerFileUploader
 

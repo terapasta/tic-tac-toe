@@ -72,4 +72,18 @@ RSpec.describe Bot do
       it { is_expected.to eq("「test」についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？") }
     end
   end
+
+  describe '#change_token_and_set_demo_finished_time!' do
+    subject do
+      lambda do
+        bot.change_token_and_set_demo_finished_time!
+      end
+    end
+
+    it 'change token and set demo_finished_at' do      
+      expect(subject)
+        .to change{ bot.reload.token }
+        .and change{ bot.reload.demo_finished_at }
+    end
+  end
 end

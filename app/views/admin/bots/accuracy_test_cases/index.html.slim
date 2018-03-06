@@ -18,7 +18,7 @@
           th.text-center
       tbody
         - @accuracy_test_cases.each do |accuracy_test_case|
-          tr
+          tr id="accuracy-test-case-#{accuracy_test_case.id}"
             td
               = accuracy_test_case.question_text
             td
@@ -63,7 +63,7 @@
 
             td.text-center
               - if @result.present?
-                - if accuracy_test_case.success_result?(@result[accuracy_test_case.id])
+                - if accuracy_test_case.success?(@result[accuracy_test_case.id])
                   = material_icon 'check_circle', class: 'text-success'
                 - else
                   = material_icon 'close', class: 'text-danger'

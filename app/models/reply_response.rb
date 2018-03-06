@@ -1,5 +1,5 @@
 class ReplyResponse
-  attr_reader :raw_data
+  attr_reader :raw_data, :question
 
   def initialize(raw_data, bot, question)
     @raw_data = raw_data

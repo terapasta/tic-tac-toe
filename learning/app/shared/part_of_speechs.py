@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class PartOfSpeech(Enum):
+    UNKNOWN = 0
     NOUN = 1
     VERB = 2
     ADJECTIVE = 3
@@ -24,4 +25,4 @@ class PartOfSpeech(Enum):
         elif pos == '副詞':
             return PartOfSpeech.ADVERB
         else:
-            return None
+            return PartOfSpeech.UNKNOWN

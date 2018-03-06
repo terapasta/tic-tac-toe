@@ -67,6 +67,11 @@ class FuzzyTermTokenizer(BaseTokenizer):
                 if lemma == "*":
                     lemma = node.surface
 
+                # 空文字の場合はスキップ
+                if lemma is None or lemma == "":
+                    node = node.next
+                    continue
+
                 # 形態素と読みを併せて返す
                 word_list.append(self._normalize_word(lemma))
                 if not phonetic is None:

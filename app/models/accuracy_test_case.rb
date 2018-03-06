@@ -3,6 +3,8 @@ class AccuracyTestCase < ApplicationRecord
 
   validates :question_text, presence: true
 
+  BotMessageStruct = Struct.new(:body, :similar_question_answers)
+
   def success_result?(bot_message)
     answer_is_success = false
     if expected_text.present?
@@ -19,10 +21,12 @@ class AccuracyTestCase < ApplicationRecord
   end
 
   def success?(reply_response)
-    struct = Struct.new(:body, :similar_question_answers).new(
-      reply_response.question_answer.answer,
-      reply_response.similar_question_answers
-    )
+    body = if reply_response.is_need_has_suggests_message?
+      reply_response.render_has_suggests_message
+    else
+      reply_response.question_answer.answer
+    end
+    struct = BotMessageStruct.new(body, reply_response.similar_question_answers)
     success_result?(struct)
   end
 end

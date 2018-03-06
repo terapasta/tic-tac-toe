@@ -82,3 +82,18 @@
     .container
       = render 'shared/flash'
       = yield
+  - if current_user && @bot.id == 45
+    /セブン銀行様フィードバックBot
+    javascript:
+      (function() {
+        var head = document.querySelector("head");
+        var src = "//my-ope-assets.s3.amazonaws.com/assets/embed.js";
+        var isAlreadyLoaded = document.querySelector("[src='" + src + "']");
+        if (isAlreadyLoaded) { return console.warn("[My-ope office] Duplicated loading scripts"); }
+        var js = document.createElement("script");
+        js.src = src;
+        js.async = true;
+        js.id = "MyOpeEmbedScript";
+        head.appendChild(js);
+      }).call(this);
+    #MyOpeChatWidget data-token="a33bbb24e89ec8159efe599f33c1bd1a3c0021463bd3685842ce47c6726154d3" data-position="right"

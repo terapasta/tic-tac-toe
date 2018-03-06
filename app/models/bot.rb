@@ -21,6 +21,8 @@ class Bot < ApplicationRecord
   has_many :allowed_ip_addresses, dependent: :destroy
   has_many :organization_ownerships, class_name: 'Organization::BotOwnership'
   has_many :organizations, through: :organization_ownerships
+  has_many :organization_memberships, class_name: 'Organization::UserMembership', through: :organizations, source: :user_memberships
+  has_many :organization_users, class_name: 'User', through: :organization_memberships, source: :user
   has_one :tutorial
   has_many :chat_service_users
   has_one :line_credential
@@ -37,9 +39,11 @@ class Bot < ApplicationRecord
 
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 
+  scope :demos, -> { where(is_demo: true) }
+
   mount_uploader :image, ImageUploader
 
-  before_validation :generate_token, :set_learning_status_changed_at_if_needed
+  before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
 
   def learning_parameter_attributes
     if learning_parameter.present?
@@ -98,9 +102,17 @@ class Bot < ApplicationRecord
     organizations&.first&.chats_limit_per_day || Organization::ChatsLimitPerDay[:professional]
   end
 
+  def change_token_and_set_demo_finished_time!
+    self.update!(token: generate_token, demo_finished_at: Time.current)
+  end
+
   private
+    def set_token_if_needed
+      self.token = generate_token if token.blank?
+    end
+
     def generate_token
-      self.token = SecureRandom.hex(32) if token.blank?
+      SecureRandom.hex(32)
     end
 
     def set_learning_status_changed_at_if_needed

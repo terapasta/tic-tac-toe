@@ -5,21 +5,25 @@ RSpec.describe WordMappingsDecorator, type: :model do
     create(:bot)
   end
 
-  let!(:system_word_mapping) do
-    WordMapping.destroy_all
-    create(:word_mapping, word: '日程').tap do |wm|
+  def define_dict(word, synonym, bot = nil)
+    create(:word_mapping, bot: bot, word: word).tap do |wm|
       wm.update(word_mapping_synonyms_attributes: [
-        { value: 'スケジュール' }
+        { value: synonym }
       ])
     end
   end
 
+  let!(:system_word_mapping) do
+    WordMapping.destroy_all
+    define_dict('日程', 'スケジュール')
+  end
+
   let!(:bot_word_mapping) do
-    create(:word_mapping, bot: bot, word: '予定表').tap do |wm|
-      wm.update(word_mapping_synonyms_attributes: [
-        { value: 'スケジュール' }
-      ])
-    end
+    define_dict('予定表', 'スケジュール', bot)
+  end
+
+  let!(:bot_word_mapping_2) do
+    define_dict('社内メール便', 'メール便', bot)
   end
 
   let(:decorator) do
@@ -28,11 +32,17 @@ RSpec.describe WordMappingsDecorator, type: :model do
 
   describe '#replace_synonym' do
     subject do
-      decorator.replace_synonym('スケジュールを教えて')
+      decorator.replace_synonym(text)
     end
 
-    it '質問文の「スケジュール」が「予定表」に変換されていること' do
-      expect(subject).to eq('予定表を教えて')
+    context '予定表' do
+      let(:text) { 'スケジュールを教えて' }
+      it { is_expected.to eq('予定表を教えて') }
+    end
+
+    context '社内メール便' do
+      let(:text) { 'こんにちは。社内メール便を送りたいので、メール便の方法を教えてください。メール便は大好きです。社内メール便最高！メール便メール便社内メール便' }
+      it { is_expected.to eq('こんにちは。社内メール便を送りたいので、社内メール便の方法を教えてください。社内メール便は大好きです。社内メール便最高！社内メール便社内メール便社内メール便') }
     end
   end
 end

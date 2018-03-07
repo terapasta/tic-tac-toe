@@ -21,6 +21,9 @@ class DecisionBranch < ApplicationRecord
     foreign_key: :parent_decision_branch_id,
     dependent: :destroy
 
+  has_many :answer_files,
+    dependent: :destroy
+
   accepts_nested_attributes_for :child_decision_branches
 
   acts_as_list scope: [:question_answer_id, :parent_decision_branch_id]

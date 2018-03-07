@@ -1,8 +1,15 @@
 class AnswerFile < ApplicationRecord
-  belongs_to :question_answer
+  belongs_to :question_answer, required: false
+  belongs_to :decision_branch, required: false
 
   validates :file, presence: true
   validates :file_type, presence: true
+  validates :question_answer,
+    presence: true,
+    if: -> (it) { it.decision_branch.blank? }
+  validates :decision_branch,
+    presence: true,
+    if: -> (it) { it.question_answer.blank? }
 
   mount_uploader :file, AnswerFileUploader
 

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
           resources :topic_taggings, module: :question_answers
           resources :decision_branches, module: :question_answers
           resource :child_decision_branches, only: [:destroy], module: :question_answers
+          resources :answer_files, module: :question_answers, only: [:create, :destroy]
         end
         resources :decision_branches, module: :bots do
           resource :child_decision_branches, only: [:destroy], module: :decision_branches
@@ -84,6 +85,7 @@ Rails.application.routes.draw do
             put :higher
             put :lower
           end
+          resources :answer_files, module: :decision_branches, only: [:create, :destroy]
         end
         resources :answers, module: :bots
         resources :messages, module: :bots, only: [] do

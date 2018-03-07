@@ -17,6 +17,7 @@ import DecisionBranchIcon from './DecisionBranchIcon'
 import AnswerTab, { TabType } from './DecisionBranchAnswerTab'
 import SelectableTree from './SelectableTree'
 import SearchForm, { Mode as SearchFormMode } from './SearchForm'
+import AnswerFiles from './AnswerFiles'
 import { calcPercentile } from '../helpers'
 
 const getComputedHeight = el => {
@@ -45,7 +46,8 @@ export default {
     DecisionBranchIcon,
     AnswerTab,
     SelectableTree,
-    SearchForm
+    SearchForm,
+    AnswerFiles
   },
 
   data: () => ({
@@ -251,12 +253,17 @@ export default {
       @wheel="handleAnswerFormGroupWheel"
     >
       <answer-tab :tabType="tabType" @changeTab="handleAnswerTabChange">
-        <textarea
-          class="form-control"
-          rows="3"
-          v-model="decisionBranch.answer"
-          slot="input"
-        ></textarea>
+        <div slot="input">
+          <textarea
+            class="form-control mb-3"
+            rows="3"
+            v-model="decisionBranch.answer"
+          />
+          <answer-files
+            :decisionBranchId="decisionBranch.id"
+            :answerFiles="decisionBranch.answerFiles"
+          />
+        </div>
         <div slot="select">
           <p>この選択肢から別のQ&Aツリーの回答にリンクさせることができます</p>
           <search-form

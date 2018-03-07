@@ -11,7 +11,7 @@ Capybara.register_driver :selenium do |app|
           disable-gpu
           no-sandbox
           disable-popup-blocking
-          window-size=1680,1050
+          window-size=1680,5000
         ),
       },
     )

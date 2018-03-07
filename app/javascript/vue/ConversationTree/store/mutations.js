@@ -34,7 +34,11 @@ import {
   ADD_SEARCH_INDEX,
   TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
   MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
-  MOVE_DECISION_BRANCH_TO_LOWER_POSITION
+  MOVE_DECISION_BRANCH_TO_LOWER_POSITION,
+  ADD_ANSWER_FILE_TO_QUESTION_ANSWER,
+  REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER,
+  ADD_ANSWER_FILE_TO_DECISION_BRANCH,
+  REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
 } from './mutationTypes'
 
 import {
@@ -282,5 +286,29 @@ export default {
         moveToLower(dbIds)
       })
     }
+  },
+
+  [ADD_ANSWER_FILE_TO_QUESTION_ANSWER] (state, { questionAnswerId, answerFile }) {
+    const { questionsRepo } = state
+    const qa = questionsRepo[questionAnswerId]
+    qa.answerFiles = qa.answerFiles.concat([answerFile])
+  },
+
+  [REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER] (state, { questionAnswerId, answerFileId }) {
+    const { questionsRepo } = state
+    const qa = questionsRepo[questionAnswerId]
+    qa.answerFiles = qa.answerFiles.filter(it => it.id !== answerFileId)
+  },
+
+  [ADD_ANSWER_FILE_TO_DECISION_BRANCH] (state, { decisionBranchId, answerFile }) {
+    const { decisionBranchesRepo } = state
+    const db = decisionBranchesRepo[decisionBranchId]
+    db.answerFiles = db.answerFiles.concat([answerFile])
+  },
+
+  [REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH] (state, { decisionBranchId, answerFileId }) {
+    const { decisionBranchesRepo } = state
+    const db = decisionBranchesRepo[decisionBranchId]
+    db.answerFiles = db.answerFiles.filter(it => it.id !== answerFileId)
   }
 }

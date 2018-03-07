@@ -109,7 +109,7 @@ export default class ChatBotMessage extends Component {
           const fileName = last(answerFile.file.url.split('?')[0].split("/"));
 
           return (
-            <div className="chat-message__file">
+            <div className="chat-message__file" key={i}>
               {isImage && (
                 <a href={answerFile.file.url} target="_blank">
                   <img src={answerFile.file.url} />

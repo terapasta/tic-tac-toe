@@ -54,7 +54,6 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
         expect(task.guest_message).to eq('サンプルメッセージ')
         expect(task.bot_message).to_not be_blank
       end
-      page.save_screenshot
     end
   end
 end

@@ -5,6 +5,7 @@ import toastr from 'toastr'
 
 import QuestionIcon from './QuestionIcon'
 import AnswerIcon from './AnswerIcon'
+import AnswerFiles from './AnswerFiles'
 import QuestionAnswerFormMixin from '../mixins/QuestionAnswerForm'
 
 export default {
@@ -14,7 +15,8 @@ export default {
 
   components: {
     QuestionIcon,
-    AnswerIcon
+    AnswerIcon,
+    AnswerFiles
   },
 
   data: () => ({
@@ -216,6 +218,11 @@ export default {
         :disabled="isProcessing"
       />
     </div>
+    <answer-files
+      v-if="questionAnswer.id"
+      :questionAnswerId="questionAnswer.id"
+      :answerFiles="questionAnswer.answerFiles"
+    />
     <div class="form-group clearfix">
       <div class="text-right">
         <button

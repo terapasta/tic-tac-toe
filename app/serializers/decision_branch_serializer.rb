@@ -11,6 +11,7 @@ class DecisionBranchSerializer < ActiveModel::Serializer
 
   # has_many :child_decision_branches
   has_one :answer_link
+  has_many :answer_files
 
   def answer
     object.answer_or_answer_link_text

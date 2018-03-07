@@ -72,7 +72,6 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       subject do
         lambda do
           visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-          page.save_screenshot
           find('[name="question_answer[question]"]').set('updated question')
           find('[name="question_answer[answer]"]').set('updated answer')
           # fill_in_input name: 'question_answer[question]', value: 'updated question'

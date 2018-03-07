@@ -80,6 +80,9 @@ export default {
     >
       <span class="tree__item-body">
         <answer-icon />
+        <span class="icon-circle" v-if="nodeData.answerFiles.length > 0">
+          <i class="material-icons" title="添付ファイル">attachment</i>
+        </span>
         <span v-html="highlight(nodeData.answer, searchingKeyword)" />
       </span>
     </router-link>

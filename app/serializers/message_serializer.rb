@@ -31,7 +31,12 @@ class MessageSerializer < ActiveModel::Serializer
   end
 
   def answer_files
-    object.question_answer&.answer_files.as_json(only: [:file, :file_size, :file_type])
+    options = { only: [:file, :file_size, :file_type] }
+    if object.question_answer.present?
+      object.question_answer.answer_files.as_json(options)
+    elsif object.decision_branch.present?
+      object.decision_branch.answer_files.as_json(options)
+    end
   end
 
   def child_decision_branches

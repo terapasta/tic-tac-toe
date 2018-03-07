@@ -7,7 +7,7 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
 
   def as_repo_json
     inject({}){ |result, qa|
-      result[qa.id] = qa.as_json(only: [:id, :question, :answer], include: [{ sub_questions: { only: [:id, :question] } }])
+      result[qa.id] = DeepCamelizeKeys.deep_camelize_keys(QuestionAnswerSerializer.new(qa).as_json)
       result
     }
   end

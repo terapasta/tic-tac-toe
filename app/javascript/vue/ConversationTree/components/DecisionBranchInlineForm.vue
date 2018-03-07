@@ -2,6 +2,7 @@
 import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 import toastr from 'toastr'
+import get from 'lodash/get'
 
 import DecisionBranchFormMixin from '../mixins/DecisionBranchForm'
 
@@ -27,6 +28,10 @@ export default {
 
     isNew () {
       return isEmpty(this.nodeData.id)
+    },
+
+    answerFiles () {
+      return get(this.nodeData, 'answerFiles', [])
     }
   },
 
@@ -95,6 +100,14 @@ export default {
 <template>
   <div :id="`DecisionBranchItem-${nodeData.id}`">
     <span v-if="!isNew && !isEditing">{{nodeData.body}}</span>
+    <router-link :to="`/decisionBranch/${nodeData.id}`">
+      <i
+        v-if="answerFiles.length > 0"
+        class="material-icons"
+        alt="添付ファイルがあります"
+        title="添付ファイルがあります"
+      >attachment</i>
+    </router-link>
     <button
       v-if="!isNew && !isEditing"
       class="btn btn-link"

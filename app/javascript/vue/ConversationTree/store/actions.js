@@ -6,6 +6,7 @@ import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
 import * as AnswerLinkAPI from '../../../api/answerLink'
 import * as SubQuestionAPI from '../../../api/subQuestion'
+import * as AnswerFileAPI from '../../../api/answerFile'
 
 import {
   OPEN_NODE,
@@ -33,7 +34,11 @@ import {
   ADD_SEARCH_INDEX,
   TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
   MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
-  MOVE_DECISION_BRANCH_TO_LOWER_POSITION
+  MOVE_DECISION_BRANCH_TO_LOWER_POSITION,
+  ADD_ANSWER_FILE_TO_QUESTION_ANSWER,
+  REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER,
+  ADD_ANSWER_FILE_TO_DECISION_BRANCH,
+  REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
 } from './mutationTypes'
 
 import {
@@ -299,4 +304,32 @@ export default {
       commit(MOVE_DECISION_BRANCH_TO_LOWER_POSITION, { decisionBranchId })
     })
   },
+
+  attachFileToQuestionAnswer ({ commit, state }, { questionAnswerId, file }) {
+    const { botId } = state
+    return AnswerFileAPI.attachFileToQuestionAnswer(botId, questionAnswerId, file).then(res => {
+      commit(ADD_ANSWER_FILE_TO_QUESTION_ANSWER, { questionAnswerId, answerFile: res.data.answerFile })
+    })
+  },
+
+  removeFileFromQuestionAnswer ({ commit, state }, { questionAnswerId, answerFileId }) {
+    const { botId } = state
+    return AnswerFileAPI.removeQuestionAnswerFile(botId, questionAnswerId, answerFileId).then(() => {
+      commit (REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER, { questionAnswerId, answerFileId })
+    })
+  },
+
+  attachFileToDecisionBranch ({ commit, state }, { decisionBranchId, file }) {
+    const { botId } = state
+    return AnswerFileAPI.attachFileToDecisionBranch(botId, decisionBranchId, file).then(res => {
+      commit(ADD_ANSWER_FILE_TO_DECISION_BRANCH, { decisionBranchId, answerFile: res.data.answerFile })
+    })
+  },
+
+  removeFileFromDecisionBranch ({ commit, state }, { decisionBranchId, answerFileId }) {
+    const { botId } = state
+    return AnswerFileAPI.removeDecisionBranchAnswerFile(botId, decisionBranchId, answerFileId).then(() => {
+      commit (REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH, { decisionBranchId, answerFileId })
+    })
+  }
 }

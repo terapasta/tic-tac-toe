@@ -5,7 +5,6 @@ from app.shared.logger import logger
 from app.shared.constants import Constants
 from app.shared.base_cls import BaseCls
 
-from app.core.evaluator.mcll_evaluator import McllEvaluator
 
 class LearnController(BaseCls):
     def __init__(self, context):
@@ -67,16 +66,11 @@ class LearnController(BaseCls):
             )
 
     def _evaluate(self):
-        logger.info('load test data for evaluation')
-
-        y_expected = [1, 2]
-        y_actual = [{1: 0.2, 2: 0.6, 3: 0.2}, {1: 0.8, 2: 0.1, 3: 0.1}]
-
-        evaluator = McllEvaluator()
-        rmse = evaluator.evaluate(y_expected, y_actual)
-
         return {
-            'rmse': rmse,
+            'accuracy': 0,
+            'precision': 0,
+            'recall': 0,
+            'f1': 0,
         }
 
     def _transform_to_vector(self, sentences):

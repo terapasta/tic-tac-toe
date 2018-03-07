@@ -16,7 +16,8 @@ class McllEvaluator(BaseEvaluator):
         for y_e, y_a in zip(expected_ids, actual_probs):
             # y_e is an expected class id
             # y_a is an array or dict of probabilities for each class
-            sum += math.log(y_a[y_e])
+            if y_e in y_a:
+                sum += math.log(y_a[y_e])
 
         N = len(expected_ids)
         value = - sum / float(N)

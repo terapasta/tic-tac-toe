@@ -9,6 +9,7 @@ from app.core.evaluator.accuracy_evaluator import AccuracyEvaluator
 import csv
 import logging
 
+
 class EvaluateController(BaseCls):
     """
     EvaluateController は LearnController と共通のメソッドを持つ

@@ -20,5 +20,4 @@ class McllEvaluator(BaseEvaluator):
                 sum += math.log(y_a[y_e])
 
         N = len(expected_ids)
-        value = - sum / float(N)
-        return value
+        return - sum / float(N)

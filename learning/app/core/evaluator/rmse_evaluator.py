@@ -18,5 +18,4 @@ class RmseEvaluator(BaseEvaluator):
             return None
 
         N = y_expected.shape[0]
-        value = np.sqrt(np.sum((y_expected - y_actual) * (y_expected - y_actual)) / float(N))
-        return value
+        return np.sqrt(np.sum((y_expected - y_actual) * (y_expected - y_actual)) / float(N))

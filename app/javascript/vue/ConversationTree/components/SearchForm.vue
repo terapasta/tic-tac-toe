@@ -94,3 +94,9 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.input {
+  height: 40px;
+}
+</style>

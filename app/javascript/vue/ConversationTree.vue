@@ -9,6 +9,8 @@ import {
   compact,
   reduce
  } from 'lodash'
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 import getOffset from '../helpers/getOffset'
 import { calcPercentile } from './ConversationTree/helpers'
@@ -25,7 +27,8 @@ export default {
 
   components: {
     Tree,
-    SearchForm
+    SearchForm,
+    Multiselect
   },
 
   data: () => ({
@@ -34,7 +37,12 @@ export default {
     showingIndecies: range(0, 30),
     detailPanelHeight: null,
     detailPanelWatchTimer: null,
-    originalDetailPanelHeight: null
+    originalDetailPanelHeight: null,
+    selectedTopicTags: [],
+    topicTags: [
+      { id: 1, name: 'hoge' },
+      { id: 2, name: 'fuga' }
+    ]
   }),
 
   created () {
@@ -124,6 +132,10 @@ export default {
 
     updateCurrentNodes () {
       this.currentNodes = this.filteredQuestionsTree.filter((_, i) => includes(this.showingIndecies, i))
+    },
+
+    makeTopicTagLabel (option) {
+      return option.name
     }
   },
 
@@ -164,6 +176,14 @@ export default {
         ref="master"
       >
         <search-form />
+        <multiselect
+          v-model="selectedTopicTags"
+          :options="topicTags"
+          :multiple="true"
+          :custom-label="makeTopicTagLabel"
+          :show-labels="false"
+          placeholder="トピックタグで絞込み"
+        />
         <tree
           :currentNodes="currentNodes"
           ref="tree"
@@ -183,8 +203,28 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .tree {
   display: block;
+}
+
+.multiselect {
+  margin-bottom: 8px;
+  margin-left: 16px;
+  width: calc(30% - 52px) !important;
+}
+.multiselect__content-wrapper {
+  z-index: 100 !important;
+}
+.multiselect__tags {
+  border-color: #ced4da !important;
+  border-radius: 0.2rem !important;
+}
+.multiselect__tag,
+.multiselect__option--highlight {
+  background-color: #17a2b8 !important;
+}
+.multiselect__tag-icon:hover {
+  background-color: darken(#17a2b8, 5%) !important;
 }
 </style>

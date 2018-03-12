@@ -91,6 +91,7 @@
     "uuid": "^3.0.1",
     "vue": "^2.5.13",
     "vue-loader": "^13.6.1",
+    "vue-multiselect": "^2.0.8",
     "vue-router": "^3.0.1",
     "vue-sweetalert": "^0.1.18",
     "vue-template-compiler": "^2.5.13",

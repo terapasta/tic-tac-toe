@@ -5,6 +5,9 @@ import findIndex from 'lodash/findIndex'
 import sortBy from 'lodash/sortBy'
 import assign from 'lodash/assign'
 import filter from 'lodash/filter'
+import intersection from 'lodash/intersection'
+import values from 'lodash/values'
+import isEqual from 'lodash/isEqual'
 import isEmpty from 'is-empty'
 
 import {
@@ -39,6 +42,8 @@ import {
   REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER,
   ADD_ANSWER_FILE_TO_DECISION_BRANCH,
   REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
+  FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS,
+  CLEAR_TOPIC_TAG_FILTER,
 } from './mutationTypes'
 
 import {
@@ -310,5 +315,26 @@ export default {
     const { decisionBranchesRepo } = state
     const db = decisionBranchesRepo[decisionBranchId]
     db.answerFiles = db.answerFiles.filter(it => it.id !== answerFileId)
+  },
+
+  [FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS] (state, { topicTagIds }) {
+    const targetQaIds = values(state.questionsRepo).filter(qa => {
+      const qaTagIds = qa.topicTags.map(it => it.id)
+      const sameIds = intersection(qaTagIds, topicTagIds)
+      return isEqual(sortBy(sameIds), sortBy(topicTagIds))
+    }).map(qa => qa.id)
+    state.filteredQuestionsTree = state.questionsTree.filter(it => (
+      includes(targetQaIds, it.id)
+    ))
+    state.isOnlyShowHasDecisionBranchesNode = false
+    state.searchingKeyword = ''
+    state.selectedTopicTagIds = topicTagIds
+  },
+
+  [CLEAR_TOPIC_TAG_FILTER] (state, payload = { isNeedResetTree: true }) {
+    if (payload.isNeedResetTree) {
+      state.filteredQuestionsTree = state.questionsTree.concat()
+    }
+    state.selectedTopicTagIds = []
   }
 }

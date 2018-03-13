@@ -7,13 +7,15 @@ import {
   last,
   get,
   compact,
-  reduce
+  reduce,
+  values
  } from 'lodash'
 
 import getOffset from '../helpers/getOffset'
 import { calcPercentile } from './ConversationTree/helpers'
 import Tree from './ConversationTree/components/Tree'
 import SearchForm from './ConversationTree/components/SearchForm'
+import TopicTagsSelector from './ConversationTree/components/TopicTagsSelector'
 
 const Direction = {
   Up: 'up',
@@ -25,7 +27,8 @@ export default {
 
   components: {
     Tree,
-    SearchForm
+    SearchForm,
+    TopicTagsSelector
   },
 
   data: () => ({
@@ -34,7 +37,7 @@ export default {
     showingIndecies: range(0, 30),
     detailPanelHeight: null,
     detailPanelWatchTimer: null,
-    originalDetailPanelHeight: null
+    originalDetailPanelHeight: null,
   }),
 
   created () {
@@ -130,7 +133,7 @@ export default {
   watch: {
     filteredQuestionsTree () {
       this.updateCurrentNodes()
-    }
+    },
   },
 
   computed: {
@@ -164,6 +167,7 @@ export default {
         ref="master"
       >
         <search-form />
+        <topic-tags-selector />
         <tree
           :currentNodes="currentNodes"
           ref="tree"
@@ -183,7 +187,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .tree {
   display: block;
 }

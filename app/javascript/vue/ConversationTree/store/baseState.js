@@ -2,5 +2,6 @@ export default {
   openedNodes: [],
   searchingKeyword: '',
   selectableTreeSearchingKeyword: '',
-  isOnlyShowHasDecisionBranchesNode: false
+  isOnlyShowHasDecisionBranchesNode: false,
+  selectedTopicTagIds: []
 }

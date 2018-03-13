@@ -2,7 +2,6 @@
   position: relative;
   padding: 0;
   margin: 0;
-  width: min-content;
   list-style: none;
 
   .tree {
@@ -11,7 +10,7 @@
   }
 
   &__node {
-    z-index: 2;
+    // z-index: 2;
     padding-left: 24px;
   }
 
@@ -43,7 +42,7 @@
 
     > * {
       position: relative;
-      z-index: 1;
+      // z-index: 1;
     }
 
     &.active {
@@ -54,7 +53,7 @@
         bottom: 0;
         left: -99999px;
         right: -99999px;
-        z-index: 0;
+        // z-index: 0;
         background-color: #d8e2e6;
       }
     }

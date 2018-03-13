@@ -7,6 +7,7 @@
     data-questions-repo=@question_answers.as_repo_json.to_json
     data-search-index=@question_answers.make_index_json(tree, @decision_branches).to_json
     data-decision-branches-repo=DeepCamelizeKeys.deep_camelize_keys(@decision_branches.as_repo_json).to_json
+    data-topic-tags-repo=DeepCamelizeKeys.deep_camelize_keys(@bot.topic_tags.decorate.as_repo_json).to_json
   )
 
   / span(

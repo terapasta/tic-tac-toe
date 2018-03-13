@@ -39,6 +39,8 @@ import {
   REMOVE_ANSWER_FILE_FROM_QUESTION_ANSWER,
   ADD_ANSWER_FILE_TO_DECISION_BRANCH,
   REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
+  FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS,
+  CLEAR_TOPIC_TAG_FILTER,
 } from './mutationTypes'
 
 import {
@@ -260,6 +262,7 @@ export default {
     const filteredQuestionsTree = state.questionsTree.filter(it => includes(uniqQuestionNodeIds, `Question-${it.id}`))
     commit(SET_FILTERED_QUESTIONS_TREE, { filteredQuestionsTree })
     commit(SET_SEARCHING_KEYWORD, { searchingKeyword: keyword})
+    commit(CLEAR_TOPIC_TAG_FILTER, { isNeedResetTree: false })
     nodeIds.forEach(it => commit(OPEN_NODE, { nodeId: it }))
   },
 
@@ -287,7 +290,10 @@ export default {
     commit(SET_SELECTABLE_TREE_SEARCHING_KEYWORD, { selectableTreeSearchingKeyword: '' })
   },
 
-  toggleIsOnlyShowHasDecisionBranchesNode ({ commit }) {
+  toggleIsOnlyShowHasDecisionBranchesNode ({ commit, state }) {
+    if (!state.isOnlyShowHasDecisionBranchesNode) {
+      commit(CLEAR_TOPIC_TAG_FILTER, { isNeedResetTree: false })
+    }
     commit(TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE)
   },
 
@@ -331,5 +337,13 @@ export default {
     return AnswerFileAPI.removeDecisionBranchAnswerFile(botId, decisionBranchId, answerFileId).then(() => {
       commit (REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH, { decisionBranchId, answerFileId })
     })
+  },
+
+  filterQuestionAnswerByTopicTags ({ commit }, { topicTagIds }) {
+    commit(FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS, { topicTagIds })
+  },
+
+  clearTopicTagFilter ({ commit }) {
+    commit(CLEAR_TOPIC_TAG_FILTER)
   }
 }

@@ -64,6 +64,10 @@ export default {
 
     hasSubQuestions () {
       return !isEmpty(get(this.nodeData, 'subQuestions'))
+    },
+
+    topicTags () {
+      return get(this.nodeData, 'topicTags', [])
     }
   },
 
@@ -85,6 +89,9 @@ export default {
     >
       <span class="tree__item-body">
         <question-icon :has-decision-branches="hasDecisionBranches" />
+        <span v-for="(tag, i) in topicTags" :key="i">
+          <span class="badge badge-info">{{tag.name}}</span>&nbsp;
+        </span>
         <span v-html="this.highlight(nodeData.question, searchingKeyword)" />
       </span>
       <ul v-if="hasSubQuestions" class="tree__item-sub-body">

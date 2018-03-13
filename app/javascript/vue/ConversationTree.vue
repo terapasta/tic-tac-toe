@@ -7,7 +7,8 @@ import {
   last,
   get,
   compact,
-  reduce
+  reduce,
+  values
  } from 'lodash'
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
@@ -38,11 +39,7 @@ export default {
     detailPanelHeight: null,
     detailPanelWatchTimer: null,
     originalDetailPanelHeight: null,
-    selectedTopicTags: [],
-    topicTags: [
-      { id: 1, name: 'hoge' },
-      { id: 2, name: 'fuga' }
-    ]
+    selectedTopicTags: []
   }),
 
   created () {
@@ -65,7 +62,9 @@ export default {
 
   methods: {
     ...mapActions([
-      'toggleIsOnlyShowHasDecisionBranchesNode'
+      'toggleIsOnlyShowHasDecisionBranchesNode',
+      'filterQuestionAnswerByTopicTags',
+      'clearTopicTagFilter'
     ]),
 
     adjustHeight () {
@@ -136,19 +135,36 @@ export default {
 
     makeTopicTagLabel (option) {
       return option.name
+    },
+
+    handleMultiselectSelect (selected) {
+      const selectedTags = this.selectedTopicTags.concat([selected])
+      const topicTagIds = selectedTags.map(it => it.id)
+      if (topicTagIds.length > 0) {
+        this.filterQuestionAnswerByTopicTags({ topicTagIds })
+      } else {
+        this.clearTopicTagFilter()
+      }
     }
   },
 
   watch: {
     filteredQuestionsTree () {
       this.updateCurrentNodes()
+    },
+
+    // NOTE stateから更新される
+    selectedTopicTagIds (val) {
+      this.selectedTopicTags = this.topicTags.filter(it => includes(val, it.id))
     }
   },
 
   computed: {
     ...mapState([
       'questionsTree',
-      'filteredQuestionsTree'
+      'filteredQuestionsTree',
+      'topicTagsRepo',
+      'selectedTopicTagIds'
     ]),
 
     rootStyle () {
@@ -162,6 +178,10 @@ export default {
         maxHeight: this.detailPanelHeight ? `${this.detailPanelHeight}px` : 'auto',
         backgroundColor: this.$route.name === 'Home' ? 'rgba(255,255,255,.9)' : '#fff'
       }
+    },
+
+    topicTags () {
+      return values(this.topicTagsRepo)
     }
   }
 }
@@ -183,6 +203,7 @@ export default {
           :custom-label="makeTopicTagLabel"
           :show-labels="false"
           placeholder="トピックタグで絞込み"
+          @select="handleMultiselectSelect"
         />
         <tree
           :currentNodes="currentNodes"

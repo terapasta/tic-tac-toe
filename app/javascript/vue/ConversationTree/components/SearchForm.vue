@@ -1,6 +1,6 @@
 <script>
 import isEmpty from 'is-empty'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import debounce from 'lodash/debounce'
 
 export const Mode = {
@@ -62,6 +62,10 @@ export default {
   },
 
   computed: {
+    ...mapState([
+      'searchingKeyword'
+    ]),
+
     rootClassName () {
       switch (this.mode) {
         case Mode.Global:
@@ -69,6 +73,13 @@ export default {
         case Mode.Selectable:
           return ''
       }
+    }
+  },
+
+  watch: {
+    searchingKeyword () {
+      this.keyword = this.searchingKeyword
+      this.isShowClearButton = !isEmpty(this.searchingKeyword)
     }
   }
 }

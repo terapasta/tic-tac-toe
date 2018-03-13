@@ -17,6 +17,7 @@ class DecisionBranch < ApplicationRecord
   has_many :answer_links, as: :answer
 
   has_many :child_decision_branches,
+    -> { order(position: :asc) },
     class_name: 'DecisionBranch',
     foreign_key: :parent_decision_branch_id,
     dependent: :destroy

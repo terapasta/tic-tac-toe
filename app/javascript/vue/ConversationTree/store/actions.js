@@ -89,10 +89,8 @@ export default {
 
     if (isEmpty(answer)) {
       const node = find(state.questionsTree, (node) => node.id === id)
-      node.decisionBranches.forEach(db => {
-
-        promises.push(DecisionBranchAPI.nestedDelete(botId, db.id))
-      })
+      const decisionBranchIds = node.decisionBranches.map(it => it.id)
+      promises.push(DecisionBranchAPI.bulkDelete(botId, decisionBranchIds))
     }
 
     return Promise.all(promises)

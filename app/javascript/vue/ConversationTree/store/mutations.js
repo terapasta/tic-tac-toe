@@ -85,12 +85,14 @@ export default {
     const index = findIndex(state.questionsTree, (node) => node.id === id)
     state.questionsTree.splice(index, 1)
     delete state.questionsRepo[id]
+    state.filteredQuestionsTree = state.filteredQuestionsTree.filter(it => it.id !== id)
   },
 
   [DELETE_ANSWER] (state, { questionAnswerId }) {
     const index = findIndex(state.questionsTree, (node) => node.id === questionAnswerId)
     state.questionsTree[index].decisionBranches = []
     state.questionsRepo[questionAnswerId].answer = ""
+    state.filteredQuestionsTree = state.filteredQuestionsTree.concat()
   },
 
   [ADD_DECISION_BRANCH_TO_QUESTION_ANSWER] (state, { questionAnswerId }) {

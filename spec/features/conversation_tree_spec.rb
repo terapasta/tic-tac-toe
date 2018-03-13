@@ -147,4 +147,12 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(decision_branches.first.reload.position).to eq(1)
     expect(decision_branches.second.reload.position).to eq(2)
   end
+
+  scenario 'only show has decision branches nodes' do
+    expect(page).to have_content(question_answers.first.question)
+    expect(page).to_not have_content(question_answers.second.question)
+    find('#toggleOnlyShowHasDecisionBranchesNode').click
+    expect(page).to have_content(question_answers.first.question)
+    expect(page).to have_content(question_answers.second.question)
+  end
 end

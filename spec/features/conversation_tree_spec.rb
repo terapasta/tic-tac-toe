@@ -34,6 +34,12 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     create_list(:decision_branch, 2, bot: bot, question_answer: question_answers.first)
   end
 
+  let!(:topic_tags) do
+    create_list(:topic_tag, 2, bot: bot).each_with_index do |topic_tag, index|
+      question_answers[index].topic_taggings.create(topic_tag: topic_tag)
+    end
+  end
+
   before do
     sign_in staff
     visit "/bots/#{bot.id}/conversation_tree"
@@ -154,5 +160,14 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     find('#toggleOnlyShowHasDecisionBranchesNode').click
     expect(page).to have_content(question_answers.first.question)
     expect(page).to have_content(question_answers.second.question)
+  end
+
+  scenario 'filter by topic_tags' do
+    find('.multiselect__tags').click
+    all('.multiselect__element').detect{ |it| it.text == topic_tags.first.name }.click
+    topic_tag_1_qa = question_answers.detect{ |qa| qa.topic_tags.include?(topic_tags.first) }
+    topic_tag_2_qa = question_answers.detect{ |qa| qa.topic_tags.include?(topic_tags.second) }
+    expect(page).to have_content(topic_tag_1_qa.question)
+    expect(page).to_not have_content(topic_tag_2_qa.question)
   end
 end

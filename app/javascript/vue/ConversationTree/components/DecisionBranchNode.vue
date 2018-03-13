@@ -84,6 +84,7 @@ export default {
       <router-link
         :class="itemClassName"
         :to="`/decisionBranch/${this.node.id}`"
+        :id="`${nodeId}-link`"
         @click.native="handleClick"
       >
         <span class="tree__item-body">

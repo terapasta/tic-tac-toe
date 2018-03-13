@@ -10,13 +10,12 @@ import {
   reduce,
   values
  } from 'lodash'
-import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 import getOffset from '../helpers/getOffset'
 import { calcPercentile } from './ConversationTree/helpers'
 import Tree from './ConversationTree/components/Tree'
 import SearchForm from './ConversationTree/components/SearchForm'
+import TopicTagsSelector from './ConversationTree/components/TopicTagsSelector'
 
 const Direction = {
   Up: 'up',
@@ -29,7 +28,7 @@ export default {
   components: {
     Tree,
     SearchForm,
-    Multiselect
+    TopicTagsSelector
   },
 
   data: () => ({
@@ -39,7 +38,6 @@ export default {
     detailPanelHeight: null,
     detailPanelWatchTimer: null,
     originalDetailPanelHeight: null,
-    selectedTopicTags: []
   }),
 
   created () {
@@ -62,9 +60,7 @@ export default {
 
   methods: {
     ...mapActions([
-      'toggleIsOnlyShowHasDecisionBranchesNode',
-      'filterQuestionAnswerByTopicTags',
-      'clearTopicTagFilter'
+      'toggleIsOnlyShowHasDecisionBranchesNode'
     ]),
 
     adjustHeight () {
@@ -131,20 +127,6 @@ export default {
 
     updateCurrentNodes () {
       this.currentNodes = this.filteredQuestionsTree.filter((_, i) => includes(this.showingIndecies, i))
-    },
-
-    makeTopicTagLabel (option) {
-      return option.name
-    },
-
-    handleMultiselectSelect (selected) {
-      const selectedTags = this.selectedTopicTags.concat([selected])
-      const topicTagIds = selectedTags.map(it => it.id)
-      if (topicTagIds.length > 0) {
-        this.filterQuestionAnswerByTopicTags({ topicTagIds })
-      } else {
-        this.clearTopicTagFilter()
-      }
     }
   },
 
@@ -152,19 +134,12 @@ export default {
     filteredQuestionsTree () {
       this.updateCurrentNodes()
     },
-
-    // NOTE stateから更新される
-    selectedTopicTagIds (val) {
-      this.selectedTopicTags = this.topicTags.filter(it => includes(val, it.id))
-    }
   },
 
   computed: {
     ...mapState([
       'questionsTree',
-      'filteredQuestionsTree',
-      'topicTagsRepo',
-      'selectedTopicTagIds'
+      'filteredQuestionsTree'
     ]),
 
     rootStyle () {
@@ -178,10 +153,6 @@ export default {
         maxHeight: this.detailPanelHeight ? `${this.detailPanelHeight}px` : 'auto',
         backgroundColor: this.$route.name === 'Home' ? 'rgba(255,255,255,.9)' : '#fff'
       }
-    },
-
-    topicTags () {
-      return values(this.topicTagsRepo)
     }
   }
 }
@@ -196,15 +167,7 @@ export default {
         ref="master"
       >
         <search-form />
-        <multiselect
-          v-model="selectedTopicTags"
-          :options="topicTags"
-          :multiple="true"
-          :custom-label="makeTopicTagLabel"
-          :show-labels="false"
-          placeholder="トピックタグで絞込み"
-          @select="handleMultiselectSelect"
-        />
+        <topic-tags-selector />
         <tree
           :currentNodes="currentNodes"
           ref="tree"
@@ -227,25 +190,5 @@ export default {
 <style lang="scss">
 .tree {
   display: block;
-}
-
-.multiselect {
-  margin-bottom: 8px;
-  margin-left: 16px;
-  width: calc(30% - 52px) !important;
-}
-.multiselect__content-wrapper {
-  z-index: 100 !important;
-}
-.multiselect__tags {
-  border-color: #ced4da !important;
-  border-radius: 0.2rem !important;
-}
-.multiselect__tag,
-.multiselect__option--highlight {
-  background-color: #17a2b8 !important;
-}
-.multiselect__tag-icon:hover {
-  background-color: darken(#17a2b8, 5%) !important;
 }
 </style>

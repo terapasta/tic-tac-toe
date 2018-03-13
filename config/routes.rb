@@ -86,6 +86,9 @@ Rails.application.routes.draw do
             put :lower
           end
           resources :answer_files, module: :decision_branches, only: [:create, :destroy]
+          collection do
+            resource :bulk, only: [:destroy], module: :decision_branches
+          end
         end
         resources :answers, module: :bots
         resources :messages, module: :bots, only: [] do

@@ -12,7 +12,7 @@ import logging
 
 class EvaluateController(BaseCls):
     """
-    EvaluateController は LearnController と共通のメソッドを持つ
+    EvaluateController は内部的に LearnController と ReplyController を呼び出す
     """
     __TEST_FILE_PATH = 'fixtures/test_messages.csv'
 

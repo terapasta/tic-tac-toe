@@ -17,3 +17,4 @@ class Constants:
     DATASOURCE_TYPE_FILE = 'file'
     RATING_GOOD = 1
     RATING_BAD = 2
+    DOCUMENT_GENERATOR_REPLACEMENT = 1

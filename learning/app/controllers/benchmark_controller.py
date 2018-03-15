@@ -15,8 +15,6 @@ class BenchmarkController(BaseCls):
     """
     BenchmarkController は内部的に LearnController と ReplyController を呼び出す
     """
-    __TEST_FILE_PATH = 'fixtures/test_messages.csv'
-
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()

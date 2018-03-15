@@ -1,3 +1,18 @@
+#
+# 各設定値の意味
+#
+# | key | type | details |
+# | :---: | :---: | :--- |
+# | testcase.version | string | 生成するテストケースのバージョン番号 |
+# | testcase.generator | int | （未使用だが）テストケースを生成するアルゴリズム |
+# | testcase.options | dict | テストケースの生成に関する詳細設定 |
+# | testcase.options.src_type | string | 'file' または 's3' をとる。生成元のファイルをどこから読み込むかの設定値 |
+# | testcase.options.src_path | string | 生成元のファイルのパス |
+# | testcase.options.synonym_path | string | 生成元の辞書ファイルのパス（これはローカルからの読み込みのみ対応） |
+# | testcase.options.dst_type | string | 'file' または 's3' をとる。生成したファイルをどこに格納するかの設定値 |
+# | testcase.options.dst_path | string | 生成後のファイルのパス |
+# | testcase.options.bucket_name | string | src_type または dst_type で s3 を指定した場合に必須。どのバケットに格納する/されているかの設定値 |
+#
 algorithm: 8
 bot_id: 25
 testcase:

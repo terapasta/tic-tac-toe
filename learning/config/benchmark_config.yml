@@ -1,0 +1,12 @@
+algorithm: 8
+bot_id: 25
+testcase:
+  version: 0.1.0
+  generator: 1
+  options:
+    src_type: s3
+    src_path: test_messages.csv
+    synonym_path: fixtures/synonyms.yml
+    dst_type: s3
+    dst_path: bench_testcase.csv
+    bucket_name: my-ope-ml

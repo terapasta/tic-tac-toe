@@ -1,12 +1,12 @@
 import argparse
 
-from app.controllers.evaluate_controller import EvaluateController
+from app.controllers.benchmark_controller import BenchmarkController
 from app.shared.config import Config
 from app.shared.constants import Constants
 from app.shared.context import Context
 
 
-def evaluate():
+def benchmark():
     parser = argparse.ArgumentParser()
     parser.add_argument('--bot_id', default=1, type=int)
     parser.add_argument('--env', type=str, default='development')
@@ -24,9 +24,9 @@ def evaluate():
 
 
     context = Context(args.bot_id, LearningParameter(), {})
-    result = EvaluateController(context=context).perform()
+    result = BenchmarkController(context=context).perform()
     print(result)
 
 
 if __name__ == "__main__":
-    evaluate()
+    benchmark()

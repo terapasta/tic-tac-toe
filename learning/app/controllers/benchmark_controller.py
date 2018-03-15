@@ -1,5 +1,6 @@
 from app.shared.logger import logger
 from app.shared.base_cls import BaseCls
+from app.shared.benchmark import Benchmark
 from app.shared.document_generator import DocumentGenerator
 from app.controllers.learn_controller import LearnController
 from app.controllers.reply_controller import ReplyController
@@ -10,9 +11,9 @@ import csv
 import logging
 
 
-class EvaluateController(BaseCls):
+class BenchmarkController(BaseCls):
     """
-    EvaluateController は内部的に LearnController と ReplyController を呼び出す
+    BenchmarkController は内部的に LearnController と ReplyController を呼び出す
     """
     __TEST_FILE_PATH = 'fixtures/test_messages.csv'
 
@@ -47,32 +48,32 @@ class EvaluateController(BaseCls):
         # reply用のコントローラを使うので、ログは警告のみ表示させる
         logger.setLevel(logging.WARNING)
 
-        # 文章生成器
-        dg = DocumentGenerator()
+        # ベンチマーク用のクラス
+        bench = Benchmark()
+
+        # テストケースを読み込む
+        testcase = bench.get_testcase()
 
         y_expected = []
         y_actual = []
-        with open(self.__TEST_FILE_PATH) as f:
-            reader = csv.DictReader(f, delimiter=',')
-            for data in reader:
-                # 対象のボットに関するテストデータのみ使用する
-                if self.bot.id == int(data['bot_id']):
+        for t in testcase:
+            # bot_id が指定されていない場合はスキップする
+            if (not self.bot.id is None) and (t['bot_id'] is None):
+                continue
 
-                    # 精度を計るために文書を生成する
-                    docs = dg.generate_by_replacement(data['question'])
+            # 対象のボットに関するテストデータのみ使用する
+            if self.bot.id == int(t['bot_id']):
+                # bot からのリプライを取得
+                reply = self.reply_controller.perform(t['question'])
 
-                    for doc in docs:
-                        # bot からのリプライを取得
-                        reply = self.reply_controller.perform(doc)
+                # dict形式の list から dict へと変換する
+                test_data = self._dict_array_to_dict(reply['results'], 'question_answer_id', 'probability')
 
-                        # dict形式の list から dict へと変換する
-                        test_data = self._dict_array_to_dict(reply['results'], 'question_answer_id', 'probability')
+                # テストデータ（入力）は、各回答の確率分布
+                y_actual.append(test_data)
 
-                        # テストデータ（入力）は、各回答の確率分布
-                        y_actual.append(test_data)
-
-                        # テストデータ（出力）は、回答のID
-                        y_expected.append(data['question_answer_id'])
+                # テストデータ（出力）は、回答のID
+                y_expected.append(t['question_answer_id'])
 
         # INFOレベルに戻す
         logger.setLevel(logging.INFO)

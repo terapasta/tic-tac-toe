@@ -52,6 +52,7 @@ export default {
           type="checkbox"
           :checked="isOnlyShowHasDecisionBranchesNode"
           @change="handleCheckBoxChange"
+          id="toggleOnlyShowHasDecisionBranchesNode"
         />
         &nbsp;
         <span class="icon-circle">

@@ -34,18 +34,24 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     create_list(:decision_branch, 2, bot: bot, question_answer: question_answers.first)
   end
 
+  let!(:topic_tags) do
+    create_list(:topic_tag, 2, bot: bot).each_with_index do |topic_tag, index|
+      question_answers[index].topic_taggings.create(topic_tag: topic_tag)
+    end
+  end
+
   before do
     sign_in staff
     visit "/bots/#{bot.id}/conversation_tree"
   end
 
   scenario 'display tree nodes' do
-    find("#Question-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
     expect(page).to have_content(question_answers.first.answer)
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Answer-#{question_answers.first.id}-link").click
     expect(page).to have_content(decision_branches.first.body)
     expect(page).to have_content(decision_branches.second.body)
-    find("#DecisionBranch-#{decision_branches.first.id}").click
+    find("#DecisionBranch-#{decision_branches.first.id}-link").click
     expect(page).to have_content(decision_branches.first.answer)
   end
 
@@ -69,8 +75,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'creates decision_branch' do
-    find("#Question-#{question_answers.first.id}").click
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
+    find("#Answer-#{question_answers.first.id}-link").click
     find('#AddDecisionBranchButton').click
     find('[name=decision-branch-body]').set('new decision branch')
     # fill_in_input name: 'decision-branch-body', value: 'new decision branch'
@@ -82,8 +88,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'updates answer' do
-    find("#Question-#{question_answers.first.id}").click
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
+    find("#Answer-#{question_answers.first.id}-link").click
     find('[name=answer-body]').set('updated answer')
     # fill_in_input name: 'answer-body', value: 'updated answer'
     click_button '保存'
@@ -93,8 +99,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'updates decision branch' do
-    find("#Question-#{question_answers.first.id}").click
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
+    find("#Answer-#{question_answers.first.id}-link").click
     within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('.btn').click
     end
@@ -109,8 +115,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes answer' do
-    find("#Question-#{question_answers.first.id}").click
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
+    find("#Answer-#{question_answers.first.id}-link").click
     find("#DeleteAnswerButton").click
     find(".swal2-confirm.swal2-styled").click
     within '.master-detail-panel__master' do
@@ -119,8 +125,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'deletes decision branch' do
-    find("#Question-#{question_answers.first.id}").click
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
+    find("#Answer-#{question_answers.first.id}-link").click
     within "#DecisionBranchItem-#{decision_branches.first.id}" do
       find('.btn').click
     end
@@ -134,8 +140,8 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   end
 
   scenario 'order decision branches' do
-    find("#Question-#{question_answers.first.id}").click
-    find("#Answer-#{question_answers.first.id}").click
+    find("#Question-#{question_answers.first.id}-link").click
+    find("#Answer-#{question_answers.first.id}-link").click
     expect(decision_branches.first.position).to eq(1)
     expect(decision_branches.second.position).to eq(2)
     find("#DecisionBranch-#{decision_branches.first.id}-moveLowerButton").click
@@ -146,5 +152,21 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     sleep 1
     expect(decision_branches.first.reload.position).to eq(1)
     expect(decision_branches.second.reload.position).to eq(2)
+  end
+
+  scenario 'only show has decision branches nodes' do
+    expect(page).to have_content(question_answers.first.question)
+    expect(page).to_not have_content(question_answers.second.question)
+    find('#toggleOnlyShowHasDecisionBranchesNode').click
+    expect(page).to have_content(question_answers.first.question)
+    expect(page).to have_content(question_answers.second.question)
+  end
+
+  scenario 'filter by topic_tags' do
+    find('.multiselect__tags').click
+    page.save_screenshot
+    all('.multiselect__element').detect{ |it| it.text == topic_tags.first.name }.click
+    expect(page).to have_content(question_answers.first.question)
+    expect(page).to_not have_content(question_answers.second.question)
   end
 end

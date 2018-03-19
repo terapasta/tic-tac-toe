@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from './config'
+import { assign } from 'lodash'
 
 export const create = (botId, questionAnswerId, body) => {
   return axios.post(`/api/bots/${botId}/question_answers/${questionAnswerId}/decision_branches.json`, {
@@ -50,4 +51,10 @@ export const moveHigher = (botId, id) => (
 )
 export const moveLower = (botId, id) => (
   axios.put(`/api/bots/${botId}/decision_branches/${id}/position/lower`, {}, config())
+)
+
+export const bulkDelete = (botId, decisionBranchIds) => (
+  axios.delete(`/api/bots/${botId}/decision_branches/bulk`, assign({}, config(), {
+    params: { decision_branch_ids: decisionBranchIds }
+  }))
 )

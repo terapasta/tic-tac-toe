@@ -57,6 +57,7 @@ gem 'enum_help'
 
 # Use Unicorn as the app server
 gem 'unicorn'
+gem 'puma'
 
 # Zendesk API
 gem 'zendesk_api'
@@ -160,6 +161,7 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
+  gem 'capistrano3-puma'
 end
 
 group :production, :staging do

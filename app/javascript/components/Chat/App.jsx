@@ -170,6 +170,18 @@ export default class ChatApp extends Component {
                     dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
                     const { eventName, options } = makeEvent('click suggest');
                     Mixpanel.sharedInstance.trackEvent(eventName, options);
+                  },
+                  onInitialQuestionPositionChange (index, direction) {
+                    switch (direction) {
+                      case 'up':
+                        dispatch(a.upPositionInitialQuestion(window.currentBot.id, index))
+                        break
+                      case 'down':
+                        dispatch(a.downPositionInitialQuestion(window.currentBot.id, index))
+                        break
+                      default:
+                        break
+                    }
                   }
                 }} />
               </ChatSection>

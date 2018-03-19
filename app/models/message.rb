@@ -2,7 +2,7 @@ class Message < ApplicationRecord
   include AnswerMarkable
   paginates_per 50
 
-  attr_accessor :similar_question_answers
+  attr_accessor :similar_question_answers, :has_initial_questions
 
   belongs_to :chat
   belongs_to :question_answer

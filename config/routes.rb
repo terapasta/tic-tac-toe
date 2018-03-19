@@ -43,6 +43,7 @@ Rails.application.routes.draw do
         resource :answer, only: [:show], module: :question_answers
         collection do
           resources :selections, only: [:index], module: :question_answers, as: :question_answers_selections
+          put '/selections', to: 'question_answers/selections#update'
         end
       end
       resource :topic_tags, only: [:show, :update]

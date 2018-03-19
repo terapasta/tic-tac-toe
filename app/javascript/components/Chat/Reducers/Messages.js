@@ -61,15 +61,15 @@ export function classifyBotMessage(sections, message) {
   lastSec.answer = pickUp(message)
   secs[secs.length - 1] = lastSec
 
-  const { similarQuestionAnswers, isShowSimilarQuestionAnswers } = message
+  const { similarQuestionAnswers, isShowSimilarQuestionAnswers, hasInitialQuestions } = message
   const decisionBranches = get(message, "questionAnswer.decisionBranches", null) || get(message, 'childDecisionBranches')
 
   if (!isEmpty(decisionBranches)) {
-    secs.push({ decisionBranches, isShowSimilarQuestionAnswers: true })
+    secs.push({ decisionBranches, isShowSimilarQuestionAnswers: true, hasInitialQuestions })
   }
 
   if (!isEmpty(similarQuestionAnswers)) {
-    secs.push({ similarQuestionAnswers, isShowSimilarQuestionAnswers })
+    secs.push({ similarQuestionAnswers, isShowSimilarQuestionAnswers, hasInitialQuestions })
   }
 
   return secs
@@ -149,6 +149,7 @@ export default handleActions({
     }
 
     initialQuestionsSection.isShowSimilarQuestionAnswers = true
+    initialQuestionsSection.hasInitialQuestions = true
 
     return assign({}, state, { classifiedData: [
       data[0],

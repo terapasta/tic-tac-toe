@@ -65,6 +65,7 @@ class Bot < ApplicationRecord
   def reset_training_data!
     transaction do
       self.selected_question_answer_ids = []
+      save!
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all

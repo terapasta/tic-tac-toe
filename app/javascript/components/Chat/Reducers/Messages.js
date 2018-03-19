@@ -55,6 +55,7 @@ export function classify(data, messages, isLastPage) {
 }
 
 export function classifyBotMessage(sections, message) {
+  if (sections.length === 0) { return sections }
   let secs = cloneDeep(sections)
   let lastSec = last(secs)
   lastSec.answer = pickUp(message)

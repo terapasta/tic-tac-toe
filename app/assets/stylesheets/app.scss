@@ -43,6 +43,10 @@ body {
   max-width: none !important;
 }
 
+.dropdown-menu {
+  z-index: 2000;
+}
+
 @import 'app/common/variables';
 @import 'app/common/keyframes';
 @import 'app/helpers/*';

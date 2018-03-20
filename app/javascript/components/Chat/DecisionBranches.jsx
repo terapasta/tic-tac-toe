@@ -10,6 +10,8 @@ export default class ChatDecisionBranches extends Component {
       items: PropTypes.array.isRequired,
       onChoose: PropTypes.func.isRequired,
       selectAttribute: PropTypes.string.isRequired,
+      isSortable: PropTypes.bool,
+      onInitialQuestionPositionChange: PropTypes.func,
     }
   }
 
@@ -18,12 +20,25 @@ export default class ChatDecisionBranches extends Component {
     return `chat-decision-branches__item ${align}`
   }
 
+  handleUpClick (index) {
+    if (index === 0) { return }
+    const { onInitialQuestionPositionChange } = this.props
+    onInitialQuestionPositionChange(index, 'up')
+  }
+
+  handleDownClick (index) {
+    const { items, onInitialQuestionPositionChange } = this.props
+    if (index === items.length - 1) { return }
+    onInitialQuestionPositionChange(index, 'down')
+  }
+
   render() {
     const {
       title,
       items,
       onChoose,
       selectAttribute,
+      isSortable,
     } = this.props
 
     return (
@@ -34,15 +49,32 @@ export default class ChatDecisionBranches extends Component {
           </div>
           <div className="chat-decision-branches__items">
             {items.map((item, i) => (
-              <a className={this.itemClassName(item.body)}
-                href="#"
-                key={i}
-                onClick={(e) => {
-                  e.preventDefault()
-                  onChoose(item[selectAttribute])
-                }}>
-                {item.body}
-              </a>
+              <div className={this.itemClassName(item.body)} key={i}>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onChoose(item[selectAttribute])
+                  }}>
+                  {item.body}
+                </a>
+                {isSortable && (i !== 0) && (
+                  <button
+                    className="chat-decision-branches__up"
+                    onClick={() => this.handleUpClick(i)}
+                  >
+                    <i className="material-icons">keyboard_arrow_up</i>
+                  </button>
+                )}
+                {isSortable && (i !== items.length - 1) && (
+                  <button
+                    className="chat-decision-branches__down"
+                    onClick={() => this.handleDownClick(i)}
+                  >
+                    <i className="material-icons">keyboard_arrow_down</i>
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         </div>

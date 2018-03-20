@@ -27,12 +27,70 @@ class Benchmark(BaseCls):
         self._set_config(conf)
         logger.info('configuration file loaded')
 
+    @property
+    def alg_base_current(self):
+        return self._alg_base_current
+
+    @property
+    def alg_base_competed(self):
+        return self._alg_base_competed
+
+    @property
+    def alg_feedback_current(self):
+        return self._alg_feedback_current
+
+    @property
+    def alg_feedback_competed(self):
+        return self._alg_feedback_competed
+
+    @property
+    def bot_id(self):
+        return self._bot_id
+
     def _is_valid_configuration(self, conf):
+        # 設定ファイルが存在しない場合
+        if (conf is None):
+            return False
+
+        # bot_id
+        if not 'bot_id' in conf:
+            return False
+
+        # アルゴリズムに関する設定
+        if 'algorithm' in conf:
+
+            # ベースアルゴリズムとフィードバックアルゴリズムそれぞれをチェック
+            if 'base' in conf['algorithm'] and 'feedback' in conf['algorithm']:
+                base_alg = conf['algorithm']['base']
+                feedback_alg = conf['algorithm']['feedback']
+
+                # 提案手法と競合手法の設定
+                # 全ての設定が過不足無く入っていなければ False
+                if not ('current' in base_alg and 'competed' in base_alg and
+                        'current' in feedback_alg and 'competed' in feedback_alg):
+                    return False
+            else:
+                return False
+        else:
+            return False
+
+        # テストケースに関する設定
         if (conf is None) or (not 'testcase' in conf) or (not 'options' in conf['testcase']):
             return False
+
+        # 全てのテストをパスした場合
         return True
 
     def _set_config(self, config):
+        # アルゴリズムに関する設定
+        self._alg_base_current = config['algorithm']['base']['current']
+        self._alg_base_competed = config['algorithm']['base']['competed']
+        self._alg_feedback_current = config['algorithm']['feedback']['current']
+        self._alg_feedback_competed = config['algorithm']['feedback']['competed']
+
+        # bot_id
+        self._bot_id = config['bot_id']
+
         # テストケース生成に関する設定
         options = config['testcase']['options']
 
@@ -50,6 +108,14 @@ class Benchmark(BaseCls):
         self._test_dst_type = options['dst_type']
         self._test_dst_path = self._get_versioned_dst_path(options['dst_path'], self._version)
         self._bucket_name = options['bucket_name']
+
+    def is_improved(self, current_value, competed_value, is_error=True):
+        if is_error:
+            # 計測値が誤差なら、小さい方が良い
+            return current_value <= competed_value
+        else:
+            # そうでなければ、大きいほうが良い
+            return current_value >= competed_value
 
     def generate_testcase(self):
         # 文章生成器

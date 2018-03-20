@@ -13,7 +13,13 @@
 # | testcase.options.dst_path | string | 生成後のファイルのパス |
 # | testcase.options.bucket_name | string | src_type または dst_type で s3 を指定した場合に必須。どのバケットに格納する/されているかの設定値 |
 #
-algorithm: 8
+algorithm:
+  base:
+    current: 8
+    competed: 7
+  feedback:
+    current: 0
+    competed: 0
 bot_id: 25
 testcase:
   version: 0.1.0

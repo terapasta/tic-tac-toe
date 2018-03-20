@@ -99,9 +99,10 @@ class Benchmark(BaseCls):
         else:
             raise NotImplementedError
 
-        # テストケースが未生成だったら、エラーにする
+        # テストケースが未生成だったら、例外を発生させる
         if len(testcase) <= 0:
-            logger.fatal("testcase not found: requied to generate testcase before run evaluator")
+            logger.critical("testcase not found: required to generate testcase before run benchmarker")
+            raise FileNotFoundError
 
         return testcase
 

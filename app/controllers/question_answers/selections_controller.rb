@@ -36,7 +36,7 @@ class QuestionAnswers::SelectionsController < ApplicationController
     @bot.add_selected_question_answer_ids(@question_answer.id)
     @bot.save
     respond_to do |format|
-      format.json { render json: @question_answer}
+      format.json { render json: @question_answer }
     end
   end
 
@@ -44,7 +44,16 @@ class QuestionAnswers::SelectionsController < ApplicationController
     @bot.remove_selected_question_answer_ids(@question_answer.id)
     @bot.save
     respond_to do |format|
-      format.json { render json: @question_answer}
+      format.json { render json: @question_answer }
+    end
+  end
+
+  def update
+    ids = params.permit![:selected_question_answer_ids]
+    @bot.assign_attributes(selected_question_answer_ids: ids)
+    @bot.save
+    respond_to do |format|
+      format.json { render json: @bot.selected_question_answers }
     end
   end
 

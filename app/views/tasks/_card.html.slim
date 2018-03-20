@@ -17,7 +17,7 @@
               = space 2
               span Bad評価
               br
-              = task.bot_message
+              = nl2br task.bot_message
 
         - if task.bot_message_record&.bad_reasons&.any?
           .pt-2: .card: .card-body.p-2

@@ -12,7 +12,8 @@ class MessageSerializer < ActiveModel::Serializer
     :child_decision_branches,
     :similar_question_answers,
     :is_show_similar_question_answers,
-    :reply_log
+    :reply_log,
+    :has_initial_questions
 
   has_one :question_answer
 

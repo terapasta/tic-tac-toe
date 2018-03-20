@@ -65,6 +65,7 @@ class Bot < ApplicationRecord
   def reset_training_data!
     transaction do
       self.selected_question_answer_ids = []
+      save!
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
@@ -85,7 +86,10 @@ class Bot < ApplicationRecord
   end
 
   def selected_question_answers
-    question_answers.where(id: selected_question_answer_ids)
+    qas = question_answers.where(id: selected_question_answer_ids).to_a
+    selected_question_answer_ids.map{ |id|
+      qas.detect{ |qa| qa.id == id }
+    }
   end
 
   def learn_later

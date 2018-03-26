@@ -139,6 +139,15 @@ ActiveRecord::Schema.define(version: 20180320094335) do
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end
 
+  create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "bot_id", null: false
+    t.json "data"
+    t.string "type_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "type_name"], name: "index_data_summaries_on_bot_id_and_type_name"
+  end
+
   create_table "decision_branches", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false

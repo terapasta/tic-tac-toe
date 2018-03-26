@@ -18,22 +18,20 @@ class QuestionAnswers::SelectionsController < ApplicationController
           q: params[:q],
           page: @current_page,
           per_page: @per_page,
-          without_ids: Array(@bot.selected_question_answers)
+          without_ids: Array(@bot.selected_question_answers.map(&:id))
         )
         @question_answers = @q.result
-        @selected_question_answers = current_page == 1 ?
-          @bot.selected_question_answers.to_a : []
+        @selected_question_answers = params[:page].to_i > 1 ? [] : @bot.selected_question_answers.to_a
       end
 
       format.json do
-        @question_answers = @bot.selected_question_answers
-        render json: @question_answers, adapter: :json
+        render json: @bot.selected_question_answers, adapter: :json
       end
     end
   end
 
   def create
-    @bot.add_selected_question_answer_ids(@question_answer.id)
+    @bot.initial_selections.create(question_answer_id: @question_answer.id)
     @bot.save
     respond_to do |format|
       format.json { render json: @question_answer }
@@ -41,7 +39,7 @@ class QuestionAnswers::SelectionsController < ApplicationController
   end
 
   def destroy
-    @bot.remove_selected_question_answer_ids(@question_answer.id)
+    @bot.initial_selections.find_by(question_answer_id: @question_answer.id)&.destroy
     @bot.save
     respond_to do |format|
       format.json { render json: @question_answer }
@@ -50,7 +48,9 @@ class QuestionAnswers::SelectionsController < ApplicationController
 
   def update
     ids = params.permit![:selected_question_answer_ids]
-    @bot.assign_attributes(selected_question_answer_ids: ids)
+    @bot.question_answers.where(id: ids).pluck(:id).each{ |id|
+      @bot.initial_selections.build(question_answer_id: id)
+    }
     @bot.save
     respond_to do |format|
       format.json { render json: @bot.selected_question_answers }

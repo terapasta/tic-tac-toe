@@ -28,6 +28,8 @@ class Bot < ApplicationRecord
   has_one :line_credential
   has_one :chatwork_credential
   has_one :microsoft_credential
+  has_many :initial_selections, -> { order(position: :asc) }, dependent: :destroy
+  has_many :initial_questions, through: :initial_selections, class_name: 'QuestionAnswer', foreign_key: :question_answer_id, source: :question_answer
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
   accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true
@@ -64,8 +66,7 @@ class Bot < ApplicationRecord
 
   def reset_training_data!
     transaction do
-      self.selected_question_answer_ids = []
-      save!
+      initial_selections.destroy_all
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all
@@ -77,19 +78,8 @@ class Bot < ApplicationRecord
     classify_failed_message.presence || DefinedAnswer.classify_failed_text
   end
 
-  def add_selected_question_answer_ids(question_answer_id)
-    self.selected_question_answer_ids.push(question_answer_id)
-  end
-
-  def remove_selected_question_answer_ids(question_answer_id)
-    self.selected_question_answer_ids.delete(question_answer_id)
-  end
-
   def selected_question_answers
-    qas = question_answers.where(id: selected_question_answer_ids).to_a
-    selected_question_answer_ids.map{ |id|
-      qas.detect{ |qa| qa.id == id }
-    }
+    initial_questions
   end
 
   def learn_later

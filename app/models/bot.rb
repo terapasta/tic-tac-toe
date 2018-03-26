@@ -28,8 +28,8 @@ class Bot < ApplicationRecord
   has_one :line_credential
   has_one :chatwork_credential
   has_one :microsoft_credential
-  has_many :initial_selections, dependent: :destroy
-  has_many :initial_questions, through: :initial_selections
+  has_many :initial_selections, -> { order(position: :asc) }, dependent: :destroy
+  has_many :initial_questions, through: :initial_selections, class_name: 'QuestionAnswer', foreign_key: :question_answer_id, source: :question_answer
 
   accepts_nested_attributes_for :allowed_hosts, allow_destroy: true
   accepts_nested_attributes_for :allowed_ip_addresses, allow_destroy: true
@@ -66,8 +66,7 @@ class Bot < ApplicationRecord
 
   def reset_training_data!
     transaction do
-      self.selected_question_answer_ids = []
-      save!
+      initial_selections.destroy_all
       question_answers.destroy_all
       learning_training_messages.destroy_all
       chats.destroy_all

@@ -1,6 +1,7 @@
 class CreateInitialSelections < ActiveRecord::Migration[5.1]
   class TempBot < ActiveRecord::Base
     self.table_name = 'bots'
+    serialize :selected_question_answer_ids, Array
   end
 
   class TempQuestionAnswer < ActiveRecord::Base
@@ -11,7 +12,7 @@ class CreateInitialSelections < ActiveRecord::Migration[5.1]
     self.table_name = 'initial_selections'
   end
 
-  def change
+  def self.up
     create_table :initial_selections do |t|
       t.integer :bot_id, null: false
       t.integer :question_answer_id, null: false
@@ -24,10 +25,15 @@ class CreateInitialSelections < ActiveRecord::Migration[5.1]
     ActiveRecord::Base.transaction do
       TempBot.all.each do |bot|
         ids = bot.selected_question_answer_ids || []
+        p ids
         TempQuestionAnswer.where(bot_id: bot.id, id: ids).pluck(:id).each do |id|
-          TempInitialSelection.create!(bot_id: bot.id, question_answer_id: id)
+          p TempInitialSelection.create!(bot_id: bot.id, question_answer_id: id)
         end
       end
     end
+  end
+
+  def self.down
+    drop_table :initial_selections
   end
 end

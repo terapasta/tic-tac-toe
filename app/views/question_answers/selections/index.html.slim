@@ -12,8 +12,8 @@
   = pagination
 
   table.table.table-hover: tbody
-    - @selected_question_answers.concat(@question_answers.to_a).each do |question_answer|
-      - is_selected = @bot.selected_question_answer_ids.include?(question_answer.id)
+    - [*@selected_question_answers, *@question_answers.to_a].each do |question_answer|
+      - is_selected = @selected_question_answers.include?(question_answer)
       tr
         = render 'question_answers/selections/check_box_cell', bot: @bot, question_answer: question_answer, is_selected: is_selected
         td
@@ -28,6 +28,6 @@
     .sticky-footer__title
       span 選択済のQ&A：
       strong data-role="select-question-answer-counter"
-        = @bot.selected_question_answer_ids.count
+        = @bot.selected_question_answers.count
       = space
       span ／ 5

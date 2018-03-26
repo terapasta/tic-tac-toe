@@ -36,7 +36,9 @@ export default {
           columns: this.columns,
           type: 'bar',
           color (color, d) {
-            if (d.value <= Thresolds.Safe) {
+            if (d === 'Bad評価率') {
+              return '#fff'
+            } else if (d.value <= Thresolds.Safe) {
               return Colors.Safe
             } else if (d.value <= Thresolds.Warining) {
               return Colors.Warning

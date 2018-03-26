@@ -7,12 +7,16 @@ class ApplicationSummarizer
     self.class.type_name
   end
 
-  def save!
-    DataSummary.create!(
+  def build
+    DataSummary.new(
       bot: @bot,
       type_name: type_name,
       data: as_json
     )
+  end
+
+  def save!
+    build.save!
   end
 
   def save

@@ -1,6 +1,6 @@
 class BadCountSummarizer < ApplicationSummarizer
-  def initialize(bot_id)
-    @bot = Bot.find(bot_id)
+  def initialize(bot)
+    @bot = bot
     @all_count = 0
     @bad_count = 0
     @bad_rate = 0.0
@@ -22,6 +22,17 @@ class BadCountSummarizer < ApplicationSummarizer
       all_count: @all_count,
       bad_count: @bad_count,
       bad_rate: @bad_rate
+    }
+  end
+
+  def seven_days_chart_data
+    get_between(
+      start_time: 7.days.ago.beginning_of_day,
+      end_time: Time.current.end_of_day
+    ).inject([['x'], ['Bad評価率']]) { |acc, it|
+      acc[0].push(it.created_at.strftime('%Y-%m-%d'))
+      acc[1].push((it.data['bad_rate'] * 100).round(2))
+      acc
     }
   end
 end

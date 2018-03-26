@@ -51,3 +51,8 @@ end
 every 1.day, at: '9:00' do
   rake 'slack:notify_accuracy'
 end
+
+# 未明5:00
+every 1.day, at: '20:00' do
+  rake 'database:mysqldump_s3'
+end

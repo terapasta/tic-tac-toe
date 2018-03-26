@@ -12,6 +12,7 @@ class QuestionAnswer < ApplicationRecord
   has_many :answer_files, dependent: :destroy
   has_many :answer_links, as: :answer_record
   has_many :sub_questions, dependent: :destroy
+  has_many :initial_selection, dependent: :destroy
 
   accepts_nested_attributes_for :topic_taggings, allow_destroy: true
   accepts_nested_attributes_for :answer_files, allow_destroy: true

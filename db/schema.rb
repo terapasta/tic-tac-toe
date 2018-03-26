@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20180320094335) do
     t.string "widget_subtitle"
     t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
+    t.boolean "is_demo", default: false, null: false
+    t.datetime "demo_finished_at"
     t.float "threshold_of_suggest_similar_questions", limit: 24
     t.text "chat_test_job_error"
     t.index ["user_id"], name: "index_bots_on_user_id"

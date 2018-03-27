@@ -42,7 +42,7 @@
 
   - example = [['x'] + 7.times.map{ |n| "2018-01-0#{n+1}" }, ['Bad評価率'] + 7.times.map{ rand(100) }]
 
-  - if @bad_count_summarizer.get_seven_days_data.present?
+  - if current_user.staff? && @bad_count_summarizer.get_seven_days_data.present?
     .card.mb-5: .card-body
       h6.mb-4
         = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'

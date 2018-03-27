@@ -3,7 +3,7 @@ class BotsController < ApplicationController
   before_action :set_bot, only: [:show, :edit, :update, :reset]
 
   def index
-    @bots = bots.all
+    @bots = bots.all.includes(organizations: [:users])
     redirect_to bot_path(@bots.first) if @bots.count == 1
   end
 

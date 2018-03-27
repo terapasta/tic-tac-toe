@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180320094335) do
+ActiveRecord::Schema.define(version: 20180326033035) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.text "question_text"
@@ -107,12 +107,10 @@ ActiveRecord::Schema.define(version: 20180320094335) do
     t.string "widget_subtitle"
     t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
-    t.float "threshold_of_suggest_similar_questions", limit: 24
     t.text "chat_test_job_error"
     t.boolean "is_demo", default: false, null: false
     t.datetime "demo_finished_at"
     t.float "threshold_of_suggest_similar_questions", limit: 24
-    t.text "chat_test_job_error"
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
@@ -137,6 +135,15 @@ ActiveRecord::Schema.define(version: 20180320094335) do
     t.index ["guest_key"], name: "index_chats_on_guest_key"
     t.index ["is_normal"], name: "index_chats_on_is_normal"
     t.index ["is_staff"], name: "index_chats_on_is_staff"
+  end
+
+  create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "bot_id", null: false
+    t.json "data"
+    t.string "type_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "type_name"], name: "index_data_summaries_on_bot_id_and_type_name"
   end
 
   create_table "decision_branches", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

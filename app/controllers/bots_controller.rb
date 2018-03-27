@@ -20,6 +20,8 @@ class BotsController < ApplicationController
       @reducted_hours = @total_reducted_minutes / 60
       @reducted_minutes = @total_reducted_minutes % 60
     end
+
+    @bad_count_summarizer = BadCountSummarizer.new(@bot)
   end
 
   def reset

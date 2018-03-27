@@ -15,7 +15,7 @@ class BadCountSummarizer < ApplicationSummarizer
     end
     data = data.pluck('ratings.level')
     @all_count = data.count
-    @bad_count = data.select{ |it| it[1] == Rating.levels[:bad] }.count
+    @bad_count = data.compact.select{ |it| it == Rating.levels[:bad] }.count
     if @all_count.zero? || @bad_count.zero?
       @bad_rate = 0
     else

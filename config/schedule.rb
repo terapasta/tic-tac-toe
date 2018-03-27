@@ -56,3 +56,8 @@ end
 every 1.day, at: '20:00' do
   rake 'database:mysqldump_s3'
 end
+
+# 未明3:00
+every 1.day, at: '18:00' do
+  rake 'data_summary:calc_bad_counts'
+end

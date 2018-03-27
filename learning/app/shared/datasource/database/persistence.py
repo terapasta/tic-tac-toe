@@ -1,4 +1,6 @@
 import io
+import time
+import datetime
 from sklearn.externals import joblib
 from app.shared.datasource.database.database import Database
 from app.shared.base_cls import BaseCls
@@ -33,14 +35,17 @@ class Persistence(BaseCls):
         file = io.BytesIO()
         joblib.dump(obj, file)
         file.seek(0)
+        ts = time.time()
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         self.database.execute_with_transaction(
                 [
                     [
-                        'INSERT INTO dumps (bot_id, name, content) VALUES (%(bot_id)s, %(name)s, %(content)s);',
+                        'INSERT INTO dumps (bot_id, name, content, created_at) VALUES (%(bot_id)s, %(name)s, %(content)s, %(created_at)s);',
                         {
                             'bot_id': self.id,
                             'name': self._generate_name(key),
                             'content': file.getvalue(),
+                            'created_at': timestamp
                         },
                     ],
                     [

@@ -48,10 +48,12 @@ class QuestionAnswers::SelectionsController < ApplicationController
 
   def update
     ids = params.permit![:selected_question_answer_ids]
-    @bot.question_answers.where(id: ids).pluck(:id).each{ |id|
-      @bot.initial_selections.build(question_answer_id: id)
-    }
-    @bot.save
+    qa_ids = @bot.question_answers.where(id: ids).pluck(:id)
+    sorted_qa_ids = ids.map{ |id| qa_ids.detect{ |qa_id| qa_id == id } }.compact
+    ActiveRecord::Base.transaction do
+      @bot.initial_selections.map(&:destroy!)
+      sorted_qa_ids.each.with_index(1){ |id, i| @bot.initial_selections.create!(question_answer_id: id, position: i)  }
+    end
     respond_to do |format|
       format.json { render json: @bot.selected_question_answers }
     end

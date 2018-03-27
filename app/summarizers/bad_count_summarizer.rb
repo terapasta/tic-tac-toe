@@ -13,9 +13,9 @@ class BadCountSummarizer < ApplicationSummarizer
       @date = date
       data = data.where(created_at: (5.years.ago..date))
     end
-    data = data.pluck(:id, 'ratings.level')
+    data = data.pluck('ratings.level')
     @all_count = data.count
-    @bad_count = data.select{ |it| it[1] == 2 }.count
+    @bad_count = data.select{ |it| it[1] == Rating.levels[:bad] }.count
     if @all_count.zero? || @bad_count.zero?
       @bad_rate = 0
     else

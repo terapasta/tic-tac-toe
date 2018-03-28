@@ -60,14 +60,14 @@ class QuestionAnswer < ApplicationRecord
   scope :keyword, -> (_keyword) {
     if _keyword.present?
       _kw = "%#{_keyword}%"
-      where('question LIKE ? OR answer LIKE ?', _kw, _kw)
+      where('question_answers.question LIKE ? OR question_answers.answer LIKE ?', _kw, _kw)
     end
   }
 
   scope :keyword_for_answer, -> (_keyword) {
     if _keyword.present?
       _kw = "%#{_keyword}%"
-      where('answer LIKE ?', _kw)
+      where('question_answers.answer LIKE ?', _kw)
     end
   }
 

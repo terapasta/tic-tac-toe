@@ -12,6 +12,7 @@ export default class ChatDecisionBranches extends Component {
       selectAttribute: PropTypes.string.isRequired,
       isSortable: PropTypes.bool,
       onInitialQuestionPositionChange: PropTypes.func,
+      isManager: PropTypes.bool
     }
   }
 
@@ -39,6 +40,7 @@ export default class ChatDecisionBranches extends Component {
       onChoose,
       selectAttribute,
       isSortable,
+      isManager,
     } = this.props
 
     return (
@@ -58,7 +60,7 @@ export default class ChatDecisionBranches extends Component {
                   }}>
                   {item.body}
                 </a>
-                {isSortable && (i !== 0) && (
+                {isManager && isSortable && (i !== 0) && (
                   <button
                     className="chat-decision-branches__up"
                     onClick={() => this.handleUpClick(i)}
@@ -66,7 +68,7 @@ export default class ChatDecisionBranches extends Component {
                     <i className="material-icons">keyboard_arrow_up</i>
                   </button>
                 )}
-                {isSortable && (i !== items.length - 1) && (
+                {isManager && isSortable && (i !== items.length - 1) && (
                   <button
                     className="chat-decision-branches__down"
                     onClick={() => this.handleDownClick(i)}

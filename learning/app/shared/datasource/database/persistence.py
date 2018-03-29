@@ -36,7 +36,7 @@ class Persistence(BaseCls):
         self.database.execute_with_transaction(
                 [
                     [
-                        'INSERT INTO dumps (bot_id, name, content) VALUES (%(bot_id)s, %(name)s, %(content)s);',
+                        'INSERT INTO dumps (bot_id, name, content, created_at) VALUES (%(bot_id)s, %(name)s, %(content)s, NOW());',
                         {
                             'bot_id': self.id,
                             'name': self._generate_name(key),

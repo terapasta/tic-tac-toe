@@ -166,6 +166,7 @@ export default class ChatApp extends Component {
                 }} />
                 <ChatSimilarQuestionAnswersRow {...{
                   section,
+                  isManager,
                   onChoose(question) {
                     dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
                     const { eventName, options } = makeEvent('click suggest');

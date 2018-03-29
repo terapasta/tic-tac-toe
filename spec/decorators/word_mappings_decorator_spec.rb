@@ -26,6 +26,14 @@ RSpec.describe WordMappingsDecorator, type: :model do
     define_dict('社内メール便', 'メール便', bot)
   end
 
+  let!(:bot_word_mapping_3) do
+    define_dict('JPG', 'JPEG', bot)
+  end
+
+  let!(:bot_word_mapping_4) do
+    define_dict('POWER EGG', 'PE', bot)
+  end
+
   let(:decorator) do
     WordMapping.for_bot(bot).decorate
   end
@@ -37,12 +45,17 @@ RSpec.describe WordMappingsDecorator, type: :model do
 
     context '予定表' do
       let(:text) { 'スケジュールを教えて' }
-      it { is_expected.to eq('予定表を教えて') }
+      it { is_expected.to eq('予定 表 を 教え て ') }
     end
 
     context '社内メール便' do
       let(:text) { 'こんにちは。社内メール便を送りたいので、メール便の方法を教えてください。メール便は大好きです。社内メール便最高！メール便メール便社内メール便' }
-      it { is_expected.to eq('こんにちは。社内メール便を送りたいので、社内メール便の方法を教えてください。社内メール便は大好きです。社内メール便最高！社内メール便社内メール便社内メール便') }
+      it { is_expected.to eq('こんにちは 。 社内 メール 便 を 送り たい ので 、 社内 メール 便 の 方法 を 教え て ください 。 社内 メール 便 は 大好き です 。 社内 メール 便 最高 ！ 社内 メール 便 社内 メール 便 社内 メール 便 ') }
+    end
+
+    context 'POWER EGG' do
+      let(:text) { 'JPEGについて。PEは関係ない' }
+      it { is_expected.to eq('JPG について 。 POWER EGG は 関係 ない ') }
     end
   end
 end

@@ -11,7 +11,8 @@ class ChatSimilarQuestionAnswersRow extends Component {
     const {
       section: { similarQuestionAnswers, isDone, hasInitialQuestions },
       onChoose,
-      onInitialQuestionPositionChange
+      onInitialQuestionPositionChange,
+      isManager
     } = this.props
 
     if (isEmpty(similarQuestionAnswers) || isDone) { return null }
@@ -29,6 +30,7 @@ class ChatSimilarQuestionAnswersRow extends Component {
             onChoose={onChoose}
             isSortable={!!hasInitialQuestions}
             onInitialQuestionPositionChange={onInitialQuestionPositionChange}
+            isManager={isManager}
           />
         </ChatContainer>
       </ChatRow>

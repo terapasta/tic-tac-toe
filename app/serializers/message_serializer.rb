@@ -36,7 +36,9 @@ class MessageSerializer < ActiveModel::Serializer
     if object.question_answer.present?
       object.question_answer.answer_files.as_json(options)
     elsif object.decision_branch.present?
-      object.decision_branch.answer_files.as_json(options)
+      object.decision_branch.answer_files.as_json(options).presence ||
+      object.decision_branch.dest_question_answer&.answer_files.as_json(options) ||
+      []
     end
   end
 

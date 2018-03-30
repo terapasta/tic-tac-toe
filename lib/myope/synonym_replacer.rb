@@ -23,6 +23,7 @@ module SynonymReplacer
       synonym_end = synonym_start + synonym.length - 1
       next_text_index = synonym_end + (is_added_head_space ? 0 : 1)
       target_range = text[start_text_index, next_text_index]
+      break if target_range.nil?
       if target_range[0] != ' '
         target_range = " #{target_range}"
       end

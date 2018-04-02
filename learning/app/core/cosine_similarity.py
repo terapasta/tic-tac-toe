@@ -26,7 +26,12 @@ class CosineSimilarity(BaseCore):
     def predict(self, question_features):
         if self.data is None:
             raise NotTrainedError()
-        similarities = cosine_similarity(self.data['x'], question_features)
+        similarities = None
+        try:
+            # NOTE x と y の長さが違うことがある（直したい）
+            similarities = cosine_similarity(self.data['x'], question_features)
+        except ValueError as e:
+            raise NotTrainedError(e)
         similarities = similarities.flatten()
         result = pd.DataFrame({
             'question_answer_id': self.data['y'],

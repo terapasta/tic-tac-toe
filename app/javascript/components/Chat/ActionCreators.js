@@ -72,6 +72,7 @@ export function postMessage(token, messageBody, dispatch) {
     })
     .catch((err) => {
       console.error(err);
+      dispatch(enableForm())
       if (err.response['status'] === 503) {
         toastr.warning(c.BotIsNotTrainedErrorMessage, c.BotIsNotTrainedErrorTitle);
         return;

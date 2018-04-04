@@ -1,6 +1,7 @@
 <script>
 import C3 from 'c3'
 import 'c3/c3.min.css'
+import max from 'lodash/max'
 
 const Colors = {
   Danger: '#dc3545',
@@ -13,6 +14,11 @@ const Thresolds = {
   Warining: 20
 }
 
+const YAxisMax = {
+  Lower: 25,
+  Higher: 100
+}
+
 export default {
   props: {
     columns: { type: Array, required: true }
@@ -22,6 +28,13 @@ export default {
     this.$nextTick(() => {
       this.renderChart()
     })
+  },
+
+  computed: {
+    yAxisMax () {
+      const result = max(this.columns[1].slice(1)) + 10
+      return result > YAxisMax.Higher ? YAxisMax.Higher : (result < YAxisMax.Lower ? YAxisMax.Lower : result)
+    }
   },
 
   methods: {
@@ -56,7 +69,7 @@ export default {
           },
           y: {
             padding: 0,
-            max: 100,
+            max: this.yAxisMax,
             min: 0,
             tick: {
               format (d) { return `${d}%` }

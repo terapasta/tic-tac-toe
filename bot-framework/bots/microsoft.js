@@ -26,6 +26,17 @@ const service_type = 'skype'
 const s3 = NODE_ENV === 'development' ?
   'https://my-ope-assets-dev.s3.amazonaws.com' : ''
 
+const resolveUid = ({ source, id, uid }) => {
+  switch (source) {
+    case 'slack':
+    case 'webchat':
+    case 'msteams':
+      return id
+    default:
+      return uid
+  }
+}
+
 class Bot {
   constructor(connector) {
     this.connector = connector
@@ -68,7 +79,8 @@ class Bot {
   handleDefaultDialog(session) {
     const { botToken, source } = session.message
     const { id, uid, name } = session.message.user
-    const _uid = source === 'slack' ? id : uid
+    const _uid = resolveUid({ source, id, uid })
+    const service_type = source === 'webchat' ? 'msteams' : source
 
     session.sendTyping()
 
@@ -77,7 +89,7 @@ class Bot {
       botToken,
       uid: _uid,
       name,
-      service_type: source
+      service_type
     }).then((res) => (
       // POST /api/bots/:token/chats/:id/messages.json
       createMessage({
@@ -116,7 +128,7 @@ class Bot {
         const { id, uid, name } = session.message.user
         const { decisionBranches, isSuggestion } = session.privateConversationData
         const selected = decisionBranches[get(results, 'response.index')]
-        const _uid = source === 'slack' ? id : uid
+        const _uid = resolveUid({ source, id, uid })
 
         if (selected == null) {
           session.endDialog()

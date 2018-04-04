@@ -1,7 +1,7 @@
 class ChatServiceUser < ApplicationRecord
   belongs_to :bot
 
-  enum service_type: [:skype, :line, :chatwork, :slack]
+  enum service_type: [:skype, :line, :chatwork, :slack, :msteams]
 
   validates :uid,
     presence: true,

@@ -33,12 +33,14 @@ ENV BUNDLE_JOBS=4 \
     BUNDLE_PATH=/bundle
 
 WORKDIR /tmp
-RUN wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz \
+RUN apt-get -y install python-dev libxml2-dev libxslt-dev \
+    && wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz \
     && tar xzvf Python-3.5.2.tgz \
     && cd ./Python-3.5.2 \
     && ./configure --with-threads \
     && make install \
     && wget https://bootstrap.pypa.io/get-pip.py \
-    && python get-pip.py
+    && python get-pip.py \
+    && python -m pip install -U https://github.com/pypa/pip/archive/master.zip
 
 COPY . .

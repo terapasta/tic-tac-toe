@@ -152,7 +152,10 @@ class Benchmark(BaseCls):
         # s3 から取得
         elif self._test_dst_type == 's3':
             # s3 からオブジェクトを取得
-            s3 = boto3.resource('s3')
+            s3 = boto3.resource('s3',
+                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+            )
             res = s3.Object(self._bucket_name, self._test_dst_path).get()
 
             # オブジェクトの中身を取得
@@ -202,7 +205,10 @@ class Benchmark(BaseCls):
                 raise NameError
 
             # s3 からオブジェクトを取得
-            s3 = boto3.resource('s3')
+            s3 = boto3.resource('s3',
+                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+            )
             res = s3.Object(self._bucket_name, self._test_src_path).get()
 
             # オブジェクトの中身を取得
@@ -237,7 +243,10 @@ class Benchmark(BaseCls):
             if self._bucket_name is None:
                 raise NameError
 
-            s3 = boto3.resource('s3')
+            s3 = boto3.resource('s3',
+                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+            )
             obj = s3.Object(self._bucket_name, self._test_dst_path)
             obj.put(
                 Body=data.encode('utf-8'),

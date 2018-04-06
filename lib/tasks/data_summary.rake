@@ -10,11 +10,11 @@ namespace :data_summary do
     end
   end
 
-  desc 'Calc bad count summaries in last 7 days'
-  task calc_bad_counts_last_7_days: :environment do
+  desc 'Calc bad count summaries in last 30 days'
+  task calc_bad_counts_last_30_days: :environment do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
-        7.times do |n|
+        30.times do |n|
           date = n.days.ago.end_of_day
           summarizer = BadCountSummarizer.new(bot)
           summarizer.summarize(date: date)

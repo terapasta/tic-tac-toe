@@ -2,15 +2,15 @@ class LearningParameter < ApplicationRecord
   belongs_to :bot
 
   enum algorithm: [
-    :logistic_regression,
-    :naive_bayes,
-    :neural_network,
-    :similarity_classification,
-    :two_step_similarity_classification,
-    :word2vec_wmd,
-    :hybrid_classification,
-    :topic_similarity_classification,
-    :fuzzy_similarity_classification,
+    :logistic_regression, # 0
+    :naive_bayes, # 1
+    :neural_network, # 2
+    :similarity_classification, # 3
+    :two_step_similarity_classification, # 4
+    :word2vec_wmd, # 5
+    :hybrid_classification, # 6
+    :topic_similarity_classification, # 7
+    :fuzzy_similarity_classification, # 8
   ]
 
   enum feedback_algorithm: [
@@ -25,7 +25,7 @@ class LearningParameter < ApplicationRecord
 
   def self.default_attributes
       {
-        algorithm: algorithms[:similarity_classification],
+        algorithm: algorithms[:fuzzy_similarity_classification],
         parameters: {},
         feedback_algorithm: feedback_algorithms[:disable],
         parameters_for_feedback: {},

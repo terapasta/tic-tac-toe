@@ -3,6 +3,7 @@ import os
 import csv
 import yaml
 import boto3
+from boto3.session import Session
 import pandas as pd
 from app.shared.logger import logger
 from app.shared.config import Config
@@ -152,10 +153,7 @@ class Benchmark(BaseCls):
         # s3 から取得
         elif self._test_dst_type == 's3':
             # s3 からオブジェクトを取得
-            s3 = boto3.resource('s3',
-                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
-            )
+            s3 = self.aws_session.resource('s3')
             res = s3.Object(self._bucket_name, self._test_dst_path).get()
 
             # オブジェクトの中身を取得
@@ -205,10 +203,7 @@ class Benchmark(BaseCls):
                 raise NameError
 
             # s3 からオブジェクトを取得
-            s3 = boto3.resource('s3',
-                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
-            )
+            s3 = self.aws_session.resource('s3')
             res = s3.Object(self._bucket_name, self._test_src_path).get()
 
             # オブジェクトの中身を取得
@@ -243,10 +238,7 @@ class Benchmark(BaseCls):
             if self._bucket_name is None:
                 raise NameError
 
-            s3 = boto3.resource('s3',
-                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
-            )
+            s3 = self.aws_session.resource('s3')
             obj = s3.Object(self._bucket_name, self._test_dst_path)
             obj.put(
                 Body=data.encode('utf-8'),
@@ -256,3 +248,14 @@ class Benchmark(BaseCls):
 
         else:
             raise NotImplementedError
+
+    @property
+    def aws_session(self):
+        if not hasattr(self, '_aws_session'):
+            self._aws_session = Session(
+                aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+                region_name='ap-northeast-1'
+            )
+        return self._aws_session
+

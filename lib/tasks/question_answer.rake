@@ -41,10 +41,10 @@ namespace :question_answer do
     all_data = {}
 
     CSV.new(reader.read).each do |raw_row|
-      row = raw_row.compact
-      tags = row[0].gsub('／', '/').split('/')
+      row = raw_row
+      tags = (row[0] || '').gsub('／', '/').split('/')
       qa = row.slice(1, 2)
-      dbs = row.slice(3, 100).each_slice(2).to_a
+      dbs = (row.slice(3, 100) || []).each_slice(2).to_a
       all_data[qa] ||= {}
       all_data[qa][:tags] ||= []
       all_data[qa][:tags] += tags
@@ -71,6 +71,8 @@ namespace :question_answer do
         dbs_data.each do |dbs|
           parent_db = nil
           dbs.each do |db|
+            p db.compact
+            next if db.compact.count < 2
             if parent_db.nil?
               parent_db = qa.decision_branches.find_or_create_by!(
                 bot_id: bot.id,

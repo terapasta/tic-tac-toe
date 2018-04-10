@@ -31,7 +31,7 @@ jobs:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-            cd ./learning && pip install -r requirements.txt --quiet && pip install nose
+            cd ./learning && pip3.5 install -r requirements.txt --quiet && pip3.5 install nose
 
       - save_cache:
           paths:

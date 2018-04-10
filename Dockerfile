@@ -70,3 +70,6 @@ RUN mkdir -p ~/neologd-tmp \
     && ./bin/install-mecab-ipadic-neologd -n -y
 
 COPY . .
+
+WORKDIR /tmp/learning
+RUN pip install -r requirements.txt && pip install nose

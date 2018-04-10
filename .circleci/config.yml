@@ -9,7 +9,8 @@ jobs:
       - image: kozo002/myope
         auth:
           username: kozo002
-          password: $DOCKERHUB_PASSWORD
+          password: $DOCKEHRUB_PASSWORD
+
         environment:
           DB_HOST: 127.0.0.1
 
@@ -34,7 +35,6 @@ jobs:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-            cd ./learning && pip3.5 install -r requirements.txt --quiet && pip3.5 install nose
 
       - save_cache:
           paths:

@@ -6,7 +6,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: kozo002/ruby-node-chrome
+      - image: kozo002/myope
+        auth:
+          username: kozo002
+          password: $DOCKERHUB_PASSWORD
         environment:
           DB_HOST: 127.0.0.1
 

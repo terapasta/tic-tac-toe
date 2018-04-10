@@ -49,7 +49,7 @@ class Helper:
         Config().init('test')
 
     @classmethod
-    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NONE, datasource=None):
+    def test_context(cls, bot_id, algorithm=Constants.ALGORITHM_FUZZY_COSINE_SIMILARITY_CLASSIFICATION, feedback_algorithm=Constants.FEEDBACK_ALGORITHM_NONE, datasource=None):
         if datasource is None:
             datasource = Datasource()
         return Context.new(

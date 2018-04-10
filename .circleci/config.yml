@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: kozo002/myope
+      - image: kozo002/myope:latest
         auth:
           username: kozo002
           password: $DOCKEHRUB_PASSWORD

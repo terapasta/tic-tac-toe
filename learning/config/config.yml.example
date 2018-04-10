@@ -24,14 +24,14 @@ test:
     name: donusagi_bot_test
     user: root
     password: ""
-  dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd
+  dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
 
 production:
   <<: *default
   database:
-    endpoint: 
-    host: 
-    name: 
-    user: 
-    password: 
+    endpoint:
+    host:
+    name:
+    user:
+    password:
   dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd

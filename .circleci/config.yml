@@ -53,7 +53,10 @@ jobs:
               --format progress \
               --format RspecJunitFormatter \
               --out /tmp/test-results/rspec.xml
-            cd ./learning && cp config/config.yml.example config/config.yml && nosetests -s tests
+            cd ./learning && cp config/config.yml.example config/config.yml && nosetests -s tests \
+            bundle exec rails r "Bot.create(is_demo: false).tap{ |bot| bot.create_learning_parameter(LeariningParameter.default_attributes) }"
+            python -m bin.benchmark
+
 
       # collect reports
       - type: store_artifacts

@@ -18,22 +18,26 @@ class Chats::MessagesController < ApplicationController
   end
 
   def create
-    @bot = Bot.find_by!(token: params[:token])
     ActiveRecord::Base.transaction do
-      @message = @chat.messages.create!(permitted_attributes(Message)) {|m|
-        m.speaker = 'guest'
-        m.user_agent = request.env['HTTP_USER_AGENT']
-      }
+      TimeMeasurement.measure(name: 'chats/messages#create 開始から同義語変換の前まで', bot: @bot) do
+        @bot = Bot.find_by!(token: params[:token])
+        @message = @chat.messages.create!(permitted_attributes(Message)) {|m|
+          m.speaker = 'guest'
+          m.user_agent = request.env['HTTP_USER_AGENT']
+        }
+      end
       @bot_messages = receive_and_reply!(@chat, @message)
     end
 
-    TaskCreateService.new(@bot_messages, @bot, current_user).process.each do |task, bot_message|
-      SendAnswerFailedMailService.new(bot_message, current_user, task).send_mail
-    end
+    TimeMeasurement.measure(name: 'chats/messages#create controllerに返ってきてレスポンスを返すまで', bot: @bot) do
+      TaskCreateService.new(@bot_messages, @bot, current_user).process.each do |task, bot_message|
+        SendAnswerFailedMailService.new(bot_message, current_user, task).send_mail
+      end
 
-    respond_to do |format|
-      format.js
-      format.json { render_collection_json [@message, *@bot_messages], include: included_associations }
+      respond_to do |format|
+        format.js
+        format.json { render_collection_json [@message, *@bot_messages], include: included_associations }
+      end
     end
   rescue Ml::Engine::NotTrainedError => e
     logger.error e.message + e.backtrace.join("\n")

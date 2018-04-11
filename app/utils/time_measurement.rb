@@ -8,11 +8,11 @@ class TimeMeasurement
     result = block.call
     end_time = Time.current
     duration = end_time - start_time
-    if duration > 1.0 && !Rails.env.development?
-      slack_notifier.post \
-        text: "1秒以上かかる処理が発生しました [#{name}] `bot_id: #{bot.id}` `duration: #{duration}`",
-        channel: '#alert'
-    end
+    # if duration > 1.0 && !Rails.env.development?
+    #   slack_notifier.post \
+    #     text: "1秒以上かかる処理が発生しました [#{name}] `bot_id: #{bot.id}` `duration: #{duration}`",
+    #     channel: '#alert'
+    # end
     result
   end
 end

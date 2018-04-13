@@ -40,10 +40,15 @@ class Api::Bots::ChatChoicesController < Api::BaseController
     end
 
     def bot_message_params(guest_user_message)
+
       {
         decision_branch_id: @decision_branch.id,
         speaker: 'bot',
-        body: @decision_branch.answer.presence || @bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text,
+        body: (
+          @decision_branch.answer_or_answer_link_text.presence ||
+          @bot.classify_failed_message.presence ||
+          DefinedAnswer.classify_failed_text
+        ),
         created_at: guest_user_message.created_at + 1.second,
         answer_failed: @decision_branch.answer.blank?,
       }

@@ -166,7 +166,7 @@ class LineBot {
     const allFiles = imageFiles.concat(otherFiles)
     let allMessages = allFiles
     if (!isEmpty(message)) {
-      const textObj = { type: 'text', text: message }
+      const textObj = { type: 'text', text: message + answerFiles.map(it => it.file.url).join(',') }
       allMessages = [textObj].concat(allFiles)
     }
     allMessages = allMessages.slice(0, 5)

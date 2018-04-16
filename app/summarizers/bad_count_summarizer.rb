@@ -8,7 +8,13 @@ class BadCountSummarizer < ApplicationSummarizer
   end
 
   def summarize(date: nil)
-    data = @bot.messages.bot.includes(:rating).order(created_at: :desc).limit(5000)
+    guest_chat_ids = @bot.chat.select(:id).where(is_staff: false, is_normal: false)
+    data = @bot.messages
+      .bot
+      .includes(:rating)
+      .where(chat_id: guest_chat_ids)
+      .order(created_at: :desc)
+      .limit(5000)
     if date.present?
       @date = date
       data = data.where(created_at: (5.years.ago..date))

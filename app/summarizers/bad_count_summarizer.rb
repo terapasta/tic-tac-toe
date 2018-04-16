@@ -8,7 +8,7 @@ class BadCountSummarizer < ApplicationSummarizer
   end
 
   def summarize(date: nil)
-    guest_chat_ids = @bot.chat.select(:id).where(is_staff: false, is_normal: false)
+    guest_chat_ids = @bot.chats.select(:id).where(is_staff: false, is_normal: false)
     data = @bot.messages
       .bot
       .includes(:rating)

@@ -57,7 +57,7 @@ jobs:
               --format RspecJunitFormatter \
               --out /tmp/test-results/rspec.xml
             cd ./learning && cp config/config.yml.example config/config.yml && nosetests -s tests
-            bundle exec rails r "Bot.create(is_demo: false).tap{ |bot| bot.create_learning_parameter(LearningParameter.default_attributes) }"
+            bundle exec rails r "Bot.create(is_demo: false).tap{ |bot| bot.create_learning_parameter(LearningParameter.default_attributes) }.tap{ |bot| QuestionAnswer.create(bot_id: bot.id, question: 'example', answer: 'example') }"
             python -m bin.benchmark
 
 

@@ -1,5 +1,3 @@
-import rails from 'rails-ujs'
-
 document.addEventListener('DOMContentLoaded', () => {
   const taskSelectings = [].slice.call(document.querySelectorAll('[data-role="task-selecting"]'))
   const allTaskSelecting = document.querySelector('[data-role="all-task-selecting"]')

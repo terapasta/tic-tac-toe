@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :task do
-    guest_message "MyText"
-    bot_message "MyText"
+    sequence(:guest_message) { |n| "tasks.guest_message #{n}" }
+    sequence(:bot_message) { |n| "tasks.bot_messags #{n}" }
     is_done false
-    bot_id 1
   end
 end

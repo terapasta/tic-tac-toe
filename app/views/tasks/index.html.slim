@@ -17,6 +17,15 @@
 
   = pagination
 
+  .card.mb-3: .card-body.d-flex.justify-content-between.align-items-center
+    label.mb-0
+      input type="checkbox" data-role="all-task-selecting"
+      = space
+      span 全部をチェックする/はずす
+    = button_to bot_task_bulk_complete_path(@bot), method: :post, class: 'btn btn-secondary', disabled: true, data: { role: 'bulk-complete-button' } do
+      span まとめて対応済みにする
+
+
   - if @tasks.empty?
     .card: .card-body.text-center
       = material_icon 'check', class: 'text-success mi-lg'
@@ -27,3 +36,5 @@
     = render('card', { bot: @bot, task: task, redirect_path: nil })
 
   .mb-4= pagination
+
+= javascript_pack_tag 'tasks'

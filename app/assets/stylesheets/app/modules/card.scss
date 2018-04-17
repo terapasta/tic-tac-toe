@@ -42,4 +42,36 @@
       }
     }
   }
+
+  $-card-cap-width: 32px;
+  &.card-left-capped {
+    padding-left: $-card-cap-width;
+  }
+  .card-left-cap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $-card-cap-width;
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+
+    &__checkbox {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+    input[type=checkbox] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
+

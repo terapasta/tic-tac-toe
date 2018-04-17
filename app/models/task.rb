@@ -18,4 +18,9 @@ class Task < ApplicationRecord
   scope :unstarted, -> (bot) {
     where(bot_id: bot.id, is_done: false)
   }
+
+  def done!
+    self.is_done = true
+    save!
+  end
 end

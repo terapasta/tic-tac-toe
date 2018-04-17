@@ -13,23 +13,29 @@ class TasksController < ApplicationController
 
     @tasks = @bot.tasks
       .with_done(params[:done])
-      .page(params[:page])
+      .page(page)
       .per(@per_page)
       .order(created_at: :desc)
+    if @tasks.count.zero? && page > 1
+      redirect_to bot_tasks_path(@bot)
+    end
   end
 
   def update
     @task = @bot.tasks.find(params[:id])
     if @task.update(is_done: (params[:is_done] || true).to_bool)
-      redirect_path = params[:redirect_path].presence || bot_tasks_path(@bot)
-      redirect_to redirect_path
+      redirect_back fallback_location: bot_tasks_path(@bot)
     else
-      redirect_to bot_tasks_path(@bot), alert: '対応状態を変更できませんでした'
+      redirect_back fallback_location: bot_tasks_path(@bot), alert: '対応状態を変更できませんでした'
     end
   end
 
   private
     def set_bot
       @bot = bots.find(params[:bot_id])
+    end
+
+    def page
+      (params[:page] || 1).to_i
     end
 end

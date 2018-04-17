@@ -4,6 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from app.shared.logger import logger
 
 from app.shared.custom_errors import NotTrainedError
+from app.shared.custom_errors import TrainingDataMatrixError
 from app.shared.datasource.datasource import Datasource
 from app.core.base_core import BaseCore
 
@@ -31,7 +32,7 @@ class CosineSimilarity(BaseCore):
             # NOTE x と y の長さが違うことがある（直したい）
             similarities = cosine_similarity(self.data['x'], question_features)
         except ValueError as e:
-            raise NotTrainedError(e)
+            raise TrainingDataMatrixError(str(e))
         similarities = similarities.flatten()
         result = pd.DataFrame({
             'question_answer_id': self.data['y'],

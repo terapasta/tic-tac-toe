@@ -10,6 +10,7 @@ namespace :circleci do
               message.create_rating!(level: :good, bot_id: bot.id, question: 'example q', answer: 'example a')
             end
           end
+          bot.learning_training_messages.create!(question: qa.question, answer_body: qa.answer, question_answer_id: qa.id)
         end
       end
     end

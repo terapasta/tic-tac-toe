@@ -1,4 +1,8 @@
-.card.mb-5
+.card.mb-5 class=(params[:action] == 'index' ? 'card-left-capped' : '')
+  - if params[:action] == 'index'
+    .card-left-cap
+      .card-left-cap__checkbox data-role="task-selecting"
+        input type="checkbox" value=task.id
   .card-body.p-4
     .row
       .col-sm-6.order-12

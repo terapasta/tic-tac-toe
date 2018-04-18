@@ -1,5 +1,5 @@
 default: &default
-  datasource_type: database
+  datasource_type: file
   database:
     endpoint: mysql://root@localhost/donusagi_bot?charset=utf8
     host: 127.0.0.1

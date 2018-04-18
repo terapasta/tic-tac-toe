@@ -57,8 +57,8 @@ jobs:
               --format RspecJunitFormatter \
               --out /tmp/test-results/rspec.xml
             cd ./learning && cp config/config.yml.example config/config.yml && nosetests -s tests
-            bundle exec rake circleci:python_benchmark_seed
-            python -m bin.learn --bot_id=1
+            python -m bin.learn --bot_id=1 --algorithm=7
+            python -m bin.learn --bot_id=1 --algorithm=8
             python -m bin.benchmark
 
 

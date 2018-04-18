@@ -16,6 +16,7 @@ from app.shared.config import Config
 from app.shared.stop_watch import stop_watch
 from app.shared.context import Context
 from app.shared.custom_errors import NotTrainedError
+from app.shared.custom_errors import TrainingDataMatrixError
 from app.controllers.setup_controller import SetupController
 from app.controllers.reply_controller import ReplyController
 from app.controllers.learn_controller import LearnController
@@ -46,6 +47,13 @@ class RouteGuideServicer(BotServicer):
             reply = ReplyController.new(context=myope_context).perform(request.body)
         except NotTrainedError:
             detail = 'bot_id:%s wasn\'t trained' % str(myope_context.current_bot.id)
+            logger.error(detail)
+            logger.error(traceback.format_exc())
+            reply = self._empty_reply()
+            context.set_code(grpc.StatusCode.UNAVAILABLE)
+            context.set_details(detail)
+        except TrainingDataMatrixError:
+            detail = 'bot_id:%s\'s training data matrix is invalid' % str(myope_context.current_bot.id)
             logger.error(detail)
             logger.error(traceback.format_exc())
             reply = self._empty_reply()

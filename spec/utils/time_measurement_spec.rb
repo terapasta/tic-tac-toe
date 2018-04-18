@@ -13,7 +13,7 @@ RSpec.describe TimeMeasurement do
         1
       end
 
-      specify do
+      xspecify do
         expect_any_instance_of(Slack::Notifier).to receive(:post).with(text: /^1秒以上かかる処理が発生しました/, channel: '#dev')
         subject
       end
@@ -24,7 +24,7 @@ RSpec.describe TimeMeasurement do
         0.5
       end
 
-      specify do
+      xspecify do
         expect_any_instance_of(Slack::Notifier).to_not receive(:post)
         subject
       end

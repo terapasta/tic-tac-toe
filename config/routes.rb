@@ -35,7 +35,11 @@ Rails.application.routes.draw do
       member do
         post :reset
       end
-      resources :tasks, only: [:index, :update, :show]
+      resources :tasks, only: [:index, :update, :show] do
+        collection do
+          resource :bulk_complete, only: [:create], module: :tasks, as: :task_bulk_complete
+        end
+      end
       resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :question_answers do

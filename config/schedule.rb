@@ -43,21 +43,21 @@
 env 'MECAB_PATH', '/usr/local/lib/libmecab.so'
 
 # 朝8:00
-every 1.day, at: '23:00' do
+every 1.day, at: '8:00' do
   rake 'organization:check_finishing_trial'
 end
 
 # 夕方18:00
-every 1.day, at: '9:00' do
+every 1.day, at: '18:00' do
   rake 'slack:notify_accuracy'
 end
 
 # 未明5:00
-every 1.day, at: '20:00' do
+every 1.day, at: '5:00' do
   rake 'database:mysqldump_s3'
 end
 
 # 未明3:00
-every 1.day, at: '18:00' do
+every 1.day, at: '3:00' do
   rake 'data_summary:calc_bad_counts'
 end

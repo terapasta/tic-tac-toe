@@ -28,18 +28,21 @@ class Database():
 
     def execute_with_transaction(self, queries):
         def my_execute():
-            with self.db as cur:
-                for query in queries:
-                    cur.execute(query[0], query[1])
+            cur = self.db.cursor()
+            for query in queries:
+                cur.execute(query[0], query[1])
         self._execute_with_connect(my_execute)
 
     def _execute_with_connect(self, function):
         try:
             self._connect()
-            return function()
+            result = function()
+            self.db.commit()
+            return result
         # NOTE: MYSQLに一定時間以上クエリーを実行しなかった場合に接続が切断されてしまうため再接続を行う
         #       https://www.pivotaltracker.com/n/projects/1879711/stories/151425115
         except (MySQLdb.Error, pd.io.sql.DatabaseError) as e:
+            self.db.rollback()
             try:
                 self.db.close()
             except:
@@ -47,7 +50,9 @@ class Database():
 
             self.db = None
             self._connect()
-            return function()
+            result = function()
+            self.db.commit()
+            return result
 
     def _connect(self):
         if self.db is not None:
@@ -61,4 +66,5 @@ class Database():
                 passwd=dbconfig['password'],
                 charset='utf8',
             )
+        self.db.autocommit(False)
         logger.info('database connected')

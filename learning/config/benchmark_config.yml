@@ -20,7 +20,7 @@ algorithm:
   feedback:
     current: 0
     competed: 0
-bot_id: 25
+bot_id: 1
 testcase:
   version: 0.1.0
   generator: 1

@@ -1,10 +1,15 @@
 import argparse
+from dotenv import load_dotenv
+from pathlib import Path
 
 from app.controllers.benchmark_controller import BenchmarkController
 from app.shared.config import Config
 from app.shared.benchmark import Benchmark
 from app.shared.context import Context
 from app.shared.logger import logger
+
+if Path('../.env').is_file():
+    load_dotenv(dotenv_path='../.env')
 
 def benchmark(exit_on_finished=False):
     # ベンチマーク用のクラス

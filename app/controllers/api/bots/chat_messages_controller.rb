@@ -26,7 +26,9 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     end
 
     TaskCreateService.new(bot_messages, bot, nil).process.each do |task, bot_message|
-      SendAnswerFailedMailService.new(bot_message, nil, task).send_mail
+      unless chat_service_user.line?
+        SendAnswerFailedMailService.new(bot_message, nil, task).send_mail
+      end
     end
 
     respond_to do |format|

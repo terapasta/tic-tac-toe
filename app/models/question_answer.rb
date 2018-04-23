@@ -78,7 +78,7 @@ class QuestionAnswer < ApplicationRecord
   }
 
   before_validation do
-    self.question_wakati = Natto::MeCab.new('-Owakati').parse(question || '')
+    self.question_wakati = wakatify_question
   end
 
   before_destroy do
@@ -135,5 +135,9 @@ class QuestionAnswer < ApplicationRecord
       index += 1
     end
     results
+  end
+
+  def wakatify_question
+    Natto::MeCab.new('-Owakati').parse(question || '')
   end
 end

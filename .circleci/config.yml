@@ -6,7 +6,11 @@ version: 2
 jobs:
   build:
     docker:
-      - image: kozo002/ruby-node-chrome
+      - image: kozo002/myope:latest
+        auth:
+          username: kozo002
+          password: $DOCKEHRUB_PASSWORD
+
         environment:
           DB_HOST: 127.0.0.1
 
@@ -52,6 +56,11 @@ jobs:
               --format progress \
               --format RspecJunitFormatter \
               --out /tmp/test-results/rspec.xml
+            cd ./learning && cp config/config.yml.example config/config.yml && nosetests -s tests
+            python -m bin.learn --bot_id=1 --algorithm=7
+            python -m bin.learn --bot_id=1 --algorithm=8
+            python -m bin.benchmark
+
 
       # collect reports
       - type: store_artifacts

@@ -9,4 +9,8 @@ class WordMappingSynonym < ApplicationRecord
     where(word_mapping_id: WordMapping.select(:id)
     .where(bot_id: bot_id))
   }
+
+  before_validation do
+    self.value_wakati = Natto::MeCab.new('-Owakati').parse(value || '')
+  end
 end

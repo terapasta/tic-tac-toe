@@ -20,7 +20,10 @@ class WordMapping < ApplicationRecord
   # validate :word_is_not_eq_synonym
   # validate :word_is_not_eq_other_synonym
 
-  before_validation :strip_word
+  before_validation do
+    strip_word
+    self.word_wakati = Natto::MeCab.new('-Owakati').parse(word || '')
+  end
 
   scope :for_bot, -> (bot) {
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)

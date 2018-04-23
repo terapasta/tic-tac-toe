@@ -77,6 +77,10 @@ class QuestionAnswer < ApplicationRecord
       .or(left_joins(:topic_tags).where(topic_tags: { id: nil }))
   }
 
+  before_validation do
+    self.question_wakati = Natto::MeCab.new('-Owakati').parse(question || '')
+  end
+
   before_destroy do
     break if self.bot.blank?
     if self.bot.selected_question_answer_ids.include?(self.id)

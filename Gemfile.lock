@@ -296,7 +296,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
-    mecab (0.996)
     memoist (0.16.0)
     meta_request (0.4.3)
       callsite (~> 0.0, >= 0.0.11)
@@ -617,7 +616,6 @@ DEPENDENCIES
   kaminari
   letter_opener
   letter_opener_web
-  mecab
   meta_request
   mini_mime
   mysql2 (~> 0.3.20)

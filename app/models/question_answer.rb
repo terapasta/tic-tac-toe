@@ -141,7 +141,7 @@ class QuestionAnswer < ApplicationRecord
 
   def set_question_wakati
     wakatify_question.tap do |wq|
-      wq = bot.word_mappings.decorate.replace_synonym(wq) if bot.present?
+      wq = WordMapping.for_bot(bot).decorate.replace_synonym(wq) if bot.present?
       self.question_wakati = wq
     end
   end

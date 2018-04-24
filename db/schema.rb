@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423072415) do
+ActiveRecord::Schema.define(version: 20180424070351) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.text "question_text"
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(version: 20180423072415) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

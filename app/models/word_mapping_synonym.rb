@@ -11,6 +11,6 @@ class WordMappingSynonym < ApplicationRecord
   }
 
   before_validation do
-    self.value_wakati = Natto::MeCab.new('-Owakati').parse(value || '')
+    self.value_wakati = Wakatifier.apply(value)
   end
 end

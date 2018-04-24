@@ -17,8 +17,8 @@
               dd= nl2br(sq.question)
         - if current_user.staff? && question_answer.question_wakati.present?
           .card: .card-body.p-2: dl.mb-0
-            dt: small 分かち書き
-            dd= nl2br= question_answer.question_wakati
+            dt: small 分かち書き(同義語変換済み)
+            dd= nl2br question_answer.question_wakati
       .col-sm-6
         dl.mb-0
           dt: small 回答

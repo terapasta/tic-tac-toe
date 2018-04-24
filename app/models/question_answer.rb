@@ -77,9 +77,7 @@ class QuestionAnswer < ApplicationRecord
       .or(left_joins(:topic_tags).where(topic_tags: { id: nil }))
   }
 
-  before_validation do
-    self.question_wakati = wakatify_question
-  end
+  before_validation :set_question_wakati
 
   before_destroy do
     break if self.bot.blank?
@@ -138,6 +136,13 @@ class QuestionAnswer < ApplicationRecord
   end
 
   def wakatify_question
-    Natto::MeCab.new('-Owakati').parse(question || '')
+    Wakatifier.apply(question)
+  end
+
+  def set_question_wakati
+    wakatify_question.tap do |wq|
+      wq = bot.word_mappings.decorate.replace_synonym(wq) if bot.present?
+      self.question_wakati = wq
+    end
   end
 end

@@ -22,11 +22,12 @@ class WordMapping < ApplicationRecord
 
   before_validation do
     strip_word
-    self.word_wakati = Natto::MeCab.new('-Owakati').parse(word || '')
+    self.word_wakati = Wakatifier.apply(word)
   end
 
   scope :for_bot, -> (bot) {
-    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
+    bot_id = bot.respond_to?(:id) ? bot.id : bot
+    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot_id)
   }
 
   scope :keyword, -> (_keyword) {
@@ -39,6 +40,19 @@ class WordMapping < ApplicationRecord
   scope :systems, -> {
     where(bot_id: nil)
   }
+
+  class << self
+    def replace_synonym_all!(bot_id)
+      word_mappings = WordMapping.for_bot(bot_id).decorate
+      question_answers = QuestionAnswer.where(bot_id: bot_id).select(:id, :question)
+      ActiveRecord::Base.transaction do
+        question_answers.each do |qa|
+          qa.question_wakati = word_mappings.replace_synonym(qa.wakatify_question)
+          qa.save!(validate: false) if qa.question_wakati_changed?
+        end
+      end
+    end
+  end
 
   private
     def strip_word

@@ -49,7 +49,7 @@ class WordMapping < ApplicationRecord
         question_answers.each do |qa|
           qa.question_wakati = word_mappings.replace_synonym(qa.wakatify_question)
           qa.save!(validate: false) if qa.question_wakati_changed?
-          qa.sub_question_answers.each do |sq|
+          qa.sub_questions.each do |sq|
             sq.question_wakati = word_mappings.replace_synonym(sq.wakatify_question)
             sq.save!(validate: false) if sq.question_wakati_changed?
           end

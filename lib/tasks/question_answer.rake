@@ -98,6 +98,9 @@ namespace :question_answer do
       Bot.all.each do |bot|
         bot.question_answers.each do |qa|
           qa.save!
+          qa.sub_questions.each do |sq|
+            sq.save!
+          end
         end
       end
     end

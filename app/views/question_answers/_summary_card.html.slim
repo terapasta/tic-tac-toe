@@ -15,9 +15,15 @@
             dt: small サブ質問
             - question_answer.sub_questions.each do |sq|
               dd= nl2br(sq.question)
+              - if sq.question_wakati.present?
+                .card: .card-body.p-2.d-flex.justify-content-between
+                  small= sq.question_wakati
+                  span.badge.badge-success STAFF ONLY
         - if current_user.staff? && question_answer.question_wakati.present?
-          .card: .card-body.p-2: dl.mb-0
-            dt: small 分かち書き(同義語変換済み)
+          .card.mt-3: .card-body.p-2: dl.mb-0
+            dt.d-flex.justify-content-between
+              small 分かち書き(同義語変換済み)
+              span.badge.badge-success STAFF ONLY
             dd= nl2br question_answer.question_wakati
       .col-sm-6
         dl.mb-0

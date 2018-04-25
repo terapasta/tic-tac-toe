@@ -40,7 +40,7 @@
         br
         |※ チャット数は日付が変わるとリセットされます
 
-  - if current_user.staff? && @bad_count_summarizer.get_thirty_days_data.present?
+  - if @bad_count_summarizer.get_thirty_days_data.present?
     .card.mb-5: .card-body
       h6.mb-4
         = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'

@@ -15,7 +15,7 @@
             dt: small サブ質問
             - question_answer.sub_questions.each do |sq|
               dd= nl2br(sq.question)
-              - if sq.question_wakati.present?
+              - if current_user.staff? && sq.question_wakati.present?
                 .card: .card-body.p-2.d-flex.justify-content-between
                   small= sq.question_wakati
                   span.badge.badge-success STAFF ONLY

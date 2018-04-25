@@ -9,7 +9,7 @@ class ReplyResponse
 
   def effective_results
     @effective_results ||= @raw_data[:results].select{ |it|
-      it[:probability] > 0.1
+      it[:probability] > @bot.candidate_answers_threshold
     }
   end
 

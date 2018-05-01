@@ -1,5 +1,3 @@
-require 'zendesk_api'
-
 class ZendeskClient
   def self.shared_client
     @client ||= ZendeskAPI::Client.new do |config|
@@ -37,5 +35,9 @@ class ZendeskClient
       # When getting the error 'hostname does not match the server certificate'
       # use the API at https://yoursubdomain.zendesk.com/api/v2
     end
+  end
+
+  def shared_client
+    self.class.shared_client
   end
 end

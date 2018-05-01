@@ -4,9 +4,17 @@ class ContactsController < ApplicationController
 
   def create
     client = ZendeskClient.shared_client
+    user = client.users.search(query: current_user.email).fetch.first
+    if user.blank?
+      user = ZendeskAPI::User.new(client)
+      user.name = current_user.email
+      user.email = current_user.email
+      user.save
+    end
     ticket = ZendeskAPI::Ticket.new(client,
-      subject:     "サポートフォームからのお問い合わせ<#{current_user.email}>",
-      description: params[:ticket][:description]
+      subject: "サポートフォームからのお問い合わせ<#{current_user.email}>",
+      description: params[:ticket][:description],
+      requester_id: user.id
     )
     if ticket.save
       redirect_to new_contacts_path, notice: 'お問い合わせが完了しました。'

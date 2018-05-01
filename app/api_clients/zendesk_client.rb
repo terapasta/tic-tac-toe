@@ -40,4 +40,27 @@ class ZendeskClient
   def shared_client
     self.class.shared_client
   end
+
+  def get_help_center_data
+    @data = shared_client.hc_categories.to_a.inject({
+      sections: [],
+      articles: []
+    }) { |acc, cat|
+      acc[:sections] += cat.sections.to_a
+      acc[:articles] += cat.articles.to_a
+      acc
+    }
+  end
+
+  def sections
+    @data[:sections] || []
+  end
+
+  def articles
+    @data[:articles] || []
+  end
+
+  def section_by(id)
+    sections.detect{ |it| it.id == id }
+  end
 end

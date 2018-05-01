@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.boolean "is_demo", default: false, null: false
     t.datetime "demo_finished_at"
     t.float "threshold_of_suggest_similar_questions", limit: 24
+    t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 

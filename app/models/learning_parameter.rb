@@ -29,7 +29,7 @@ class LearningParameter < ApplicationRecord
         parameters: {},
         feedback_algorithm: feedback_algorithms[:disable],
         parameters_for_feedback: {},
-        classify_threshold: 0.5,
+        classify_threshold: 0.6,
       }
   end
 

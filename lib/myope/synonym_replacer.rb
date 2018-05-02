@@ -2,9 +2,9 @@ module SynonymReplacer
   def self.replace(text, synonym, word)
     return text unless text.include?(synonym)
 
-    text = to_wakati(text)
-    synonym = to_wakati(synonym)
-    word = to_wakati(word)
+    # text = to_wakati(text)
+    # synonym = to_wakati(synonym)
+    # word = to_wakati(word)
 
     result = ''
     start_text_index = 0
@@ -46,15 +46,16 @@ module SynonymReplacer
     result
   end
 
-  def self.to_wakati(original)
-    if mecab_exists?
-      " #{ `echo #{original} | mecab -Owakati`.sub(/\n/, '') }"
-    else
-      original
-    end
-  end
+  # def self.to_wakati(original)
+  #   if mecab_exists?
+  #     Natto::MeCab.new('-Owakati').parse(original)
+  #     # " #{ `echo #{original} | mecab -Owakati`.sub(/\n/, '') }"
+  #   else
+  #     original
+  #   end
+  # end
 
-  def self.mecab_exists?
-    `type -a mecab`.present?
-  end
+  # def self.mecab_exists?
+  #   `type -a mecab`.present?
+  # end
 end

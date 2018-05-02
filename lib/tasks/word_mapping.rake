@@ -43,4 +43,18 @@ namespace :word_mapping do
       f.write(encoded_csv)
     end
   end
+
+  desc '全辞書データを分かち書きしておく'
+  task wakati_all: :environment do
+    ActiveRecord::Base.transaction do
+      Bot.all.each do |bot|
+        bot.word_mappings.each do |wm|
+          wm.save!
+          wm.word_mapping_synonyms.each do|wms|
+            wms.save!
+          end
+        end
+      end
+    end
+  end
 end

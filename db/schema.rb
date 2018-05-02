@@ -325,6 +325,7 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

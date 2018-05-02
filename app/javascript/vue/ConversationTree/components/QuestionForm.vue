@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import isEmpty from 'is-empty'
 import toastr from 'toastr'
 
@@ -7,6 +7,7 @@ import QuestionIcon from './QuestionIcon'
 import AnswerIcon from './AnswerIcon'
 import AnswerFiles from './AnswerFiles'
 import QuestionAnswerFormMixin from '../mixins/QuestionAnswerForm'
+import { UPDATE_QUESTION_ANSWER } from '../store/mutationTypes'
 
 export default {
   mixins: [
@@ -53,6 +54,9 @@ export default {
       'updateSubQuestion',
       'deleteSubQuestion'
     ]),
+    ...mapMutations({
+      updateQuestionAnswer: UPDATE_QUESTION_ANSWER
+    }),
 
     handleDeleteSubQuestionButtonClick (e) {
       this.$swal({
@@ -131,6 +135,11 @@ export default {
           type: 'error'
         })
       })
+    },
+
+    handleAnswerKeyup () {
+      const { questionAnswer } = this
+      this.updateQuestionAnswer({ questionAnswer, id: this.currentId })
     }
   }
 }
@@ -216,6 +225,7 @@ export default {
         name="question-answer"
         v-model="questionAnswer.answer"
         :disabled="isProcessing"
+        @keyup="handleAnswerKeyup"
       />
     </div>
     <answer-files

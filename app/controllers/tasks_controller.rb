@@ -24,7 +24,11 @@ class TasksController < ApplicationController
   def update
     @task = @bot.tasks.find(params[:id])
     if @task.update(is_done: (params[:is_done] || true).to_bool)
-      redirect_back fallback_location: bot_tasks_path(@bot)
+      if params[:redirect_path].present?
+        redirect_to params[:redirect_path]
+      else
+        redirect_back fallback_location: bot_tasks_path(@bot)
+      end
     else
       redirect_back fallback_location: bot_tasks_path(@bot), alert: '対応状態を変更できませんでした'
     end

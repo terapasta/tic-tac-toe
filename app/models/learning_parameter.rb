@@ -20,7 +20,7 @@ class LearningParameter < ApplicationRecord
   ]
 
   def use_similarity_classification?
-    similarity_classification? or two_step_similarity_classification?
+    similarity_classification? || two_step_similarity_classification? || fuzzy_similarity_classification? || topic_similarity_classification?
   end
 
   def self.default_attributes
@@ -29,7 +29,7 @@ class LearningParameter < ApplicationRecord
         parameters: {},
         feedback_algorithm: feedback_algorithms[:disable],
         parameters_for_feedback: {},
-        classify_threshold: 0.5,
+        classify_threshold: 0.6,
       }
   end
 

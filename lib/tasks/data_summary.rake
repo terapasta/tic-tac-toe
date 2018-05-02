@@ -25,4 +25,22 @@ namespace :data_summary do
       end
     end
   end
+
+  task calc_bad_counts_in: :environment do
+    target_date = ENV['TARGET_DATE']
+    ActiveRecord::Base.transaction do
+      Bot.all.each do |bot|
+        sum = BadCountSummarizer.new(bot)
+        data = sum.get_between(
+          start_time: Time.zone.parse("#{target_date} 00:00:00"),
+          end_time: Time.zone.parse("#{target_date} 23:59:59")
+        )
+        next unless data.count.zero?
+        sum.summarize(date: Time.zone.parse(target_date))
+        record = sum.build
+        record.created_at = Time.zone.parse(target_date)
+        record.save!
+      end
+    end
+  end
 end

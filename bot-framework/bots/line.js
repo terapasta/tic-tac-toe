@@ -39,6 +39,8 @@ const toActionData = ({ questionAnswer, decisionBranch }) => {
   }
 }
 
+const testImageURL = 'https://lh3.googleusercontent.com/M6tjfBEKczqgQPk6xq7YOOajqbzkcjec83eTGsm18jmQwHwNZHyJPI5EBdYHLJ0MwhA_mzip1dWxj06mKuKN7vWSd77k-CIXtjn-ImLhcYLP4UmTepwoyOsCfC4wHzmRYsFlMs-4i-ANgGHbJbviLYOBfbE0I2-3J8uvgxrC9kH15-oR49xCqyFDBFT65CY0LjDUG1MXrnpBGCbUB6eDxxtDIpjtF1x9A2X-BZmBQsAhFWiSIQSnV7vBDHx44wShIQurXqGV7uTKH4LuDF5lXF9oYWFfwUgOHC8WLUnSDAepKQHq2qsybXlsyLHec2UJm7k8YrxRxc9HtM8F3wq3xw4h3GmkXDxJVKJ4QOUKNea5fpqXhnPa5wufIlXeJxFoTwq7STBf-fbkmq7XeFzKuaqcGsMNmbyF9nXrA3dAXO2IGOw6uetIZR5n98Y4yRWpIuLpgt4vEPLObH6Jh6Kioee86yKkK3BP_EFNour_g01qUa-_p4DzmI9VJ8RVgIwObQi9gDjIMIVmfVy354Ig1X9SFf5jazrz-i8c0DcgWlB9Ad4rDIun1LXOURFMOY9muqpQrD4z1OPxvorZX2zIz9iNFthpBGimtqStpenJrJU6vyr8Uz_j1gpoFF-hu8o3oJvb_SRLeiWGqK3vrmLJxgXY3ERvbCQ3=w866-h649-no'
+
 class LineBot {
   constructor() {
     this.handleEvent = this.handleEvent.bind(this)
@@ -152,8 +154,8 @@ class LineBot {
       .filter(it => /image/.test(it.fileType))
       .map(it => ({
         type: 'image',
-        originalContentUrl: s3 + it.file.url,
-        previewImageUrl: s3 + it.file.url
+        originalContentUrl: it.file.url,
+        previewImageUrl: it.file.url
       }))
 
     const otherFiles = answerFiles

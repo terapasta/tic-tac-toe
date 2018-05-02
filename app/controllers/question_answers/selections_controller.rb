@@ -54,9 +54,10 @@ class QuestionAnswers::SelectionsController < ApplicationController
       @bot.initial_selections.map(&:destroy!)
       sorted_qa_ids.each.with_index(1){ |id, i| @bot.initial_selections.create!(question_answer_id: id, position: i)  }
     end
-    respond_to do |format|
-      format.json { render json: @bot.selected_question_answers }
-    end
+    render json: @bot.selected_question_answers
+  rescue => e
+    logger.error e.message
+    render json: @bot.errors.full_messages, status: :unprocessable_entity
   end
 
   private

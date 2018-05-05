@@ -284,7 +284,6 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
-    t.text "question_wakati"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
 
@@ -325,7 +324,6 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -395,7 +393,6 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "value_wakati"
   end
 
   create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -403,7 +400,6 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id"
-    t.string "word_wakati"
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
   end
 

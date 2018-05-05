@@ -91,18 +91,4 @@ namespace :question_answer do
       end
     end
   end
-
-  desc '全Q&Aを分かち書きを保存しておく'
-  task wakati_all: :environment do
-    ActiveRecord::Base.transaction do
-      Bot.all.each do |bot|
-        bot.question_answers.each do |qa|
-          qa.save!
-          qa.sub_questions.each do |sq|
-            sq.save!
-          end
-        end
-      end
-    end
-  end
 end

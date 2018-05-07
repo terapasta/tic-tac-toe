@@ -13,7 +13,7 @@
   vars_files:
     - private.yml
   roles:
-    - users
+    - { role: 'users', tags: 'users' }
     - base
     - rbenv
     - pyenv

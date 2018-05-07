@@ -96,8 +96,8 @@ export default {
     state.filteredQuestionsTree = state.filteredQuestionsTree.concat()
   },
 
-  [UPDATE_QUESTION_ANSWER] (state, { questionAnswer, id }) {
-    state.questionsRepo = assign({}, state.questionsRepo, { [id]: questionAnswer })
+  [UPDATE_QUESTION_ANSWER] (state, payload) {
+    state.questionsRepo = assign({}, state.questionsRepo, { [payload.id]: payload.questionAnswer })
   },
 
   [ADD_DECISION_BRANCH_TO_QUESTION_ANSWER] (state, { questionAnswerId }) {

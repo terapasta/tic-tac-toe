@@ -88,7 +88,6 @@ export default {
       const verb = this.isNew ? 'create' : 'update'
       this[`${verb}QuestionAnswer`]({ id, question, answer })
         .then(newQuestionAnswer => {
-          console.log(newQuestionAnswer)
           this.isNew = false
           this.isProcessing = false
           this.$router.push(`/question/${newQuestionAnswer.id}`)

@@ -115,8 +115,31 @@ namespace :question_answer do
 
         tag = bot.topic_tags.find_or_create_by!(name: section.name, bot_id: bot.id)
         next unless qa.topic_taggings.find_by(topic_tag_id: tag.id).blank?
-
         qa.topic_taggings.create!(topic_tag_id: tag.id)
+      end
+    end
+  end
+
+  desc '全Q&Aを分かち書きを保存しておく'
+  task wakati_all: :environment do
+    bot_word_mappings = Bot.all.inject({}) { |acc, bot|
+      acc[bot.id] = WordMapping.for_bot(bot).decorate
+      acc
+    }
+
+    ActiveRecord::Base.transaction do
+      Bot.all.each do |bot|
+        bot.question_answers.each do |qa|
+          qa.question_wakati = bot_word_mappings[qa.bot_id].replace_synonym(Wakatifier.apply(qa.question))
+          qa.save!(validate: false)
+
+          qa.sub_questions.each do |sq|
+            sq.question_wakati = bot_word_mappings[qa.bot_id].replace_synonym(Wakatifier.apply(sq.question))
+            sq.save!(validate: false)
+          end
+
+          puts qa.id
+        end
       end
     end
   end

@@ -43,4 +43,49 @@ namespace :word_mapping do
       f.write(encoded_csv)
     end
   end
+
+  desc '全辞書データを分かち書きしておく'
+  task wakati_all: :environment do
+    begin
+      ActiveRecord::Base.transaction do
+        WordMapping.all.each do |wm|
+          wm.word_wakati = Wakatifier.apply(wm.word)
+          wm.save!(validate: false)
+          wm.word_mapping_synonyms.each do |wms|
+            wms.value_wakati = Wakatifier.apply(wms.value)
+            wms.save!(validate: false)
+          end
+        end
+      end
+    rescue => e
+      pp e.record.errors
+    end
+  end
+
+  task import_csv: :environment do
+    wms = CSV.parse(Rails.root.join('tmp/wms.csv').read)
+    wmss = CSV.parse(Rails.root.join('tmp/wmss.csv').read)
+
+    begin
+      ActiveRecord::Base.transaction do
+        WordMapping.create!(wms.map{ |wm|
+          {
+            id: wm[0],
+            word: wm[1],
+            bot_id: wm[5],
+          }
+        })
+        WordMappingSynonym.create!(wmss.select{ |wms| wms[5].present? }.map{ |wms|
+          {
+            id: wms[0],
+            value: wms[1],
+            word_mapping_id: wms[5],
+          }
+        })
+      end
+    rescue => e
+      pp e.record
+      pp e.record.errors
+    end
+  end
 end

@@ -16,6 +16,7 @@ import {
   ADD_QUESTION_ANSWER,
   DELETE_QUESTION_ANSWER,
   DELETE_ANSWER,
+  UPDATE_QUESTION_ANSWER,
   ADD_DECISION_BRANCH_TO_QUESTION_ANSWER,
   ADD_DECISION_BRANCH_TO_DECISION_BRANCH,
   CREATE_DECISION_BRANCH_OF_QUESTION_ANSWER,
@@ -93,6 +94,10 @@ export default {
     state.questionsTree[index].decisionBranches = []
     state.questionsRepo[questionAnswerId].answer = ""
     state.filteredQuestionsTree = state.filteredQuestionsTree.concat()
+  },
+
+  [UPDATE_QUESTION_ANSWER] (state, { questionAnswer, id }) {
+    state.questionsRepo = assign({}, state.questionsRepo, { [id]: questionAnswer })
   },
 
   [ADD_DECISION_BRANCH_TO_QUESTION_ANSWER] (state, { questionAnswerId }) {

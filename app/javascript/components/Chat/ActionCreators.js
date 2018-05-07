@@ -281,7 +281,10 @@ export const upPositionInitialQuestion = (botId, index) => {
     const newIds = [...head, target, before, ...tail]
     InitialQuestionsAPI.update(botId, newIds).then(res => {
       dispatch(setInitialQuestionsToMessages(res.data))
-    }).catch(console.error)
+    }).catch(e => {
+      toastr.error('初期質問の順序変更でエラーが発生しました');
+      console.error(e)
+    })
   }
 }
 
@@ -298,6 +301,9 @@ export const downPositionInitialQuestion = (botId, index) => {
     const newIds = [...head, after, target, ...tail]
     InitialQuestionsAPI.update(botId, newIds).then(res => {
       dispatch(setInitialQuestionsToMessages(res.data))
-    }).catch(console.error)
+    }).catch(e => {
+      toastr.error('初期質問の順序変更でエラーが発生しました');
+      console.error(e)
+    })
   }
 }

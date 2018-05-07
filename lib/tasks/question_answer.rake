@@ -95,8 +95,8 @@ namespace :question_answer do
   desc 'BOT_IDで指定したボットにmofomof.zendesk.com/hcの記事を流し込む'
   task import_mofmof_zendesk_hc: :environment do
     h = ActionController::Base.helpers
-    bot_id = ENV['BOT_ID']
-    fail 'Require BOT_ID' if bot_id.blank?
+    bot_id = ENV['ZENDESK_HC_BOT_ID']
+    fail 'Require ZENDESK_HC_BOT_ID' if bot_id.blank?
     bot = Bot.find(bot_id)
 
     zc = ZendeskClient.new

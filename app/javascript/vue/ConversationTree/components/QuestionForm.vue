@@ -55,7 +55,7 @@ export default {
       'deleteSubQuestion'
     ]),
     ...mapMutations({
-      updateQuestionAnswer: UPDATE_QUESTION_ANSWER
+      updateQuestionAnswerMutation: UPDATE_QUESTION_ANSWER
     }),
 
     handleDeleteSubQuestionButtonClick (e) {
@@ -139,7 +139,7 @@ export default {
 
     handleAnswerKeyup () {
       const { questionAnswer } = this
-      this.updateQuestionAnswer({ questionAnswer, id: this.currentId })
+      this.updateQuestionAnswerMutation({ questionAnswer, id: this.currentId })
     }
   }
 }

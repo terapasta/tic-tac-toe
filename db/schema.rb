@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180425082650) do
+ActiveRecord::Schema.define(version: 20180501052923) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.text "question_text"
@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(version: 20180425082650) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
+    t.bigint "zendesk_article_id"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
 

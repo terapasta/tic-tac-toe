@@ -1,4 +1,3 @@
 class AnswerInlineImage < ApplicationRecord
-  validates :file, presence: true
-  mount_uploader :file, AnswerInlineImageUploader
+  belongs_to :bot
 end

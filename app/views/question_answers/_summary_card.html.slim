@@ -1,5 +1,9 @@
 .card.mb-4
   .card-body
+    - if question_answer.try(:zendesk_article_id).present? && current_user.staff?
+      .card.border-success.mb-3: .card-body.p-2.d-flex.justify-content-between.align-items-center
+        span このQ&AはZendeskで管理されています
+        span.badge.badge-success STAFF ONLY
     - if question_answer.topic_tags.any?
       .row style="padding-bottom:15px;": .col-sm-12
         - question_answer.topic_tags.each do |topic_tag|

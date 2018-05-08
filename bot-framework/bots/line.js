@@ -39,8 +39,6 @@ const toActionData = ({ questionAnswer, decisionBranch }) => {
   }
 }
 
-const testImageURL = 'https://lh3.googleusercontent.com/M6tjfBEKczqgQPk6xq7YOOajqbzkcjec83eTGsm18jmQwHwNZHyJPI5EBdYHLJ0MwhA_mzip1dWxj06mKuKN7vWSd77k-CIXtjn-ImLhcYLP4UmTepwoyOsCfC4wHzmRYsFlMs-4i-ANgGHbJbviLYOBfbE0I2-3J8uvgxrC9kH15-oR49xCqyFDBFT65CY0LjDUG1MXrnpBGCbUB6eDxxtDIpjtF1x9A2X-BZmBQsAhFWiSIQSnV7vBDHx44wShIQurXqGV7uTKH4LuDF5lXF9oYWFfwUgOHC8WLUnSDAepKQHq2qsybXlsyLHec2UJm7k8YrxRxc9HtM8F3wq3xw4h3GmkXDxJVKJ4QOUKNea5fpqXhnPa5wufIlXeJxFoTwq7STBf-fbkmq7XeFzKuaqcGsMNmbyF9nXrA3dAXO2IGOw6uetIZR5n98Y4yRWpIuLpgt4vEPLObH6Jh6Kioee86yKkK3BP_EFNour_g01qUa-_p4DzmI9VJ8RVgIwObQi9gDjIMIVmfVy354Ig1X9SFf5jazrz-i8c0DcgWlB9Ad4rDIun1LXOURFMOY9muqpQrD4z1OPxvorZX2zIz9iNFthpBGimtqStpenJrJU6vyr8Uz_j1gpoFF-hu8o3oJvb_SRLeiWGqK3vrmLJxgXY3ERvbCQ3=w866-h649-no'
-
 class LineBot {
   constructor() {
     this.handleEvent = this.handleEvent.bind(this)
@@ -180,20 +178,23 @@ class LineBot {
     const attrName = isSuggestion ? 'question' : 'body'
     const actionKey = isSuggestion ? 'questionAnswer' : 'decisionBranch'
     const text = isSuggestion ? 'こちらの質問ではないですか？' : truncate(message, 160)
+
     const messageObj = {
       type: 'template',
-      altText: 'alt text',
+      altText: text,
       template: {
-        type: 'buttons',
-        text,
-        actions: decisionBranches.slice(0, 4).map(it => ({
-          type: 'postback',
-          label: truncate(it[attrName], 20),
-          data: JSON.stringify(toActionData({ [actionKey]: it }))
+        type: 'carousel',
+        columns: decisionBranches.slice(0, 10).map(it => ({
+          text: truncate(it[attrName], 120),
+          actions: [{
+            type: 'postback',
+            label: '選択',
+            data: JSON.stringify(toActionData({ [actionKey]: it }))
+          }]
         }))
       }
     }
-    return [messageObj]
+    return [{ type: 'text', text }, messageObj]
   }
 
   replyText(event, text) {

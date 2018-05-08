@@ -92,6 +92,34 @@ namespace :question_answer do
     end
   end
 
+  desc 'BOT_IDで指定したボットにmofomof.zendesk.com/hcの記事を流し込む'
+  task import_mofmof_zendesk_hc: :environment do
+    h = ActionController::Base.helpers
+    bot_id = ENV['ZENDESK_HC_BOT_ID']
+    fail 'Require ZENDESK_HC_BOT_ID' if bot_id.blank?
+    bot = Bot.find(bot_id)
+
+    zc = ZendeskClient.new
+    zc.get_help_center_data
+
+    ActiveRecord::Base.transaction do
+      zc.articles.each do |article|
+        qa = bot.question_answers.find_or_initialize_by(zendesk_article_id: article.id)
+        qa.question = article.name
+        answer_text = h.raw(h.truncate(h.strip_tags(article.body), length: 150).sub(/^\n+/, ''))
+        qa.answer = "#{answer_text}\n#{article.html_url}"
+        qa.save!
+
+        section = zc.section_by(article.section_id)
+        next unless section.present?
+
+        tag = bot.topic_tags.find_or_create_by!(name: section.name, bot_id: bot.id)
+        next unless qa.topic_taggings.find_by(topic_tag_id: tag.id).blank?
+        qa.topic_taggings.create!(topic_tag_id: tag.id)
+      end
+    end
+  end
+
   desc '全Q&Aを分かち書きを保存しておく'
   task wakati_all: :environment do
     bot_word_mappings = Bot.all.inject({}) { |acc, bot|

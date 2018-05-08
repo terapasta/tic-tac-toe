@@ -560,6 +560,8 @@ GEM
       inflection
       mime-types
       multipart-post (~> 2.0)
+    zendesk_help_center_api (0.4.1)
+      zendesk_api (~> 1.13, >= 1.13.4)
 
 PLATFORMS
   ruby
@@ -663,6 +665,7 @@ DEPENDENCIES
   webpacker (~> 3.0)
   whenever
   zendesk_api
+  zendesk_help_center_api
 
 RUBY VERSION
    ruby 2.4.2p198

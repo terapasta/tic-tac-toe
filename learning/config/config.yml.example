@@ -7,7 +7,9 @@ default: &default
     user: root
     password: ""
   # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
-  dicdir: /usr/local/lib/mecab/dic/ipadic
+  # for docker
+  dicdir: /var/lib/mecab/dic/debian
+  # dicdir: /usr/local/lib/mecab/dic/ipadic
   # dicdir: /var/lib/mecab/dic/debian
   # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
   word2vec_model_name: fasttext_model.vec

@@ -72,6 +72,7 @@ Rails.application.routes.draw do
 
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
 
+    # こちらのAPIブロックは管理画面にログインしているユーザー専用
     namespace :api, { format: 'json' } do
       resources :messages, only: :create
       resources :question_answers
@@ -99,8 +100,8 @@ Rails.application.routes.draw do
         resources :messages, module: :bots, only: [] do
           resource :mark, module: :messages, only: [:create, :destroy]
         end
-
         resources :word_mappings, only: [:create, :update, :destroy], module: :bots
+        resources :answer_inline_images, only: [:create], module: :bots
       end
       resources :word_mappings, only: [:create, :update, :destroy]
     end
@@ -148,6 +149,7 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
+  # このAPIブロックはチャット等ログイン不要の場合に使う
   namespace :api, { format: 'json' } do
     resources :messages, only: :create
     resources :public_bots, param: :token, only: [:show]

@@ -2,7 +2,8 @@
 import isEmpty from 'is-empty'
 import debounce from "lodash/debounce"
 
-import * as QuestionAnswerAPI from "../api/questionAnswer";
+import * as QuestionAnswerAPI from '../api/questionAnswer'
+import * as AnswerInlineImageAPI from '../api/answerInlineImage'
 
 const isIE = navigator.userAgent.search("Trident") >= 0
 const KeyCodes = {
@@ -21,7 +22,8 @@ export default {
   data: () => ({
     isIMEInputting: false,
     answers: [],
-    answer: ''
+    answer: '',
+    isProcessing: false
   }),
 
   created () {
@@ -83,6 +85,27 @@ export default {
     handleSuggestItemClick (answer) {
       this.answer = answer
       this.answers = []
+    },
+
+    handleFileInputChange (e) {
+      if (this.isProcessing) { return }
+      const file = e.target.files[0]
+      if (file == null) { return }
+      const { botId } = this
+      this.isProcessing = true
+
+      AnswerInlineImageAPI.upload({ botId, file }).then(res => {
+        this.isProcessing = false
+        const { url } = res.data.answerInlineImage.file
+        const markdown = `\n![${file.name}](${url})\n`
+        const insertPosition = this.$refs.textArea.selectionStart
+        const headText = this.answer.slice(0, insertPosition)
+        const tailText = this.answer.slice(insertPosition + 1)
+        this.answer = headText + markdown + tailText
+      }).catch(err => {
+        console.error(err)
+        this.isProcessing = false
+      })
     }
   }
 }
@@ -90,11 +113,27 @@ export default {
 
 <template>
   <div class="form-group">
-    <label>回答</label>
+    <div class="d-flex justify-content-between align-items-center">
+      <label>回答</label>
+      <div
+        class="btn btn-link file-input-container"
+        title="クリックして回答本文中に画像を追加できます"
+      >
+        <i class="material-icons">add_photo_alternate</i>
+        <input
+          type="file"
+          class="file-input"
+          @change="handleFileInputChange"
+        />
+      </div>
+    </div>
     <textarea
       class="form-control"
       rows="5"
+      ref="textArea"
+      name="question_answer[answer]"
       v-model="answer"
+      :disabled="isProcessing"
       @keydown="handleTextAreaKeyDown"
       @keyup="handleTextAreaKeyUp"
     />
@@ -136,5 +175,19 @@ export default {
 }
 .suggest-item:hover {
   background-color: #efefef;
+}
+.file-input-container {
+  position: relative;
+}
+.file-input {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

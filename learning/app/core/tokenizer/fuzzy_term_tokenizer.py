@@ -10,6 +10,7 @@ from app.shared.config import Config
 from app.shared.logger import logger
 from app.core.tokenizer.base_tokenizer import BaseTokenizer
 from app.shared.part_of_speechs import PartOfSpeech
+from app.shared.learning_phase import is_learning_phase
 
 
 class FuzzyTermTokenizer(BaseTokenizer):
@@ -74,7 +75,10 @@ class FuzzyTermTokenizer(BaseTokenizer):
 
                 # 形態素と読みを併せて返す
                 word_list.append(self._normalize_word(lemma))
-                if not phonetic is None:
+
+                # 学習フェーズのみ読み仮名を特徴ベクトルに含める
+                # see: https://www.pivotaltracker.com/story/show/157345963
+                if is_learning_phase() and not phonetic is None:
                     word_list.append(self._normalize_word(phonetic))
 
             node = node.next

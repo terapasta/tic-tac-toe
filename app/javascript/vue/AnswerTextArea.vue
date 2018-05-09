@@ -17,7 +17,8 @@ export default {
   props: {
     defaultValue: { type: String, default: '' },
     name: { type: String, default: 'question_answer[answer]' },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    isHiddenLabel: { type: Boolean, default: false }
   },
 
   data: () => ({
@@ -125,7 +126,9 @@ export default {
   <div class="form-group">
     <div class="d-flex justify-content-between align-items-center">
       <label class="mb-0">
-        <i class="material-icons" title="回答">chat_bubble_outline</i>&nbsp;回答
+        <span v-if="!isHiddenLabel">
+          <i class="material-icons" title="回答">chat_bubble_outline</i>&nbsp;回答
+        </span>
       </label>
       <div
         class="btn btn-link file-input-container py-1"

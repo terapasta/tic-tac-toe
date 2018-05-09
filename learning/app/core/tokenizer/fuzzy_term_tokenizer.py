@@ -76,9 +76,9 @@ class FuzzyTermTokenizer(BaseTokenizer):
                 # 形態素と読みを併せて返す
                 word_list.append(self._normalize_word(lemma))
 
-                # 学習フェーズのみ読み仮名を特徴ベクトルに含める
+                # 回答フェーズでは、名詞のふりがなを特徴ベクトルに含めない
                 # see: https://www.pivotaltracker.com/story/show/157345963
-                if is_learning_phase() and not phonetic is None:
+                if (is_learning_phase() or pos != PartOfSpeech.NOUN) and not phonetic is None:
                     word_list.append(self._normalize_word(phonetic))
 
             node = node.next

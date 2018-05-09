@@ -111,6 +111,7 @@ export default {
         const headText = this.answer.slice(0, insertPosition)
         const tailText = this.answer.slice(insertPosition)
         this.answer = headText + markdown + tailText
+        this.$emit('keyup', this.answer)
       }).catch(err => {
         console.error(err)
         this.isProcessing = false

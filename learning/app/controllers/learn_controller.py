@@ -4,7 +4,7 @@ import pandas as pd
 from app.shared.logger import logger
 from app.shared.constants import Constants
 from app.shared.base_cls import BaseCls
-
+from app.shared.learning_phase import set_learning_phase
 
 class LearnController(BaseCls):
     def __init__(self, context):
@@ -14,6 +14,8 @@ class LearnController(BaseCls):
     def perform(self):
         logger.info('start')
         logger.debug('bot_id: %s' % self.bot.id)
+
+        set_learning_phase(True)
 
         # HACK: 各種fitをするために_learn_for_vocablaryを必ず最初に実行しないといけない
         self._learn_for_vocabulary()

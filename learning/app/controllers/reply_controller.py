@@ -14,7 +14,7 @@ class ReplyController(BaseCls):
     def perform(self, text):
         logger.info('start')
         logger.debug('question: %s' % text)
-        set_learning_phase(True)
+        set_learning_phase(False)
 
         logger.info('before action')
         texts = self.factory.core.before_reply([text])

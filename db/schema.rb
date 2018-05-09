@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180508072615) do
-=======
-ActiveRecord::Schema.define(version: 20180501052923) do
->>>>>>> eebc3064b1608564da49ba8f1e00df6529495694
-=======
-ActiveRecord::Schema.define(version: 20180501052923) do
->>>>>>> 0f62a424db44678c03999ffdc8f5e50666db1a6c
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"

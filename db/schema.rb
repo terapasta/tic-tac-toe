@@ -48,12 +48,11 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
   end
 
-  create_table "answer_inline_images", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "answer_inline_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "file", null: false
     t.integer "bot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bot_id"], name: "index_answer_inline_images_on_bot_id"
   end
 
   create_table "answer_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -410,5 +409,4 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
   end
 
-  add_foreign_key "answer_inline_images", "bots"
 end

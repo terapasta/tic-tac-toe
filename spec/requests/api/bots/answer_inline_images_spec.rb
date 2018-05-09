@@ -16,12 +16,22 @@ RSpec.describe '/api/bots/:bot_id/answer_inline_images', type: :request do
     end
   end
 
+  let(:sample_image_path) do
+    Rails.root.join('spec/fixtures/images/sample_naoki.jpg')
+  end
+
+  let(:sample_image) do
+    fixture_file_upload(sample_image_path, 'image/jpg')
+  end
+
+  before do
+    login_as(user, scope: :user)
+  end
+
   describe 'POST /api/bots/:bot_id/answer_inline_images' do
     let(:answer_inline_image_params) do
       {
-        answer_inline_image: {
-          file: Rails.root.join('spec/fixtures/images/sample_naoki.jpg').open
-        }
+        answer_inline_image: { file: sample_image }
       }
     end
 
@@ -35,5 +45,4 @@ RSpec.describe '/api/bots/:bot_id/answer_inline_images', type: :request do
       expect(subject).to change(AnswerInlineImage, :count).by(1)
     end
   end
-
 end

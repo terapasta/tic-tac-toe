@@ -61,6 +61,7 @@ gem 'puma'
 
 # Zendesk API
 gem 'zendesk_api'
+gem 'zendesk_help_center_api', require: 'zendesk_api/help_center'
 
 # Use zendesk API parameter
 gem 'virtus'

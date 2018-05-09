@@ -109,7 +109,7 @@ export default {
         const markdown = `\n![${file.name}](${url})\n`
         const insertPosition = this.$refs.textArea.selectionStart
         const headText = this.answer.slice(0, insertPosition)
-        const tailText = this.answer.slice(insertPosition + 1)
+        const tailText = this.answer.slice(insertPosition)
         this.answer = headText + markdown + tailText
       }).catch(err => {
         console.error(err)

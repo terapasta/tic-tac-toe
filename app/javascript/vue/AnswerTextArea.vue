@@ -15,15 +15,17 @@ const KeyCodes = {
 
 export default {
   props: {
-    defaultValue: { type: String, required: true },
-    botId: { type: Number, required: true },
+    defaultValue: { type: String, default: '' },
+    name: { type: String, default: 'question_answer[answer]' },
+    disabled: { type: Boolean, default: false }
   },
 
   data: () => ({
     isIMEInputting: false,
     answers: [],
     answer: '',
-    isProcessing: false
+    isProcessing: false,
+    botId: window.currentBot.id
   }),
 
   created () {
@@ -33,6 +35,12 @@ export default {
   computed: {
     isExistAnswers () {
       return this.answers.length > 0
+    }
+  },
+
+  watch: {
+    defaultValue () {
+      this.answer = this.defaultValue
     }
   },
 
@@ -67,6 +75,7 @@ export default {
 
     handleTextAreaKeyUpForModernBrowsers (e) {
       const { value } = e.target
+      this.$emit('keyup', value)
       if (!isEmpty(value)) {
         this.searchAnswers(value)
       } else {
@@ -114,9 +123,11 @@ export default {
 <template>
   <div class="form-group">
     <div class="d-flex justify-content-between align-items-center">
-      <label>回答</label>
+      <label class="mb-0">
+        <i class="material-icons" title="回答">chat_bubble_outline</i>&nbsp;回答
+      </label>
       <div
-        class="btn btn-link file-input-container"
+        class="btn btn-link file-input-container py-1"
         title="クリックして回答本文中に画像を追加できます"
       >
         <i class="material-icons">add_photo_alternate</i>
@@ -128,12 +139,13 @@ export default {
       </div>
     </div>
     <textarea
+      id="answer-body"
       class="form-control"
       rows="5"
       ref="textArea"
       name="question_answer[answer]"
       v-model="answer"
-      :disabled="isProcessing"
+      :disabled="isProcessing || disabled"
       @keydown="handleTextAreaKeyDown"
       @keyup="handleTextAreaKeyUp"
     />

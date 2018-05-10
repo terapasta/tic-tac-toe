@@ -66,6 +66,8 @@ export default class ChatBotMessage extends Component {
       backgroundImage: `url(${iconImageUrl})`,
     };
 
+    const renderedBody = striptags(markdown.toHTML(body), ['img']).replace(/\n/g, '<br />')
+
     return (
       <div className={className} id={`message-${id}`}>
         <div className="chat-message__icon" style={iconStyle} key="icon" />
@@ -73,7 +75,7 @@ export default class ChatBotMessage extends Component {
           {answerFailed && <i className="material-icons mi-xs text-muted mr-1">error_outline</i>}
           {!isLoading && (
             <Linkify properties={{ target: "_blank" }}>
-              {nl2br(striptags(markdown.toHTML(body), ['img']))}
+              <span dangerouslySetInnerHTML={{ __html: renderedBody }} />
             </Linkify>
           )}
           {isLoading && (

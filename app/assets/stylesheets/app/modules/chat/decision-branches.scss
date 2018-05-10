@@ -17,6 +17,7 @@
 
   &__item {
     position: relative;
+    text-align: center;
 
     span,
     a {
@@ -25,7 +26,6 @@
       border-left: 1px solid $gray-lighter;
       border-right: 1px solid $gray-lighter;
       padding: 10px;
-      text-align: center;
       font-size: 14px;
       color: $blue;
       word-break: break-all;

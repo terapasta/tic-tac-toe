@@ -11,7 +11,6 @@ import isEmpty from 'is-empty'
 import bytes from 'bytes'
 import { markdown } from 'markdown'
 import striptags from 'striptags'
-console.log(striptags)
 
 import * as c from './Constants'
 

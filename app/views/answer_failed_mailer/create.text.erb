@@ -2,7 +2,7 @@
 
 以下の質問に回答が失敗してしまいましたのでご連絡差し上げました。
 
-質問<%= @guest_user.present? "（#{@guest_user.name}さん#{@guest_user.email.present? ? ' ' + @guest_user.email : ''}）" : '' %>
+質問<%= @guest_name %>
 「<%= @guest_message.body」 %>
 
 回答

@@ -1,15 +1,15 @@
 class ZendeskClient
-  def self.shared_client
-    @client ||= ZendeskAPI::Client.new do |config|
+  def self.make_client_with(credential)
+    ZendeskAPI::Client.new do |config|
       # Mandatory:
 
-      config.url = ENV['ZENDESK_URL'] # e.g. https://mydesk.zendesk.com/api/v2
+      config.url = credential.url # e.g. https://mydesk.zendesk.com/api/v2
 
       # Basic / Token Authentication
-      config.username = ENV['ZENDESK_USERNAME']
+      config.username = credential.username
 
       # Choose one of the following depending on your authentication choice
-      config.token = ENV['ZENDESK_TOKEN']
+      config.token = credential.access_token
       # config.password = "your zendesk password"
 
       # OAuth Authentication
@@ -37,12 +37,20 @@ class ZendeskClient
     end
   end
 
+  def self.shared_client
+    @client ||= make_client_with(ZendeskCredential.new(
+      url: ENV['ZENDESK_URL'],
+      username: ENV['ZENDESK_USERNAME'],
+      access_token: ENV['ZENDESK_TOKEN']
+    ))
+  end
+
   def shared_client
     self.class.shared_client
   end
 
-  def get_help_center_data
-    @data = shared_client.hc_categories.to_a.inject({
+  def get_help_center_data(client = nil)
+    @data = (client || shared_client).hc_categories.to_a.inject({
       sections: [],
       articles: []
     }) { |acc, cat|
@@ -62,5 +70,23 @@ class ZendeskClient
 
   def section_by(id)
     sections.detect{ |it| it.id == id }
+  end
+
+  def import_articles_for!(bot)
+    h = ActionController::Base.helpers
+    articles.each do |article|
+      qa = bot.question_answers.find_or_initialize_by(zendesk_article_id: article.id)
+      qa.question = article.name
+      answer_text = h.raw(h.truncate(h.strip_tags(article.body), length: 150).sub(/^\n+/, ''))
+      qa.answer = "#{answer_text}\n#{article.html_url}"
+      qa.save!
+
+      section = section_by(article.section_id)
+      next unless section.present?
+
+      tag = bot.topic_tags.find_or_create_by!(name: section.name, bot_id: bot.id)
+      next unless qa.topic_taggings.find_by(topic_tag_id: tag.id).blank?
+      qa.topic_taggings.create!(topic_tag_id: tag.id)
+    end
   end
 end

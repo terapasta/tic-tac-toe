@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
     t.text "chat_test_job_error"
-    t.boolean "is_demo", default: false, null: false
+    t.boolean "is_demo", null: false
     t.datetime "demo_finished_at"
     t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
     t.index ["user_id"], name: "index_bots_on_user_id"
@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
+    t.text "question_wakati"
     t.bigint "zendesk_article_id"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
@@ -331,6 +332,7 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -400,6 +402,7 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "value_wakati"
   end
 
   create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -407,7 +410,18 @@ ActiveRecord::Schema.define(version: 20180508072615) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id"
+    t.string "word_wakati"
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
+  end
+
+  create_table "zendesk_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "bot_id", null: false
+    t.string "url", null: false
+    t.string "username", null: false
+    t.string "access_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_zendesk_credentials_on_bot_id"
   end
 
 end

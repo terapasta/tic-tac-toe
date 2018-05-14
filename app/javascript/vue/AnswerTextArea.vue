@@ -138,6 +138,7 @@ export default {
         <input
           type="file"
           class="file-input"
+          name="answer-inline-image"
           @change="handleFileInputChange"
         />
       </div>

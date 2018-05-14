@@ -164,7 +164,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
 
   scenario 'filter by topic_tags' do
     find('.multiselect__tags').click
-    page.save_screenshot
     all('.multiselect__element').detect{ |it| it.text == topic_tags.first.name }.click
     expect(page).to have_content(question_answers.first.question)
     expect(page).to_not have_content(question_answers.second.question)

@@ -76,12 +76,20 @@ class Context(BaseCls):
         else:
             logger.info('algorithm: Default')
 
-        return factory_cls.new(
+        factory = factory_cls.new(
             bot=self.current_bot,
             datasource=self.get_datasource(),
             feedback=self.get_feedback(),
-            phase=self.phase,
         )
+
+        # set_phaseメソッドが定義されている場合、phase をセットする
+        # see: https://docs.python.org/3.6/library/functions.html#getattr
+        #      https://docs.python.org/3.6/library/functions.html#callable
+        op = getattr(factory, "set_phase", None)
+        if callable(op):
+            factory.set_phase(self.phase)
+
+        return factory
 
     def get_feedback(self):
         feedback_cls = PassFeedback

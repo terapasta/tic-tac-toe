@@ -12,9 +12,9 @@ from app.shared.datasource.datasource import Datasource
 
 class FuzzyCosineSimilarityFactory(BaseFactory):
     @inject
-    def __init__(self, bot, datasource: Datasource, feedback, phase):
+    def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
-        self.tokenizer = FuzzyTermTokenizer.new(phase=phase)
+        self.tokenizer = FuzzyTermTokenizer.new()
         self.vectorizer = FuzzyTermVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)
@@ -42,6 +42,12 @@ class FuzzyCosineSimilarityFactory(BaseFactory):
 
     def get_datasource(self):
         return self.datasource
+
+    def set_phase(self, phase):
+        # NOTE:
+        # フェーズによってトークナイズ方式が異なるので、ここで設定
+        # see: https://www.pivotaltracker.com/story/show/157345963
+        self.tokenizer.set_phase(phase)
 
     @property
     def core(self):

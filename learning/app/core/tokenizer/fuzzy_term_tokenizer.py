@@ -14,12 +14,12 @@ from app.shared.constants import Constants
 
 
 class FuzzyTermTokenizer(BaseTokenizer):
-    def __init__(self, phase=None):
+    def __init__(self):
         logger.debug('dicdir: ' + Config().get('dicdir'))
         self.tagger = MeCab.Tagger("-u dict/custom.dic -d " + Config().get('dicdir'))
         # Note: node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         self.tagger.parse('')
-        self.phase = phase
+        self.phase = None
 
     def tokenize(self, texts):
         splited_texts = []
@@ -32,6 +32,9 @@ class FuzzyTermTokenizer(BaseTokenizer):
 
     def extract_verb_count(self, text):
         return self.__extract_pos_count('動詞', text)
+
+    def set_phase(self, phase):
+        self._phase = phase
 
     def _tokenize_single_text(self, text):
         node = self.tagger.parseToNode(text)

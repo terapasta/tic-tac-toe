@@ -115,7 +115,7 @@ class Bot {
 
         const attrName = isSuggestion ? 'question' : 'body'
         const choices = decisionBranches.map(it => it[attrName])
-        let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : ''
+        let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : '回答を選択して下さい'
         _message = !isEmpty(message) ? `${message}<br/>` : _message
 
         Prompts.choice(session, _message/* + "※半角数字で解答して下さい"*/, choices, {

@@ -9,6 +9,11 @@
   = render 'shared/pagination', resources: @question_answers, per_page: @per_page
 
 = render layout: 'bots/layout' do
+  - if @bot.zendesk_credential.present?
+    .card.mb-4: .card-body.position-relative.text-center
+      = link_to 'Zendeskのデータを取り込む', bot_zendesk_articles_path(@bot), class: 'btn btn-success', data: { method: :put }
+      span.badge.badge-success style="position:absolute; top:16px; right:16px" STAFF ONLY
+
   = render 'question_answers/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, action_url: bot_question_answers_path(@bot, headless: params[:headless], hide_global_header: params[:hide_global_header])
 
   = render layout: 'shared/pagination', locals: { resources: @question_answers, per_page: @per_page, hide_paginator: true } do

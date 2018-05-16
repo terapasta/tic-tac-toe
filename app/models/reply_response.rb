@@ -109,7 +109,7 @@ class ReplyResponse
   def update_to_has_suggests_message_if_needed!(bot_message)
     return unless is_need_has_suggests_message?
     bot_message.body = render_has_suggests_message
-    bot_message.update!(answer_failed: false)
+    bot_message.update!(answer_failed: false, is_show_similar_question_answers: true)
   end
 
   private

@@ -92,6 +92,20 @@ namespace :question_answer do
     end
   end
 
+  desc 'BOT_IDで指定したボットにmofomof.zendesk.com/hcの記事を流し込む'
+  task import_mofmof_zendesk_hc: :environment do
+    bot_id = ENV['ZENDESK_HC_BOT_ID']
+    fail 'Require ZENDESK_HC_BOT_ID' if bot_id.blank?
+
+    bot = Bot.find(bot_id)
+    zc = ZendeskClient.new
+    zc.get_help_center_data
+
+    ActiveRecord::Base.transaction do
+      zc.import_articles_for!(bot)
+    end
+  end
+
   desc '全Q&Aを分かち書きを保存しておく'
   task wakati_all: :environment do
     bot_word_mappings = Bot.all.inject({}) { |acc, bot|

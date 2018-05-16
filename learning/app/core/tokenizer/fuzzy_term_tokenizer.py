@@ -10,15 +10,16 @@ from app.shared.config import Config
 from app.shared.logger import logger
 from app.core.tokenizer.base_tokenizer import BaseTokenizer
 from app.shared.part_of_speechs import PartOfSpeech
-from app.shared.learning_phase import is_learning_phase
+from app.shared.constants import Constants
 
 
 class FuzzyTermTokenizer(BaseTokenizer):
-    def __init__(self):
+    def __init__(self, phase=None):
         logger.debug('dicdir: ' + Config().get('dicdir'))
         self.tagger = MeCab.Tagger("-u dict/custom.dic -d " + Config().get('dicdir'))
         # Note: node.surfaceを取得出来るようにするため、空文字をparseする(Python3のバグの模様)
         self.tagger.parse('')
+        self.phase = phase
 
     def tokenize(self, texts):
         splited_texts = []
@@ -78,7 +79,7 @@ class FuzzyTermTokenizer(BaseTokenizer):
 
                 # 回答フェーズでは、名詞のふりがなを特徴ベクトルに含めない
                 # see: https://www.pivotaltracker.com/story/show/157345963
-                if (is_learning_phase() or pos != PartOfSpeech.NOUN) and not phonetic is None:
+                if (self.phase == Constants.PHASE_LEARNING or pos != PartOfSpeech.NOUN) and not phonetic is None:
                     word_list.append(self._normalize_word(phonetic))
 
             node = node.next

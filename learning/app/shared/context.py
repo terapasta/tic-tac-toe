@@ -19,12 +19,13 @@ from app.feedback.pass_feedback import PassFeedback
 
 # Note: リクエストされたコンテキスト情報を保持する
 class Context(BaseCls):
-    def __init__(self, bot_id, learning_parameter, grpc_context=None, datasource: Datasource=None):
+    def __init__(self, bot_id, learning_parameter, grpc_context=None, datasource: Datasource=None, phase=Constants.PHASE_REPLYING):
         self._bot = Bot(bot_id=bot_id, learning_parameter=learning_parameter)
         self._grpc_context = grpc_context
         self._datasource = datasource if datasource is not None else Datasource.new()
         self._datasource.persistence.init_by_bot(self.current_bot)
         self._pass_feedback = False
+        self._phase = phase
 
     @property
     def current_bot(self):
@@ -33,6 +34,10 @@ class Context(BaseCls):
     @property
     def pass_feedback(self):
         return self._pass_feedback
+
+    @property
+    def phase(self):
+        return self._phase
 
     def get_datasource(self):
         return self._datasource
@@ -74,7 +79,8 @@ class Context(BaseCls):
         return factory_cls.new(
             bot=self.current_bot,
             datasource=self.get_datasource(),
-            feedback=self.get_feedback()
+            feedback=self.get_feedback(),
+            phase=self.phase,
         )
 
     def get_feedback(self):

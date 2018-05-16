@@ -2,7 +2,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from app.shared.logger import logger
 from app.shared.base_cls import BaseCls
-from app.shared.learning_phase import set_learning_phase
 
 
 class ReplyController(BaseCls):
@@ -14,7 +13,6 @@ class ReplyController(BaseCls):
     def perform(self, text):
         logger.info('start')
         logger.debug('question: %s' % text)
-        set_learning_phase(False)
 
         logger.info('before action')
         texts = self.factory.core.before_reply([text])

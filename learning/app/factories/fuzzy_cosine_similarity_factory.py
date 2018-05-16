@@ -12,9 +12,9 @@ from app.shared.datasource.datasource import Datasource
 
 class FuzzyCosineSimilarityFactory(BaseFactory):
     @inject
-    def __init__(self, bot, datasource: Datasource, feedback):
+    def __init__(self, bot, datasource: Datasource, feedback, phase):
         self.datasource = datasource
-        self.tokenizer = FuzzyTermTokenizer.new()
+        self.tokenizer = FuzzyTermTokenizer.new(phase=phase)
         self.vectorizer = FuzzyTermVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
         self.normalizer = PassNormalizer.new(datasource=self.datasource)

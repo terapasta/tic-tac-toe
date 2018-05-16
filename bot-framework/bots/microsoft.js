@@ -23,8 +23,6 @@ const {
 } = require('../api')
 
 const service_type = 'skype'
-const s3 = NODE_ENV === 'development' ?
-  'https://my-ope-assets-dev.s3.amazonaws.com' : ''
 
 const resolveUid = ({ source, id, uid }) => {
   switch (source) {
@@ -180,14 +178,14 @@ class Bot {
       .filter(it => /image/.test(it.fileType))
       .map(it => (new HeroCard(session)
         .title(path.basename(it.file.url))
-        .images([CardImage.create(session, s3 + it.file.url)])
-        .buttons([CardAction.openUrl(session, s3 + it.file.url, '画像を開く')])))
+        .images([CardImage.create(session, it.file.url)])
+        .buttons([CardAction.openUrl(session, it.file.url, '画像を開く')])))
 
     const otherFiles = answerFiles
       .filter(it => !/image/.test(it.fileType))
       .map(it => (new HeroCard(session)
         .title(decodeURIComponent(path.basename(it.file.url)))
-        .buttons([CardAction.openUrl(session, s3 + it.file.url, 'ダウンロード')])))
+        .buttons([CardAction.openUrl(session, it.file.url, 'ダウンロード')])))
 
     const msg = new Message(session)
       .attachmentLayout(AttachmentLayout.carousel)

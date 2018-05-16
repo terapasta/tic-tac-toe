@@ -10,6 +10,10 @@ class Message < ApplicationRecord
   accepts_nested_attributes_for :rating
   belongs_to :decision_branch
   has_many :bad_reasons
+  belongs_to :guest_message,
+    -> { guest },
+    class_name: 'Message',
+    foreign_key: :guest_message_id
 
   enum speaker: { bot: 'bot', guest: 'guest' }
 

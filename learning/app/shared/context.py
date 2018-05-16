@@ -39,6 +39,10 @@ class Context(BaseCls):
     def phase(self):
         return self._phase
 
+    @phase.setter
+    def phase(self, phase):
+        self._phase = phase
+
     def get_datasource(self):
         return self._datasource
 

@@ -81,6 +81,7 @@ class Bot {
     const { id, uid, name } = session.message.user
     const _uid = resolveUid({ source, id, uid })
     const service_type = source === 'webchat' ? 'msteams' : source
+    const message = session.message.text.replace(/<at>.+<\/at>/g, '')
 
     session.sendTyping()
 
@@ -95,7 +96,7 @@ class Bot {
       createMessage({
         botToken,
         guestKey: res.data.chat.guestKey,
-        message: session.message.text
+        message
       }).then((res) => {
         this.handleAnswerMessage({ session, res })
       })

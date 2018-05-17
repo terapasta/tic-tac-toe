@@ -6,7 +6,24 @@ class Learning::Summarizer
   def summary
     ActiveRecord::Base.transaction do
       LearningTrainingMessage.where(bot: @bot).delete_all
-      convert_question_answers!
+      data = @bot.question_answers.pluck(:id, :question_wakati, :answer).map{ |qa|
+        datum = {
+          bot_id: @bot.id,
+          question_answer_id: qa[0],
+          question: qa[1],
+          answer_body: qa[2]
+        }
+        sq_data = SubQuestion.where(question_answer_id: qa[0]).pluck(:id, :question_wakati).map{ |sqa| {
+          is_sub_question: true,
+          bot_id: @bot.id,
+          question_answer_id: qa[0],
+          question: sqa[1],
+          answer_body: qa[2]
+        } }
+        [datum, *sq_data].map{ |d| LearningTrainingMessage.new(d) }
+      }.flatten
+      LearningTrainingMessage.import(data)
+      # convert_question_answers!
     end
   end
 

@@ -22,12 +22,13 @@ class WordMappingsDecorator < Draper::CollectionDecorator
   private
     def mappings
       @mappings ||= object.inject([]) { |memo, word_mapping|
-        synonyms = word_mapping.word_mapping_synonyms.map(&:value)
+        synonyms = word_mapping.word_mapping_synonyms.map{ |it| it.value_wakati.presence || it.value }
         synonyms.each do |synonym|
           memo.select!{ |it| it.second.exclude?(synonym) }
-          index = memo.index{ |it| it.first == word_mapping.word }
+          word = word_mapping.word_wakati.presence || word_mapping.word
+          index = memo.index{ |it| it.first == word }
           if index.blank?
-            memo << [word_mapping.word, [synonym]]
+            memo << [word, [synonym]]
           else
             memo[index][1] ||= []
             memo[index][1] << synonym

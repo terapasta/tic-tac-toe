@@ -23,10 +23,6 @@ class QuestionAnswer < ApplicationRecord
 
   validates :question, presence: true
 
-  after_create do
-    self.bot&.tutorial&.done_fifty_question_answers_if_needed!
-  end
-
   scope :completed_count_for, -> (user_id, target_date) {
     joins(:sentence_synonyms)
       .merge(SentenceSynonym.target_user(user_id))
@@ -76,6 +72,10 @@ class QuestionAnswer < ApplicationRecord
       .where(topic_tags: { is_show_in_suggestion: true })
       .or(left_joins(:topic_tags).where(topic_tags: { id: nil }))
   }
+
+  after_create do
+    self.bot&.tutorial&.done_fifty_question_answers_if_needed!
+  end
 
   before_destroy do
     break if self.bot.blank?

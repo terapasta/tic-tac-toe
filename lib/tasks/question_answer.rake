@@ -108,23 +108,27 @@ namespace :question_answer do
 
   desc '全Q&Aを分かち書きを保存しておく'
   task wakati_all: :environment do
-    bot_word_mappings = Bot.all.inject({}) { |acc, bot|
+    bot_id = ENV['BOT_ID']
+    bots = bot_id.present? ? Bot.where(id: [bot_id]) : Bot.all
+    bot_word_mappings = bots.inject({}) { |acc, bot|
       acc[bot.id] = WordMapping.for_bot(bot).decorate
       acc
     }
 
     ActiveRecord::Base.transaction do
-      Bot.all.each do |bot|
+      bots.each do |bot|
+        word_mappings = bot_word_mappings[bot.id]
         bot.question_answers.each do |qa|
-          qa.question_wakati = bot_word_mappings[qa.bot_id].replace_synonym(Wakatifier.apply(qa.question))
+          qa.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(qa.question))
           qa.save!(validate: false)
+          puts "#{qa.id}: #{qa.question_wakati}"
 
           qa.sub_questions.each do |sq|
-            sq.question_wakati = bot_word_mappings[qa.bot_id].replace_synonym(Wakatifier.apply(sq.question))
+            sq.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(sq.question))
             sq.save!(validate: false)
+            puts "    #{sq.id}: #{sq.question_wakati}"
           end
 
-          puts qa.id
         end
       end
     end

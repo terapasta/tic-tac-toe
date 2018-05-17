@@ -77,11 +77,22 @@ class QuestionAnswer < ApplicationRecord
     self.bot&.tutorial&.done_fifty_question_answers_if_needed!
   end
 
+  before_validation :set_question_wakati
+
   before_destroy do
     break if self.bot.blank?
     if self.bot.selected_question_answer_ids.include?(self.id)
       self.bot.selected_question_answer_ids -= [self.id]
       self.bot.save!
+    end
+  end
+
+  def set_question_wakati
+    if bot.present?
+      word_mappings = WordMapping.for_bot(bot).decorate
+      self.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(question))
+    else
+      self.question_wakati = Wakatifier.apply(question)
     end
   end
 

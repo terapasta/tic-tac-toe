@@ -27,7 +27,7 @@ class WordMapping < ApplicationRecord
   end
 
   scope :for_bot, -> (bot) {
-    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
+    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id).includes(:word_mapping_synonyms)
   }
 
   scope :keyword, -> (_keyword) {

@@ -87,6 +87,31 @@ class QuestionAnswer < ApplicationRecord
     end
   end
 
+  def self.replace_synonym_all!(bot_id = nil)
+    bots = bot_id.present? ? Bot.where(id: [bot_id]) : Bot.all
+    bot_word_mappings = bots.inject({}) { |acc, bot|
+      acc[bot.id] = WordMapping.for_bot(bot).decorate
+      acc
+    }
+
+    ActiveRecord::Base.transaction do
+      bots.each do |bot|
+        word_mappings = bot_word_mappings[bot.id]
+        bot.question_answers.includes(:sub_questions).each do |qa|
+          qa.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(qa.question))
+          qa.save!(validate: false)
+          puts "#{qa.id}: #{qa.question_wakati}"
+
+          qa.sub_questions.each do |sq|
+            sq.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(sq.question))
+            sq.save!(validate: false)
+            puts "    #{sq.id}: #{sq.question_wakati}"
+          end
+        end
+      end
+    end
+  end
+
   def set_question_wakati
     if bot.present?
       word_mappings = WordMapping.for_bot(bot).decorate

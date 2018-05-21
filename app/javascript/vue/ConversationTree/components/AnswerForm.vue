@@ -7,6 +7,7 @@ import DecisionBranchInlineForm from './DecisionBranchInlineForm'
 import QuestionAnswerFormMixin from '../mixins/QuestionAnswerForm'
 import AnswerFormMixin from '../mixins/AnswerForm'
 import AnswerFiles from './AnswerFiles'
+import AnswerTextArea from '../../AnswerTextArea'
 
 export default {
   mixins: [
@@ -17,7 +18,8 @@ export default {
   components: {
     AnswerIcon,
     DecisionBranchInlineForm,
-    AnswerFiles
+    AnswerFiles,
+    AnswerTextArea
   },
 
   data: () => ({
@@ -106,6 +108,10 @@ export default {
         default:
           break
       }
+    },
+
+    handleAnswerTextAreaKeyup (answer) {
+      this.parent.answer = answer
     }
   }
 }
@@ -114,15 +120,11 @@ export default {
 <template>
   <div>
     <div class="form-group">
-      <label><answer-icon />&nbsp;回答</label>
-      <textarea
-        class="form-control mb-3"
-        id="answer-body"
+      <answer-text-area
         name="answer-body"
-        rows="3"
-        style="height: 86px;"
-        v-model="parent.answer"
         :disabled="isProcessing"
+        :default-value="parent.answer"
+        @keyup="handleAnswerTextAreaKeyup"
       />
       <answer-files
         :decisionBranchId="decisionBranch.id"

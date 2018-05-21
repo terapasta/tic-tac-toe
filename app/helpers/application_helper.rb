@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def nl2br(text)
-    sanitize(text.to_s).gsub(/\r?\n/, '<br />').html_safe
+    sanitize(text.to_s.squeeze("\n")).gsub(/\r?\n/, '<br />').html_safe
   end
 
   def topic_tags_for_select(bot)

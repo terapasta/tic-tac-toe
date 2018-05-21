@@ -47,6 +47,11 @@ body {
   z-index: 2000;
 }
 
+.btn,
+input[type="file"] {
+  cursor: pointer !important;
+}
+
 @import 'app/common/variables';
 @import 'app/common/keyframes';
 @import 'app/helpers/*';

@@ -1,7 +1,7 @@
 import "babel-polyfill";
 import promiseMiddleware from 'redux-promise'
 
-import AnswerTextArea from '../components/AnswerTextArea'
+// import AnswerTextArea from '../components/AnswerTextArea'
 import BotResetForm from '../components/BotResetForm'
 import CopyButton from '../components/CopyButton'
 import ChatApp from '../components/Chat/App'
@@ -21,7 +21,7 @@ function init() {
   Mixpanel.listenEvents()
   CopyButton.initialize()
 
-  mountComponent(AnswerTextArea)
+  // mountComponent(AnswerTextArea)
   mountComponent(BotResetForm)
   mountComponentWithRedux(ChatApp, ChatAppReducers, [promiseMiddleware])
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers)

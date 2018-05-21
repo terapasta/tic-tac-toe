@@ -40,8 +40,8 @@ export default {
   },
 
   watch: {
-    defaultValue () {
-      this.answer = this.defaultValue
+    defaultValue (newVal) {
+      this.answer = newVal
     }
   },
 

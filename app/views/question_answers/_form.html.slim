@@ -41,7 +41,7 @@
       span(
         data-component="AnswerTextArea"
         data-base-name="question_answer"
-        data-default-value=@question_answer.answer
+        data-default-value=(@question_answer.answer || '')
         data-bot-id=@bot.id
       )
         label 回答

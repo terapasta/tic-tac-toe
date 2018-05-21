@@ -66,7 +66,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   scenario 'creates question with answer'  do
     find('#AddQuestionAnswerButton').click
     find('[name=question-question]').set('new question')
-    find('[name=question-answer]').set('new answer')
+    find('[name="question_answer[answer]"]').set('new answer')
     click_button '保存'
     within '.master-detail-panel__master' do
       expect(page).to have_content('new question')
@@ -90,7 +90,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
   scenario 'updates answer' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
-    find('[name=answer-body]').set('updated answer')
+    find('[name="question_answer[answer]"]').set('updated answer')
     # fill_in_input name: 'answer-body', value: 'updated answer'
     click_button '保存'
     within '.master-detail-panel__master' do
@@ -164,7 +164,6 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
 
   scenario 'filter by topic_tags' do
     find('.multiselect__tags').click
-    page.save_screenshot
     all('.multiselect__element').detect{ |it| it.text == topic_tags.first.name }.click
     expect(page).to have_content(question_answers.first.question)
     expect(page).to_not have_content(question_answers.second.question)

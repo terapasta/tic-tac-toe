@@ -9,6 +9,8 @@ import last from 'lodash/last'
 import classNames from 'classnames'
 import isEmpty from 'is-empty'
 import bytes from 'bytes'
+import { markdown } from 'markdown'
+import striptags from 'striptags'
 
 import * as c from './Constants'
 
@@ -63,6 +65,8 @@ export default class ChatBotMessage extends Component {
       backgroundImage: `url(${iconImageUrl})`,
     };
 
+    const renderedBody = striptags(markdown.toHTML(body), ['img']).replace(/\n/g, '<br />')
+
     return (
       <div className={className} id={`message-${id}`}>
         <div className="chat-message__icon" style={iconStyle} key="icon" />
@@ -70,7 +74,7 @@ export default class ChatBotMessage extends Component {
           {answerFailed && <i className="material-icons mi-xs text-muted mr-1">error_outline</i>}
           {!isLoading && (
             <Linkify properties={{ target: "_blank" }}>
-              {nl2br(body)}
+              <span dangerouslySetInnerHTML={{ __html: renderedBody }} />
             </Linkify>
           )}
           {isLoading && (

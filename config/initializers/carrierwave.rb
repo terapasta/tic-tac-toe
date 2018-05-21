@@ -1,4 +1,9 @@
-if Rails.env.production? || Rails.env.staging?
+fog_envs = %w(
+  production
+  staging
+)
+
+if fog_envs.include?(Rails.env.to_s)
   CarrierWave.configure do |config|
     config.fog_provider = 'fog/aws'
     config.fog_credentials = {
@@ -16,11 +21,7 @@ if Rails.env.production? || Rails.env.staging?
     config.asset_host = "https://#{ENV['AWS_S3_BUCKET_NAME']}.s3.amazonaws.com"
     # config.fog_attributes = { 'Cache-Control' => 'max-age=315576000' }
   end
-elsif Rails.env.development?
-  CarrierWave.configure do |config|
-    config.storage = :file
-  end
-else
+elsif Rails.env.test?
   CarrierWave.configure do |config|
     config.storage = :file
     config.enable_processing = false
@@ -37,6 +38,10 @@ else
         "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
       end
     end
+  end
+else
+  CarrierWave.configure do |config|
+    config.storage = :file
   end
 end
 CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/

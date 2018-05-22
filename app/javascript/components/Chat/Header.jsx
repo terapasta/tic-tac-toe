@@ -62,10 +62,13 @@ class ChatHeader extends Component {
   }
 
   renderGuestUserParts () {
-    const { isManager, isEnableGuestUserRegistration } = this.props
+    const { isManager, isEnableGuestUserRegistration, isGuestUserFormSkippable } = this.props
     const { isNoHeader, isShowGuestUserForm, isRegisteredGuestUser } = this.state
 
     if (!isEnableGuestUserRegistration) { return null }
+    const modalOnClose = isRegisteredGuestUser || isGuestUserFormSkippable
+      ? () => { this.setState({ isShowGuestUserForm: false }) }
+      : null
 
     return (
       <span>
@@ -85,7 +88,7 @@ class ChatHeader extends Component {
         {(!isManager && isShowGuestUserForm) && (
           <Modal
             title='ユーザー情報'
-            onClose={isRegisteredGuestUser ? () => { this.setState({ isShowGuestUserForm: false }) } : null}
+            onClose={modalOnClose}
           >
             <GuestUserForm
               handleRegistered={() => {
@@ -125,7 +128,8 @@ ChatHeader.propTypes = {
   botName: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isManager: PropTypes.bool.isRequired,
-  learningStatus: PropTypes.oneOf(values(LearningStatus))
+  learningStatus: PropTypes.oneOf(values(LearningStatus)),
+  isGuestUserFormSkippable: PropTypes.bool.isRequired
 }
 
 export default ChatHeader

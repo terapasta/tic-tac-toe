@@ -10,27 +10,27 @@ import get from 'lodash/get'
 import * as GuestUserAPI from '../../api/guestUser'
 
 class Static extends Component {
-  render() {
-    const { name, email, onClickEditButton } = this.props;
+  render () {
+    const { name, email, onClickEditButton } = this.props
     return (
       <div>
-        <div className="form-group">
+        <div className='form-group'>
           以下の内容でユーザー情報を登録しています
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <label>お名前</label>
-          <p className="mb-0" style={{ fontSize: '16px' }}>{name}</p>
+          <p className='mb-0' style={{ fontSize: '16px' }}>{name}</p>
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <label>メールアドレス</label>
-          <p className="mb-0" style={{ fontSize: '16px' }}>
+          <p className='mb-0' style={{ fontSize: '16px' }}>
             {!isEmpty(email) && email}
             {isEmpty(email) && '未登録'}
           </p>
         </div>
-        <div className="form-group mb-0 text-center">
+        <div className='form-group mb-0 text-center'>
           <button
-            className="btn btn-secondary"
+            className='btn btn-secondary'
             onClick={onClickEditButton}
           >編集</button>
         </div>
@@ -40,7 +40,7 @@ class Static extends Component {
 }
 
 class Form extends Component {
-  render() {
+  render () {
     const {
       values,
       touched,
@@ -49,53 +49,53 @@ class Form extends Component {
       handleSubmit,
       isSubmitting,
       isPersisted,
-      handleClickCancel,
+      handleClickCancel
     } = this.props
 
     return (
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className='form-group'>
           チャット後のサポートに役立てるために、<br />以下の情報をご入力下さい
         </div>
-        <div className="form-group">
-          <label>お名前 <span className="text-danger">*</span></label>
+        <div className='form-group'>
+          <label>お名前 <span className='text-danger'>*</span></label>
           <input
-            id="guest-user-name"
-            type="text"
-            name="name"
-            className="form-control"
+            id='guest-user-name'
+            type='text'
+            name='name'
+            className='form-control'
             onChange={handleChange}
             value={values.name}
           />
-        {errors.name && (
-            <div className="text-danger">{errors.name}</div>
+          {errors.name && (
+            <div className='text-danger'>{errors.name}</div>
           )}
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <label>メールアドレス</label>
           <input
-            id="guest-user-email"
-            type="email"
-            name="email"
-            className="form-control"
+            id='guest-user-email'
+            type='email'
+            name='email'
+            className='form-control'
             onChange={handleChange}
             value={values.email}
           />
           {touched.email && errors.email && (
-            <div className="text-danger">{errors.email}</div>
+            <div className='text-danger'>{errors.email}</div>
           )}
         </div>
-        <div className="form-group mb-0 text-center">
+        <div className='form-group mb-0 text-center'>
           <input
-            id="guest-user-submit"
-            type="submit"
-            value="送信"
-            className="btn btn-success"
+            id='guest-user-submit'
+            type='submit'
+            value='送信'
+            className='btn btn-success'
             disabled={isSubmitting}
           />
           {isPersisted && (
             <button
-              className="btn btn-link"
+              className='btn btn-link'
               onClick={handleClickCancel}
             >キャンセル</button>
           )}
@@ -111,7 +111,7 @@ const FormikForm = withFormik({
     name: Yup.string().required('お名前は必須項目です'),
     email: Yup.string().email('メールアドレスの形式が正しくありません')
   }),
-  handleSubmit(values, { props, setSubmitting }) {
+  handleSubmit (values, { props, setSubmitting }) {
     const { name, email } = values
     const guestKey = Cookies.get('guest_key')
     let request, isCreate
@@ -132,36 +132,36 @@ const FormikForm = withFormik({
       }
     }).catch((err) => {
       setSubmitting(false)
-      const { errors, error } = err.response.data;
-      const message = !isEmpty(errors) ? errors.join("\n") : error
+      const { errors, error } = err.response.data
+      const message = !isEmpty(errors) ? errors.join('\n') : error
       toastr.error(message, 'エラー')
-    });
+    })
   }
 })(Form)
 
 class GuestUserForm extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       guestUser: null,
       isLoading: false,
-      isEditing: false,
+      isEditing: false
     }
     this.handleClickEditButton = this.handleClickEditButton.bind(this)
     this.handleSaved = this.handleSaved.bind(this)
   }
 
-  handleClickEditButton(e) {
+  handleClickEditButton (e) {
     e.preventDefault()
     this.setState({ isEditing: true })
   }
 
-  handleSaved(guestUser) {
+  handleSaved (guestUser) {
     this.setState({ guestUser, isEditing: false })
     toastr.success('ユーザー情報を保存しました')
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const guestKey = Cookies.get('guest_key')
     if (isEmpty(guestKey)) { return }
     this.setState({ isLoading: true })
@@ -176,13 +176,13 @@ class GuestUserForm extends Component {
     })
   }
 
-  render() {
+  render () {
     const { handleRegistered } = this.props
     const { guestUser, isEditing, isLoading } = this.state
 
     return (
       <div style={{ textAlign: 'left' }}>
-        {isLoading && <div className="chat-guest-user-form">読み込み中...</div>}
+        {isLoading && <div className='chat-guest-user-form'>読み込み中...</div>}
         {(isEmpty(guestUser) || isEditing) && !isLoading && (
           <FormikForm
             isPersisted={!isEmpty(guestUser)}
@@ -206,7 +206,7 @@ class GuestUserForm extends Component {
 }
 
 GuestUserForm.propTypes = {
-  handleRegistered: PropTypes.func,
+  handleRegistered: PropTypes.func
 }
 
 export default GuestUserForm

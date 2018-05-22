@@ -43,8 +43,13 @@ export default {
   computed: {
     ...mapState([
       'questionsRepo',
-      'questionsTree'
-    ])
+      'questionsTree',
+      'isStaff'
+    ]),
+
+    isNeedZendeskAlert () {
+      return this.questionAnswer.zendeskArticleId && this.isStaff
+    }
   },
 
   methods: {
@@ -155,6 +160,12 @@ export default {
 <template>
   <div>
     <div class="form-group">
+      <div v-if="isNeedZendeskAlert" class="card border-success mb-3">
+        <div class="card-body p-2 d-flex justify-content-between align-items-center">
+          <span>このQ&AはZendeskで管理されています</span>
+          <span class="badge badge-success">STAFF ONLY</span>
+        </div>
+      </div>
       <label><question-icon />&nbsp;質問</label>
       <textarea
         id="question"

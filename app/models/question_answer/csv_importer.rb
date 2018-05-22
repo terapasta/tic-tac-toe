@@ -4,6 +4,8 @@ class QuestionAnswer::CsvImporter
 
   class EmptyQuestionError < StandardError; end
   class EmptyAnswerError < StandardError; end
+  class InvalidUTF8Error < StandardError; end
+  class InvalidSJISError < StandardError; end
 
   attr_reader :succeeded, :current_row, :error_message
 
@@ -54,8 +56,14 @@ class QuestionAnswer::CsvImporter
   rescue EmptyAnswerError => e
     @error_message = '回答を入力してください'
   rescue => e
-    Rails.logger.debug(e)
-    Rails.logger.debug(e.backtrace.join("\n"))
+    if e.message == 'invalid byte sequence in UTF-8'
+      raise InvalidUTF8Error.new
+    elsif e.message == 'invalid byte sequence in Shift_JIS'
+      raise InvalidSJISError.new
+    else
+      Rails.logger.debug(e)
+      Rails.logger.debug(e.backtrace.join("\n"))
+    end
   end
 
   def parse

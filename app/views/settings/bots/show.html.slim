@@ -49,5 +49,10 @@
           br
           |※ ユーザー情報は45日間保存されます
 
+        = f.label :is_guest_user_form_skippable, class: 'pt-3' do
+          = f.check_box :is_guest_user_form_skippable
+          = space
+          |フォームの入力をスキップ可能にする
+
       .form-group.text-right
         = f.submit class: 'btn btn-success', data: { event: 'update bot account' }

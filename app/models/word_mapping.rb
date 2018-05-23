@@ -22,10 +22,6 @@ class WordMapping < ApplicationRecord
 
   before_validation :strip_word, :set_word_wakati
 
-  after_commit do
-    ReplaceSynonymForAllQaJob.perform_later
-  end
-
   scope :for_bot, -> (bot) {
     where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id).includes(:word_mapping_synonyms)
   }

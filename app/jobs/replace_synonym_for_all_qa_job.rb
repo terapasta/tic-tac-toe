@@ -1,5 +1,5 @@
 class ReplaceSynonymForAllQaJob < ApplicationJob
-  def perform
-    QuestionAnswer.replace_synonym_all!
+  def perform(bot_id = nil)
+    QuestionAnswer.replace_synonym_all!(bot_id)
   end
 end

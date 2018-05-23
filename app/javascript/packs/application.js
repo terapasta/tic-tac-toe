@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import 'babel-polyfill'
 import promiseMiddleware from 'redux-promise'
 
 // import AnswerTextArea from '../components/AnswerTextArea'
@@ -16,8 +16,8 @@ import WordMappings from '../components/WordMappings'
 
 import mountComponent, { mountComponentWithRedux } from '../helpers/mountComponent'
 
-function init() {
-  Mixpanel.initialize("3c53484fb604d6e20438b4fac8d2ea56")
+function init () {
+  Mixpanel.initialize('3c53484fb604d6e20438b4fac8d2ea56')
   Mixpanel.listenEvents()
   CopyButton.initialize()
 
@@ -31,8 +31,8 @@ function init() {
   mountComponent(WordMappings)
 }
 
-if (document.readyState === "complete") {
+if (document.readyState === 'complete') {
   init()
 } else {
-  document.addEventListener("DOMContentLoaded", init)
+  document.addEventListener('DOMContentLoaded', init)
 }

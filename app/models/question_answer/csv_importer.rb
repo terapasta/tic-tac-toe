@@ -55,15 +55,16 @@ class QuestionAnswer::CsvImporter
     @error_message = '質問を入力してください'
   rescue EmptyAnswerError => e
     @error_message = '回答を入力してください'
-  rescue => e
-    if e.message == 'invalid byte sequence in UTF-8'
+  rescue ArgumentError => e
+    if e.message.include?('UTF-8')
       raise InvalidUTF8Error.new
-    elsif e.message == 'invalid byte sequence in Shift_JIS'
+    elsif e.message.include?('Shift_JIS')
       raise InvalidSJISError.new
     else
-      Rails.logger.debug(e)
-      Rails.logger.debug(e.backtrace.join("\n"))
+      debug_log(e)
     end
+  rescue => e
+    debug_log(e)
   end
 
   def parse
@@ -111,5 +112,10 @@ class QuestionAnswer::CsvImporter
   private
     def sjis_safe(str)
       SjisSafeConverter.sjis_safe(str)
+    end
+
+    def debug_log(e)
+      Rails.logger.debug(e)
+      Rails.logger.debug(e.backtrace.join("\n"))
     end
 end

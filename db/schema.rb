@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180516073950) do
-=======
-ActiveRecord::Schema.define(version: 20180508060556) do
->>>>>>> 9bc372e3f5e2ad036c587d4aaa4415ca8dfbffca
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -52,16 +48,6 @@ ActiveRecord::Schema.define(version: 20180508060556) do
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
   end
 
-<<<<<<< HEAD
-  create_table "answer_inline_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "file", null: false
-    t.integer "bot_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-=======
->>>>>>> 9bc372e3f5e2ad036c587d4aaa4415ca8dfbffca
   create_table "answer_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "decision_branch_id", null: false
     t.integer "answer_record_id", null: false
@@ -122,7 +108,7 @@ ActiveRecord::Schema.define(version: 20180508060556) do
     t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
     t.text "chat_test_job_error"
-    t.boolean "is_demo", null: false
+    t.boolean "is_demo", default: false, null: false
     t.datetime "demo_finished_at"
     t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
     t.index ["user_id"], name: "index_bots_on_user_id"
@@ -298,10 +284,6 @@ ActiveRecord::Schema.define(version: 20180508060556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
-<<<<<<< HEAD
-=======
-    t.text "question_wakati"
->>>>>>> 9bc372e3f5e2ad036c587d4aaa4415ca8dfbffca
     t.bigint "zendesk_article_id"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
@@ -343,7 +325,6 @@ ActiveRecord::Schema.define(version: 20180508060556) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -413,7 +394,6 @@ ActiveRecord::Schema.define(version: 20180508060556) do
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "value_wakati"
   end
 
   create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -421,7 +401,6 @@ ActiveRecord::Schema.define(version: 20180508060556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id"
-    t.string "word_wakati"
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
   end
 

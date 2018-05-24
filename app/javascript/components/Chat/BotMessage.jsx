@@ -9,7 +9,7 @@ import last from 'lodash/last'
 import classNames from 'classnames'
 import isEmpty from 'is-empty'
 import bytes from 'bytes'
-import { markdown } from 'markdown'
+import marked from 'marked'
 import striptags from 'striptags'
 
 import * as c from './Constants'
@@ -45,9 +45,6 @@ const autoLink = (text, options = {}) => {
       return link.outerHTML
     }
   )
-}
-const unescapeTag = text => {
-  return text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
 }
 
 export default class ChatBotMessage extends Component {
@@ -97,7 +94,10 @@ export default class ChatBotMessage extends Component {
       backgroundImage: `url(${iconImageUrl})`
     }
 
-    const renderedBody = striptags(unescapeTag(markdown.toHTML(autoLink(body, { target: '_blank' }))), ['img', 'a']).replace(/\n/g, '<br />')
+    const autoLinked = autoLink(body, { target: '_blank' })
+    const markdowned = marked(autoLinked)
+    const striped = striptags(markdowned, ['img', 'a'])
+    const renderedBody = striped.replace(/\n/g, '<br />')
 
     return (
       <div className={className} id={`message-${id}`}>

@@ -68,7 +68,7 @@
     "js-cookie": "^2.1.4",
     "json2csv": "^3.7.3",
     "lodash": "^4.17.2",
-    "markdown": "^0.5.0",
+    "marked": "^0.4.0",
     "object-to-formdata": "^1.0.12",
     "promise": "^7.1.1",
     "prop-types": "^15.6.0",

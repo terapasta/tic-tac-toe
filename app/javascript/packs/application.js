@@ -1,7 +1,7 @@
-import "babel-polyfill";
+import 'babel-polyfill'
 import promiseMiddleware from 'redux-promise'
 
-import AnswerTextArea from '../components/AnswerTextArea'
+// import AnswerTextArea from '../components/AnswerTextArea'
 import BotResetForm from '../components/BotResetForm'
 import CopyButton from '../components/CopyButton'
 import ChatApp from '../components/Chat/App'
@@ -16,12 +16,12 @@ import WordMappings from '../components/WordMappings'
 
 import mountComponent, { mountComponentWithRedux } from '../helpers/mountComponent'
 
-function init() {
-  Mixpanel.initialize("3c53484fb604d6e20438b4fac8d2ea56")
+function init () {
+  Mixpanel.initialize('3c53484fb604d6e20438b4fac8d2ea56')
   Mixpanel.listenEvents()
   CopyButton.initialize()
 
-  mountComponent(AnswerTextArea)
+  // mountComponent(AnswerTextArea)
   mountComponent(BotResetForm)
   mountComponentWithRedux(ChatApp, ChatAppReducers, [promiseMiddleware])
   mountComponentWithRedux(ConversationTree, ConversationTreeReducers)
@@ -31,8 +31,8 @@ function init() {
   mountComponent(WordMappings)
 }
 
-if (document.readyState === "complete") {
+if (document.readyState === 'complete') {
   init()
 } else {
-  document.addEventListener("DOMContentLoaded", init)
+  document.addEventListener('DOMContentLoaded', init)
 }

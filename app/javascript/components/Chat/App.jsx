@@ -84,6 +84,7 @@ export default class ChatApp extends Component {
       initialQuestions,
       isRegisteredGuestUser,
       isEnableGuestUserRegistration,
+      isGuestUserFormSkippable
     } = this.props;
 
     const {
@@ -99,6 +100,7 @@ export default class ChatApp extends Component {
           isManager,
           isRegisteredGuestUser,
           isEnableGuestUserRegistration,
+          isGuestUserFormSkippable,
           onClickStartLearning() { dispatch(a.startLearning(window.currentBot.id)) },
         }} />
         <ChatArea innerref={node => this.area = node}>

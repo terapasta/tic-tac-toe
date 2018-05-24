@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mutations
   })
 
+  /* eslint-disable no-new */
   new Vue({
     el: mountNode,
     template: '<ConversationTree />',

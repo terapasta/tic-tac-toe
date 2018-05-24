@@ -7,7 +7,7 @@ import learnings from './Reducers/Learnings'
 import readMore from './Reducers/ReadMore'
 import initialQuestions from './Reducers/InitialQuestions'
 
-function through(state = null) {
+function through (state = null) {
   return state
 }
 
@@ -23,7 +23,8 @@ const Reducers = combineReducers({
   flashMessage: through,
   isRegisteredGuestUser: through,
   isEnableGuestUserRegistration: through,
-  initialQuestions,
+  isGuestUserFormSkippable: through,
+  initialQuestions
 })
 
 export default Reducers

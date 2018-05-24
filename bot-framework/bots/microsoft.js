@@ -23,8 +23,6 @@ const {
 } = require('../api')
 
 const service_type = 'skype'
-const s3 = NODE_ENV === 'development' ?
-  'https://my-ope-assets-dev.s3.amazonaws.com' : ''
 
 const resolveUid = ({ source, id, uid }) => {
   switch (source) {
@@ -115,7 +113,7 @@ class Bot {
 
         const attrName = isSuggestion ? 'question' : 'body'
         const choices = decisionBranches.map(it => it[attrName])
-        let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : ''
+        let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : '回答を選択して下さい'
         _message = !isEmpty(message) ? `${message}<br/>` : _message
 
         Prompts.choice(session, _message/* + "※半角数字で解答して下さい"*/, choices, {
@@ -180,14 +178,14 @@ class Bot {
       .filter(it => /image/.test(it.fileType))
       .map(it => (new HeroCard(session)
         .title(path.basename(it.file.url))
-        .images([CardImage.create(session, s3 + it.file.url)])
-        .buttons([CardAction.openUrl(session, s3 + it.file.url, '画像を開く')])))
+        .images([CardImage.create(session, it.file.url)])
+        .buttons([CardAction.openUrl(session, it.file.url, '画像を開く')])))
 
     const otherFiles = answerFiles
       .filter(it => !/image/.test(it.fileType))
       .map(it => (new HeroCard(session)
         .title(decodeURIComponent(path.basename(it.file.url)))
-        .buttons([CardAction.openUrl(session, s3 + it.file.url, 'ダウンロード')])))
+        .buttons([CardAction.openUrl(session, it.file.url, 'ダウンロード')])))
 
     const msg = new Message(session)
       .attachmentLayout(AttachmentLayout.carousel)

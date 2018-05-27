@@ -26,7 +26,8 @@ class LearningParameters(BaseCls):
             return data['threshold']
         except:
             logger.debug('no learning parameter for feedback threshold')
-            return 0.1
+            # https://www.pivotaltracker.com/story/show/157344812
+            return 0.7
 
     def _feedback_parameters(self, bot_id):
         return self.database.select(

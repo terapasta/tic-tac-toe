@@ -10,4 +10,5 @@ class LearningParameters(BaseCls):
         return {}
 
     def feedback_threshold(self, bot_id):
-        return 0.1
+        # https://www.pivotaltracker.com/story/show/157344812
+        return 0.7

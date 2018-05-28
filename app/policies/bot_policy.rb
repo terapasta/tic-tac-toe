@@ -52,6 +52,7 @@ class BotPolicy < ApplicationPolicy
       :start_message,
       :has_suggests_message,
       :enable_guest_user_registration,
+      :is_guest_user_form_skippable,
       {
         allowed_hosts_attributes: [
           :id,

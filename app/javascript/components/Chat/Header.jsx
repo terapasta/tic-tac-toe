@@ -12,8 +12,8 @@ import queryParams from '../../helpers/queryParams'
 const POLLING_INTERVAL = 1000 * 2
 
 class ChatHeader extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isLearning: false,
       learningStatus: null,
@@ -24,35 +24,35 @@ class ChatHeader extends Component {
     this.onClickLearning = this.onClickLearning.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.isManager) {
       this.pollLearningStatus()
     }
   }
 
-  pollLearningStatus() {
+  pollLearningStatus () {
     setTimeout(() => {
       LearningAPI.status(window.currentBot.id).then((res) => {
         this.setState({
           learningStatus: res.data.learning_status,
-          isLearning: res.data.learning_status === LearningStatus.Processing,
+          isLearning: res.data.learning_status === LearningStatus.Processing
         })
         this.pollLearningStatus()
       }).catch(console.error)
     }, POLLING_INTERVAL)
   }
 
-  render() {
+  render () {
     const { botName, isAdmin, isManager } = this.props
     const { isNoHeader } = this.state
 
     if (isNoHeader) { return this.renderGuestUserParts() }
 
     return (
-      <header className="chat-header">
-        <h1 className="chat-header__title">{botName}</h1>
+      <header className='chat-header'>
+        <h1 className='chat-header__title'>{botName}</h1>
         {isManager && (
-          <div className="chat-header__right">
+          <div className='chat-header__right'>
             <LearningButton botId={window.currentBot.id} isAdmin={isAdmin} />
           </div>
         )}
@@ -61,38 +61,41 @@ class ChatHeader extends Component {
     )
   }
 
-  renderGuestUserParts() {
-    const { isManager, isEnableGuestUserRegistration } = this.props
+  renderGuestUserParts () {
+    const { isManager, isEnableGuestUserRegistration, isGuestUserFormSkippable } = this.props
     const { isNoHeader, isShowGuestUserForm, isRegisteredGuestUser } = this.state
 
     if (!isEnableGuestUserRegistration) { return null }
+    const modalOnClose = isRegisteredGuestUser || isGuestUserFormSkippable
+      ? () => { this.setState({ isShowGuestUserForm: false }) }
+      : null
 
     return (
       <span>
         {!isManager && !isNoHeader && (
-          <div className="chat-header__left">
+          <div className='chat-header__left'>
             <a
-              id="guest-user-modal-button"
-              href="#"
-              className="btn btn-link"
-              title="ユーザー情報を編集できます"
+              id='guest-user-modal-button'
+              href='#'
+              className='btn btn-link'
+              title='ユーザー情報を編集できます'
               onClick={() => this.setState({ isShowGuestUserForm: true })}
             >
-              <i className="material-icons">person</i>
+              <i className='material-icons'>person</i>
             </a>
           </div>
         )}
         {(!isManager && isShowGuestUserForm) && (
           <Modal
-            title="ユーザー情報"
-            onClose={isRegisteredGuestUser ? () => { this.setState({ isShowGuestUserForm: false })} : null}
+            title='ユーザー情報'
+            onClose={modalOnClose}
           >
             <GuestUserForm
               handleRegistered={() => {
                 this.setState({
                   isShowGuestUserForm: false,
                   isRegisteredGuestUser: true
-                });
+                })
               }}
             />
           </Modal>
@@ -101,21 +104,21 @@ class ChatHeader extends Component {
     )
   }
 
-  onClickLearning() {
-    if (this.state.isLearning) { return; }
+  onClickLearning () {
+    if (this.state.isLearning) { return }
     this.setState({
       isLearning: true,
-      learningStatus: LearningStatus.Processing,
+      learningStatus: LearningStatus.Processing
     })
     LearningAPI.start(window.currentBot.id).then((res) => {
       this.setState({
-        learningStatus: res.data.learning_status,
+        learningStatus: res.data.learning_status
       })
     }).catch((err) => {
-      console.error(err);
+      console.error(err)
       this.setState({
         isLearning: false,
-        learningStatus: LearningStatus.Failed,
+        learningStatus: LearningStatus.Failed
       })
     })
   }
@@ -126,6 +129,7 @@ ChatHeader.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isManager: PropTypes.bool.isRequired,
   learningStatus: PropTypes.oneOf(values(LearningStatus)),
+  isGuestUserFormSkippable: PropTypes.bool.isRequired
 }
 
 export default ChatHeader

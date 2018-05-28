@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180516073950) do
+
+ActiveRecord::Schema.define(version: 20180522031641) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -46,6 +47,14 @@ ActiveRecord::Schema.define(version: 20180516073950) do
     t.integer "question_answer_id"
     t.integer "decision_branch_id"
     t.index ["question_answer_id"], name: "index_answer_files_on_question_answer_id"
+  end
+
+  create_table "answer_inline_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "file", null: false
+    t.integer "bot_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "uuid", null: false
   end
 
   create_table "answer_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -111,6 +120,7 @@ ActiveRecord::Schema.define(version: 20180516073950) do
     t.boolean "is_demo", default: false, null: false
     t.datetime "demo_finished_at"
     t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
+    t.boolean "is_guest_user_form_skippable", default: true, null: false
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 

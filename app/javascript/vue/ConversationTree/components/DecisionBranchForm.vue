@@ -19,6 +19,7 @@ import SelectableTree from './SelectableTree'
 import SearchForm, { Mode as SearchFormMode } from './SearchForm'
 import AnswerFiles from './AnswerFiles'
 import { calcPercentile } from '../helpers'
+import AnswerTextArea from '../../AnswerTextArea'
 
 const getComputedHeight = el => {
   const toInt = val => {
@@ -47,7 +48,8 @@ export default {
     AnswerTab,
     SelectableTree,
     SearchForm,
-    AnswerFiles
+    AnswerFiles,
+    AnswerTextArea
   },
 
   data: () => ({
@@ -231,6 +233,10 @@ export default {
           this.showingIndecies = this.showingIndecies.filter(i => !includes(hiddableIndecies, i))
         }
       }
+    },
+
+    handleAnswerTextAreaKeyup (answer) {
+      this.decisionBranch.answer = answer
     }
   }
 }
@@ -254,10 +260,10 @@ export default {
     >
       <answer-tab :tabType="tabType" @changeTab="handleAnswerTabChange">
         <div slot="input">
-          <textarea
-            class="form-control mb-3"
-            rows="3"
-            v-model="decisionBranch.answer"
+          <answer-text-area
+            :default-value="decisionBranch.answer"
+            :is-hidden-label="true"
+            @keyup="handleAnswerTextAreaKeyup"
           />
           <answer-files
             :decisionBranchId="decisionBranch.id"

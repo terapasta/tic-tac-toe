@@ -52,13 +52,14 @@ RSpec.describe 'Q&Aトピックの検索テスト', type: :feature, js: true do
       expect(page).to have_content '更新できませんでした。'
     end
 
-    xscenario 'Delete item' do
+    scenario 'Delete item' do
       visit bot_topic_tags_path(bot)
       click_on 'トピックタグを追加'
       find('[type="text"][name^="bot[topic_tags_attributes]"]').set(topic_tag_attrs[:name])
       click_on '更新する'
       expect{
         click_on '削除'
+        accept_alert
         click_on '更新する'
         expect(page).to have_content '更新しました'
       }.to change(TopicTag, :count).by(-1)

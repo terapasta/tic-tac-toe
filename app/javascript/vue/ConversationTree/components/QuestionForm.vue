@@ -8,6 +8,7 @@ import AnswerIcon from './AnswerIcon'
 import AnswerFiles from './AnswerFiles'
 import QuestionAnswerFormMixin from '../mixins/QuestionAnswerForm'
 import { UPDATE_QUESTION_ANSWER } from '../store/mutationTypes'
+import AnswerTextArea from '../../AnswerTextArea'
 
 export default {
   mixins: [
@@ -17,7 +18,8 @@ export default {
   components: {
     QuestionIcon,
     AnswerIcon,
-    AnswerFiles
+    AnswerFiles,
+    AnswerTextArea
   },
 
   data: () => ({
@@ -41,8 +43,13 @@ export default {
   computed: {
     ...mapState([
       'questionsRepo',
-      'questionsTree'
-    ])
+      'questionsTree',
+      'isStaff'
+    ]),
+
+    isNeedZendeskAlert () {
+      return this.questionAnswer.zendeskArticleId && this.isStaff
+    }
   },
 
   methods: {
@@ -137,9 +144,14 @@ export default {
       })
     },
 
-    handleAnswerKeyup () {
-      const { questionAnswer } = this
-      this.updateQuestionAnswerMutation({ questionAnswer, id: this.currentId })
+    handleAnswerKeyup (answer) {
+      this.questionAnswer.answer = answer
+      this.updateQuestionAnswerMutation({
+        questionAnswer: this.questionAnswer,
+        id: this.currentId
+      })
+      // const { questionAnswer } = this
+      // this.updateQuestionAnswerMutation({ questionAnswer, id: this.currentId })
     }
   }
 }
@@ -148,6 +160,12 @@ export default {
 <template>
   <div>
     <div class="form-group">
+      <div v-if="isNeedZendeskAlert" class="card border-success mb-3">
+        <div class="card-body p-2 d-flex justify-content-between align-items-center">
+          <span>このQ&AはZendeskで管理されています</span>
+          <span class="badge badge-success">STAFF ONLY</span>
+        </div>
+      </div>
       <label><question-icon />&nbsp;質問</label>
       <textarea
         id="question"
@@ -217,17 +235,12 @@ export default {
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label><answer-icon />&nbsp;回答</label>
-      <textarea
-        class="form-control"
-        id="answer-body"
-        name="question-answer"
-        v-model="questionAnswer.answer"
-        :disabled="isProcessing"
-        @keyup="handleAnswerKeyup"
-      />
-    </div>
+    <answer-text-area
+      name="question-answer"
+      :default-value="questionAnswer.answer"
+      :disabled="isProcessing"
+      @keyup="handleAnswerKeyup"
+    />
     <answer-files
       v-if="questionAnswer.id"
       :questionAnswerId="questionAnswer.id"

@@ -45,29 +45,17 @@ RSpec.describe WordMappingsDecorator, type: :model do
 
     context '予定表' do
       let(:text) { 'スケジュールを教えて' }
-      if SynonymReplacer.mecab_exists?
-        it { is_expected.to eq('予定 表 を 教え て ') }
-      else
-        it { is_expected.to eq('予定表を教えて') }
-      end
+      it { is_expected.to eq('予定 表 を 教え て ') }
     end
 
     context '社内メール便' do
       let(:text) { 'こんにちは。社内メール便を送りたいので、メール便の方法を教えてください。メール便は大好きです。社内メール便最高！メール便メール便社内メール便' }
-      if SynonymReplacer.mecab_exists?
-        it { is_expected.to eq('こんにちは 。 社内 メール 便 を 送り たい ので 、 社内 メール 便 の 方法 を 教え て ください 。 社内 メール 便 は 大好き です 。 社内 メール 便 最高 ！ 社内 メール 便 社内 メール 便 社内 メール 便 ') }
-      else
-        it { is_expected.to eq('こんにちは。社内メール便を送りたいので、社内メール便の方法を教えてください。社内メール便は大好きです。社内メール便最高！社内メール便社内メール便社内メール便') }
-      end
+      it { is_expected.to eq('こんにちは 。 社内 メール 便 を 送り たい ので 、 社内 メール 便 の 方法 を 教え て ください 。 社内 メール 便 は 大好き です 。 社内 メール 便 最高 ！ 社内 メール 便 社内 メール 便 社内 メール 便 ') }
     end
 
     context 'POWER EGG' do
       let(:text) { 'JPEGについて。PEは関係ない' }
-      if SynonymReplacer.mecab_exists?
-        it { is_expected.to eq('JPG について 。 POWER EGG は 関係 ない ') }
-      else
-        it { is_expected.to eq('JPGについて。POWER EGGは関係ない') }
-      end
+      it { is_expected.to eq('JPG について 。 POWER EGG は 関係 ない ') }
     end
   end
 end

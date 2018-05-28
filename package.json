@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
+    "auto-link": "^1.0.0",
     "axios": "^0.15.3",
     "babel-jest": "^19.0.0",
     "babel-loader": "^7.1.2",
@@ -67,6 +68,7 @@
     "js-cookie": "^2.1.4",
     "json2csv": "^3.7.3",
     "lodash": "^4.17.2",
+    "marked": "^0.4.0",
     "object-to-formdata": "^1.0.12",
     "promise": "^7.1.1",
     "prop-types": "^15.6.0",
@@ -87,6 +89,7 @@
     "redux-thunk": "^2.2.0",
     "sanitize-html": "^1.17.0",
     "sinon": "^1.17.7",
+    "striptags": "^3.1.1",
     "styled-components": "^2.1.1",
     "toastr": "^2.1.2",
     "uuid": "^3.0.1",

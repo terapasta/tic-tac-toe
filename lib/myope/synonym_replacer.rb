@@ -47,14 +47,8 @@ module SynonymReplacer
   end
 
   def self.to_wakati(original)
-    if mecab_exists?
-      " #{ `echo #{original} | mecab -Owakati`.sub(/\n/, '') }"
-    else
-      original
-    end
-  end
-
-  def self.mecab_exists?
-    `type -a mecab`.present?
+    res = Natto::MeCab.new('-Owakati').parse(original.to_s).sub(/\n$/, '')
+    res = " #{res}" unless res.starts_with?(' ')
+    res
   end
 end

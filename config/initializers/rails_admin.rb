@@ -58,6 +58,20 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model "Bot" do
+    edit do
+      field :name
+      field :classify_failed_message
+      field :start_message
+      field :image
+      field :learning_status
+      field :enable_guest_user_registration
+      field :is_guest_user_form_skippable
+      field :is_demo
+      field :candidate_answers_threshold
+    end
+  end
+
   config.excluded_models += %w(
     Contact
   )

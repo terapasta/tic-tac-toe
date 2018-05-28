@@ -23,10 +23,6 @@ class QuestionAnswer < ApplicationRecord
 
   validates :question, presence: true
 
-  after_create do
-    self.bot&.tutorial&.done_fifty_question_answers_if_needed!
-  end
-
   scope :completed_count_for, -> (user_id, target_date) {
     joins(:sentence_synonyms)
       .merge(SentenceSynonym.target_user(user_id))
@@ -77,11 +73,51 @@ class QuestionAnswer < ApplicationRecord
       .or(left_joins(:topic_tags).where(topic_tags: { id: nil }))
   }
 
+  after_create do
+    self.bot&.tutorial&.done_fifty_question_answers_if_needed!
+  end
+
+  before_validation :set_question_wakati
+
   before_destroy do
     break if self.bot.blank?
     if self.bot.selected_question_answer_ids.include?(self.id)
       self.bot.selected_question_answer_ids -= [self.id]
       self.bot.save!
+    end
+  end
+
+  def self.replace_synonym_all!(bot_id = nil)
+    bots = bot_id.present? ? Bot.where(id: [bot_id]) : Bot.all
+    bot_word_mappings = bots.inject({}) { |acc, bot|
+      acc[bot.id] = WordMapping.for_bot(bot).decorate
+      acc
+    }
+
+    ActiveRecord::Base.transaction do
+      bots.each do |bot|
+        word_mappings = bot_word_mappings[bot.id]
+        bot.question_answers.includes(:sub_questions).each do |qa|
+          qa.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(qa.question))
+          qa.save!(validate: false)
+          puts "#{qa.id}: #{qa.question_wakati}"
+
+          qa.sub_questions.each do |sq|
+            sq.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(sq.question))
+            sq.save!(validate: false)
+            puts "    #{sq.id}: #{sq.question_wakati}"
+          end
+        end
+      end
+    end
+  end
+
+  def set_question_wakati
+    if bot.present?
+      word_mappings = WordMapping.for_bot(bot).decorate
+      self.question_wakati = word_mappings.replace_synonym(Wakatifier.apply(question))
+    else
+      self.question_wakati = Wakatifier.apply(question)
     end
   end
 

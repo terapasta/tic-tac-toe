@@ -10,6 +10,7 @@ class ReplyResponse::SimilarQuestionAnswersFinder
     @results.inject([]) { |acc, result|
       ltm = find_learning_training_message_by(result)
       qa = find_question_answer_by(result)
+      next acc if ltm.blank? || qa.blank?
       if ltm.sub_question_id.present?
         acc + [find_sub_question_from(question_answer: qa, by_learning_training_message: ltm)]
       else

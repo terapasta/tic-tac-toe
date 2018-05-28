@@ -16,6 +16,12 @@ class ImportsController < ApplicationController
       @error_message = importer.error_message
       render :show
     end
+  rescue QuestionAnswer::CsvImporter::InvalidUTF8Error => e
+    flash.now.alert = 'UTF-8でインポートできませんでした。Shift_JISをお試しください。'
+    render :show
+  rescue QuestionAnswer::CsvImporter::InvalidSJISError => e
+    flash.now.alert = 'Shift_JISでインポートできませんでした。UTF-8をお試しください。'
+    render :show
   end
 
   private

@@ -168,4 +168,8 @@ class QuestionAnswer < ApplicationRecord
     end
     results
   end
+
+  def sub_question?
+    false
+  end
 end

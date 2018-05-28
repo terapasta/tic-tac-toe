@@ -12,4 +12,8 @@ class SubQuestion < ApplicationRecord
       self.question_wakati = Wakatifier.apply(question)
     end
   end
+
+  def sub_question?
+    true
+  end
 end

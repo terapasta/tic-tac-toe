@@ -14,7 +14,7 @@ class Learning::Summarizer
           answer_body: qa[2]
         }
         sq_data = SubQuestion.where(question_answer_id: qa[0]).pluck(:id, :question_wakati).map{ |sqa| {
-          sub_question_id: sqa.id,
+          sub_question_id: sqa[0],
           bot_id: @bot.id,
           question_answer_id: qa[0],
           question: sqa[1],

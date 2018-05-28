@@ -1,0 +1,58 @@
+{
+  "questionFeatureCount": 3,
+  "results": [{
+      "questionAnswerId": 395,
+      "probability": 0.8699052929878235,
+      "question": "QRコード欲しい"
+    },
+    {
+      "questionAnswerId": 1,
+      "probability": 0,
+      "question": "オフィスはどこにあるの？"
+    },
+    {
+      "questionAnswerId": 162,
+      "probability": 0,
+      "question": "寒いですね"
+    },
+    {
+      "questionAnswerId": 157,
+      "probability": 0,
+      "question": "休みの日は何してますか"
+    },
+    {
+      "questionAnswerId": 158,
+      "probability": 0,
+      "question": "どこに住んでいますか"
+    },
+    {
+      "questionAnswerId": 159,
+      "probability": 0,
+      "question": "好きなスポーツは何ですか"
+    },
+    {
+      "questionAnswerId": 160,
+      "probability": 0,
+      "question": "好きな動物は何ですか"
+    },
+    {
+      "questionAnswerId": 161,
+      "probability": 0,
+      "question": "涼しいですね"
+    },
+    {
+      "questionAnswerId": 164,
+      "probability": 0,
+      "question": "行ってきます"
+    },
+    {
+      "questionAnswerId": 163,
+      "probability": 0,
+      "question": "暑いですね"
+    }
+  ],
+  "nounCount": 1,
+  "verbCount": 0,
+  "algorithm": 8,
+  "feedbackAlgorithm": 0
+}

@@ -43,12 +43,9 @@ class ReplyResponse
   end
 
   def similar_question_answers
-    ids = question_answer_ids
-    if classify_threshold < 0.9 && !show_similar_question_answers?
-      ids = ids.drop(1)
-    end
-    qas = @bot.question_answers.where(id: ids).for_suggestion
-    question_answer_ids.map{ |id| qas.detect{ |x| id == x.id } }.compact
+    results = effective_results
+    results.shift if classify_threshold < 0.9 && !show_similar_question_answers?
+    SimilarQuestionAnswersFinder.new(bot: @bot, results: results).process
   end
 
   def question_feature_count

@@ -44,9 +44,6 @@ class Bot < ApplicationRecord
   enum learning_status: { processing: 'processing', failed: 'failed', successed: 'successed' }
 
   scope :demos, -> { where(is_demo: true) }
-  scope :have_zendesk_credential, -> {
-    where(id: ZendeskCredential.select(:bot_id))
-  }
 
   mount_uploader :image, ImageUploader
 

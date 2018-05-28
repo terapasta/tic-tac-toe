@@ -45,16 +45,6 @@ class ZendeskClient
     ))
   end
 
-  def self.import_articles_for!(bot)
-    fail 'Required ZendeskCredential' if bot.zendesk_credential.blank?
-    client = make_client_with(bot.zendesk_credential)
-    instance = new
-    instance.get_help_center_data(client)
-    ActiveRecord::Base.transaction do
-      instance.import_articles_for!(bot)
-    end
-  end
-
   def shared_client
     self.class.shared_client
   end

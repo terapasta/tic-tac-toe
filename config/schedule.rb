@@ -60,7 +60,7 @@ end
 
 # 未明4:00
 every 1.day, at: '4:00' do
-  rake 'question_answer:import_zendesk_hc_for_all'
+  rake 'question_answer:import_mofmof_zendesk_hc'
 end
 
 # 未明3:00

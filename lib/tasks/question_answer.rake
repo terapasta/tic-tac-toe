@@ -93,17 +93,16 @@ namespace :question_answer do
   end
 
   desc 'BOT_IDで指定したボットにmofomof.zendesk.com/hcの記事を流し込む'
-  task import_zendesk_hc: :environment do
+  task import_mofmof_zendesk_hc: :environment do
     bot_id = ENV['ZENDESK_HC_BOT_ID']
     fail 'Require ZENDESK_HC_BOT_ID' if bot_id.blank?
-    bot = Bot.find(bot_id)
-    ZendeskClient.import_articles_for!(bot)
-  end
 
-  desc 'ZendeskCredentialを持っている全Botのarticlesをimportする'
-  task import_zendesk_hc_for_all: :environment do
-    Bot.have_zendesk_credential.each do |bot|
-      ZendeskClient.import_articles_for!(bot)
+    bot = Bot.find(bot_id)
+    zc = ZendeskClient.new
+    zc.get_help_center_data
+
+    ActiveRecord::Base.transaction do
+      zc.import_articles_for!(bot)
     end
   end
 

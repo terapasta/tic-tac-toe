@@ -9,10 +9,4 @@ class WordMappingSynonym < ApplicationRecord
     where(word_mapping_id: WordMapping.select(:id)
     .where(bot_id: bot_id))
   }
-
-  before_validation :set_value_wakati
-
-  def set_value_wakati
-    self.value_wakati = Wakatifier.apply(value)
-  end
 end

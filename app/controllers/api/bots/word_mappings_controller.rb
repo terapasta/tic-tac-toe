@@ -6,7 +6,6 @@ class Api::Bots::WordMappingsController < Api::BaseController
     @word_mapping = @bot.word_mappings.build(permitted_attributes(WordMapping))
     authorize @word_mapping
     if @word_mapping.save
-      ReplaceSynonymForAllQaJob.perform_later(@bot.id)
       render json: @word_mapping, adapter: :json
     else
       render_errors
@@ -15,7 +14,6 @@ class Api::Bots::WordMappingsController < Api::BaseController
 
   def update
     if @word_mapping.update(permitted_attributes(@word_mapping))
-      ReplaceSynonymForAllQaJob.perform_later(@bot.id)
       render json: @word_mapping, adapter: :json
     else
       render_errors
@@ -24,7 +22,6 @@ class Api::Bots::WordMappingsController < Api::BaseController
 
   def destroy
     @word_mapping.destroy!
-    ReplaceSynonymForAllQaJob.perform_later(@bot.id)
     render json: {}, status: :no_content
   end
 

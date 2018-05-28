@@ -20,10 +20,10 @@ class WordMapping < ApplicationRecord
   # validate :word_is_not_eq_synonym
   # validate :word_is_not_eq_other_synonym
 
-  before_validation :strip_word, :set_word_wakati
+  before_validation :strip_word
 
   scope :for_bot, -> (bot) {
-    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id).includes(:word_mapping_synonyms)
+    where("bot_id IS NULL OR bot_id = :bot_id", bot_id: bot&.id)
   }
 
   scope :keyword, -> (_keyword) {
@@ -36,10 +36,6 @@ class WordMapping < ApplicationRecord
   scope :systems, -> {
     where(bot_id: nil)
   }
-
-  def set_word_wakati
-    self.word_wakati = Wakatifier.apply(word)
-  end
 
   private
     def strip_word

@@ -43,6 +43,12 @@ class FuzzyCosineSimilarityFactory(BaseFactory):
     def get_datasource(self):
         return self.datasource
 
+    def set_phase(self, phase):
+        # NOTE:
+        # フェーズによってトークナイズ方式が異なるので、ここで設定
+        # see: https://www.pivotaltracker.com/story/show/157345963
+        self.tokenizer.set_phase(phase)
+
     @property
     def core(self):
         return self.__core

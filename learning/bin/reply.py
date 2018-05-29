@@ -21,6 +21,6 @@ class LearningParameter:
     feedback_algorithm = args.feedback_algorithm
 
 
-context = Context(args.bot_id, LearningParameter(), {})
+context = Context(args.bot_id, LearningParameter(), {}, phase=Constants.PHASE_REPLYING)
 result = ReplyController(context=context).perform(args.question)
 print(result)

@@ -59,4 +59,39 @@ RSpec.describe Chat, type: :model do
       end
     end
   end
+
+  describe '#classified_pairs_messages' do
+    let!(:bot) do
+      create(:bot)
+    end
+  
+    let!(:chat) do
+      create(:chat, bot: bot)
+    end
+
+    let!(:messages) do
+      first = chat.messages.create(speaker: :bot)
+      [
+        first,
+        chat.messages.create(speaker: :guest, id: first.id + 1), # 1
+        chat.messages.create(speaker: :bot, id: first.id + 2), # 2
+        chat.messages.create(speaker: :guest, id: first.id + 3), # 3
+        chat.messages.create(speaker: :bot, id: first.id + 4), # 4
+        chat.messages.create(speaker: :guest, id: first.id + 6), # 5 わざとidを一つ飛ばす
+        chat.messages.create(speaker: :guest, id: first.id + 7), # 6 わざとguestを連続させる
+        chat.messages.create(speaker: :guest, id: first.id + 8), # 7
+        chat.messages.create(speaker: :bot, id: first.id + 9) # 8
+      ]
+    end
+
+    it '正しく質問と回答のペアに分類する' do
+      expect(chat.classified_pair_messages).to eq([
+        [messages[1], messages[2]],
+        [messages[3], messages[4]],
+        [messages[5]],
+        [messages[6]],
+        [messages[7], messages[8]]
+      ])
+    end
+  end
 end

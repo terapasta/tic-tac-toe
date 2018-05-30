@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.text "chat_test_results", limit: 16777215
     t.boolean "is_chat_test_processing"
     t.text "chat_test_job_error"
-    t.boolean "is_demo", null: false
+    t.boolean "is_demo", default: false, null: false
     t.datetime "demo_finished_at"
     t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
     t.boolean "is_guest_user_form_skippable", default: true, null: false
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.integer "decision_branch_id"
     t.boolean "is_show_similar_question_answers", default: true
     t.json "reply_log"
+    t.integer "guest_message_id"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["question_answer_id"], name: "index_messages_on_question_answer_id"
   end
@@ -293,7 +294,6 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
-    t.text "question_wakati"
     t.bigint "zendesk_article_id"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
@@ -335,7 +335,6 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -405,7 +404,6 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "value_wakati"
   end
 
   create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -413,7 +411,6 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id"
-    t.string "word_wakati"
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
   end
 

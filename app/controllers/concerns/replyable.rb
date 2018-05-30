@@ -13,6 +13,7 @@ module Replyable
           answer_failed: qa.no_classified?,
           created_at: guest_message.created_at + 1.second,
           reply_log: reply_response.raw_data,
+          guest_message_id: guest_message.id
         )
         bot_message.save!
 

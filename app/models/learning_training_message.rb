@@ -1,6 +1,7 @@
 class LearningTrainingMessage < ApplicationRecord
   belongs_to :bot
 
+  validates :question, presence: true
   validates :answer_body, length: { maximum: 10000 }
 
   scope :by_results, -> (results) {

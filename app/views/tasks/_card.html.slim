@@ -6,8 +6,13 @@
   .card-body.p-4
     .row
       .col-sm-6.order-12
-        .chat-message--my.full-width
+        .chat-message--my.full-width.float-none
           .chat-message__balloon= task.guest_message
+        - task.guest_message_record&.chat&.guest_user.tap do |guest|
+          - if guest.present?
+            .pt-2
+              span.badge.badge-default 質問者
+              code #{guest.name} #{guest.email}
       .col-sm-6.order-1 style="padding-top:16px"
         .chat-message.full-width style="float:none;"
           .chat-message__icon style=("background-image:url(#{bot.image_url});")

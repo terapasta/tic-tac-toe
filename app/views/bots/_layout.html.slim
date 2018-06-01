@@ -47,8 +47,9 @@
             = material_icon 'clear_all', class: 'text-gray-light mi-sm flip-horizontal'
             = space
             span 会話ツリー
+        - active_history = !!/^\/bots\/[0-9]+\/threads(\/[0-9]+\/messages)?$/.match(request.path) ? 'active' : ''
         li class="nav-item"
-          = active_link_to "/bots/#{@bot.id}/threads.html", class: 'nav-link', data: { event: 'chat log' } do
+          = link_to "/bots/#{@bot.id}/threads", class: "nav-link #{active_history}", data: { event: 'chat log' } do
             = material_icon 'history', class: 'text-gray-light mi-sm'
             = space
             span 対話履歴

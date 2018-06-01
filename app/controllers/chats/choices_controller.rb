@@ -37,7 +37,6 @@ class Chats::ChoicesController < ApplicationController
         body: answer.presence || @bot.classify_failed_message.presence || DefinedAnswer.classify_failed_text,
         created_at: @message.created_at + 1.second,
         answer_failed: answer.blank?,
-        guest_message_id: @message.id
       }
     end
 end

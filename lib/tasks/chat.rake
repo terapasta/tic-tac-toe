@@ -7,7 +7,7 @@ namespace :chat do
           chat.classified_pair_messages.each do |pair|
             if pair[1].present?
               pair[1].assign_attributes(guest_message_id: pair[0].id)
-              pair[1].save!
+              p pair[1].save!
             end
           end
         end

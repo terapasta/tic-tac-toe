@@ -3,7 +3,7 @@ namespace :chat do
   task connect_message_from_guest_to_bot: :environment do
     begin
       ActiveRecord::Base.transaction do
-        Chat.all.each do |chat|
+        Chat.includes(:messages).find_each do |chat|
           chat.classified_pair_messages.each do |pair|
             if pair[1].present?
               pair[1].assign_attributes(guest_message_id: pair[0].id)
@@ -15,6 +15,5 @@ namespace :chat do
     rescue => exception
       p exception.message
     end
-    
   end
 end

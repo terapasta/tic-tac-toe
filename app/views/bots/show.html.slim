@@ -49,7 +49,7 @@
         = space 2
         small １日毎に過去最大5,000件の回答のBad評価の割合を計算しています
       div(
-        data-component="TimeseriesChart"
+        data-component="BadCountChart"
         data-columns=@bad_count_summarizer.thirty_days_chart_data.to_json
       )
     = javascript_pack_tag 'chart'

@@ -42,6 +42,10 @@ class Message < ApplicationRecord
     joins(:rating).merge(Rating.bad)
   }
 
+  scope :is_staff_message, -> (flag) {
+    joins(:chat).where(chats: {is_staff: false}) if flag
+  }
+
   scope :bot_message_ids, -> {
     Message.bot.select(:id)
   }

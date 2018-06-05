@@ -13,6 +13,7 @@ class ThreadsController < ApplicationController
         end
 
         @guest_messages = @guest_messages
+          .is_staff_message(!current_user.staff?)
           .has_answer_failed_or_bad_or_good_or_marked_answer(params[:answer_failed].to_bool, params[:good].to_bool, params[:bad].to_bool, params[:marked].to_bool)
           .order(created_at: :desc)
           .page(params[:page]).per(@per_page)

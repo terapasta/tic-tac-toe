@@ -3,6 +3,10 @@ class ApplicationSummarizer
     name.sub(/Summarizer$/, '')
   end
 
+  def self.delete_all
+    DataSummary.where(type_name: type_name).delete_all
+  end
+
   def type_name
     self.class.type_name
   end
@@ -11,7 +15,8 @@ class ApplicationSummarizer
     DataSummary.new(
       bot: @bot,
       type_name: type_name,
-      data: as_json
+      data: as_json,
+      created_at: @created_at
     )
   end
 
@@ -32,5 +37,13 @@ class ApplicationSummarizer
       type_name: type_name,
       created_at: (start_time..end_time)
     )
+  end
+
+  def summarize
+    fail 'must implement #summarize method'
+  end
+
+  def as_json
+    fail 'must implement #as_json method'
   end
 end

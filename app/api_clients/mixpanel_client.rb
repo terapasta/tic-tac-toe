@@ -16,6 +16,6 @@ class MixpanelClient
       to_date: end_time.strftime('%Y-%m-%d'),
       type: 'general',
       unit: 'week',
-    ).dig('data', 'values')[bot_id.to_s].values.reduce(&:+)
+    ).dig('data', 'values')[bot_id.to_s]&.values&.reduce(&:+) || 0
   end
 end

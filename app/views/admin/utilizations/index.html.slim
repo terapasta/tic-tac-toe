@@ -1,1 +1,5 @@
-p utilizations
+.card.m-3: .card-body
+  = link_to 'ボットを再選択', admin_utilizations_path(selecting: 1), class: 'btn btn-primary'
+
+- @bots.each do |bot|
+  p=bot.name

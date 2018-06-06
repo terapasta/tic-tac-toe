@@ -1,8 +1,4 @@
 class GuestMessagesSummarizer < ApplicationSummarizer
-  StartingDay = :monday
-  HalfYearDays = 182
-  HalfYearWeeks = HalfYearDays / 7
-
   # 月〜日を1週間とする
   # created_atに週の終わり時刻(日曜の23:59:59)を記録する
   def initialize(bot)

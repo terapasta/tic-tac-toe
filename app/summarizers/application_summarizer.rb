@@ -1,4 +1,8 @@
 class ApplicationSummarizer
+  StartingDay = :monday
+  HalfYearDays = 182
+  HalfYearWeeks = HalfYearDays / 7
+
   def self.type_name
     name.sub(/Summarizer$/, '')
   end

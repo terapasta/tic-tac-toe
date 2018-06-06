@@ -6,7 +6,7 @@ class Admin::UtilizationsController < ApplicationController
     if @watching_bot_ids.blank? || params[:selecting].present?
       render :bot_selector and return
     end
-    @bots = Bot.where(id: cookies[CookieKey].split(','))
+    @bots = Bot.where(id: cookies[CookieKey].split(',')).order(created_at: :desc)
   end
 
   def create

@@ -6,16 +6,21 @@
   - @bots.each_slice(3) do |bots|
     .row.mb-3
       - bots.each do |bot|
-        .col-4
+        .col-md-4
           .card: .card-body
-            = link_to @bot, class: 'd-flex link-silent align-items-center mb-2' do
+            = link_to bot, class: 'd-flex link-silent align-items-center mb-2' do
               .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
               = space
               = bot.name
-            - summarizer = GuestMessagesSummarizer.new(bot)
+              = space
+              span（#{bot.organizations.map(&:name).join(', ')}）
+
+            - gm_summarizer = GuestMessagesSummarizer.new(bot)
+            - qa_summarizer = QuestionAnswersSummarizer.new(bot)
+            - data = ApplicationSummarizer.aggregate_data(gm_summarizer.half_year_data, qa_summarizer.half_year_data)
             div(
-              data-component="GuestMessagesChart"
-              data-columns=summarizer.half_year_data.to_json
+              data-component="UtilizationChart"
+              data-columns=data.to_json
             )
 
 = javascript_pack_tag 'chart'

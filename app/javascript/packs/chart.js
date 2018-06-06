@@ -2,7 +2,7 @@
 import Vue from 'vue'
 
 import BadCountChart from '../vue/BadCountChart'
-import GuestMessagesChart from '../vue/GuestMessagesChart'
+import UtilizationChart from '../vue/UtilizationChart'
 import getData from '../helpers/getData'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  Array.prototype.forEach.call(document.querySelectorAll('[data-component="GuestMessagesChart"]'), (mountNode) => {
+  Array.prototype.forEach.call(document.querySelectorAll('[data-component="UtilizationChart"]'), (mountNode) => {
     new Vue({
       el: mountNode,
-      components: { GuestMessagesChart },
+      components: { UtilizationChart },
       data: getData(mountNode),
-      template: '<guest-messages-chart :columns="columns" />'
+      template: '<utilization-chart :columns="columns" />'
     })
   })
 })

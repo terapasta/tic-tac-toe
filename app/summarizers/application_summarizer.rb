@@ -11,6 +11,17 @@ class ApplicationSummarizer
     DataSummary.where(type_name: type_name).delete_all
   end
 
+  def self.aggregate_data(*data)
+    [
+      data[0][0],
+      *data.map{|it| it.drop(1) }.reduce(&:concat)
+    ]
+  end
+
+  def self.extract_max_value(data)
+    data.drop(1).map{ |it| it.drop(1) }.flatten.sort.last
+  end
+
   def type_name
     self.class.type_name
   end

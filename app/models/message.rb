@@ -47,7 +47,7 @@ class Message < ApplicationRecord
   }
 
   scope :is_normal_message, -> (flag) {
-    where(chats: {is_normal: flag})
+    joins(:chat).where(chats: {is_normal: flag})
   }
 
   scope :bot_message_ids, -> {

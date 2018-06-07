@@ -43,7 +43,7 @@ class Message < ApplicationRecord
   }
 
   scope :is_staff_message, -> (flag) {
-    where(chats: {is_staff: false}) if flag
+    joins(:chat).where(chats: {is_staff: false}) if flag
   }
 
   scope :is_normal_message, -> (flag) {

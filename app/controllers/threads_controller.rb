@@ -6,10 +6,20 @@ class ThreadsController < ApplicationController
     respond_to do |format|
       format.html do
         @per_page = 20
-        @guest_messages = @bot.messages.includes(:bot_messages)
+        tmp_chats = @bot.chats
+          .includes(:messages)
+          .has_multiple_messages
+          .not_staff(!current_user.staff?)
+          .not_normal(params[:normal].blank?)
+          .normal(params[:normal])
+          .has_answer_failed(params[:answer_failed].to_bool)
+          .has_good_answer(params[:good].to_bool)
+          .has_bad_answer(params[:bad].to_bool)
+          .has_answer_marked(params[:marked].to_bool)
+          .order('chats.created_at DESC')
 
-        if !params[:answer_failed].to_bool && !params[:good].to_bool && !params[:bad].to_bool && !params[:marked].to_bool
-          @guest_messages = @guest_messages.guest
+        if current_user.ec_plan?(@bot) && params[:normal].blank?
+          tmp_chats = tmp_chats.where('chats.created_at >= ?', current_user.histories_limit_time(@bot))
         end
 
         @guest_messages = @guest_messages

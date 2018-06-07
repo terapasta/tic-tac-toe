@@ -1,6 +1,7 @@
 from app.shared.logger import logger
 from app.shared.base_cls import BaseCls
 from app.shared.benchmark import Benchmark
+from app.shared.constants import Constants
 from app.shared.document_generator import DocumentGenerator
 from app.controllers.learn_controller import LearnController
 from app.controllers.reply_controller import ReplyController
@@ -18,17 +19,21 @@ class BenchmarkController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()
+
+        context.phase = Constants.PHASE_LEARNING
         self.learn_controller = LearnController(context)
+
+        context.phase = Constants.PHASE_REPLYING
         self.reply_controller = ReplyController(context)
 
     def perform(self):
-
         # 評価前に学習する
         logger.setLevel(logging.WARNING)
         self.learn_controller.perform()
-        logger.setLevel(logging.INFO)
 
+        logger.setLevel(logging.INFO)
         logger.info('load test data for evaluation')
+
         expected, actual = self._load_test_data()
 
         # multi-class logarithmic loss

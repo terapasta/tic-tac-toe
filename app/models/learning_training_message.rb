@@ -1,7 +1,15 @@
 class LearningTrainingMessage < ApplicationRecord
   belongs_to :bot
 
+  validates :question, presence: true
   validates :answer_body, length: { maximum: 10000 }
+
+  scope :by_results, -> (results) {
+    results
+      .map{ |it| it.slice(:question_answer_id, :question).to_h }
+      .map{ |it| where(it) }
+      .reduce(:or)
+  }
 
   class << self
     def amp!(bot)

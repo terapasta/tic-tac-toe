@@ -27,14 +27,27 @@ RSpec.describe Learning::Summarizer do
 
   describe '#summary' do
     subject do
-      lambda do
-        summarizer.summary
-      end
+      -> { summarizer.summary }
     end
 
-    it { is_expected.to change(model, :count).by(1) }
-    it { is_expected.to change{model.find_by(id: learning_training_message.id)} }
-    it { is_expected.to change{model.find_by(question: sub_question.question)} }
-    it { is_expected.to change{model.find_by(question: question_answer.question)} }
+    context 'normal' do
+      it { is_expected.to change(model, :count).by(1) }
+      it { is_expected.to change{model.find_by(id: learning_training_message.id)}.to(nil).from(learning_training_message) }
+      it { is_expected.to change{model.find_by(question: sub_question.question)}.from(nil) }
+      it { is_expected.to change{model.find_by(question: question_answer.question)}.from(nil) }
+    end
+
+    context 'when error occur' do
+      before do
+        allow_any_instance_of(Learning::Summarizer).to \
+          receive(:convert_question_answers!).and_raise('some error')
+      end
+
+      it 'rollback' do
+        expect{
+          expect{ subject.call }.to raise_error(RuntimeError)
+        }.to_not change{ model.pluck(:id) }
+      end
+    end
   end
 end

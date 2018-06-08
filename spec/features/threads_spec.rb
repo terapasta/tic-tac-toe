@@ -33,25 +33,32 @@ RSpec.describe 'Threads', type: :feature, js: true do
 
   let!(:messages) do
     list = []
-    list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 0 guest
+    create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 0 guest
+      list << m
       list << create(:message, chat: chats[0], speaker: 'bot', guest_message_id: m.id)   # 1
     end
-    list << create(:message, chat: chats[1], speaker: 'guest').tap do |m| # 2 staff
+    create(:message, chat: chats[1], speaker: 'guest').tap do |m| # 2 staff
+      list << m
       list << create(:message, chat: chats[1], speaker: 'bot', guest_message_id: m.id)  # 3
     end
-    list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 4 staff
+    create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 4 staff
+      list << m
       list << create(:message, chat: chats[0], speaker: 'bot', answer_failed: true, guest_message_id: m.id)  # 5
     end
-    list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 6 guest
+    create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 6 guest
+      list << m
       list << create(:message, chat: chats[0], speaker: 'bot', guest_message_id: m.id)   # 7
     end
-    list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 8 guest
+    create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 8 guest
+      list << m
       list << create(:message, chat: chats[0], speaker: 'bot', guest_message_id: m.id)   # 9
     end
-    list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 10 guest
+    create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 10 guest
+      list << m
       list << create(:message, chat: chats[0], speaker: 'bot', answer_marked: true, guest_message_id: m.id)   # 11
     end
-    list << create(:message, chat: chats[2], speaker: 'guest').tap do |m| # 12 normal
+    create(:message, chat: chats[2], speaker: 'guest').tap do |m| # 12 normal
+      list << m
       list << create(:message, chat: chats[2], speaker: 'bot', guest_message_id: m.id)  # 13
     end
     list
@@ -96,7 +103,7 @@ RSpec.describe 'Threads', type: :feature, js: true do
       expect(page).to_not have_content(messages[3].body)
     end
   end
-     
+
   feature 'has params of answer_failed or good or bad or marked' do
     before do
       sign_in(normal_user)

@@ -43,13 +43,13 @@ RSpec.describe 'Threads', type: :feature, js: true do
       list << create(:message, chat: chats[0], speaker: 'bot', answer_failed: true, guest_message_id: m.id)  # 5
     end
     list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 6 guest
-      create(:message, chat: chats[0], speaker: 'bot', guest_message_id: m.id)   # 7
+      list << create(:message, chat: chats[0], speaker: 'bot', guest_message_id: m.id)   # 7
     end
     list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 8 guest
       list << create(:message, chat: chats[0], speaker: 'bot', guest_message_id: m.id)   # 9
     end
     list << create(:message, chat: chats[0], speaker: 'guest').tap do |m| # 10 guest
-      create(:message, chat: chats[0], speaker: 'bot', answer_marked: true, guest_message_id: m.id)   # 11
+      list << create(:message, chat: chats[0], speaker: 'bot', answer_marked: true, guest_message_id: m.id)   # 11
     end
     list << create(:message, chat: chats[2], speaker: 'guest').tap do |m| # 12 normal
       list << create(:message, chat: chats[2], speaker: 'bot', guest_message_id: m.id)  # 13
@@ -59,8 +59,10 @@ RSpec.describe 'Threads', type: :feature, js: true do
 
   let!(:ratings) do
     [
-      create(:rating, bot_id: bot.id, level: :good, message_id: messages[7].id, question: messages[6].body, answer: messages[7].body),
-      create(:rating, bot_id: bot.id, level: :bad, message_id: messages[9].id, question: messages[8].body, answer: messages[9].body)
+      # create(:rating, bot_id: bot.id, level: :good, message_id: messages[7].id, question: messages[6].body, answer: messages[7].body),
+      # create(:rating, bot_id: bot.id, level: :bad, message_id: messages[9].id, question: messages[8].body, answer: messages[9].body)
+      messages[7].good!,
+      messages[9].bad!
     ]
   end
 
@@ -71,7 +73,7 @@ RSpec.describe 'Threads', type: :feature, js: true do
 
     scenario do
       visit "/bots/#{bot.id}/threads"
-      # page.save_screenshots
+      #page.save_screenshot
       expect(page).to have_content(messages[0].body)
       expect(page).to have_content(messages[1].body)
       expect(page).to_not have_content(messages[2].body)

@@ -65,22 +65,17 @@ RSpec.describe 'Threads', type: :feature, js: true do
   end
 
   let!(:ratings) do
-    [
-      # create(:rating, bot_id: bot.id, level: :good, message_id: messages[7].id, question: messages[6].body, answer: messages[7].body),
-      # create(:rating, bot_id: bot.id, level: :bad, message_id: messages[9].id, question: messages[8].body, answer: messages[9].body)
-      messages[7].good!,
-      messages[9].bad!
-    ]
+    messages[7].good!
+    messages[9].bad!
   end
 
-  feature 'not staff user dont show staff messages' do
+  feature 'normal user dont show staff messages' do
     before do
       sign_in(normal_user)
     end
 
     scenario do
       visit "/bots/#{bot.id}/threads"
-      #page.save_screenshot
       expect(page).to have_content(messages[0].body)
       expect(page).to have_content(messages[1].body)
       expect(page).to_not have_content(messages[2].body)
@@ -98,9 +93,21 @@ RSpec.describe 'Threads', type: :feature, js: true do
     end
 
     scenario do
-      visit '/bots/#{bot.id}/threads?answer_failed=false&bad=false&good=false&marked=false&normal=1'
+      visit "/bots/#{bot.id}/threads?answer_failed=false&bad=false&good=false&marked=false&normal=1"
+      expect(page).to_not have_content(messages[0].body)
+      expect(page).to_not have_content(messages[1].body)
       expect(page).to_not have_content(messages[2].body)
       expect(page).to_not have_content(messages[3].body)
+      expect(page).to_not have_content(messages[4].body)
+      expect(page).to_not have_content(messages[5].body)
+      expect(page).to_not have_content(messages[6].body)
+      expect(page).to_not have_content(messages[7].body)
+      expect(page).to_not have_content(messages[8].body)
+      expect(page).to_not have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
+      expect(page).to have_content(messages[12].body)
+      expect(page).to have_content(messages[13].body)
     end
   end
 
@@ -110,7 +117,9 @@ RSpec.describe 'Threads', type: :feature, js: true do
     end
 
     scenario do
-      visit '/bots/#{bot.id}/threads?answer_failed=true&good=false&bad=false&marked=false'
+      visit "/bots/#{bot.id}/threads?answer_failed=true&good=false&bad=false&marked=false"
+      expect(page).to have_content(messages[4].body)
+      expect(page).to have_content(messages[5].body)
       expect(page).to_not have_content(messages[6].body)
       expect(page).to_not have_content(messages[7].body)
       expect(page).to_not have_content(messages[8].body)
@@ -120,38 +129,123 @@ RSpec.describe 'Threads', type: :feature, js: true do
     end
 
     scenario do
-      visit '/bots/#{bot.id}/threads?answer_failed=false&good=true&bad=false&marked=false'
-      if messages[7].good!
-        expect(page).to_not have_content(messages[4].body)
-        expect(page).to_not have_content(messages[5].body)
-        expect(page).to_not have_content(messages[8].body)
-        expect(page).to_not have_content(messages[9].body)
-        expect(page).to_not have_content(messages[10].body)
-        expect(page).to_not have_content(messages[11].body)
-      end
+      visit "/bots/#{bot.id}/threads?answer_failed=true&good=true&bad=false&marked=false"
+      expect(page).to have_content(messages[4].body)
+      expect(page).to have_content(messages[5].body)
+      expect(page).to have_content(messages[6].body)
+      expect(page).to have_content(messages[7].body)
+      expect(page).to_not have_content(messages[8].body)
+      expect(page).to_not have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
     end
 
     scenario do
-      visit '/bots/#{bot.id}/threads?answer_failed=false&good=false&bad=true&marked=false'
-      if messages[9].bad!
-        expect(page).to_not have_content(messages[4].body)
-        expect(page).to_not have_content(messages[5].body)
-        expect(page).to_not have_content(messages[6].body)
-        expect(page).to_not have_content(messages[7].body)
-        expect(page).to_not have_content(messages[10].body)
-        expect(page).to_not have_content(messages[11].body)
-      end
+      visit "/bots/#{bot.id}/threads?answer_failed=true&good=false&bad=true&marked=false"
+      expect(page).to have_content(messages[4].body)
+      expect(page).to have_content(messages[5].body)
+      expect(page).to_not have_content(messages[6].body)
+      expect(page).to_not have_content(messages[7].body)
+      expect(page).to have_content(messages[8].body)
+      expect(page).to have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
     end
 
     scenario do
-      visit '/bots/#{bot.id}/threads?answer_failed=false&good=false&bad=false&marked=true'
+      visit "/bots/#{bot.id}/threads?answer_failed=true&good=true&bad=true&marked=false"
+      expect(page).to have_content(messages[4].body)
+      expect(page).to have_content(messages[5].body)
+      expect(page).to have_content(messages[6].body)
+      expect(page).to have_content(messages[7].body)
+      expect(page).to have_content(messages[8].body)
+      expect(page).to have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=true&good=true&bad=true&marked=true"
+      expect(page).to have_content(messages[4].body)
+      expect(page).to have_content(messages[5].body)
+      expect(page).to have_content(messages[6].body)
+      expect(page).to have_content(messages[7].body)
+      expect(page).to have_content(messages[8].body)
+      expect(page).to have_content(messages[9].body)
+      expect(page).to have_content(messages[10].body)
+      expect(page).to have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=false&good=true&bad=false&marked=false"
+      expect(page).to_not have_content(messages[4].body)
+      expect(page).to_not have_content(messages[5].body)
+      expect(page).to have_content(messages[6].body)
+      expect(page).to have_content(messages[7].body)
+      expect(page).to_not have_content(messages[8].body)
+      expect(page).to_not have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=false&good=true&bad=true&marked=false"
+      expect(page).to_not have_content(messages[4].body)
+      expect(page).to_not have_content(messages[5].body)
+      expect(page).to have_content(messages[6].body)
+      expect(page).to have_content(messages[7].body)
+      expect(page).to have_content(messages[8].body)
+      expect(page).to have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=false&good=true&bad=false&marked=true"
+      expect(page).to_not have_content(messages[4].body)
+      expect(page).to_not have_content(messages[5].body)
+      expect(page).to have_content(messages[6].body)
+      expect(page).to have_content(messages[7].body)
+      expect(page).to_not have_content(messages[8].body)
+      expect(page).to_not have_content(messages[9].body)
+      expect(page).to have_content(messages[10].body)
+      expect(page).to have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=false&good=false&bad=true&marked=false"
+      expect(page).to_not have_content(messages[4].body)
+      expect(page).to_not have_content(messages[5].body)
+      expect(page).to_not have_content(messages[6].body)
+      expect(page).to_not have_content(messages[7].body)
+      expect(page).to have_content(messages[8].body)
+      expect(page).to have_content(messages[9].body)
+      expect(page).to_not have_content(messages[10].body)
+      expect(page).to_not have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=false&good=false&bad=true&marked=true"
+      expect(page).to_not have_content(messages[4].body)
+      expect(page).to_not have_content(messages[5].body)
+      expect(page).to_not have_content(messages[6].body)
+      expect(page).to_not have_content(messages[7].body)
+      expect(page).to have_content(messages[8].body)
+      expect(page).to have_content(messages[9].body)
+      expect(page).to have_content(messages[10].body)
+      expect(page).to have_content(messages[11].body)
+    end
+
+    scenario do
+      visit "/bots/#{bot.id}/threads?answer_failed=false&good=false&bad=false&marked=true"
       expect(page).to_not have_content(messages[4].body)
       expect(page).to_not have_content(messages[5].body)
       expect(page).to_not have_content(messages[6].body)
       expect(page).to_not have_content(messages[7].body)
       expect(page).to_not have_content(messages[8].body)
       expect(page).to_not have_content(messages[9].body)
+      expect(page).to have_content(messages[10].body)
+      expect(page).to have_content(messages[11].body)
     end
   end
-
 end

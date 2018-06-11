@@ -41,7 +41,6 @@
 # end
 
 env 'MECAB_PATH', '/usr/local/lib/libmecab.so'
-env 'ZENDESK_HC_BOT_ID', 1
 
 # 朝8:00
 every 1.day, at: '8:00' do
@@ -59,9 +58,9 @@ every 1.day, at: '5:00' do
 end
 
 # 未明4:00
-# every 1.day, at: '4:00' do
-#   rake 'question_answer:import_mofmof_zendesk_hc'
-# end
+every 1.day, at: '4:00' do
+  rake 'question_answer:import_zendesk_hc_to_all_bots'
+end
 
 # 未明3:00
 every 1.day, at: '3:00' do

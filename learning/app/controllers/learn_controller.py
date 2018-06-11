@@ -5,7 +5,6 @@ from app.shared.logger import logger
 from app.shared.constants import Constants
 from app.shared.base_cls import BaseCls
 
-
 class LearnController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
@@ -30,7 +29,7 @@ class LearnController(BaseCls):
         logger.info('load all get_datasource')
         question_answers = self.factory.get_datasource().question_answers.all()
         ratings = self.factory.get_datasource().ratings.all()
-        all_questions = pd.concat([question_answers['question'], ratings['question']])
+        all_questions = pd.concat([question_answers['question'], ratings['question']]).dropna()
 
         logger.info('tokenize')
         tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
@@ -49,7 +48,7 @@ class LearnController(BaseCls):
         bot_qa_data = self.factory.get_datasource().question_answers.by_bot(self.bot.id)
         bot_ratings_data = self.factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
 
-        all_questions = np.array(pd.concat([bot_qa_data['question'], bot_ratings_data['question']]))
+        all_questions = np.array(pd.concat([bot_qa_data['question'], bot_ratings_data['question']]).dropna())
         all_answer_ids = np.array(pd.concat([bot_qa_data['question_answer_id'], bot_ratings_data['question_answer_id']]), dtype=np.int)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加

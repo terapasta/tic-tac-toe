@@ -120,7 +120,8 @@ class Chat < ApplicationRecord
   end
 
   def classified_pair_messages
-    ordered = messages.order(id: :asc).to_a
+    ordered = messages.loaded? ?
+      messages.sort_by(&:id) : messages.order(id: :asc).to_a
     ordered.shift
     irregulars = ordered.select.with_index{ |it, i|
       it.guest? && ordered[i + 1].guest?

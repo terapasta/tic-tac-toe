@@ -21,7 +21,7 @@ class ThreadsController < ApplicationController
         if current_user.ec_plan?(@bot) && params[:normal].blank?
           tmp_chats = tmp_chats.where('chats.created_at >= ?', current_user.histories_limit_time(@bot))
         end
-
+        
         @chats = tmp_chats
           .page(params[:page])
           .per(@per_page)

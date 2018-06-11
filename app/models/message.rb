@@ -15,11 +15,6 @@ class Message < ApplicationRecord
     class_name: 'Message',
     foreign_key: :guest_message_id
 
-  has_many :bot_messages,
-    -> { bot },
-    class_name: 'Message',
-    foreign_key: :guest_message_id
-
   enum speaker: { bot: 'bot', guest: 'guest' }
 
   serialize :similar_question_answers_log

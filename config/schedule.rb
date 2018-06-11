@@ -41,7 +41,6 @@
 # end
 
 env 'MECAB_PATH', '/usr/local/lib/libmecab.so'
-env 'ZENDESK_HC_BOT_ID', 1
 
 # 朝8:00
 every 1.day, at: '8:00' do

@@ -4,11 +4,12 @@
 
   - if current_user.staff?
     .card.mb-4: .card-body
-      h6.card-title
-        = material_icon 'trending_down', class: 'mi-sm mi-v-sub text-muted'
-        = space
-        span 削減効果予測
-        = space 5
+      .d-flex.justify-content-between.align-items-start
+        h6.card-title
+          = material_icon 'trending_down', class: 'mi-sm mi-v-sub text-muted'
+          = space
+          span 削減効果予測
+          = space 5
         small.text-sm.badge.badge-success STAFF ONLY
       table.table.mb-0 style="width: auto"
         thead: tr
@@ -40,6 +41,21 @@
         br
         |※ チャット数は日付が変わるとリセットされます
 
+  - if @guest_messages_summarizer.get_half_year_data.present?
+    .card.mb-5: .card-body
+      .d-flex.justify-content-between.align-items-start
+        h6.mb-4
+          = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'
+          = space
+          span チャット質問数
+          = space 2
+          small １週間毎に最大過去半年分のチャット質問数を計算しています
+        small.text-sm.badge.badge-success STAFF ONLY
+      div(
+        data-component="GuestMessagesChart"
+        data-columns=@guest_messages_summarizer.half_year_data.to_json
+      )
+
   - if @bad_count_summarizer.get_thirty_days_data.present?
     .card.mb-5: .card-body
       h6.mb-4
@@ -49,8 +65,9 @@
         = space 2
         small １日毎に過去最大5,000件の回答のBad評価の割合を計算しています
       div(
-        data-component="TimeseriesChart"
+        data-component="BadCountChart"
         data-columns=@bad_count_summarizer.thirty_days_chart_data.to_json
       )
-    = javascript_pack_tag 'chart'
-    = stylesheet_pack_tag 'chart'
+
+= javascript_pack_tag 'chart'
+= stylesheet_pack_tag 'chart'

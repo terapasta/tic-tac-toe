@@ -41,7 +41,7 @@
         br
         |※ チャット数は日付が変わるとリセットされます
 
-  - if @guest_messages_summarizer.get_half_year_data.present?
+  - if @guest_messages_summarizer.get_half_year_data.present? && current_user.staff?
     .card.mb-5: .card-body
       .d-flex.justify-content-between.align-items-start
         h6.mb-4

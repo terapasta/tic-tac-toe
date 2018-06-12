@@ -8,6 +8,8 @@ import addDays from 'date-fns/add_days'
 import jaLocale from 'date-fns/locale/ja'
 
 import max from 'lodash/max'
+import flatten from 'lodash/flatten'
+import sortBy from 'lodash/sortBy'
 
 const DateFormat = 'YYYY-MM-DD dd'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
@@ -25,7 +27,8 @@ export default {
 
   computed: {
     yAxisMax () {
-      return max(this.columns[1].slice(1)) + 10
+      const all = flatten(this.columns.slice(1).map(it => it.slice(1)))
+      return max(all) + 10
     }
   },
 

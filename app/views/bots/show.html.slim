@@ -52,7 +52,7 @@
           small １週間毎に最大過去半年分のチャット質問数を計算しています
         small.text-sm.badge.badge-success STAFF ONLY
       div(
-        data-component="GuestMessagesChart"
+        data-component="UtilizationChart"
         data-columns=@guest_messages_summarizer.half_year_data.to_json
       )
 

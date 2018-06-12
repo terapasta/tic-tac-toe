@@ -145,6 +145,8 @@ Rails.application.routes.draw do
       resources :demo_bots, only: [:index] do
         resource :term, only: [:destroy], module: :demo_bots
       end
+      get :utilizations, to: 'utilizations#index'
+      post :utilizations, to: 'utilizations#create'
     end
 
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

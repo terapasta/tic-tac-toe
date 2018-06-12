@@ -1,0 +1,27 @@
+.card.m-3: .card-body.d-flex.align-items-center
+  h4.mb-0.mr-3 各社利用状況
+  = link_to 'ボットを再選択', admin_utilizations_path(selecting: 1), class: 'btn btn-primary'
+
+.container-fluid
+  - @bots.each_slice(3) do |bots|
+    .row.mb-3
+      - bots.each do |bot|
+        .col-md-4
+          .card: .card-body
+            = link_to bot, class: 'd-flex link-silent align-items-center mb-2' do
+              .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+              = space
+              = bot.name
+              = space
+              span（#{bot.organizations.map(&:name).join(', ')}）
+
+            - gm_summarizer = GuestMessagesSummarizer.new(bot)
+            - qa_summarizer = QuestionAnswersSummarizer.new(bot)
+            - data = ApplicationSummarizer.aggregate_data(gm_summarizer.half_year_data, qa_summarizer.half_year_data)
+            div(
+              data-component="UtilizationChart"
+              data-columns=data.to_json
+            )
+
+= javascript_pack_tag 'chart'
+= stylesheet_pack_tag 'chart'

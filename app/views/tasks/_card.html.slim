@@ -16,17 +16,17 @@
       .col-sm-6.order-1 style="padding-top:16px"
         .chat-message.full-width style="float:none;"
           .chat-message__icon style=("background-image:url(#{bot.image_url});")
-          .chat-message__balloon
-            - if task.bot_message.blank?
+          - if task.bot_message.blank?
+            .chat-message__balloon
               = material_icon 'error_outline', class: 'mi-sm text-muted'
               = space 2
               span 回答不可
-            - else
+          - else
+            .chat-message__balloon
+            .mt-2.d-flex.justify-content-end
               = material_icon 'thumb_down', class: 'mi-sm text-danger'
               = space 2
               span Bad評価
-              br
-              = nl2br task.bot_message
 
         - if task.bot_message_record&.bad_reasons&.any?
           .pt-2: .card: .card-body.p-2

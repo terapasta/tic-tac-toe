@@ -36,10 +36,10 @@
           = render 'guest_user', guest_user: @guest_user
       - @messages.each do |message|
         - if message.guest?
-          .row: .col-6.offset-6
+          .row: .col-6.offset-6 class=(params[:guest_message_id].to_i == message.id ? 'message-tasks' : '')
             = render 'messages/guest_balloon', message: message
         - else
-          .row: .col-6
+          .row: .col-6 class=(params[:bot_message_id].to_i == message.id ? 'message-tasks' : '')
             = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
           - if message_has_decision_branches?(message)
             = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'

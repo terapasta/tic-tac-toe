@@ -36,11 +36,13 @@
           = render 'guest_user', guest_user: @guest_user
       - @messages.each do |message|
         - if message.guest?
-          .row: .col-6.offset-6 class=(params[:guest_message_id].to_i == message.id ? 'message-tasks' : '')
-            = render 'messages/guest_balloon', message: message
+          .row class=(params[:guest_message_id].to_i == message.id ? 'messages-row-highlighted' : '')
+            .col-6.offset-6
+              = render 'messages/guest_balloon', message: message
         - else
-          .row: .col-6 class=(params[:bot_message_id].to_i == message.id ? 'message-tasks' : '')
-            = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
+          .row class=(params[:bot_message_id].to_i == message.id ? 'messages-row-highlighted' : '')
+            .col-6
+              = render 'messages/bot_balloon', bot: @bot, message: message, show_mark_button: true
           - if message_has_decision_branches?(message)
             = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'
           - if message.similar_question_answers_log.present? && message.is_show_similar_question_answers

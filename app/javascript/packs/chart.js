@@ -20,7 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
       el: mountNode,
       components: { UtilizationChart },
       data: getData(mountNode),
-      template: '<utilization-chart :columns="columns" />'
+      template: `
+        <utilization-chart
+          :columns="columns"
+          :y-max="yMax"
+        />
+      `
     })
   })
 })

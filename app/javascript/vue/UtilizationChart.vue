@@ -11,12 +11,13 @@ import max from 'lodash/max'
 import flatten from 'lodash/flatten'
 import sortBy from 'lodash/sortBy'
 
-const DateFormat = 'YYYY-MM-DD dd'
+const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 
 export default {
   props: {
-    columns: { type: Array, required: true }
+    columns: { type: Array, required: true },
+    yMax: { type: Number, required: true }
   },
 
   mounted () {
@@ -27,8 +28,9 @@ export default {
 
   computed: {
     yAxisMax () {
-      const all = flatten(this.columns.slice(1).map(it => it.slice(1)))
-      return max(all) + 10
+      // const all = flatten(this.columns.slice(1).map(it => it.slice(1)))
+      // return max(all) + 10
+      return this.yMax + 10
     }
   },
 
@@ -50,7 +52,7 @@ export default {
             tick: {
               format (d) {
                 const date = parseDate(d)
-                return `${formatDate(date)} 〜 ${formatDate(addDays(date, 6))}`
+                return formatDate(date)
               }
             }
           },

@@ -3,25 +3,26 @@
   = link_to 'ボットを再選択', admin_utilizations_path(selecting: 1), class: 'btn btn-primary'
 
 .container-fluid
-  - @bots.each_slice(3) do |bots|
-    .row.mb-3
-      - bots.each do |bot|
-        .col-md-4
-          .card: .card-body
-            = link_to bot, class: 'd-flex link-silent align-items-center mb-2' do
-              .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
-              = space
-              = bot.name
-              = space
-              span（#{bot.organizations.map(&:name).join(', ')}）
+  - [:high, :middle, :low].each do |level|
+    h6.mt-5= level.upcase
+    - @data_list[level].each_slice(3) do |data_list|
+      .row.mb-3
+        - data_list.each do |data|
+          - bot = data[:bot]
+          .col-md-4
+            .card: .card-body
+              = link_to bot, class: 'd-flex link-silent align-items-center mb-2' do
+                .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+                = space
+                = bot.name
+                = space
+                span（#{bot.organizations.map(&:name).join(', ')}）
 
-            - gm_summarizer = GuestMessagesSummarizer.new(bot)
-            - qa_summarizer = QuestionAnswersSummarizer.new(bot)
-            - data = ApplicationSummarizer.aggregate_data(gm_summarizer.half_year_data, qa_summarizer.half_year_data)
-            div(
-              data-component="UtilizationChart"
-              data-columns=data.to_json
-            )
+              div(
+                data-component="UtilizationChart"
+                data-columns=data[:data].to_json
+                data-y-max=@data_list[level].first[:max]
+              )
 
 = javascript_pack_tag 'chart'
 = stylesheet_pack_tag 'chart'

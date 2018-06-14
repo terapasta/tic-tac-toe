@@ -23,6 +23,7 @@
               span 回答不可
           - else
             .chat-message__balloon
+              = nl2br message_to_html(task.bot_message)
             .mt-2.d-flex.justify-content-end
               = material_icon 'thumb_down', class: 'mi-sm text-danger'
               = space 2

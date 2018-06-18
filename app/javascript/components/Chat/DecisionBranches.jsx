@@ -56,7 +56,7 @@ export default class ChatDecisionBranches extends Component {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
-                    onChoose(item[selectAttribute])
+                    onChoose(item[selectAttribute], item)
                   }}>
                   {item.body}
                 </a>

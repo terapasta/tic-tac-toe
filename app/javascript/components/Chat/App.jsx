@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual'
 import includes from 'lodash/includes'
 import findLastIndex from 'lodash/findLastIndex'
 import takeRight from 'lodash/takeRight'
+import get from 'lodash/get'
 import isEmpty from 'is-empty'
 import imagesLoaded from 'imagesloaded'
 
@@ -169,10 +170,14 @@ export default class ChatApp extends Component {
                 <ChatSimilarQuestionAnswersRow {...{
                   section,
                   isManager,
-                  onChoose(question) {
-                    dispatch(a.postMessageIfNeeded(token, question, { isForce: true }));
-                    const { eventName, options } = makeEvent('click suggest');
-                    Mixpanel.sharedInstance.trackEvent(eventName, options);
+                  onChoose (question, item) {
+                    if (get(item, 'id') === -1) {
+                      dispatch(a.selectNoApplicableItem(token, question))
+                    } else {
+                      dispatch(a.postMessageIfNeeded(token, question, { isForce: true }))
+                    }
+                    const { eventName, options } = makeEvent('click suggest')
+                    Mixpanel.sharedInstance.trackEvent(eventName, options)
                   },
                   onInitialQuestionPositionChange (index, direction) {
                     switch (direction) {

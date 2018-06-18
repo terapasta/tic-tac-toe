@@ -1,4 +1,6 @@
 class ReplyResponse::SimilarQuestionAnswersFinder
+  NoApplicable = Struct.new(:id, :question)
+
   def initialize(bot:, results:)
     @bot = bot
     @results = results.map{ |it| Hashie::Mash.new(it) }
@@ -16,7 +18,7 @@ class ReplyResponse::SimilarQuestionAnswersFinder
       else
         acc + [qa]
       end
-    }.compact
+    }.compact + [NoApplicable.new(-1, 'どれにも該当しない')]
   end
 
   private

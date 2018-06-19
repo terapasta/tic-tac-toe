@@ -9,7 +9,7 @@ class ReplyResponse::SimilarQuestionAnswersFinder
   end
 
   def process
-    @results.inject([]) { |acc, result|
+    items = @results.inject([]) { |acc, result|
       ltm = find_learning_training_message_by(result)
       qa = find_question_answer_by(result)
       next acc if ltm.blank? || qa.blank?
@@ -18,7 +18,9 @@ class ReplyResponse::SimilarQuestionAnswersFinder
       else
         acc + [qa]
       end
-    }.compact + [NoApplicable.new(-1, 'どれにも該当しない')]
+    }.compact
+    return items if items.count.zero?
+    items + [NoApplicable.new(-1, 'どれにも該当しない')]
   end
 
   private

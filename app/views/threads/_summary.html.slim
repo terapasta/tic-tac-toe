@@ -1,45 +1,40 @@
-.card.mb-4
-  .card-body
-    - if chat.guest_user.present?
-      = render 'messages/guest_user', guest_user: chat.guest_user
-    .text-center.mb-3= link_to 'これ以前の発言もすべて見る', bot_thread_messages_path(bot, chat), data: { event: 'check all chat log' }
-    .row
-      - chat.messages.order(created_at: :desc).limit(2).reverse.tap do |messages|
-        - messages.first.tap do |message|
-          .col-sm-6.order-12
-            = render 'messages/guest_balloon', message: message
-        - messages.second.tap do |message|
-          .col-sm-6.order-1 style="padding-top:16px"
-            = render 'messages/bot_balloon', bot: @bot, message: message
+- chat = guest_message.chat
 
-  .card-footer.d-flex.justify-content-between
+.card.mb-4
+  .row.mt-3
+    - if guest_message.bot_messages.any?
+      .col-6.offset-6
+        = render 'messages/guest_balloon', message: guest_message
+
+      - guest_message.bot_messages.each do |bot_message|
+        .col-6 style="padding-bottom:20px; padding-left:65px"
+          = render 'messages/bot_balloon', bot: @bot, message: bot_message, show_mark_button: true
+        - if message_has_decision_branches?(bot_message)
+          .col-10.offset-1
+            = render 'messages/decision_branches', items: message_get_decision_branches_from(bot_message), title: '回答を選択してください'
+        - if bot_message.similar_question_answers_log.present? && bot_message.is_show_similar_question_answers
+          .col-10.offset-1
+            = render 'messages/decision_branches', items: bot_message.similar_question_answers_log.map{ |it| Struct.new(:body).new(it['question']) }, title: 'こちらの質問ではないですか？'
+    - else
+      .col-6.offset-6.mb-3
+        = render 'messages/guest_balloon', message: guest_message
+
+  .px-3.pb-3.d-flex.justify-content-between.align-items-center
     div
-      small ID：#{chat.id}
+      small 質問日時：#{l guest_message.created_at}
       = space 10
-      small 日時：#{l chat.messages.last.created_at}
-      = space 10
-      small 質問数：#{chat.messages.guest.count}
-    div.text-muted
-      span.mr-3
-        - chat.messages.answer_failed.count.tap do |count|
-          = material_icon 'error_outline', class: ('text-warning' if count > 0)
+      - if chat.guest_user.present?
+        span style="font-size:12px;"
+          = material_icon 'person'
           = space
-          = count
-      span.mr-3
-        - chat.messages.good.count.tap do |count|
-          = material_icon 'thumb_up', class: ('text-success' if count > 0)
-          = space
-          = count
-      span.mr-3
-        - chat.messages.bad.count.tap do |count|
-          = material_icon 'thumb_down', class: ('text-danger' if count > 0)
-          = space
-          = count
-      span
-        - chat.messages.answer_marked.count.tap do |count|
-          - if count.zero?
-            = image_tag 'icon-pin.svg', width: 24, height: 24
-          - else
-            = image_tag 'icon-pin--orange.svg', width: 24, height: 24
-          = space
-          = count
+          code= chat.guest_user.name
+          - if chat.guest_user.email.present?
+            = space
+            |/
+            = space
+            code= chat.guest_user.email
+    div
+      = link_to bot_thread_messages_path(bot, chat), class: 'btn btn-info btn-sm', data: { event: 'check all chat log' } do
+        = material_icon 'forum', class: 'mi-xs'
+        = space
+        span チャット全体を見る

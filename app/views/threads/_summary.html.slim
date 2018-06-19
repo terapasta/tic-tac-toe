@@ -1,9 +1,6 @@
 - chat = guest_message.chat
 
 .card.mb-4
-  /.card-body
-    - if chat.guest_user.present?
-      = render 'messages/guest_user', guest_user: chat.guest_user
   .row.mt-3
     - if guest_message.bot_messages.any?
       .col-6.offset-6

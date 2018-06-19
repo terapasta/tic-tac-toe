@@ -54,14 +54,14 @@ RSpec.describe ReplyResponse do
     ReplyResponse.new(raw_data, bot, 'hogehoge')
   end
 
+  subject do
+    reply_response.similar_question_answers
+  end
+
   describe '#similar_question_answers' do
     context 'when included sub_question' do
-      it 'returns sub_question text' do
-        expect(reply_response.similar_question_answers).to eq([
-          sub_question,
-          question_answers.second
-        ])
-      end
+      it { is_expected.to be_include(sub_question) }
+      it { is_expected.to be_include(question_answers.second) }
     end
   end
 end

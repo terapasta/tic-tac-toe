@@ -6,20 +6,20 @@
       = render 'messages/guest_user', guest_user: chat.guest_user
   .row.mt-3
     - if guest_message.bot_messages.any?
-      .col-sm-6.offset-md-6
+      .col-6.offset-6
         = render 'messages/guest_balloon', message: guest_message
 
       - guest_message.bot_messages.each do |bot_message|
-        .col-sm-6 style="padding-bottom:20px; padding-left:65px"
+        .col-6 style="padding-bottom:20px; padding-left:65px"
           = render 'messages/bot_balloon', bot: @bot, message: bot_message, show_mark_button: true
         - if message_has_decision_branches?(bot_message)
-          .col-md-10.offset-md-1
+          .col-10.offset-1
             = render 'messages/decision_branches', items: message_get_decision_branches_from(bot_message), title: '回答を選択してください'
         - if bot_message.similar_question_answers_log.present? && bot_message.is_show_similar_question_answers
-          .col-md-10.offset-md-1
+          .col-10.offset-1
             = render 'messages/decision_branches', items: bot_message.similar_question_answers_log.map{ |it| Struct.new(:body).new(it['question']) }, title: 'こちらの質問ではないですか？'
     - else
-      .col-sm-6.order-12
+      .col-6.offset-6.mb-3
         = render 'messages/guest_balloon', message: guest_message
 
   .px-3.pb-3.d-flex.justify-content-between.align-items-center

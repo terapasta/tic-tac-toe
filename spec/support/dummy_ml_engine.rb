@@ -30,8 +30,9 @@ class DummyMLEngine
 
   @@dummy_results = []
 
-  def self.add_dummy_result(probability:, question_answer_id:)
+  def self.add_dummy_result(probability:, question_answer_id:, question: 'example')
     @@dummy_results.push(
+      'question' => question,
       'probability' => probability,
       'question_answer_id' => question_answer_id
     )

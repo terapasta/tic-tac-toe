@@ -5,18 +5,36 @@ RSpec.describe 'Chats: N/A selection', type: :feature, js: true do
     create(:bot)
   end
 
-  let(:dummy_results) do
-    5.times.map{ |n|
-      {
-        "question": "サンプル #{n}",
-        "probability": 0.7,
-        "questionAnswerId": n
-      }
-    }
+  let!(:question_answers) do
+    5.times do |n|
+      create(:question_answer,
+        id: n,
+        question: "サンプル #{n}",
+        bot: bot
+      )
+    end
+  end
+
+  let!(:learning_training_messages) do
+    5.times do |n|
+      create(:learning_training_message,
+        id: n,
+        question: "サンプル #{n}",
+        question_answer_id: n,
+        bot: bot
+      )
+    end
   end
 
   before do
     stub_const('Ml::Engine', DummyMLEngine)
+    5.times.map{ |n|
+      DummyMLEngine.add_dummy_result(
+        probability: 0.7,
+        question_answer_id: n,
+        question: "サンプル #{n}"
+      )
+    }
   end
 
   scenario do

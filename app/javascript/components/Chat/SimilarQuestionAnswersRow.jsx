@@ -17,7 +17,8 @@ class ChatSimilarQuestionAnswersRow extends Component {
 
     if (isEmpty(similarQuestionAnswers) || isDone) { return null }
     const items = similarQuestionAnswers.map((q) => ({
-      body: q.question,
+      id: q.id,
+      body: q.question
     }))
 
     return (

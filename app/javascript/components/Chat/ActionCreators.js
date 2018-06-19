@@ -6,12 +6,14 @@ import findIndex from 'lodash/findIndex'
 import get from 'lodash/get'
 import isEmpty from 'is-empty'
 import toastr from 'toastr'
+import Cookies from 'js-cookie'
 
 import * as API from '../../api/chatMessages'
 import * as MessageRatingAPI from '../../api/chatMessageRating'
 import * as ChatTrainigsAPI from '../../api/chatTrainings'
 import * as BotLearningAPI from '../../api/botLearning'
 import * as InitialQuestionsAPI from '../../api/initialQuestions'
+import * as FailedMessagesAPI from '../../api/failedMessages'
 import * as c from './Constants'
 
 import Mixpanel from '../../analytics/mixpanel'
@@ -305,5 +307,19 @@ export const downPositionInitialQuestion = (botId, index) => {
       toastr.error('初期質問の順序変更でエラーが発生しました');
       console.error(e)
     })
+  }
+}
+
+export const selectNoApplicableItem = (botToken, message) => {
+  return (dispatch, getState) => {
+    const guestKey = Cookies.get('guest_key')
+    dispatch(disableForm())
+    FailedMessagesAPI.create(botToken, guestKey, message)
+      .then(res => {
+        dispatch(createdMessage(res))
+        dispatch(clearMessageBody())
+        dispatch(enableForm())
+      })
+      .catch(err => console.error(err))
   }
 }

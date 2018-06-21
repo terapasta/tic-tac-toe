@@ -77,7 +77,7 @@ class ZendeskClient
     articles.each do |article|
       qa = bot.question_answers.find_or_initialize_by(zendesk_article_id: article.id)
       qa.question = article.name
-      answer_text = h.raw(h.truncate(h.strip_tags(article.body), length: 150).sub(/^\n+/, ''))
+      answer_text = h.raw(h.truncate(h.strip_tags(article.body), length: 150)&.sub(/^\n+/, ''))
       qa.answer = "#{answer_text}\n#{article.html_url}"
       qa.save!
 

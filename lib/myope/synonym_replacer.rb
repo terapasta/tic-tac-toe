@@ -2,10 +2,6 @@ module SynonymReplacer
   def self.replace(text, synonym, word)
     return text unless text.include?(synonym)
 
-    text = to_wakati(text)
-    synonym = to_wakati(synonym)
-    word = to_wakati(word)
-
     result = ''
     start_text_index = 0
 
@@ -44,11 +40,5 @@ module SynonymReplacer
     end
 
     result
-  end
-
-  def self.to_wakati(original)
-    res = Natto::MeCab.new('-Owakati').parse(original.to_s).sub(/\n$/, '')
-    res = " #{res}" unless res.starts_with?(' ')
-    res
   end
 end

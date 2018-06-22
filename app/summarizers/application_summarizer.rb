@@ -1,6 +1,25 @@
 class ApplicationSummarizer
+  StartingDay = :monday
+  HalfYearDays = 182
+  HalfYearWeeks = HalfYearDays / 7
+
   def self.type_name
     name.sub(/Summarizer$/, '')
+  end
+
+  def self.delete_all
+    DataSummary.where(type_name: type_name).delete_all
+  end
+
+  def self.aggregate_data(*data)
+    [
+      data[0][0],
+      *data.map{|it| it.drop(1) }.reduce(&:concat)
+    ]
+  end
+
+  def self.extract_max_value(data)
+    data.drop(1).map{ |it| it.drop(1) }.flatten.sort.last
   end
 
   def type_name
@@ -11,7 +30,8 @@ class ApplicationSummarizer
     DataSummary.new(
       bot: @bot,
       type_name: type_name,
-      data: as_json
+      data: as_json,
+      created_at: @created_at
     )
   end
 
@@ -32,5 +52,13 @@ class ApplicationSummarizer
       type_name: type_name,
       created_at: (start_time..end_time)
     )
+  end
+
+  def summarize
+    fail 'must implement #summarize method'
+  end
+
+  def as_json
+    fail 'must implement #as_json method'
   end
 end

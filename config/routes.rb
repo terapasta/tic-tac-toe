@@ -145,6 +145,8 @@ Rails.application.routes.draw do
       resources :demo_bots, only: [:index] do
         resource :term, only: [:destroy], module: :demo_bots
       end
+      get :utilizations, to: 'utilizations#index'
+      post :utilizations, to: 'utilizations#create'
     end
 
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -159,6 +161,7 @@ Rails.application.routes.draw do
       resources :chats, module: :bots, only: [:create]
       resources :chat_messages, module: :bots, only: [:create]
       resources :chat_choices, module: :bots, only: [:create]
+      resources :chat_failed_messages, module: :bots, only: [:create]
       resource :line_credential, module: :bots, only: [:show]
       resource :chatwork_credential, module: :bots, only: [:show]
       resource :microsoft_credential, module: :bots, only: [:show]

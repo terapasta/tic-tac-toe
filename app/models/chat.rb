@@ -118,4 +118,17 @@ class Chat < ApplicationRecord
       chat.is_normal = true if current_user.try(:normal?)
     end
   end
+
+  def classified_pair_messages
+    ordered = messages.loaded? ?
+      messages.sort_by(&:id) : messages.order(id: :asc).to_a
+    ordered.shift
+    irregulars = ordered.select.with_index{ |it, i|
+      it.guest? && ordered[i + 1].guest?
+    }
+    regulars = ordered - irregulars
+    paired = regulars.each_slice(2).to_a
+    result = paired + irregulars.map{ |it| [it] }
+    result.sort_by{ |it| it[0].id }
+  end
 end

@@ -1,15 +1,31 @@
+/* eslint-disable no-new */
 import Vue from 'vue'
 
-import TimeseriesChart from '../vue/TimeseriesChart'
+import BadCountChart from '../vue/BadCountChart'
+import UtilizationChart from '../vue/UtilizationChart'
 import getData from '../helpers/getData'
 
 document.addEventListener('DOMContentLoaded', () => {
-  Array.prototype.forEach.call(document.querySelectorAll('[data-component="TimeseriesChart"]'), (mountNode) => {
+  Array.prototype.forEach.call(document.querySelectorAll('[data-component="BadCountChart"]'), (mountNode) => {
     new Vue({
       el: mountNode,
-      components: { TimeseriesChart },
+      components: { BadCountChart },
       data: getData(mountNode),
-      template: '<timeseries-chart :columns="columns" />'
+      template: '<bad-count-chart :columns="columns" />'
+    })
+  })
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-component="UtilizationChart"]'), (mountNode) => {
+    new Vue({
+      el: mountNode,
+      components: { UtilizationChart },
+      data: getData(mountNode),
+      template: `
+        <utilization-chart
+          :columns="columns"
+          :y-max="yMax"
+        />
+      `
     })
   })
 })

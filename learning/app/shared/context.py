@@ -19,12 +19,13 @@ from app.feedback.pass_feedback import PassFeedback
 
 # Note: リクエストされたコンテキスト情報を保持する
 class Context(BaseCls):
-    def __init__(self, bot_id, learning_parameter, grpc_context=None, datasource: Datasource=None):
+    def __init__(self, bot_id, learning_parameter, grpc_context=None, datasource: Datasource=None, phase=Constants.PHASE_REPLYING):
         self._bot = Bot(bot_id=bot_id, learning_parameter=learning_parameter)
         self._grpc_context = grpc_context
         self._datasource = datasource if datasource is not None else Datasource.new()
         self._datasource.persistence.init_by_bot(self.current_bot)
         self._pass_feedback = False
+        self._phase = phase
 
     @property
     def current_bot(self):
@@ -33,6 +34,14 @@ class Context(BaseCls):
     @property
     def pass_feedback(self):
         return self._pass_feedback
+
+    @property
+    def phase(self):
+        return self._phase
+
+    @phase.setter
+    def phase(self, phase):
+        self._phase = phase
 
     def get_datasource(self):
         return self._datasource
@@ -71,11 +80,20 @@ class Context(BaseCls):
         else:
             logger.info('algorithm: Default')
 
-        return factory_cls.new(
+        factory = factory_cls.new(
             bot=self.current_bot,
             datasource=self.get_datasource(),
-            feedback=self.get_feedback()
+            feedback=self.get_feedback(),
         )
+
+        # set_phaseメソッドが定義されている場合、phase をセットする
+        # see: https://docs.python.org/3.6/library/functions.html#getattr
+        #      https://docs.python.org/3.6/library/functions.html#callable
+        op = getattr(factory, "set_phase", None)
+        if callable(op):
+            factory.set_phase(self.phase)
+
+        return factory
 
     def get_feedback(self):
         feedback_cls = PassFeedback

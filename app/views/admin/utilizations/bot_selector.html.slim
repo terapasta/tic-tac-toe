@@ -1,0 +1,22 @@
+.container
+  .row: .col-8.offset-2.mt-5.mb-4
+    h4.mb-4 利用状況を確認したいボットを選んでください
+    table.table: tbody
+      = form_with url: admin_utilizations_path do |f|
+        tr: td.text-center
+          = f.submit '送信', class: 'btn btn-success'
+        - Bot.all.each do |bot|
+          tr: td
+            h4.d-flex.justify-content-between.align-items-center
+              = link_to bot_path(bot), class: 'd-block link-silent mb-3' do
+                .circle-image-56 style=css_bg_image(bot.image_url(:thumb))
+                = space
+                = bot.name
+              = f.check_box 'bot_ids[]', { checked: @watching_bot_ids.include?(bot.id) }, bot.id, nil
+            dl
+              - if bot.is_demo
+                dd: span.badge.badge-secondary DEMO
+              dt.text-muted ORGANIZATIONS
+              dd= bot.organizations.pluck(:name).join(', ')
+        tr: td.text-center
+          = f.submit '送信', class: 'btn btn-success'

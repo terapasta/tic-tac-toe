@@ -6,12 +6,6 @@ import * as QuestionAnswerAPI from '../api/questionAnswer'
 import * as AnswerInlineImageAPI from '../api/answerInlineImage'
 
 const isIE = navigator.userAgent.search("Trident") >= 0
-const KeyCodes = {
-  IMEInputting: 229,
-  Enter: 13,
-  Backspace: 8,
-  Delete: 46
-}
 
 export default {
   props: {
@@ -46,35 +40,7 @@ export default {
   },
 
   methods: {
-    handleTextAreaKeyDown (e) {
-      this.isIMEInputting = e.keyCode === KeyCodes.IMEInputting && isIE
-    },
-
     handleTextAreaKeyUp (e) {
-      if (isIE) {
-        this.handleTextAreaKeyUpForIE(e)
-      } else {
-        this.handleTextAreaKeyUpForModernBrowsers(e)
-      }
-    },
-
-    handleTextAreaKeyUpForIE (e) {
-      const isTargetKeyCode = (
-        (e.keyCode === KeyCodes.Enter && this.isIMEInputting) ||
-        e.keyCode === KeyCodes.Backspace || e.keyCode === KeyCodes.Delete
-      )
-      if (isTargetKeyCode) {
-        this.isIMEInputting = false
-        const { value } = e.target
-        if (!isEmpty(value)) {
-          this.searchAnswers(value)
-        } else {
-          this.answers = []
-        }
-      }
-    },
-
-    handleTextAreaKeyUpForModernBrowsers (e) {
       const { value } = e.target
       this.$emit('keyup', value)
       if (!isEmpty(value)) {
@@ -95,6 +61,7 @@ export default {
     handleSuggestItemClick (answer) {
       this.answer = answer
       this.answers = []
+      this.$emit('keyup', answer)
     },
 
     handleFileInputChange (e) {
@@ -151,7 +118,6 @@ export default {
       name="question_answer[answer]"
       v-model="answer"
       :disabled="isProcessing || disabled"
-      @keydown="handleTextAreaKeyDown"
       @keyup="handleTextAreaKeyUp"
     />
     <div class="card" v-if="isExistAnswers">

@@ -21,6 +21,7 @@ class BotsController < ApplicationController
       @reducted_minutes = @total_reducted_minutes % 60
     end
 
+    @guest_messages_summarizer = GuestMessagesSummarizer.new(@bot)
     @bad_count_summarizer = BadCountSummarizer.new(@bot)
   end
 

@@ -5,6 +5,9 @@ class Api::WordMappingsController < Api::BaseController
     @word_mapping = WordMapping.new(permitted_attributes(WordMapping))
     authorize @word_mapping
     if @word_mapping.save
+      Bot.pluck(:id).each do |bot_id|
+        BotWordMappingApplyJob.perform_later(bot_id)
+      end
       render json: @word_mapping, adapter: :json
     else
       render_errors
@@ -13,6 +16,9 @@ class Api::WordMappingsController < Api::BaseController
 
   def update
     if @word_mapping.update(permitted_attributes(@word_mapping))
+      Bot.pluck(:id).each do |bot_id|
+        BotWordMappingApplyJob.perform_later(bot_id)
+      end
       render json: @word_mapping, adapter: :json
     else
       render_errors
@@ -21,6 +27,9 @@ class Api::WordMappingsController < Api::BaseController
 
   def destroy
     @word_mapping.destroy!
+    Bot.pluck(:id).each do |bot_id|
+      BotWordMappingApplyJob.perform_later(bot_id)
+    end
     render json: {}, status: :no_content
   end
 

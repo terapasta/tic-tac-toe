@@ -128,10 +128,11 @@ RSpec.describe 'AnswerInlintImage', feature: true, js: true do
       before do
         bot.chats.create(guest_key: 'hogehoge').tap do |chat|
           chat.messages.create(speaker: :bot, body: 'first', created_at: 3.seconds.ago)
-          chat.messages.create(speaker: :guest, body: 'second', created_at: 2.seconds.ago)
+          guest_message = chat.messages.create(speaker: :guest, body: 'second', created_at: 2.seconds.ago)
           chat.messages.create(speaker: :bot,
             question_answer: question_answer,
-            body: "![hogehoge](#{answer_inline_image.file_url})"
+            body: "![hogehoge](#{answer_inline_image.file_url})",
+            guest_message_id: guest_message.id
           )
         end
       end

@@ -43,4 +43,54 @@ namespace :data_summary do
       end
     end
   end
+
+  task calc_guest_messages: :environment do
+    ActiveRecord::Base.transaction do
+      Bot.all.each do |bot|
+        summarizer = GuestMessagesSummarizer.new(bot)
+        # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する
+        summarizer.summarize(date: 1.day.ago)
+        summarizer.save!
+      end
+    end
+  end
+
+  task calc_guest_messages_last_half_year: :environment do
+    ActiveRecord::Base.transaction do
+      Bot.all.each do |bot|
+        GuestMessagesSummarizer::HalfYearWeeks.times do |n|
+          date = (n + 1).weeks.ago
+          summarizer = GuestMessagesSummarizer.new(bot)
+          summarizer.summarize(date: date)
+          pp summarizer.build
+          summarizer.save!
+        end
+      end
+    end
+  end
+
+  task calc_question_answers: :environment do
+    ActiveRecord:Base.transaction do
+      Bot.all.each do |bot|
+        summarizer = QuestionAnswersSummarizer.new(bot)
+        # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する
+        summarizer.summarize(date: 1.day.ago)
+        summarizer.save!
+      end
+    end
+  end
+
+  task calc_question_answers_last_half_year: :environment do
+    ActiveRecord::Base.transaction do
+      Bot.all.each do |bot|
+        QuestionAnswersSummarizer::HalfYearWeeks.times do |n|
+          date = (n + 1).weeks.ago
+          summarizer = QuestionAnswersSummarizer.new(bot)
+          summarizer.summarize(date: date)
+          pp summarizer.build
+          summarizer.save!
+        end
+      end
+    end
+  end
 end

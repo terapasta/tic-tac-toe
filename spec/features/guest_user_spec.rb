@@ -58,7 +58,7 @@ RSpec.describe 'GuestUser', type: :feature, js: true do
       click_on 'ログイン'
 
       visit "/bots/#{bot.id}/threads"
-      click_on 'これ以前の発言もすべて見る'
+      click_on 'チャット全体を見る'
 
       expect(page).to have_content(name)
       expect(page).to have_content(email)

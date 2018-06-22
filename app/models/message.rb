@@ -10,6 +10,15 @@ class Message < ApplicationRecord
   accepts_nested_attributes_for :rating
   belongs_to :decision_branch
   has_many :bad_reasons
+  belongs_to :guest_message,
+    -> { guest },
+    class_name: 'Message',
+    foreign_key: :guest_message_id
+
+  has_many :bot_messages,
+    -> { bot },
+    class_name: 'Message',
+    foreign_key: :guest_message_id
 
   enum speaker: { bot: 'bot', guest: 'guest' }
 
@@ -31,6 +40,32 @@ class Message < ApplicationRecord
 
   scope :bad, -> {
     joins(:rating).merge(Rating.bad)
+  }
+
+  scope :is_staff_message, -> (flag) {
+    joins(:chat).where(chats: {is_staff: false}) if flag
+  }
+
+  scope :is_normal_message, -> (flag) {
+    joins(:chat).where(chats: {is_normal: flag})
+  }
+
+  scope :bot_message_ids, -> {
+    Message.bot.select(:id)
+  }
+
+  scope :has_answer_failed_or_bad_or_good_or_marked_answer, -> (answer_failed_flag, good_flag, bad_flag, marked_flag) {
+    conditions = []
+    conditions << bot_message_ids.answer_failed if answer_failed_flag.present?
+    conditions << bot_message_ids.good if good_flag.present?
+    conditions << bot_message_ids.bad if bad_flag.present?
+    conditions << bot_message_ids.answer_marked if marked_flag.present?
+    query_func = -> (condition) { joins(:bot_messages).where(bot_messages_messages: { id: condition }) }
+    if conditions.any?
+      conditions.drop(1).inject(query_func.call(conditions[0])) { |query, it|
+        query.or(query_func.call(it))
+      }
+    end
   }
 
   validates :body, length: { maximum: 10000 }

@@ -3,6 +3,7 @@ class ChatworkDecisionBranch < ApplicationRecord
 
   belongs_to :chat
   belongs_to :decision_branch
+  has_one :bot, through: :chat
 
   validates :access_token,
     presence: true,

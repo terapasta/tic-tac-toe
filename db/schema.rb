@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524084943) do
+ActiveRecord::Schema.define(version: 20180626015201) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -146,7 +146,16 @@ ActiveRecord::Schema.define(version: 20180524084943) do
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end
 
-  create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "chatwork_decision_branches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "chat_id", null: false
+    t.string "access_token", null: false
+    t.integer "decision_branch_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_token"], name: "index_chatwork_decision_branches_on_access_token", unique: true
+  end
+
+  create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer "bot_id", null: false
     t.json "data"
     t.string "type_name", null: false

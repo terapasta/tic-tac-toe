@@ -1,0 +1,2 @@
+class ChatworkDecisionBranch < ApplicationRecord
+end

@@ -36,10 +36,11 @@
               - task.bot_message_record.bad_reasons.each do |br|
                 li= br.body
 
-    - message = Message.find(task.bot_message_id)
-    - if message_has_decision_branches?(message)
-      .col-sm-12
-        = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'
+    - if task.bot_message_id.present?
+      - message = Message.find(task.bot_message_id)
+      - if message_has_decision_branches?(message)
+        .col-sm-12
+          = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'
 
   .card-footer.d-flex.justify-content-between
     div

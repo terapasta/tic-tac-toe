@@ -81,6 +81,10 @@ class Chat < ApplicationRecord
       .distinct
   }
 
+  scope :get_from, -> (task) {
+    find(Message.find(task.guest_message_id).chat_id)
+  }
+
   def build_start_message
     body = bot.start_message.presence || DefinedAnswer.start_answer_unsetting_text
     self.messages << Message.new(speaker: 'bot', body: body)

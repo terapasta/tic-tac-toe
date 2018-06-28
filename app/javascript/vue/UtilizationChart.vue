@@ -17,7 +17,7 @@ const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocal
 export default {
   props: {
     columns: { type: Array, required: true },
-    yMax: { type: Number, required: true }
+    yMax: { type: Number }
   },
 
   mounted () {
@@ -28,9 +28,12 @@ export default {
 
   computed: {
     yAxisMax () {
-      // const all = flatten(this.columns.slice(1).map(it => it.slice(1)))
-      // return max(all) + 10
-      return this.yMax + 10
+      if (this.yMax) {
+        return this.yMax + 10
+      } else {
+        const all = flatten(this.columns.slice(1).map(it => it.slice(1)))
+        return max(all) + 10
+      }
     }
   },
 

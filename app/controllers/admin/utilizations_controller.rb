@@ -1,12 +1,14 @@
 class Admin::UtilizationsController < ApplicationController
   CookieKey = :watching_bot_ids
 
+  helper_method :watching_bot_ids
+
   def index
     @watching_bot_ids = watching_bot_ids
     if @watching_bot_ids.blank? || params[:selecting].present?
       render :bot_selector and return
     end
-    @bots = Bot.where(id: cookies[CookieKey].split(',')).order(created_at: :desc)
+    @bots = Bot.where(id: watching_bot_ids).order(created_at: :desc)
 
     @data_list = @bots.inject({}) { |acc, bot|
       gm_summarizer = GuestMessagesSummarizer.new(bot)

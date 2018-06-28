@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180626015201) do
+ActiveRecord::Schema.define(version: 20180626031852) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 20180626015201) do
     t.integer "decision_branch_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "room_id", null: false
+    t.string "from_account_id", null: false
     t.index ["access_token"], name: "index_chatwork_decision_branches_on_access_token", unique: true
   end
 

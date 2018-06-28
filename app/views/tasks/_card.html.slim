@@ -45,10 +45,11 @@
     div
       small.text-muted 日時：#{l task.created_at}
       = space 5
-      = link_to bot_thread_messages_path(bot, Chat.get_from(task), guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
-        = material_icon 'forum', class: 'mi-xs'
-        = space
-        span チャット全体を見る
+      - if task.bot_message_id.present? || task.guest_message_id.present?
+        = link_to bot_thread_messages_path(bot, Chat.get_from(task), guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
+          = material_icon 'forum', class: 'mi-xs'
+          = space
+          span チャット全体を見る
     - unless local_assigns[:disable_controls]
       .text-align
         - if task.is_done?

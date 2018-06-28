@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
+import assign from 'lodash/assign'
 
 import BadCountChart from '../vue/BadCountChart'
 import UtilizationChart from '../vue/UtilizationChart'
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new Vue({
       el: mountNode,
       components: { UtilizationChart },
-      data: getData(mountNode),
+      data: assign({ yMax: null }, getData(mountNode)),
       template: `
         <utilization-chart
           :columns="columns"

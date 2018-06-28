@@ -1,3 +1,3 @@
 class ChatSerializer < ActiveModel::Serializer
-  attributes :guest_key
+  attributes :id, :guest_key
 end

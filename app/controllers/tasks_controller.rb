@@ -10,7 +10,8 @@ class TasksController < ApplicationController
     @unstarted_tasks_count = Task.unstarted(@bot).count
     @done_tasks_count = Task.where(bot_id: @bot.id).with_done(true).count
     @per_page = 20
-
+    @is_normal_index = params[:done].blank? && params[:action] == 'index'
+    
     @tasks = @bot.tasks
       .with_done(params[:done])
       .page(page)

@@ -82,7 +82,7 @@ class Chat < ApplicationRecord
   }
 
   scope :get_from, -> (task) {
-    find(Message.find(task.guest_message_id).chat_id)
+    find(Message.find(task.guest_message_id.presence || task.bot_message_id).chat_id)
   }
 
   def build_start_message

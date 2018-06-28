@@ -55,3 +55,19 @@ module.exports.createChoice = ({
     guest_key: guestKey
   })
 )
+
+module.exports.createChatworkDecisionBranch = ({
+  chatId,
+  roomId,
+  fromAccountId,
+  decisionBranchId
+}) => (
+  axios.post(`/api/cwdb.json`, {
+    chatwork_decision_branch: {
+      chat_id: chatId,
+      room_id: roomId,
+      from_account_id: fromAccountId,
+      decision_branch_id: decisionBranchId
+    }
+  })
+)

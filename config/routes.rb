@@ -169,5 +169,7 @@ Rails.application.routes.draw do
         resource :answer_link, only: [:create, :destroy], module: :decision_branches
       end
     end
+    get 'cwdb/:access_token', to: 'chatwork_decision_branches#show', as: :chatwork_decision_branch
+    post 'cwdb', to: 'chatwork_decision_branches#create', as: :chatwork_decision_branches
   end
 end

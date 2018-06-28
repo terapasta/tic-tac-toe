@@ -1,4 +1,4 @@
-FROM ruby:2.4.2
+FROM ruby:2.5.1
 
 ENV LANG C.UTF-8
 RUN apt-get update -qq \
@@ -18,7 +18,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 
 WORKDIR /tmp
 RUN apt-get update \
-    && apt-get -y install zip unzip xvfb libgconf2-4 libnss3-1d libxss1 libasound2 libatk1.0-0 libcups2 libgtk-3-0 libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 fonts-liberation libappindicator1 lsb-release xdg-utils \
+    && apt-get -y install zip unzip xvfb libgconf2-4 libnss3 libnspr4 libxss1 libasound2 libatk1.0-0 libcups2 libgtk-3-0 libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 fonts-liberation libappindicator1 lsb-release xdg-utils libappindicator3-1 \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb \
     && apt-get -fy install \

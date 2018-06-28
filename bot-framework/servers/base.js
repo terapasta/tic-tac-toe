@@ -18,6 +18,10 @@ class Base {
       this.reqBodyMiddleware.bind(this),
       ...this.chatListeners
     )
+
+    if (this.name === 'chatwork') {
+      app.post(`/${this.name}/:botToken/:chatId/`, ...this.decisionBranchListeners)
+    }
   }
 
   reqBodyMiddleware (req, res, next) {

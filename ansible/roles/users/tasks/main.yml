@@ -13,6 +13,7 @@
     - public_keys/k.yamagata
     - public_keys/y.miyata
     - public_keys/y.matsuzawa
+    - public_keys/c.hasegawa
 
 - user:
     name: a.harada
@@ -65,6 +66,7 @@
     key: '{{ item }}'
   with_file:
     - public_keys/y.miyata
+
 - user:
     name: y.matsuzawa
     comment: "Yuya Matsuzawa"
@@ -77,6 +79,19 @@
     key: '{{ item }}'
   with_file:
     - public_keys/y.matsuzawa
+
+- user:
+    name: c.hasegawa
+    comment: "Chisato Hasegawa"
+    password: '{{ passwords.hasegawa | password_hash("sha512") }}'
+    group: wheel
+- name: Set up authorized_keys for c.hasegawa user
+  authorized_key:
+    user: c.hasegawa
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/c.hasegawa
 
 - name: permit sudo for users
   blockinfile:

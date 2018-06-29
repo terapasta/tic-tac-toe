@@ -44,17 +44,17 @@ RSpec.describe WordMappingsDecorator, type: :model do
     end
 
     context '予定表' do
-      let(:text) { Wakatifier.apply('スケジュールを教えて') }
+      let(:text) { 'スケジュールを教えて' }
       it { is_expected.to eq('予定 表 を 教え て ') }
     end
 
     context '社内メール便' do
-      let(:text) { Wakatifier.apply('こんにちは。社内メール便を送りたいので、メール便の方法を教えてください。メール便は大好きです。社内メール便最高！メール便メール便社内メール便') }
+      let(:text) { 'こんにちは。社内メール便を送りたいので、メール便の方法を教えてください。メール便は大好きです。社内メール便最高！メール便メール便社内メール便' }
       it { is_expected.to eq('こんにちは 。 社内 メール 便 を 送り たい ので 、 社内 メール 便 の 方法 を 教え て ください 。 社内 メール 便 は 大好き です 。 社内 メール 便 最高 ！ 社内 メール 便 社内 メール 便 社内 メール 便 ') }
     end
 
     context 'POWER EGG' do
-      let(:text) { Wakatifier.apply('JPEGについて。PEは関係ない') }
+      let(:text) { 'JPEGについて。PEは関係ない' }
       it { is_expected.to eq('JPG について 。 POWER EGG は 関係 ない ') }
     end
   end

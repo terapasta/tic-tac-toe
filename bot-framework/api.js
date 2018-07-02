@@ -19,6 +19,13 @@ module.exports.fetchMicrosoftCredential = ({ botToken }) => (
   axios.get(`/api/bots/${botToken}/microsoft_credential.json`)
 )
 
+module.exports.fetchChat = ({
+  botToken,
+  chatId
+}) => (
+  axios.get(`/api/bots/${botToken}/chats/${chatId}.json`)
+)
+
 module.exports.createChat = ({
   botToken,
   uid,

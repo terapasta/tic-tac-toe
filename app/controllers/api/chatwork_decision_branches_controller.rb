@@ -4,14 +4,9 @@ class Api::ChatworkDecisionBranchesController < Api::BaseController
     @decision_branch = @chatwork_decision_branch.decision_branch
     @bot = @chatwork_decision_branch.bot
     @chat = @chatwork_decision_branch.chat
+    ChatworkDecisionBranchJob.perform_later(@bot, @chat, @decision_branch, @chatwork_decision_branch)
 
-    conn = Faraday.new(url: ENV['MYOPE_BOT_FRAMEWORK_HOST'])
-    conn.post "/chatwork/#{@bot.token}/#{@chat.id}", {
-      decisionBranchId: @decision_branch.id,
-      decisionBranchBody: @decision_branch.body,
-      room_id: @chatwork_decision_branch.room_id,
-      from_account_id: @chatwork_decision_branch.from_account_id
-    }.to_json
+    render template: 'api/chatwork_decision_branches/show.html.slim', layout: false
   end
 
   def create

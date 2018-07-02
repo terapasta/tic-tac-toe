@@ -1,4 +1,11 @@
 class Api::Bots::ChatsController < Api::BaseController
+  def show
+    token = params.require(:bot_token)
+    @bot = Bot.find_by!(token: token)
+    @chat = @bot.chats.find(params[:id])
+    render json: @chat, adapter: :json
+  end
+
   def create
     token = params.require(:bot_token)
     uid = params.require(:uid)

@@ -15,22 +15,28 @@ const BASE_URL = 'https://api.chatwork.com/v2'
 const service_type = 'chatwork'
 
 class ChatworkBot {
-  constructor(apiToken) {
+  constructor (apiToken) {
     this.apiToken = apiToken
   }
 
   handleEvent (reqBody) {
-    const { botToken, webhook_event: { from_account_id, body } } = reqBody
+    const {
+      botToken,
+      webhook_event: {
+        from_account_id: fromAccountId,
+        body
+      }
+    } = reqBody
 
     this.fetchUsers().then(users => {
-      const user = users.filter(it => it.account_id === from_account_id)[0]
+      const user = users.filter(it => it.account_id === fromAccountId)[0]
       if (user === undefined) { return }
 
       let chatId
 
       api.createChat({
         botToken,
-        uid: from_account_id,
+        uid: fromAccountId,
         service_type,
         name: user.name
       }).then(res => {
@@ -52,11 +58,48 @@ class ChatworkBot {
 
         this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId)
       }).catch(console.error)
-    })
+    }).catch(console.error)
   }
 
   handleDecisionBranch (req) {
-    console.log(req)
+    const { botToken, chatId } = req.params
+    const {
+      room_id: roomId,
+      from_account_id: fromAccountId,
+      decision_branch_id: decisionBranchId
+    } = req.body
+
+    this.fetchUsers().then(users => {
+      const user = users.filter(it => it.account_id === global.parseInt(fromAccountId))[0]
+      if (user === undefined) { return }
+
+      api.fetchChat({ botToken, chatId }).then(res => {
+        const { guestKey } = res.data.chat
+
+        return api.createChoice({
+          botToken,
+          guestKey,
+          choiceId: decisionBranchId
+        })
+      }).then(res => {
+        const body = get(res, 'data.message.body')
+        const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches', [])
+        const childDecisionBranches = get(res, 'data.message.childDecisionBranches', [])
+        // const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers')
+        // const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers', false)
+        const answerFiles = get(res, 'data.message.answerFiles', [])
+        const reqBody = {
+          webhook_event: {
+            room_id: roomId,
+            from_account_id: fromAccountId
+          }
+        }
+
+        const mergedDecisionBranches = decisionBranches.concat(childDecisionBranches)
+
+        this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId)
+      })
+    }).catch(console.error)
   }
 
   fetchUsers () {

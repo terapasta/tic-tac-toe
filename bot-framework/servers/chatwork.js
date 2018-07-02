@@ -47,10 +47,7 @@ class Chatwork extends Base {
   }
 
   handleDecisionBranch (req, res, next) {
-    // TODO receive request body
-    console.log(req)
-    const reqBody = this.sanitizeReqBody(req.body)
-    const { botToken } = reqBody
+    const { botToken } = req.params
     this.fetchCredential(botToken).then(credential => {
       const { apiToken } = credential
       req.chatworkBot = new ChatworkBot(apiToken)

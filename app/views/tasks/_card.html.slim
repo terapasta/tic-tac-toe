@@ -36,19 +36,21 @@
               - task.bot_message_record.bad_reasons.each do |br|
                 li= br.body
 
-    - message = Message.find(task.bot_message_id)
-    - if message_has_decision_branches?(message)
-      .col-sm-12
-        = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'
+    - if task.bot_message_id.present?
+      - message = Message.find(task.bot_message_id)
+      - if message_has_decision_branches?(message)
+        .col-sm-12
+          = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'
 
   .card-footer.d-flex.justify-content-between
     div
       small.text-muted 日時：#{l task.created_at}
       = space 5
-      = link_to bot_thread_messages_path(bot, Chat.get_from(task), guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
-        = material_icon 'forum', class: 'mi-xs'
-        = space
-        span チャット全体を見る
+      - if task.bot_message_id.present? || task.guest_message_id.present?
+        = link_to bot_thread_messages_path(bot, Chat.get_from(task), guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
+          = material_icon 'forum', class: 'mi-xs'
+          = space
+          span チャット全体を見る
     - unless local_assigns[:disable_controls]
       .text-align
         - if task.is_done?

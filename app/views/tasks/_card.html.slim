@@ -47,12 +47,13 @@
       small.text-muted 日時：#{l task.created_at}
       = space 5
 
-      - chat = @bot.chats.find_by(id: (task.guest_message_record || task.bot_message_record).chat_id)
-      - if chat.present?
-        = link_to bot_thread_messages_path(bot, chat, guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
-          = material_icon 'forum', class: 'mi-xs'
-          = space
-          span チャット全体を見る
+      - if task.guest_message_record.present? || task.bot_message_record.present?
+        - chat = @bot.chats.find_by(id: (task.guest_message_record || task.bot_message_record).chat_id)
+        - if chat.present?
+          = link_to bot_thread_messages_path(bot, chat, guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
+            = material_icon 'forum', class: 'mi-xs'
+            = space
+            span チャット全体を見る
 
     - unless local_assigns[:disable_controls]
       .text-align

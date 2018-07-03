@@ -76,6 +76,7 @@ class ChatworkBot {
       api.fetchChat({ botToken, chatId }).then(res => {
         const { guestKey } = res.data.chat
 
+        console.log('start createChoice')
         return api.createChoice({
           botToken,
           guestKey,
@@ -83,6 +84,7 @@ class ChatworkBot {
         })
       }).then(res => {
         const body = get(res, 'data.message.body')
+        console.log('end createChoice', body)
         const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches', [])
         const childDecisionBranches = get(res, 'data.message.childDecisionBranches', [])
         // const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers')
@@ -128,7 +130,7 @@ class ChatworkBot {
       const answerFileText = answerFileUrls.length > 0 ? `\n\n<添付ファイル>\n${answerFileUrls}` : ''
       let body = `[To:${fromAccountId}] ${userName}さん\n${text}${answerFileText}`
       if (!isEmpty(decisionBranchLinkList)) {
-        body += `\n\n${decisionBranchLinkList}`
+        body += `\n\n<回答を選択してください>\n${decisionBranchLinkList}`
       }
       const formData = { body }
 

@@ -6,7 +6,7 @@ class Api::ChatworkDecisionBranchesController < Api::BaseController
     @chat = @chatwork_decision_branch.chat
     ChatworkDecisionBranchJob.perform_later(@bot, @chat, @decision_branch, @chatwork_decision_branch)
 
-    render template: 'api/chatwork_decision_branches/show.html.slim', layout: false
+    render template: 'api/chatwork_decision_branches/show.html.slim'
   end
 
   def create

@@ -1,2 +1,17 @@
+- content_for :hide_login_button, true
+
+.container
+  .row
+    .col-6.offset-3.pt-5
+      .card: .card-body.pt-5
+        .circle-image-56.card__top-image style=css_bg_image(@bot.image_url(:thumb))
+        h5.mb-4
+          span 「#{@decision_branch.body}」
+          small を選択しました
+
+        p このページは１０秒後に自動で閉じます。<br />時間差でChatworkに回答が返されますので、チャットは引き続きChatworkで行ってください。
+
 javascript:
-  window.close()
+  setTimeout(function() {
+    window.close()
+  }, 10 * 1000)

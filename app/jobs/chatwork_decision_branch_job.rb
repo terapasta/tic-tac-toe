@@ -3,7 +3,7 @@ class ChatworkDecisionBranchJob < ApplicationJob
     conn = Faraday.new(url: ENV['MYOPE_BOT_FRAMEWORK_HOST'])
 
     res = conn.post do |req|
-      req.url "/chatwork/#{bot.token}/#{chat.id}"
+      req.url "/chatwork/#{bot.token}/#{chat.id}/decisionBranch"
       req.headers['Content-Type'] = 'application/json'
       req.body = {
         decision_branch_id: decision_branch.id,

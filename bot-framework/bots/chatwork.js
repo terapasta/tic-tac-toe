@@ -66,7 +66,8 @@ class ChatworkBot {
     const {
       room_id: roomId,
       from_account_id: fromAccountId,
-      decision_branch_id: decisionBranchId
+      decision_branch_id: decisionBranchId,
+      decision_branch_body: decisionBranchBody
     } = req.body
 
     this.fetchUsers().then(users => {
@@ -76,18 +77,17 @@ class ChatworkBot {
       api.fetchChat({ botToken, chatId }).then(res => {
         const { guestKey } = res.data.chat
 
-        console.log('start createChoice')
         return api.createChoice({
           botToken,
           guestKey,
           choiceId: decisionBranchId
         })
       }).then(res => {
-        const body = get(res, 'data.message.body')
-        console.log('end createChoice', body)
+        const answerBody = get(res, 'data.message.body')
+        const body = `${user.name}さんが選択\n「${decisionBranchBody}」\n\n${answerBody}`
         const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches', [])
         const childDecisionBranches = get(res, 'data.message.childDecisionBranches', [])
-        // const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers')
+        // const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers', [])
         // const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers', false)
         const answerFiles = get(res, 'data.message.answerFiles', [])
         const reqBody = {
@@ -143,7 +143,6 @@ class ChatworkBot {
         if (err) {
           return console.error(err)
         }
-        // console.log(res)
       })
     }
 
@@ -166,7 +165,7 @@ class ChatworkBot {
           res.data.chatworkDecisionBranch.accessToken,
           res.data.chatworkDecisionBranch.decisionBranchBody
         ])
-        .map(data => `- ${data[1]} ${MYOPE_API_URL}/api/cwdb/${data[0]}`)
+        .map(data => `・${data[1]} ${MYOPE_API_URL}/api/cwdb/${data[0]}`)
         .join('\n')
 
       process()

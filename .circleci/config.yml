@@ -9,7 +9,7 @@ jobs:
       - image: kozo002/myope:latest
         auth:
           username: kozo002
-          password: $DOCKEHRUB_PASSWORD
+          password: $DOCKERHUB_PASSWORD
 
         environment:
           DB_HOST: 127.0.0.1

@@ -213,7 +213,7 @@ class ChatworkBot {
       Promise.all(dbPromises).then(responses => {
         decisionBranchLinkList = responses
           .map(res => pick(res.data.chatworkDecisionBranch, ['accessToken', 'decisionBranchBody']))
-          .map(data => `・${data.decisionBranchBody} ${MYOPE_API_URL}/api/cwdb/${data.accessToken}`)
+          .map(data => `・${data.decisionBranchBody} ${MYOPE_API_URL}/cwdb/${data.accessToken}`)
           .join('\n')
         resolve()
       }).catch(err => {
@@ -236,7 +236,7 @@ class ChatworkBot {
       Promise.all(sqaPromises).then(responses => {
         similarQuestionAnswersLinkList = responses
           .map(res => pick(res.data.chatworkSimilarQuestionAnswer, ['accessToken', 'question']))
-          .map(data => `・${data.question} ${MYOPE_API_URL}/api/cwsqa/${data.accessToken}`)
+          .map(data => `・${data.question} ${MYOPE_API_URL}/cwsqa/${data.accessToken}`)
           .join('\n')
         resolve()
       }).catch(err => {

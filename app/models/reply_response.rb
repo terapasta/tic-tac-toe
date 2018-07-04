@@ -1,10 +1,11 @@
 class ReplyResponse
   attr_reader :raw_data, :question
 
-  def initialize(raw_data, bot, question)
+  def initialize(raw_data, bot, question, raw_question)
     @raw_data = raw_data
     @bot = bot
     @question = question
+    @raw_question = raw_question
   end
 
   def effective_results
@@ -96,7 +97,7 @@ class ReplyResponse
   end
 
   def render_has_suggests_message
-    @bot.render_has_suggests_message(@question)
+    @bot.render_has_suggests_message(@raw_question)
   end
 
   def is_need_has_suggests_message?

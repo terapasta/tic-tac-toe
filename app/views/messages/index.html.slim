@@ -32,7 +32,7 @@
 
     .card-body.padding-left-64
       - if @guest_user.present?
-        .row: .offset-sm-6
+        .text-right
           = render 'guest_user', guest_user: @guest_user
       - @messages.each do |message|
         - if message.guest?

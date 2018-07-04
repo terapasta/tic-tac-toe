@@ -21,6 +21,7 @@ class Base {
 
     if (this.name === 'chatwork') {
       app.post(`/${this.name}/:botToken/:chatId/decisionBranch`, ...this.decisionBranchListeners)
+      app.post(`/${this.name}/:botToken/:chatId/similarQuestionAnswer`, ...this.similarQuestionAnswerListeners)
     }
   }
 

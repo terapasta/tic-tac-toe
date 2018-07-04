@@ -78,3 +78,20 @@ module.exports.createChatworkDecisionBranch = ({
     }
   })
 )
+
+module.exports.createChatworkSimilarQuestionAnswer = ({
+  chatId,
+  roomId,
+  fromAccountId,
+  questionAnswerId
+}) => (
+  axios.post(`/api/cwsqa.json`, {
+    chatwork_similar_question_answer: {
+      chat_id: chatId,
+      room_id: roomId,
+      from_account_id: fromAccountId,
+      question_answer_id: questionAnswerId
+    }
+  })
+)
+

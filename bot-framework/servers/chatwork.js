@@ -14,6 +14,9 @@ class Chatwork extends Base {
     this.decisionBranchListeners = [
       this.handleDecisionBranch.bind(this)
     ]
+    this.similarQuestionAnswerListeners = [
+      this.handleSimilarQuestionAnswer.bind(this)
+    ]
   }
 
   beforeSignatureValidation (req, res, next) {
@@ -43,7 +46,7 @@ class Chatwork extends Base {
     if (req.body.webhook_event_type !== 'mention_to_me') {
       return
     }
-    req.chatworkBot.handleEvent(req.body)
+    req.chatworkBot.handleEvent(req.body, res)
   }
 
   handleDecisionBranch (req, res, next) {
@@ -51,7 +54,16 @@ class Chatwork extends Base {
     this.fetchCredential(botToken).then(credential => {
       const { apiToken } = credential
       req.chatworkBot = new ChatworkBot(apiToken)
-      req.chatworkBot.handleDecisionBranch(req)
+      req.chatworkBot.handleDecisionBranch(req, res)
+    }).catch(console.error)
+  }
+
+  handleSimilarQuestionAnswer (req, res, next) {
+    const { botToken } = req.params
+    this.fetchCredential(botToken).then(credential => {
+      const { apiToken } = credential
+      req.chatworkBot = new ChatworkBot(apiToken)
+      req.chatworkBot.handleSimilarQuestionAnswer(req, res)
     }).catch(console.error)
   }
 }

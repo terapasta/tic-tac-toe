@@ -171,5 +171,7 @@ Rails.application.routes.draw do
     end
     get 'cwdb/:access_token', to: 'chatwork_decision_branches#show', as: :chatwork_decision_branch
     post 'cwdb', to: 'chatwork_decision_branches#create', as: :chatwork_decision_branches
+    get 'cwsqa/:access_token', to: 'chatwork_similar_question_answers#show', as: :chatwork_similar_question_answer
+    post 'cwsqa', to: 'chatwork_similar_question_answers#create', as: :chatwork_similar_question_answers
   end
 end

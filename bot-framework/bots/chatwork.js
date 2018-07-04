@@ -1,4 +1,5 @@
 const get = require('lodash.get')
+const pick = require('lodash.pick')
 const request = require('request')
 const isEmpty = require('is-empty')
 
@@ -54,14 +55,15 @@ class ChatworkBot {
         const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches', [])
         const childDecisionBranches = get(res, 'data.childDecisionBranches', [])
         const mergedDecisionBranches = decisionBranches.concat(childDecisionBranches)
-        // const similarQuestionAnswers = get(res, 'data.similarQuestionAnswers')
+        const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers')
+        const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers', false)
 
-        this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId)
+        this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId, similarQuestionAnswers, isShowSimilarQuestionAnswers)
       }).catch(console.error)
     }).catch(console.error)
   }
 
-  handleDecisionBranch (req) {
+  handleDecisionBranch (req, response) {
     const { botToken, chatId } = req.params
     const {
       room_id: roomId,
@@ -87,8 +89,8 @@ class ChatworkBot {
         const body = `${user.name}さんが選択\n「${decisionBranchBody}」\n\n${answerBody}`
         const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches', [])
         const childDecisionBranches = get(res, 'data.message.childDecisionBranches', [])
-        // const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers', [])
-        // const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers', false)
+        const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers', [])
+        const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers', false)
         const answerFiles = get(res, 'data.message.answerFiles', [])
         const reqBody = {
           webhook_event: {
@@ -99,7 +101,51 @@ class ChatworkBot {
 
         const mergedDecisionBranches = decisionBranches.concat(childDecisionBranches)
 
-        this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId)
+        this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId, similarQuestionAnswers, isShowSimilarQuestionAnswers)
+          .then(() => { response.send('OK') })
+      })
+    }).catch(console.error)
+  }
+
+  handleSimilarQuestionAnswer (req, response) {
+    const { botToken, chatId } = req.params
+    const {
+      room_id: roomId,
+      from_account_id: fromAccountId,
+      question
+    } = req.body
+
+    this.fetchUsers().then(users => {
+      const user = users.filter(it => it.account_id === global.parseInt(fromAccountId))[0]
+      if (user === undefined) { return }
+
+      api.fetchChat({ botToken, chatId }).then(res => {
+        const { guestKey } = res.data.chat
+
+        return api.createMessage({
+          botToken,
+          guestKey,
+          message: question
+        })
+      }).then(res => {
+        const answerBody = get(res, 'data.message.body')
+        const body = `${user.name}さんが選択\n「${question}」\n\n${answerBody}`
+        const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches', [])
+        const childDecisionBranches = get(res, 'data.message.childDecisionBranches', [])
+        const similarQuestionAnswers = get(res, 'data.message.similarQuestionAnswers', [])
+        const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers', false)
+        const answerFiles = get(res, 'data.message.answerFiles', [])
+        const reqBody = {
+          webhook_event: {
+            room_id: roomId,
+            from_account_id: fromAccountId
+          }
+        }
+
+        const mergedDecisionBranches = decisionBranches.concat(childDecisionBranches)
+
+        this.sendReply(reqBody, user.name, body, answerFiles, mergedDecisionBranches, chatId, similarQuestionAnswers, isShowSimilarQuestionAnswers)
+          .then(() => { response.send('OK') })
       })
     }).catch(console.error)
   }
@@ -119,10 +165,10 @@ class ChatworkBot {
     })
   }
 
-  sendReply (reqBody, userName, text, answerFiles, decisionBranches, chatId) {
+  sendReply (reqBody, userName, text, answerFiles, decisionBranches, chatId, similarQuestionAnswers, isShowSimilarQuestionAnswers) {
     const roomId = reqBody.webhook_event.room_id
     const fromAccountId = reqBody.webhook_event.from_account_id
-    let decisionBranchLinkList
+    let decisionBranchLinkList, similarQuestionAnswersLinkList
 
     const process = () => {
       const url = `${BASE_URL}/rooms/${roomId}/messages`
@@ -131,6 +177,9 @@ class ChatworkBot {
       let body = `[To:${fromAccountId}] ${userName}さん\n${text}${answerFileText}`
       if (!isEmpty(decisionBranchLinkList)) {
         body += `\n\n<回答を選択してください>\n${decisionBranchLinkList}`
+      }
+      if (!isEmpty(similarQuestionAnswersLinkList)) {
+        body += `\n\n<こちらの質問ではないですか？>\n${similarQuestionAnswersLinkList}`
       }
       const formData = { body }
 
@@ -146,11 +195,13 @@ class ChatworkBot {
       })
     }
 
-    if (isEmpty(decisionBranches)) {
-      return process()
+    if (isEmpty(decisionBranches) &&
+       (isEmpty(similarQuestionAnswers) || !isShowSimilarQuestionAnswers)
+    ) {
+      return Promise.resolve(process())
     }
 
-    const promises = decisionBranches.map(db => (
+    const dbPromises = decisionBranches.map(db => (
       api.createChatworkDecisionBranch({
         decisionBranchId: db.id,
         chatId,
@@ -158,20 +209,44 @@ class ChatworkBot {
         fromAccountId
       })
     ))
-
-    Promise.all(promises).then(responses => {
-      decisionBranchLinkList = responses
-        .map(res => [
-          res.data.chatworkDecisionBranch.accessToken,
-          res.data.chatworkDecisionBranch.decisionBranchBody
-        ])
-        .map(data => `・${data[1]} ${MYOPE_API_URL}/api/cwdb/${data[0]}`)
-        .join('\n')
-
-      process()
-    }).catch(err => {
-      console.error(err)
+    const dbPromise = new Promise((resolve, reject) => {
+      Promise.all(dbPromises).then(responses => {
+        decisionBranchLinkList = responses
+          .map(res => pick(res.data.chatworkDecisionBranch, ['accessToken', 'decisionBranchBody']))
+          .map(data => `・${data.decisionBranchBody} ${MYOPE_API_URL}/api/cwdb/${data.accessToken}`)
+          .join('\n')
+        resolve()
+      }).catch(err => {
+        console.error(err)
+        reject()
+      })
     })
+
+    const sqaPromises = similarQuestionAnswers.filter(sqa => (
+      !isEmpty(sqa.question) && sqa.question !== 'どれにも該当しない'
+    )).map(sqa => (
+      api.createChatworkSimilarQuestionAnswer({
+        chatId,
+        roomId,
+        fromAccountId,
+        questionAnswerId: sqa.id
+      })
+    ))
+    const sqaPromise = new Promise((resolve, reject) => {
+      Promise.all(sqaPromises).then(responses => {
+        similarQuestionAnswersLinkList = responses
+          .map(res => pick(res.data.chatworkSimilarQuestionAnswer, ['accessToken', 'question']))
+          .map(data => `・${data.question} ${MYOPE_API_URL}/api/cwsqa/${data.accessToken}`)
+          .join('\n')
+        resolve()
+      }).catch(err => {
+        console.error(err)
+        reject()
+      })
+    })
+
+    return Promise.all([dbPromise, sqaPromise])
+      .then(() => { process() })
   }
 
   reqHeaders () {

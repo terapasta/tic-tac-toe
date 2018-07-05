@@ -1,5 +1,5 @@
-.card.mb-5 class=(params[:action] == 'index' ? 'card-left-capped' : '')
-  - if params[:action] == 'index'
+.card.mb-5 class=(@is_normal_index ? 'card-left-capped' : '')
+  - if @is_normal_index
     .card-left-cap
       .card-left-cap__checkbox data-role="task-selecting"
         input type="checkbox" value=task.id
@@ -16,17 +16,18 @@
       .col-sm-6.order-1 style="padding-top:16px"
         .chat-message.full-width style="float:none;"
           .chat-message__icon style=("background-image:url(#{bot.image_url});")
-          .chat-message__balloon
-            - if task.bot_message.blank?
+          - if task.bot_message.blank?
+            .chat-message__balloon
               = material_icon 'error_outline', class: 'mi-sm text-muted'
               = space 2
               span 回答不可
-            - else
+          - else
+            .chat-message__balloon
+              = nl2br message_to_html(task.bot_message)
+            .mt-2.d-flex.justify-content-end
               = material_icon 'thumb_down', class: 'mi-sm text-danger'
               = space 2
               span Bad評価
-              br
-              = nl2br task.bot_message
 
         - if task.bot_message_record&.bad_reasons&.any?
           .pt-2: .card: .card-body.p-2
@@ -35,9 +36,21 @@
               - task.bot_message_record.bad_reasons.each do |br|
                 li= br.body
 
+    - if task.bot_message_id.present?
+      - message = Message.find(task.bot_message_id)
+      - if message_has_decision_branches?(message)
+        .col-sm-12
+          = render 'messages/decision_branches', items: message_get_decision_branches_from(message), title: '回答を選択してください'
+
   .card-footer.d-flex.justify-content-between
     div
       small.text-muted 日時：#{l task.created_at}
+      = space 5
+      - if task.bot_message_id.present? || task.guest_message_id.present?
+        = link_to bot_thread_messages_path(bot, Chat.get_from(task), guest_message_id: task.guest_message_id, bot_message_id: task.bot_message_id), class: 'btn btn-outline-info btn-sm' do
+          = material_icon 'forum', class: 'mi-xs'
+          = space
+          span チャット全体を見る
     - unless local_assigns[:disable_controls]
       .text-align
         - if task.is_done?

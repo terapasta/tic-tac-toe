@@ -3,7 +3,11 @@ class Api::Bots::TopicTagsController < Api::BaseController
 
   def index
     authorize TopicTag
-    render json: @bot.topic_tags, adapter: :json
+    if params[:data_format] == 'repo'
+      render json: { topicTagsRepo: @bot.topic_tags.decorate.as_repo_json }
+    else
+      render json: @bot.topic_tags, adapter: :json
+    end
   end
 
   def create

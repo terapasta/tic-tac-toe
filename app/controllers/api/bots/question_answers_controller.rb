@@ -4,8 +4,25 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
 
 
   def index
-    @question_answers = @bot.question_answers.keyword_for_answer(params[:q])
-    render json: @question_answers, adapter: :json
+    if params[:data_format] == 'tree'
+      @question_answers = @bot.question_answers
+        .includes(:sub_questions, :decision_branches)
+        .order(created_at: :desc)
+        .page(params[:page])
+        .per(params[:per].presence || 50)
+        .decorate
+      @decision_branches = @bot.decision_branches.decorate
+
+      tree = @question_answers.make_tree(@decision_branches)
+      render json: {
+        questionsTree: tree,
+        questionsRepo: @question_answers.as_repo_json,
+        searchIndex: @question_answers.make_index_json(tree, @decision_branches)
+      }
+    else
+      @question_answers = @bot.question_answers.keyword_for_answer(params[:q])
+      render json: @question_answers, adapter: :json
+    end
   end
 
   def show

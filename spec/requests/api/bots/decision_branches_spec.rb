@@ -28,6 +28,15 @@ RSpec.describe '/api/bots/:bot_id/decision_branches' do
     login_as(user, scope: :user)
   end
 
+  describe 'index' do
+    context 'when data_format=repo' do
+      it 'returns decision branches as repo format' do
+        get "/api/bots/#{bot.id}/decision_branches.json?data_format=repo"
+        expect(JSON.parse(response.body)['decisionBranchesRepo']).to be_present
+      end
+    end
+  end
+
   describe 'PUT /api/bots/:bot_id/decision_branches/:decision_branch_id/position/higher' do
     subject do
       lambda do

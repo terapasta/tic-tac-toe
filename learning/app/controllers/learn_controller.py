@@ -31,6 +31,9 @@ class LearnController(BaseCls):
         ratings = self.factory.get_datasource().ratings.all()
         all_questions = pd.concat([question_answers['question'], ratings['question']]).dropna()
 
+        logger.info('preprocess')
+        clean_questions = self.factory.get_preprocessor().perform(all_questions)
+
         logger.info('tokenize')
         tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
 

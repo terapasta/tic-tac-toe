@@ -1,5 +1,6 @@
 from injector import inject
 
+from app.core.preprocessor.synonym_expansion_preprocessor import SynonymExpansionPreprocessor
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.core.estimator.naive_bayes import NaiveBayes
@@ -14,6 +15,7 @@ class HybridClassificationFactory(BaseFactory):
     @inject
     def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
+        self.preprocessor = SynonymExpansionPreprocessor.new(bot=bot, datasource=self.datasource)
         self.tokenizer = MecabTokenizer.new()
         self.vectorizer = TfidfVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
@@ -29,6 +31,9 @@ class HybridClassificationFactory(BaseFactory):
                 datasource=self.datasource,
             )
         self.__feedback = feedback
+
+    def get_preprocessor(self):
+        return self.preprocessor
 
     def get_tokenizer(self):
         return self.tokenizer

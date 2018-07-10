@@ -62,9 +62,15 @@ export default {
     searchFormMode: SearchFormMode.Selectable
   }),
 
+  created () {
+    this.$root.$on('updatedQuestionAnswers', () => {
+      this.setDecisionBranch()
+    })
+  },
+
   mounted () {
     this.setDecisionBranch()
-    this.currentTab = isEmpty(this.nodeData.answerLink) ? TabType.Input : TabType.Select
+    this.currentTab = isEmpty(get(this, 'nodeData.answerLink', null)) ? TabType.Input : TabType.Select
     this.heightCheckTimerId = setInterval(() => {
       this.calcAndSetAnswerFormGroupHeight()
     }, 100)
@@ -105,7 +111,7 @@ export default {
     },
 
     tabType () {
-      return isEmpty(this.nodeData.answerLink) ? TabType.Input : TabType.Select
+      return isEmpty(get(this, 'nodeData.answerLink')) ? TabType.Input : TabType.Select
     },
 
     answerFormGroupStyle () {
@@ -136,7 +142,7 @@ export default {
     },
 
     handleSaveButtonClick () {
-      const { id, body, answer } = this.decisionBranch
+      const { id, body, answer } = (this.decisionBranch || {})
       let promises = []
 
       if (!isEmpty(answer)) {
@@ -249,7 +255,7 @@ export default {
       <input
         type="text"
         class="form-control"
-        v-model="decisionBranch.body"
+        v-model="(decisionBranch || {}).body"
       />
     </div>
     <div
@@ -261,13 +267,13 @@ export default {
       <answer-tab :tabType="tabType" @changeTab="handleAnswerTabChange">
         <div slot="input">
           <answer-text-area
-            :default-value="decisionBranch.answer"
+            :default-value="(decisionBranch || {}).answer"
             :is-hidden-label="true"
             @keyup="handleAnswerTextAreaKeyup"
           />
           <answer-files
-            :decisionBranchId="decisionBranch.id"
-            :answerFiles="decisionBranch.answerFiles"
+            :decisionBranchId="(decisionBranch || {}).id"
+            :answerFiles="(decisionBranch || {}).answerFiles"
           />
         </div>
         <div slot="select">

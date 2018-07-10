@@ -42,6 +42,11 @@ export default {
 
   created () {
     this.toggleIsOnlyShowHasDecisionBranchesNode()
+    this.getAllData({
+      updated: () => {
+        this.$emit('updatedQuestionAnswers')
+      }
+    })
   },
 
   mounted () {
@@ -60,7 +65,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'toggleIsOnlyShowHasDecisionBranchesNode'
+      'toggleIsOnlyShowHasDecisionBranchesNode',
+      'getAllData'
     ]),
 
     adjustHeight () {

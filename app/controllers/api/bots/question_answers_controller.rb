@@ -19,6 +19,7 @@ class Api::Bots::QuestionAnswersController < Api::BaseController
         questionsRepo: @question_answers.as_repo_json,
         searchIndex: @question_answers.make_index_json(tree, @decision_branches)
       }
+      response.headers['X-Total-Pages'] = @question_answers.object.total_pages
     else
       @question_answers = @bot.question_answers.keyword_for_answer(params[:q])
       render json: @question_answers, adapter: :json

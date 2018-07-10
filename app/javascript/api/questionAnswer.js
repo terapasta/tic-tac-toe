@@ -35,3 +35,7 @@ export function destroy (botId, id) {
 export function deleteChildDecisionBranches (botId, id) {
   return axios.delete(`/api/bots/${botId}/question_answers/${id}/child_decision_branches.json`, config())
 }
+
+export function getTree (botId, page = 1) {
+  return axios.get(`/api/bots/${botId}/question_answers.json?data_format=tree&page=${page}`, config())
+}

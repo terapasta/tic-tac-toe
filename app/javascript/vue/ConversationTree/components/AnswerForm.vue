@@ -30,6 +30,12 @@ export default {
     isProcessing: false
   }),
 
+  created () {
+    this.$root.$on('updatedQuestionAnswers', () => {
+      this.setParent()
+    })
+  },
+
   mounted () {
     this.setParent()
   },
@@ -111,7 +117,9 @@ export default {
     },
 
     handleAnswerTextAreaKeyup (answer) {
-      this.parent.answer = answer
+      if (this.parent) {
+        this.parent.answer = answer
+      }
     }
   }
 }
@@ -123,12 +131,12 @@ export default {
       <answer-text-area
         name="answer-body"
         :disabled="isProcessing"
-        :default-value="parent.answer"
+        :default-value="(parent || {}).answer"
         @keyup="handleAnswerTextAreaKeyup"
       />
       <answer-files
-        :decisionBranchId="decisionBranch.id"
-        :questionAnswerId="questionAnswer.id"
+        :decisionBranchId="(decisionBranch || {}).id"
+        :questionAnswerId="(questionAnswer || {}).id"
         :answerFiles="answerFiles"
       />
     </div>

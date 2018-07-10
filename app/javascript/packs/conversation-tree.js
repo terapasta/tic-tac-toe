@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueSweetAlert from 'vue-sweetalert'
 import assign from 'lodash/assign'
-import isEmpty from 'is-empty'
 
 import getData from '../helpers/getData'
 import ConversationTree from '../vue/ConversationTree.vue'
@@ -10,6 +9,7 @@ import actions from '../vue/ConversationTree/store/actions'
 import baseState from '../vue/ConversationTree/store/baseState'
 import mutations from '../vue/ConversationTree/store/mutations'
 import router from '../vue/ConversationTree/router'
+console.log(ConversationTree)
 
 Vue.use(Vuex)
 Vue.use(VueSweetAlert)
@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('ConversationTree')
   if (mountNode === null) { return }
   const state = assign(baseState, getData(mountNode))
-  state.filteredQuestionsTree = state.questionsTree.concat()
-  state.filteredQuestionsSelectableTree = state.questionsTree.concat()
+  // state.filteredQuestionsTree = state.questionsTree.concat()
+  // state.filteredQuestionsSelectableTree = state.questionsTree.concat()
 
   if (process.env.NODE_ENV === 'development') {
     console.log('[initial state]', state)
@@ -31,12 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mutations
   })
 
-  /* eslint-disable no-new */
-  new Vue({
-    el: mountNode,
-    template: '<ConversationTree />',
-    components: { ConversationTree },
+  const App = Vue.extend(assign({}, ConversationTree, {
     store,
     router
-  })
+  }))
+  new App().$mount(mountNode)
 })

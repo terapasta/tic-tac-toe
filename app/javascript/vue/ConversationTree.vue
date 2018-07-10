@@ -42,11 +42,11 @@ export default {
 
   created () {
     this.toggleIsOnlyShowHasDecisionBranchesNode()
-    this.getAllData({
-      updated: () => {
-        this.$emit('updatedQuestionAnswers')
-      }
-    })
+    // this.getAllData({
+    //   updated: () => {
+    //     this.$emit('updatedQuestionAnswers')
+    //   }
+    // })
   },
 
   mounted () {

@@ -69,8 +69,14 @@ export default {
 
   [ADD_QUESTIONS_TREE] (state, { questionsTree }) {
     state.questionsTree = state.questionsTree.concat(questionsTree)
-    state.filteredQuestionsTree = state.questionsTree.concat()
-    state.filteredQuestionsSelectableTree = state.questionsTree.concat()
+    const cloned = state.questionsTree.concat()
+    if (state.isOnlyShowHasDecisionBranchesNode) {
+      state.filteredQuestionsTree = cloned.filter(it => !isEmpty(it.decisionBranches))
+      state.filteredQuestionsSelectableTree = cloned.filter(it => !isEmpty(it.decisionBranches))
+    } else {
+      state.filteredQuestionsTree = cloned.concat()
+      state.filteredQuestionsSelectableTree = cloned.concat()
+    }
   },
 
   [SET_DECISION_BRANCHES_REPO] (state, { decisionBranchesRepo }) {

@@ -55,7 +55,7 @@ RSpec.describe 'AnswerInlintImage', feature: true, js: true do
 
   feature 'insert image on conversation tree page' do
     context 'when question answer form' do
-      scenario do
+      xscenario do
         visit "/bots/#{bot.id}/conversation_tree"
         click_on question_answer.question
         attach_file 'answer-inline-image', sample_image, make_visible: true
@@ -68,7 +68,7 @@ RSpec.describe 'AnswerInlintImage', feature: true, js: true do
     end
 
     context 'when answer form' do
-      scenario do
+      xscenario do
         visit "/bots/#{bot.id}/conversation_tree"
         click_on question_answer.question
         click_on question_answer.answer
@@ -82,7 +82,7 @@ RSpec.describe 'AnswerInlintImage', feature: true, js: true do
     end
 
     context 'when decision branch form' do
-      scenario do
+      xscenario do
         visit "/bots/#{bot.id}/conversation_tree"
         click_on question_answer.question
         click_on question_answer.answer

@@ -233,7 +233,7 @@ function scrollToLastSectionIfNeeded(prevProps, component, scrollableElement) {
       const total = secEls.reduce((sum, it) => {
         return sum + it.offsetHeight;
       }, 0);
-      scrollableElement.scrollTop = scrollableElement.scrollHeight - total - 95;
+      scrollableElement.scrollTop = scrollableElement.scrollHeight - total;
     });
   }
 }

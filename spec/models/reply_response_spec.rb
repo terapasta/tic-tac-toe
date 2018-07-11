@@ -51,7 +51,7 @@ RSpec.describe ReplyResponse do
   end
 
   let(:reply_response) do
-    ReplyResponse.new(raw_data, bot, 'hogehoge')
+    ReplyResponse.new(raw_data, bot, 'hogehoge', 'hogehoge')
   end
 
   subject do

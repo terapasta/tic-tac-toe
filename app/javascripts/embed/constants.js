@@ -11,7 +11,7 @@ export const Position = {
     }
   }
 }
-export const MaxHeight = 500
+export const MaxHeight = 550
 export const Margin = 20
 export const MoveButtonSize = 24
 export const MoveButtonMargin = 10

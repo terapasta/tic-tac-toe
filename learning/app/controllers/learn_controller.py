@@ -35,7 +35,7 @@ class LearnController(BaseCls):
         clean_questions = self.factory.get_preprocessor().perform(all_questions)
 
         logger.info('tokenize')
-        tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
+        tokenized_sentences = self.factory.get_tokenizer().tokenize(clean_questions)
 
         logger.info('fit vectorizer')
         vectorized_features = self.factory.get_vectorizer().fit_transform(tokenized_sentences)

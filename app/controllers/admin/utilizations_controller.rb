@@ -32,7 +32,7 @@ class Admin::UtilizationsController < ApplicationController
       acc
     }
     [:high, :middle, :low].each{ |level|
-      @data_list[level].sort_by!{ |it| it[:max] }.reverse!
+      Array(@data_list[level]).sort_by!{ |it| it[:max] }.reverse!
     }
   end
 

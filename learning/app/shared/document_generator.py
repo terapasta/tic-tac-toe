@@ -11,9 +11,11 @@ class DocumentGenerator(BaseCls):
         return self._expand_dict_to_text(source, dict)
 
     def _expand_dict_to_text(self, text, dict):
+        # NOTE:
+        # dict は id, word, value, bot_id を持つ pandas.DataFrame型
+        #
         docs = [text]
-        for key in dict.keys():
-            if re.match(key, text):
-                for replacement in dict[key][0]:
-                    docs.append(text.replace(key, replacement))
+        for tpl in dict.itertuples():
+            if re.match(tpl.word, text):
+                docs.append(text.replace(tpl.word, tpl.value))
         return docs

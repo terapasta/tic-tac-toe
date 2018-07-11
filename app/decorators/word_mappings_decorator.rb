@@ -19,6 +19,17 @@ class WordMappingsDecorator < Draper::CollectionDecorator
     result
   end
 
+  CSVHeader = %w(基準となる単語 同じ意味の単語)
+
+  def to_csv
+    CSV.generate do |csv|
+      csv << CSVHeader
+      object.each do |record|
+        csv << [record.word, *record.word_mapping_synonyms.map(&:value)]
+      end
+    end
+  end
+
   private
     def mappings
       @mappings ||= object.inject([]) { |memo, word_mapping|

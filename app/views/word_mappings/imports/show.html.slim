@@ -1,0 +1,39 @@
+= render layout: 'bots/layout' do
+  = render 'word_mappings/nav', bot: @bot
+
+  h4.mb-4 辞書インポート
+
+  .card.card-outline-secondary.mb-4: .card-body
+    h5 辞書インポート機能とは
+    |このインポート機能は、辞書データを一括で追加登録する機能です。
+    br
+    |ファイルの1行目はヘッダーとして無視されます。
+
+    h5.pt-3 文字エンコードについて
+    |Excelで作成したCSVファイルに特殊文字が含まれていると、インポート時に文字化けしたり?に変換されたりする可能性がありますのでご注意ください
+    br
+    |例：
+    code 〜
+    span 波線
+    = space 2
+    code ー
+    span 全角ハイフン
+    = space 2
+    code style="font-size:22px;" ①
+    = space
+    span 丸数字
+
+  .row: .col-8.offset-2
+    = form_tag bot_import_word_mappings_path(@bot), method: :post, multipart: true, data: { event_name: 'Import word_mappings data' } do
+
+      .form-group
+        = file_field_tag :file, label: 'ファイル', class: 'form-control'
+
+      .form-group.text-center
+        .d-inline-block.align-top.text-left
+          = submit_tag 'Shift_JISでインポート', class: 'btn btn-success', data: { event: 'import word_mappings with shift_JIS' }
+          br
+          span.text-muted Excelで作成した場合はこちら
+        = space 5
+        .d-inline-block.align-top
+          = submit_tag 'UTF-8でインポート', class: 'btn btn-success', data: { event: 'import word_mappings with UTF_8' }

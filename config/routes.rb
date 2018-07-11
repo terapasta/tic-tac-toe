@@ -66,7 +66,12 @@ Rails.application.routes.draw do
       end
       resources :decision_branches, only: [:show, :update, :create, :destroy]
       resource :conversation_tree, only: [:show]
-      resources :word_mappings
+      resources :word_mappings do
+        collection do
+          resource :export, only: [:show], module: :word_mappings, as: :export_word_mappings
+          resource :import, only: [:show, :create], module: :word_mappings, as: :import_word_mappings
+        end
+      end
       resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
       resource :zendesk_articles, only: [:update]
     end

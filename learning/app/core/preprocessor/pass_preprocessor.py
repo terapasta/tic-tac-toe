@@ -5,5 +5,5 @@ class PassPreprocessor(BasePreprocessor):
     def __init__(self):
         pass
 
-    def preprocess(self, texts):
+    def perform(self, texts):
         return texts

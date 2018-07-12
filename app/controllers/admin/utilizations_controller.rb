@@ -37,7 +37,10 @@ class Admin::UtilizationsController < ApplicationController
   end
 
   def create
-    cookies[CookieKey] = params[:bot_ids].map(&:to_i).join(',')
+    cookies[CookieKey] = {
+      value: params[:bot_ids].map(&:to_i).join(','),
+      expires: 10.years.from_now
+    }
     redirect_to admin_utilizations_path
   end
 

@@ -93,11 +93,11 @@ export default {
         <span v-for="(tag, i) in topicTags" :key="i">
           <span class="badge badge-info">{{tag.name}}</span>&nbsp;
         </span>
-        <span v-html="this.highlight(nodeData.question, searchingKeyword)" />
+        <span v-html="highlight(nodeData.question, searchingKeyword)" />
       </span>
       <ul v-if="hasSubQuestions" class="tree__item-sub-body">
         <li v-for="(sq, i) in nodeData.subQuestions" :key="i">
-          {{sq.question}}
+          <span v-html="highlight(sq.question, searchingKeyword)" />
         </li>
       </ul>
     </router-link>

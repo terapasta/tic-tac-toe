@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 20180706072356) do
     t.datetime "updated_at", null: false
     t.text "answer"
     t.bigint "zendesk_article_id"
-    t.integer "question_answers_count", default: 0
+    t.integer "messages_count", default: 0
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
 

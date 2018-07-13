@@ -129,4 +129,17 @@ namespace :question_answer do
       end
     end
   end
+
+  desc 'チャット内で使用されたQ&Aを集計する'
+  task total_messages: :environment do
+    begin
+      ActiveRecord::Base.transaction do
+        QuestionAnswer.all.each do |qa|
+          QuestionAnswer.reset_counters(qa.id, :messages_count)
+        end
+      end
+    rescue => e
+      p e.message
+    end
+  end
 end

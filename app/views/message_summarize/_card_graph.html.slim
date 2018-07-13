@@ -1,0 +1,25 @@
+.row
+  .col-sm-5
+    .card.my-1.card-left-capped.clickable data-toggle="modal" data-target=".bd-example-modal-lg" value="#{question_answer.id}"
+      .card-left-cap.d-flex.justify-content-center.align-items-center
+        = index
+      .card-body style="padding: 10px 10px 10px;"
+        .card-text
+          p.small.text-muted style="margin-bottom: 0px"
+            span ID：#{question_answer.id}
+          p style="margin-bottom: 0px"
+            = material_icon 'comment', class: 'mi-sm text-muted'
+            = message_to_html(truncate(question_answer.question, length: 20))
+          p style="margin-bottom: 0px"
+            = material_icon 'chat_bubble_outline', class: 'mi-sm mi-v-sub text-muted'
+            = message_to_html(truncate(question_answer.answer, length: 20))
+  .col-sm-7.d-flex.align-items-center
+    .col-sm-10
+      - value = (question_answer.messages_count.to_f / top_message.messages_count.to_f) * 100
+      .progress
+        .progress-bar.bg-success role="progressbar" style="width: #{value}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+    .col-sm-2 style="font-size: 1.5rem"
+      = question_answer.messages_count
+
+    .modal.fade.bd-example-modal-lg id="questionAnswerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+      .modal-dialog.modal-lg role="document"

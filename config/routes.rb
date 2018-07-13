@@ -69,6 +69,7 @@ Rails.application.routes.draw do
       resources :word_mappings
       resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
       resource :zendesk_articles, only: [:update]
+      resources :message_summarize, only: [:index]
     end
 
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]

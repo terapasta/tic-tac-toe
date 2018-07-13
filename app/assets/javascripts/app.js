@@ -37,4 +37,16 @@ window.jQuery(function($) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
-});
+
+  var modal = document.querySelector('#questionAnswerModal .modal-dialog')
+  var cards = document.querySelectorAll('.card')
+  Array.prototype.forEach.call(cards, function (card) {
+    card.addEventListener('click', function () {
+      var questionAnswerId = card.getAttribute('value')
+      var url = '/bots/' + window.currentBot.id + '/question_answers/' + questionAnswerId + '?qacard=true';
+      $.get(url).done(function(html) {
+        modal.innerHTML = html
+      })
+    })
+  })
+})

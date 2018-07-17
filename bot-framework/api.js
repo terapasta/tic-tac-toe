@@ -19,6 +19,13 @@ module.exports.fetchMicrosoftCredential = ({ botToken }) => (
   axios.get(`/api/bots/${botToken}/microsoft_credential.json`)
 )
 
+module.exports.fetchChat = ({
+  botToken,
+  chatId
+}) => (
+  axios.get(`/api/bots/${botToken}/chats/${chatId}.json`)
+)
+
 module.exports.createChat = ({
   botToken,
   uid,
@@ -55,3 +62,36 @@ module.exports.createChoice = ({
     guest_key: guestKey
   })
 )
+
+module.exports.createChatworkDecisionBranch = ({
+  chatId,
+  roomId,
+  fromAccountId,
+  decisionBranchId
+}) => (
+  axios.post(`/api/cwdb.json`, {
+    chatwork_decision_branch: {
+      chat_id: chatId,
+      room_id: roomId,
+      from_account_id: fromAccountId,
+      decision_branch_id: decisionBranchId
+    }
+  })
+)
+
+module.exports.createChatworkSimilarQuestionAnswer = ({
+  chatId,
+  roomId,
+  fromAccountId,
+  questionAnswerId
+}) => (
+  axios.post(`/api/cwsqa.json`, {
+    chatwork_similar_question_answer: {
+      chat_id: chatId,
+      room_id: roomId,
+      from_account_id: fromAccountId,
+      question_answer_id: questionAnswerId
+    }
+  })
+)
+

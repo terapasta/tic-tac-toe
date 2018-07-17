@@ -163,7 +163,7 @@ Rails.application.routes.draw do
     resources :public_bots, param: :token, only: [:show]
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
     resources :bots, param: :token do
-      resources :chats, module: :bots, only: [:create]
+      resources :chats, module: :bots, only: [:show, :create]
       resources :chat_messages, module: :bots, only: [:create]
       resources :chat_choices, module: :bots, only: [:create]
       resources :chat_failed_messages, module: :bots, only: [:create]
@@ -174,5 +174,9 @@ Rails.application.routes.draw do
         resource :answer_link, only: [:create, :destroy], module: :decision_branches
       end
     end
+    post 'cwdb', to: 'chatwork_decision_branches#create', as: :chatwork_decision_branches
+    post 'cwsqa', to: 'chatwork_similar_question_answers#create', as: :chatwork_similar_question_answers
   end
+  get 'cwdb/:access_token', to: 'api/chatwork_decision_branches#show', as: :chatwork_decision_branch
+  get 'cwsqa/:access_token', to: 'api/chatwork_similar_question_answers#show', as: :chatwork_similar_question_answer
 end

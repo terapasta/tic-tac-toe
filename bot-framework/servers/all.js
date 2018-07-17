@@ -4,6 +4,7 @@ class All {
   constructor (servers) {
     this.servers = servers
     this.app = restify.createServer()
+    this.app.use(restify.plugins.bodyParser({ mapParams: false }))
   }
 
   run () {

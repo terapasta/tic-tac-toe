@@ -22,6 +22,10 @@ class DecisionBranch < ApplicationRecord
     foreign_key: :parent_decision_branch_id,
     dependent: :destroy
 
+  belongs_to :parent_decision_branch,
+    class_name: 'DecisionBranch',
+    foreign_key: :parent_decision_branch_id
+
   has_many :answer_files,
     dependent: :destroy
 

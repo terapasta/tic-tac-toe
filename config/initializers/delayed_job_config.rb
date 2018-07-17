@@ -1,2 +1,2 @@
 # Delayed::Worker.logger = Logger.new(File.join(Rails.root, 'log', 'delayed_job.log'))
-Delayed::Worker.sleep_delay = 30
+Delayed::Worker.sleep_delay = 1

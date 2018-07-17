@@ -39,7 +39,7 @@ window.jQuery(function($) {
   })
 
   var modal = document.querySelector('#questionAnswerModal .modal-dialog')
-  var cards = document.querySelectorAll('.card')
+  var cards = document.querySelectorAll('.modal-qa-showed')
   Array.prototype.forEach.call(cards, function (card) {
     card.addEventListener('click', function () {
       var questionAnswerId = card.getAttribute('value')

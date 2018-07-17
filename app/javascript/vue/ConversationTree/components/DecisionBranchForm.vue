@@ -55,6 +55,7 @@ export default {
   data: () => ({
     questionAnswerId: null,
     decisionBranch: {},
+    answerFiles: [],
     heightCheckTimerId: null,
     answerFormGroupHeight: null,
     currentTab: null,
@@ -87,6 +88,13 @@ export default {
 
     filteredQuestionsSelectableTree () {
       this.showingIndecies = range(0, 20)
+    },
+
+    decisionBranch: {
+      deep: true,
+      handler () {
+        this.answerFiles = get(this, 'decisionBranch.answerFiles', [])
+      }
     }
   },
 
@@ -273,7 +281,7 @@ export default {
           />
           <answer-files
             :decisionBranchId="(decisionBranch || {}).id"
-            :answerFiles="(decisionBranch || {}).answerFiles"
+            :answerFiles="answerFiles"
           />
         </div>
         <div slot="select">

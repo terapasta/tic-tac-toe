@@ -4,7 +4,7 @@ class Api::Bots::DecisionBranchesController < Api::BaseController
 
   def index
     if params[:data_format] == 'repo'
-      render json: { decisionBranchesRepo: @bot.decision_branches.decorate.as_repo_json }
+      render json: { decisionBranchesRepo: DeepCamelizeKeys.deep_camelize_keys(@bot.decision_branches.decorate.as_repo_json) }
     else
       render json: @bot.decision_branches, adapter: :json
     end

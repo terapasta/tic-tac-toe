@@ -4,7 +4,7 @@ class Api::Bots::TopicTagsController < Api::BaseController
   def index
     authorize TopicTag
     if params[:data_format] == 'repo'
-      render json: { topicTagsRepo: @bot.topic_tags.decorate.as_repo_json }
+      render json: { topicTagsRepo: DeepCamelizeKeys.deep_camelize_keys(@bot.topic_tags.decorate.as_repo_json) }
     else
       render json: @bot.topic_tags, adapter: :json
     end

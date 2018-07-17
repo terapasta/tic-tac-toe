@@ -9,7 +9,6 @@ import actions from '../vue/ConversationTree/store/actions'
 import baseState from '../vue/ConversationTree/store/baseState'
 import mutations from '../vue/ConversationTree/store/mutations'
 import router from '../vue/ConversationTree/router'
-console.log(ConversationTree)
 
 Vue.use(Vuex)
 Vue.use(VueSweetAlert)

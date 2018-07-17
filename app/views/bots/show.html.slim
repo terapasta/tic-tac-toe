@@ -34,20 +34,24 @@
     .card.mb-4: .card-body
       .d-flex.justify-content-between.align-items-start
         h6.card-title
-          = material_icon 'trending_down', class: 'mi-sm mi-v-sub text-muted'
+          = material_icon 'format_list_numbered', class: 'mi-sm mi-v-sub text-muted'
           = space
           span 質問数分析
           = space 5
         small.text-sm.badge.badge-success STAFF ONLY
+
+      .d-flex.align-items-start.mb-3
+        span 今までチャット上で使用された既存の"Q&A"を使用頻度順で確認できます
       
       - @all_question_answers.limit(5).each.with_index(1) do |qa, index|
         = render 'message_summarize/card_graph', question_answer: qa, index: index, top_message: @top_message
       
       - if @all_question_answers.size > 10
-        = space
-        .d-flex.justify-content-center
-          = link_to "全体を見る", bot_message_summarize_index_path(params[:id])
-        = space
+
+        .d-flex.justify-content-center.align-items-center
+          = material_icon 'more_vert', class: 'mi-lg text-muted'
+          = space 5
+          = link_to "全体を見る", bot_message_summarize_index_path(params[:id]), class: 'btn btn-outline-info btn-sm'
 
         - index_value = @all_question_answers.size - 4
         - @all_question_answers.last(5).each.with_index(index_value) do |qa|

@@ -58,3 +58,7 @@ export const bulkDelete = (botId, decisionBranchIds) => (
     params: { decision_branch_ids: decisionBranchIds }
   }))
 )
+
+export const getRepo = (botId) => (
+  axios.get(`/api/bots/${botId}/decision_branches.json?data_format=repo`, config())
+)

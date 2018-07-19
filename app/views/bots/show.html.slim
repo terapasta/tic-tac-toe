@@ -43,11 +43,18 @@
       .d-flex.align-items-start.mb-3
         span 今までチャット上で使用された既存の"Q&A"を使用頻度順で確認できます
       
-      - @all_question_answers.limit(5).each.with_index(1) do |qa, index|
-        = render 'message_summarize/card_graph', question_answer: qa, index: index, top_message: @top_message
-      
-      - if @all_question_answers.size > 10
+      - if @all_question_answers.size == 0
+        .d-flex.align-items-start.mb-3
+          span ・登録されているQ&Aはありません
 
+      - elsif @all_question_answers.size < 11
+        - @all_question_answers.limit(10).each.with_index(1) do |qa, index|
+          = render 'message_summarize/card_graph', question_answer: qa, index: index, top_message: @top_message
+      
+      - else
+        - @all_question_answers.limit(5).each.with_index(1) do |qa, index|
+            = render 'message_summarize/card_graph', question_answer: qa, index: index, top_message: @top_message
+        
         .d-flex.justify-content-center.align-items-center
           = material_icon 'more_vert', class: 'mi-lg text-muted'
           = space 5

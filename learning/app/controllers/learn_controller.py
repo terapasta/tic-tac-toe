@@ -73,6 +73,32 @@ class LearnController(BaseCls):
             'precision': 0,
             'recall': 0,
             'f1': 0,
+            'meta': self._learning_meta_data(),
+        }
+
+    def _learning_meta_data(self):
+        #
+        # IMPORTANT:
+        # protocol buffer を使用して gRPC でデータのやり取りをするので、
+        # app/learning/gateway.proto も更新する
+        #
+        # see: https://github.com/mofmof/donusagi-bot/wiki/Python側の開発に関わる情報
+        #
+
+        config = self.bot.config.data[self.bot.config.env]
+        return {
+            'env': self.bot.config.env,
+            'bot_id': self.bot.id,
+            'algorithm': self.bot.algorithm,
+            'feedback_algorithm': self.bot.feedback_algorithm,
+            'config': {
+                # FIXME:
+                # binary の綴りが間違っているけど、影響範囲が読めてないので後で直したい
+                'word2vec_model_is_binary': config['word2vec_model_is_binaly'],
+                'dicdir': config['dicdir'],
+                'datasource_type': config['datasource_type'],
+                'word2vec_model_name': config['word2vec_model_name'],
+            },
         }
 
     def _transform_to_vector(self, sentences):

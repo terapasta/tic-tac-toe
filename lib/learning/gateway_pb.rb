@@ -45,6 +45,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :precision, :float, 3
     optional :recall, :float, 4
     optional :f1, :float, 5
+    optional :meta, :message, 6, "gateway.LearnMetaResponse"
+  end
+  add_message "gateway.LearnMetaResponse" do
+    optional :env, :string, 1
+    optional :bot_id, :int32, 2
+    optional :algorithm, :int32, 3
+    optional :feedback_algorithm, :int32, 4
+    optional :config, :message, 5, "gateway.LearnConfigResponse"
+  end
+  add_message "gateway.LearnConfigResponse" do
+    optional :word2vec_model_is_binary, :bool, 1
+    optional :dicdir, :string, 2
+    optional :datasource_type, :string, 3
+    optional :word2vec_model_name, :string, 4
   end
 end
 
@@ -59,4 +73,6 @@ module Gateway
   ReplyResponses = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.ReplyResponses").msgclass
   LearnRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnRequest").msgclass
   LearnResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnResponse").msgclass
+  LearnMetaResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnMetaResponse").msgclass
+  LearnConfigResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("gateway.LearnConfigResponse").msgclass
 end

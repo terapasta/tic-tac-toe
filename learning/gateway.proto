@@ -49,6 +49,22 @@ message LearnResponse {
     float precision = 3;
     float recall  = 4;
     float f1 = 5;
+    LearnMetaResponse meta = 6;
+}
+
+message LearnMetaResponse {
+    string env = 1;
+    int32 bot_id = 2;
+    int32 algorithm = 3;
+    int32 feedback_algorithm = 4;
+    LearnConfigResponse config = 5;
+}
+
+message LearnConfigResponse {
+    bool word2vec_model_is_binary = 1;
+    string dicdir = 2;
+    string datasource_type = 3;
+    string word2vec_model_name = 4;
 }
 
 service Bot {

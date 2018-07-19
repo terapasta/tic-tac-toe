@@ -13,7 +13,13 @@ class LearnJob < ApplicationJob
     # 単語の normalize処理は python側にまとめる
     # https://www.pivotaltracker.com/n/projects/1879711/stories/158060539
 
-    scores = Ml::Engine.new(@bot).learn
+    scores_and_metadata = Ml::Engine.new(@bot).learn
+    scores = scores_and_metadata.reject{|key| key == 'meta'}
+
+    # NOTE:
+    # メタデータも送られてくるけど、何も処理してないから、
+    # ログとかに出力しても良いかも
+
     unless @bot.use_similarity_classification?
       @bot.build_score if @bot.score.nil?
       @bot.score.update!(scores)

@@ -13,4 +13,5 @@ class Synonyms(BaseCls):
         return self._data
 
     def by_bot(self, bot_id):
-        return self._data[self._data['bot_id'] == bot_id]
+        query = 'bot_id in [{}, None]'.format(bot_id)
+        return self._data.query(query)

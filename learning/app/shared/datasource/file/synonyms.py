@@ -1,3 +1,4 @@
+import yaml
 import pandas as pd
 from app.shared.constants import Constants
 from app.shared.base_cls import BaseCls
@@ -5,7 +6,8 @@ from app.shared.base_cls import BaseCls
 
 class Synonyms(BaseCls):
     def __init__(self):
-        self._data = pd.read_csv('./fixtures/synonyms.yml')
+        with open('./fixtures/synonyms.yml', 'r') as f:
+            self._data = pd.io.json.json_normalize(yaml.load(f))
 
     def all(self):
         return self._data

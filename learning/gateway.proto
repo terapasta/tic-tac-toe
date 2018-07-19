@@ -33,10 +33,16 @@ message ReplyResponse {
     int32 verb_count = 4;
     int32 algorithm = 5;
     int32 feedback_algorithm = 6;
+    ProcessingResponse processing = 7;
+    LearnMetaResponse meta = 8;
 }
 
 message ReplyResponses {
     repeated ReplyResponse data = 1;
+}
+
+message ProcessingResponse {
+    repeated string tokenized = 1;
 }
 
 message LearnRequest {

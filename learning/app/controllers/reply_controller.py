@@ -52,11 +52,26 @@ class ReplyController(BaseCls):
 
         logger.info('end')
 
+        #
+        # IMPORTANT:
+        # protocol buffer を使用して gRPC でデータのやり取りをするので、
+        # app/learning/gateway.proto も更新する
+        #
+        # see: https://github.com/mofmof/donusagi-bot/wiki/Python側の開発に関わる情報
+        #
+
+        # Railsサーバーに返す、処理途中のデータ
+        processing = {
+            'tokenized': tokenized_sentences,
+        }
+
         return {
             'question_feature_count': self.factory.get_vectorizer().extract_feature_count(tokenized_sentences),
             'results': results,
             'noun_count': self.factory.get_tokenizer().extract_noun_count(text),
             'verb_count': self.factory.get_tokenizer().extract_verb_count(text),
+            'processing': processing,
+            'meta': self._replying_meta_data(),
         }
 
     def _transform_query_vector(self, query_vector):
@@ -103,6 +118,9 @@ class ReplyController(BaseCls):
         similarities = similarities.flatten()
         data_frame['similarity'] = similarities
         return data_frame
+
+    def _replying_meta_data(self):
+        return self.bot.learning_meta_data()
 
     def _transform_texts_to_vector(self, texts):
         tokenized_sentences = self.factory.get_tokenizer().tokenize(texts)

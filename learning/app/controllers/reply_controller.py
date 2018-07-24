@@ -1,3 +1,4 @@
+import logging
 from sklearn.metrics.pairwise import cosine_similarity
 
 from app.shared.logger import logger
@@ -48,9 +49,11 @@ class ReplyController(BaseCls):
         # 学習時に処理した値を DB に保持して置いてもよいが、
         # 学習時の DB への負荷と返却時に高々 10件程度の前処理を行うのでは、
         # 後者の方が低コストな気がする（要検証）
+        logger.setLevel(logging.WARNING)
         learn_pipe = LearnPipe(self.factory)
         for i in range(len(results)):
             results[i]['processing'] = learn_pipe.before_vectorize([results[i]['question']])
+        logger.setLevel(logging.INFO)
 
         for row in results:
             logger.debug(row)

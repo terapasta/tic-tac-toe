@@ -13,15 +13,23 @@ class SynonymExpansionPreprocessor(BasePreprocessor):
         return self._expand_synonyms(texts, self._synonyms.by_bot(self._bot.id))
 
     def _expand_synonyms(self, texts, synonym_mappings):
-        result = []
-        for text in texts:
-            for r in self._expand_synonyms_to_single_text(text, synonym_mappings):
-                result.append(r)
-        return result
+        # DataFrame から itertupples でループを回すよりも、
+        # word と value を取得してから zip でまとめてループで回した方が早い
+        # word は正規表現にコンパイルしておく
+        words_and_values = zip([re.compile(x) for x in synonym_mappings.word], synonym_mappings.value)
 
-    def _expand_synonyms_to_single_text(self, text, synonym_mappings):
-        expanded = [text]
-        for mapping in synonym_mappings.itertuples():
-            if re.match(mapping.word, text):
-                expanded.append(re.sub(mapping.word, mapping.value, text))
-        return expanded
+        results = []
+        for text in texts:
+            results.extend(self._expand_synonyms_to_single_text(text, words_and_values))
+        return results
+
+    def _expand_synonyms_to_single_text(self, text, words_and_values):
+        # シノニム展開前のテキスト
+        results = [text]
+
+        for word, value in words_and_values:
+            if re.match(word, text):
+                # シノニム展開後のテキスト
+                results.append(re.sub(word, value, text))
+
+        return results

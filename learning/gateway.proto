@@ -11,6 +11,7 @@ message Result {
     int32 question_answer_id = 1;
     float probability = 2;
     string question = 3;
+    repeated string processing = 4;
 }
 
 message SetupRequest {}
@@ -33,7 +34,7 @@ message ReplyResponse {
     int32 verb_count = 4;
     int32 algorithm = 5;
     int32 feedback_algorithm = 6;
-    ProcessingResponse processing = 7;
+    Query query = 7;
     LearnMetaResponse meta = 8;
 }
 
@@ -41,8 +42,9 @@ message ReplyResponses {
     repeated ReplyResponse data = 1;
 }
 
-message ProcessingResponse {
-    repeated string tokenized = 1;
+message Query {
+    string query = 1;
+    repeated string processing = 2;
 }
 
 message LearnRequest {

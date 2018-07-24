@@ -73,7 +73,7 @@ class RouteGuideServicer(BotServicer):
             verb_count=reply['verb_count'],
             algorithm=myope_context.current_bot.algorithm,
             feedback_algorithm=myope_context.current_bot.feedback_algorithm,
-            processing=reply['processing'],
+            query=reply['query'],
             meta=reply['meta'],
         )
 

@@ -22,7 +22,7 @@ RUN apt-get update \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb \
     && apt-get -fy install \
-    && wget https://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip \
+    && wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip \
     && unzip chromedriver_linux64.zip \
     && cp chromedriver /usr/local/bin/chromedriver
 
@@ -37,7 +37,7 @@ ENV PYTHON_VERSION 3.5.2
 ENV PYTHON_PIP_VERSION 9.0.3
 
 WORKDIR /tmp
-RUN apt-get -y install python-dev libxml2-dev libxslt-dev \
+RUN apt-get -y install python-dev libxml2-dev libxslt-dev libssl-dev openssl \
     && set -ex \
     && curl -fSL "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" -o python.tar.xz \
     && mkdir -p /usr/src/python \
@@ -48,7 +48,13 @@ RUN apt-get -y install python-dev libxml2-dev libxslt-dev \
     && make -j$(nproc) \
     && make install \
     && ldconfig \
-    && pip3 install --no-cache-dir --upgrade --ignore-installed pip==$PYTHON_PIP_VERSION \
+
+    && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
+    && python get-pip.py \
+        --disable-pip-version-check \
+        --no-cache-dir \
+        "pip==$PYTHON_PIP_VERSION" \
+
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
@@ -56,18 +62,12 @@ RUN apt-get -y install python-dev libxml2-dev libxslt-dev \
     && rm -rf /usr/src/python ~/.cache
 # SymbolicLinkを作っておく
 RUN cd /usr/local/bin \
+    && rm -f easy_install \
     && ln -s easy_install-3.5 easy_install \
     && ln -s idle3 idle \
     && ln -s pydoc3 pydoc \
     && ln -s python3 python \
     && ln -s python3-config python-config
-
-RUN mkdir -p ~/neologd-tmp \
-    && cd ~/neologd-tmp \
-    && git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
-    && cd mecab-ipadic-neologd \
-    && mkdir -p /usr/lib/mecab/dic \
-    && ./bin/install-mecab-ipadic-neologd -n -y
 
 COPY . .
 

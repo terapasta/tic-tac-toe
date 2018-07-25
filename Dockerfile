@@ -37,20 +37,22 @@ ENV PYTHON_VERSION 3.5.2
 ENV PYTHON_PIP_VERSION 9.0.3
 
 WORKDIR /tmp
-RUN apt-get -y install python-dev libxml2-dev libxslt-dev libssl-dev openssl \
+RUN apt-get -y install python-dev libxml2-dev libxslt-dev libssl1.0-dev openssl \
     && set -ex \
+    && export CFLAGS="-I/usr/include/openssl" \
+    && export LDFLAGS="-L/usr/lib" \
     && curl -fSL "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" -o python.tar.xz \
     && mkdir -p /usr/src/python \
     && tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz \
     && rm python.tar.xz \
     && cd /usr/src/python \
-    && ./configure --enable-shared --enable-unicode=ucs4 \
+    && ./configure --enable-shared --enable-unicode=ucs4 --prefix=/usr/local \
     && make -j$(nproc) \
     && make install \
     && ldconfig \
 
     && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
-    && python get-pip.py \
+    && /usr/local/bin/python3 get-pip.py \
         --disable-pip-version-check \
         --no-cache-dir \
         "pip==$PYTHON_PIP_VERSION" \
@@ -72,4 +74,4 @@ RUN cd /usr/local/bin \
 COPY . .
 
 WORKDIR /tmp/learning
-RUN pip install -r requirements.txt && pip install nose
+RUN pip install --upgrade setuptools && pip install -r requirements.txt && pip install nose

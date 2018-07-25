@@ -18,18 +18,13 @@ class SynonymExpansionPreprocessor(BasePreprocessor):
         # word は正規表現にコンパイルしておく
         words_and_values = zip([re.compile(x) for x in synonym_mappings.word], synonym_mappings.value)
 
-        results = []
+        # generator を使うことで省メモリ化と高速化を行う
+        return [r for r in self._generate_synonym_expander(texts, words_and_values)]
+
+    def _generate_synonym_expander(self, texts, words_and_values):
+        # return しないで yield したほうがオーバーヘッドが小さく、高速かつ省メモリ
         for text in texts:
-            results.extend(self._expand_synonyms_to_single_text(text, words_and_values))
-        return results
-
-    def _expand_synonyms_to_single_text(self, text, words_and_values):
-        # シノニム展開前のテキスト
-        results = [text]
-
-        for word, value in words_and_values:
-            if re.match(word, text):
-                # シノニム展開後のテキスト
-                results.append(re.sub(word, value, text))
-
-        return results
+            yield text
+            for word, value in words_and_values:
+                if re.match(word, text):
+                    yield re.sub(word, value, text)

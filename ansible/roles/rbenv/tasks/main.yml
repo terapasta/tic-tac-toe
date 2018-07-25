@@ -25,6 +25,9 @@
   shell: cd /usr/local/rbenv/plugins/ruby-build && ./install.sh
   when: not ruby_build_dir.stat.exists
 
+- name: git pull ruby-build
+  shell: cd /usr/local/rbenv/plugins/ruby-build && git pull origin master
+
 - name: check /etc/profile.d/rbenv.sh is exists
   stat: path=/etc/profile.d/rbenv.sh
   register: rbenv_sh
@@ -45,7 +48,11 @@
   when: ruby_is_installed.stdout != ruby_version
 
 - name: set global ruby version
+  become: true
   shell: bash -lc "rbenv global {{ ruby_version }} && rbenv rehash"
 
 - name: use custom sudoers
   copy: src=sudoers dest=/etc/sudoers.d/rbenv backup=yes validate='visudo -c -f %s' owner=root group=root mode=0440
+
+- name: install bundler gem
+  gem: name=bundler user_install=no

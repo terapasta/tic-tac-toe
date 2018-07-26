@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20180726020808) do
     t.datetime "demo_finished_at"
     t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
     t.boolean "is_guest_user_form_skippable", default: true, null: false
-    t.string "pin_code"
+    t.string "password"
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 

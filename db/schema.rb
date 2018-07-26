@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180703023418) do
+ActiveRecord::Schema.define(version: 20180726020808) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.text "question_text"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.datetime "demo_finished_at"
     t.float "candidate_answers_threshold", limit: 24, default: 0.1, null: false
     t.boolean "is_guest_user_form_skippable", default: true, null: false
+    t.string "pin_code"
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
@@ -146,7 +147,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.index ["is_staff"], name: "index_chats_on_is_staff"
   end
 
-  create_table "chatwork_decision_branches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "chatwork_decision_branches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer "chat_id", null: false
     t.string "access_token", null: false
     t.integer "decision_branch_id", null: false
@@ -157,7 +158,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.index ["access_token"], name: "index_chatwork_decision_branches_on_access_token", unique: true
   end
 
-  create_table "chatwork_similar_question_answers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "chatwork_similar_question_answers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer "chat_id", null: false
     t.string "access_token", null: false
     t.integer "question_answer_id", null: false
@@ -316,6 +317,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "answer"
+    t.text "question_wakati"
     t.bigint "zendesk_article_id"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
@@ -357,6 +359,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "question_wakati"
   end
 
   create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -426,6 +429,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "value_wakati"
   end
 
   create_table "word_mappings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -433,6 +437,7 @@ ActiveRecord::Schema.define(version: 20180703023418) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id"
+    t.string "word_wakati"
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
   end
 

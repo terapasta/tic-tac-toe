@@ -49,9 +49,7 @@ import {
   ADD_ANSWER_FILE_TO_DECISION_BRANCH,
   REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
   FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS,
-  CLEAR_TOPIC_TAG_FILTER,
-  TURN_LOADING_ON,
-  TURN_LOADING_OFF
+  CLEAR_TOPIC_TAG_FILTER
 } from './mutationTypes'
 
 import {
@@ -378,13 +376,5 @@ export default {
       state.filteredQuestionsTree = state.questionsTree.concat()
     }
     state.selectedTopicTagIds = []
-  },
-
-  [TURN_LOADING_ON] (state) {
-    state.isLoading = true
-  },
-
-  [TURN_LOADING_OFF] (state) {
-    state.isLoading = false
   }
 }

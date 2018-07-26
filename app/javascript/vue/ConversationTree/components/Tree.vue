@@ -1,7 +1,6 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import chunk from 'lodash/chunk'
-import BeatLoader from 'vue-spinner/src/BeatLoader'
 
 import QuestionNode from './QuestionNode'
 import classnames from 'classnames'
@@ -14,14 +13,12 @@ export default {
   },
 
   components: {
-    QuestionNode,
-    BeatLoader
+    QuestionNode
   },
 
   computed: {
     ...mapState([
-      'isOnlyShowHasDecisionBranchesNode',
-      'isLoading'
+      'isOnlyShowHasDecisionBranchesNode'
     ]),
 
     isActiveAddButton () {
@@ -50,22 +47,20 @@ export default {
 <template>
   <ol class="tree">
     <li class="tree__node" id="adding">
-      <div class="d-flex justify-content-between narrow-box">
-        <label>
-          <input
-            type="checkbox"
-            :checked="isOnlyShowHasDecisionBranchesNode"
-            @change="handleCheckBoxChange"
-            id="toggleOnlyShowHasDecisionBranchesNode"
-          />
-          &nbsp;
-          <span class="icon-circle">
-            <i class="material-icons upside-down" title="選択肢" style="top:-1px">call_split</i>
-          </span>
-          ツリーのみ表示
-        </label>
-        <beat-loader v-if="isLoading" size="8px" color="#F36B30" />
-      </div>
+      <label>
+        <input
+          type="checkbox"
+          :checked="isOnlyShowHasDecisionBranchesNode"
+          @change="handleCheckBoxChange"
+          id="toggleOnlyShowHasDecisionBranchesNode"
+        />
+        &nbsp;
+        <span class="icon-circle">
+          <i class="material-icons upside-down" title="選択肢" style="top:-1px">call_split</i>
+        </span>
+        ツリーのみ表示
+      </label>
+      <br />
       <div :class="addButtonClassName">
         <router-link
           id="AddQuestionAnswerButton"
@@ -79,10 +74,3 @@ export default {
     </template>
   </ol>
 </template>
-
-<style scoped>
-.narrow-box {
-  box-sizing: content-box;
-  width: calc(30% - 52px)
-}
-</style>

@@ -116,6 +116,7 @@ Rails.application.routes.draw do
 
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
+      post :auth
       scope module: :chats do
         resources :messages, only: [:index, :create] do
           resource :rating, only: [], controller: :message_rating do

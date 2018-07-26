@@ -23,6 +23,11 @@
             = space
             span 許可IPアドレス
         li.nav-item
+          = active_link_to bot_settings_password_path(@bot), class: 'nav-link', data: { event: 'chat password' } do
+            = material_icon 'lock', class: 'mi-xs'
+            = space
+            span チャット画面パスワード
+        li.nav-item
           = active_link_to bot_settings_reset_path(@bot), class: 'nav-link', data: { event: 'all reset learning data' } do
             = material_icon 'layers_clear', class: 'mi-xs'
             = space

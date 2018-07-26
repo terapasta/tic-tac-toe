@@ -1,0 +1,13 @@
+= render layout: 'settings/shared/layout' do
+  .card: .card-body
+    h5.mb-3: strong チャット画面パスワード
+    p チャット画面に自由な文字列でパスワードをかけることができます。
+    = form_for @bot, url: bot_settings_password_path do |f|
+      .form-group
+        = f.text_field :password, class: 'form-control'
+      .form-text.text-muted.mb-3
+        |※使える文字の種類や長さに制限はありません
+        br
+        |※空にするとパスワード認証を解除できます
+      .form-group.mb-0
+        = f.submit '更新', class: 'btn btn-success'

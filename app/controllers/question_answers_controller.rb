@@ -28,6 +28,7 @@ class QuestionAnswersController < ApplicationController
   def show
     @question_answer = @bot.question_answers.find params[:id]
     if params[:qacard] == 'true'
+      @is_modal = params[:is_modal]
       render :show, layout: false and return
     end
     respond_to do |format|

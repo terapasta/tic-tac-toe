@@ -107,7 +107,7 @@ class Form extends Component {
 
 const FormikForm = withFormik({
   mapPropsToValus: props => ({ name: '', email: '' }),
-  validationSchema: Yup.object().shape({
+  validationSchema: Yup.object({
     name: Yup.string().required('お名前は必須項目です'),
     email: Yup.string().email('メールアドレスの形式が正しくありません')
   }),

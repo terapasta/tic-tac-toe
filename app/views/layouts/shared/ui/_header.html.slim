@@ -30,5 +30,5 @@ header
                 = link_to 'CloudWatch Logs', 'https://ap-northeast-1.console.aws.amazon.com/cloudwatch/home?region=ap-northeast-1#logs:prefix=/var/www/donusagi-bot', target: '_blank', class: 'dropdown-item'
                 = link_to '各社利用状況', admin_utilizations_path, class: 'dropdown-item'
 
-      - else
+      - elsif !content_for?(:hide_login_button)
         = link_to 'ログイン', new_user_session_path, class: 'btn btn-sm btn-primary'

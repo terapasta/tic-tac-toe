@@ -20,7 +20,7 @@ class ChatTestJob < ApplicationJob
     end
 
     reply_responses = engine.replies(data)[:data].map.with_index{ |raw_data, i|
-      ReplyResponse.new(raw_data, @bot, data[i])
+      ReplyResponse.new(raw_data, @bot, data[i], data[i])
     }
     ids = reply_responses.map(&:resolved_question_answer_id)
     qas = QuestionAnswer.find_all_or_null_question_answers(ids, @bot)

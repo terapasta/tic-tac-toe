@@ -5,7 +5,7 @@
 .container-fluid
   - [:high, :middle, :low].each do |level|
     h6.mt-5= level.upcase
-    - @data_list[level].each_slice(3) do |data_list|
+    - Array(@data_list[level]).each_slice(3) do |data_list|
       .row.mb-3
         - data_list.each do |data|
           - bot = data[:bot]

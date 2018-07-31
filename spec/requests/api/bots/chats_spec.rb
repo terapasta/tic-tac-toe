@@ -30,6 +30,7 @@ RSpec.describe '/api/bots/:token/chats', type: :request do
             post_api_bot_chats
             expect(JSON.parse(response.body)).to eq(
               'chat' => {
+                'id' => Chat.last.id,
                 'guestKey' => Chat.last.guest_key
               }
             )

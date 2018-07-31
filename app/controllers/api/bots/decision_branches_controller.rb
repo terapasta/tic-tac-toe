@@ -2,6 +2,14 @@ class Api::Bots::DecisionBranchesController < Api::BaseController
   before_action :set_bot
   before_action :set_decision_branch, only: [:update, :destroy]
 
+  def index
+    if params[:data_format] == 'repo'
+      render json: { decisionBranchesRepo: DeepCamelizeKeys.deep_camelize_keys(@bot.decision_branches.decorate.as_repo_json) }
+    else
+      render json: @bot.decision_branches, adapter: :json
+    end
+  end
+
   def create
     @decision_branch = @bot.decision_branches.build(permitted_attributes(DecisionBranch))
     if @decision_branch.save

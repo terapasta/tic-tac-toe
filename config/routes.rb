@@ -66,7 +66,12 @@ Rails.application.routes.draw do
       end
       resources :decision_branches, only: [:show, :update, :create, :destroy]
       resource :conversation_tree, only: [:show]
-      resources :word_mappings
+      resources :word_mappings do
+        collection do
+          resource :export, only: [:show], module: :word_mappings, as: :export_word_mappings
+          resource :import, only: [:show, :create], module: :word_mappings, as: :import_word_mappings
+        end
+      end
       resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
       resource :zendesk_articles, only: [:update]
       resources :message_summarize, only: [:index]
@@ -159,7 +164,7 @@ Rails.application.routes.draw do
     resources :public_bots, param: :token, only: [:show]
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
     resources :bots, param: :token do
-      resources :chats, module: :bots, only: [:create]
+      resources :chats, module: :bots, only: [:show, :create]
       resources :chat_messages, module: :bots, only: [:create]
       resources :chat_choices, module: :bots, only: [:create]
       resources :chat_failed_messages, module: :bots, only: [:create]
@@ -170,5 +175,9 @@ Rails.application.routes.draw do
         resource :answer_link, only: [:create, :destroy], module: :decision_branches
       end
     end
+    post 'cwdb', to: 'chatwork_decision_branches#create', as: :chatwork_decision_branches
+    post 'cwsqa', to: 'chatwork_similar_question_answers#create', as: :chatwork_similar_question_answers
   end
+  get 'cwdb/:access_token', to: 'api/chatwork_decision_branches#show', as: :chatwork_decision_branch
+  get 'cwsqa/:access_token', to: 'api/chatwork_similar_question_answers#show', as: :chatwork_similar_question_answer
 end

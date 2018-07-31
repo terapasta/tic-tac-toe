@@ -70,7 +70,7 @@ namespace :data_summary do
   end
 
   task calc_question_answers: :environment do
-    ActiveRecord:Base.transaction do
+    ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
         summarizer = QuestionAnswersSummarizer.new(bot)
         # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する

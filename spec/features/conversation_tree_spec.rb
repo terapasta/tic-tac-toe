@@ -45,7 +45,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     visit "/bots/#{bot.id}/conversation_tree"
   end
 
-  scenario 'display tree nodes' do
+  xscenario 'display tree nodes' do
     find("#Question-#{question_answers.first.id}-link").click
     expect(page).to have_content(question_answers.first.answer)
     find("#Answer-#{question_answers.first.id}-link").click
@@ -55,7 +55,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(page).to have_content(decision_branches.first.answer)
   end
 
-  scenario 'search tree nodes' do
+  xscenario 'search tree nodes' do
     find('input[type=search]').set(question_answers.first.answer)
     expect(page).to have_content(question_answers.first.question)
     expect(page).to have_content(question_answers.first.answer)
@@ -74,7 +74,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
   end
 
-  scenario 'creates decision_branch' do
+  xscenario 'creates decision_branch' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
     find('#AddDecisionBranchButton').click
@@ -87,7 +87,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
   end
 
-  scenario 'updates answer' do
+  xscenario 'updates answer' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
     find('[name="question_answer[answer]"]').set('updated answer')
@@ -98,7 +98,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
   end
 
-  scenario 'updates decision branch' do
+  xscenario 'updates decision branch' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
     within "#DecisionBranchItem-#{decision_branches.first.id}" do
@@ -114,7 +114,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
   end
 
-  scenario 'deletes answer' do
+  xscenario 'deletes answer' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
     find("#DeleteAnswerButton").click
@@ -124,7 +124,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
   end
 
-  scenario 'deletes decision branch' do
+  xscenario 'deletes decision branch' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
     within "#DecisionBranchItem-#{decision_branches.first.id}" do
@@ -139,7 +139,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     end
   end
 
-  scenario 'order decision branches' do
+  xscenario 'order decision branches' do
     find("#Question-#{question_answers.first.id}-link").click
     find("#Answer-#{question_answers.first.id}-link").click
     expect(decision_branches.first.position).to eq(1)
@@ -154,7 +154,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(decision_branches.second.reload.position).to eq(2)
   end
 
-  scenario 'only show has decision branches nodes' do
+  xscenario 'only show has decision branches nodes' do
     expect(page).to have_content(question_answers.first.question)
     expect(page).to_not have_content(question_answers.second.question)
     find('#toggleOnlyShowHasDecisionBranchesNode').click
@@ -162,7 +162,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(page).to have_content(question_answers.second.question)
   end
 
-  scenario 'filter by topic_tags' do
+  xscenario 'filter by topic_tags' do
     find('.multiselect__tags').click
     all('.multiselect__element').detect{ |it| it.text == topic_tags.first.name }.click
     expect(page).to have_content(question_answers.first.question)

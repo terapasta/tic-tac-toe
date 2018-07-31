@@ -61,6 +61,13 @@ RSpec.describe '/api/bots/:bot_id/topic_tags', type: :request do
           get resources
           expect(response_json["topicTags"].count).to eq(2)
         end
+
+        context 'when data_format=repo' do
+          it 'returns topic tags as repo format' do
+            get resources + '?data_format=repo'
+            expect(response_json['topicTagsRepo']).to be_present
+          end
+        end
       end
 
       context 'when other bot' do

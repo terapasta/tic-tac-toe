@@ -18,6 +18,11 @@ class Base {
       this.reqBodyMiddleware.bind(this),
       ...this.chatListeners
     )
+
+    if (this.name === 'chatwork') {
+      app.post(`/${this.name}/:botToken/:chatId/decisionBranch`, ...this.decisionBranchListeners)
+      app.post(`/${this.name}/:botToken/:chatId/similarQuestionAnswer`, ...this.similarQuestionAnswerListeners)
+    }
   }
 
   reqBodyMiddleware (req, res, next) {
@@ -25,16 +30,16 @@ class Base {
       this.passToChatListener(req, res, next)
     } else {
       let requestData = ''
-      req.on('data', (chunk) => requestData += chunk)
+      req.on('data', chunk => { requestData += chunk })
       req.on('end', () => {
         req.body = requestData
-        this.passToChatListener(req, res, next);
+        this.passToChatListener(req, res, next)
       })
     }
   }
 
   passToChatListener (req, res, next) {
-    req.body = Object.assign(JSON.parse(req.body), {
+    req.body = Object.assign({}, req.body, {
       botToken: req.params.botToken
     })
     next(req, res)
@@ -52,6 +57,7 @@ class Base {
       })
 
       if (!isValidSignature) {
+        console.error(`invalid ${signatureName}`)
         return next(new Error(`invalid ${signatureName}`))
       }
       next(req, res)

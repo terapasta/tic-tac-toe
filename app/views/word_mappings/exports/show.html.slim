@@ -1,0 +1,22 @@
+= render layout: 'bots/layout' do
+  = render 'word_mappings/nav', bot: @bot
+
+  h4.mb-4 辞書エクスポート
+
+  .card.card-outline-secondary.mb-4: .card-body
+    h5 辞書エクスポート機能とは
+    |既に登録されている学習データをCSV形式でダウンロード出来る機能です。
+    br
+    |ダウンロードしたCSVはそのままインポートにも使用できますので、一括で辞書を更新したい場合もまずはエクスポートを行って下さい。
+    br
+    |エクスポートファイルを作成すると、サーバーに保存されますので表示されたURLをクリックしてファイルをダウンロードして下さい。
+
+  .row: .col-8.offset-2
+    .form-group.text-center
+      .d-inline-block.text-left.align-top
+        = link_to 'Shift_JISでエクスポート', bot_export_word_mappings_path(@bot, format: :csv, encoding: :sjis), class: 'btn btn-success', data: { event: 'export word_mappings with shift_JIS' }
+        br
+        span.text-muted Excelで開きたい場合はこちら
+      = space 5
+      .d-inline-block.align-top
+        = link_to 'UTF-8でエクスポート', bot_export_word_mappings_path(@bot, format: :csv, encoding: :utf8), class: 'btn btn-success', data: { event: 'export word_mappings with UTF_8' }

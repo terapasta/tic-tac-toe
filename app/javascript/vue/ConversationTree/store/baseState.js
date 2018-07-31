@@ -6,6 +6,5 @@ export default {
   selectedTopicTagIds: [],
   filteredQuestionsTree: [],
   filteredQuestionsSelectableTree: [],
-  topicTagsRepo: {},
-  isLoading: false
+  topicTagsRepo: {}
 }

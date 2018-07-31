@@ -14,14 +14,12 @@ export default {
   },
 
   components: {
-    QuestionNode,
-    BeatLoader
+    QuestionNode
   },
 
   computed: {
     ...mapState([
-      'isOnlyShowHasDecisionBranchesNode',
-      'isLoading'
+      'isOnlyShowHasDecisionBranchesNode'
     ]),
 
     isActiveAddButton () {

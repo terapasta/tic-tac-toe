@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
-import Yup from 'yup'
+import * as Yup from 'yup'
 import toastr from 'toastr'
 import isEmpty from 'is-empty'
 import Cookies from 'js-cookie'

@@ -1,35 +1,35 @@
 <script>
 import { mapActions } from 'vuex'
-import Yup from 'yup'
+// import Yup from 'yup'
 import includes from 'lodash/includes'
 import last from 'lodash/last'
 import isEmpty from 'is-empty'
 
 import Spinner from '../Spinner'
 
-export const answerFileValidationSchema = Yup.object({
-  id: Yup.number().required(),
-  file: Yup.object({
-    url: Yup.string()
-  }).required(),
-  fileType: Yup.string().required(),
-  fileSize: Yup.number().required()
-})
+// export const answerFileValidationSchema = Yup.object({
+//   id: Yup.number().required(),
+//   file: Yup.object({
+//     url: Yup.string()
+//   }).required(),
+//   fileType: Yup.string().required(),
+//   fileSize: Yup.number().required()
+// })
 
-export const answerFileValidator = (val) => {
-  try {
-    answerFileValidationSchema.validateSync(val)
-  } catch (err) {
-    console.error(err)
-    return false
-  }
-  return true
-}
+// export const answerFileValidator = (val) => {
+//   try {
+//     answerFileValidationSchema.validateSync(val)
+//   } catch (err) {
+//     console.error(err)
+//     return false
+//   }
+//   return true
+// }
 
-export const answerFilesValidator = (val) => {
-  const results = val.map(v => answerFileValidator(v))
-  return !includes(results, false)
-}
+// export const answerFilesValidator = (val) => {
+//   const results = val.map(v => answerFileValidator(v))
+//   return !includes(results, false)
+// }
 
 export default {
   components: {
@@ -39,7 +39,7 @@ export default {
   props: {
     decisionBranchId: { type: Number, default: null },
     questionAnswerId: { type: Number, default: null },
-    answerFile: { type: Object, required: true, validator: answerFileValidator }
+    answerFile: { type: Object, required: true/*, validator: answerFileValidator*/ }
   },
 
   data: () => ({

@@ -1,10 +1,10 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import chunk from 'lodash/chunk'
-import BeatLoader from 'vue-spinner/src/BeatLoader'
+import classnames from 'classnames'
 
 import QuestionNode from './QuestionNode'
-import classnames from 'classnames'
+import BeatLoader from '../../BeatLoader'
 
 export default {
   name: 'tree',
@@ -64,7 +64,7 @@ export default {
           </span>
           ツリーのみ表示
         </label>
-        <beat-loader v-if="isLoading" size="8px" color="#F36B30" />
+        <beat-loader v-if="isLoading" />
       </div>
       <div :class="addButtonClassName">
         <router-link

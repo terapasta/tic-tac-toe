@@ -1,6 +1,10 @@
 import Promise from 'promise'
 import isEmpty from 'is-empty'
-import { find, includes, uniq, flatten } from 'lodash'
+import find from 'lodash/find'
+import includes from 'lodash/includes'
+import uniq from 'lodash/uniq'
+import flatten from 'lodash/flatten'
+import values from 'lodash/values'
 
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
@@ -46,7 +50,9 @@ import {
   ADD_ANSWER_FILE_TO_DECISION_BRANCH,
   REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
   FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS,
-  CLEAR_TOPIC_TAG_FILTER
+  CLEAR_TOPIC_TAG_FILTER,
+  TURN_LOADING_ON,
+  TURN_LOADING_OFF
 } from './mutationTypes'
 
 import {
@@ -352,7 +358,13 @@ export default {
   },
 
   getAllData ({ commit, state }, { updated }) {
+    commit(TURN_LOADING_ON)
     const { botId } = state
+    let doneTasks = {
+      questionsTree: false,
+      decisionBranches: false,
+      topicTags: false
+    }
     const questionsTreeRequest = (page = 1) => {
       QuestionAnswerAPI.getTree(botId, page).then(res => {
         const totalPages = window.parseInt(res.headers['x-total-pages'])
@@ -361,18 +373,40 @@ export default {
         commit(ADD_QUESTIONS_TREE, { questionsTree })
         commit(ADD_SEARCH_INDEXES, { indexItems: searchIndex })
         updated()
-        if (page < totalPages) { questionsTreeRequest(page + 1) }
+        if (page < totalPages) {
+          questionsTreeRequest(page + 1)
+        } else {
+          doneTasks.questionsTree = true
+        }
+      }).catch(err => {
+        console.error(err)
+        doneTasks.questionsTree = true
       })
     }
     questionsTreeRequest()
 
     DecisionBranchAPI.getRepo(botId).then(res => {
+      doneTasks.decisionBranches = true
       const { decisionBranchesRepo } = res.data
       commit(SET_DECISION_BRANCHES_REPO, { decisionBranchesRepo })
+    }).catch(err => {
+      console.error(err)
+      doneTasks.decisionBranches = true
     })
     TopicTagAPI.getRepo(botId).then(res => {
+      doneTasks.topicTags = true
       const { topicTagsRepo } = res.data
       commit(SET_TOPIC_TAGS_REPO, { topicTagsRepo })
+    }).catch(err => {
+      console.error(err)
+      doneTasks.topicTags = true
     })
+
+    const timerId = setInterval(() => {
+      if (!includes(values(doneTasks), false)) {
+        clearInterval(timerId)
+        commit(TURN_LOADING_OFF)
+      }
+    }, 100)
   }
 }

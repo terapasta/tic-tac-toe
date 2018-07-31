@@ -7,9 +7,9 @@ import isEmpty from 'is-empty'
 
 import Spinner from '../Spinner'
 
-export const answerFileValidationSchema = Yup.object({
+export const answerFileValidationSchema = Yup.object.shape({
   id: Yup.number().required(),
-  file: Yup.object({
+  file: Yup.object.shape({
     url: Yup.string()
   }).required(),
   fileType: Yup.string().required(),

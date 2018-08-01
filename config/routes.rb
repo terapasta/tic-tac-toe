@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         resource :bot, only: [:show, :update]
         resource :allowed_hosts, only: [:show, :update]
         resource :allowed_ip_addresses, only: [:show, :update]
+        resource :password, only: [:show, :update]
         resource :reset, only: [:show, :create]
       end
       member do
@@ -116,6 +117,7 @@ Rails.application.routes.draw do
 
   scope 'embed/:token' do
     resource :chats, only: [:show, :new, :destroy] do
+      post :auth
       scope module: :chats do
         resources :messages, only: [:index, :create] do
           resource :rating, only: [], controller: :message_rating do

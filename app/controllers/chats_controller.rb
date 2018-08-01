@@ -19,6 +19,9 @@ class ChatsController < ApplicationController
       redirect_to new_chats_path(token: params[:token], noheader: params[:noheader])
     else
       authorize @chat
+      if need_password_view?
+        render_password_view
+      end
     end
   end
 
@@ -28,7 +31,22 @@ class ChatsController < ApplicationController
       chat.is_staff = true if current_user.try(:staff?)
       chat.is_normal = true if current_user.try(:normal?)
     end
-    render :show
+    if need_password_view?
+      render_password_view
+    else
+      render :show
+    end
+  end
+
+  def auth
+    pass = params.require(:bot).require(:password)
+    if @bot.password.present? && pass == @bot.password
+      session[:user_inputted_password] = pass
+      redirect_to chats_path(@bot.token)
+    else
+      flash.now.alert = 'パスワードが正しくありません'
+      render_password_view
+    end
   end
 
   private
@@ -57,5 +75,14 @@ class ChatsController < ApplicationController
 
     def render_finished_trial_page
       render :finished_trial, status: :service_unavailable
+    end
+
+    def need_password_view?
+      @bot.password.present? && session[:user_inputted_password] != @bot.password
+    end
+
+    def render_password_view
+      session.delete(:user_inputted_password)
+      render :password
     end
 end

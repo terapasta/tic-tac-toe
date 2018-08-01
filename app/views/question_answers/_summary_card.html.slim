@@ -1,4 +1,4 @@
-.card.mb-4.qa-summury-card
+.card.qa-summury-card class=(@is_modal ? '' : 'mb-4')
   .card-body
     - if question_answer.try(:zendesk_article_id).present? && current_user.staff?
       .card.border-success.mb-3: .card-body.p-2.d-flex.justify-content-between.align-items-center

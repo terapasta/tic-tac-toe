@@ -26,6 +26,11 @@ class QuestionAnswersController < ApplicationController
   end
 
   def show
+    @question_answer = @bot.question_answers.find params[:id]
+    if params[:qacard] == 'true'
+      @is_modal = params[:is_modal]
+      render :show, layout: false and return
+    end
     respond_to do |format|
       format.json do
         render json: @question_answer.decorate.as_json(include: [:topic_tags])

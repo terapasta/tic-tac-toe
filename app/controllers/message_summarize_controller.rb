@@ -16,7 +16,7 @@ class MessageSummarizeController < ApplicationController
         per_page: @per_page
       )
       @question_answers = @qa.result
-      @top_message = @question_answers.first
+      @top_message = first_of_messages_count_having_question_answer(bot: @bot)
     end
   end
 

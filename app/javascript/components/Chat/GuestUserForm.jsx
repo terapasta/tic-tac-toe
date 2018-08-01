@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
-import Yup from 'yup'
+import * as Yup from 'yup'
 import toastr from 'toastr'
 import isEmpty from 'is-empty'
 import Cookies from 'js-cookie'
@@ -107,7 +107,7 @@ class Form extends Component {
 
 const FormikForm = withFormik({
   mapPropsToValus: props => ({ name: '', email: '' }),
-  validationSchema: Yup.object().shape({
+  validationSchema: Yup.object({
     name: Yup.string().required('お名前は必須項目です'),
     email: Yup.string().email('メールアドレスの形式が正しくありません')
   }),

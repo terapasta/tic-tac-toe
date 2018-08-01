@@ -1,30 +1,35 @@
 <script>
 import { mapActions } from 'vuex'
-import Joi from 'joi-browser'
+// import Yup from 'yup'
 import includes from 'lodash/includes'
 import last from 'lodash/last'
 import isEmpty from 'is-empty'
 
 import Spinner from '../Spinner'
 
-export const answerFileValidationSchema = Joi.object().keys({
-  id: Joi.number().required(),
-  file: Joi.object().keys({
-    url: Joi.string()
-  }).required(),
-  fileType: Joi.string().required(),
-  fileSize: Joi.number().required()
-})
+// export const answerFileValidationSchema = Yup.object({
+//   id: Yup.number().required(),
+//   file: Yup.object({
+//     url: Yup.string()
+//   }).required(),
+//   fileType: Yup.string().required(),
+//   fileSize: Yup.number().required()
+// })
 
-export const answerFileValidator = (val) => {
-  const { error } = Joi.validate(val, answerFileValidationSchema)
-  return error === null
-}
+// export const answerFileValidator = (val) => {
+//   try {
+//     answerFileValidationSchema.validateSync(val)
+//   } catch (err) {
+//     console.error(err)
+//     return false
+//   }
+//   return true
+// }
 
-export const answerFilesValidator = (val) => {
-  const results = val.map(v => answerFileValidator(v))
-  return !includes(results, false)
-}
+// export const answerFilesValidator = (val) => {
+//   const results = val.map(v => answerFileValidator(v))
+//   return !includes(results, false)
+// }
 
 export default {
   components: {
@@ -34,7 +39,7 @@ export default {
   props: {
     decisionBranchId: { type: Number, default: null },
     questionAnswerId: { type: Number, default: null },
-    answerFile: { type: Object, required: true, validator: answerFileValidator }
+    answerFile: { type: Object, required: true/*, validator: answerFileValidator*/ }
   },
 
   data: () => ({

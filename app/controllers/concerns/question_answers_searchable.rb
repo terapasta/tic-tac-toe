@@ -18,6 +18,22 @@ module QuestionAnswersSearchable
       result.search(q)
     end
 
+    def search_question_answers_count_list(bot:, keyword:, q:, page:, per_page:)
+      result = bot.question_answers
+        .order('messages_count DESC')
+        .page(page)
+        .per(per_page)
+        .keyword(keyword)
+      result.search(q)
+    end
+
+    def first_of_messages_count_having_question_answer(bot:)
+      bot.question_answers
+        .order(messages_count: :desc)
+        .limit(1)
+        .first
+    end
+
     def sorting_url(condition)
       send(index_path_helper_name, @bot, request.query_parameters.merge(q: { s: condition }))
     end

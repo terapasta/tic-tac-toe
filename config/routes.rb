@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       end
       resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
       resource :zendesk_articles, only: [:update]
+      resources :message_summarize, only: [:index]
     end
 
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]

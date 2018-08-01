@@ -1,6 +1,3 @@
-- name: install bundler gem
-  gem: name=bundler user_install=no
-
 - file:
     path: /var/www
     state: directory

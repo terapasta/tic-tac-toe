@@ -3,7 +3,7 @@ import { mapActions } from 'vuex'
 import isEmpty from 'is-empty'
 
 import FileInput from './AnswerFiles/FileInput'
-import FileItem, { answerFilesValidator } from './AnswerFiles/FileItem'
+import FileItem/*, { answerFilesValidator }*/ from './AnswerFiles/FileItem'
 
 export default {
   components: {
@@ -14,7 +14,7 @@ export default {
   props: {
     questionAnswerId: { type: Number, default: null },
     decisionBranchId: { type: Number, default: null },
-    answerFiles: { type: Array, default: () => ([]), validator: answerFilesValidator }
+    answerFiles: { type: Array, default: () => ([])/*, validator: answerFilesValidator*/ }
   },
 
   methods: {

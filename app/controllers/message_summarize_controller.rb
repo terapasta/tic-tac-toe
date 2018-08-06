@@ -4,20 +4,18 @@ class MessageSummarizeController < ApplicationController
   before_action :set_bot, only: [:index]
 
   def index
-    if current_user.staff?
-      @per_page = 20
-      @keyword = params[:keyword]
-      @current_page = current_page
-      @qa = search_question_answers_count_list(
-        bot: @bot,
-        keyword: @keyword,
-        q: params[:q],
-        page: @current_page,
-        per_page: @per_page
-      )
-      @question_answers = @qa.result
-      @top_message = first_of_messages_count_having_question_answer(bot: @bot)
-    end
+    @per_page = 20
+    @keyword = params[:keyword]
+    @current_page = current_page
+    @qa = search_question_answers_count_list(
+      bot: @bot,
+      keyword: @keyword,
+      q: params[:q],
+      page: @current_page,
+      per_page: @per_page
+    )
+    @question_answers = @qa.result
+    @top_message = first_of_messages_count_having_question_answer(bot: @bot)
   end
 
   private

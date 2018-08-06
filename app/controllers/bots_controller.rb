@@ -19,14 +19,14 @@ class BotsController < ApplicationController
       @total_reducted_minutes = @recent_30days_users_count * 5
       @reducted_hours = @total_reducted_minutes / 60
       @reducted_minutes = @total_reducted_minutes % 60
-
-      @per_page = 20
-      @all_question_answers = @bot.question_answers.order('messages_count DESC')
-      @question_answers = @all_question_answers
-        .page(params[:page])
-        .per(@per_page)
-      @top_message = @all_question_answers.first
     end
+
+    @per_page = 20
+    @all_question_answers = @bot.question_answers.order('messages_count DESC')
+    @question_answers = @all_question_answers
+      .page(params[:page])
+      .per(@per_page)
+    @top_message = @all_question_answers.first
 
     @guest_messages_summarizer = GuestMessagesSummarizer.new(@bot)
     @bad_count_summarizer = BadCountSummarizer.new(@bot)

@@ -1,14 +1,23 @@
 import Promise from 'promise'
 import isEmpty from 'is-empty'
-import { find, includes, uniq, flatten } from 'lodash'
+import find from 'lodash/find'
+import includes from 'lodash/includes'
+import uniq from 'lodash/uniq'
+import flatten from 'lodash/flatten'
+import values from 'lodash/values'
 
 import * as QuestionAnswerAPI from '../../../api/questionAnswer'
 import * as DecisionBranchAPI from '../../../api/decisionBranch'
 import * as AnswerLinkAPI from '../../../api/answerLink'
 import * as SubQuestionAPI from '../../../api/subQuestion'
 import * as AnswerFileAPI from '../../../api/answerFile'
+import * as TopicTagAPI from '../../../api/topicTag'
 
 import {
+  ADD_QUESTIONS_REPO,
+  ADD_QUESTIONS_TREE,
+  SET_DECISION_BRANCHES_REPO,
+  SET_TOPIC_TAGS_REPO,
   OPEN_NODE,
   CLOSE_NODE,
   ADD_QUESTION_ANSWER,
@@ -32,6 +41,7 @@ import {
   SET_SEARCHING_KEYWORD,
   SET_SELECTABLE_TREE_SEARCHING_KEYWORD,
   ADD_SEARCH_INDEX,
+  ADD_SEARCH_INDEXES,
   TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
   MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
   MOVE_DECISION_BRANCH_TO_LOWER_POSITION,
@@ -41,6 +51,8 @@ import {
   REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
   FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS,
   CLEAR_TOPIC_TAG_FILTER,
+  TURN_LOADING_ON,
+  TURN_LOADING_OFF
 } from './mutationTypes'
 
 import {
@@ -48,7 +60,7 @@ import {
   findDecisionBranchFromTree,
   getFlatTreeFromDecisionBranchId,
   makeNodeIdsFromNode
-} from '../helpers';
+} from '../helpers'
 
 const logError = err => {
   console.log(err)
@@ -343,5 +355,58 @@ export default {
 
   clearTopicTagFilter ({ commit }) {
     commit(CLEAR_TOPIC_TAG_FILTER)
+  },
+
+  getAllData ({ commit, state }, { updated }) {
+    commit(TURN_LOADING_ON)
+    const { botId } = state
+    let doneTasks = {
+      questionsTree: false,
+      decisionBranches: false,
+      topicTags: false
+    }
+    const questionsTreeRequest = (page = 1) => {
+      QuestionAnswerAPI.getTree(botId, page).then(res => {
+        const totalPages = window.parseInt(res.headers['x-total-pages'])
+        const { questionsRepo, questionsTree, searchIndex } = res.data
+        commit(ADD_QUESTIONS_REPO, { questionsRepo })
+        commit(ADD_QUESTIONS_TREE, { questionsTree })
+        commit(ADD_SEARCH_INDEXES, { indexItems: searchIndex })
+        updated()
+        if (page < totalPages) {
+          questionsTreeRequest(page + 1)
+        } else {
+          doneTasks.questionsTree = true
+        }
+      }).catch(err => {
+        console.error(err)
+        doneTasks.questionsTree = true
+      })
+    }
+    questionsTreeRequest()
+
+    DecisionBranchAPI.getRepo(botId).then(res => {
+      doneTasks.decisionBranches = true
+      const { decisionBranchesRepo } = res.data
+      commit(SET_DECISION_BRANCHES_REPO, { decisionBranchesRepo })
+    }).catch(err => {
+      console.error(err)
+      doneTasks.decisionBranches = true
+    })
+    TopicTagAPI.getRepo(botId).then(res => {
+      doneTasks.topicTags = true
+      const { topicTagsRepo } = res.data
+      commit(SET_TOPIC_TAGS_REPO, { topicTagsRepo })
+    }).catch(err => {
+      console.error(err)
+      doneTasks.topicTags = true
+    })
+
+    const timerId = setInterval(() => {
+      if (!includes(values(doneTasks), false)) {
+        clearInterval(timerId)
+        commit(TURN_LOADING_OFF)
+      }
+    }, 100)
   }
 }

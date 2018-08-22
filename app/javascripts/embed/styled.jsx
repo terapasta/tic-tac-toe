@@ -208,7 +208,7 @@ const CloseButton = styled.a.attrs({
   href: '#'
 })`
   position: absolute;
-  top: 8px;
+  top: 4px;
   right: 8px;
   display: block;
   width: 32px;

@@ -1,0 +1,13 @@
+- pagination = capture do
+  = render 'shared/pagination', resources: @question_answers, per_page: @per_page
+
+= render layout: 'bots/layout' do
+  h5.mb-4 質問数分析
+
+  = render 'message_summarize/search_form', bot: @bot, search_result: @search_result, keyword: @keyword, action_url: bot_message_summarize_index_path(@bot, headless: params[:headless], hide_global_header: params[:hide_global_header])
+
+  - params[:page].nil? ? rank = 1 : rank = @per_page * (params[:page].to_i - 1) + 1
+  - @question_answers.each.with_index(rank) do |question_answer, index|
+    = render 'card_graph', question_answer: question_answer, index: index, top_message: @top_message
+
+  = pagination

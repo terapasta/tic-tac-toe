@@ -11,6 +11,10 @@ import isEqual from 'lodash/isEqual'
 import isEmpty from 'is-empty'
 
 import {
+  ADD_QUESTIONS_REPO,
+  ADD_QUESTIONS_TREE,
+  SET_DECISION_BRANCHES_REPO,
+  SET_TOPIC_TAGS_REPO,
   OPEN_NODE,
   CLOSE_NODE,
   ADD_QUESTION_ANSWER,
@@ -36,6 +40,7 @@ import {
   SET_SEARCHING_KEYWORD,
   SET_SELECTABLE_TREE_SEARCHING_KEYWORD,
   ADD_SEARCH_INDEX,
+  ADD_SEARCH_INDEXES,
   TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE,
   MOVE_DECISION_BRANCH_TO_HIGHER_POSITION,
   MOVE_DECISION_BRANCH_TO_LOWER_POSITION,
@@ -45,6 +50,8 @@ import {
   REMOVE_ANSWER_FILE_FROM_DECISION_BRANCH,
   FILTER_QUESTION_ANSWER_BY_TOPIC_TAGS,
   CLEAR_TOPIC_TAG_FILTER,
+  TURN_LOADING_ON,
+  TURN_LOADING_OFF
 } from './mutationTypes'
 
 import {
@@ -58,6 +65,30 @@ import {
 } from '../helpers'
 
 export default {
+  [ADD_QUESTIONS_REPO] (state, { questionsRepo }) {
+    state.questionsRepo = assign({}, state.questionsRepo, questionsRepo)
+  },
+
+  [ADD_QUESTIONS_TREE] (state, { questionsTree }) {
+    state.questionsTree = state.questionsTree.concat(questionsTree)
+    const cloned = state.questionsTree.concat()
+    if (state.isOnlyShowHasDecisionBranchesNode) {
+      state.filteredQuestionsTree = cloned.filter(it => !isEmpty(it.decisionBranches))
+      state.filteredQuestionsSelectableTree = cloned.filter(it => !isEmpty(it.decisionBranches))
+    } else {
+      state.filteredQuestionsTree = cloned.concat()
+      state.filteredQuestionsSelectableTree = cloned.concat()
+    }
+  },
+
+  [SET_DECISION_BRANCHES_REPO] (state, { decisionBranchesRepo }) {
+    state.decisionBranchesRepo = assign({}, state.decisionBranchesRepo, decisionBranchesRepo)
+  },
+
+  [SET_TOPIC_TAGS_REPO] (state, { topicTagsRepo }) {
+    state.topicTagsRepo = assign({}, state.topicTagsRepo, topicTagsRepo)
+  },
+
   [OPEN_NODE] (state, { nodeId }) {
     if (includes(state.openedNodes, nodeId)) { return }
     state.openedNodes.push(nodeId)
@@ -228,6 +259,10 @@ export default {
     state.searchIndex = state.searchIndex.concat([indexItem])
   },
 
+  [ADD_SEARCH_INDEXES] (state, { indexItems }) {
+    state.searchIndex = state.searchIndex.concat(indexItems)
+  },
+
   [TOGGLE_IS_ONLY_SHOW_HAS_DECISION_BRANCHES_NODE] (state) {
     state.isOnlyShowHasDecisionBranchesNode = !state.isOnlyShowHasDecisionBranchesNode
 
@@ -343,5 +378,13 @@ export default {
       state.filteredQuestionsTree = state.questionsTree.concat()
     }
     state.selectedTopicTagIds = []
+  },
+
+  [TURN_LOADING_ON] (state) {
+    state.isLoading = true
+  },
+
+  [TURN_LOADING_OFF] (state) {
+    state.isLoading = false
   }
 }

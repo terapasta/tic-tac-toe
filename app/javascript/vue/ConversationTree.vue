@@ -1,15 +1,13 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import isEmpty from 'is-empty'
-import {
-  range,
-  includes,
-  last,
-  get,
-  compact,
-  reduce,
-  values
- } from 'lodash'
+import range from 'lodash/range'
+import includes from 'lodash/includes'
+import last from 'lodash/last'
+import get from 'lodash/get'
+import compact from 'lodash/compact'
+import reduce from 'lodash/reduce'
+import values from 'lodash/values'
 
 import getOffset from '../helpers/getOffset'
 import { calcPercentile } from './ConversationTree/helpers'
@@ -42,6 +40,11 @@ export default {
 
   created () {
     this.toggleIsOnlyShowHasDecisionBranchesNode()
+    this.getAllData({
+      updated: () => {
+        this.$emit('updatedQuestionAnswers')
+      }
+    })
   },
 
   mounted () {
@@ -60,7 +63,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'toggleIsOnlyShowHasDecisionBranchesNode'
+      'toggleIsOnlyShowHasDecisionBranchesNode',
+      'getAllData'
     ]),
 
     adjustHeight () {

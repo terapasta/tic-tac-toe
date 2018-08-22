@@ -3,5 +3,9 @@ export default {
   searchingKeyword: '',
   selectableTreeSearchingKeyword: '',
   isOnlyShowHasDecisionBranchesNode: false,
-  selectedTopicTagIds: []
+  selectedTopicTagIds: [],
+  filteredQuestionsTree: [],
+  filteredQuestionsSelectableTree: [],
+  topicTagsRepo: {},
+  isLoading: false
 }

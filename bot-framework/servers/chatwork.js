@@ -11,25 +11,60 @@ class Chatwork extends Base {
       this.beforeSignatureValidation.bind(this),
       this.handleEvents.bind(this)
     ]
+    this.decisionBranchListeners = [
+      this.handleDecisionBranch.bind(this)
+    ]
+    this.similarQuestionAnswerListeners = [
+      this.handleSimilarQuestionAnswer.bind(this)
+    ]
   }
 
   beforeSignatureValidation (req, res, next) {
     const { botToken } = req.body
-    api.fetchChatworkCredential({ botToken }).then(res => {
-      const credential = res.data['bot::ChatworkCredential']
+    this.fetchCredential(botToken).then(credential => {
       const { webhookToken, apiToken } = credential
       req.chatworkBot = new ChatworkBot(apiToken)
 
-      const validator = this.createSignatureValidator('x-chatworkwebhooksignature', new Buffer(webhookToken, 'base64'))
+      const validator = this.createSignatureValidator('x-chatworkwebhooksignature', Buffer.from(webhookToken, 'base64'))
       validator(req, res, next)
     }).catch(console.error)
+  }
+
+  fetchCredential (botToken) {
+    return new Promise((resolve, reject) => {
+      api.fetchChatworkCredential({ botToken }).then(res => {
+        const credential = res.data['bot::ChatworkCredential']
+        resolve(credential)
+      }).catch(err => {
+        console.error(err)
+        reject(err)
+      })
+    })
   }
 
   handleEvents (req, res, next) {
     if (req.body.webhook_event_type !== 'mention_to_me') {
       return
     }
-    req.chatworkBot.handleEvent(req.body)
+    req.chatworkBot.handleEvent(req.body, res)
+  }
+
+  handleDecisionBranch (req, res, next) {
+    const { botToken } = req.params
+    this.fetchCredential(botToken).then(credential => {
+      const { apiToken } = credential
+      req.chatworkBot = new ChatworkBot(apiToken)
+      req.chatworkBot.handleDecisionBranch(req, res)
+    }).catch(console.error)
+  }
+
+  handleSimilarQuestionAnswer (req, res, next) {
+    const { botToken } = req.params
+    this.fetchCredential(botToken).then(credential => {
+      const { apiToken } = credential
+      req.chatworkBot = new ChatworkBot(apiToken)
+      req.chatworkBot.handleSimilarQuestionAnswer(req, res)
+    }).catch(console.error)
   }
 }
 

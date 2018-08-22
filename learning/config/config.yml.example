@@ -27,7 +27,8 @@ test:
     name: donusagi_bot_test
     user: root
     password: ""
-  dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
+  # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
+  dicdir: /usr/local/lib/mecab/dic/ipadic
 
 production:
   <<: *default

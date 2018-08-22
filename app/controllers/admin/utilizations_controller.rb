@@ -32,12 +32,15 @@ class Admin::UtilizationsController < ApplicationController
       acc
     }
     [:high, :middle, :low].each{ |level|
-      @data_list[level].sort_by!{ |it| it[:max] }.reverse!
+      Array(@data_list[level]).sort_by!{ |it| it[:max] }.reverse!
     }
   end
 
   def create
-    cookies[CookieKey] = params[:bot_ids].map(&:to_i).join(',')
+    cookies[CookieKey] = {
+      value: params[:bot_ids].map(&:to_i).join(','),
+      expires: 10.years.from_now
+    }
     redirect_to admin_utilizations_path
   end
 

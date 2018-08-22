@@ -1,0 +1,24 @@
+.text-center: .btn-group
+  - (request.path == bot_word_mappings_path(bot)).tap do |is_active|
+    a.btn(
+      href=bot_word_mappings_path(bot)
+      class=(class_names('btn-outline-primary' => !is_active, 'btn-primary' => is_active))
+      data-event="click normal talk"
+    )
+      |一覧
+
+  - (request.path == bot_import_word_mappings_path(bot)).tap do |is_active|
+    a.btn(
+      href=bot_import_word_mappings_path(bot)
+      class=(class_names('btn-outline-primary' => !is_active, 'btn-primary' => is_active))
+      data-event="click Admin talk"
+    )
+      |インポート
+
+  - (request.path == bot_export_word_mappings_path(bot)).tap do |is_active|
+    a.btn(
+      href=bot_export_word_mappings_path(bot)
+      class=(class_names('btn-outline-primary' => !is_active, 'btn-primary' => is_active))
+      data-event="click Admin talk"
+    )
+      |エクスポート

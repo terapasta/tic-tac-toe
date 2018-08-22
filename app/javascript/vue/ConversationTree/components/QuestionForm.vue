@@ -2,6 +2,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 import isEmpty from 'is-empty'
 import toastr from 'toastr'
+import get from 'lodash/get'
 
 import QuestionIcon from './QuestionIcon'
 import AnswerIcon from './AnswerIcon'
@@ -30,6 +31,12 @@ export default {
     creatingSubQuestion: ''
   }),
 
+  created () {
+    this.$root.$on('updatedQuestionAnswers', () => {
+      this.setParent()
+    })
+  },
+
   mounted () {
     this.setParent()
   },
@@ -48,7 +55,7 @@ export default {
     ]),
 
     isNeedZendeskAlert () {
-      return this.questionAnswer.zendeskArticleId && this.isStaff
+      return get(this, 'questionAnswer.zendeskArticleId') && this.isStaff
     }
   },
 
@@ -74,7 +81,7 @@ export default {
       }).then(() => {
         this.isProcessing = true
         const index = window.parseInt(e.target.getAttribute('data-index'))
-        const subQuestion = this.questionAnswer.subQuestions[index]
+        const subQuestion = get(this, `questionAnswer.subQuestions[${index}]`, null)
         if (isEmpty(subQuestion)) { return }
         this.deleteSubQuestion({
           questionAnswerId: this.questionAnswer.id,
@@ -172,6 +179,7 @@ export default {
         name="question-question"
         class="form-control mb-3"
         placeholder="質問を入力してください（例：カードキー無くしてしまったのですが、どうすればいいですか）"
+        v-if="questionAnswer"
         v-model="questionAnswer.question"
         :disabled="isProcessing"
       />
@@ -181,7 +189,7 @@ export default {
             <span class="pr-2">サブ質問</span>
             <small>言い方の違う質問文を登録すると、回答精度の向上が期待できます</small>
           </label>
-          <div v-for="(sq, i) in questionAnswer.subQuestions" class="mb-3" :key="sq.id">
+          <div v-for="(sq, i) in ((questionAnswer || {}).subQuestions || [])" class="mb-3" :key="sq.id">
             <textarea
               v-model="sq.question"
               class="form-control mb-1"
@@ -237,12 +245,13 @@ export default {
     </div>
     <answer-text-area
       name="question-answer"
+      v-if="questionAnswer"
       :default-value="questionAnswer.answer"
       :disabled="isProcessing"
       @keyup="handleAnswerKeyup"
     />
     <answer-files
-      v-if="questionAnswer.id"
+      v-if="(questionAnswer || {}).id"
       :questionAnswerId="questionAnswer.id"
       :answerFiles="questionAnswer.answerFiles"
     />

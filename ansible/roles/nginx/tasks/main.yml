@@ -39,8 +39,8 @@
 
 - name: deploy nginx config file for myope (https)
   template: >
-    src=my-ope-https.conf
-    dest=/etc/nginx/conf.d/my-ope-https.conf
+    src=my-ope-staging.conf
+    dest=/etc/nginx/conf.d/my-ope-staging.conf
   notify: restart nginx
   when: stage == "staging"
 

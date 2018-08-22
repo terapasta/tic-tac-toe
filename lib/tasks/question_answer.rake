@@ -37,13 +37,18 @@ namespace :question_answer do
   task import_tree: :environment do
     fail 'BOT_ID is required' if ENV['BOT_ID'].blank?
     bot = Bot.find(ENV['BOT_ID'])
-    reader = FileReader.new(file_path: Rails.root.join('tmp/tree.csv'), encoding: Encoding::Shift_JIS)
+    reader = FileReader.new(file_path: Rails.root.join('tmp/tree.csv'), encoding: Encoding::UTF_8)
     all_data = {}
+    before_qa = nil
 
     CSV.new(reader.read).each do |raw_row|
       row = raw_row
       tags = (row[0] || '').gsub('／', '/').split('/')
-      qa = row.slice(1, 2)
+      qa = row.slice(1, 2).compact
+      if qa.blank?
+        qa = before_qa
+      end
+      before_qa = qa
       dbs = (row.slice(3, 100) || []).each_slice(2).to_a
       all_data[qa] ||= {}
       all_data[qa][:tags] ||= []
@@ -127,6 +132,19 @@ namespace :question_answer do
           puts qa.id
         end
       end
+    end
+  end
+
+  desc 'チャット内で使用されたQ&Aを集計する'
+  task total_messages: :environment do
+    begin
+      ActiveRecord::Base.transaction do
+        QuestionAnswer.all.each do |qa|
+          QuestionAnswer.reset_counters(qa.id, :messages_count)
+        end
+      end
+    rescue => e
+      p e.message
     end
   end
 end

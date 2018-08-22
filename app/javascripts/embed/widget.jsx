@@ -99,7 +99,7 @@ export default class Widget extends Component {
 
     if (isDeniedAccess) { return <span />; }
 
-    const chatURL = `${Origin}/embed/${token}/chats?noheader=true`;
+    const chatURL = `${Origin}/embed/${token}/chats?noheader=false`;
     const isShowIframe = isLoadingIframe || isLoadedIframe;
 
     return (

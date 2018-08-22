@@ -53,6 +53,9 @@ class QuestionAnswersDecorator < Draper::CollectionDecorator
       qa = object.detect{ |qa| qa.id == node[:id] }
       node_ids = ["Question-#{qa.id}"]
       acc << { text: qa.question, relatedNodeIds: node_ids }
+      acc += qa.sub_questions.map{ |sq|
+        { text: sq.question, relatedNodeIds: node_ids }
+      }
       if qa.answer.present?
         _node_ids = node_ids + ["Answer-#{qa.id}"]
         acc << { text: qa.answer, relatedNodeIds: _node_ids }

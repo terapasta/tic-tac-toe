@@ -1,7 +1,6 @@
 import re
 from app.core.preprocessor.base_preprocessor import BasePreprocessor
 from app.shared.datasource.datasource import Datasource
-from IPython import embed
 
 
 class SynonymExpansionPreprocessor(BasePreprocessor):

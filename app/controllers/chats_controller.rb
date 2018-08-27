@@ -47,6 +47,9 @@ class ChatsController < ApplicationController
       flash.now.alert = 'パスワードが正しくありません'
       render_password_view
     end
+  rescue ActionController::ParameterMissing => e
+    flash.now.alert = 'パスワードを入力してください'
+    render_password_view
   end
 
   private

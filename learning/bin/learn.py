@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)
 parser.add_argument('--env', type=str, default='development')
 parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
-parser.add_argument('--feedback_algorithm', type=str, default=Constants.FEEDBACK_ALGORITHM_NONE)
+parser.add_argument('--feedback_algorithm', type=str, default=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
 args = parser.parse_args()
 
 Config().init(args.env)

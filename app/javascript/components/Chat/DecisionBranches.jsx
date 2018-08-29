@@ -17,7 +17,8 @@ export default class ChatDecisionBranches extends Component {
   }
 
   itemClassName (body) {
-    const align = (body || '').length > LengthThreshold ? 'text-left' : ''
+    // see: https://www.pivotaltracker.com/n/projects/1879711/stories/159879196
+    const align = 'text-left'
     return `chat-decision-branches__item ${align}`
   }
 

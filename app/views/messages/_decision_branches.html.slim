@@ -3,5 +3,5 @@
     .chat-decision-branches__title= title
     .chat-decision-branches__items
       - items.each do |item|
-        span.chat-decision-branches__item class=(item.body.length > 20 ? 'text-left' : '')
+        span.chat-decision-branches__item.text-left
           span= item.body

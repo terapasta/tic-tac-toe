@@ -1,5 +1,6 @@
 from injector import inject
 
+from app.core.preprocessor.synonym_expansion_preprocessor import SynonymExpansionPreprocessor
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.reducer.pass_reducer import PassReducer
 from app.core.normalizer.pass_normalizer import PassNormalizer
@@ -15,6 +16,7 @@ class Word2vecWmdFactory(BaseFactory):
     @inject
     def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
+        self.preprocessor = SynonymExpansionPreprocessor.new(bot=bot, datasource=self.datasource)
         self.tokenizer = MecabTokenizer.new()
         self.vectorizer = PassVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
@@ -25,6 +27,9 @@ class Word2vecWmdFactory(BaseFactory):
             datasource=self.datasource,
         )
         self.__feedback = PassFeedback.new()
+
+    def get_preprocessor(self):
+        return self.preprocessor
 
     def get_tokenizer(self):
         return self.tokenizer

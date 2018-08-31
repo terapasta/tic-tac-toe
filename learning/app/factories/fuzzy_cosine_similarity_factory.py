@@ -1,5 +1,6 @@
 from injector import inject
 
+from app.core.preprocessor.synonym_expansion_preprocessor import SynonymExpansionPreprocessor
 from app.core.tokenizer.fuzzy_term_tokenizer import FuzzyTermTokenizer
 from app.core.vectorizer.fuzzy_term_vectorizer import FuzzyTermVectorizer
 from app.core.reducer.pass_reducer import PassReducer
@@ -14,6 +15,7 @@ class FuzzyCosineSimilarityFactory(BaseFactory):
     @inject
     def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
+        self.preprocessor = SynonymExpansionPreprocessor.new(bot=bot, datasource=self.datasource)
         self.tokenizer = FuzzyTermTokenizer.new()
         self.vectorizer = FuzzyTermVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
@@ -24,6 +26,9 @@ class FuzzyCosineSimilarityFactory(BaseFactory):
             datasource=self.datasource,
         )
         self.__feedback = feedback
+
+    def get_preprocessor(self):
+        return self.preprocessor
 
     def get_tokenizer(self):
         return self.tokenizer

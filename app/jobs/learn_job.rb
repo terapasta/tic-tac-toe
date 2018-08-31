@@ -9,15 +9,17 @@ class LearnJob < ApplicationJob
     summarizer = Learning::Summarizer.new(@bot)
     summarizer.summary
 
-    # Note: use_similarity_classificationがnilの場合もtrue扱いにする
-    if @bot.use_similarity_classification?
-      summarizer.unify_learning_training_message_words!
-    else
-      LearningTrainingMessage.amp!(@bot)
-      LearningTrainingMessage.amp_by_sentence_synonyms!(@bot)
-    end
+    # NOTE:
+    # 単語の normalize処理は python側にまとめる
+    # https://www.pivotaltracker.com/n/projects/1879711/stories/158060539
 
-    scores = Ml::Engine.new(@bot).learn
+    scores_and_metadata = Ml::Engine.new(@bot).learn
+    scores = scores_and_metadata.reject{|key| key == 'meta'}
+
+    # NOTE:
+    # メタデータも送られてくるけど、何も処理してないから、
+    # ログとかに出力しても良いかも
+
     unless @bot.use_similarity_classification?
       @bot.build_score if @bot.score.nil?
       @bot.score.update!(scores)

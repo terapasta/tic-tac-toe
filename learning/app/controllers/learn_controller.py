@@ -4,11 +4,13 @@ import pandas as pd
 from app.shared.logger import logger
 from app.shared.constants import Constants
 from app.shared.base_cls import BaseCls
+from app.core.pipe.learn_pipe import LearnPipe
 
 class LearnController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()
+        self.pipe = LearnPipe(self.factory)
 
     def perform(self):
         logger.info('start')
@@ -31,17 +33,8 @@ class LearnController(BaseCls):
         ratings = self.factory.get_datasource().ratings.all()
         all_questions = pd.concat([question_answers['question'], ratings['question']]).dropna()
 
-        logger.info('tokenize')
-        tokenized_sentences = self.factory.get_tokenizer().tokenize(all_questions)
-
-        logger.info('fit vectorizer')
-        vectorized_features = self.factory.get_vectorizer().fit_transform(tokenized_sentences)
-
-        logger.info('fit reducer')
-        reduced_features = self.factory.get_reducer().fit_transform(vectorized_features)
-
-        logger.info('fit normalizer')
-        self.factory.get_normalizer().fit(reduced_features)
+        # 学習用の Pipe で一括処理
+        self.pipe.perform(all_questions)
 
     def _learn_bot(self):
         logger.info('load question_answers and ratings')
@@ -65,12 +58,23 @@ class LearnController(BaseCls):
             )
 
     def _evaluate(self):
+        #
+        # IMPORTANT:
+        # protocol buffer を使用して gRPC でデータのやり取りをするので、
+        # app/learning/gateway.proto も更新する
+        #
+        # see: https://github.com/mofmof/donusagi-bot/wiki/Python側の開発に関わる情報
+        #
         return {
             'accuracy': 0,
             'precision': 0,
             'recall': 0,
             'f1': 0,
+            'meta': self._learning_meta_data(),
         }
+
+    def _learning_meta_data(self):
+        return self.bot.learning_meta_data()
 
     def _transform_to_vector(self, sentences):
         tokenized_sentences = self.factory.get_tokenizer().tokenize(sentences)

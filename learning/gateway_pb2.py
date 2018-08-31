@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='gateway.proto',
   package='gateway',
   syntax='proto3',
-  serialized_pb=_b('\n\rgateway.proto\x12\x07gateway\"B\n\x11LearningParameter\x12\x11\n\talgorithm\x18\x01 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x02 \x01(\x05\"K\n\x06Result\x12\x1a\n\x12question_answer_id\x18\x01 \x01(\x05\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\x12\x10\n\x08question\x18\x03 \x01(\t\"\x0e\n\x0cSetupRequest\"\x0f\n\rSetupResponse\"d\n\x0cReplyRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x62ody\x18\x02 \x01(\t\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"4\n\rReplyRequests\x12#\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x15.gateway.ReplyRequest\"\xa8\x01\n\rReplyResponse\x12\x1e\n\x16question_feature_count\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.gateway.Result\x12\x12\n\nnoun_count\x18\x03 \x01(\x05\x12\x12\n\nverb_count\x18\x04 \x01(\x05\x12\x11\n\talgorithm\x18\x05 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x06 \x01(\x05\"6\n\x0eReplyResponses\x12$\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x16.gateway.ReplyResponse\"V\n\x0cLearnRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"P\n\rLearnResponse\x12\x10\n\x08\x61\x63\x63uracy\x18\x02 \x01(\x02\x12\x11\n\tprecision\x18\x03 \x01(\x02\x12\x0e\n\x06recall\x18\x04 \x01(\x02\x12\n\n\x02\x66\x31\x18\x05 \x01(\x02\x32\xf1\x01\n\x03\x42ot\x12\x38\n\x05Setup\x12\x15.gateway.SetupRequest\x1a\x16.gateway.SetupResponse\"\x00\x12\x38\n\x05Reply\x12\x15.gateway.ReplyRequest\x1a\x16.gateway.ReplyResponse\"\x00\x12<\n\x07Replies\x12\x16.gateway.ReplyRequests\x1a\x17.gateway.ReplyResponses\"\x00\x12\x38\n\x05Learn\x12\x15.gateway.LearnRequest\x1a\x16.gateway.LearnResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\rgateway.proto\x12\x07gateway\"B\n\x11LearningParameter\x12\x11\n\talgorithm\x18\x01 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x02 \x01(\x05\"_\n\x06Result\x12\x1a\n\x12question_answer_id\x18\x01 \x01(\x05\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\x12\x10\n\x08question\x18\x03 \x01(\t\x12\x12\n\nprocessing\x18\x04 \x03(\t\"\x0e\n\x0cSetupRequest\"\x0f\n\rSetupResponse\"d\n\x0cReplyRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x62ody\x18\x02 \x01(\t\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"4\n\rReplyRequests\x12#\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x15.gateway.ReplyRequest\"\xf1\x01\n\rReplyResponse\x12\x1e\n\x16question_feature_count\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.gateway.Result\x12\x12\n\nnoun_count\x18\x03 \x01(\x05\x12\x12\n\nverb_count\x18\x04 \x01(\x05\x12\x11\n\talgorithm\x18\x05 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x06 \x01(\x05\x12\x1d\n\x05query\x18\x07 \x01(\x0b\x32\x0e.gateway.Query\x12(\n\x04meta\x18\x08 \x01(\x0b\x32\x1a.gateway.LearnMetaResponse\"6\n\x0eReplyResponses\x12$\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x16.gateway.ReplyResponse\"*\n\x05Query\x12\r\n\x05query\x18\x01 \x01(\t\x12\x12\n\nprocessing\x18\x02 \x03(\t\"V\n\x0cLearnRequest\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\x05\x12\x36\n\x12learning_parameter\x18\x03 \x01(\x0b\x32\x1a.gateway.LearningParameter\"z\n\rLearnResponse\x12\x10\n\x08\x61\x63\x63uracy\x18\x02 \x01(\x02\x12\x11\n\tprecision\x18\x03 \x01(\x02\x12\x0e\n\x06recall\x18\x04 \x01(\x02\x12\n\n\x02\x66\x31\x18\x05 \x01(\x02\x12(\n\x04meta\x18\x06 \x01(\x0b\x32\x1a.gateway.LearnMetaResponse\"\x8d\x01\n\x11LearnMetaResponse\x12\x0b\n\x03\x65nv\x18\x01 \x01(\t\x12\x0e\n\x06\x62ot_id\x18\x02 \x01(\x05\x12\x11\n\talgorithm\x18\x03 \x01(\x05\x12\x1a\n\x12\x66\x65\x65\x64\x62\x61\x63k_algorithm\x18\x04 \x01(\x05\x12,\n\x06\x63onfig\x18\x05 \x01(\x0b\x32\x1c.gateway.LearnConfigResponse\"}\n\x13LearnConfigResponse\x12 \n\x18word2vec_model_is_binary\x18\x01 \x01(\x08\x12\x0e\n\x06\x64icdir\x18\x02 \x01(\t\x12\x17\n\x0f\x64\x61tasource_type\x18\x03 \x01(\t\x12\x1b\n\x13word2vec_model_name\x18\x04 \x01(\t2\xf1\x01\n\x03\x42ot\x12\x38\n\x05Setup\x12\x15.gateway.SetupRequest\x1a\x16.gateway.SetupResponse\"\x00\x12\x38\n\x05Reply\x12\x15.gateway.ReplyRequest\x1a\x16.gateway.ReplyResponse\"\x00\x12<\n\x07Replies\x12\x16.gateway.ReplyRequests\x1a\x17.gateway.ReplyResponses\"\x00\x12\x38\n\x05Learn\x12\x15.gateway.LearnRequest\x1a\x16.gateway.LearnResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -91,6 +91,13 @@ _RESULT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='processing', full_name='gateway.Result.processing', index=3,
+      number=4, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -104,7 +111,7 @@ _RESULT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=94,
-  serialized_end=169,
+  serialized_end=189,
 )
 
 
@@ -127,8 +134,8 @@ _SETUPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=171,
-  serialized_end=185,
+  serialized_start=191,
+  serialized_end=205,
 )
 
 
@@ -151,8 +158,8 @@ _SETUPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=187,
-  serialized_end=202,
+  serialized_start=207,
+  serialized_end=222,
 )
 
 
@@ -196,8 +203,8 @@ _REPLYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=204,
-  serialized_end=304,
+  serialized_start=224,
+  serialized_end=324,
 )
 
 
@@ -227,8 +234,8 @@ _REPLYREQUESTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=306,
-  serialized_end=358,
+  serialized_start=326,
+  serialized_end=378,
 )
 
 
@@ -281,6 +288,20 @@ _REPLYRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='query', full_name='gateway.ReplyResponse.query', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='gateway.ReplyResponse.meta', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -293,8 +314,8 @@ _REPLYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=361,
-  serialized_end=529,
+  serialized_start=381,
+  serialized_end=622,
 )
 
 
@@ -324,8 +345,46 @@ _REPLYRESPONSES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=531,
-  serialized_end=585,
+  serialized_start=624,
+  serialized_end=678,
+)
+
+
+_QUERY = _descriptor.Descriptor(
+  name='Query',
+  full_name='gateway.Query',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='query', full_name='gateway.Query.query', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='processing', full_name='gateway.Query.processing', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=680,
+  serialized_end=722,
 )
 
 
@@ -362,8 +421,8 @@ _LEARNREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=587,
-  serialized_end=673,
+  serialized_start=724,
+  serialized_end=810,
 )
 
 
@@ -402,6 +461,13 @@ _LEARNRESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='gateway.LearnResponse.meta', index=4,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -414,15 +480,130 @@ _LEARNRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=675,
-  serialized_end=755,
+  serialized_start=812,
+  serialized_end=934,
+)
+
+
+_LEARNMETARESPONSE = _descriptor.Descriptor(
+  name='LearnMetaResponse',
+  full_name='gateway.LearnMetaResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='env', full_name='gateway.LearnMetaResponse.env', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='bot_id', full_name='gateway.LearnMetaResponse.bot_id', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='algorithm', full_name='gateway.LearnMetaResponse.algorithm', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='feedback_algorithm', full_name='gateway.LearnMetaResponse.feedback_algorithm', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='config', full_name='gateway.LearnMetaResponse.config', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=937,
+  serialized_end=1078,
+)
+
+
+_LEARNCONFIGRESPONSE = _descriptor.Descriptor(
+  name='LearnConfigResponse',
+  full_name='gateway.LearnConfigResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='word2vec_model_is_binary', full_name='gateway.LearnConfigResponse.word2vec_model_is_binary', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='dicdir', full_name='gateway.LearnConfigResponse.dicdir', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='datasource_type', full_name='gateway.LearnConfigResponse.datasource_type', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='word2vec_model_name', full_name='gateway.LearnConfigResponse.word2vec_model_name', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1080,
+  serialized_end=1205,
 )
 
 _REPLYREQUEST.fields_by_name['learning_parameter'].message_type = _LEARNINGPARAMETER
 _REPLYREQUESTS.fields_by_name['data'].message_type = _REPLYREQUEST
 _REPLYRESPONSE.fields_by_name['results'].message_type = _RESULT
+_REPLYRESPONSE.fields_by_name['query'].message_type = _QUERY
+_REPLYRESPONSE.fields_by_name['meta'].message_type = _LEARNMETARESPONSE
 _REPLYRESPONSES.fields_by_name['data'].message_type = _REPLYRESPONSE
 _LEARNREQUEST.fields_by_name['learning_parameter'].message_type = _LEARNINGPARAMETER
+_LEARNRESPONSE.fields_by_name['meta'].message_type = _LEARNMETARESPONSE
+_LEARNMETARESPONSE.fields_by_name['config'].message_type = _LEARNCONFIGRESPONSE
 DESCRIPTOR.message_types_by_name['LearningParameter'] = _LEARNINGPARAMETER
 DESCRIPTOR.message_types_by_name['Result'] = _RESULT
 DESCRIPTOR.message_types_by_name['SetupRequest'] = _SETUPREQUEST
@@ -431,8 +612,11 @@ DESCRIPTOR.message_types_by_name['ReplyRequest'] = _REPLYREQUEST
 DESCRIPTOR.message_types_by_name['ReplyRequests'] = _REPLYREQUESTS
 DESCRIPTOR.message_types_by_name['ReplyResponse'] = _REPLYRESPONSE
 DESCRIPTOR.message_types_by_name['ReplyResponses'] = _REPLYRESPONSES
+DESCRIPTOR.message_types_by_name['Query'] = _QUERY
 DESCRIPTOR.message_types_by_name['LearnRequest'] = _LEARNREQUEST
 DESCRIPTOR.message_types_by_name['LearnResponse'] = _LEARNRESPONSE
+DESCRIPTOR.message_types_by_name['LearnMetaResponse'] = _LEARNMETARESPONSE
+DESCRIPTOR.message_types_by_name['LearnConfigResponse'] = _LEARNCONFIGRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 LearningParameter = _reflection.GeneratedProtocolMessageType('LearningParameter', (_message.Message,), dict(
@@ -491,6 +675,13 @@ ReplyResponses = _reflection.GeneratedProtocolMessageType('ReplyResponses', (_me
   ))
 _sym_db.RegisterMessage(ReplyResponses)
 
+Query = _reflection.GeneratedProtocolMessageType('Query', (_message.Message,), dict(
+  DESCRIPTOR = _QUERY,
+  __module__ = 'gateway_pb2'
+  # @@protoc_insertion_point(class_scope:gateway.Query)
+  ))
+_sym_db.RegisterMessage(Query)
+
 LearnRequest = _reflection.GeneratedProtocolMessageType('LearnRequest', (_message.Message,), dict(
   DESCRIPTOR = _LEARNREQUEST,
   __module__ = 'gateway_pb2'
@@ -505,6 +696,20 @@ LearnResponse = _reflection.GeneratedProtocolMessageType('LearnResponse', (_mess
   ))
 _sym_db.RegisterMessage(LearnResponse)
 
+LearnMetaResponse = _reflection.GeneratedProtocolMessageType('LearnMetaResponse', (_message.Message,), dict(
+  DESCRIPTOR = _LEARNMETARESPONSE,
+  __module__ = 'gateway_pb2'
+  # @@protoc_insertion_point(class_scope:gateway.LearnMetaResponse)
+  ))
+_sym_db.RegisterMessage(LearnMetaResponse)
+
+LearnConfigResponse = _reflection.GeneratedProtocolMessageType('LearnConfigResponse', (_message.Message,), dict(
+  DESCRIPTOR = _LEARNCONFIGRESPONSE,
+  __module__ = 'gateway_pb2'
+  # @@protoc_insertion_point(class_scope:gateway.LearnConfigResponse)
+  ))
+_sym_db.RegisterMessage(LearnConfigResponse)
+
 
 
 _BOT = _descriptor.ServiceDescriptor(
@@ -513,8 +718,8 @@ _BOT = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=758,
-  serialized_end=999,
+  serialized_start=1208,
+  serialized_end=1449,
   methods=[
   _descriptor.MethodDescriptor(
     name='Setup',

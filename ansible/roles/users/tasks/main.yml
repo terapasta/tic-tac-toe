@@ -15,6 +15,7 @@
     - public_keys/y.matsuzawa
     - public_keys/k.sakamoto
     - public_keys/c.hasegawa
+    - public_keys/k.iwai
 
 - user:
     name: a.harada
@@ -107,6 +108,19 @@
   with_file:
     - public_keys/c.hasegawa
 
+- user:
+    name: k.iwai
+    comment: "Kazuki Iwai"
+    password: '{{ passwords.iwai | password_hash("sha512") }}'
+    group: wheel
+- name: Set up authorized_keys for k.iwai user
+  authorized_key:
+    user: k.iwai
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/k.iwai
+
 - name: permit sudo for users
   blockinfile:
     dest: /etc/sudoers
@@ -119,4 +133,5 @@
       s.tachibana     ALL=(ALL)       ALL
       y.matsuzawa     ALL=(ALL)       ALL
       c.hasegawa      ALL=(ALL)       ALL
+      k.iwai          ALL=(ALL)       ALL
       deploy  ALL=(ALL)       NOPASSWD: /usr/local/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp,/usr/local/pyenv/shims/pip,/usr/local/bin/install-neologd.sh,/usr/bin/git

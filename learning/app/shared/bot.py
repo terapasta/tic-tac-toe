@@ -23,3 +23,20 @@ class Bot(BaseCls):
     @property
     def feedback_algorithm(self):
         return self._learning_parameter.feedback_algorithm
+
+    def learning_meta_data(self):
+        config = self.config.data[self.config.env]
+        return {
+            'env': self.config.env,
+            'bot_id': self.id,
+            'algorithm': self.algorithm,
+            'feedback_algorithm': self.feedback_algorithm,
+            'config': {
+                # FIXME:
+                # binary の綴りが間違っているけど、影響範囲が読めてないので後で直したい
+                'word2vec_model_is_binary': config['word2vec_model_is_binaly'],
+                'dicdir': config['dicdir'],
+                'datasource_type': config['datasource_type'],
+                'word2vec_model_name': config['word2vec_model_name'],
+            },
+        }

@@ -1,7 +1,10 @@
+import logging
 from sklearn.metrics.pairwise import cosine_similarity
 
 from app.shared.logger import logger
 from app.shared.base_cls import BaseCls
+from app.core.pipe.learn_pipe import LearnPipe
+from app.core.pipe.reply_pipe import ReplyPipe
 
 
 class ReplyController(BaseCls):
@@ -9,6 +12,7 @@ class ReplyController(BaseCls):
         self.factory = context.get_factory()
         self.bot = context.current_bot
         self.pass_feedback = context.pass_feedback
+        self.pipe = ReplyPipe(self.factory)
 
     def perform(self, text):
         logger.info('start')
@@ -17,18 +21,10 @@ class ReplyController(BaseCls):
         logger.info('before action')
         texts = self.factory.core.before_reply([text])
 
-        logger.info('tokenize question')
-        tokenized_sentences = self.factory.get_tokenizer().tokenize(texts)
-        logger.debug(tokenized_sentences)
-
-        logger.info('vectorize question')
-        vectorized_features = self.factory.get_vectorizer().transform(tokenized_sentences)
-
-        logger.info('reduce question')
-        reduced_features = self.factory.get_reducer().transform(vectorized_features)
-
-        logger.info('normalize question')
-        normalized_features = self.factory.get_normalizer().transform(reduced_features)
+        # 応答用の Pipe で一括処理
+        tokenized_sentences = self.pipe.before_vectorize(texts)
+        vectors = self.pipe.vectorize(tokenized_sentences)
+        normalized_features = self.pipe.after_vectorize(vectors)
 
         if not self.pass_feedback:
             normalized_features = self._transform_query_vector(normalized_features)
@@ -47,16 +43,44 @@ class ReplyController(BaseCls):
         results = [{col: getattr(row, col) for col in results} for row in results.itertuples()]
         results = results[:10]
 
+        # NOTE:
+        # 応答結果に対して再度前処理を行い、中間結果をフロント側で確認できるようにする
+        #
+        # 学習時に処理した値を DB に保持して置いてもよいが、
+        # 学習時の DB への負荷と返却時に高々 10件程度の前処理を行うのでは、
+        # 後者の方が低コストな気がする（要検証）
+        logger.setLevel(logging.WARNING)
+        learn_pipe = LearnPipe(self.factory)
+        for i in range(len(results)):
+            results[i]['processing'] = learn_pipe.before_vectorize([results[i]['question']])
+        logger.setLevel(logging.INFO)
+
         for row in results:
             logger.debug(row)
 
         logger.info('end')
+
+        #
+        # IMPORTANT:
+        # protocol buffer を使用して gRPC でデータのやり取りをするので、
+        # app/learning/gateway.proto も更新する
+        #
+        # see: https://github.com/mofmof/donusagi-bot/wiki/Python側の開発に関わる情報
+        #
+
+        # Railsサーバーに返す、処理途中のデータ
+        query = {
+            'query': text,
+            'processing': tokenized_sentences,
+        }
 
         return {
             'question_feature_count': self.factory.get_vectorizer().extract_feature_count(tokenized_sentences),
             'results': results,
             'noun_count': self.factory.get_tokenizer().extract_noun_count(text),
             'verb_count': self.factory.get_tokenizer().extract_verb_count(text),
+            'query': query,
+            'meta': self._replying_meta_data(),
         }
 
     def _transform_query_vector(self, query_vector):
@@ -103,6 +127,9 @@ class ReplyController(BaseCls):
         similarities = similarities.flatten()
         data_frame['similarity'] = similarities
         return data_frame
+
+    def _replying_meta_data(self):
+        return self.bot.learning_meta_data()
 
     def _transform_texts_to_vector(self, texts):
         tokenized_sentences = self.factory.get_tokenizer().tokenize(texts)

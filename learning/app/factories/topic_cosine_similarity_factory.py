@@ -1,5 +1,6 @@
 from injector import inject
 
+from app.core.preprocessor.synonym_expansion_preprocessor import SynonymExpansionPreprocessor
 from app.core.tokenizer.topic_tokenizer import TopicTokenizer
 from app.core.vectorizer.topic_vectorizer import TopicVectorizer
 from app.core.reducer.pass_reducer import PassReducer
@@ -14,6 +15,7 @@ class TopicCosineSimilarityFactory(BaseFactory):
     @inject
     def __init__(self, bot, datasource: Datasource, feedback):
         self.datasource = datasource
+        self.preprocessor = SynonymExpansionPreprocessor.new(bot=bot, datasource=self.datasource)
         self.tokenizer = TopicTokenizer.new()
         self.vectorizer = TopicVectorizer.new(datasource=self.datasource)
         self.reducer = PassReducer.new(datasource=self.datasource)
@@ -24,6 +26,9 @@ class TopicCosineSimilarityFactory(BaseFactory):
             datasource=self.datasource,
         )
         self.__feedback = feedback
+
+    def get_preprocessor(self):
+        return self.preprocessor
 
     def get_tokenizer(self):
         return self.tokenizer

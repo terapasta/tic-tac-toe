@@ -2,6 +2,9 @@ from app.shared.base_cls import BaseCls
 
 
 class BaseFactory(BaseCls):
+    def get_preprocessor(self):
+        raise NotImplementedError()
+
     def get_tokenizer(self):
         raise NotImplementedError()
 

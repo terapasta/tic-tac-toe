@@ -98,15 +98,15 @@ class Context(BaseCls):
     def get_feedback(self):
         feedback_cls = PassFeedback
         algorithm = self.current_bot.feedback_algorithm
-        if algorithm == Constants.FEEDBACK_ALGORITHM_ROCCHIO:
-            logger.info('feedback algorithm: Rocchio')
-            feedback_cls = RocchioFeedback
+        if algorithm == Constants.FEEDBACK_ALGORITHM_NONE:
+            logger.info('feedback algorithm: None')
+            self._pass_feedback = True
         elif algorithm == Constants.FEEDBACK_ALGORITHM_NEAREST_CENTROID:
             logger.info('feedback algorithm: Rocchio (use NearestCentroid)')
             feedback_cls = NearestCentroidFeedback
         else:
-            logger.info('feedback algorithm: None')
-            self._pass_feedback = True
+            logger.info('feedback algorithm: Rocchio')
+            feedback_cls = RocchioFeedback
 
         return feedback_cls.new(
             bot=self.current_bot,

@@ -9,7 +9,8 @@ const {
   AttachmentLayout,
   HeroCard,
   CardImage,
-  CardAction
+  CardAction,
+  MemoryBotStorage
 } = require('botbuilder')
 
 const {
@@ -38,11 +39,12 @@ const resolveUid = ({ source, id, uid }) => {
 class Bot {
   constructor(connector) {
     this.connector = connector
+    const inMemoryStorage = new MemoryBotStorage()
     this.bot = new UniversalBot(this.connector, {
       localizerSettings: {
         defaultLocale: 'ja'
       }
-    })
+    }).set('storage', inMemoryStorage)
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }

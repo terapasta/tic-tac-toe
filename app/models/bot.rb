@@ -28,6 +28,7 @@ class Bot < ApplicationRecord
   has_one :line_credential
   has_one :chatwork_credential
   has_one :microsoft_credential
+  has_one :slack_credential
   has_many :initial_selections, -> { order(position: :asc) }, dependent: :destroy
   has_many :initial_questions, through: :initial_selections, class_name: 'QuestionAnswer', foreign_key: :question_answer_id, source: :question_answer
   has_many :answer_inline_images, dependent: :destroy

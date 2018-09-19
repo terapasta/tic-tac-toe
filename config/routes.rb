@@ -173,6 +173,7 @@ Rails.application.routes.draw do
       resource :line_credential, module: :bots, only: [:show]
       resource :chatwork_credential, module: :bots, only: [:show]
       resource :microsoft_credential, module: :bots, only: [:show]
+      resource :slack_credential, module: :bots, only: [:show]
       resources :decision_branches, module: :bots do
         resource :answer_link, only: [:create, :destroy], module: :decision_branches
       end

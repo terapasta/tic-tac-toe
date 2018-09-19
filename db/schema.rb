@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180824070251) do
+ActiveRecord::Schema.define(version: 20180911173428) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -94,6 +94,15 @@ ActiveRecord::Schema.define(version: 20180824070251) do
     t.string "app_id", null: false
     t.string "app_password", null: false
     t.integer "bot_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bot_slack_credentials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "team_id"
+    t.integer "bot_id", null: false
+    t.string "microsoft_app_id", null: false
+    t.string "microsoft_app_password", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

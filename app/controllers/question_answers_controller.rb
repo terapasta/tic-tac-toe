@@ -119,6 +119,9 @@ class QuestionAnswersController < ApplicationController
       begin
         format.html do
           n = @question_answers.count
+          if n == 0
+            return redirect_to bot_question_answers_path(@bot), alert: "削除する Q/A を選択してください。"
+          end
           @question_answers.destroy_all
           @bot.learn_later
           redirect_to bot_question_answers_path(@bot), notice: "#{n}件の Q/A を削除しました。"
@@ -147,6 +150,8 @@ class QuestionAnswersController < ApplicationController
       delete_params = params.require(:question_answer).permit(should_delete: {})
       delete_ids = delete_params.to_hash['should_delete'].keys
       @question_answers = QuestionAnswer.where(id: delete_ids)
+    rescue ActionController::ParameterMissing
+      @question_answers = QuestionAnswer.none
     end
 
     def question_answer_params

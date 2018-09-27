@@ -34,7 +34,12 @@
         option value=sorting_url('updated_at asc') selected=(sort == "updated_at asc")
           |更新日時の古い順
 
-  - @question_answers.each do |question_answer|
-    = render 'summary_card', question_answer: question_answer, bot: @bot
+  = form_tag bulk_delete_bot_question_answers_url, method: :delete, class: 'form', data: { event_name: 'Bulk delete question answers', bot_id: @bot.id, bot_name: @bot.name } do
+    - @question_answers.each do |question_answer|
+      = render 'summary_card', question_answer: question_answer, bot: @bot
+
+    = button_tag class: 'btn btn-danger float-right', type: 'submit', data: {confirm: '本当に削除してよろしいですか？'}
+      = material_icon 'delete', class: 'mi-sm mi-label-rotate'
+      span 一括削除
 
   = pagination

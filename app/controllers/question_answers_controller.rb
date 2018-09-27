@@ -5,6 +5,7 @@ class QuestionAnswersController < ApplicationController
   before_action :set_bot
   before_action :set_question_answer, only: [:show, :edit, :update, :destroy]
   before_action :set_topic_tags, only: [:index]
+  before_action :set_bulk_delete_question_answers, only: [:bulk_delete]
 
   def index
     authorize QuestionAnswer
@@ -113,6 +114,21 @@ class QuestionAnswersController < ApplicationController
     end
   end
 
+  def bulk_delete
+    n = @question_answers.count
+    if n == 0
+      return redirect_to bot_question_answers_path(@bot), alert: "削除する Q/A を選択してください。"
+    end
+
+    deleted = @question_answers.destroy_all
+    if n != deleted.count
+      return redirect_to bot_question_answers_path(@bot), alert: "#{n - deleted.count}件の削除に失敗しました。しばらく時間を置いてから再度お試しください。"
+    end
+
+    @bot.learn_later
+    redirect_to bot_question_answers_path(@bot), notice: "#{n}件の Q/A を削除しました。"
+  end
+
   private
     def set_bot
       @bot = bots.find params[:bot_id]
@@ -125,6 +141,12 @@ class QuestionAnswersController < ApplicationController
 
     def set_topic_tags
       @topic_tags = @bot.topic_tags
+    end
+
+    def set_bulk_delete_question_answers
+      delete_params = params.fetch(:question_answer, {should_delete: {}}).permit(should_delete: {})
+      delete_ids = delete_params.to_hash['should_delete'].keys
+      @question_answers = QuestionAnswer.where(id: delete_ids)
     end
 
     def question_answer_params

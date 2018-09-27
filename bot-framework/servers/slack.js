@@ -2,7 +2,7 @@ const {
   ChatConnector,
 } = require('botbuilder')
 
-const SlackBot = require('../bots/slack')
+const SlackBot = require('../bots/microsoft')
 const Base = require('./base')
 const api = require('../api')
 

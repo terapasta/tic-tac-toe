@@ -9,5 +9,6 @@ const env = fs.readFileSync(envFile, { encoding: 'UTF-8' })
   .reduce((acc, it) => { acc[it[0]] = it[1]; return acc }, {})
 
 module.exports = Object.assign(env, {
-  NODE_ENV: process.env.NODE_ENV || 'development'
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  MYOPE_API_URL: process.env.MYOPE_API_URL || 'http://localhost:3000',
 })

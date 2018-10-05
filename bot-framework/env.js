@@ -11,4 +11,6 @@ const env = fs.readFileSync(envFile, { encoding: 'UTF-8' })
 module.exports = Object.assign(env, {
   NODE_ENV: process.env.NODE_ENV || 'development',
   MYOPE_API_URL: process.env.MYOPE_API_URL || 'http://localhost:3000',
+  AZURE_PROJECT_NAME: process.env.AZURE_PROJECT_NAME,
+  AZURE_PASSWORD: process.env.AZURE_PASSWORD,
 })

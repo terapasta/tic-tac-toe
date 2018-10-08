@@ -14,6 +14,14 @@ class Base {
   mapRoute (app) {
     app.get(`/${this.name}/healthcheck`, (req, res) => res.send('OK'))
 
+    if (this.name === 'slack') {
+      app.post('/', this.reqBodyMiddleware.bind(this), ...this.chatListeners);
+      app.post('/api/messages',
+        this.reqBodyMiddleware.bind(this),
+        ...this.chatListeners
+      );
+    }
+
     app.post(`/${this.name}/:botToken`,
       this.reqBodyMiddleware.bind(this),
       ...this.chatListeners

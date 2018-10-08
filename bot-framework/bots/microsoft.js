@@ -9,11 +9,13 @@ const {
   AttachmentLayout,
   HeroCard,
   CardImage,
-  CardAction
+  CardAction,
+  MemoryBotStorage,
 } = require('botbuilder')
 
 const {
-  NODE_ENV
+  NODE_ENV,
+  BOT_TOKEN,
 } = require('../env')
 
 const {
@@ -29,6 +31,7 @@ const resolveUid = ({ source, id, uid }) => {
     case 'slack':
     case 'webchat':
     case 'msteams':
+    case 'emulator': // Microsfot製 botframework-emulator（開発用）
       return id
     default:
       return uid
@@ -38,11 +41,12 @@ const resolveUid = ({ source, id, uid }) => {
 class Bot {
   constructor(connector) {
     this.connector = connector
+    let inMemoryStorage = new MemoryBotStorage();
     this.bot = new UniversalBot(this.connector, {
       localizerSettings: {
         defaultLocale: 'ja'
       }
-    })
+    }).set('storage', inMemoryStorage)
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }
@@ -75,11 +79,17 @@ class Bot {
   }
 
   handleDefaultDialog(session) {
-    const { botToken, source } = session.message
+    let { botToken } = session.message
+    const { source } = session.message
     const { id, uid, name } = session.message.user
     const _uid = resolveUid({ source, id, uid })
     const service_type = source === 'webchat' ? 'msteams' : source
     const message = session.message.text.replace(/<at>.+<\/at>/g, '')
+
+    // Azure上の bot service を使ってデプロイした場合は、環境変数で指定する
+    if (botToken === undefined && BOT_TOKEN) {
+      botToken = BOT_TOKEN
+    }
 
     session.sendTyping()
 

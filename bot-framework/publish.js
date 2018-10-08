@@ -3,8 +3,8 @@ var path = require('path');
 var fs = require('fs');
 var request = require('request');
 
-const { AZURE_PROJECT_NAME, AZURE_PASSWORD } = require('./env');
-if (!(AZURE_PROJECT_NAME && AZURE_PASSWORD)) {
+const { AZURE_PROJECT_NAME, AZURE_PROJECT_PASSWORD } = require('./env');
+if (!(AZURE_PROJECT_NAME && AZURE_PROJECT_PASSWORD)) {
   console.error("[Error] environment variables 'AZURE_PROJECT_NAME' and 'AZURE_PROJECT_PASSWORD' are required.");
   return;
 }
@@ -12,8 +12,8 @@ if (!(AZURE_PROJECT_NAME && AZURE_PASSWORD)) {
 var rootFolder = path.resolve('.');
 var zipPath = path.resolve(rootFolder, `../${AZURE_PROJECT_NAME}.zip`);
 var kuduApi = `https://${AZURE_PROJECT_NAME}.scm.azurewebsites.net/api/zip/site/wwwroot`;
-var userName = `$${AZURE_PROJECT_NAME}`;
-var password = AZURE_PASSWORD;
+var userName = `${AZURE_PROJECT_NAME}`;
+var password = AZURE_PROJECT_PASSWORD;
 
 
 function uploadZip(callback) {

@@ -19,10 +19,6 @@ module.exports.fetchMicrosoftCredential = ({ botToken }) => (
   axios.get(`/api/bots/${botToken}/microsoft_credential.json`)
 )
 
-module.exports.fetchSlackCredential = ({ botToken }) => (
-  axios.get(`/api/bots/${botToken}/slack_credential.json`)
-)
-
 module.exports.fetchChat = ({
   botToken,
   chatId

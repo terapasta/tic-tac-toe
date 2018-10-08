@@ -14,6 +14,10 @@ class Base {
   mapRoute (app) {
     app.get(`/${this.name}/healthcheck`, (req, res) => res.send('OK'))
 
+    // NOTE:
+    // Azure の Bot Service を使う場合、/api/messages をエントリポイントとして指定する必要がある
+    // slack に限らず、他のサービスも Azure を介して連携する場合には必要なはずだが、
+    // ひとまず slack だけ追加しておく
     if (this.name === 'slack') {
       app.post('/', this.reqBodyMiddleware.bind(this), ...this.chatListeners);
       app.post('/api/messages',

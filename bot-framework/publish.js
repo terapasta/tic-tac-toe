@@ -1,3 +1,7 @@
+//
+// Bot Service で自動生成されたデプロイスクリプト（少し改変済み）
+//
+
 var zipFolder = require('zip-folder');
 var path = require('path');
 var fs = require('fs');

@@ -41,12 +41,23 @@ const resolveUid = ({ source, id, uid }) => {
 class Bot {
   constructor(connector) {
     this.connector = connector
+
+    // NOTE:
+    // in memory storage を使わないと動かなくなった
+    //
+    // stackoverflow
+    // https://stackoverflow.com/questions/51823661/bot-framework-webchat-failure-405-method-not-allowed
+    //
+    // MS docs
+    // https://docs.microsoft.com/en-us/azure/bot-service/nodejs/bot-builder-nodejs-state?view=azure-bot-service-3.0
+    //
     let inMemoryStorage = new MemoryBotStorage();
     this.bot = new UniversalBot(this.connector, {
       localizerSettings: {
         defaultLocale: 'ja'
       }
     }).set('storage', inMemoryStorage)
+
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }

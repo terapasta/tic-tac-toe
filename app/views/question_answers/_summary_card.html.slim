@@ -12,7 +12,11 @@
     .row
       .col-sm-6
         dl
-          dt: small 質問
+          dt
+            span.checkbox.p-1
+              = check_box 'question_answer[should_delete]', question_answer.id, {}, true, false
+              = label 'question_answer[should_delete]', question_answer.id, class: 'px-2'
+                small = '質問'
           dd= highlight(nl2br(question_answer.question), params[:keyword])
         - if question_answer.sub_questions.any?
           .card: .card-body.p-2: dl.mb-0

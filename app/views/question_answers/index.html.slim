@@ -35,11 +35,19 @@
           |更新日時の古い順
 
   = form_tag bulk_delete_bot_question_answers_url, method: :delete, class: 'form', data: { event_name: 'Bulk delete question answers', bot_id: @bot.id, bot_name: @bot.name } do
+
+    .card.mb-3: .card-body.d-flex.justify-content-between.align-items-center
+      label.mb-0
+        input type="checkbox" data-role="all-deleteable-items"
+        = space
+        span 全部をチェックする/はずす
+      = button_tag class:'btn btn-danger', type: 'submit', data: {confirm: '本当に削除してよろしいですか？', role: 'bulk-delete-button'}
+        = material_icon 'delete', class: 'mi-xs'
+        span まとめて削除する
+
     - @question_answers.each do |question_answer|
       = render 'summary_card', question_answer: question_answer, bot: @bot
 
-    = button_tag class: 'btn btn-danger float-right', type: 'submit', data: {confirm: '本当に削除してよろしいですか？'}
-      = material_icon 'delete', class: 'mi-sm mi-label-rotate'
-      span 一括削除
-
   = pagination
+
+= javascript_pack_tag 'bulk-delete'

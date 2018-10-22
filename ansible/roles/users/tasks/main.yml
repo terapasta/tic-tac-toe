@@ -12,10 +12,9 @@
     - public_keys/s.tachibana
     - public_keys/k.yamagata
     - public_keys/y.miyata
-    - public_keys/y.matsuzawa
-    - public_keys/k.sakamoto
     - public_keys/c.hasegawa
     - public_keys/k.iwai
+    - public_keys/y.ito
 
 - user:
     name: a.harada
@@ -70,32 +69,6 @@
     - public_keys/y.miyata
 
 - user:
-    name: y.matsuzawa
-    comment: "Yuya Matsuzawa"
-    password: '{{ passwords.matsuzawa | password_hash("sha512") }}'
-    group: wheel
-- name: Set up authorized_keys for y.matsuzawa user
-  authorized_key:
-    user: y.matsuzawa
-    state: present
-    key: '{{ item }}'
-  with_file:
-    - public_keys/y.matsuzawa
-
-- user:
-    name: k.sakamoto
-    comment: "Kyotaro Sakamoto"
-    password: '{{ passwords.sakamoto | password_hash("sha512") }}'
-    group: wheel
-- name: Set up authorized_keys for k.sakamoto user
-  authorized_key:
-    user: k.sakamoto
-    state: present
-    key: '{{ item }}'
-  with_file:
-    - public_keys/k.sakamoto
-
-- user:
     name: c.hasegawa
     comment: "Chisato Hasegawa"
     password: '{{ passwords.hasegawa | password_hash("sha512") }}'
@@ -121,6 +94,19 @@
   with_file:
     - public_keys/k.iwai
 
+- user:
+    name: y.ito
+    comment: "Yuki Ito"
+    password: '{{ passwords.ito | password_hash("sha512") }}'
+    group: wheel
+- name: Set up authorized_keys for k.iwai user
+  authorized_key:
+    user: y.ito
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/y.ito
+
 - name: permit sudo for users
   blockinfile:
     dest: /etc/sudoers
@@ -131,7 +117,7 @@
       k.yamagata      ALL=(ALL)       ALL
       k.yamagata      ALL=(ALL)       NOPASSWD: /usr/bin/vim
       s.tachibana     ALL=(ALL)       ALL
-      y.matsuzawa     ALL=(ALL)       ALL
       c.hasegawa      ALL=(ALL)       ALL
       k.iwai          ALL=(ALL)       ALL
+      y.ito           ALL=(ALL)       ALL
       deploy  ALL=(ALL)       NOPASSWD: /usr/local/bin/supervisorctl,/usr/local/rbenv/shims/bundle,/sbin/start,/sbin/stop,/sbin/restart,/bin/chown,/bin/chgrp,/usr/local/pyenv/shims/pip,/usr/local/bin/install-neologd.sh,/usr/bin/git

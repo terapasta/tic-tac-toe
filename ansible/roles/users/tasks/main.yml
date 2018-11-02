@@ -82,6 +82,20 @@
     - public_keys/c.hasegawa
 
 - user:
+    name: y.matsuzawa
+    comment: "Yuya Matsuzawa"
+    password: '{{ passwords.matsuzawa | password_hash("sha512") }}'
+    group: wheel
+    state: absent
+
+- user:
+    name: k.sakamoto
+    comment: "Kyotaro Sakamoto"
+    password: '{{ passwords.sakamoto | password_hash("sha512") }}'
+    group: wheel
+    state: absent
+
+- user:
     name: k.iwai
     comment: "Kazuki Iwai"
     password: '{{ passwords.iwai | password_hash("sha512") }}'

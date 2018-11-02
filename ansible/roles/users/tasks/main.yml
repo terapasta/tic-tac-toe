@@ -99,7 +99,7 @@
     comment: "Yuki Ito"
     password: '{{ passwords.ito | password_hash("sha512") }}'
     group: wheel
-- name: Set up authorized_keys for k.iwai user
+- name: Set up authorized_keys for y.ito user
   authorized_key:
     user: y.ito
     state: present

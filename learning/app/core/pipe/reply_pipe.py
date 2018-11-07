@@ -19,8 +19,7 @@ class ReplyPipe(BaseCls):
         return results
 
     def before_vectorize(self, texts):
-        # 応答時にはシノニム展開処理をしない
-        pipes = [self._tokenize]
+        pipes = [self._preprocess, self._tokenize, self._merge]
         return self._apply_pipes(texts, pipes)
 
     def vectorize(self, texts):
@@ -37,11 +36,28 @@ class ReplyPipe(BaseCls):
             results = pipe(results)
         return results
 
+    def _preprocess(self, texts):
+        logger.info('preprocess')
+        return self._factory.get_preprocessor().perform(texts)
+
     def _tokenize(self, texts):
         logger.info('tokenize question')
         tokenized = self._factory.get_tokenizer().tokenize(texts)
         logger.debug(tokenized)
         return tokenized
+
+    def _merge(self, texts, separator=' '):
+        # スペース区切りの複数の文章をまとめる
+        #
+        # e.g.,
+        # ['ぷりんたー いれる 電源 が わかる 方 わかり いれ の', 'いれる 電源 が わかる 方 わかり いれ の ぷりんた']
+        # => ['ぷりんた わかる 電源 いれる が いれ わかり ぷりんたー の 方']
+        #
+        dic = {}
+        for text in texts:
+            for word in text.split(separator):
+                dic[word] = True
+        return [separator.join(dic.keys())]
 
     def _vectorize(self, texts):
         logger.info('vectorize question')

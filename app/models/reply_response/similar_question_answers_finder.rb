@@ -19,6 +19,8 @@ class ReplyResponse::SimilarQuestionAnswersFinder
         acc + [qa]
       end
     }.compact
+
+    items = items.take(@bot.suggest_limit)
     return items if items.count.zero?
     items + [NoApplicable.new(-1, 'どれにも該当しない')]
   end

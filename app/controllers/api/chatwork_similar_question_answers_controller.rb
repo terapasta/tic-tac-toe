@@ -11,6 +11,13 @@ class Api::ChatworkSimilarQuestionAnswersController < Api::BaseController
 
   def create
     @chatwork_similar_question_answer = ChatworkSimilarQuestionAnswer.new(chatwork_similar_question_answer_params)
+    @sub_question = SubQuestion.find_by(id: params[:chatwork_similar_question_answer][:question_answer_id])
+    if @sub_question.present?
+      @chatwork_similar_question_answer.assign_attributes(
+        question_answer_id: @sub_question.question_answer_id,
+        question: @sub_question.question
+      )
+    end
     if @chatwork_similar_question_answer.save
       render json: @chatwork_similar_question_answer, adapter: :json, status: :created
     else

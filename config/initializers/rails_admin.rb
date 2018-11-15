@@ -63,6 +63,7 @@ RailsAdmin.config do |config|
       field :name
       field :classify_failed_message
       field :start_message
+      field :token
       field :image
       field :learning_status
       field :enable_guest_user_registration

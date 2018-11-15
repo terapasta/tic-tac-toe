@@ -1,4 +1,7 @@
-.card.qa-summury-card class=(@is_modal ? '' : 'mb-4')
+.card.card-left-capped.qa-summury-card class=(@is_modal ? '' : 'mb-4')
+  .card-left-cap
+    .card-left-cap__checkbox data-role="deleteable-item"
+      = check_box 'question_answer[should_delete]', question_answer.id, {}, true, false
   .card-body
     - if question_answer.try(:zendesk_article_id).present? && current_user.staff?
       .card.border-success.mb-3: .card-body.p-2.d-flex.justify-content-between.align-items-center
@@ -13,10 +16,8 @@
       .col-sm-6
         dl
           dt
-            span.checkbox.p-1
-              = check_box 'question_answer[should_delete]', question_answer.id, {}, true, false
-              = label 'question_answer[should_delete]', question_answer.id, class: 'px-2'
-                small = '質問'
+            span
+              small = '質問'
           dd= highlight(nl2br(question_answer.question), params[:keyword])
         - if question_answer.sub_questions.any?
           .card: .card-body.p-2: dl.mb-0

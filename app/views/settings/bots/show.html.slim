@@ -37,6 +37,10 @@
           p 例：質問が"会社"のみだった場合
           blockquote「会社」についてですね。 どのような質問ですか？ 以下から選択するか、もう少し詳しい内容を入力していただけますか？
 
+      .form-group
+        = f.label :suggest_limit
+        = f.number_field :suggest_limit, class: 'form-control', placeholder: "10"
+
       .form-group: .card: .card-body
         = f.label :enable_guest_user_registration do
           = f.check_box :enable_guest_user_registration

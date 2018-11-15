@@ -27,6 +27,10 @@ namespace :database do
 
     if bucket.files.get(file_key)
       puts "Already exists #{bucket_file_key}"
+
+      # https://www.pivotaltracker.com/n/projects/1879711/stories/161141542
+      # 既にバックアップファイルが存在する場合にはローカルの dumpファイルを削除
+      system("rm -f #{output_path}")
     else
       bucket.files.create(
         key: file_key,
@@ -35,8 +39,16 @@ namespace :database do
       ).tap do |f|
         if f
           puts "Created #{bucket_file_key}"
+
+          # https://www.pivotaltracker.com/n/projects/1879711/stories/161141542
+          # バックアップに成功した場合のみローカルの dumpファイルを削除する
+          system("rm -f #{output_path}")
         else
           puts "Failed create #{bucket_file_key}"
+
+          # 失敗したら slack に失敗した旨の通知を出す
+          notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
+          notifier.ping text: "S3 への DBバックアップに失敗しました。\nサーバ上にダンプファイルが残っているため、早急に対応をお願いします", channel: '#alert'
         end
       end
     end

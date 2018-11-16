@@ -15,7 +15,12 @@ class SynonymExpansionPreprocessor(BasePreprocessor):
         # DataFrame から itertupples でループを回すよりも、
         # word と value を取得してから zip でまとめてループで回した方が早い
         # word は正規表現にコンパイルしておく
-        words_and_values = zip([re.compile(x) for x in synonym_mappings.word], synonym_mappings.value)
+        #
+        # また、zip は iterator を生成するが、
+        # iterator は終端まで行くと StopIteration を return するので、
+        # 複数回ループを回すことができない
+        # これを回避するため、一旦 list に変換する
+        words_and_values = list(zip([re.compile(x) for x in synonym_mappings.word], synonym_mappings.value))
 
         # generator を使うことで省メモリ化と高速化を行う
         return [r for r in self._generate_synonym_expander(texts, words_and_values)]
@@ -23,7 +28,10 @@ class SynonymExpansionPreprocessor(BasePreprocessor):
     def _generate_synonym_expander(self, texts, words_and_values):
         # return しないで yield したほうがオーバーヘッドが小さく、高速かつ省メモリ
         for text in texts:
-            yield text
+            res_array = [text]
             for word, value in words_and_values:
                 if re.match(word, text):
-                    yield re.sub(word, value, text)
+                    res_array.append(re.sub(word, value, text))
+
+            # あとで tokeinze するので、とりあえず 1つの文字列として繋げておく
+            yield ' '.join(res_array)

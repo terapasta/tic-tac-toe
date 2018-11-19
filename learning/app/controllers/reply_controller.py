@@ -21,7 +21,8 @@ class ReplyController(BaseCls):
         logger.info('before action')
         texts = self.factory.core.before_reply([text])
 
-        # 応答用の Pipe で一括処理
+        # 応答用の Pipe の各メソッドを呼ぶ
+        # perform を使うと中間処理の結果が取得できないので、metaデータが返せない
         tokenized_sentences = self.pipe.before_vectorize(texts)
         vectors = self.pipe.vectorize(tokenized_sentences)
         normalized_features = self.pipe.after_vectorize(vectors)

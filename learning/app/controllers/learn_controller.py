@@ -5,12 +5,14 @@ from app.shared.logger import logger
 from app.shared.constants import Constants
 from app.shared.base_cls import BaseCls
 from app.core.pipe.learn_pipe import LearnPipe
+from app.core.pipe.reply_pipe import ReplyPipe
 
 class LearnController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()
-        self.pipe = LearnPipe(self.factory)
+        self.learn_pipe = LearnPipe(self.factory)
+        self.reply_pipe = ReplyPipe(self.factory)
 
     def perform(self):
         logger.info('start')
@@ -34,7 +36,7 @@ class LearnController(BaseCls):
         all_questions = pd.concat([question_answers['question'], ratings['question']]).dropna()
 
         # 学習用の Pipe で一括処理
-        self.pipe.perform(all_questions)
+        self.learn_pipe.perform(all_questions)
 
     def _learn_bot(self):
         logger.info('load question_answers and ratings')
@@ -48,7 +50,10 @@ class LearnController(BaseCls):
         all_questions = np.append(all_questions, [''] * Constants.COUNT_OF_APPEND_BLANK)
         all_answer_ids = np.append(all_answer_ids, [Constants.CLASSIFY_FAILED_ANSWER_ID] * Constants.COUNT_OF_APPEND_BLANK)
 
-        bot_features = self._transform_to_vector(all_questions)
+        # 各質問応答の学習時には応答用の Pipe を用いる
+        # 学習用のパイプは基本的に fit しかせず、transform していないので、
+        # データが失われてしまう
+        bot_features = self.reply_pipe.perform(all_questions)
 
         logger.info('fit')
         self.factory.core.fit(
@@ -75,11 +80,3 @@ class LearnController(BaseCls):
 
     def _learning_meta_data(self):
         return self.bot.learning_meta_data()
-
-    def _transform_to_vector(self, sentences):
-        tokenized_sentences = self.factory.get_tokenizer().tokenize(sentences)
-        vectorized_features = self.factory.get_vectorizer().transform(tokenized_sentences)
-        reduced_features = self.factory.get_reducer().transform(vectorized_features)
-        normalized_features = self.factory.get_normalizer().transform(reduced_features)
-
-        return normalized_features

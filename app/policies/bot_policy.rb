@@ -51,6 +51,7 @@ class BotPolicy < ApplicationPolicy
       :classify_failed_message,
       :start_message,
       :has_suggests_message,
+      :suggest_limit,
       :enable_guest_user_registration,
       :is_guest_user_form_skippable,
       {

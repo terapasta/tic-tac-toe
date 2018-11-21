@@ -119,7 +119,7 @@ class ChatworkBot {
       const user = users.filter(it => it.account_id === global.parseInt(fromAccountId))[0]
       if (user === undefined) { return }
 
-      api.fetchChat({ botToken, chatId }).then(res => {
+      return api.fetchChat({ botToken, chatId }).then(res => {
         const { guestKey } = res.data.chat
 
         return api.createMessage({

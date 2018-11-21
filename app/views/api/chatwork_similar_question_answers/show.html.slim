@@ -6,7 +6,7 @@
       .card: .card-body.pt-5
         .circle-image-56.card__top-image style=css_bg_image(@bot.image_url(:thumb))
         h5.mb-4
-          span 「#{@question_answer.question}」
+          span 「#{@chatwork_similar_question_answer.question.presence || @question_answer.question}」
           small を選択しました
 
         p このページは１０秒後に自動で閉じます。<br />時間差でChatworkに回答が返されますので、チャットは引き続きChatworkで行ってください。

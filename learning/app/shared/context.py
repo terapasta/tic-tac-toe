@@ -48,7 +48,7 @@ class Context(BaseCls):
         return self._datasource
 
     def get_factory(self):
-        factory_cls = FuzzyCosineSimilarityFactory
+        factory_cls = CosineSimilarityFactory
         algorithm = int(self.current_bot.algorithm)  # pythonコマンドから直接実行した場合にstring型になってしまうためintに変換している
         if algorithm == Constants.ALGORITHM_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Simmilarity Classification')

@@ -21,8 +21,6 @@ const env = getEnv(envFile)
 module.exports = Object.assign(env, {
   NODE_ENV: process.env.NODE_ENV || 'development',
   MYOPE_API_URL: process.env.MYOPE_API_URL || 'http://localhost:3000',
-  AZURE_PROJECT_NAME: process.env.AZURE_PROJECT_NAME,
-  AZURE_PROJECT_PASSWORD: process.env.AZURE_PROJECT_PASSWORD,
   MicrosoftAppId: process.env.MicrosoftAppId,
   MicrosoftAppPassword: process.env.MicrosoftAppPassword,
   BOT_TOKEN: process.env.BOT_TOKEN,

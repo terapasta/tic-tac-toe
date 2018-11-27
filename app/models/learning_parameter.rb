@@ -11,6 +11,7 @@ class LearningParameter < ApplicationRecord
     :hybrid_classification, # 6
     :topic_similarity_classification, # 7
     :fuzzy_similarity_classification, # 8
+    :strict_fuzzy_similarity_classification, # 9
   ]
 
   enum feedback_algorithm: [
@@ -20,7 +21,11 @@ class LearningParameter < ApplicationRecord
   ]
 
   def use_similarity_classification?
-    similarity_classification? || two_step_similarity_classification? || fuzzy_similarity_classification? || topic_similarity_classification?
+    similarity_classification? ||
+    two_step_similarity_classification? ||
+    fuzzy_similarity_classification? ||
+    strict_fuzzy_similarity_classification? ||
+    topic_similarity_classification?
   end
 
   def self.default_attributes

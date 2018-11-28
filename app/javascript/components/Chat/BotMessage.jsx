@@ -94,8 +94,9 @@ export default class ChatBotMessage extends Component {
       backgroundImage: `url(${iconImageUrl})`
     }
 
-    const autoLinked = autoLink(body, { target: '_blank' })
-    const markdowned = marked(autoLinked)
+    // markedの時点でバックスラッシュ2つがエスケープされてしまうため置換しておく
+    const replaced = autoLink(body, { target: '_blank' }).replace(/\\/g, '\\\\')
+    const markdowned = marked(replaced)
     const striped = striptags(markdowned, ['img', 'a'])
     const renderedBody = striped.replace(/\n/g, '<br />')
 

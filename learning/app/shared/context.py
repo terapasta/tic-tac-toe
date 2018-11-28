@@ -7,6 +7,7 @@ from app.shared.base_cls import BaseCls
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 from app.factories.topic_cosine_similarity_factory import TopicCosineSimilarityFactory
 from app.factories.fuzzy_cosine_similarity_factory import FuzzyCosineSimilarityFactory
+from app.factories.strict_fuzzy_cosine_similarity_factory import StrictFuzzyCosineSimilarityFactory
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
 from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
@@ -76,6 +77,9 @@ class Context(BaseCls):
         elif algorithm == Constants.ALGORITHM_FUZZY_COSINE_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Fuzzy Cosine Similarity Classification')
             factory_cls = FuzzyCosineSimilarityFactory
+        elif algorithm == Constants.ALGORITHM_STRICT_FUZZY_COSINE_SIMILARITY_CLASSIFICATION:
+            logger.info('algorithm: Strict Fuzzy Cosine Similarity Classification')
+            factory_cls = StrictFuzzyCosineSimilarityFactory
 
         else:
             logger.info('algorithm: Default')

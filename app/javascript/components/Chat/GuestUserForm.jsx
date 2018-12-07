@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'
 import get from 'lodash/get'
 
 import * as GuestUserAPI from '../../api/guestUser'
+import { getGuestKey } from '../../helpers/guestKeyHandler';
 
 class Static extends Component {
   render () {
@@ -162,7 +163,7 @@ class GuestUserForm extends Component {
   }
 
   componentDidMount () {
-    const guestKey = Cookies.get('guest_key')
+    const guestKey = getGuestKey();
     if (isEmpty(guestKey)) { return }
     this.setState({ isLoading: true })
 

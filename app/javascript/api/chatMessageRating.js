@@ -1,19 +1,19 @@
 import axios from 'axios'
 import config from './config'
 
-export function good(token, guestKey, messageId) {
-  return request(token, guestKey, messageId, "good")
+export function good(token, messageId) {
+  return request(token, messageId, "good")
 }
 
-export function bad(token, guestKey, messageId) {
-  return request(token, guestKey, messageId, "bad")
+export function bad(token, messageId) {
+  return request(token, messageId, "bad")
 }
 
-export function nothing(token, guestKey, messageId) {
-  return request(token, guestKey, messageId, "nothing")
+export function nothing(token, messageId) {
+  return request(token, messageId, "nothing")
 }
 
-function request(token, guestKey, messageId, resource) {
+function request(token, messageId, resource) {
   const url = `/embed/${token}/chats/messages/${messageId}/rating/${resource}.json`
-  return axios.put(url, {}, config({headers: {'X-Guest-Key': guestKey}}))
+  return axios.put(url, {}, config());
 }

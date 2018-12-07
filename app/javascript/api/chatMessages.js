@@ -1,30 +1,26 @@
 import axios from "axios"
 import config from "./config"
 
-export function fetchMessages(token, guestKey, page = 1) {
-  return axios.get(`/embed/${token}/chats/messages.json`, {
-    params: { page },
-    headers: { 'X-Guest-Key': guestKey },
-  });
+export function fetchMessages(token, page = 1) {
+  return axios.get(`/embed/${token}/chats/messages.json`, config({params: {page}}));
 }
 
-export function postMessage(token, guestKey, messageBody) {
+export function postMessage(token, messageBody) {
   return axios.post(`/embed/${token}/chats/messages.json`, {
     message: {
       body: messageBody,
     },
   },
-  config({headers: { 'X-Guest-Key': guestKey }}));
+  config());
 }
 
 export function chooseDecisionBranch(token, decisionBranchId) {
-  return axios.post(`/embed/${token}/chats/choices/${decisionBranchId}.json`,
-    config({headers: { 'X-Guest-Key': guestKey }}));
+  return axios.post(`/embed/${token}/chats/choices/${decisionBranchId}.json`, config());
 }
 
 export function updateMessage(token, messageId, payload) {
   const path = `/embed/${token}/chats/messages/${messageId}.json`;
   return axios.put(path, assign({
     message: payload,
-  }, config({headers: { 'X-Guest-Key': guestKey }})));
+  }, config()));
 }

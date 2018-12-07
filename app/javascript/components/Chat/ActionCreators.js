@@ -6,7 +6,6 @@ import findIndex from 'lodash/findIndex'
 import get from 'lodash/get'
 import isEmpty from 'is-empty'
 import toastr from 'toastr'
-import Cookies from 'js-cookie'
 
 import * as API from '../../api/chatMessages'
 import * as MessageRatingAPI from '../../api/chatMessageRating'
@@ -18,7 +17,7 @@ import * as c from './Constants'
 
 import Mixpanel from '../../analytics/mixpanel'
 import snakeCaseKeys from '../../helpers/snakeCaseKeys'
-import { getGuestKey, setGuestKey } from '../../helpers/guestKeyHandler';
+import { setGuestKey } from '../../helpers/guestKeyHandler';
 
 const PollingInterval = 1000 * 1;
 
@@ -34,8 +33,7 @@ export function storeGuestKey(guestKey) {
 export function fetchMessages(token, page = 1) {
   return (dispatch, getState) => {
     dispatch(disableReadMore());
-    const guestKey = getGuestKey();
-    API.fetchMessages(token, guestKey, page).then((res) => {
+    API.fetchMessages(token, page).then((res) => {
       const { currentPage, totalPages } = get(res, "data.meta");
       const isApperedReadMore = currentPage < totalPages;
       const isLastPage = !isApperedReadMore;
@@ -72,8 +70,7 @@ export const postMessageIfNeeded = (token, messageBody, options = { isForce: fal
 };
 
 export function postMessage(token, messageBody, dispatch) {
-  const guestKey = getGuestKey();
-  API.postMessage(token, guestKey, messageBody)
+  API.postMessage(token,  messageBody)
     .then((res) => {
       dispatch(createdMessage(res));
       dispatch(clearMessageBody());
@@ -108,8 +105,7 @@ export function disableFormIfHasDecisionBranches(data) {
 
 export function chooseDecisionBranch(token, decisionBranchId) {
   return (dispatch, getState) => {
-    const guestKey = getGuestKey();
-    API.chooseDecisionBranch(token, guestKey, decisionBranchId)
+      API.chooseDecisionBranch(token, decisionBranchId)
       .then((res) => {
         dispatch(chosenDecisionBranch(res));
         dispatch(enableForm());
@@ -134,20 +130,19 @@ export function disableFormIfHasSimilerQuestoinAnswers(data) {
 }
 
 export function changeMessageRatingTo(type, token, messageId) {
-  const guestKey = getGuestKey();
   return (dispatch, getState) => {
     switch (type) {
       case c.Ratings.Good:
         trackMixpanel("good", { messageId })
-        dispatch(goodMessage(token, guestKey, messageId));
+        dispatch(goodMessage(token, messageId));
         break;
       case c.Ratings.Bad:
         trackMixpanel("bad", { messageId })
-        dispatch(badMessage(token, guestKey,messageId));
+        dispatch(badMessage(token, messageId));
         break;
       case c.Ratings.Nothing:
         trackMixpanel("nothing", { messageId })
-        dispatch(nothingMessage(token, guestKey,messageId));
+        dispatch(nothingMessage(token, messageId));
         break;
     }
   };
@@ -323,9 +318,8 @@ export const downPositionInitialQuestion = (botId, index) => {
 
 export const selectNoApplicableItem = (botToken, message) => {
   return (dispatch, getState) => {
-    const guestKey = getGuestKey();
-    dispatch(disableForm())
-    FailedMessagesAPI.create(botToken, guestKey, message)
+      dispatch(disableForm())
+    FailedMessagesAPI.create(botToken,  message)
       .then(res => {
         dispatch(createdMessage(res))
         dispatch(clearMessageBody())

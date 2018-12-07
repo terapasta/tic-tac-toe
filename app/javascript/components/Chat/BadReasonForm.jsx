@@ -7,8 +7,6 @@ import find from 'lodash/find'
 import Popover from './Popover'
 import * as API from '../../api/chatBadReasons'
 
-import { getGuestKey } from '../../helpers/guestKeyHandler';
-
 const PreparedReasons = [
   '質門に対して回答が噛み合っていない',
   '間違ってはいないが、知りたかった回答ではない',
@@ -54,9 +52,8 @@ class BadReasonForm extends Component {
     if (isEmpty(resolvedText)) { return }
     this.setState({ isSubmitting: true })
     const botToken = window.location.pathname.split('/')[2]
-    const guestKey = getGuestKey();
 
-    API.create(botToken, guestKey, messageId, resolvedText).then(res => {
+    API.create(botToken, messageId, resolvedText).then(res => {
       this.setState({ isSubmitting: false, isCompleted: true })
     }).catch(err => {
       console.error(err)

@@ -70,7 +70,7 @@ export const postMessageIfNeeded = (token, messageBody, options = { isForce: fal
 };
 
 export function postMessage(token, messageBody, dispatch) {
-  API.postMessage(token,  messageBody)
+  API.postMessage(token, messageBody)
     .then((res) => {
       dispatch(createdMessage(res));
       dispatch(clearMessageBody());
@@ -105,7 +105,7 @@ export function disableFormIfHasDecisionBranches(data) {
 
 export function chooseDecisionBranch(token, decisionBranchId) {
   return (dispatch, getState) => {
-      API.chooseDecisionBranch(token, decisionBranchId)
+    API.chooseDecisionBranch(token, decisionBranchId)
       .then((res) => {
         dispatch(chosenDecisionBranch(res));
         dispatch(enableForm());
@@ -318,7 +318,7 @@ export const downPositionInitialQuestion = (botId, index) => {
 
 export const selectNoApplicableItem = (botToken, message) => {
   return (dispatch, getState) => {
-      dispatch(disableForm())
+    dispatch(disableForm())
     FailedMessagesAPI.create(botToken,  message)
       .then(res => {
         dispatch(createdMessage(res))

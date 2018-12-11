@@ -16,7 +16,7 @@ if (!(AZURE_PROJECT_NAME && AZURE_PROJECT_PASSWORD)) {
 var rootFolder = path.resolve('.');
 var zipPath = path.resolve(rootFolder, `../${AZURE_PROJECT_NAME}.zip`);
 var kuduApi = `https://${AZURE_PROJECT_NAME}.scm.azurewebsites.net/api/zip/site/wwwroot`;
-var userName = `${AZURE_PROJECT_NAME}`;
+var userName = `$${AZURE_PROJECT_NAME}`;
 var password = AZURE_PROJECT_PASSWORD;
 
 

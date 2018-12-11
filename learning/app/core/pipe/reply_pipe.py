@@ -30,6 +30,20 @@ class ReplyPipe(BaseCls):
         pipes = [self._reduce, self._normalize]
         return self._apply_pipes(vectors, pipes)
 
+    def preprocess(self, texts):
+        '''
+        _preprocess の公開メソッド
+        reply_controller で中環結果を使用するために公開する
+        '''
+        return self._preprocess(texts)
+
+    def tokenize(self, texts):
+        '''
+        _tokenize の公開メソッド
+        reply_controller で中環結果を使用するために公開する
+        '''
+        return self._tokenize(texts)
+
     def _apply_pipes(self, data, pipes):
         results = data
         for pipe in pipes:

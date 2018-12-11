@@ -7,7 +7,7 @@ class ChatworkSimilarQuestionAnswerJob < ApplicationJob
       req.headers['Content-Type'] = 'application/json'
       req.body = {
         question_answer_id: question_answer.id,
-        question: question_answer.question,
+        question: chatwork_similat_question_answer.question.presence || question_answer.question,
         room_id: chatwork_similar_question_answer.room_id,
         from_account_id: chatwork_similar_question_answer.from_account_id
       }.to_json

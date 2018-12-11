@@ -109,8 +109,12 @@ class FuzzyTermTokenizer(BaseTokenizer):
         return list(set(dup_list))
 
     def _normalize_word(self, word):
-        return mojimoji.han_to_zen( # 半角 -> 全角
-                 jaconv.kata2hira(  # カタカナ -> ひらがな
-                   word.lower()   # 大文字 -> 小文字
+        # NOTE:
+        # 処理の順番に注意
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/161473652
+        #
+        return jaconv.kata2hira(      # カタカナ -> ひらがな
+                 mojimoji.han_to_zen( # 半角 -> 全角
+                   word.lower()       # 大文字 -> 小文字
                  )
                )

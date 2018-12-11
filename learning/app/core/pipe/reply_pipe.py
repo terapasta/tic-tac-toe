@@ -19,8 +19,7 @@ class ReplyPipe(BaseCls):
         return results
 
     def before_vectorize(self, texts):
-        # 応答時にはシノニム展開処理をしない
-        pipes = [self._tokenize]
+        pipes = [self._preprocess, self._tokenize]
         return self._apply_pipes(texts, pipes)
 
     def vectorize(self, texts):
@@ -36,6 +35,10 @@ class ReplyPipe(BaseCls):
         for pipe in pipes:
             results = pipe(results)
         return results
+
+    def _preprocess(self, texts):
+        logger.info('preprocess')
+        return self._factory.get_preprocessor().perform(texts)
 
     def _tokenize(self, texts):
         logger.info('tokenize question')

@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         collection do
           resources :selections, only: [:index], module: :question_answers, as: :question_answers_selections
           put '/selections', to: 'question_answers/selections#update'
+          delete '/bulk_delete', to: 'question_answers#bulk_delete'
         end
       end
       resource :topic_tags, only: [:show, :update]

@@ -51,13 +51,12 @@ class Bot {
     // MS docs
     // https://docs.microsoft.com/en-us/azure/bot-service/nodejs/bot-builder-nodejs-state?view=azure-bot-service-3.0
     //
-    let inMemoryStorage = new MemoryBotStorage();
+    const inMemoryStorage = new MemoryBotStorage();
     this.bot = new UniversalBot(this.connector, {
       localizerSettings: {
         defaultLocale: 'ja'
       }
     }).set('storage', inMemoryStorage)
-
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }

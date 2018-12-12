@@ -15,7 +15,9 @@ class Admin::UtilizationsController < ApplicationController
       qa_summarizer = QuestionAnswersSummarizer.new(bot)
       data = ApplicationSummarizer.aggregate_data(gm_summarizer.half_year_data, qa_summarizer.half_year_data)
 
-      max = data.drop(1).map{ |d| d.drop(1).max }.max
+      # データが１件もない場合は nil になるので、その場合の max は 0 とする
+      # https://www.pivotaltracker.com/n/projects/1879711/stories/161669875
+      max = data.drop(1).map{ |d| d.drop(1).max }.max || 0
       level = if max >= 500
                 :high
               elsif max >= 300

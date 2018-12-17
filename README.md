@@ -177,6 +177,8 @@ default: &default
   database:
     endpoint: mysql://root@db/donusagi_bot?charset=utf8
     host: db
+  # dicdir: /usr/local/lib/mecab/dic/ipadic
+  dicdir: /var/lib/mecab/dic/debian # for docker
 ...
 test:
   <<: *default

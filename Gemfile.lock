@@ -357,7 +357,7 @@ GEM
     puma (3.11.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
-    rack (2.0.5)
+    rack (2.0.6)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
     rack-pjax (1.0.0)
@@ -683,4 +683,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.2
+   1.16.3

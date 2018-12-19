@@ -1,17 +1,14 @@
 default: &default
-  datasource_type: file
+  datasource_type: database
   database:
     endpoint: mysql://root@localhost/donusagi_bot?charset=utf8
-    host: 127.0.0.1
+    host: localhost
     name: donusagi_bot
     user: root
     password: ""
   # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
-  # for docker
-  dicdir: /var/lib/mecab/dic/debian
-  # dicdir: /usr/local/lib/mecab/dic/ipadic
-  # dicdir: /var/lib/mecab/dic/debian
-  # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
+  dicdir: /usr/local/lib/mecab/dic/ipadic
+  # dicdir: /var/lib/mecab/dic/debian # for docker
   word2vec_model_name: fasttext_model.vec
   word2vec_model_is_binaly: False
 
@@ -27,8 +24,6 @@ test:
     name: donusagi_bot_test
     user: root
     password: ""
-  # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
-  dicdir: /usr/local/lib/mecab/dic/ipadic
 
 production:
   <<: *default
@@ -38,4 +33,3 @@ production:
     name:
     user:
     password:
-  dicdir: /usr/local/lib/mecab/dic/mecab-ipadic-neologd

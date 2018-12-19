@@ -33,4 +33,24 @@ module ApplicationHelper
   def css_bg_image(url)
     "background-image:url(#{url});"
   end
+
+  def logo_class
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスをベタ打ち
+    if current_user.email == "milai-work@little-cloud.jp"
+      "mikata"
+    else
+      ""
+    end
+  end
+
+  def page_title
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスをベタ打ち
+    if current_user.email == "milai-work@little-cloud.jp"
+      "市民のミカタ - 社内問い合わせ専用AIチャットボット"
+    else
+      "My-ope office - 社内問い合わせ専用AIチャットボット"
+    end
+  end
 end

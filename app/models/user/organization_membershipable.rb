@@ -28,7 +28,9 @@ module User::OrganizationMembershipable
   end
 
   def detect_organization_from(bot)
-    organizations.detect{ |org| org.bots.include?(bot) }
+    # 原因は不明だが、detectを使うとblock内処理がtrueを返しても、戻り値にnilを返すケースが発生したためselectとfirstで代用している
+    # organizations.detect{ |org| org.bots.include?(bot)}
+    organizations.select{ |org| org.bots.include?(bot)}.first
   end
 
   def has_membership_of?(bot)

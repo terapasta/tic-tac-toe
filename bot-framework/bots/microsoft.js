@@ -57,11 +57,16 @@ class Bot {
         defaultLocale: 'ja'
       }
     }).set('storage', inMemoryStorage)
+
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }
 
   handleAnswerMessage({ session, res }) {
+    // NOTE:
+    // 回答の場合は mension である必要はないので
+    // shouldReply によるチェックは不要
+
     const body = get(res, 'data.message.body')
     const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches')
     const childDecisionBranches = get(res, 'data.message.childDecisionBranches')
@@ -89,6 +94,11 @@ class Bot {
   }
 
   handleDefaultDialog(session) {
+    // 反応する必要のないイベントも流れてくるので、制御する
+    if (!this.shouldReply(session)) {
+      return;
+    }
+
     let { botToken } = session.message
     const { source } = session.message
     const { id, uid, name } = session.message.user
@@ -213,6 +223,67 @@ class Bot {
 
     session.send(message)
     session.send(msg)
+  }
+
+  shouldReply(session) {
+    // サービスごとに API からのレスポンスが異なるので、ここで調整する
+    switch (session.message.source) {
+      case 'slack':
+        return this.shouldReplyInSlack(session);
+    }
+
+    return true;
+  }
+
+  shouldReplyInSlack(session) {
+    // slack の場合はメンションと IM のみ返答する
+    return this.isSlackMentioned(session) || this.isSlackIM(session);
+  }
+
+  isSlackMentioned(session) {
+    // session が適切な変数でない場合、false
+    if (!session.message) {
+      return false;
+    }
+
+    // メッセージに含まれる entity から botId を検出
+    if (
+      !session.message.entities ||
+      !(session.message.entities.length > 0) ||
+      !session.message.entities[0].mentioned ||
+      !session.message.entities[0].mentioned.id
+    ) {
+      return false;
+    }
+
+    // メッセージに含まれるボット情報から botId を検出
+    if (
+      !session.message.address ||
+      !session.message.address.bot ||
+      !session.message.address.bot.id
+    ) {
+      return false;
+    }
+
+    // エンティティとボット情報の ID が等しければ、bot への返信
+    return session.message.entities[0].mentioned.id === session.message.address.bot.id;
+  }
+
+  isSlackIM(session) {
+    // session が適切な変数でない場合、false
+    if (
+      !session.message ||
+      !session.message.sourceEvent ||
+      !session.message.sourceEvent.SlackMessage ||
+      !session.message.sourceEvent.SlackMessage.event ||
+      !session.message.sourceEvent.SlackMessage.event.channel_type
+    ) {
+      return false;
+    }
+
+    // channel_type が im ならばボットへの直接的なメッセージ
+    // （他の人との im での会話は取得できないはずなので、id を確認する必要はない）
+    return session.message.sourceEvent.SlackMessage.event.channel_type === 'im';
   }
 }
 

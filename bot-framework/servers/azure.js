@@ -1,6 +1,6 @@
 var builder = require('botbuilder');
 
-const SlackBot = require('../bots/microsoft')
+const AzureBot = require('../bots/microsoft')
 const Base = require('./base')
 const api = require('../api')
 const {
@@ -8,8 +8,8 @@ const {
   MicrosoftAppPassword,
 } = require('../env')
 
-class Slack extends Base {
-  get name () { return 'slack' }
+class Azure extends Base {
+  get name () { return 'azure' }
 
   constructor (bot) {
     super([])
@@ -30,9 +30,9 @@ class Slack extends Base {
       appId: MicrosoftAppId,
       appPassword: MicrosoftAppPassword,
     })
-    new SlackBot(connector)
+    new AzureBot(connector)
     connector.listen()(req, res, next)
   }
 }
 
-module.exports = Slack
+module.exports = Azure

@@ -26,11 +26,13 @@ class Base {
 
     // NOTE:
     // Azure の Bot Service を使う場合、/api/messages をエントリポイントとして指定する必要がある
-    app.post('/', this.reqBodyMiddleware.bind(this), ...this.chatListeners)
-    app.post('/api/messages',
-      this.reqBodyMiddleware.bind(this),
-      ...this.chatListeners
-    )
+    if (this.name === 'azure') {
+      app.post('/', this.reqBodyMiddleware.bind(this), ...this.chatListeners)
+      app.post('/api/messages',
+        this.reqBodyMiddleware.bind(this),
+        ...this.chatListeners
+      )
+    }
   }
 
   reqBodyMiddleware (req, res, next) {

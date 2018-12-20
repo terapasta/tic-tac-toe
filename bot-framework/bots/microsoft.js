@@ -32,6 +32,7 @@ const resolveUid = ({ source, id, uid }) => {
     case 'webchat':
     case 'msteams':
     case 'emulator': // Microsfot製 botframework-emulator（開発用）
+    case 'azure':
       return id
     default:
       return uid

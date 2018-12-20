@@ -75,22 +75,24 @@ class Bot {
     const answerFiles = get(res, 'data.message.answerFiles', [])
     const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers')
 
+    const message = this.appendReplier(session, body);
+
     if (!isEmpty(decisionBranches) || !isEmpty(childDecisionBranches)) {
-      this.sendMessageWithAttachments(session, body, answerFiles)
+      this.sendMessageWithAttachments(session, message, answerFiles)
       // Disaptch decisionBranches Dialog
       return session.beginDialog('decisionBranches', {
         decisionBranches: decisionBranches || childDecisionBranches,
         isSuggestion: false
       })
     } else if (!isEmpty(similarQuestionAnswers) && isShowSimilarQuestionAnswers) {
-      this.sendMessageWithAttachments(session, body, answerFiles)
+      this.sendMessageWithAttachments(session, message, answerFiles)
       // Disaptch decisionBranches Dialog as suggestion
       return session.beginDialog('decisionBranches', {
         decisionBranches: similarQuestionAnswers,
         isSuggestion: true
       })
     } else {
-      this.sendMessageWithAttachments(session, body, answerFiles)
+      this.sendMessageWithAttachments(session, message, answerFiles)
     }
   }
 
@@ -231,7 +233,18 @@ class Bot {
            .message
            .text
            .replace(/<at>.+<\/at>/g, '')
-           .replace(/^@[^\s]+/g, '');
+           .replace(/^@[^\s]+/g, '')
+           .trim();
+  }
+
+  appendReplier(session, message) {
+    switch (session.message.source) {
+      case 'slack':
+        const userAndTeamId = session.message.user.id;
+        const userId = userAndTeamId.split(':')[0];
+        return `<@${userId}> ` + message;
+    }
+    return message;
   }
 
   shouldReply(session) {

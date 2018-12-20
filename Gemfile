@@ -146,7 +146,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5.0.beta'
   gem 'factory_girl_rails'
   gem 'capybara', '~> 2.15.4'
-  gem 'selenium-webdriver', '~> 3.6.0'
+  gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'
   gem 'rails-controller-testing'
 

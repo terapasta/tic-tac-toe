@@ -16,7 +16,7 @@ gem 'sass', '~> 3.5.2'
 gem 'sass-rails'
 
 # easy to write a form
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '~> 4.1.3'
 #gem 'simple_form' #代替案
 
 # Use Uglifier as compressor for JavaScript assets

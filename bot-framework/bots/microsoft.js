@@ -105,7 +105,7 @@ class Bot {
     const { id, uid, name } = session.message.user
     const _uid = resolveUid({ source, id, uid })
     const service_type = source === 'webchat' ? 'msteams' : source
-    const message = session.message.text.replace(/<at>.+<\/at>/g, '')
+    const message = this.parseMessageBody(session)
 
     // Azure上の bot service を使ってデプロイした場合は、環境変数で指定する
     if (botToken === undefined && BOT_TOKEN) {
@@ -224,6 +224,14 @@ class Bot {
 
     session.send(message)
     session.send(msg)
+  }
+
+  parseMessageBody(session) {
+    return session
+           .message
+           .text
+           .replace(/<at>.+<\/at>/g, '')
+           .replace(/^@[^\s]+/g, '');
   }
 
   shouldReply(session) {

@@ -21,7 +21,7 @@ import CollapsibleLog from './CollapsibleLog'
 const autoLink = (text, options = {}) => {
   if (text == null) { return text }
   return text.replace(
-    /(?!\]\()((https?:\/\/)|(www\.))(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/gi,
+    /(?!\]\()((https?:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/gi,
     (...args) => {
       const url = args[0]
       const start = args[args.length - 2]

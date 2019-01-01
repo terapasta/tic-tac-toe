@@ -14,6 +14,10 @@ class ReplyResponse
     }
   end
 
+  def found_probable_answer?
+    not question_answer.no_classified?
+  end
+
   def question_answer_ids
     @question_answer_ids ||= begin
       if effective_results.count.zero?
@@ -32,7 +36,7 @@ class ReplyResponse
 
   def question_answer
     @question_answer ||= QuestionAnswer.find_or_null_question_answer(
-      question_answer_ids.first,
+      question_answer_id,
       @bot,
       probability,
       classify_threshold
@@ -45,7 +49,12 @@ class ReplyResponse
 
   def similar_question_answers
     results = effective_results
-    results.shift if classify_threshold < 0.9 && !show_similar_question_answers?
+
+    # ユーザーの質問に対して一致度の高い質問が見つかり、かつ
+    # 「こちらの質問ではないですか？」が表示されない場合に限り、
+    # 結果から最も確度の高い物を削除して回答として表示する
+    results.shift if found_probable_answer? and !show_similar_question_answers?
+
     SimilarQuestionAnswersFinder.new(bot: @bot, results: results).process
   end
 
@@ -64,6 +73,7 @@ class ReplyResponse
   def classify_threshold
     @classify_threshold ||= begin
       lp = @bot.learning_parameter || LearningParameter.build_with_default
+      # 名詞１語のみの質問の場合、回答の確度が低いので類似する質問を強制的に表示する
       if noun_count == 1 && verb_count.zero?
         # lp.classify_thresholdが0.9以上だったらこれを返す
         return lp.classify_threshold if lp.classify_threshold >= 0.9
@@ -83,6 +93,15 @@ class ReplyResponse
   end
 
   def show_similar_question_answers?
+    # 以下のいずれかの条件に合致する場合は true、そうでなければ false
+    # 1. 最も一致度の高い質問の確率が、サジェストを表示する閾値を（下方に）超えている
+    # 2. 最も一致度の高い質問の確率が 0.9 以下で、かつ質問の文字数が 5以下である
+    # 3. 最も一致度の高い質問の確率が 0.9 以下で、かつ質問の素性の数が 2以下である
+    #
+    # 要するに、ある程度の確度があっても、あらかじめ設定した閾値を超えられないか、
+    # 同様にある程度の確度があっても、短すぎる質問に対しては
+    # よほど一致率が高くない限りは強制的に類似する質問を表示する
+    #
     probability < threshold_of_suggest_similar_questions ||
     (probability < 0.9 && @question.length <= 5) ||
     (probability < 0.9 && question_feature_count <= 2)

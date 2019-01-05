@@ -136,6 +136,7 @@ Rails.application.routes.draw do
     end
 
     get '/ws_chat' => 'ws_chats#show'
+    post '/ws_chat/auth' => 'ws_chats#auth'
   end
 
   authenticated :user, ->(u) { u.staff? } do

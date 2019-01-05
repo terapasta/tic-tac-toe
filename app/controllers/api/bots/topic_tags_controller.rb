@@ -1,4 +1,4 @@
-class Api::Bots::TopicTagsController < Api::BaseController
+class ::Api::Bots::TopicTagsController < Api::BaseController
   before_action :set_bot
 
   def index

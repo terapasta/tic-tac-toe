@@ -134,6 +134,8 @@ Rails.application.routes.draw do
         post 'choices/:id', to: 'choices#create', as: :choices
       end
     end
+
+    get '/ws_chat' => 'ws_chats#show'
   end
 
   authenticated :user, ->(u) { u.staff? } do

@@ -2,6 +2,7 @@ class Api::Bots::ChatMessagesController < Api::BaseController
   include Replyable
   include ApiRespondable
   include ApiChatOperable
+  include ResourceSerializable
 
   def index
     guest_key = params.require(:guest_key)
@@ -38,6 +39,7 @@ class Api::Bots::ChatMessagesController < Api::BaseController
         m.speaker = 'guest'
         m.user_agent = request.env['HTTP_USER_AGENT']
       }
+      ChatChannel.broadcast_to(chat, { action: :create, data: serialize(message) })
       bot_messages = receive_and_reply!(chat, message)
     end
 
@@ -50,6 +52,8 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     respond_to do |format|
       format.json { render json: bot_messages.first, adapter: :json, include: included_associations }
     end
+
+    ChatChannel.broadcast_to(chat, { action: :create, data: serialize(bot_messages.first) })
 
   rescue Ml::Engine::NotTrainedError => e
     logger.error e.message + e.backtrace.join("\n")

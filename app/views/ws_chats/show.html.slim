@@ -1,4 +1,11 @@
 - content_for :hide_global_header, true
 = javascript_pack_tag 'chat'
+= stylesheet_pack_tag 'chat'
 
-= @bot.name
+p= @bot.name
+p= @chat.id
+
+#Chat(
+  data-bot-token=@bot.token
+  data-guest-key=guest_key
+)

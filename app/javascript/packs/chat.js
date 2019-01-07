@@ -1,32 +1,35 @@
-import ActionCable from 'actioncable'
-import Cookies from 'js-cookie'
+import 'babel-polyfill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+import VueSweetAlert from 'vue-sweetalert'
+import assign from 'lodash/assign'
 
-const guestKey = Cookies.get().guest_key
-const botToken = window.location.pathname.split('/')[2]
+import getData from '../helpers/getData'
+import Chat from '../vue/Chat.vue'
+import actions from '../vue/Chat/store/actions'
+import baseState from '../vue/Chat/store/baseState'
+import mutations from '../vue/Chat/store/mutations'
 
-const cable = ActionCable.createConsumer()
-const channel = cable.subscriptions.create({
-  channel: 'ChatChannel',
-  bot_token: botToken,
-  guest_key: guestKey
-}, {
-  connected () {
-    console.log('connected')
-  },
+Vue.use(Vuex)
+Vue.use(VueSweetAlert)
 
-  disconnected () {
-    console.log('disconnected')
-  },
+document.addEventListener('DOMContentLoaded', async () => {
+  const mountNode = document.getElementById('Chat')
+  if (mountNode === null) { return }
+  const state = assign(baseState, getData(mountNode))
 
-  rejected () {
-    console.log('rejected')
-  },
-
-  received (...args) {
-    console.log(...args)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[initial state]', state)
   }
-})
 
-channel.consumer.connection.webSocket.onerror = err => {
-  console.log('an error occurred')
-}
+  const store = new Vuex.Store({
+    actions,
+    state,
+    mutations
+  })
+
+  const App = Vue.extend(assign({}, Chat, {
+    store
+  }))
+  new App().$mount(mountNode)
+})

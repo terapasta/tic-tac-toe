@@ -12,9 +12,8 @@ class WsChatsController < ApplicationController
       is_normal: !!current_user.try(:normal?)
     )
     authorize @chat
-    if need_password_view?
-      render_password_view and return
-    end
+    render_password_view if need_password_view?
+  end
   end
 
   private

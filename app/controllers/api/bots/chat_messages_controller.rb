@@ -1,6 +1,7 @@
 class Api::Bots::ChatMessagesController < Api::BaseController
   include Replyable
   include ApiRespondable
+  include ApiChatOperable
 
   def index
     guest_key = params.require(:guest_key)
@@ -24,8 +25,8 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     question_answer_id = params[:question_answer_id]
 
     bot = Bot.find_by!(token: token)
-    chat_service_user = bot.chat_service_users.find_by!(guest_key: guest_key)
-    chat = bot.chats.find_by!(guest_key: chat_service_user.guest_key)
+    chat_service_user = find_chat_service_user!(bot, guest_key)
+    chat = bot.chats.find_by!(guest_key: guest_key)
 
     if message.blank? && question_answer_id.present?
       message = bot.question_answers.find(question_answer_id).question
@@ -41,7 +42,7 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     end
 
     TaskCreateService.new(bot_messages, bot, nil).process.each do |task, bot_message|
-      unless chat_service_user.line?
+      unless chat_service_user.try(:line?)
         SendAnswerFailedMailService.new(bot_message, nil, task).send_mail
       end
     end

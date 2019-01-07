@@ -1,5 +1,9 @@
 module GuestKeyUsable
   extend ActiveSupport::Concern
+  
+  included do
+    helper_method :guest_key
+  end
 
   private
     def set_guest_key

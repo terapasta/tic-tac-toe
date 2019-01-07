@@ -172,6 +172,7 @@ Rails.application.routes.draw do
     resources :bots, param: :token do
       resources :chats, module: :bots, only: [:show, :create]
       resources :chat_messages, module: :bots, only: [:create]
+      resources :chat_messages, module: :bots, only: [:index, :create]
       resources :chat_choices, module: :bots, only: [:create]
       resources :chat_failed_messages, module: :bots, only: [:create]
       resource :line_credential, module: :bots, only: [:show]

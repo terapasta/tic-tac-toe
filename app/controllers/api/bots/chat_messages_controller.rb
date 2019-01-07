@@ -2,6 +2,21 @@ class Api::Bots::ChatMessagesController < Api::BaseController
   include Replyable
   include ApiRespondable
 
+  def index
+    guest_key = params.require(:guest_key)
+    token = params.require(:bot_token)
+    bot = Bot.find_by!(token: token)
+    chat = bot.chats.find_by!(guest_key: guest_key)
+    messages = chat.messages
+      .order(created_at: :desc)
+      .page(params[:page])
+      .per(params[:per_page].presence || 50)
+
+    respond_to do |format|
+      format.json { render json: messages, adapter: :json, include: included_associations }
+    end
+  end
+
   def create
     guest_key = params.require(:guest_key)
     token = params.require(:bot_token)

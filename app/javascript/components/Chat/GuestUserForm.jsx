@@ -4,10 +4,10 @@ import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import toastr from 'toastr'
 import isEmpty from 'is-empty'
+import Cookies from 'js-cookie'
 import get from 'lodash/get'
 
 import * as GuestUserAPI from '../../api/guestUser'
-import { getGuestKey } from '../../helpers/guestKeyHandler';
 
 class Static extends Component {
   render () {
@@ -113,7 +113,7 @@ const FormikForm = withFormik({
   }),
   handleSubmit (values, { props, setSubmitting }) {
     const { name, email } = values
-    const guestKey = getGuestKey()
+    const guestKey = Cookies.get('guest_key')
     let request, isCreate
 
     if (props.isPersisted) {
@@ -162,7 +162,7 @@ class GuestUserForm extends Component {
   }
 
   componentDidMount () {
-    const guestKey = getGuestKey();
+    const guestKey = Cookies.get('guest_key')
     if (isEmpty(guestKey)) { return }
     this.setState({ isLoading: true })
 

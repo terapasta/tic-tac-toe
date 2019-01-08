@@ -21,6 +21,10 @@ module ApplicationHelper
     sanitize(text.to_s.squeeze("\n")).gsub(/\r?\n/, '<br />').html_safe
   end
 
+  def unescape_backslash(text)
+    text.gsub(/\\/,'\&\&')
+  end
+
   def topic_tags_for_select(bot)
     null_topic_tag = Struct.new(:id, :name).new(-1, 'トピックタグなし')
     [null_topic_tag, *bot.topic_tags]

@@ -2,16 +2,17 @@ import axios from "axios"
 import config from "./config"
 
 export function fetchMessages(token, page = 1) {
-  return axios.get(`/embed/${token}/chats/messages.json`, config({params: {page}}));
+  return axios.get(`/embed/${token}/chats/messages.json`, {
+    params: { page }
+  });
 }
 
 export function postMessage(token, messageBody) {
   return axios.post(`/embed/${token}/chats/messages.json`, {
     message: {
       body: messageBody,
-    },
-  },
-  config());
+    }
+  }, config());
 }
 
 export function chooseDecisionBranch(token, decisionBranchId) {
@@ -20,7 +21,5 @@ export function chooseDecisionBranch(token, decisionBranchId) {
 
 export function updateMessage(token, messageId, payload) {
   const path = `/embed/${token}/chats/messages/${messageId}.json`;
-  return axios.put(path, assign({
-    message: payload,
-  }, config()));
+  return axios.put(path, assign({ message: payload }, config()));
 }

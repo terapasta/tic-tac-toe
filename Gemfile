@@ -16,7 +16,7 @@ gem 'sass', '~> 3.5.2'
 gem 'sass-rails'
 
 # easy to write a form
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '~> 4.1.3'
 #gem 'simple_form' #代替案
 
 # Use Uglifier as compressor for JavaScript assets
@@ -146,7 +146,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5.0.beta'
   gem 'factory_girl_rails'
   gem 'capybara', '~> 2.15.4'
-  gem 'selenium-webdriver', '~> 3.6.0'
+  gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'
   gem 'rails-controller-testing'
 

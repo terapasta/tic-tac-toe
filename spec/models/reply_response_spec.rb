@@ -147,7 +147,7 @@ RSpec.describe ReplyResponse do
         }
       end
 
-      context 'testing similar_question_ansers' do
+      context 'testing similar_question_answers' do
         subject do
           reply_response.similar_question_answers
         end

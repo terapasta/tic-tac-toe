@@ -9,7 +9,11 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         self._synonyms = datasource.synonyms
 
     def perform(self, texts):
-        return self._normalize_word(texts, self._synonyms.by_bot(self._bot.id))
+        # ボット固有の辞書を優先して変換する
+        # bot_id = N/A のもの（システム辞書）は、リスト順で後ろの方に移動
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/162856567
+        synonyms = self._synonyms.by_bot(self._bot.id).sort_values('bot_id', na_position='last')
+        return self._normalize_word(texts, synonyms)
 
     def _normalize_word(self, texts, synonym_mappings):
         # DataFrame から itertupples でループを回すよりも、
@@ -35,11 +39,18 @@ class WordNormalizationPreprocessor(BasePreprocessor):
                     # シノニムとして登録した語は、元の語に寄せる
                     # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765
                     #
-                    yield re.sub(value, word, text)
+                    # 変換前の文字列に変換後の文字列が含まれる場合、過剰置換してしまうので、
+                    # （例えば、プリンタという辞書が登録されており、プリンターという文字列を見るとプリンターーとなってしまう）
+                    # 一度変換後の文字列で split して、後に join することで変換しないようにする
+                    #
+                    normalized = word.join([re.sub(value, word, x) for x in text.split(word)])
 
                     # N:1 なので、シノニムが一つでも見つかった場合は、これ以降のループは不要
-                    found = True
-                    break
+                    if normalized != text:
+                        yield normalized
+
+                        found = True
+                        break
 
             # シノニムが存在しない場合は元の文を返す
             if not found:

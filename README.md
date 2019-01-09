@@ -14,6 +14,9 @@ $ rake db:seed_fu
 $ cp learning/learning/config/config.yml.example learning/learning/config/config.yml
 ```
 
+#### 参考
+`.env` に設定値を記載する場合、`.env.example` ファイルをコピーするか、前任の開発者から `.env` ファイルを受け取って設定してください。この際、使用するキー以外は削除してください。（キーに対して空文字が設定してあると、空文字を環境変数として使用して落ちる箇所があるため。）
+
 ## 開発サーバー起動
 railsとworkerとBotエンジンを起動する必要があります。
 普通にコンソールを３つ開いてもいいですが、Foremanを使うと比較的楽です

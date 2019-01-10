@@ -37,7 +37,7 @@ module ApplicationHelper
   def logo_class
     # https://www.pivotaltracker.com/story/show/162403437
     # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスをベタ打ち
-    if current_user.email == "milai-work@little-cloud.jp"
+    if current_user&.email == "milai-work@little-cloud.jp"
       "mikata"
     else
       ""
@@ -47,7 +47,8 @@ module ApplicationHelper
   def page_title
     # https://www.pivotaltracker.com/story/show/162403437
     # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスをベタ打ち
-    if current_user&.email == "milai-work@little-cloud.jp"
+    # 管理者画面とチャット画面に対応
+    if current_user&.email == "milai-work@little-cloud.jp" || @bot&.name == "市民のミカタ"
       "市民のミカタ - 問い合わせ専用AIチャットボット"
     else
       "My-ope office - 社内問い合わせ専用AIチャットボット"

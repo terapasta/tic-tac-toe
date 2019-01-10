@@ -10,6 +10,7 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     bot = Bot.find_by!(token: token)
     chat = bot.chats.find_by!(guest_key: guest_key)
     messages = chat.messages
+      .includes(:rating, chat: [:bot], question_answer: [:decision_branches, :answer_files])
       .order(created_at: :desc)
       .page(params[:page])
       .per(params[:per_page].presence || 50)

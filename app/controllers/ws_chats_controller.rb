@@ -14,7 +14,6 @@ class WsChatsController < ApplicationController
     authorize @chat
     render_password_view if need_password_view?
   end
-  end
 
   private
     def chat_path

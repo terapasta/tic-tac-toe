@@ -20,6 +20,7 @@
     echo 'eval "$(pyenv init -)"' >> /etc/profile.d/pyenv.sh
   when: not pyenv_sh.stat.exists
 
+# FIXME: サーバで「3.5.2、3.5.2/envs/donusagi-bot3」が出力されてしまうため、以降のpython installが実行されてしまいエラーになる
 - name: check if target python is installed
   shell: cd; bash -lc "pyenv versions | grep {{ python_version }} | tr '*' ' ' | sed -e 's/\s\+//' | cut -f1 -d' '"
   register: python_is_installed

@@ -13,7 +13,7 @@ module GuestKeyUsable
     end
 
     def guest_key
-      cookies[:guest_key]
+      cookies[:guest_key] || request.headers['X-Guest-Key']
     end
 
     def make_guest_key

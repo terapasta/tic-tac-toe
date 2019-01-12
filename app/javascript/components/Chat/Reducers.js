@@ -18,6 +18,7 @@ const Reducers = combineReducers({
   learnings,
   readMore,
   token: through,
+  guestKey: through,
   isAdmin: through,
   isManager: through,
   flashMessage: through,

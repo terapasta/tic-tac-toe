@@ -6,7 +6,6 @@ import findIndex from 'lodash/findIndex'
 import get from 'lodash/get'
 import isEmpty from 'is-empty'
 import toastr from 'toastr'
-import Cookies from 'js-cookie'
 
 import * as API from '../../api/chatMessages'
 import * as MessageRatingAPI from '../../api/chatMessageRating'
@@ -18,11 +17,18 @@ import * as c from './Constants'
 
 import Mixpanel from '../../analytics/mixpanel'
 import snakeCaseKeys from '../../helpers/snakeCaseKeys'
+import { setGuestKey } from '../../helpers/guestKeyHandler';
 
 const PollingInterval = 1000 * 1;
 
 export const fetchedMessages = createAction("FETCHED_MESSAGES");
 export const createdMessage = createAction("CREATED_MESSAGE");
+
+export function storeGuestKey(guestKey) {
+  return (dispatch, getState) => {
+    setGuestKey(guestKey);
+  }
+}
 
 export function fetchMessages(token, page = 1) {
   return (dispatch, getState) => {
@@ -312,9 +318,8 @@ export const downPositionInitialQuestion = (botId, index) => {
 
 export const selectNoApplicableItem = (botToken, message) => {
   return (dispatch, getState) => {
-    const guestKey = Cookies.get('guest_key')
     dispatch(disableForm())
-    FailedMessagesAPI.create(botToken, guestKey, message)
+    FailedMessagesAPI.create(botToken,  message)
       .then(res => {
         dispatch(createdMessage(res))
         dispatch(clearMessageBody())

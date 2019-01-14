@@ -59,6 +59,13 @@ namespace :deploy do
     end
   end
 
+  task :export_node_options do
+    on roles(:app) do
+      execute 'export NODE_OPTIONS="--max-old-space-size=8192"'
+    end
+  end
+
+  before "deploy:compile_assets", :export_node_options
   after "deploy:compile_assets", :copy_assets_manifest
   after "deploy:rollback_assets", :copy_assets_manifest
 
@@ -90,7 +97,7 @@ namespace :deploy do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
       within current_path.join('learning') do
-        sudo :pip, :install, '-r requirements.txt'
+        sudo :pip, :install, '-r requirements.txt --no-cache-dir'
       end
       sudo :supervisorctl, :restart, :engine, '-c /etc/supervisord.conf'
 

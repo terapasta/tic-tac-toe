@@ -18,6 +18,7 @@
 - name: 'install mecab ipadic'
   when: not d.stat.exists
   shell: |
+    export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
     cd /tmp
     wget -O mecab-ipadic.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
     tar zxvf mecab-ipadic.tar.gz
@@ -32,6 +33,7 @@
 - name: 'install mecab ipadic neologd'
   shell: sudo install-neologd.sh
   ignore_errors: True
+  when: False
 
 - name: set up dicrc
   template:

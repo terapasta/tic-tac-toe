@@ -24,3 +24,4 @@
     - mecab
     - logrotate
     - { role: awslogs, when: stage == 'production' }
+    - { role: redis, tags: 'redis' }

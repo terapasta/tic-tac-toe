@@ -1,0 +1,10 @@
+---
+- name: install redis
+  yum: name=redis.x86_64 state=installed enablerepo=epel
+  notify: restart redis
+  when: stage != 'production'
+
+- name: Auto starting Redis
+  service: name=redis state=started enabled=yes
+  tags: redis
+  when: stage != 'production'

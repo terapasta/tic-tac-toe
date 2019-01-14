@@ -58,6 +58,7 @@ gem 'enum_help'
 # Use Unicorn as the app server
 gem 'unicorn'
 gem 'puma'
+gem 'redis'
 
 # Zendesk API
 gem 'zendesk_api'

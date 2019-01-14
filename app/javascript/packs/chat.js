@@ -13,8 +13,6 @@ import mutations from '../vue/Chat/store/mutations'
 Vue.use(Vuex)
 Vue.use(VueSweetAlert)
 
-console.log('this is test')
-
 document.addEventListener('DOMContentLoaded', async () => {
   const mountNode = document.getElementById('Chat')
   if (mountNode === null) { return }

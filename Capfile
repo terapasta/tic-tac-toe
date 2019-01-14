@@ -6,6 +6,7 @@ require 'capistrano/rails/migrations'
 require 'capistrano/rbenv'
 require 'capistrano/bundler'
 require 'capistrano3/unicorn'
+require 'capistrano/puma'
 require 'capistrano/delayed_job'
 require 'whenever/capistrano'
 

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include OrganizationMembershipable
+  after_initialize :set_email_notification_true, unless: :persisted?
 
   # Include default devise modules. Others available are:
   #  :lockable, :timeoutable and :omniauthable
@@ -30,5 +31,9 @@ class User < ApplicationRecord
   private
     def generate_password
       SecureRandom.hex(10)
+    end
+
+    def set_email_notification_true
+      self.notification_settings = { "email": true }
     end
 end

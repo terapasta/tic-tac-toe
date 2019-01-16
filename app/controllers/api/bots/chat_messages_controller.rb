@@ -1,9 +1,9 @@
 class Api::Bots::ChatMessagesController < Api::BaseController
   include Replyable
+  include GuestKeyUsable
   include ApiRespondable
 
   def create
-    guest_key = params.require(:guest_key)
     token = params.require(:bot_token)
     message = params[:message]
     question_answer_id = params[:question_answer_id]

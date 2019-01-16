@@ -9,7 +9,11 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         self._synonyms = datasource.synonyms
 
     def perform(self, texts):
-        return self._normalize_word(texts, self._synonyms.by_bot(self._bot.id))
+        # ボット固有の辞書を優先して変換する
+        # bot_id = N/A のもの（システム辞書）は、リスト順で後ろの方に移動
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/162856567
+        synonyms = self._synonyms.by_bot(self._bot.id).sort_values('bot_id', na_position='last')
+        return self._normalize_word(texts, synonyms)
 
     def _normalize_word(self, texts, synonym_mappings):
         # DataFrame から itertupples でループを回すよりも、

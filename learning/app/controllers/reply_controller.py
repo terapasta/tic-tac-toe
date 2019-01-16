@@ -23,7 +23,8 @@ class ReplyController(BaseCls):
 
         # 応答用の Pipe の各メソッドを呼ぶ
         # perform を使うと中間処理の結果が取得できないので、metaデータが返せない
-        tokenized_sentences = self.pipe.before_vectorize(texts)
+        preprocessed = self.pipe.preprocess(texts)
+        tokenized_sentences = self.pipe.tokenize(preprocessed)
         vectors = self.pipe.vectorize(tokenized_sentences)
         normalized_features = self.pipe.after_vectorize(vectors)
 
@@ -61,6 +62,12 @@ class ReplyController(BaseCls):
 
         logger.info('end')
 
+        # 前処理を施した質問を取得する
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/162404720
+        processed_text = text
+        if len(preprocessed) > 0:
+            processed_text = preprocessed[0]
+
         #
         # IMPORTANT:
         # protocol buffer を使用して gRPC でデータのやり取りをするので、
@@ -78,8 +85,8 @@ class ReplyController(BaseCls):
         return {
             'question_feature_count': self.factory.get_vectorizer().extract_feature_count(tokenized_sentences),
             'results': results,
-            'noun_count': self.factory.get_tokenizer().extract_noun_count(text),
-            'verb_count': self.factory.get_tokenizer().extract_verb_count(text),
+            'noun_count': self.factory.get_tokenizer().extract_noun_count(processed_text),
+            'verb_count': self.factory.get_tokenizer().extract_verb_count(processed_text),
             'query': query,
             'meta': self._replying_meta_data(),
         }

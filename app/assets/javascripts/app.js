@@ -49,4 +49,10 @@ window.jQuery(function($) {
       })
     })
   })
-})
+  $(function() {
+    $('#answer-files').on('change', 'input', function(e) {
+      var file = e.target.files[0]
+      console.log(file.size)
+    })
+  })
+}) 

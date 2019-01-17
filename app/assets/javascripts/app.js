@@ -33,7 +33,7 @@ window.jQuery(function($) {
     });
   });
 
-  // Safari で JS エラーとなるので合わせて修正 pivotal -> #163214830
+  // Safari で Syntax エラーとなるので合わせて修正 pivotal -> #163214830
   $('[data-role="collapsible"]').on('dblclick', function(e) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')

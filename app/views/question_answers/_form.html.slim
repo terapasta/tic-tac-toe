@@ -51,7 +51,7 @@
 
     .form-group
       .card: .card-body
-        label 回答添付ファイル
+        label 回答添付ファイル（最大ファイルサイズ：10MB）
         - if policy(@question_answer).attachable_answer_file?(@bot)
           #answer-files
             = f.fields_for :answer_files, wrapper: false do |nf|

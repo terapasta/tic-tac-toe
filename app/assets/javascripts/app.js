@@ -33,7 +33,8 @@ window.jQuery(function($) {
     });
   });
 
-  $('[data-role="collapsible').on('dblclick', function(e) {
+  // Safari で JS エラーとなるので合わせて修正 pivotal -> #163214830
+  $('[data-role="collapsible"]').on('dblclick', function(e) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
@@ -49,10 +50,16 @@ window.jQuery(function($) {
       })
     })
   })
+
+  // HACK: pivotal -> #163214830
   $(function() {
     $('#answer-files').on('change', 'input', function(e) {
       var file = e.target.files[0]
-      console.log(file.size)
+      if (file.size > 10*1024*1024) {
+        $(this).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
+        $(".file-alert").html('ファイルサイズが10MB以上のため添付できません').fadeOut(2000);
+        $(this).replaceWith($(this).val('').clone(true));
+      }
     })
   })
 }) 

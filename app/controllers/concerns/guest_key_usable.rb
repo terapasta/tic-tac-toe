@@ -13,11 +13,7 @@ module GuestKeyUsable
     end
 
     def guest_key
-      # NOTE:
-      # guest_key はクエリパラメータ（params）、クッキー（cookies）、ヘッダ（headers）の順に評価する
-      params[:guest_key] ||
-      cookies[:guest_key] ||
-      request.headers['X-Guest-Key']
+      cookies[:guest_key] || request.headers['X-Guest-Key']
     end
 
     def make_guest_key

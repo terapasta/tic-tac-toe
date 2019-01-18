@@ -1,8 +1,8 @@
 class Api::Bots::ChatFailedMessagesController < Api::BaseController
-  include GuestKeyUsable
   include ApiRespondable
 
   def create
+    guest_key = params.require(:guest_key)
     token = params.require(:bot_token)
     message = params.require(:message)
 

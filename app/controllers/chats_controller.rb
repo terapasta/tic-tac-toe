@@ -26,7 +26,6 @@ class ChatsController < ApplicationController
   end
 
   def new
-    @guest_key = guest_key
     @chat = @bot.chats.create_by(guest_key: guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)

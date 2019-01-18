@@ -1,5 +1,4 @@
 class Api::Bots::ChatChoicesController < Api::BaseController
-  include GuestKeyUsable
   include ApiRespondable
   before_action :set_bot_chat_user_decision_branch!, only: [:create]
 
@@ -15,6 +14,7 @@ class Api::Bots::ChatChoicesController < Api::BaseController
 
   private
     def set_bot_chat_user_decision_branch!
+      guest_key = params.require(:guest_key)
       token = params.require(:bot_token)
 
       @bot = Bot.find_by!(token: token)

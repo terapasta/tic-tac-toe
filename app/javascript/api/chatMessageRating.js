@@ -15,5 +15,5 @@ export function nothing(token, messageId) {
 
 function request(token, messageId, resource) {
   const url = `/embed/${token}/chats/messages/${messageId}/rating/${resource}.json`
-  return axios.put(url, {}, config());
+  return axios.put(url, {}, config())
 }

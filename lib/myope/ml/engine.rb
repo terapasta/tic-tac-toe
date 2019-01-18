@@ -6,17 +6,11 @@ class Ml::Engine
 
   attr_reader :stub
 
-  DEFAULT_HOST = '127.0.0.1'
-  DEFAULT_PORT = 6000
-
   def initialize(bot)
-    host = ENV.fetch('RPC_HOST'){ DEFAULT_HOST }
-    port = ENV.fetch('RPC_PORT'){ DEFAULT_PORT }
-
     # #162837217の対応
     # .env にキーのみ設定(値は空)されていると空文字が設定されるため、これを防ぐ
-    host = DEFAULT_HOST if host.empty?
-    port = DEFAULT_PORT if port.empty? 
+    host = ENV['RPC_HOST'].presence || '127.0.0.1'
+    port = ENV['RPC_PORT'].presence || 6000
 
     @bot = bot
     @stub = Gateway::Bot::Stub.new("#{host}:#{port}", :this_channel_is_insecure)

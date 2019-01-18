@@ -26,7 +26,7 @@
   register: python_is_installed
 
 - name: install global python
-  shell: bash -lc "pyenv install {{ python_version }}"
+  shell: bash -lc "pyenv install {{ python_version }} -f"
   when: python_is_installed.stdout != python_version
 
 - name: set global python version

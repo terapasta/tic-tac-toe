@@ -20,7 +20,7 @@
     - ndenv
     - { role: 'nginx', tags: 'nginx' }
     - mysql
-    - app
+    - { role: 'app', tags: 'app' }
     - mecab
     - logrotate
     - { role: awslogs, when: stage == 'production' }

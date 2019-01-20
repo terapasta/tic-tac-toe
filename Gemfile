@@ -58,6 +58,7 @@ gem 'enum_help'
 # Use Unicorn as the app server
 gem 'unicorn'
 gem 'puma'
+gem 'redis', "~> 3.0"
 
 # Zendesk API
 gem 'zendesk_api'
@@ -77,7 +78,7 @@ gem 'rails_autolink'
 gem 'http'
 gem 'whenever', require: false
 gem 'carrierwave'
-gem 'rmagick', require: false
+gem 'rmagick', git: 'http://github.com/rmagick/rmagick.git', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
 gem 'slack-api'

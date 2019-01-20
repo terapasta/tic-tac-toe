@@ -17,8 +17,20 @@ set :linked_files, %w{.env .python-version learning/config/config.yml config/dat
 set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads public/packs learning/dumps learning/logs node_modules}
 
 set :bundle_jobs, 4
-set :unicorn_pid, "/tmp/unicorn.pid"
-set :unicorn_config_path, 'config/unicorn.rb'
+# set :unicorn_pid, "/tmp/unicorn.pid"
+# set :unicorn_config_path, 'config/unicorn.rb'
+
+set :puma_threads, [4, 16]
+set :puma_workers, 0
+set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
+set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
+set :puma_access_log, "#{release_path}/log/puma.access.log"
+set :puma_error_log,  "#{release_path}/log/puma.error.log"
+set :puma_preload_app, true
+set :puma_worker_timeout, nil
+set :puma_init_active_record, true
+
 set :whenever_identifier, ->{"#{fetch(:application)}_#{fetch(:stage)}}"}
 set :whenever_roles, ->{ :batch }
 set :delayed_job_roles, [:worker]
@@ -28,6 +40,17 @@ task :update_neologd do
   on roles(:app) do
     sudo 'install-neologd.sh'
   end
+end
+
+namespace :puma do
+  desc 'Create Directories for Puma Pids and Socket'
+  task :make_dirs do
+    on roles(:app) do
+      execute "mkdir #{shared_path}/tmp/sockets -p"
+      execute "mkdir #{shared_path}/tmp/pids -p"
+    end
+  end
+  before :start, :make_dirs
 end
 
 namespace :deploy do
@@ -59,15 +82,31 @@ namespace :deploy do
     end
   end
 
+  task :export_node_options do
+    on roles(:app) do
+      execute 'export NODE_OPTIONS="--max-old-space-size=8192"'
+    end
+  end
+
+  before "deploy:compile_assets", :export_node_options
   after "deploy:compile_assets", :copy_assets_manifest
   after "deploy:rollback_assets", :copy_assets_manifest
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'unicorn:restart'
+  desc 'Initial Deploy'
+  task :initial do
+    on roles(:app) do
+      before 'deploy:restart', 'puma:start'
+      invoke 'deploy'
     end
   end
+
+  # desc 'Restart application'
+  # task :restart do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     # invoke 'unicorn:restart'
+  #     invoke 'puma:restart'
+  #   end
+  # end
 
   after :publishing, :restart
   after :restart, :clear_cache do
@@ -90,7 +129,7 @@ namespace :deploy do
       execute :cp, shared_path.join('.python-version'), release_path.join('learning/.python-version')
       # execute :cp, shared_path.join('config.yml'), release_path.join('learning/learning/config/config.yml')
       within current_path.join('learning') do
-        sudo :pip, :install, '-r requirements.txt'
+        sudo :pip, :install, '-r requirements.txt --no-cache-dir'
       end
       sudo :supervisorctl, :restart, :engine, '-c /etc/supervisord.conf'
 

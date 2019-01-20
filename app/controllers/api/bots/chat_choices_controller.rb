@@ -1,5 +1,6 @@
 class Api::Bots::ChatChoicesController < Api::BaseController
   include ApiRespondable
+  include ApiChatOperable
   before_action :set_bot_chat_user_decision_branch!, only: [:create]
 
   def create
@@ -18,8 +19,8 @@ class Api::Bots::ChatChoicesController < Api::BaseController
       token = params.require(:bot_token)
 
       @bot = Bot.find_by!(token: token)
-      @chat_service_user = ChatServiceUser.find_by!(bot: @bot, guest_key: guest_key)
-      @chat = @bot.chats.find_by!(guest_key: @chat_service_user.guest_key)
+      @chat_service_user = find_chat_service_user!(@bot, guest_key)
+      @chat = @bot.chats.find_by!(guest_key: guest_key)
       @decision_branch = @chat.bot.decision_branches.find(params[:id])
     end
 

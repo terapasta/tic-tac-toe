@@ -1,6 +1,9 @@
 module IframeSupportable
   extend ActiveSupport::Concern
 
+  class ExceededError < StandardError; end
+  class FinishedTrialError < StandardError; end
+
   MyOpeHosts = %w(app.my-ope.net staging.my-ope.net localhost).freeze
 
   def iframe_support(bot)
@@ -15,5 +18,12 @@ module IframeSupportable
       break if ref.blank? || MyOpeHosts.include?(URI.parse(ref).host)
       bot&.tutorial&.done_embed_chat_if_needed
     end
+  end
+
+
+  def prepare_iframe(bot)
+    iframe_support bot
+    fail ExceededError.new if policy(bot).exceeded_chats_count?
+    fail FinishedTrialError if policy(bot).finished_trial?
   end
 end

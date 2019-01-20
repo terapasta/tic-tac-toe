@@ -84,3 +84,5 @@ config/environments/*.local.yml
 /public/packs
 /public/packs-test
 /node_modules
+
+/.vscode

@@ -1,7 +1,7 @@
 header
   nav.navbar.navbar-light.navbar-global.navbar-expand
     .container
-      h1.navbar__logo= link_to 'My-ope office', root_path, class: logo_class,  data: { event: 'my-ope home' }
+      h1.navbar__logo= link_to 'My-ope office', root_path, class: logo_class(@bot),  data: { event: 'my-ope home' }
 
       - if user_signed_in?
         ul.navbar-nav

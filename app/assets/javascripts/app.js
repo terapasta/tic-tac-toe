@@ -51,14 +51,16 @@ window.jQuery(function($) {
     })
   })
 
-  // HACK: pivotal -> #163214830
+  // 一回のサブミットで10MB以上添付すると nginx 413 に振られるのを防ぐ pivotal -> #163214830
   $(function() {
     $('#answer-files').on('change', 'input', function() {
       var fileSizeSum = 0;
       $.each($('.file-size-check'), function(i, value) {
-        fileSizeSum += value.files[0].size
+        // undefined のサイズを掴まないようチェック
+        if (value.files[0]) fileSizeSum += value.files[0].size
       })
       if (fileSizeSum > 10*1024*1024) {
+        // FIXME
         $(this).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
         $(".file-alert").html('合計ファイルサイズが10MB以上のため添付できません').fadeOut(2000);
         $(this).replaceWith($(this).val('').clone(true));

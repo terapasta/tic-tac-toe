@@ -56,13 +56,19 @@ window.jQuery(function($) {
     $('#answer-files').on('change', 'input', function() {
       var fileSizeSum = 0;
       $.each($('.file-size-check'), function(i, value) {
+        // キャンセル済みファイルはカウントしない(キャンセルすると親の親ノードが display: none になる)
+        if ($(value).parent().parent().css('display') == 'none') {
+          return true;
+        }
         // undefined のサイズを掴まないようチェック
         if (value.files[0]) fileSizeSum += value.files[0].size
       })
       if (fileSizeSum > 10*1024*1024) {
-        // FIXME
         $(this).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
-        $(".file-alert").html('合計ファイルサイズが10MB以上のため添付できません').fadeOut(2000);
+        $(".file-alert").html('合計ファイルサイズが10MB以上のため添付できません')
+        setTimeout(function() {
+          $(".file-alert").hide(400)
+        }, 3000);
         $(this).replaceWith($(this).val('').clone(true));
       }
     })

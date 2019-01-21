@@ -23,6 +23,16 @@ class Base {
       app.post(`/${this.name}/:botToken/:chatId/decisionBranch`, ...this.decisionBranchListeners)
       app.post(`/${this.name}/:botToken/:chatId/similarQuestionAnswer`, ...this.similarQuestionAnswerListeners)
     }
+
+    // NOTE:
+    // Azure の Bot Service を使う場合、/api/messages をエントリポイントとして指定する必要がある
+    if (this.name === 'azure') {
+      app.post('/', this.reqBodyMiddleware.bind(this), ...this.chatListeners)
+      app.post('/api/messages',
+        this.reqBodyMiddleware.bind(this),
+        ...this.chatListeners
+      )
+    }
   }
 
   reqBodyMiddleware (req, res, next) {

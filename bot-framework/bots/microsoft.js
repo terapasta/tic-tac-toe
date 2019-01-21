@@ -10,11 +10,12 @@ const {
   HeroCard,
   CardImage,
   CardAction,
-  MemoryBotStorage
+  MemoryBotStorage,
 } = require('botbuilder')
 
 const {
-  NODE_ENV
+  NODE_ENV,
+  BOT_TOKEN,
 } = require('../env')
 
 const {
@@ -30,6 +31,8 @@ const resolveUid = ({ source, id, uid }) => {
     case 'slack':
     case 'webchat':
     case 'msteams':
+    case 'emulator': // Microsfot製 botframework-emulator（開発用）
+    case 'azure':
       return id
     default:
       return uid
@@ -39,17 +42,32 @@ const resolveUid = ({ source, id, uid }) => {
 class Bot {
   constructor(connector) {
     this.connector = connector
-    const inMemoryStorage = new MemoryBotStorage()
+
+    // NOTE:
+    // in memory storage を使わないと動かなくなった
+    //
+    // stackoverflow
+    // https://stackoverflow.com/questions/51823661/bot-framework-webchat-failure-405-method-not-allowed
+    //
+    // MS docs
+    // https://docs.microsoft.com/en-us/azure/bot-service/nodejs/bot-builder-nodejs-state?view=azure-bot-service-3.0
+    //
+    const inMemoryStorage = new MemoryBotStorage();
     this.bot = new UniversalBot(this.connector, {
       localizerSettings: {
         defaultLocale: 'ja'
       }
     }).set('storage', inMemoryStorage)
+
     this.bot.dialog('/', this.handleDefaultDialog.bind(this))
     this.bot.dialog('decisionBranches', this.handleDecisionBranchesDialogSteps())
   }
 
   handleAnswerMessage({ session, res }) {
+    // NOTE:
+    // 回答の場合は mension である必要はないので
+    // shouldReply によるチェックは不要
+
     const body = get(res, 'data.message.body')
     const decisionBranches = get(res, 'data.message.questionAnswer.decisionBranches')
     const childDecisionBranches = get(res, 'data.message.childDecisionBranches')
@@ -57,31 +75,44 @@ class Bot {
     const answerFiles = get(res, 'data.message.answerFiles', [])
     const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers')
 
+    const message = this.appendReplier(session, body);
+
     if (!isEmpty(decisionBranches) || !isEmpty(childDecisionBranches)) {
-      this.sendMessageWithAttachments(session, body, answerFiles)
+      this.sendMessageWithAttachments(session, message, answerFiles)
       // Disaptch decisionBranches Dialog
       return session.beginDialog('decisionBranches', {
         decisionBranches: decisionBranches || childDecisionBranches,
         isSuggestion: false
       })
     } else if (!isEmpty(similarQuestionAnswers) && isShowSimilarQuestionAnswers) {
-      this.sendMessageWithAttachments(session, body, answerFiles)
+      this.sendMessageWithAttachments(session, message, answerFiles)
       // Disaptch decisionBranches Dialog as suggestion
       return session.beginDialog('decisionBranches', {
         decisionBranches: similarQuestionAnswers,
         isSuggestion: true
       })
     } else {
-      this.sendMessageWithAttachments(session, body, answerFiles)
+      this.sendMessageWithAttachments(session, message, answerFiles)
     }
   }
 
   handleDefaultDialog(session) {
-    const { botToken, source } = session.message
+    // 反応する必要のないイベントも流れてくるので、制御する
+    if (!this.shouldReply(session)) {
+      return;
+    }
+
+    let { botToken } = session.message
+    const { source } = session.message
     const { id, uid, name } = session.message.user
     const _uid = resolveUid({ source, id, uid })
     const service_type = source === 'webchat' ? 'msteams' : source
-    const message = session.message.text.replace(/<at>.+<\/at>/g, '')
+    const message = this.parseMessageBody(session)
+
+    // Azure上の bot service を使ってデプロイした場合は、環境変数で指定する
+    if (botToken === undefined && BOT_TOKEN) {
+      botToken = BOT_TOKEN
+    }
 
     session.sendTyping()
 
@@ -195,6 +226,86 @@ class Bot {
 
     session.send(message)
     session.send(msg)
+  }
+
+  parseMessageBody(session) {
+    return session
+           .message
+           .text
+           .replace(/<at>.+<\/at>/g, '')
+           .replace(/^@[^\s]+/g, '')
+           .trim();
+  }
+
+  appendReplier(session, message) {
+    switch (session.message.source) {
+      case 'slack':
+        const userAndTeamId = session.message.user.id;
+        const userId = userAndTeamId.split(':')[0];
+        return `<@${userId}> ` + message;
+    }
+    return message;
+  }
+
+  shouldReply(session) {
+    // サービスごとに API からのレスポンスが異なるので、ここで調整する
+    switch (session.message.source) {
+      case 'slack':
+        return this.shouldReplyInSlack(session);
+    }
+
+    return true;
+  }
+
+  shouldReplyInSlack(session) {
+    // slack の場合はメンションと IM のみ返答する
+    return this.isSlackMentioned(session) || this.isSlackIM(session);
+  }
+
+  isSlackMentioned(session) {
+    // session が適切な変数でない場合、false
+    if (!session.message) {
+      return false;
+    }
+
+    // メッセージに含まれる entity から botId を検出
+    if (
+      !session.message.entities ||
+      !(session.message.entities.length > 0) ||
+      !session.message.entities[0].mentioned ||
+      !session.message.entities[0].mentioned.id
+    ) {
+      return false;
+    }
+
+    // メッセージに含まれるボット情報から botId を検出
+    if (
+      !session.message.address ||
+      !session.message.address.bot ||
+      !session.message.address.bot.id
+    ) {
+      return false;
+    }
+
+    // エンティティとボット情報の ID が等しければ、bot への返信
+    return session.message.entities[0].mentioned.id === session.message.address.bot.id;
+  }
+
+  isSlackIM(session) {
+    // session が適切な変数でない場合、false
+    if (
+      !session.message ||
+      !session.message.sourceEvent ||
+      !session.message.sourceEvent.SlackMessage ||
+      !session.message.sourceEvent.SlackMessage.event ||
+      !session.message.sourceEvent.SlackMessage.event.channel_type
+    ) {
+      return false;
+    }
+
+    // channel_type が im ならばボットへの直接的なメッセージ
+    // （他の人との im での会話は取得できないはずなので、id を確認する必要はない）
+    return session.message.sourceEvent.SlackMessage.event.channel_type === 'im';
   }
 }
 

@@ -30,7 +30,7 @@
           dd
             p
               - if question_answer.answer.present?
-                = highlight(nl2br(unescape_backslash(message_to_html(question_answer.answer))), params[:keyword])
+                = highlight(nl2br(message_to_html(unescape_backslash(question_answer.answer))), params[:keyword])
               - else
                 span.label.label-default 回答なし
 

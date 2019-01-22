@@ -1,4 +1,5 @@
-grpcio-tools==1.6.3
+grpcio==1.17.1
+grpcio-tools==1.17.1
 injector==0.13.3
 jaconv==0.2.3
 mecab-python3==0.7

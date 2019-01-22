@@ -42,15 +42,17 @@ module.exports.fetchMessages = ({
   page,
   perPage,
 }, config = {}) => (
-  axios.get(`/api/bots/${botToken}/chat_messages.json`, {
-    ...config,
-    params: {
-      guest_key: guestKey,
-      page,
-      per_page: perPage,
-    },
-  })
-)
+  axios.get(`/api/bots/${botToken}/chat_messages.json`, Object.assign({},
+    config,
+    {
+      params: {
+        guest_key: guestKey,
+        page,
+        per_page: perPage,
+      }
+    }
+  )
+))
 
 module.exports.createMessage = ({
   botToken,

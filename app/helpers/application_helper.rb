@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def unescape_backslash(text)
-    text.gsub(/\\/,'\&\&')
+    text.gsub(/\\/,'\\\\\\')
   end
 
   def topic_tags_for_select(bot)

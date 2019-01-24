@@ -37,4 +37,26 @@ module ApplicationHelper
   def css_bg_image(url)
     "background-image:url(#{url});"
   end
+
+  def logo_class(bot = nil)
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 管理者画面に対応
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスとトークンをベタ打ち
+    if current_user&.email == "milai-work@little-cloud.jp" || bot&.token == "cbdf74a20f064e84ec1c539ccddc60808b2eba13b5dd5595527b6e017e9b4be4"
+      "mikata"
+    else
+      ""
+    end
+  end
+
+  def page_title(bot = nil)
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 管理者画面とチャット画面に対応
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスとトークンをベタ打ち
+    if current_user&.email == "milai-work@little-cloud.jp" || bot&.token == "cbdf74a20f064e84ec1c539ccddc60808b2eba13b5dd5595527b6e017e9b4be4"
+      "市民のミカタ - 問い合わせ専用AIチャットボット"
+    else
+      "My-ope office - 社内問い合わせ専用AIチャットボット"
+    end
+  end
 end

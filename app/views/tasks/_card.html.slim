@@ -67,7 +67,7 @@
 
           = space 5
           - if task.bot_message_record&.question_answer.present?
-            button.btn.btn-info.btn-sm data-toggle="modal" data-target="#exampleModal"
+            button.btn.btn-info.btn-sm data-toggle="modal" data-target="#taskModal_#{task.id}"
               i.material-icons.mi-sm keyboard_arrow_right
               span これを元にQ&Aを登録する
           - else
@@ -77,11 +77,11 @@
 
 - if task.bot_message_record&.question_answer.present?
   - task.bot_message_record.question_answer.tap do |question_answer|
-    .modal.fade#exampleModal tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    .modal.fade id="taskModal_#{task.id}" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel_#{task.id}" aria-hidden="true"
       .modal-dialog role="document"
         .modal-content
           .modal-header
-            h6.modal-title#exampleModalLabel 回答に使用されたQ&Aが存在します
+            h6.modal-title id="taskModalLabel_#{task.id}" 回答に使用されたQ&Aが存在します
             button.close type="button" data-dismiss="modal" aria-label="Close"
               span aria-hidden="true" &times;
           .modal-body

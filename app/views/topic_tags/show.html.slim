@@ -19,7 +19,7 @@
           h5.mb-3
             strong Q&Aトピックタグ
             = space 4
-            small: a href="#" data-toggle="popover" title="サジェストに表示するとは？" data-content="チャットの回答時に「こちらの質門ではないですか？」というリストがサジェスト機能です。ここではサジェストに表示させたくない回答をまとめて指定するためにトピックタグ毎に設定ができます。例えば雑談系等にお使い下さい。" data-placement="right" サジェストに表示するとは？
+            small: a href="#" data-toggle="popover" title="サジェストに表示するとは？" data-content="チャットの回答時に「こちらの質問ではないですか？」というリストがサジェスト機能です。ここではサジェストに表示させたくない回答をまとめて指定するためにトピックタグ毎に設定ができます。例えば雑談系等にお使い下さい。" data-placement="right" サジェストに表示するとは？
           #bot-topic-tags
             = f.fields_for :topic_tags do |nf|
               = nf.hidden_field :id

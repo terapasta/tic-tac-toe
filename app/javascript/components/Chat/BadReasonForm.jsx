@@ -8,7 +8,7 @@ import Popover from './Popover'
 import * as API from '../../api/chatBadReasons'
 
 const PreparedReasons = [
-  '質門に対して回答が噛み合っていない',
+  '質問に対して回答が噛み合っていない',
   '間違ってはいないが、知りたかった回答ではない',
   '回答内容がわかりづらい'
 ]

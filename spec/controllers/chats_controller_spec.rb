@@ -21,7 +21,7 @@ RSpec.describe ChatsController do
   end
 
   let(:guest_key) do
-    'sample guest key'
+    SecureRandom.hex(64)
   end
 
   describe 'GET #show' do

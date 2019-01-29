@@ -24,6 +24,7 @@ test:
     name: donusagi_bot_test
     user: root
     password: ""
+  dicdir: /var/lib/mecab/dic/ipadic-utf8
 
 production:
   <<: *default

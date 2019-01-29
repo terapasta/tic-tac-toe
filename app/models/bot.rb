@@ -47,6 +47,8 @@ class Bot < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
+  validates :suggest_limit, numericality: { less_than_or_equal_to: 10 }
+
   before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
 
   def learning_parameter_attributes

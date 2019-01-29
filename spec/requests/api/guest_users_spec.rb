@@ -14,9 +14,17 @@ RSpec.describe '/api/guest_users', type: :request do
   end
 
   before do
+    # cookies[:guest_key] に反応するように mock を設定
+    allow(dummy_cookies).to receive(:[]).with(:guest_key).and_return(guest_key)
+    # cookies['guest_key'] に反応するように mock を設定
+    allow(dummy_cookies).to receive(:[]).with('guest_key').and_return(guest_key)
+
+    # cookies.encrypted に反応
     allow(dummy_cookies).to receive(:encrypted) do
       { guest_key: guest_key }
     end
+
+    # ApplicationController は dummy_cookies（mockオブジェクト）を返すように設定
     allow_any_instance_of(ApplicationController).to \
       receive_message_chain(:cookies) { dummy_cookies }
   end
@@ -40,7 +48,7 @@ RSpec.describe '/api/guest_users', type: :request do
 
   describe 'POST #create' do
     let(:guest_key) do
-      'hogehogehogehoge'
+      SecureRandom.hex(64)
     end
 
     let(:guest_user_params) do

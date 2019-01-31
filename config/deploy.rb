@@ -88,9 +88,16 @@ namespace :deploy do
     end
   end
 
+  task :notify_rollback_succeeded do
+    on roles(:app) do
+      invoke "slack:notify_rollback_succeeded"
+    end
+  end
+
   before "deploy:compile_assets", :export_node_options
   after "deploy:compile_assets", :copy_assets_manifest
   after "deploy:rollback_assets", :copy_assets_manifest
+  after "deploy:finishing_rollback", :notify_rollback_succeeded
 
   desc 'Initial Deploy'
   task :initial do

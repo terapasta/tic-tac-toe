@@ -20,7 +20,8 @@ export default {
     answers: [],
     answer: '',
     isProcessing: false,
-    botId: window.currentBot.id
+    botId: window.currentBot.id,
+    errMsg: ''
   }),
 
   created () {
@@ -68,6 +69,20 @@ export default {
       if (this.isProcessing) { return }
       const file = e.target.files[0]
       if (file == null) { return }
+
+      this.errMsg = ''
+
+      // from AnswerInlineImageUploader#extension_whitelist(ruby)
+      let extensionWhiteList = /(\.jpg|\.jpeg|\.gif|\.png)$/i
+      if (!extensionWhiteList.exec(file.name)) {
+        this.errMsg = '拡張子が .jpg .jpeg .gif .png の画像ファイルのみ追加可能です'
+        return false
+      }
+
+      if (file.size > 10*1024*1024 /* = 10MB */) {
+        this.errMsg = '画像サイズは10MB以下となるものを選択してください'
+        return false
+      }
       const { botId } = this
       this.isProcessing = true
 
@@ -94,13 +109,14 @@ export default {
     <div class="d-flex justify-content-between align-items-center">
       <label class="mb-0">
         <span v-if="!isHiddenLabel">
-          <i class="material-icons" title="回答">chat_bubble_outline</i>&nbsp;回答
+          <i class="material-icons" title="回答">chat_bubble_outline</i>&nbsp;回答（本文中に10MB以下の画像を追加できます）
         </span>
       </label>
       <div
         class="btn btn-link file-input-container py-1"
         title="クリックして回答本文中に画像を追加できます"
       >
+
         <i class="material-icons">add_photo_alternate</i>
         <input
           type="file"
@@ -120,6 +136,12 @@ export default {
       :disabled="isProcessing || disabled"
       @keyup="handleTextAreaKeyUp"
     />
+    <p
+      v-if="errMsg"
+      class="alert alert-danger mt-2"
+    >
+      {{ errMsg }}
+    </p>
     <div class="card" v-if="isExistAnswers">
       <label class="m-3">回答の候補</label>
       <div

@@ -45,11 +45,11 @@ RSpec.describe 'My Pages', type: :feature do
     scenario do
       expect{
         visit '/my/notification/edit'
-        check 'user[email_notification]'
+        uncheck 'user[email_notification]'
         click_on '更新'
         expect(page).to have_content('通知を更新しました')
         user.reload
-    }.to change(user, :email_notification).to(true)
+    }.to change(user, :email_notification).to(false)
     end
   end
 end

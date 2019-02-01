@@ -33,7 +33,8 @@ window.jQuery(function($) {
     });
   });
 
-  $('[data-role="collapsible').on('dblclick', function(e) {
+  // Safari で Syntax エラーとなるので合わせて修正 pivotal -> #163214830
+  $('[data-role="collapsible"]').on('dblclick', function(e) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
@@ -49,4 +50,27 @@ window.jQuery(function($) {
       })
     })
   })
-})
+
+  // 一回のサブミットで10MB以上添付すると nginx 413 に振られるのを防ぐ pivotal -> #163214830
+  $(function() {
+    $('#answer-files').on('change', 'input', function() {
+      var fileSizeSum = 0;
+      $.each($('.file-size-check'), function(i, value) {
+        // キャンセル済みファイルはカウントしない(キャンセルすると親の親ノードが display: none になる)
+        if ($(value).parent().parent().css('display') == 'none') {
+          return true;
+        }
+        // undefined のサイズを掴まないようチェック
+        if (value.files[0]) fileSizeSum += value.files[0].size
+      })
+      if (fileSizeSum > 10*1024*1024) {
+        $(this).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
+        $(".file-alert").html('合計ファイルサイズが10MB以上のため添付できません')
+        setTimeout(function() {
+          $(".file-alert").hide(400)
+        }, 3000);
+        $(this).replaceWith($(this).val('').clone(true));
+      }
+    })
+  })
+}) 

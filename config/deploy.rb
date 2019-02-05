@@ -16,20 +16,20 @@ set :rbenv_roles, :all
 set :linked_files, %w{.env .python-version learning/config/config.yml config/database.yml}
 set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads public/packs learning/dumps learning/logs node_modules}
 
-set :bundle_jobs, 4
-# set :unicorn_pid, "/tmp/unicorn.pid"
-# set :unicorn_config_path, 'config/unicorn.rb'
+set :bundle_jobs, 4 
+set :unicorn_pid, "/tmp/unicorn.pid"
+set :unicorn_config_path, 'config/unicorn.rb'
 
-set :puma_threads, [5, 5]
-set :puma_workers, 0
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
-set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
-set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
-set :puma_access_log, "#{release_path}/log/puma.access.log"
-set :puma_error_log,  "#{release_path}/log/puma.error.log"
-set :puma_preload_app, true
-set :puma_worker_timeout, nil
-set :puma_init_active_record, true
+# set :puma_threads, [5, 5]
+# set :puma_workers, 0
+# set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
+# set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
+# set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
+# set :puma_access_log, "#{release_path}/log/puma.access.log"
+# set :puma_error_log,  "#{release_path}/log/puma.error.log"
+# set :puma_preload_app, true
+# set :puma_worker_timeout, nil
+# set :puma_init_active_record, true
 
 set :whenever_identifier, ->{"#{fetch(:application)}_#{fetch(:stage)}}"}
 set :whenever_roles, ->{ :batch }
@@ -42,16 +42,16 @@ task :update_neologd do
   end
 end
 
-namespace :puma do
-  desc 'Create Directories for Puma Pids and Socket'
-  task :make_dirs do
-    on roles(:app) do
-      execute "mkdir #{shared_path}/tmp/sockets -p"
-      execute "mkdir #{shared_path}/tmp/pids -p"
-    end
-  end
-  before :start, :make_dirs
-end
+# namespace :puma do
+#   desc 'Create Directories for Puma Pids and Socket'
+#   task :make_dirs do
+#     on roles(:app) do
+#       execute "mkdir #{shared_path}/tmp/sockets -p"
+#       execute "mkdir #{shared_path}/tmp/pids -p"
+#     end
+#   end
+#   before :start, :make_dirs
+# end
 
 namespace :deploy do
   task :copy_assets_manifest do
@@ -92,21 +92,21 @@ namespace :deploy do
   after "deploy:compile_assets", :copy_assets_manifest
   after "deploy:rollback_assets", :copy_assets_manifest
 
-  desc 'Initial Deploy'
-  task :initial do
-    on roles(:app) do
-      before 'deploy:restart', 'puma:start'
-      invoke 'deploy'
-    end
-  end
-
-  # desc 'Restart application'
-  # task :restart do
-  #   on roles(:app), in: :sequence, wait: 5 do
-  #     # invoke 'unicorn:restart'
-  #     invoke 'puma:restart'
+  # desc 'Initial Deploy'
+  # task :initial do
+  #   on roles(:app) do
+  #     before 'deploy:restart', 'puma:start'
+  #     invoke 'deploy'
   #   end
   # end
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'unicorn:restart'
+      # invoke 'puma:restart'
+    end
+  end
 
   after :publishing, :restart
   after :restart, :clear_cache do

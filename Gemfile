@@ -78,7 +78,7 @@ gem 'rails_autolink'
 gem 'http'
 gem 'whenever', require: false
 gem 'carrierwave'
-gem 'rmagick', git: 'http://github.com/rmagick/rmagick.git', require: false
+gem 'rmagick', require: false
 gem 'rails4-autocomplete'
 gem 'slim-rails'
 gem 'slack-api'

@@ -5,10 +5,12 @@ import Cookies from 'js-cookie'
 
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
 
+import ChatForm from './Chat/ChatForm'
 import MainBody from './Chat/MainBody'
 
 export default {
   components: {
+    ChatForm,
     MainBody,
   },
 
@@ -44,11 +46,9 @@ export default {
       'createMessage',
     ]),
 
-    handleSubmitButonClick () {
-      this.createMessage({ message: this.newMessage })
-      this.newMessage = ''
+    handleChatFormSubmit (message) {
+      this.createMessage({ message })
     },
-
   }
 }
 </script>
@@ -60,21 +60,14 @@ export default {
 
     <main-body
       :messages="messages"
+      :header-height="40"
     />
 
     <div class="footer">
-      <form>
-        <textarea
-          v-model="newMessage"
-          :disabled="isProcessing"
-        />
-        <button
-          :disabled="isProcessing"
-          @click.prevent.stop="handleSubmitButonClick"
-        >
-          送信
-        </button>
-      </form>
+      <chat-form
+        :is-disabled="isProcessing"
+        @submit="handleChatFormSubmit"
+      />
     </div>
   </div>
 </template>

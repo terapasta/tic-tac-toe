@@ -66,6 +66,7 @@ export default {
   border-radius: 16px;
   background-color: #fff;
   box-shadow: 0 16px 24px -8px rgba(0, 0, 0, .05);
+  word-break: break-all;
 
   &--bot {
     background: rgba(94,185,255,1);

@@ -3,4 +3,5 @@ export default {
   guestKey: null,
   messages: [],
   isProcessing: false,
+  bot: {},
 }

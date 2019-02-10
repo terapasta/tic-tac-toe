@@ -8,6 +8,7 @@ export default {
   },
 
   props: {
+    bot: { type: Object, required: true },
     messages: { type: Array, required: true },
     headerHeight: { type: Number, required: true },
   },
@@ -65,9 +66,11 @@ export default {
         :key="i"
       >
         <message
+          :bot="message.speaker === 'bot' ? bot : null"
           :ref="`message-${message.id}`"
           :speaker="message.speaker"
           :body="message.body"
+          :message="message"
           :is-animate="isDoneFirstRendering"
         />
       </div>

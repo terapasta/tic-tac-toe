@@ -1,9 +1,13 @@
 <script>
+import format from 'date-fns/format'
+
 export default {
   props: {
+    bot: { type: Object },
     speaker: { type: String, required: true },
     body: { type: String, required: true },
     isAnimate: { type: Boolean, default: true },
+    message: { type: Object, required: true },
   },
 
   computed: {
@@ -25,6 +29,10 @@ export default {
 
     animationDuration () {
       return this.isAnimate ? 1000 : 0
+    },
+
+    formattedCreatedAt () {
+      return format(this.message.createdAt, 'YYYY/MM/DD HH:mm')
     }
   }
 }
@@ -39,27 +47,80 @@ export default {
     <div
       :class="wrapperClass"
     >
-      <div v-if="isBot">
-        <div class="avatar"></div>
+      <div v-if="isBot" class="speaker-info bot">
+        <div class="avatar">
+          <a :href="bot.image.url" target="_blank">
+            <img :src="bot.image.thumb.url" />
+          </a>
+        </div>
+        <div class="text">
+          <span>{{bot.name}}</span>
+          <time>{{formattedCreatedAt}}</time>
+        </div>
       </div>
+
+      <div v-if="isGuest" class="speaker-info guest">
+        <div class="text">
+          <time>{{formattedCreatedAt}}</time>
+        </div>
+      </div>
+
       <div
         :class="balloonClass"
       >
         {{body}}
+      </div>
+
+      <div v-if="isBot" class="feedback">
+        <div class="desc">この回答を評価してください</div>
+        <button>
+          <i class="material-icons good" :class="{ active: true }">thumb_up</i>
+        </button>
+        <button>
+          <i class="material-icons bad" :class="{ active: true }">thumb_down</i>
+        </button>
       </div>
     </div>
   </transition>
 </template>
 
 <style scoped lang="scss">
-.avatar {
+.speaker-info {
   margin-bottom: 12px;
-  margin-left: -4px;
-  width: 48px;
-  height: 48px;
-  background-color: #ddd;
-  border-radius: 50%;
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    margin-right: 8px;
+    margin-left: -4px;
+    width: 48px;
+    height: 48px;
+    background-color: #ddd;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .text {
+    width: 100%;
+    font-size: 0.8rem;
+    color: #444444;
+
+    time {
+      color: #999;
+    }
+  }
+
+  &.guest {
+    text-align: right;
+  }
 }
+
 
 .balloon {
   padding: 12px 16px;
@@ -84,6 +145,49 @@ export default {
 
   &--guest {
     border-top-right-radius: 0px;
+  }
+}
+
+.feedback {
+  padding: 8px 16px 0 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .desc {
+    font-size: 0.8rem;
+    color: #999;
+  }
+  button {
+    transition-duration: 0.1s;
+    transition-property: transform;
+    margin-left: 8px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+      .material-icons {
+        color: #666;
+      }
+    }
+
+    &:active {
+      transform: scale(1.2);
+      transform-origin: center;
+    }
+  }
+  .material-icons {
+    color: #888;
+
+    &.good.active {
+      color: #28a745;
+    }
+    &.bad.active {
+      color: #dc3545;
+    }
   }
 }
 

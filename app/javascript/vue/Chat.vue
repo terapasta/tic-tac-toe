@@ -7,11 +7,13 @@ import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
 
 import ChatForm from './Chat/ChatForm'
 import MainBody from './Chat/MainBody'
+import Notification from './Chat/Notification'
 
 export default {
   components: {
     ChatForm,
     MainBody,
+    Notification,
   },
 
   data: () => ({
@@ -33,6 +35,7 @@ export default {
 
   computed: {
     ...mapState([
+      'bot',
       'botToken',
       'guestKey',
       'messages',
@@ -56,9 +59,13 @@ export default {
 <template>
   <div class="Chat">
     <div class="header">
+      <notification
+        message="サンプルメッセージサンプルメッセージ"
+      />
     </div>
 
     <main-body
+      :bot="bot"
       :messages="messages"
       :header-height="40"
     />
@@ -82,6 +89,7 @@ export default {
 }
 
 .header {
+  position: relative;
   height: 40px;
   background-color: #fff;
   flex-shrink: 0;

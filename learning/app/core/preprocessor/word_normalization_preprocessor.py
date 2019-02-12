@@ -34,7 +34,10 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         for text in texts:
             found = False
             for word, value in words_and_values:
-                if re.match(value, text):
+                # re.match() だと前方一致のものしか当たらないので、
+                # 部分文字列にヒットさせるため re.search() を使う
+                # https://www.pivotaltracker.com/n/projects/1879711/stories/163612399
+                if re.search(value, text):
                     #
                     # シノニムとして登録した語は、元の語に寄せる
                     # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765

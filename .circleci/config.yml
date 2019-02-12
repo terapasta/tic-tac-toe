@@ -6,9 +6,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: kozo002/myope:latest
+      - image: harada4atsushi/myope:latest
         auth:
-          username: kozo002
+          username: harada4atsushi
           password: $DOCKERHUB_PASSWORD
 
         environment:

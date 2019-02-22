@@ -64,7 +64,7 @@ window.jQuery(function($) {
         $(element).replaceWith($(element).val('').clone(true));
       }
 
-      let fileSizeSum = 0;
+      var fileSizeSum = 0;
       $.each($('.file-size-check'), function(i, value) {
         // キャンセル済みファイルはカウントしない(キャンセルすると親の親ノードが display: none になる)
         if ($(value).parent().parent().css('display') == 'none') {
@@ -79,7 +79,7 @@ window.jQuery(function($) {
         return showErrMsg(this, errMsg);
       }
       // 回答内画像との合算チェック（最後に添付されたファイルのみ合算対象）　
-      let imgFileSize = $('#answer-inline-image')[0].files[0].size;
+      var imgFileSize = $('#answer-inline-image')[0].files[0].size;
       if (fileSizeSum + imgFileSize > TEN_MB) {
         const errMsg = '「回答」に追加した画像との合算サイズが10MB以上のため添付できません';
         return showErrMsg(this, errMsg);

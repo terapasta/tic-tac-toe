@@ -122,6 +122,7 @@ export default {
           type="file"
           class="file-input"
           name="answer-inline-image"
+          id="answer-inline-image"
           @change="handleFileInputChange"
         />
       </div>

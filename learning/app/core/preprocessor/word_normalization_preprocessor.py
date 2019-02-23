@@ -15,12 +15,10 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # bot_id = N/A のもの（システム辞書）は、リスト順で後ろの方に移動
         # https://www.pivotaltracker.com/n/projects/1879711/stories/162856567
         synonyms = self._synonyms.by_bot(self._bot.id).sort_values('bot_id', na_position='last')
-        print('before = \n{}'.format(synonyms))
 
         # 変換が循環していると、システム辞書とユーザー辞書の関係で変換が異なる場合がある
         # https://www.pivotaltracker.com/n/projects/1879711/stories/164102017
         synonyms = self.remove_cycle_from_synonyms(synonyms)
-        print('after = \n{}'.format(synonyms))
 
         return self._normalize_word(texts, synonyms)
 

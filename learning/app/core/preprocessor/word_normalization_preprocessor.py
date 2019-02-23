@@ -42,7 +42,18 @@ class WordNormalizationPreprocessor(BasePreprocessor):
                 continue
 
             # 親の祖先に子が含まれている場合、
-            # 子の祖先に親を追加してしまうとサイクルが生じてしまう
+            # 子の祖先に親を追加してしまうとサイクルが生じてしまうので、
+            # そのような辺を追加しない
+            #
+            # 可読性は悪いが処理速度を担保するために reduce, lambda, リスト内包表記を使用
+            #
+            # [x == child for x in ...] で、リスト中の対象の単語が True、そうでない単語が False で置き換えられる
+            # 例）[True, False, False]
+            #
+            # この True/False のリストに対して、1つでも要素が True なら True を返す処理を lambda式で書く
+            # 例）[True, False] => True
+            #    [False, Fasle] => False
+            #
             has_ancestor = reduce(lambda a, b: a or b, [x == child for x in ancestors[parent]])
             if not has_ancestor:
                 # 親を祖先として追加

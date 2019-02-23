@@ -15,10 +15,12 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # bot_id = N/A のもの（システム辞書）は、リスト順で後ろの方に移動
         # https://www.pivotaltracker.com/n/projects/1879711/stories/162856567
         synonyms = self._synonyms.by_bot(self._bot.id).sort_values('bot_id', na_position='last')
+        print('before = \n{}'.format(synonyms))
 
         # 変換が循環していると、システム辞書とユーザー辞書の関係で変換が異なる場合がある
         # https://www.pivotaltracker.com/n/projects/1879711/stories/164102017
         synonyms = self.remove_cycle_from_synonyms(synonyms)
+        print('after = \n{}'.format(synonyms))
 
         return self._normalize_word(texts, synonyms)
 
@@ -32,9 +34,9 @@ class WordNormalizationPreprocessor(BasePreprocessor):
             if child not in ancestors:
                 ancestors[child] = []
 
-            # 親の祖先をそのままコピー
+            # 親の祖先を子の祖先にマージ
             inherit = getattr(ancestors, parent, [])
-            ancestors[child] = inherit.copy()
+            ancestors[child] = self._merge_lists(ancestors[child], inherit.copy())
 
             # 親に祖先がいない場合は無条件に子の祖先として親を追加
             if parent not in ancestors:
@@ -59,16 +61,23 @@ class WordNormalizationPreprocessor(BasePreprocessor):
                 # 親を祖先として追加
                 ancestors[child].append(parent)
 
-        # 最も古い祖先が変換後の文字列になる
+        # 全ての祖先を子に変換する
         replacements = []
-        for target in ancestors.keys():
-            if len(ancestors[target]) > 0:
+        for word in ancestors.keys():
+            for value in ancestors[word]:
                 replacements.append({
-                    'value': target,
-                    'word': ancestors[target][0],
+                    'word': word,
+                    'value': value,
                 })
 
         return pd.DataFrame(replacements)
+
+    def _merge_lists(self, *args):
+        add = lambda a, b: a + b
+        return self._unique_list(reduce(add, args))
+
+    def _unique_list(self, array):
+        return list(set(array))
 
     def _normalize_word(self, texts, synonym_mappings):
         # DataFrame から itertupples でループを回すよりも、

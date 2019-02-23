@@ -62,12 +62,11 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # 最も古い祖先が変換後の文字列になる
         replacements = []
         for target in ancestors.keys():
-            # dictに要素が存在するということは、少なくとも 1つは要素を持っているため、
-            # ancestors[target] の長さはチェックしなくて良い
-            replacements.append({
-                'value': target,
-                'word': ancestors[target][0],
-            })
+            if len(ancestors[target]) > 0:
+                replacements.append({
+                    'value': target,
+                    'word': ancestors[target][0],
+                })
 
         return pd.DataFrame(replacements)
 

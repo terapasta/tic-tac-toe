@@ -54,6 +54,16 @@ window.jQuery(function($) {
   // 一回のサブミットで10MB以上添付すると nginx 413 に振られるのを防ぐ pivotal -> #163214830
   $(function() {
     $('#answer-files').on('change', 'input', function() {
+      const TEN_MB = 10*1024*1024;
+      function showErrMsg(element, errMsg) {
+        $(element).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
+        $(".file-alert").html(errMsg)
+        setTimeout(function() {
+          $(".file-alert").hide(400);
+        }, 4000);
+        $(element).replaceWith($(element).val('').clone(true));
+      }
+
       var fileSizeSum = 0;
       $.each($('.file-size-check'), function(i, value) {
         // キャンセル済みファイルはカウントしない(キャンセルすると親の親ノードが display: none になる)
@@ -61,15 +71,18 @@ window.jQuery(function($) {
           return true;
         }
         // undefined のサイズを掴まないようチェック
-        if (value.files[0]) fileSizeSum += value.files[0].size
+        if (value.files[0]) fileSizeSum += value.files[0].size;
       })
-      if (fileSizeSum > 10*1024*1024) {
-        $(this).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
-        $(".file-alert").html('合計ファイルサイズが10MB以上のため添付できません')
-        setTimeout(function() {
-          $(".file-alert").hide(400)
-        }, 3000);
-        $(this).replaceWith($(this).val('').clone(true));
+      // 回答添付ファイルの合計サイズチェック
+      if (fileSizeSum > TEN_MB) {
+        const errMsg = '合計ファイルサイズが10MB以上のため添付できません';
+        return showErrMsg(this, errMsg);
+      }
+      // 回答内画像との合算チェック（最後に添付されたファイルのみ合算対象）　
+      var imgFileSize = $('#answer-inline-image')[0].files[0].size;
+      if (fileSizeSum + imgFileSize > TEN_MB) {
+        const errMsg = '「回答」に追加した画像との合算サイズが10MB以上のため添付できません';
+        return showErrMsg(this, errMsg);
       }
     })
   })

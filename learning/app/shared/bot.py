@@ -32,11 +32,7 @@ class Bot(BaseCls):
             'algorithm': self.algorithm,
             'feedback_algorithm': self.feedback_algorithm,
             'config': {
-                # FIXME:
-                # binary の綴りが間違っているけど、影響範囲が読めてないので後で直したい
-                'word2vec_model_is_binary': config['word2vec_model_is_binaly'],
                 'dicdir': config['dicdir'],
                 'datasource_type': config['datasource_type'],
-                'word2vec_model_name': config['word2vec_model_name'],
             },
         }

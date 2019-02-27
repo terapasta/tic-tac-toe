@@ -95,6 +95,8 @@ export default {
         const tailText = this.answer.slice(insertPosition)
         this.answer = headText + markdown + tailText
         this.$emit('keyup', this.answer)
+        // prevent inline image from being submitted by "送信" button
+        this.$refs.answerInlineImage.value = ''
       }).catch(err => {
         console.error(err)
         this.isProcessing = false
@@ -119,6 +121,7 @@ export default {
 
         <i class="material-icons">add_photo_alternate</i>
         <input
+          ref="answerInlineImage"
           type="file"
           class="file-input"
           name="answer-inline-image"

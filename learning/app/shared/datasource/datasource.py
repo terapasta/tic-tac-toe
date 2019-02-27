@@ -60,3 +60,7 @@ class Datasource(BaseCls):
     @property
     def synonyms(self):
         return self._synonyms
+
+    @synonyms.setter
+    def synonyms(self, synonyms):
+        self._synonyms = synonyms

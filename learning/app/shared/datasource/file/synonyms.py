@@ -5,8 +5,8 @@ from app.shared.base_cls import BaseCls
 
 
 class Synonyms(BaseCls):
-    def __init__(self):
-        with open('./fixtures/synonyms.yml', 'r') as f:
+    def __init__(self, path='./fixtures/synonyms.yml'):
+        with open(path, 'r') as f:
             self._data = pd.io.json.json_normalize(yaml.load(f))
 
     def all(self):

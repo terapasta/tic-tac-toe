@@ -51,6 +51,9 @@ class Bot < ApplicationRecord
 
   before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
 
+  # https://www.pivotaltracker.com/n/projects/1879711/stories/152746245
+  after_create :create_tutorial
+
   def learning_parameter_attributes
     if learning_parameter.present?
       attrs = learning_parameter.attributes.with_indifferent_access

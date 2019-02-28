@@ -1,4 +1,6 @@
 import re
+import pandas as pd
+from functools import reduce
 from app.core.preprocessor.base_preprocessor import BasePreprocessor
 from app.shared.datasource.datasource import Datasource
 
@@ -13,7 +15,67 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # bot_id = N/A のもの（システム辞書）は、リスト順で後ろの方に移動
         # https://www.pivotaltracker.com/n/projects/1879711/stories/162856567
         synonyms = self._synonyms.by_bot(self._bot.id).sort_values('bot_id', na_position='last')
+
+        # 変換が循環していると、システム辞書とユーザー辞書の関係で変換が異なる場合がある
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/164102017
+        synonyms = self.remove_cycle_from_synonyms(synonyms)
+
         return self._normalize_word(texts, synonyms)
+
+    def remove_cycle_from_synonyms(self, synonyms):
+        ancestors = {}
+        for _, row in synonyms.iterrows():
+            # value => word の変換が行われる
+            # value を親（parent）、wordを子（child）と呼ぶ
+            parent  = row['value']
+            child = row['word']
+            if child not in ancestors:
+                ancestors[child] = []
+
+            # 親の祖先を子の祖先にマージ
+            inherit = getattr(ancestors, parent, [])
+            ancestors[child] = self._merge_lists(ancestors[child], inherit.copy())
+
+            # 親に祖先がいない場合は無条件に子の祖先として親を追加
+            if parent not in ancestors:
+                ancestors[child].append(parent)
+                continue
+
+            # 親の祖先に子が含まれている場合、
+            # 子の祖先に親を追加してしまうとサイクルが生じてしまうので、
+            # そのような辺を追加しない
+            #
+            # 可読性は悪いが処理速度を担保するために reduce, lambda, リスト内包表記を使用
+            #
+            # [x == child for x in ...] で、リスト中の対象の単語が True、そうでない単語が False で置き換えられる
+            # 例）[True, False, False]
+            #
+            # この True/False のリストに対して、1つでも要素が True なら True を返す処理を lambda式で書く
+            # 例）[True, False] => True
+            #    [False, Fasle] => False
+            #
+            has_ancestor = reduce(lambda a, b: a or b, [x == child for x in ancestors[parent]])
+            if not has_ancestor:
+                # 親を祖先として追加
+                ancestors[child].append(parent)
+
+        # 全ての祖先を子に変換する
+        replacements = []
+        for word in ancestors.keys():
+            for value in ancestors[word]:
+                replacements.append({
+                    'word': word,
+                    'value': value,
+                })
+
+        return pd.DataFrame(replacements)
+
+    def _merge_lists(self, *args):
+        add = lambda a, b: a + b
+        return self._unique_list(reduce(add, args))
+
+    def _unique_list(self, array):
+        return list(set(array))
 
     def _normalize_word(self, texts, synonym_mappings):
         # DataFrame から itertupples でループを回すよりも、

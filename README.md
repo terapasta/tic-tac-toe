@@ -27,7 +27,8 @@ $ bundle exec foreman start
 ### React開発環境構築
 
 一部の画面でReactを使用しています。  
-ソースコードは `app/assets/javacript/components` 以下にあります。
+ソースコードは `app/assets/javacripts/es2015` 以下にあります。  
+ビルド後のソースは `app/assets/javascripts/bundled-2015.js` です。
 
 __jsライブラリのインストール__
 

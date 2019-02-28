@@ -5,7 +5,6 @@ from app.shared.constants import Constants
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.cosine_similarity_factory import CosineSimilarityFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
-from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
 from app.feedback.pass_feedback import PassFeedback
@@ -35,12 +34,6 @@ class ContextTestCase(TestCase):
         factory = context.get_factory()
 
         eq_(factory.__class__.__name__, TwoStepCosineSimilarityFactory.__name__)
-
-    def test_word2vec_wmd(self):
-        context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_WORD2VEC_WMD)
-        factory = context.get_factory()
-
-        eq_(factory.__class__.__name__, Word2vecWmdFactory.__name__)
 
     def test_hybrid_classification(self):
         context = Helper.test_context(bot_id=1, algorithm=Constants.ALGORITHM_HYBRID_CLASSIFICATION)

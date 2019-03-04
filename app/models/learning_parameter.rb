@@ -30,7 +30,7 @@ class LearningParameter < ApplicationRecord
 
   def self.default_attributes
       {
-        algorithm: algorithms[:fuzzy_similarity_classification],
+        algorithm: algorithms[:strict_fuzzy_similarity_classification],
         parameters: {},
         feedback_algorithm: feedback_algorithms[:rocchio],
         parameters_for_feedback: {},

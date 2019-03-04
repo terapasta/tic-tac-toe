@@ -6,9 +6,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: kozo002/myope:latest
+      - image: harada4atsushi/myope:latest
         auth:
-          username: kozo002
+          username: harada4atsushi
           password: $DOCKERHUB_PASSWORD
 
         environment:
@@ -57,9 +57,9 @@ jobs:
               --format RspecJunitFormatter \
               --out /tmp/test-results/rspec.xml
             cd ./learning && cp config/config.yml.example config/config.yml && nosetests -s tests
-            python -m bin.learn --bot_id=1 --algorithm=7
-            python -m bin.learn --bot_id=1 --algorithm=8
-            python -m bin.benchmark
+            python -m bin.learn --bot_id=1 --algorithm=8 --env=test
+            python -m bin.learn --bot_id=1 --algorithm=9 --env=test
+            python -m bin.benchmark --env=test
 
 
       # collect reports

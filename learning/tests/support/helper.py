@@ -1,11 +1,14 @@
+import pandas as pd
 from injector import inject
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from app.shared.base_cls import BaseCls
+from app.shared.bot import Bot
 from app.shared.config import Config
 from app.shared.context import Context
 from app.shared.constants import Constants
 from app.shared.datasource.datasource import Datasource
+from app.shared.datasource.file.synonyms import Synonyms
 from app.shared.datasource.file.question_answers import QuestionAnswers
 from tests.support.datasource.empty_persistence import EmptyPersistence
 from tests.support.datasource.empty_question_answers import EmptyQuestionAnswers
@@ -57,6 +60,18 @@ class Helper:
             learning_parameter=LearningParameter(algorithm=algorithm, feedback_algorithm=feedback_algorithm),
             grpc_context={},
             datasource=datasource,
+        )
+
+    @classmethod
+    def test_synonyms(cls):
+        return Synonyms(path='tests/fixtures/synonyms.yml')
+
+    @classmethod
+    def empty_bot(cls, bot_id=1, learning_parameter={}, config=None):
+        return Bot.new(
+            bot_id=bot_id,
+            learning_parameter=learning_parameter,
+            config=config,
         )
 
     @classmethod

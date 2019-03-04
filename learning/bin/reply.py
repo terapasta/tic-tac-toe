@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)  # Rails側と重複しないIDを指定
 parser.add_argument('--env', type=str, default='development')
 parser.add_argument('--question', type=str, default='プリン食べたい')
-parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
+parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_STRICT_FUZZY_COSINE_SIMILARITY_CLASSIFICATION)
 parser.add_argument('--feedback_algorithm', type=str, default=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
 args = parser.parse_args()
 

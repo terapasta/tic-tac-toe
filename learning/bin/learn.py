@@ -8,7 +8,7 @@ from app.shared.context import Context
 parser = argparse.ArgumentParser()
 parser.add_argument('--bot_id', default=1, type=int)
 parser.add_argument('--env', type=str, default='development')
-parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_SIMILARITY_CLASSIFICATION)
+parser.add_argument('--algorithm', type=str, default=Constants.ALGORITHM_STRICT_FUZZY_COSINE_SIMILARITY_CLASSIFICATION)
 parser.add_argument('--feedback_algorithm', type=str, default=Constants.FEEDBACK_ALGORITHM_ROCCHIO)
 args = parser.parse_args()
 

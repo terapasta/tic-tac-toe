@@ -94,12 +94,16 @@ class WordNormalizationPreprocessor(BasePreprocessor):
     def _generate_word_normalizer(self, texts, words_and_values):
         # return しないで yield したほうがオーバーヘッドが小さく、高速かつ省メモリ
         for text in texts:
-            found = False
+            # 一文の中に複数回辞書登録された語が登場する場合があるので、
+            # 一つ見つかっても変換を繰り返す
+            # https://www.pivotaltracker.com/n/projects/1879711/stories/164266051
+            normalized = text
+
             for word, value in words_and_values:
                 # re.match() だと前方一致のものしか当たらないので、
                 # 部分文字列にヒットさせるため re.search() を使う
                 # https://www.pivotaltracker.com/n/projects/1879711/stories/163612399
-                if re.search(value, text):
+                if re.search(value, normalized):
                     #
                     # シノニムとして登録した語は、元の語に寄せる
                     # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765
@@ -108,15 +112,6 @@ class WordNormalizationPreprocessor(BasePreprocessor):
                     # （例えば、プリンタという辞書が登録されており、プリンターという文字列を見るとプリンターーとなってしまう）
                     # 一度変換後の文字列で split して、後に join することで変換しないようにする
                     #
-                    normalized = word.join([re.sub(value, word, x) for x in text.split(word)])
+                    normalized = word.join([re.sub(value, word, x) for x in normalized.split(word)])
 
-                    # N:1 なので、シノニムが一つでも見つかった場合は、これ以降のループは不要
-                    if normalized != text:
-                        yield normalized
-
-                        found = True
-                        break
-
-            # シノニムが存在しない場合は元の文を返す
-            if not found:
-                yield text
+            yield normalized

@@ -78,12 +78,6 @@ window.jQuery(function($) {
         const errMsg = '合計ファイルサイズが10MB以上のため添付できません';
         return showErrMsg(this, errMsg);
       }
-      // 回答内画像との合算チェック（最後に添付されたファイルのみ合算対象）　
-      var imgFileSize = $('#answer-inline-image')[0].files[0].size;
-      if (fileSizeSum + imgFileSize > TEN_MB) {
-        const errMsg = '「回答」に追加した画像との合算サイズが10MB以上のため添付できません';
-        return showErrMsg(this, errMsg);
-      }
     })
   })
 }) 

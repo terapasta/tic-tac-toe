@@ -66,7 +66,10 @@ export default {
     },
 
     handleFileInputChange (e) {
-      if (this.isProcessing) { return }
+      if (this.isProcessing) {
+        this.makeInlineImageFileEmpty()
+        return
+      }
       const file = e.target.files[0]
       if (file == null) { return }
 
@@ -76,13 +79,17 @@ export default {
       let extensionWhiteList = /(\.jpg|\.jpeg|\.gif|\.png)$/i
       if (!extensionWhiteList.exec(file.name)) {
         this.errMsg = '拡張子が .jpg .jpeg .gif .png の画像ファイルのみ追加可能です'
-        return false
       }
 
       if (file.size > 10*1024*1024 /* = 10MB */) {
         this.errMsg = '画像サイズは10MB以下となるものを選択してください'
+      }
+
+      if (!isEmpty(this.errMsg)) {
+        this.makeInlineImageFileEmpty()
         return false
       }
+
       const { botId } = this
       this.isProcessing = true
 
@@ -98,7 +105,14 @@ export default {
       }).catch(err => {
         console.error(err)
         this.isProcessing = false
+      }).then(() => {
+        this.makeInlineImageFileEmpty()
       })
+    },
+
+    makeInlineImageFileEmpty () {
+      // prevent inline image from being submitted by "送信" button
+      this.$refs.answerInlineImage.value = ''
     }
   }
 }
@@ -119,10 +133,10 @@ export default {
 
         <i class="material-icons">add_photo_alternate</i>
         <input
+          ref="answerInlineImage"
           type="file"
           class="file-input"
           name="answer-inline-image"
-          id="answer-inline-image"
           @change="handleFileInputChange"
         />
       </div>

@@ -32,7 +32,7 @@ class Persistence(BaseCls):
             if data is not None:
                 return data
 
-            time.sleep(dt)
+            sleep(dt)
         return None
 
     def dump(self, obj, key):

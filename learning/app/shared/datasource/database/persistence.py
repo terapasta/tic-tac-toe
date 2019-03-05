@@ -1,4 +1,5 @@
 import io
+from time import sleep
 from sklearn.externals import joblib
 from app.shared.datasource.database.database import Database
 from app.shared.base_cls import BaseCls
@@ -37,7 +38,7 @@ class Persistence(BaseCls):
             if data is not None:
                 return data
 
-            time.sleep(dt)
+            sleep(dt)
         return None
 
     def dump(self, obj, key):

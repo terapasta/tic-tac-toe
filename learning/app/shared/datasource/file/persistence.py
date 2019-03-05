@@ -1,10 +1,10 @@
 import os
+from time import sleep
 from injector import inject
 from pathlib import Path
 from sklearn.externals import joblib
 from app.shared.config import Config
 from app.shared.base_cls import BaseCls
-
 
 class Persistence(BaseCls):
     @inject
@@ -22,6 +22,17 @@ class Persistence(BaseCls):
         if Path(path).is_file():
             return joblib.load(path)
 
+        return None
+
+    # @property n = #retries [times]
+    # @property dt = interval for retry [sec]
+    def load_with_retry(self, key, retry=5, dt=0.2):
+        for i in range(retry):
+            data = self.load(key)
+            if data is not None:
+                return data
+
+            time.sleep(dt)
         return None
 
     def dump(self, obj, key):

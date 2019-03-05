@@ -20,11 +20,10 @@ class TfidfVectorizer(BaseVectorizer):
         self.persistence.dump(self.vectorizer, self.dump_key)
 
     def transform(self, sentences):
-        self._prepare_instance_if_needed()
-        try:
-            return self.vectorizer.transform(sentences)
-        except NotFittedError as e:
-            raise NotTrainedError(e)
+        is_loaded = self._load_instance_if_needed()
+        if is_loaded == False:
+            raise NotTrainedError(NotFittedError)
+        return self.vectorizer.transform(sentences)
 
     def fit_transform(self, sentences):
         self.fit(sentences)
@@ -37,9 +36,19 @@ class TfidfVectorizer(BaseVectorizer):
     def dump_key(self):
         return self._dump_key
 
-    def _prepare_instance_if_needed(self):
-        if self.vectorizer is None:
-            self.vectorizer = self.persistence.load(self.dump_key)
+    def _create_instance_if_needed(self):
+        # 学習済みのものがなければ新規作成
         if self.vectorizer is None:
             # Note: token_patternは1文字のデータを除外しない設定
             self.vectorizer = SkTfidfVectorizer(use_idf=True, token_pattern=u'(?u)\\b\\w+\\b')
+
+        return self.vectorizer is not None
+
+    def _load_instance_if_needed(self, retry=5, dt=.2):
+        # 学習済みのベクタライザがあればそれをロード
+        if self.vectorizer is None:
+            self.vectorizer = self.persistence.load_with_retry(self.dump_key, retry=retry, dt=dt)
+        return self.vectorizer is not None
+
+    def _prepare_instance_if_needed(self):
+        return self._load_instance_if_needed(retry=3, dt=.1) or self._create_instance_if_needed()

@@ -11,5 +11,8 @@ class EmptyPersistence(BaseCls):
     def load(self, key):
         return None
 
+    def load_with_retry(self, key, retry=5, dt=.1):
+        return None
+
     def dump(self, obj, key):
         pass

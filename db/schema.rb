@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181115083519) do
+ActiveRecord::Schema.define(version: 20190305075245) do
 
   create_table "accuracy_test_cases", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "question_text"
@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(version: 20181115083519) do
     t.json "reply_log"
     t.integer "guest_message_id"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["guest_message_id"], name: "index_messages_on_guest_message_id"
     t.index ["question_answer_id"], name: "index_messages_on_question_answer_id"
   end
 

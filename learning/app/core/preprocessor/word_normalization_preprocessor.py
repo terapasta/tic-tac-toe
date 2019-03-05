@@ -38,7 +38,7 @@ class WordNormalizationPreprocessor(BasePreprocessor):
 
             # 親に祖先がいない場合は無条件に子の祖先として親を追加
             if parent not in ancestors:
-                ancestors[child].append(parent)
+                ancestors[child] = self._merge_lists(ancestors[child], [parent])
                 continue
 
             # 親の祖先に子が含まれている場合、
@@ -86,7 +86,7 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # iterator は終端まで行くと StopIteration を return するので、
         # 複数回ループを回すことができない
         # これを回避するため、一旦 list に変換する
-        words_and_values = list(zip(synonym_mappings.word, [re.compile(x) for x in synonym_mappings.value]))
+        words_and_values = list(zip(synonym_mappings.word, synonym_mappings.value))
 
         # generator を使うことで省メモリ化と高速化を行う
         return [r for r in self._generate_word_normalizer(texts, words_and_values)]
@@ -100,18 +100,22 @@ class WordNormalizationPreprocessor(BasePreprocessor):
             normalized = text
 
             for word, value in words_and_values:
+                #
+                # 変換前の文字列に変換後の文字列が含まれる場合、過剰置換してしまうので、
+                # （例えば、プリンタという辞書が登録されており、プリンターという文字列を見るとプリンターーとなってしまう）
+                # 一度変換後の文字列で split して、後に join することで変換しないようにする
+                #
+                if re.search(value, word):
+                    normalized = word.join([re.sub(value, word, x) for x in normalized.split(word)])
+
+                #
+                # シノニムとして登録した語は、元の語に寄せる
+                # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765
+                #
                 # re.match() だと前方一致のものしか当たらないので、
                 # 部分文字列にヒットさせるため re.search() を使う
                 # https://www.pivotaltracker.com/n/projects/1879711/stories/163612399
-                if re.search(value, normalized):
-                    #
-                    # シノニムとして登録した語は、元の語に寄せる
-                    # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765
-                    #
-                    # 変換前の文字列に変換後の文字列が含まれる場合、過剰置換してしまうので、
-                    # （例えば、プリンタという辞書が登録されており、プリンターという文字列を見るとプリンターーとなってしまう）
-                    # 一度変換後の文字列で split して、後に join することで変換しないようにする
-                    #
-                    normalized = word.join([re.sub(value, word, x) for x in normalized.split(word)])
+                elif re.search(value, normalized):
+                    normalized = re.sub(value, word, normalized)
 
             yield normalized

@@ -29,8 +29,9 @@ class WordNormalizationPreprocessorTestCase(TestCase):
             {"arg": "チェックする", "want": "確認する"},
             {"arg": "ダッシュ攻撃をチェック", "want": "DAを確認"},
             {"arg": "ダッシュ攻撃をチェックしたら壊れた", "want": "DAを確認したら調子悪い"},
-            {"arg": "プリンター", "want": "プリンター"},
-            {"arg": "プリンタ", "want": "プリンター"},
+            {"arg": "プリンター", "want": "プリンタ"},
+            {"arg": "プリンタ", "want": "プリンタ"},
+            {"arg": "プリンターで印刷できない", "want": "プリンタで印刷できない"},
             {"arg": "PC", "want": "PC"},
             {"arg": "パソコン", "want": "PC"},
         ]

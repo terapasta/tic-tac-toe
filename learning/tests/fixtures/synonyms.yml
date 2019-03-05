@@ -120,8 +120,8 @@
   value: PC
 - id: 31
   bot_id: 1
-  word: プリンター
-  value: プリンタ
+  word: プリンタ
+  value: プリンター
 - id: 32
   bot_id: 1
   word: DA
@@ -138,3 +138,7 @@
   bot_id: 1
   word: 調子悪い
   value: 壊れた
+- id: 36
+  bot_id: null
+  word: プリンター
+  value: プリンタ

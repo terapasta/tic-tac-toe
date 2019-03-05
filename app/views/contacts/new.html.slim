@@ -13,6 +13,10 @@
 
   = form_for(:ticket, url: contacts_path, method: "post" ) do |f|
     .form-group
+      = f.label :subject, '件名'
+      = f.text_field :subject, class: 'form-control', value: params.dig(:ticket, :subject)
+
+    .form-group
       = f.label :description, 'お問合わせ内容'
       = f.text_area :description, rows: 10, class: 'form-control', placeholder: "例）◯◯画面で✕✕の操作をするとエラー画面が表示されてしまいます", value: params.dig(:ticket, :description)
 

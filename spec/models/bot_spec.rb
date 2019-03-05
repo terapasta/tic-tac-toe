@@ -86,4 +86,10 @@ RSpec.describe Bot do
         .and change{ bot.reload.demo_finished_at }
     end
   end
+
+  describe "tutorial assoc." do
+    it "should create tutorial automatically soon after a bot created" do
+      expect(bot.tutorial).not_to eq(nil)
+    end
+  end
 end

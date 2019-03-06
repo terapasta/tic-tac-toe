@@ -25,7 +25,7 @@ class FuzzyTermVectorizer(BaseVectorizer):
         # 何度か retry して、読み込めなければ NotFittedError を raise する
         is_loaded = self._load_instance_if_needed()
         if is_loaded == False:
-            raise NotTrainedError(NotFittedError)
+            raise NotTrainedError(NotFittedError())
         return self.vectorizer.transform(sentences)
 
     def fit_transform(self, sentences):

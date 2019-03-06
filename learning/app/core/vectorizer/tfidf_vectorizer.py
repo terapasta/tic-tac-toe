@@ -22,7 +22,7 @@ class TfidfVectorizer(BaseVectorizer):
     def transform(self, sentences):
         is_loaded = self._load_instance_if_needed()
         if is_loaded == False:
-            raise NotTrainedError(NotFittedError)
+            raise NotTrainedError(NotFittedError())
         return self.vectorizer.transform(sentences)
 
     def fit_transform(self, sentences):

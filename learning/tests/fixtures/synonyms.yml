@@ -142,3 +142,19 @@
   bot_id: null
   word: プリンター
   value: プリンタ
+- id: 37
+  bot_id: 1
+  word: ユーザー
+  value: ユーザー
+- id: 38
+  bot_id: 1
+  word: しかばね
+  value: ゾンビ
+- id: 39
+  bot_id: 1
+  word: 栗
+  value: クリ
+- id: 40
+  bot_id: 1
+  word: $
+  value: ドル

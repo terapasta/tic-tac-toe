@@ -1,4 +1,5 @@
 import re
+import MeCab
 import pandas as pd
 from functools import reduce
 from app.core.preprocessor.base_preprocessor import BasePreprocessor
@@ -9,8 +10,13 @@ class WordNormalizationPreprocessor(BasePreprocessor):
     def __init__(self, bot, datasource: Datasource):
         self._bot = bot
         self._synonyms = datasource.synonyms
+        self._tagger = MeCab.Tagger("-Owakati")
 
     def perform(self, texts):
+        # 対象の文章を一旦 tokenize する
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/164325275
+        texts = [self._tokenize(x) for x in texts]
+
         # ボット固有の辞書を優先して変換する
         # bot_id = N/A のもの（システム辞書）は、リスト順で後ろの方に移動
         # https://www.pivotaltracker.com/n/projects/1879711/stories/162856567
@@ -20,7 +26,12 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # https://www.pivotaltracker.com/n/projects/1879711/stories/164102017
         synonyms = self.remove_cycle_from_synonyms(synonyms)
 
-        return self._normalize_word(texts, synonyms)
+        # シノニムも一度 tokenize
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/164325275
+        synonyms['word'] = synonyms.word.apply(self._tokenize)
+        synonyms['value'] = synonyms.value.apply(self._tokenize)
+
+        return [self._trim_whitespaces(x) for x in self._normalize_word(texts, synonyms)]
 
     def remove_cycle_from_synonyms(self, synonyms):
         ancestors = {}
@@ -54,7 +65,7 @@ class WordNormalizationPreprocessor(BasePreprocessor):
             # 例）[True, False] => True
             #    [False, Fasle] => False
             #
-            has_ancestor = reduce(lambda a, b: a or b, [x == child for x in ancestors[parent]])
+            has_ancestor = reduce(lambda a, b: a or b, [x == child for x in ancestors[parent]], False)
             if not has_ancestor:
                 # 親を祖先として追加
                 ancestors[child].append(parent)
@@ -69,6 +80,20 @@ class WordNormalizationPreprocessor(BasePreprocessor):
                 })
 
         return pd.DataFrame(replacements)
+
+    def _tokenize(self, text):
+        #
+        # NOTE:
+        # 先頭にスペースを入れる
+        #
+        # 'アイドル ' と 'ドル ' では一致してしまうが、
+        # ' アイドル ' と ' ドル ' とは一致しないので、
+        # 本来不可分な単語中の部分文字列が置換されるのを防ぐ
+        #
+        return ' ' + self._tagger.parse(text).replace("\n", "")
+
+    def _trim_whitespaces(self, text):
+        return ''.join(text.split(' '))
 
     def _merge_lists(self, *args):
         add = lambda a, b: a + b

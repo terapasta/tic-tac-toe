@@ -2,10 +2,10 @@ import io
 from time import sleep
 from sklearn.externals import joblib
 from app.shared.datasource.database.database import Database
-from app.shared.base_cls import BaseCls
+from app.shared.persistence_base_cls import PersistenceBaseCls
 
 
-class Persistence(BaseCls):
+class Persistence(PersistenceBaseCls):
     def __init__(self):
         self.database = Database()
         self.id = 0
@@ -28,17 +28,6 @@ class Persistence(BaseCls):
             file = io.BytesIO(records['content'][0])
             return joblib.load(file)
 
-        return None
-
-    # @property n = #retries [times]
-    # @property dt = interval for retry [sec]
-    def load_with_retry(self, key, retry=5, dt=0.2):
-        for i in range(retry):
-            data = self.load(key)
-            if data is not None:
-                return data
-
-            sleep(dt)
         return None
 
     def dump(self, obj, key):

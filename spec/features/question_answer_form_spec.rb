@@ -9,7 +9,10 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
   end
 
   let!(:tutorial) do
-    bot.create_tutorial
+    # NOTE:
+    # tutorial は自動生成される
+    # https://www.pivotaltracker.com/n/projects/1879711/stories/164098607
+    bot.tutorial
   end
 
   let!(:owner) do

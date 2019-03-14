@@ -48,7 +48,9 @@ class ReplyResponse
   end
 
   def similar_question_answers
-    results = effective_results
+    # effective_results への shift により、probability の結果が変わるため、コピーで処理を行う。
+    # https://www.pivotaltracker.com/story/show/163612187
+    results = effective_results.dup
 
     # ユーザーの質問に対して一致度の高い質問が見つかり、かつ
     # 「こちらの質問ではないですか？」が表示されない場合に限り、

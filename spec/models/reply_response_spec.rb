@@ -167,5 +167,55 @@ RSpec.describe ReplyResponse do
 
     end
 
+    # 閾値（learning_parameter.classify_threashold | default = 0.6）よりも大きい
+    # probability の場合かつ
+    # 質問の文字数が 5以上かつ質問の素性の数が 2以上の場合
+    # サジェストを表示しない
+    context 'when questions with high probabilities returned' do
+
+      let(:raw_data) do
+        {
+          results: [
+            {
+              question_answer_id: question_answers.first.id,
+              probability: 0.7,
+              question: question_answers.first.question
+            },
+            {
+              question_answer_id: question_answers.first.id,
+              probability: 0.4,
+              question: sub_question.question
+            },
+            {
+              question_answer_id: question_answers.second.id,
+              probability: 0.2,
+              question: question_answers.second.question
+            }
+          ],
+          question_feature_count: 3,
+          noun_count: 2,
+          verb_count: 1,
+        }
+      end
+
+      context 'testing similar_question_answers and show_similar_question_answers?' do
+        subject do
+          reply_response.similar_question_answers
+          reply_response.show_similar_question_answers?
+        end
+
+        it { is_expected.to be_falsey }
+      end
+
+      context 'testing question_answer' do
+        subject do
+          reply_response.question_answer
+        end
+
+        it { is_expected.to satisfy{|qa| qa.no_classified? == false} }
+      end
+
+    end
+
   end
 end

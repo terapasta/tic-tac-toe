@@ -1,10 +1,11 @@
 import io
+from time import sleep
 from sklearn.externals import joblib
 from app.shared.datasource.database.database import Database
-from app.shared.base_cls import BaseCls
+from app.shared.persistence_base_cls import PersistenceBaseCls
 
 
-class Persistence(BaseCls):
+class Persistence(PersistenceBaseCls):
     def __init__(self):
         self.database = Database()
         self.id = 0

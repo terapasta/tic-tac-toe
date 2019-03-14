@@ -1,7 +1,8 @@
-from app.shared.base_cls import BaseCls
+from time import sleep
+from app.shared.persistence_base_cls import PersistenceBaseCls
 
 
-class Persistence(BaseCls):
+class Persistence(PersistenceBaseCls):
     __shared_state = {}
     data = {}
 

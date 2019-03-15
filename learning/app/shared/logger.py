@@ -12,3 +12,10 @@ fhandler = TimedRotatingFileHandler("./logs/application.log", when='D', backupCo
 fhandler.setLevel(logging.DEBUG)
 fhandler.setFormatter(formatter)
 logger.addHandler(fhandler)
+
+
+def disable_logging():
+    logger.disabled = True
+
+def enable_logging():
+    logger.disabled = False

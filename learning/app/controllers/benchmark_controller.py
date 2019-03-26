@@ -1,4 +1,4 @@
-from app.shared.logger import logger
+from app.shared.logger import logger, disable_logging, enable_logging
 from app.shared.base_cls import BaseCls
 from app.shared.benchmark import Benchmark
 from app.shared.constants import Constants
@@ -28,10 +28,10 @@ class BenchmarkController(BaseCls):
 
     def perform(self):
         # 評価前に学習する
-        logger.setLevel(logging.WARNING)
+        disable_logging()
         self.learn_controller.perform()
+        enable_logging()
 
-        logger.setLevel(logging.INFO)
         logger.info('load test data for evaluation')
 
         expected, actual = self._load_test_data()
@@ -49,7 +49,7 @@ class BenchmarkController(BaseCls):
 
     def _load_test_data(self):
         # reply用のコントローラを使うので、ログは警告のみ表示させる
-        logger.setLevel(logging.WARNING)
+        disable_logging()
 
         # ベンチマーク用のクラス
         bench = Benchmark()
@@ -79,7 +79,7 @@ class BenchmarkController(BaseCls):
                 y_expected.append(t['question_answer_id'])
 
         # INFOレベルに戻す
-        logger.setLevel(logging.INFO)
+        enable_logging()
 
         return (y_expected, y_actual)
 

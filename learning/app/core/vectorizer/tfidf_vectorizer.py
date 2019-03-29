@@ -13,16 +13,13 @@ class TfidfVectorizer(BaseVectorizer):
         self.persistence = datasource.persistence
         self._dump_key = dump_key
         self.vectorizer = None
+        self._prepare_instance_if_needed()
 
     def fit(self, sentences):
-        self._prepare_instance_if_needed()
         self.vectorizer.fit(sentences)
         self.persistence.dump(self.vectorizer, self.dump_key)
 
     def transform(self, sentences):
-        is_loaded = self._load_instance_if_needed()
-        if is_loaded == False:
-            raise NotTrainedError(NotFittedError())
         return self.vectorizer.transform(sentences)
 
     def fit_transform(self, sentences):

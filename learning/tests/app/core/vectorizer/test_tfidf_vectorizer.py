@@ -1,8 +1,7 @@
 from unittest import TestCase
 from nose.tools import assert_raises
-
+from sklearn.exceptions import NotFittedError
 from app.shared.datasource.datasource import Datasource
-from app.shared.custom_errors import NotTrainedError
 from app.core.tokenizer.mecab_tokenizer import MecabTokenizer
 from app.core.vectorizer.tfidf_vectorizer import TfidfVectorizer
 from tests.support.datasource.empty_persistence import EmptyPersistence
@@ -18,4 +17,4 @@ class TfidfVectorizerTestCase(TestCase):
             vectorizer.transform(sentences)
 
         # エラーになること
-        assert_raises(NotTrainedError, action)
+        assert_raises(NotFittedError, action)

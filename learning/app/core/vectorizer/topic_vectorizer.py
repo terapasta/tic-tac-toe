@@ -32,9 +32,9 @@ class TopicVectorizer(BaseVectorizer):
         # 全文の特徴量
         self.raw_data_vectorizer = None
 
-    def fit(self, sentences_with_pos):
         self._prepare_instance_if_needed()
 
+    def fit(self, sentences_with_pos):
         sentences_for_subject, sentences_for_predicate, sentences_for_raw_data = \
             self._split_sentences(sentences_with_pos)
 
@@ -50,7 +50,6 @@ class TopicVectorizer(BaseVectorizer):
         self.persistence.dump(self.vectorizers, self.dump_key)
 
     def transform(self, sentences_with_pos):
-        self._prepare_instance_if_needed()
         try:
             sentences_for_subject, sentences_for_predicate, sentences_for_raw_data = \
                 self._split_sentences(sentences_with_pos)

@@ -1,6 +1,7 @@
 import re
 import MeCab
 import pandas as pd
+
 from functools import reduce
 from app.core.preprocessor.base_preprocessor import BasePreprocessor
 from app.shared.datasource.datasource import Datasource
@@ -124,23 +125,28 @@ class WordNormalizationPreprocessor(BasePreprocessor):
             # https://www.pivotaltracker.com/n/projects/1879711/stories/164266051
             normalized = text
 
-            for word, value in words_and_values:
-                #
-                # 変換前の文字列に変換後の文字列が含まれる場合、過剰置換してしまうので、
-                # （例えば、プリンタという辞書が登録されており、プリンターという文字列を見るとプリンターーとなってしまう）
-                # 一度変換後の文字列で split して、後に join することで変換しないようにする
-                #
-                if re.search(value, word):
-                    normalized = word.join([re.sub(value, word, x) for x in normalized.split(word)])
-
-                #
-                # シノニムとして登録した語は、元の語に寄せる
-                # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765
-                #
-                # re.match() だと前方一致のものしか当たらないので、
-                # 部分文字列にヒットさせるため re.search() を使う
-                # https://www.pivotaltracker.com/n/projects/1879711/stories/163612399
-                elif re.search(value, normalized):
-                    normalized = re.sub(value, word, normalized)
+            normalized = reduce(self._replace_word_if_needed, words_and_values, normalized)
 
             yield normalized
+
+    def _replace_word_if_needed(self, text, word_and_value):
+        word, value = word_and_value
+
+        # 変換前の文字列に変換後の文字列が含まれる場合、過剰置換してしまうので、
+        # （例えば、プリンタという辞書が登録されており、プリンターという文字列を見るとプリンターーとなってしまう）
+        # 一度変換後の文字列で split して、後に join することで変換しないようにする
+        #
+        if value in word:
+            return word.join([x.replace(value, word) for x in text.split(word)])
+
+        #
+        # シノニムとして登録した語は、元の語に寄せる
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/161807765
+        #
+        # re.match() だと前方一致のものしか当たらないので、
+        # 部分文字列にヒットさせるため re.search() を使う
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/163612399
+        elif value in text:
+            return text.replace(value, word)
+
+        return text

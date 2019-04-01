@@ -12,7 +12,7 @@ RUN apt-get update -qq \
                     mecab-utils \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn
 

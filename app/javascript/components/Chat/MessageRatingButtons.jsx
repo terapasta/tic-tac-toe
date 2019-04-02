@@ -47,7 +47,7 @@ export default class MessageRatingButtons extends Component {
 
     return (
       <span>
-        <div className="chat-message__rating-title">この返答を評価してください</div>
+        <div className="chat-message__rating-title">この回答で解決しましたか？</div>
         <div
           className={goodClassName}
           ref="root" onClick={this.onClick.bind(this, c.Ratings.Good)}>

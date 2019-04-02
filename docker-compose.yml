@@ -3,7 +3,7 @@ version: '2'
 services:
   app: &app_base
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec foreman start -f Procfile
     stdin_open: true
     tty: true
     volumes:
@@ -17,11 +17,11 @@ services:
     environment:
       - DB_HOST=db
       - RPC_HOST=learning
-  # jobs:
-  #   <<: *app_base
-  #   ports: []
-  #   command: bundle exec rake jobs:work
-  #   stdin_open: false
+  jobs:
+    <<: *app_base
+    ports: []
+    command: bundle exec rake jobs:work
+    stdin_open: false
   # test:
   #   <<: *app_base
   #   command: bundle exec rspec ./spec
@@ -57,14 +57,12 @@ services:
   learning:
     build: ./learning
     tty: true
-    command: python ./myope_server.py
     volumes:
       - ./learning:/usr/src/app
     depends_on:
       - db
   webpack:
     <<: *app_base
-    command: /usr/src/app/bin/webpack-dev-server
 
 volumes:
   db:

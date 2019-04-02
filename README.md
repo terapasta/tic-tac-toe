@@ -164,8 +164,7 @@ $ docker-compose build
 $ docker-compose run app bash
 app$ bundle
 app$ bundle exec rake db:create
-app$ ...etc
-$ docker-compose run client yarn
+app$ yarn
 $ cp learning/config/config.yml.example learning/config/config.yml
 $ cp docker-compose.override.yml.example docker-compose.override.yml
 ```

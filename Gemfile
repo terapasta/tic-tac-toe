@@ -78,7 +78,7 @@ gem 'rails_autolink'
 gem 'http'
 gem 'whenever', require: false
 gem 'carrierwave'
-gem 'rmagick', git: 'http://github.com/rmagick/rmagick.git', require: false
+gem 'rmagick', '2.16.0', require: false # rmagick3.0.0がImageMagick6.7.8.9に対応していないためrevert
 gem 'rails4-autocomplete'
 gem 'slim-rails'
 gem 'slack-api'

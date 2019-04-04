@@ -7,6 +7,8 @@ import {
   SET_IS_PROCESSING,
 
   SET_IS_CONNECTED,
+
+  SET_NOTIFICATION,
 } from './mutationTypes'
 
 export default {
@@ -22,6 +24,10 @@ export default {
       it.createdAt
     ))
     state.messages = newMessages
+  },
+
+  [SET_NOTIFICATION] (state, { notification }) {
+    state.notification = notification
   },
 
   [SET_IS_PROCESSING] (state, { isProcessing }) {

@@ -5,4 +5,5 @@ export default {
   isProcessing: false,
   bot: {},
   isConnected: null,
+  notification: '',
 }

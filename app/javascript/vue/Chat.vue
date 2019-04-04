@@ -45,6 +45,7 @@ export default {
       'messages',
       'isProcessing',
       'isConnected',
+      'notification'
     ])
   },
 
@@ -52,11 +53,16 @@ export default {
     ...mapActions([
       'fetchMessages',
       'createMessage',
+      'clearNotification',
     ]),
 
     handleChatFormSubmit (message) {
       this.createMessage({ message })
     },
+
+    handleNotificationClose () {
+      this.clearNotification()
+    }
   }
 }
 </script>
@@ -70,7 +76,9 @@ export default {
       />
       <guest-info />
       <notification
-        message="サンプルメッセージサンプルメッセージ"
+        v-if="notification"
+        :message="notification"
+        @close="handleNotificationClose"
       />
     </div>
 

@@ -3,10 +3,12 @@ import format from 'date-fns/format'
 import VueMarkdown from 'vue-markdown'
 
 import AnswerFiles from './AnswerFiles'
+import QuestionOptions from './QuestionOptions'
 
 export default {
   components: {
     AnswerFiles,
+    QuestionOptions,
     VueMarkdown,
   },
 
@@ -56,11 +58,26 @@ export default {
     speaker () {
       return this.message.speaker
     },
+
+    similarQuestionAnswers () {
+      const result = this.message.similarQuestionAnswers.map(it => {
+        return { ...it, body: it.question }
+      })
+      return result
+    }
   },
 
   methods: {
     handleVueMarkdownRendered (outHtml) {
     },
+
+    handleDecisionBranchSelect (decisionBranch) {
+      console.log(decisionBranch)
+    },
+
+    handleSimilarQuestionAnswerSelect (similarQuestionAnswer) {
+      console.log(similarQuestionAnswer)
+    }
   }
 }
 </script>
@@ -130,6 +147,36 @@ export default {
                 <i class="material-icons bad" :class="{ active: isBad }">thumb_down</i>
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="container pt-4"
+        v-if="message.decisionBranches.length > 0"
+      >
+        <div class="row justify-content-md-center">
+          <div class="col-md-6">
+            <question-options
+              title="回答を選択してください"
+              :items="message.decisionBranches"
+              @select="handleDecisionBranchSelect"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="container pt-4"
+        v-if="similarQuestionAnswers.length > 0"
+      >
+        <div class="row justify-content-md-center">
+          <div class="col-md-6">
+            <question-options
+              title="こちらの質問ではありませんか？"
+              :items="similarQuestionAnswers"
+              @select="handleSimilarQuestionAnswerSelect"
+            />
           </div>
         </div>
       </div>

@@ -54,7 +54,10 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       format.json { render json: bot_messages.first, adapter: :json, include: included_associations }
     end
 
-    ChatChannel.broadcast_to(chat, { action: :create, data: serialize(bot_messages.first) })
+    ChatChannel.broadcast_to(chat, {
+      action: :create,
+      data: serialize(bot_messages.first, include: included_associations)
+    })
 
   rescue Ml::Engine::NotTrainedError => e
     logger.error e.message + e.backtrace.join("\n")

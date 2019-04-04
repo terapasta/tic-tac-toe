@@ -10,6 +10,7 @@ class MessageSerializer < ActiveModel::Serializer
     :answer_files,
     :answer_failed,
     :child_decision_branches,
+    :decision_branches,
     :similar_question_answers,
     :is_show_similar_question_answers,
     :reply_log,
@@ -44,6 +45,12 @@ class MessageSerializer < ActiveModel::Serializer
 
   def child_decision_branches
     (object.decision_branch&.child_decision_branches_or_answer_link || [])
+      .map(&:as_json)
+      .map{ |it| deep_camelize_keys(it) }
+  end
+
+  def decision_branches
+    (object.question_answer&.decision_branches || [])
       .map(&:as_json)
       .map{ |it| deep_camelize_keys(it) }
   end

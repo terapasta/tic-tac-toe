@@ -4,6 +4,7 @@ import {
   ADD_MESSAGES,
   SET_IS_PROCESSING,
   SET_IS_CONNECTED,
+  SET_NOTIFICATION,
 } from './mutationTypes'
 
 const headers = {
@@ -33,6 +34,10 @@ export default {
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }
+  },
+
+  clearNotification ({ commit }) {
+    commit(SET_NOTIFICATION, { notification: '' })
   },
 
   connected ({ commit }) {

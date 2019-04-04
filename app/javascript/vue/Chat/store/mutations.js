@@ -5,6 +5,8 @@ import {
   ADD_MESSAGES,
 
   SET_IS_PROCESSING,
+
+  SET_IS_CONNECTED,
 } from './mutationTypes'
 
 export default {
@@ -25,4 +27,8 @@ export default {
   [SET_IS_PROCESSING] (state, { isProcessing }) {
     state.isProcessing = isProcessing
   },
+
+  [SET_IS_CONNECTED] (state, { isConnected }) {
+    state.isConnected = isConnected
+  }
 }

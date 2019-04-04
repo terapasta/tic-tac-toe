@@ -5,14 +5,17 @@ import Cookies from 'js-cookie'
 
 import './Chat/css/bot-message-body.css'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
-
 import ChatForm from './Chat/ChatForm'
+import ConnectionStatus from './Chat/ConnectionStatus'
+import GuestInfo from './Chat/GuestInfo'
 import MainBody from './Chat/MainBody'
 import Notification from './Chat/Notification'
 
 export default {
   components: {
     ChatForm,
+    ConnectionStatus,
+    GuestInfo,
     MainBody,
     Notification,
   },
@@ -41,6 +44,7 @@ export default {
       'guestKey',
       'messages',
       'isProcessing',
+      'isConnected',
     ])
   },
 
@@ -60,6 +64,11 @@ export default {
 <template>
   <div class="Chat">
     <div class="header">
+      <connection-status
+        :is-success="isConnected === true"
+        :is-danger="isConnected === false"
+      />
+      <guest-info />
       <notification
         message="サンプルメッセージサンプルメッセージ"
       />

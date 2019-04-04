@@ -4,4 +4,5 @@ export default {
   messages: [],
   isProcessing: false,
   bot: {},
+  isConnected: null,
 }

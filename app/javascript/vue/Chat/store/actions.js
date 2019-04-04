@@ -3,6 +3,7 @@ import api from '../../../../../bot-framework/api/functions'
 import {
   ADD_MESSAGES,
   SET_IS_PROCESSING,
+  SET_IS_CONNECTED,
 } from './mutationTypes'
 
 const headers = {
@@ -15,6 +16,7 @@ export default {
     const res = await api.fetchMessages({
       botToken,
       guestKey,
+      perPage: 10,
     }, { headers })
     commit(ADD_MESSAGES, { messages: res.data.messages })
   },
@@ -32,4 +34,12 @@ export default {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }
   },
+
+  connected ({ commit }) {
+    commit(SET_IS_CONNECTED, { isConnected: true })
+  },
+
+  disconnected ({ commit }) {
+    commit(SET_IS_CONNECTED, { isConnected: false })
+  }
 }

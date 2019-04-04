@@ -4,15 +4,15 @@ import {
 
 export const createWebsocketHandlers = store => ({
   connected () {
-    console.log('connected')
+    store.dispatch('connected')
   },
 
   disconnected () {
-    console.log('disconnected')
+    store.dispatch('disconnected')
   },
 
   rejected () {
-    console.log('rejected')
+    store.dispatch('disconnected')
   },
 
   received (payload) {

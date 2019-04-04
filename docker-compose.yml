@@ -4,8 +4,6 @@ services:
   app: &app_base
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    ports:
-      - 3000:3000
     stdin_open: true
     tty: true
     volumes:
@@ -24,23 +22,22 @@ services:
     ports: []
     command: bundle exec rake jobs:work
     stdin_open: false
-  test:
-    <<: *app_base
-    command: bundle exec rspec ./spec
-    ports: []
-    stdin_open: false
-    environment:
-      - DB_HOST=db
-      - RAILS_ENV=test
+  # test:
+  #   <<: *app_base
+  #   command: bundle exec rspec ./spec
+  #   ports: []
+  #   stdin_open: false
+  #   environment:
+  #     - DB_HOST=db
+  #     - RAILS_ENV=test
   db:
-    image: mysql
+    image: mysql:5.7
+    entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
     tty: false
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes_from:
       - db_data
-    ports:
-      - 13306:3306
   db_data:
     image: busybox
     volumes:
@@ -68,8 +65,6 @@ services:
   webpack:
     <<: *app_base
     command: bin/webpack-dev-server
-    ports:
-      - 3035:3035
 
 volumes:
   db:

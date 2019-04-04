@@ -38,12 +38,13 @@ export default {
   left: 50%;
   z-index: 100;
   transform: translateX(-50%);
-  max-width: 80%;
+  width: 80%;
   padding: 8px 16px;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 16px 24px -8px rgba(0, 0, 0, .05);
   word-wrap: break-word;
   display: flex;
+  justify-content: space-between;
 
   &.info {
     color: #856404;

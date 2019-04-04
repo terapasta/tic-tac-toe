@@ -1,11 +1,17 @@
 <script>
 import format from 'date-fns/format'
+import VueMarkdown from 'vue-markdown'
+
+import AnswerFiles from './AnswerFiles'
 
 export default {
+  components: {
+    AnswerFiles,
+    VueMarkdown,
+  },
+
   props: {
     bot: { type: Object },
-    speaker: { type: String, required: true },
-    body: { type: String, required: true },
     isAnimate: { type: Boolean, default: true },
     message: { type: Object, required: true },
   },
@@ -17,6 +23,14 @@ export default {
 
     isBot () {
       return this.speaker === 'bot'
+    },
+
+    isGood () {
+      return false
+    },
+
+    isBad () {
+      return false
     },
 
     wrapperClass () {
@@ -33,7 +47,20 @@ export default {
 
     formattedCreatedAt () {
       return format(this.message.createdAt, 'YYYY/MM/DD HH:mm')
-    }
+    },
+
+    body () {
+      return this.message.body
+    },
+
+    speaker () {
+      return this.message.speaker
+    },
+  },
+
+  methods: {
+    handleVueMarkdownRendered (outHtml) {
+    },
   }
 }
 </script>
@@ -44,47 +71,75 @@ export default {
     appear
     :duration="animationDuration"
   >
-    <div
-      :class="wrapperClass"
-    >
-      <div v-if="isBot" class="speaker-info bot">
-        <div class="avatar">
-          <a :href="bot.image.url" target="_blank">
-            <img :src="bot.image.thumb.url" />
-          </a>
-        </div>
-        <div class="text">
-          <span>{{bot.name}}</span>
-          <time>{{formattedCreatedAt}}</time>
+    <div>
+      <div class="container">
+        <div class="row">
+          <div :class="wrapperClass">
+            <div v-if="isBot" class="speaker-info bot">
+              <div class="avatar">
+                <a :href="bot.image.url" target="_blank">
+                  <img :src="bot.image.thumb.url" />
+                </a>
+              </div>
+              <div class="text">
+                <span>{{bot.name}}</span>
+                <time class="d-inline-block">{{formattedCreatedAt}}</time>
+              </div>
+            </div>
+
+            <div v-if="isGuest" class="speaker-info guest">
+              <div class="text">
+                <time>{{formattedCreatedAt}}</time>
+              </div>
+            </div>
+
+            <div :class="balloonClass">
+              <vue-markdown
+                v-if="isBot"
+                class="bot-message-body"
+                :source="body"
+                :html="false"
+                :emoji="false"
+                :toc="false"
+                :anchorAttributes="{
+                  class: 'link',
+                  target: '_blank'
+                }"
+                @rendered="handleVueMarkdownRendered"
+              />
+              <span v-else>{{body}}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div v-if="isGuest" class="speaker-info guest">
-        <div class="text">
-          <time>{{formattedCreatedAt}}</time>
+      <answer-files
+        v-if="isBot && (message.answerFiles || []).length > 0"
+        :answer-files="message.answerFiles"
+      />
+
+      <div class="container">
+        <div class="row">
+          <div :class="wrapperClass">
+            <div v-if="isBot" class="feedback">
+              <div class="desc">この回答を評価してください</div>
+              <button>
+                <i class="material-icons good" :class="{ active: isGood }">thumb_up</i>
+              </button>
+              <button>
+                <i class="material-icons bad" :class="{ active: isBad }">thumb_down</i>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div
-        :class="balloonClass"
-      >
-        {{body}}
-      </div>
-
-      <div v-if="isBot" class="feedback">
-        <div class="desc">この回答を評価してください</div>
-        <button>
-          <i class="material-icons good" :class="{ active: true }">thumb_up</i>
-        </button>
-        <button>
-          <i class="material-icons bad" :class="{ active: true }">thumb_down</i>
-        </button>
       </div>
     </div>
   </transition>
 </template>
 
 <style scoped lang="scss">
+@import './css/gradient';
+
 .speaker-info {
   margin-bottom: 12px;
   display: flex;
@@ -98,6 +153,7 @@ export default {
     background-color: #ddd;
     border-radius: 50%;
     overflow: hidden;
+    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -130,17 +186,15 @@ export default {
   word-break: break-all;
 
   &--bot {
-    background: rgba(94,185,255,1);
-    background: -moz-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(94,185,255,1)), color-stop(100%, rgba(39,96,194,1)));
-    background: -webkit-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
-    background: -o-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
-    background: -ms-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
-    background: linear-gradient(135deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5eb9ff', endColorstr='#2760c2', GradientType=1 );
+    @include blue-gradient;
     color: #fff;
     box-shadow: 0 16px 24px -8px rgba(94,185,255,0.2);
     border-top-left-radius: 0px;
+
+    .link {
+      color: #fff !important;
+      text-decoration: underline;
+    }
   }
 
   &--guest {
@@ -149,7 +203,7 @@ export default {
 }
 
 .feedback {
-  padding: 8px 16px 0 0;
+  padding: 16px 16px 0 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;

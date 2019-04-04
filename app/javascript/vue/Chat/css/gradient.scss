@@ -1,0 +1,10 @@
+@mixin blue-gradient {
+  background: rgba(94,185,255,1);
+  background: -moz-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(94,185,255,1)), color-stop(100%, rgba(39,96,194,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
+  background: linear-gradient(135deg, rgba(94,185,255,1) 0%, rgba(39,96,194,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5eb9ff', endColorstr='#2760c2', GradientType=1 );
+}

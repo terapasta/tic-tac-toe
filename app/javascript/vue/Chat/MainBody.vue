@@ -59,21 +59,19 @@ export default {
   <div
     class="body"
   >
-    <div class="container">
-      <div
-        class="row"
-        v-for="(message, i) in messages"
-        :key="i"
-      >
-        <message
-          :bot="message.speaker === 'bot' ? bot : null"
-          :ref="`message-${message.id}`"
-          :speaker="message.speaker"
-          :body="message.body"
-          :message="message"
-          :is-animate="isDoneFirstRendering"
-        />
-      </div>
+    <div
+      v-for="(message, i) in messages"
+      :key="i"
+      class="message"
+    >
+      <message
+        :bot="message.speaker === 'bot' ? bot : null"
+        :ref="`message-${message.id}`"
+        :speaker="message.speaker"
+        :body="message.body"
+        :message="message"
+        :is-animate="isDoneFirstRendering"
+      />
     </div>
   </div>
 </template>
@@ -86,7 +84,7 @@ export default {
   overflow-scrolling: touch;
   padding: 32px 0 160px;
 
-  .row {
+  .message {
     margin-bottom: 40px;
     &:last-child {
       margin-bottom: 0;

@@ -3,6 +3,7 @@ import { mapActions, mapState } from 'vuex'
 import ActionCable from 'actioncable'
 import Cookies from 'js-cookie'
 
+import './Chat/css/bot-message-body.css'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
 
 import ChatForm from './Chat/ChatForm'
@@ -93,6 +94,9 @@ export default {
   height: 40px;
   background-color: #fff;
   flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer {

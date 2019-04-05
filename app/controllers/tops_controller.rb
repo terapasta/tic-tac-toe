@@ -26,6 +26,7 @@ class TopsController < ApplicationController
     else
       feature_answer_ids = answer_ids[-2..-1]
     end
+    put feature_answer_ids.class
 
     cmd = "cd learning; python main_predict.py #{feature_answer_ids.join(' ')} #{params[:text]}"
     Rails.logger.debug(cmd)

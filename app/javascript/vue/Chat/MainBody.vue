@@ -71,6 +71,7 @@ export default {
         :body="message.body"
         :message="message"
         :is-animate="isDoneFirstRendering"
+        @select-question="$emit('select-question', $event)"
       />
     </div>
   </div>

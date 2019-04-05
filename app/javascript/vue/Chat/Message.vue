@@ -76,7 +76,7 @@ export default {
     },
 
     handleSimilarQuestionAnswerSelect (similarQuestionAnswer) {
-      console.log(similarQuestionAnswer)
+      this.$emit('select-question', similarQuestionAnswer.question)
     }
   }
 }

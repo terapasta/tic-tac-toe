@@ -62,6 +62,10 @@ export default {
 
     handleNotificationClose () {
       this.clearNotification()
+    },
+
+    handleMainBodySelectQuestion (message) {
+      this.createMessage({ message })
     }
   }
 }
@@ -86,6 +90,7 @@ export default {
       :bot="bot"
       :messages="messages"
       :header-height="40"
+      @select-question="handleMainBodySelectQuestion"
     />
 
     <div class="footer">

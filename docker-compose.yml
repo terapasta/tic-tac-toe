@@ -57,12 +57,14 @@ services:
   learning:
     build: ./learning
     tty: true
+    command: python ./myope_server.py
     volumes:
       - ./learning:/usr/src/app
     depends_on:
       - db
   webpack:
     <<: *app_base
+    command: bash -c 'rm -f -r public/packs && bin/webpack-dev-server'
 
 volumes:
   db:

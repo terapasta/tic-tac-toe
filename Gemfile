@@ -145,7 +145,7 @@ group :development, :test do
 
   # rspec
   gem 'rspec-rails', '~> 3.5.0.beta'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara', '~> 2.15.4'
   gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'

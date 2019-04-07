@@ -20,7 +20,7 @@ ActiveRecord::Migration.maintain_test_schema!
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include ActionDispatch::TestProcess
   config.include MlHelper, type: :feature
   config.include Warden::Test::Helpers

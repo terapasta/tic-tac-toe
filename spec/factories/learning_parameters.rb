@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :learning_parameter do
-    bot nil
+    bot { nil }
   end
 end

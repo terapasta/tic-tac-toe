@@ -1,12 +1,15 @@
 class Api::Bots::ChatChoicesController < Api::BaseController
   include ApiRespondable
   include ApiChatOperable
+  include ResourceSerializable
   before_action :set_bot_chat_user_decision_branch!, only: [:create]
 
   def create
     ActiveRecord::Base.transaction do
       guest_user_message = @chat.messages.create!(guest_message_params)
+      ChatChannel.broadcast_to(@chat, { action: :create, data: serialize(guest_user_message) })
       @bot_message = @chat.messages.create!(bot_message_params(guest_user_message))
+      ChatChannel.broadcast_to(@chat, { action: :create, data: serialize(@bot_message) })
     end
     respond_to do |format|
       format.json { render json: @bot_message, adapter: :json, include: 'child_decision_branches,similar_question_answers' }

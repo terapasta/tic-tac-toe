@@ -64,7 +64,18 @@ export default {
         return { ...it, body: it.question }
       })
       return result
-    }
+    },
+
+    decisionBranches () {
+      const { decisionBranches, childDecisionBranches } = this.message
+      if (decisionBranches.length > 0) {
+        return decisionBranches
+      }
+      if (childDecisionBranches.length > 0) {
+        return childDecisionBranches
+      }
+      return []
+    },
   },
 
   methods: {
@@ -72,7 +83,7 @@ export default {
     },
 
     handleDecisionBranchSelect (decisionBranch) {
-      console.log(decisionBranch)
+      this.$emit('select-decision-branch', decisionBranch)
     },
 
     handleSimilarQuestionAnswerSelect (similarQuestionAnswer) {
@@ -153,13 +164,13 @@ export default {
 
       <div
         class="container pt-4"
-        v-if="message.decisionBranches.length > 0"
+        v-if="decisionBranches.length > 0"
       >
         <div class="row justify-content-md-center">
           <div class="col-md-6">
             <question-options
               title="回答を選択してください"
-              :items="message.decisionBranches"
+              :items="decisionBranches"
               @select="handleDecisionBranchSelect"
             />
           </div>

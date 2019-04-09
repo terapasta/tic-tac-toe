@@ -13,10 +13,11 @@ const headers = {
 
 export default {
   async fetchMessages ({ commit, state }) {
-    const { botToken, guestKey } = state
+    const { botToken, guestKey, messagePage } = state
     const res = await api.fetchMessages({
       botToken,
       guestKey,
+      page: messagePage,
       perPage: 10,
     }, { headers })
     commit(ADD_MESSAGES, { messages: res.data.messages })
@@ -30,6 +31,20 @@ export default {
         message,
         botToken,
         guestKey,
+      }, { headers })
+    } finally {
+      commit(SET_IS_PROCESSING, { isProcessing: false })
+    }
+  },
+
+  async selectDecisionBranch ({ commit, state }, { decisionBranch }) {
+    commit(SET_IS_PROCESSING, { isProcessing: true })
+    const { botToken, guestKey } = state
+    try {
+      await api.createChoice({
+        botToken,
+        guestKey,
+        choiceId: decisionBranch.id,
       }, { headers })
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })

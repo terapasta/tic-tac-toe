@@ -54,6 +54,7 @@ export default {
       'fetchMessages',
       'createMessage',
       'clearNotification',
+      'selectDecisionBranch',
     ]),
 
     handleChatFormSubmit (message) {
@@ -62,6 +63,10 @@ export default {
 
     handleNotificationClose () {
       this.clearNotification()
+    },
+
+    handleMainBodySelectDecisionBranch (decisionBranch) {
+      this.selectDecisionBranch({ decisionBranch })
     },
 
     handleMainBodySelectQuestion (message) {
@@ -90,6 +95,7 @@ export default {
       :bot="bot"
       :messages="messages"
       :header-height="40"
+      @select-decision-branch="handleMainBodySelectDecisionBranch"
       @select-question="handleMainBodySelectQuestion"
     />
 

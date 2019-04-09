@@ -16,7 +16,11 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       .per(params[:per_page].presence || 50)
 
     respond_to do |format|
-      format.json { render json: messages, adapter: :json, include: included_associations }
+      format.json do
+        headers['X-Current-Page'] = messages.current_page
+        headers['X-Total-Pages'] = messages.total_pages
+        render json: messages, adapter: :json, include: included_associations
+      end
     end
   end
 

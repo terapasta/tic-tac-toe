@@ -71,6 +71,7 @@ export default {
         :body="message.body"
         :message="message"
         :is-animate="isDoneFirstRendering"
+        @select-decision-branch="$emit('select-decision-branch', $event)"
         @select-question="$emit('select-question', $event)"
       />
     </div>

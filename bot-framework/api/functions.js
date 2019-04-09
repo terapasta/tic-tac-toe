@@ -71,11 +71,11 @@ module.exports.createChoice = ({
   botToken,
   guestKey,
   choiceId
-}) => (
+}, config = {}) => (
   axios.post(`/api/bots/${botToken}/chat_choices.json`, {
     id: choiceId,
     guest_key: guestKey
-  })
+  }, config)
 )
 
 module.exports.createChatworkDecisionBranch = ({

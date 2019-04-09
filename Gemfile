@@ -16,7 +16,7 @@ gem 'sass', '~> 3.5.2'
 gem 'sass-rails'
 
 # easy to write a form
-gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap', '~> 4.3.1'
 #gem 'simple_form' #代替案
 
 # Use Uglifier as compressor for JavaScript assets
@@ -88,7 +88,7 @@ gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'autoprefixer-rails', '~> 6.7.7.2'
+gem 'autoprefixer-rails', '~> 9.5.1'
 gem 'draper', '>= 3.0.0.pre1'
 gem 'pundit'
 gem 'nested_form'

@@ -171,7 +171,9 @@ Rails.application.routes.draw do
     resources :guest_users, only: [:show, :create, :update, :destroy], param: :guest_key
     resources :bots, param: :token do
       resources :chats, module: :bots, only: [:show, :create]
-      resources :chat_messages, module: :bots, only: [:index, :create]
+      resources :chat_messages, module: :bots, only: [:index, :create] do
+        resource :rating, module: :chat_messages, only: [:create]
+      end
       resources :chat_choices, module: :bots, only: [:create]
       resources :chat_failed_messages, module: :bots, only: [:create]
       resource :line_credential, module: :bots, only: [:show]

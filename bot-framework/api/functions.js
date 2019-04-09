@@ -110,3 +110,12 @@ module.exports.createChatworkSimilarQuestionAnswer = ({
   })
 )
 
+module.exports.createRating = ({
+  botToken,
+  guestKey,
+  messageId,
+}, config = {}) => (
+  axios.post(`/api/bots/${botToken}/chat_messages/${messageId}/rating.json`, {
+    guest_key: guestKey,
+  }, config)
+)

@@ -312,7 +312,7 @@ GEM
       actionmailer (>= 3.2)
       letter_opener (~> 1.0)
       railties (>= 3.2)
-    libv8 (3.16.14.19)
+    libv8 (6.7.288.46.1)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -328,6 +328,8 @@ GEM
     mime-types-data (3.2018.0812)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
+    mini_racer (0.2.4)
+      libv8 (>= 6.3)
     minitest (5.11.3)
     mixpanel_client (4.1.6)
       typhoeus
@@ -438,7 +440,6 @@ GEM
     rdoc (4.3.0)
     redcarpet (2.3.0)
     redis (3.3.5)
-    ref (2.0.0)
     remotipart (1.4.2)
     request_store (1.4.1)
       rack (>= 1.4)
@@ -537,9 +538,6 @@ GEM
     tapp (1.5.1)
       thor
     temple (0.8.1)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.9)
@@ -648,6 +646,7 @@ DEPENDENCIES
   letter_opener_web
   meta_request
   mini_mime
+  mini_racer
   mixpanel_client
   mysql2 (~> 0.3.20)
   natto
@@ -686,7 +685,6 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   tapp
-  therubyracer (= 0.12.3)
   to_bool
   toastr-rails
   turbolinks

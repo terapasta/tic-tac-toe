@@ -23,8 +23,8 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '0.12.3', platforms: :ruby
+# See https://github.com/rails/execjs#readme for more supported runtimes
+gem 'mini_racer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

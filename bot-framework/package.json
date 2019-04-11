@@ -14,6 +14,7 @@
     "@line/bot-sdk": "^5.0.1",
     "axios": "^0.17.0",
     "botbuilder": "^3.11.0",
+    "hoek": "^4.2.1",
     "is-empty": "^1.2.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
@@ -22,7 +23,7 @@
     "lodash.pick": "^4.4.0",
     "restify": "^6.2.3",
     "restify-namespace": "^0.1.1",
-    "hoek": "^4.2.1"
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "request": "^2.88.0",

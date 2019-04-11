@@ -4,6 +4,7 @@ import VueMarkdown from 'vue-markdown'
 
 import AnswerFiles from './AnswerFiles'
 import QuestionOptions from './QuestionOptions'
+import getOffset from '../../helpers/getOffset'
 
 export default {
   components: {
@@ -22,6 +23,7 @@ export default {
   data: () => ({
     localRating: null,
     isLogOpened: false,
+    popoverStyle: {},
   }),
 
   computed: {
@@ -108,6 +110,11 @@ export default {
 
     handleLogButtonClick () {
       this.isLogOpened = !this.isLogOpened
+      const { logButton } = this.$refs
+      const offset = getOffset(logButton)
+      const rightEdgeX = offset.left + logButton.offsetWidth
+      const width = rightEdgeX < 600 ? rightEdgeX : 600
+      this.popoverStyle.width = `${width}px`
     }
   }
 }
@@ -138,6 +145,7 @@ export default {
                 class="log-container"
               >
                 <button
+                  ref="logButton"
                   class="btn btn-light"
                   @click.prevent.stop="handleLogButtonClick"
                 >
@@ -146,6 +154,7 @@ export default {
                 <div
                   v-if="isLogOpened"
                   class="popover fade show bs-popover-bottom"
+                  :style="popoverStyle"
                 >
                   <div class="arrow" />
                   <h3 class="popover-header" />
@@ -362,7 +371,6 @@ export default {
 
   .popover {
     max-width: none;
-    width: 600px;
     top: 100%;
     left: auto;
     right: 0;

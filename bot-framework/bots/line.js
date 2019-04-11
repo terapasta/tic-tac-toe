@@ -184,7 +184,7 @@ class LineBot {
       altText: text,
       template: {
         type: 'carousel',
-        columns: decisionBranches.slice(0, 10).map(it => ({
+        columns: decisionBranches.slice(0, 20).map(it => ({
           text: truncate(it[attrName], 120),
           actions: [{
             type: 'postback',

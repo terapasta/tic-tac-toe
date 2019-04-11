@@ -45,6 +45,7 @@ export default {
       'messages',
       'isProcessing',
       'isConnected',
+      'isStaff',
       'notification'
     ])
   },
@@ -105,6 +106,7 @@ export default {
       :bot="bot"
       :messages="messages"
       :header-height="40"
+      :is-staff="isStaff"
       @select-decision-branch="handleMainBodySelectDecisionBranch"
       @select-question="handleMainBodySelectQuestion"
       @good="handleGood"

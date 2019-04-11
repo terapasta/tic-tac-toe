@@ -11,6 +11,7 @@ export default {
     bot: { type: Object, required: true },
     messages: { type: Array, required: true },
     headerHeight: { type: Number, required: true },
+    isStaff: { type: Boolean, required: true, default: false },
   },
 
   data: () => ({
@@ -73,6 +74,7 @@ export default {
         :body="message.body"
         :message="message"
         :is-animate="isDoneFirstRendering"
+        :is-staff="isStaff"
         @select-decision-branch="$emit('select-decision-branch', $event)"
         @select-question="$emit('select-question', $event)"
         @good="$emit('good', $event)"

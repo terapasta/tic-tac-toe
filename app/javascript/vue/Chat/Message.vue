@@ -15,11 +15,13 @@ export default {
   props: {
     bot: { type: Object },
     isAnimate: { type: Boolean, default: true },
+    isStaff: { type: Boolean, default: false },
     message: { type: Object, required: true },
   },
 
   data: () => ({
     localRating: null,
+    isLogOpened: false,
   }),
 
   computed: {
@@ -103,6 +105,10 @@ export default {
       this.localRating = 'bad'
       this.$emit('bad', this.message)
     },
+
+    handleLogButtonClick () {
+      this.isLogOpened = !this.isLogOpened
+    }
   }
 }
 </script>
@@ -126,6 +132,32 @@ export default {
               <div class="text">
                 <span>{{bot.name}}</span>
                 <time class="d-inline-block">{{formattedCreatedAt}}</time>
+              </div>
+              <div
+                v-if="isStaff"
+                class="log-container"
+              >
+                <button
+                  class="btn btn-light"
+                  @click.prevent.stop="handleLogButtonClick"
+                >
+                  ログを{{isLogOpened ? '閉じる' : '見る'}}
+                </button>
+                <div
+                  v-if="isLogOpened"
+                  class="popover fade show bs-popover-bottom"
+                >
+                  <div class="arrow" />
+                  <h3 class="popover-header" />
+                  <div class="popover-body">
+                    <template v-if="message.replyLog">
+                      <pre>{{JSON.stringify(message.replyLog, null, '  ')}}</pre>
+                    </template>
+                    <template v-else>
+                      <div class="text-center">ログはありません</div>
+                    </template>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -322,5 +354,24 @@ export default {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.log-container {
+  position: relative;
+  flex-grow: 2;
+
+  .popover {
+    max-width: none;
+    width: 600px;
+    top: 100%;
+    left: auto;
+    right: 0;
+
+    .arrow {
+      margin: 0;
+      right: 0;
+      transform: translateX(-200%);
+    }
+  }
 }
 </style>

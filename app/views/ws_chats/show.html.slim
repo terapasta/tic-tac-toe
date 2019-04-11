@@ -13,4 +13,5 @@ css:
   data-bot-token=@bot.token
   data-bot=DeepCamelizeKeys.deep_camelize_keys(PublicBotSerializer.new(@bot).as_json).to_json
   data-guest-key=guest_key
+  data-is-staff=current_user.staff?.to_json
 )

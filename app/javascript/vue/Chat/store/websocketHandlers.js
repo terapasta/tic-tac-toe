@@ -20,6 +20,9 @@ export const createWebsocketHandlers = store => ({
       case 'create':
         store.commit(ADD_MESSAGE, { message: payload.data.message })
         break
+      case 'rating':
+        store.dispatch('applyRating', payload.data)
+        break
       default:
         break
     }

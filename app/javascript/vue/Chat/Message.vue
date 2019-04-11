@@ -18,6 +18,10 @@ export default {
     message: { type: Object, required: true },
   },
 
+  data: () => ({
+    localRating: null,
+  }),
+
   computed: {
     isGuest () {
       return this.speaker === 'guest'
@@ -28,11 +32,11 @@ export default {
     },
 
     isGood () {
-      return false
+      return this.localRating === 'good' || this.message.rating === 'good'
     },
 
     isBad () {
-      return false
+      return this.localRating === 'bad' || this.message.rating === 'bad'
     },
 
     wrapperClass () {
@@ -88,7 +92,17 @@ export default {
 
     handleSimilarQuestionAnswerSelect (similarQuestionAnswer) {
       this.$emit('select-question', similarQuestionAnswer.question)
-    }
+    },
+
+    handleGoodButtonClick () {
+      this.localRating = 'good'
+      this.$emit('good', this.message)
+    },
+
+    handleBadButtonClick () {
+      this.localRating = 'bad'
+      this.$emit('bad', this.message)
+    },
   }
 }
 </script>
@@ -151,10 +165,10 @@ export default {
           <div :class="wrapperClass">
             <div v-if="isBot" class="feedback">
               <div class="desc">この回答を評価してください</div>
-              <button>
+              <button @click.prevent.stop="handleGoodButtonClick">
                 <i class="material-icons good" :class="{ active: isGood }">thumb_up</i>
               </button>
-              <button>
+              <button @click.prevent.stop="handleBadButtonClick">
                 <i class="material-icons bad" :class="{ active: isBad }">thumb_down</i>
               </button>
             </div>

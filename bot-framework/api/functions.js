@@ -114,8 +114,10 @@ module.exports.createRating = ({
   botToken,
   guestKey,
   messageId,
+  ratingLevel,
 }, config = {}) => (
   axios.post(`/api/bots/${botToken}/chat_messages/${messageId}/rating.json`, {
     guest_key: guestKey,
+    rating: { level: ratingLevel },
   }, config)
 )

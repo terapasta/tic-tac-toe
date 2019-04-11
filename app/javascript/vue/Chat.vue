@@ -55,6 +55,8 @@ export default {
       'createMessage',
       'clearNotification',
       'selectDecisionBranch',
+      'good',
+      'bad',
     ]),
 
     handleChatFormSubmit (message) {
@@ -71,6 +73,14 @@ export default {
 
     handleMainBodySelectQuestion (message) {
       this.createMessage({ message })
+    },
+
+    handleGood (message) {
+      this.good({ message })
+    },
+
+    handleBad (message) {
+      this.bad({ message })
     }
   }
 }
@@ -97,6 +107,8 @@ export default {
       :header-height="40"
       @select-decision-branch="handleMainBodySelectDecisionBranch"
       @select-question="handleMainBodySelectQuestion"
+      @good="handleGood"
+      @bad="handleBad"
     />
 
     <div class="footer">

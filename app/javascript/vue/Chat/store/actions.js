@@ -2,6 +2,7 @@ import api from '../../../../../bot-framework/api/functions'
 
 import {
   ADD_MESSAGES,
+  REPLACE_MESSAGE,
   SET_IS_PROCESSING,
   SET_IS_CONNECTED,
   SET_NOTIFICATION,
@@ -51,6 +52,26 @@ export default {
     }
   },
 
+  async good ({ state }, { message }) {
+    const { botToken, guestKey } = state
+    await api.createRating({
+      botToken,
+      guestKey,
+      messageId: message.id,
+      ratingLevel: 'good',
+    }, { headers })
+  },
+
+  async bad ({ state }, { message }) {
+    const { botToken, guestKey } = state
+    await api.createRating({
+      botToken,
+      guestKey,
+      messageId: message.id,
+      ratingLevel: 'bad',
+    }, { headers })
+  },
+
   clearNotification ({ commit }) {
     commit(SET_NOTIFICATION, { notification: '' })
   },
@@ -61,5 +82,11 @@ export default {
 
   disconnected ({ commit }) {
     commit(SET_IS_CONNECTED, { isConnected: false })
+  },
+
+  applyRating ({ commit, state }, { rating }) {
+    const message = state.messages.find(it => it.id === rating.messageId)
+    message.rating = rating.level
+    commit(REPLACE_MESSAGE, { message })
   }
 }

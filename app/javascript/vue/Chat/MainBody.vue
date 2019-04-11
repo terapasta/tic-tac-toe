@@ -26,8 +26,10 @@ export default {
   watch: {
     messages: {
       handler (newMessages, oldMessages) {
-        this.scrollToBottom()
         this.doneFirstRendering()
+        if (newMessages.length > oldMessages.length) {
+          this.scrollToBottom()
+        }
       }
     }
   },
@@ -73,6 +75,8 @@ export default {
         :is-animate="isDoneFirstRendering"
         @select-decision-branch="$emit('select-decision-branch', $event)"
         @select-question="$emit('select-question', $event)"
+        @good="$emit('good', $event)"
+        @bad="$emit('bad', $event)"
       />
     </div>
   </div>

@@ -1,3 +1,3 @@
 class RatingSerializer < ActiveModel::Serializer
-  attributes :id, :level
+  attributes :id, :level, :message_id
 end

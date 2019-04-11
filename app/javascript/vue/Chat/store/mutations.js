@@ -1,8 +1,10 @@
 import sortBy from 'lodash/sortBy'
+import findIndex from 'lodash/findIndex'
 
 import {
   ADD_MESSAGE,
   ADD_MESSAGES,
+  REPLACE_MESSAGE,
 
   SET_IS_PROCESSING,
 
@@ -24,6 +26,15 @@ export default {
       it.createdAt
     ))
     state.messages = newMessages
+  },
+
+  [REPLACE_MESSAGE] (state, { message }) {
+    const index = findIndex(state.messages, it => it.id === message.id)
+    state.messages = [
+      ...state.messages.slice(0, index),
+      message,
+      ...state.messages.slice(index + 1),
+    ]
   },
 
   [SET_NOTIFICATION] (state, { notification }) {

@@ -67,7 +67,7 @@
 
 - name: install Development Tool
   become: yes
-  shell: yum -y groupinstall "Development Tools"
+  yum: name="@Development tools" state=present
 
 # timezone
 - name: set timezone
@@ -110,7 +110,18 @@
     owner: root
     group: root
     mode: 644
-- name: schedule a scan
+
+- name: schedule update
+  cron:
+    name: clamav update
+    weekday: 1
+    minute: 0
+    hour: 4
+    user: root
+    job: "/usr/share/clamav/freshclam-sleep"
+    cron_file: clamav-update
+
+- name: schedule scan
   cron:
     name: clamav scan
     weekday: 1

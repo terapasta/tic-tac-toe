@@ -177,7 +177,7 @@ class LineBot {
   messageWithDecisionBranches (message, decisionBranches, isSuggestion = false) {
     const attrName = isSuggestion ? 'question' : 'body'
     const actionKey = isSuggestion ? 'questionAnswer' : 'decisionBranch'
-    const text = isSuggestion ? 'こちらの質問ではないですか？' : truncate(message, 160)
+    const text = isSuggestion ? 'こちらの質問ではないですか？' : message
 
     const messageObj = {
       type: 'template',

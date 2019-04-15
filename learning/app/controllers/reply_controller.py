@@ -43,7 +43,8 @@ class ReplyController(BaseCls):
 
         # Note: to_dictだとすべてのカラムがfloatになってしまうためリスト内包表記で変換している
         results = [{col: getattr(row, col) for col in results} for row in results.itertuples()]
-        results = results[:10]
+        # FIXME: サジェスト件数のスライス
+        results = results[:20]
 
         # NOTE:
         # 応答結果に対して再度前処理を行い、中間結果をフロント側で確認できるようにする

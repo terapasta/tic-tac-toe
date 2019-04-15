@@ -16,7 +16,6 @@ module QuestionAnswersSearchable
         .keyword(keyword)
       result = result.where.not(id: without_ids) if without_ids.present?
       result.search(q)
-      raise
     end
 
     def search_question_answers_count_list(bot:, keyword:, q:, page:, per_page:)

@@ -1,7 +1,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
-import ActionCable from 'actioncable'
 import Cookies from 'js-cookie'
+import socketio from 'socket.io-client'
 
 import './Chat/css/bot-message-body.css'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
@@ -27,14 +27,11 @@ export default {
   created () {
     this.fetchMessages()
 
-    const websocketHandlers = createWebsocketHandlers(this.$store)
-    const cable = ActionCable.createConsumer()
-    const channel = cable.subscriptions.create({
-      channel: 'ChatChannel',
-      bot_token: this.botToken,
-      guest_key: this.guestKey,
-    }, websocketHandlers)
-    websocketHandlers.bindError(channel)
+    const socket = socketio('http://localhost:3978')
+    const websocketHandlers = createWebsocketHandlers(this.$store, socket)
+    socket.on('connect', websocketHandlers.connect)
+    socket.on('disconnect', websocketHandlers.disconnect)
+    socket.on('event', websocketHandlers.event)
   },
 
   computed: {

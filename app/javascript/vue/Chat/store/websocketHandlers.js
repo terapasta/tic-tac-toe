@@ -2,20 +2,25 @@ import {
   ADD_MESSAGE,
 } from './mutationTypes'
 
-export const createWebsocketHandlers = store => ({
-  connected () {
+export const createWebsocketHandlers = (store, socket) => ({
+  connect () {
+    console.log('connected')
+    const { botToken, guestKey } = store.state
     store.dispatch('connected')
+    const roomId = `${botToken}:${guestKey}`
+    socket.emit('join', { roomId })
+
+    // DEV
+    window.socket = socket
   },
 
-  disconnected () {
+  disconnect () {
+    console.log('disconnected')
     store.dispatch('disconnected')
   },
 
-  rejected () {
-    store.dispatch('disconnected')
-  },
-
-  received (payload) {
+  event (payload) {
+    console.log('event', payload)
     switch (payload.action) {
       case 'create':
         store.commit(ADD_MESSAGE, { message: payload.data.message })
@@ -28,9 +33,7 @@ export const createWebsocketHandlers = store => ({
     }
   },
 
-  bindError (channel) {
-    channel.consumer.connection.webSocket.onerror = err => {
-      console.log('an error occurred')
-    }
+  error (...args) {
+    console.error(args)
   },
 })

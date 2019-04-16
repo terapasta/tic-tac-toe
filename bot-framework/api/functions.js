@@ -121,3 +121,15 @@ module.exports.createRating = ({
     rating: { level: ratingLevel },
   }, config)
 )
+
+module.exports.createGuestUser = ({
+  name,
+  email
+}, config = {}) => (
+  axios.post('/api/guest_users.json', {
+    guest_user: {
+      name,
+      email
+    }
+  }, config)
+)

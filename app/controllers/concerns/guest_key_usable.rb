@@ -3,6 +3,7 @@ module GuestKeyUsable
   
   included do
     helper_method :guest_key
+    helper_method :current_guest_user
   end
 
   private
@@ -22,5 +23,9 @@ module GuestKeyUsable
 
     def make_guest_key
       SecureRandom.hex(64)[0...255]
+    end
+
+    def current_guest_user
+      GuestUser.find_by(guest_key: guest_key)
     end
 end

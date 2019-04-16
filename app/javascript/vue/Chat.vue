@@ -24,10 +24,11 @@ export default {
     newMessage: '',
   }),
 
-  created () {
+  async created () {
+    await this.initAPI()
     this.fetchMessages()
 
-    const socket = socketio('http://localhost:3978')
+    const socket = socketio(this.botServerHost)
     const websocketHandlers = createWebsocketHandlers(this.$store, socket)
     socket.on('connect', websocketHandlers.connect)
     socket.on('disconnect', websocketHandlers.disconnect)
@@ -43,18 +44,21 @@ export default {
       'isProcessing',
       'isConnected',
       'isStaff',
-      'notification'
+      'notification',
+      'botServerHost',
     ])
   },
 
   methods: {
     ...mapActions([
+      'initAPI',
       'fetchMessages',
       'createMessage',
       'clearNotification',
       'selectDecisionBranch',
       'good',
       'bad',
+      'saveGuestUser',
     ]),
 
     handleChatFormSubmit (message) {
@@ -79,6 +83,11 @@ export default {
 
     handleBad (message) {
       this.bad({ message })
+    },
+
+    handleGuestInfoSubmit ({ name, email }) {
+      console.log('test', name, email)
+      this.saveGuestUser({ name, email })
     }
   }
 }
@@ -91,7 +100,9 @@ export default {
         :is-success="isConnected === true"
         :is-danger="isConnected === false"
       />
-      <guest-info />
+      <guest-info
+        @submit="handleGuestInfoSubmit"
+      />
       <notification
         v-if="notification"
         :message="notification"

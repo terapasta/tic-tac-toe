@@ -1,4 +1,5 @@
-import api from '../../../../../bot-framework/api/functions'
+import axios from 'axios'
+import api from './api'
 
 import {
   ADD_MESSAGES,
@@ -13,6 +14,10 @@ const headers = {
 }
 
 export default {
+  async initAPI ({ state }) {
+    axios.defaults.baseURL = state.botServerHost
+  },
+
   async fetchMessages ({ commit, state }) {
     const { botToken, guestKey, messagePage } = state
     const res = await api.fetchMessages({
@@ -88,5 +93,14 @@ export default {
     const message = state.messages.find(it => it.id === rating.messageId)
     message.rating = rating.level
     commit(REPLACE_MESSAGE, { message })
-  }
+  },
+
+  async saveGuestUser ({ commit, state }, { name, email }) {
+    const { guestId } = state
+    if (guestId == null) {
+      return await api.createGuestUser({ name, email})
+    } else {
+      return await api.updateGuestUser({ guestId, name, email })
+    }
+  },
 }

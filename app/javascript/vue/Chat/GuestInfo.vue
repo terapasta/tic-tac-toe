@@ -12,7 +12,7 @@
     >
       <div class="modal-dialog" @click.prevent.stop>
         <div class="modal-content">
-          <form>
+          <form v-on:submit="handleSubmit">
             <div class="modal-header">
               <div class="modal-title">ゲスト情報</div>
               <button class="close" @click="handleCloseClick">
@@ -26,7 +26,7 @@
                   name="name"
                   type="text"
                   class="form-control"
-                  v-modal="name"
+                  v-model="name"
                 />
               </div>
               <div class="form-group">
@@ -35,13 +35,18 @@
                   name="email"
                   type="email"
                   class="form-control"
-                  v-modal="email"
+                  v-model="email"
                   placeholder="例：example@example.com"
                 />
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-success">保存する</button>
+              <input
+                type="submit"
+                class="btn btn-success"
+                value="保存する"
+                @click="handleSubmit"
+              />
             </div>
           </form>
         </div>
@@ -69,6 +74,12 @@ export default {
 
     handleModalClick () {
       this.isShowModal = false
+    },
+
+    handleSubmit () {
+      console.log('handleSubmit')
+      const { name, email } = this
+      this.$emit('submit', { name, email })
     }
   }
 }

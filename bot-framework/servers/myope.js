@@ -1,3 +1,5 @@
+const api = require('../api')
+
 class MyOpeServer {
   mapRoute (app) {
     app.get('/myope/healthcheck', (req, res) => {
@@ -16,6 +18,27 @@ class MyOpeServer {
     })
 
     app.get('/myope/:botToken/messages', (req, res) => {
+      res.send('OK')
+    })
+
+    app.post('/myope/:botToken/messages', (req, res) => {
+      res.send('OK')
+    })
+
+    app.post('/myope/:botToken/choices', (req, res) => {
+      res.send('OK')
+    })
+
+    app.post('/myope/:botToken/messages/:messageId/rating', (req, res) => {
+      res.send('OK')
+    })
+
+    app.post('/myope/guest_users', (req, res) => {
+      console.log(req)
+      res.send('test')
+    })
+
+    app.put('/myope/guest_users', (req, res) => {
       res.send('OK')
     })
   }

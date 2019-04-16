@@ -14,4 +14,6 @@ css:
   data-bot=DeepCamelizeKeys.deep_camelize_keys(PublicBotSerializer.new(@bot).as_json).to_json
   data-guest-key=guest_key
   data-is-staff=(!!current_user&.staff?).to_json
+  data-guest-id=current_guest_user&.id.to_json
+  data-bot-server-host=ENV['BOT_SERVER_HOST']
 )

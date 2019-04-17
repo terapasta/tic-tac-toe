@@ -27,14 +27,17 @@ const truncate = (str, limit) => {
 
 const toActionData = ({ questionAnswer, decisionBranch }) => {
   if (!isEmpty(questionAnswer)) {
+    console.log(questionAnswer)
     return {
       type: PostbackTypes.QuestionAnswer,
-      id: questionAnswer.id
+      id: questionAnswer.id,
+      message: questionAnswer.question
     }
   } else if (!isEmpty(decisionBranch)) {
     return {
       type: PostbackTypes.DecisionBranch,
-      id: decisionBranch.id
+      id: decisionBranch.id,
+      message: decisionBranch.question
     }
   }
 }

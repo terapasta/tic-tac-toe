@@ -65,6 +65,10 @@ services:
   webpack:
     <<: *app_base
     command: bash -c 'rm -f -r public/packs && bin/webpack-dev-server'
+  bot-framework:
+    build: ./bot-framework
+    volumes:
+      - ./bot-framework:/usr/src/app/bot-framework/
 
 volumes:
   db:

@@ -2,13 +2,14 @@ source 'https://rubygems.org'
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.6.2'
+gem 'rails', '5.2.2'
 gem 'rake', '< 11'
+gem 'bootsnap', require: false
 
 # select DB for local server
 #gem 'mysql2'
 # gem 'sqlite3', :group => :development
-gem 'mysql2', '~> 0.3.20'
+gem 'mysql2', '~> 0.5.2'
 
 
 # Use SCSS for stylesheets
@@ -145,7 +146,7 @@ group :development, :test do
 
   # rspec
   gem 'rspec-rails', '~> 3.5.0.beta'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara', '~> 2.15.4'
   gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'

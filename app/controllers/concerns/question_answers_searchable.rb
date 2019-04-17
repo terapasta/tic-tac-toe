@@ -15,7 +15,7 @@ module QuestionAnswersSearchable
         .per(per_page)
         .keyword(keyword)
       result = result.where.not(id: without_ids) if without_ids.present?
-      result.search(q)
+      result.ransack(q)
     end
 
     def search_question_answers_count_list(bot:, keyword:, q:, page:, per_page:)
@@ -24,7 +24,7 @@ module QuestionAnswersSearchable
         .page(page)
         .per(per_page)
         .keyword(keyword)
-      result.search(q)
+      result.ransack(q)
     end
 
     def first_of_messages_count_having_question_answer(bot:)

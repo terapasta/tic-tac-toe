@@ -166,7 +166,7 @@ export default {
         >
           <decision-branch-inline-form
             :is-first="index === 0"
-            :is-last="index === decisionBranches.length - 1"
+            :is-last="index === decisionBranches.filter(v => v).length - 1"
             :questionAnswerId="questionAnswerId"
             :decisionBranchId="decisionBranchId"
             :nodeData="data"
@@ -174,6 +174,7 @@ export default {
         </div>
       </ul>
       <button
+        v-if="decisionBranches.filter(v => v).length === decisionBranches.length"
         class="btn btn-link my-3"
         id="AddDecisionBranchButton"
         @click.prevent="handleAddDecisionBranchButtonClick"

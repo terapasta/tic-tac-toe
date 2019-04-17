@@ -130,6 +130,12 @@ mysql -uroot donusagi_bot < ./tmp/20170807163300.sql
 $ cap production deploy
 ```
 
+`Permission denied (publickey)`で落ちる場合は`ssh-agent`を使用する
+
+```
+$ ssh-add ~/.ssh/id_rsa
+```
+
 ### Ansible
 
 __How to start__

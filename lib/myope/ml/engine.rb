@@ -11,9 +11,10 @@ class Ml::Engine
     # .env にキーのみ設定(値は空)されていると空文字が設定されるため、これを防ぐ
     host = ENV['RPC_HOST'].presence || '127.0.0.1'
     port = ENV['RPC_PORT'].presence || 6000
+    timeout = ENV['RPC_TIMEOUT'].presence || 3000 # ms
 
     @bot = bot
-    @stub = Gateway::Bot::Stub.new("#{host}:#{port}", :this_channel_is_insecure)
+    @stub = Gateway::Bot::Stub.new("#{host}:#{port}", :this_channel_is_insecure, timeout: timeout)
   end
 
   # for only word2vec

@@ -33,9 +33,9 @@ class RouteGuideServicer(BotServicer):
         return ReplyResponses(data=results)
 
     def Reply(self, request, context):
-        logger.debug('bot_id = %s' % request.bot_id)
-        logger.debug('body = %s' % request.body)
-        logger.debug('learning_parameter = %s' % request.learning_parameter)
+        logger.info('bot_id = %s' % request.bot_id)
+        logger.info('body = %s' % request.body)
+        logger.info('learning_parameter = %s' % request.learning_parameter)
         myope_context = Context.new(
             bot_id=request.bot_id,
             learning_parameter=request.learning_parameter,

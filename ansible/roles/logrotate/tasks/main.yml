@@ -1,6 +1,15 @@
-- template:
+- name: rails app log
+  template:
     src: rails_app
     dest: /etc/logrotate.d/rails_app
     mode: 0644
     owner: root
     group: root
+
+- name: clamav scan log
+  template:
+      src: clamav-scan
+      dest: /etc/logrotate.d/clamav-scan
+      mode: 0644
+      owner: root
+      group: root

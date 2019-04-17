@@ -193,7 +193,7 @@ var FloatWrapper = exports.FloatWrapper = function FloatWrapper(props) {
 };
 
 var ActiveSize = {
-  Width: 300,
+  Width: 350,
   Height: _constants.MaxHeight
 };
 var transition = 'transition: all 0.15s;';

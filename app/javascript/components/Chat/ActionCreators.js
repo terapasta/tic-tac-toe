@@ -310,11 +310,11 @@ export const downPositionInitialQuestion = (botId, index) => {
   }
 }
 
-export const selectNoApplicableItem = (botToken, message) => {
+export const selectNoApplicableItem = (token, message) => {
   return (dispatch, getState) => {
     const guestKey = Cookies.get('guest_key')
     dispatch(disableForm())
-    FailedMessagesAPI.create(botToken, guestKey, message)
+    FailedMessagesAPI.create(token, guestKey, message)
       .then(res => {
         dispatch(createdMessage(res))
         dispatch(clearMessageBody())

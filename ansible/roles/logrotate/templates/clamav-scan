@@ -1,0 +1,10 @@
+/var/log/clamav/clamscan.log {
+  monthly
+  create 0644 root root
+  rotate 3
+  missingok
+  compress
+  delaycompress
+  copytruncate
+  notifempty
+}

@@ -1,4 +1,4 @@
-module FailedMessageHandleable
+module NotApplicableMessageHandleable
   extend ActiveSupport::Concern
 
   def create_messages_for_failed

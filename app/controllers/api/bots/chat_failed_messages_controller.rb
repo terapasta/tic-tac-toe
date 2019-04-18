@@ -1,6 +1,6 @@
 class Api::Bots::ChatFailedMessagesController < Api::BaseController
   include ApiRespondable
-  include FailedMessageHandleable
+  include NotApplicableMessageHandleable
 
   def create
     _, bot_message = *create_messages_for_failed

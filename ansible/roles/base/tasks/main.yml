@@ -11,33 +11,33 @@
 #   yum: name=* state=latest
 
 - name: install basic packages
-  yum: name={{ item }} state=installed
-  with_items:
-    - git
-    - curl
-    - wget
-    - libselinux-python
-    - ruby-devel
-    - readline-devel
-    - ncurses-devel
-    - gdbm-devel
-    - openssl-devel
-    - libxslt-devel
-    - sqlite-devel
-    - mysql-devel
-    - libyaml
-    - libyaml-devel
-    - tcl-devel
-    - db4-devel
-    - libffi-devel
-    - gcc
-    - libxml2
-    - libxml2-devel
-    - libxslt
-    - libxslt-devel
-    - ImageMagick
-    - ImageMagick-devel
-    - python-devel
+  yum:
+    name:
+      - git
+      - curl
+      - wget
+      - libselinux-python
+      - ruby-devel
+      - readline-devel
+      - ncurses-devel
+      - gdbm-devel
+      - openssl-devel
+      - libxslt-devel
+      - sqlite-devel
+      - mysql-devel
+      - libyaml
+      - libyaml-devel
+      - tcl-devel
+      - db4-devel
+      - libffi-devel
+      - gcc
+      - libxml2
+      - libxml2-devel
+      - libxslt
+      - libxslt-devel
+      - ImageMagick
+      - ImageMagick-devel
+      - python-devel
 
 - name: install supervisor
   yum:
@@ -67,7 +67,7 @@
 
 - name: install Development Tool
   become: yes
-  shell: yum -y groupinstall "Development Tools"
+  yum: name="@Development tools" state=present
 
 # timezone
 - name: set timezone
@@ -96,3 +96,37 @@
     src: /usr/libexec/gcc/x86_64-amazon-linux/4.8.5/cc1plus
     dest: /usr/bin/cc1plus
     state: link
+
+# ウイルス対策を導入
+- name: install clamav
+  yum:
+    name:
+      - clamav
+      - clamav-update
+- name: clamav config
+  template:
+    src: fleshclam.conf
+    dest: /etc/freshclam.conf
+    owner: root
+    group: root
+    mode: 644
+
+- name: schedule update
+  cron:
+    name: clamav update
+    weekday: 1
+    minute: 0
+    hour: 4
+    user: root
+    job: "/usr/share/clamav/freshclam-sleep"
+    cron_file: clamav-update
+
+- name: schedule scan
+  cron:
+    name: clamav scan
+    weekday: 1
+    minute: 0
+    hour: 5
+    user: root
+    job: "(echo ----------- SCAN START -----------; date -R) >> /var/log/clamav/clamscan.log; clamscan -r -l /var/log/clamav/clamscan.log -i --quiet /"
+    cron_file: clamav-scan

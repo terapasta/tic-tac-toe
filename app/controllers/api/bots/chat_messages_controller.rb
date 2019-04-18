@@ -21,7 +21,6 @@ class Api::Bots::ChatMessagesController < Api::BaseController
   end
 
   def create
-    binding.pry
     guest_key = params.require(:guest_key)
     token = params.require(:bot_token)
     message = params[:message]

@@ -27,7 +27,6 @@ const truncate = (str, limit) => {
 
 const toActionData = ({ questionAnswer, decisionBranch }) => {
   if (!isEmpty(questionAnswer)) {
-    console.log(questionAnswer)
     return {
       type: PostbackTypes.QuestionAnswer,
       id: questionAnswer.id,
@@ -36,8 +35,7 @@ const toActionData = ({ questionAnswer, decisionBranch }) => {
   } else if (!isEmpty(decisionBranch)) {
     return {
       type: PostbackTypes.DecisionBranch,
-      id: decisionBranch.id,
-      message: decisionBranch.question
+      id: decisionBranch.id
     }
   }
 }
@@ -125,7 +123,8 @@ class LineBot {
             promise = api.createMessage({
               botToken,
               guestKey,
-              questionAnswerId: data.id
+              questionAnswerId: data.id,
+              message: data.message
             })
             break
           case PostbackTypes.DecisionBranch:

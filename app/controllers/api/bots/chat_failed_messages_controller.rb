@@ -24,10 +24,6 @@ class Api::Bots::ChatFailedMessagesController < Api::BaseController
       guest_message_id: guest_message.id
     )
 
-    respond_to do |format|
-      format.json { render json: bot_message, adapter: :json, include: included_associations }
-    end
-
-    # render_collection_json [guest_message, bot_message], status: :created
+    render_collection_json [guest_message, bot_message], status: :created
   end
 end

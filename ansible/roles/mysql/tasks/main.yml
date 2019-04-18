@@ -1,10 +1,10 @@
 ---
 - name: install dependencies
-  yum: name={{ item }} state=installed
-  with_items:
-    - MySQL-python27
-    - mysql57.x86_64
-    - mysql57-devel.x86_64
+  yum:
+    name:
+      - MySQL-python27
+      - mysql57.x86_64
+      - mysql57-devel.x86_64
 
 - name: install MySQL
   yum: name=mysql57-server state=latest

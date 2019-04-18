@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :allowed_ip_address do
     
   end

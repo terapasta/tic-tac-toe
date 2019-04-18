@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :decision_branch do
     bot
     sequence(:body) { |n| "decision_branches.body #{n}" }

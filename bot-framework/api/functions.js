@@ -61,10 +61,9 @@ module.exports.createMessage = ({
   questionAnswerId
 }, config = {}) => {
   if (questionAnswerId === -1) {
-    return axios.post(`/api/bots/${botToken}/chat_messages.json`, {
+    return axios.post(`/api/bots/${botToken}/chat_failed_messages.json`, {
       guest_key: guestKey,
-      message: message,
-      question_answer_id: questionAnswerId
+      message
     }, config)
   }
   else {

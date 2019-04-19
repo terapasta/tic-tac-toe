@@ -3,7 +3,8 @@ module NotApplicableMessageHandleable
 
   def create_messages_for_failed
     guest_key = params.require(:guest_key)
-    token = params.require(:bot_token)
+    # Web版（chats)と外部連携API（api/bots)とでtokenの取り方が違うため条件分岐
+    token = params[:token].present? ? params.require(:token) : params.require(:bot_token)
     message = params.require(:message)
 
     bot = Bot.find_by!(token: token)

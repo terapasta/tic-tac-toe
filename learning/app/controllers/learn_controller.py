@@ -11,7 +11,6 @@ class LearnController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()
-        self.pass_feedback = context.pass_feedback
         self.learn_pipe = LearnPipe(self.factory)
         self.reply_pipe = ReplyPipe(self.factory)
 

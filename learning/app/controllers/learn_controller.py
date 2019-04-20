@@ -11,6 +11,7 @@ class LearnController(BaseCls):
     def __init__(self, context):
         self.bot = context.current_bot
         self.factory = context.get_factory()
+        self.pass_feedback = context.pass_feedback
         self.learn_pipe = LearnPipe(self.factory)
         self.reply_pipe = ReplyPipe(self.factory)
 
@@ -41,10 +42,14 @@ class LearnController(BaseCls):
     def _learn_bot(self):
         logger.info('load question_answers and ratings')
         bot_qa_data = self.factory.get_datasource().question_answers.by_bot(self.bot.id)
-        bot_ratings_data = self.factory.get_datasource().ratings.with_good_by_bot(self.bot.id)
 
-        all_questions = np.array(pd.concat([bot_qa_data['question'], bot_ratings_data['question']]).dropna())
-        all_answer_ids = np.array(pd.concat([bot_qa_data['question_answer_id'], bot_ratings_data['question_answer_id']]), dtype=np.int)
+        #
+        # Removed:
+        # bot_ratings_data を Q/A に含めてしまうと、元の Q/A が変更されても古いQ/A が表示されてしまう
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/165274681
+        #
+        all_questions = np.array(bot_qa_data['question'].dropna())
+        all_answer_ids = np.array(bot_qa_data['question_answer_id'], dtype=np.int)
 
         # Note: 空のテキストにラベル0を対応付けるために強制的にトレーニングセットを追加
         all_questions = np.append(all_questions, [''] * Constants.COUNT_OF_APPEND_BLANK)

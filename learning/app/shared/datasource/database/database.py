@@ -29,15 +29,15 @@ class Database():
 
     def execute(self, sql, params):
         def my_execute(conn):
-            with conn as cur:
-                cur.execute(sql, params)
+            cur = conn.cursor(buffered=False)
+            cur.execute(sql, params)
         self._execute_with_connect(my_execute)
 
     def execute_with_transaction(self, queries):
         def my_execute(conn):
-            with conn as cur:
-                for query in queries:
-                    cur.execute(query[0], query[1])
+            cur = conn.cursor(buffered=False)
+            for query in queries:
+                cur.execute(query[0], query[1])
         self._execute_with_connect(my_execute)
 
     def _execute_with_connect(self, function):

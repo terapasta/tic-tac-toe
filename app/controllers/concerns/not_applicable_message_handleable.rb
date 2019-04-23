@@ -1,12 +1,7 @@
 module NotApplicableMessageHandleable
   extend ActiveSupport::Concern
 
-  def create_messages_for_failed
-    guest_key = params.require(:guest_key)
-    # Web版（chats)と外部連携API（api/bots)とでtokenの取り方が違うため条件分岐
-    token = params[:token].present? ? params.require(:token) : params.require(:bot_token)
-    message = params.require(:message)
-
+  def create_messages_for_failed(guest_key, token, message)
     bot = Bot.find_by!(token: token)
     chat = bot.chats.find_by!(guest_key: guest_key)
 

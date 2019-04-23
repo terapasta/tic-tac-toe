@@ -29,7 +29,8 @@ const toActionData = ({ questionAnswer, decisionBranch }) => {
   if (!isEmpty(questionAnswer)) {
     return {
       type: PostbackTypes.QuestionAnswer,
-      id: questionAnswer.id
+      id: questionAnswer.id,
+      message: questionAnswer.question
     }
   } else if (!isEmpty(decisionBranch)) {
     return {
@@ -122,7 +123,8 @@ class LineBot {
             promise = api.createMessage({
               botToken,
               guestKey,
-              questionAnswerId: data.id
+              questionAnswerId: data.id,
+              message: data.message
             })
             break
           case PostbackTypes.DecisionBranch:

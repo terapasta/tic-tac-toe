@@ -25,12 +25,8 @@ RSpec.describe '/api/bots/:token/chat_messages', type: :request do
       }
 
       JSON.parse(response.body).tap do |json|
-        json['messages'][0].tap do |guest_message|
-          expect(guest_message['body']).to eq(message)
-        end
-        json['messages'][1].tap do |bot_message|
-          expect(bot_message['body']).to eq(DefinedAnswer.classify_failed_text)
-          expect(bot_message['answerFailed']).to be
+        json["message"]["body"].tap do |bot_message|
+          expect(bot_message).to eq(DefinedAnswer.classify_failed_text)
         end
       end
     end

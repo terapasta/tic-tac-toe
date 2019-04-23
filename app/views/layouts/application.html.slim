@@ -9,7 +9,8 @@ html
     link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"
     = stylesheet_link_tag    'app', media: 'all'
     = csrf_meta_tags
-
+    
+    = include_gon
     - if Rails.env.production?
       = render 'layouts/shared/analytics/mixpanel'
       = render 'layouts/shared/analytics/rollbar'

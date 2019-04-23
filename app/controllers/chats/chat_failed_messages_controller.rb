@@ -1,4 +1,4 @@
-class Api::Bots::ChatFailedMessagesController < Api::BaseController
+class Chats::ChatFailedMessagesController < Api::BaseController
   include ApiRespondable
   include NotApplicableMessageHandleable
 
@@ -8,10 +8,6 @@ class Api::Bots::ChatFailedMessagesController < Api::BaseController
     token = params[:token].present? ? params.require(:token) : params.require(:bot_token)
     message = params.require(:message)
 
-    _, bot_message = *create_messages_for_failed(guest_key, token, message)
-
-    respond_to do |format|
-      format.json { render json: bot_message, adapter: :json }
-    end
+    render_collection_json create_messages_for_failed(guest_key, token, message), status: :created
   end
 end

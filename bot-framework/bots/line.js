@@ -95,8 +95,8 @@ class LineBot {
       messages = messages.concat(this.messageWithAttachments(null, answerFiles))
     } else if (!isEmpty(similarQuestionAnswers) && isShowSimilarQuestionAnswers) {
       // Disaptch decisionBranches Dialog as suggestion
-      messages = messages.concat(this.messageWithAttachments(body, answerFiles))
       messages = messages.concat(this.messageWithDecisionBranches(body, similarQuestionAnswers, true))
+      messages = messages.concat(this.messageWithAttachments(null, answerFiles))
     } else {
       messages = messages.concat(this.messageWithAttachments(body, answerFiles))
     }
@@ -177,7 +177,7 @@ class LineBot {
   messageWithDecisionBranches (message, decisionBranches, isSuggestion = false) {
     const attrName = isSuggestion ? 'question' : 'body'
     const actionKey = isSuggestion ? 'questionAnswer' : 'decisionBranch'
-    const text = isSuggestion ? 'こちらの質問ではないですか？' : message
+    const text = message
 
     const messageObj = {
       type: 'template',

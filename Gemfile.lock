@@ -84,13 +84,13 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    brakeman (4.5.0)
     bootsnap (1.4.3)
       msgpack (~> 1.0)
     bootstrap (4.3.1)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
+    brakeman (4.5.0)
     builder (3.2.3)
     bullet (5.9.0)
       activesupport (>= 3.0.0)
@@ -616,9 +616,9 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   better_errors (~> 2.4.0)
   binding_of_caller
-  brakeman
   bootsnap
   bootstrap (~> 4.3.1)
+  brakeman
   bullet
   byebug
   capistrano (~> 3.6, >= 3.6.1)

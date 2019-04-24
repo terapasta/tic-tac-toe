@@ -60,7 +60,8 @@ class QuestionAnswer < ApplicationRecord
 
   scope :keyword, -> (_keyword) {
     if _keyword.present?
-      ransack(question_or_answer_or_sub_questions_question_cont: _keyword).result
+      _kw = "%#{_keyword}%"
+      where('question_answers.question LIKE ? OR question_answers.answer LIKE ?', _kw, _kw)
     end
   }
 

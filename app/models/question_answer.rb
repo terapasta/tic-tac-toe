@@ -60,7 +60,7 @@ class QuestionAnswer < ApplicationRecord
 
   scope :keyword, -> (_keyword) {
     if _keyword.present?
-      ransack(question_or_answer_or_sub_questions_question_cont: _keyword).result
+      ransack(question_or_answer_or_sub_questions_question_cont: _keyword).result(distinct: true)
     end
   }
 

@@ -116,7 +116,6 @@ gem 'asset_sync', '~> 2.4.0'
 gem 'acts_as_list'
 gem 'redcarpet', '~> 2.3.0'
 gem 'mixpanel_client'
-gem 'gon'
 
 group :development, :test do
 

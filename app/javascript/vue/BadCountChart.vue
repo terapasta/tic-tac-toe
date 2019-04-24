@@ -124,7 +124,7 @@ export default {
               }
               name = nameFormat(d[i].name, d[i].ratio, d[i].id, d[i].index);
               value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
-              bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+              bgcolor = d[i].id === 'Bad評価件数' ? Colors.Line : color(d[i].id);
               text += "<tr class='" + d[i].id + "'>";
               text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
               text += "<td class='value'>" + value.toLocaleString() + "</td>";

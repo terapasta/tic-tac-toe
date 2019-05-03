@@ -1,11 +1,22 @@
 const restify = require('restify')
 const socketio = require('socket.io')
+const corsMiddleware = require('restify-cors-middleware')
+
+const cors = corsMiddleware({
+  origins: [
+    'http://localhost:3000',
+    'https://app.my-ope.net',
+  ],
+  allowHeaders: ['*']
+})
 
 class All {
   constructor (servers) {
     this.servers = servers
     this.app = restify.createServer()
     this.app.use(restify.plugins.bodyParser({ mapParams: false }))
+    this.app.pre(cors.preflight)
+    this.app.use(cors.actual)
     this.io = socketio.listen(this.app.server)
   }
 

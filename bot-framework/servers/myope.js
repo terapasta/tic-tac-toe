@@ -20,7 +20,7 @@ class MyOpeServer {
     app.get('/myope/:botToken/messages', async (req, res) => {
       const {
         page = 1,
-        per_page = 20,
+        perPage = 20,
         botToken,
         guestKey,
       } = { ...req.params, ...req.query }
@@ -28,7 +28,7 @@ class MyOpeServer {
         botToken,
         guestKey,
         page,
-        per_page,
+        perPage,
       })
       const { messages } = response.data
       res.send({ messages })

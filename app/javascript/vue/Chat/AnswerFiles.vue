@@ -67,5 +67,6 @@ export default {
   padding-top: 16px;
   white-space: nowrap;
   overflow-x: auto;
+  height: 156px;
 }
 </style>

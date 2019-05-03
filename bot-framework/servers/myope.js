@@ -30,8 +30,12 @@ class MyOpeServer {
         page,
         perPage,
       })
+      const {
+        'x-current-page': currentPage,
+        'x-total-pages': totalPages,
+      } = response.headers
       const { messages } = response.data
-      res.send({ messages })
+      res.send({ messages, paging: { currentPage, totalPages } })
     })
 
     app.post('/myope/:botToken/messages', (req, res) => {

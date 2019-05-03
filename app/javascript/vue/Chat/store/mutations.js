@@ -6,6 +6,8 @@ import {
   ADD_MESSAGES,
   REPLACE_MESSAGE,
 
+  SET_MESSAGE_PAGING,
+
   SET_IS_PROCESSING,
 
   SET_IS_CONNECTED,
@@ -22,7 +24,7 @@ export default {
   },
 
   [ADD_MESSAGES] (state, { messages }) {
-    const newMessages = sortBy([...state.messages, ...messages], it => (
+    const newMessages = sortBy([...messages, ...state.messages], it => (
       it.createdAt
     ))
     state.messages = newMessages
@@ -47,5 +49,10 @@ export default {
 
   [SET_IS_CONNECTED] (state, { isConnected }) {
     state.isConnected = isConnected
-  }
+  },
+
+  [SET_MESSAGE_PAGING] (state, { paging }) {
+    state.messagePage = window.parseInt(paging.currentPage)
+    state.messageTotalPages = window.parseInt(paging.totalPages)
+  },
 }

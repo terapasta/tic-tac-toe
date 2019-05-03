@@ -3,6 +3,7 @@ import * as api from './api'
 
 import {
   ADD_MESSAGES,
+  SET_MESSAGE_PAGING,
   REPLACE_MESSAGE,
   SET_IS_PROCESSING,
   SET_IS_CONNECTED,
@@ -18,15 +19,23 @@ export default {
     axios.defaults.baseURL = state.botServerHost
   },
 
-  async fetchMessages ({ commit, state }) {
+  async fetchMessages ({ commit, state }, params = {}) {
+    commit(SET_IS_PROCESSING, { isProcessing: true })
+    const { page } = params
     const { botToken, guestKey, messagePage } = state
-    const res = await api.fetchMessages({
-      botToken,
-      guestKey,
-      page: messagePage,
-      perPage: 10,
-    }, { headers })
-    commit(ADD_MESSAGES, { messages: res.data.messages })
+    try {
+      const res = await api.fetchMessages({
+        botToken,
+        guestKey,
+        page: page || messagePage,
+        perPage: 20,
+      }, { headers })
+      const { messages, paging } = res.data
+      commit(ADD_MESSAGES, { messages })
+      commit(SET_MESSAGE_PAGING, { paging })
+    } finally {
+      commit(SET_IS_PROCESSING, { isProcessing: false })
+    }
   },
 
   async createMessage ({ commit, state }, { message }) {

@@ -12,10 +12,14 @@ export default {
     messages: { type: Array, required: true },
     headerHeight: { type: Number, required: true },
     isStaff: { type: Boolean, required: true, default: false },
+    isShowLoadMoreButton: { type: Boolean, default: false },
+    isProcessing: { type: Boolean, default: false },
   },
 
   data: () => ({
     isDoneFirstRendering: false,
+    stayPositionTo: null,
+    stayPositionY: 0,
   }),
 
   mounted () {
@@ -27,6 +31,9 @@ export default {
   watch: {
     messages: {
       handler (newMessages, oldMessages) {
+        if (this.stayPositionId != null && this.stayPositionY != null) {
+          return this.scrollToStayPosition()
+        }
         this.doneFirstRendering()
         if (newMessages.length > oldMessages.length) {
           this.scrollToBottom()
@@ -53,6 +60,26 @@ export default {
         const destElement = destComponent.$el
         this.scroller.scrollTo(destElement.offsetTop - this.headerHeight - 12)
       })
+    },
+
+    scrollToStayPosition () {
+      this.$nextTick(() => {
+        const comp = this.$refs[`message-${this.stayPositionId}`][0]
+        const top = comp.$el.offsetTop - this.stayPositionY || 0
+        this.$el.scrollTo(0, top)
+        this.stayPositionId = null
+        this.stayPositionY = null
+        this.doneFirstRendering()
+      })
+    },
+
+    handleLoadMoreButtonClick () {
+      if (this.isProcessing) { return }
+      this.isDoneFirstRendering = false
+      const { id } = this.messages[0]
+      this.stayPositionId = id
+      this.stayPositionY = this.$refs[`message-${id}`][0].$el.offsetTop
+      this.$emit('load-more')
     }
   }
 }
@@ -62,6 +89,23 @@ export default {
   <div
     class="body"
   >
+    <div
+      v-if="isShowLoadMoreButton"
+      class="mb-3 text-center"
+    >
+      <button
+        class="btn btn-primary"
+        @click.prevent.stop="handleLoadMoreButtonClick"
+        :disabled="isProcessing"
+      >
+        <template v-if="isProcessing">
+          読み込み中...
+        </template>
+        <template v-else>
+          さらに読み込む
+        </template>
+      </button>
+    </div>
     <div
       v-for="(message, i) in messages"
       :key="i"

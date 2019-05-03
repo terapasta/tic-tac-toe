@@ -9,6 +9,7 @@ import Chat from '../vue/Chat.vue'
 import actions from '../vue/Chat/store/actions'
 import baseState from '../vue/Chat/store/baseState'
 import mutations from '../vue/Chat/store/mutations'
+import getters from '../vue/Chat/store/getters'
 
 Vue.use(Vuex)
 Vue.use(VueSweetAlert)
@@ -25,7 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const store = new Vuex.Store({
     actions,
     state,
-    mutations
+    mutations,
+    getters,
   })
 
   const App = Vue.extend(assign({}, Chat, {

@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import Cookies from 'js-cookie'
 import socketio from 'socket.io-client'
 
@@ -41,12 +41,18 @@ export default {
       'botToken',
       'guestKey',
       'messages',
+      'messagePage',
+      'messageTotalPages',
       'isProcessing',
       'isConnected',
       'isStaff',
       'notification',
       'botServerHost',
-    ])
+    ]),
+
+    ...mapGetters([
+      'areMessagePagesRemaining',
+    ]),
   },
 
   methods: {
@@ -88,6 +94,10 @@ export default {
     handleGuestInfoSubmit ({ name, email }) {
       console.log('test', name, email)
       this.saveGuestUser({ name, email })
+    },
+
+    handleMessagesLoadMore () {
+      this.fetchMessages({ page: this.messagePage + 1 })
     }
   }
 }
@@ -115,10 +125,13 @@ export default {
       :messages="messages"
       :header-height="40"
       :is-staff="isStaff"
+      :is-show-load-more-button="areMessagePagesRemaining"
+      :is-processing="isProcessing"
       @select-decision-branch="handleMainBodySelectDecisionBranch"
       @select-question="handleMainBodySelectQuestion"
       @good="handleGood"
       @bad="handleBad"
+      @load-more="handleMessagesLoadMore"
     />
 
     <div class="footer">

@@ -17,8 +17,21 @@ class MyOpeServer {
       }
     })
 
-    app.get('/myope/:botToken/messages', (req, res) => {
-      res.send('OK')
+    app.get('/myope/:botToken/messages', async (req, res) => {
+      const {
+        page = 1,
+        per_page = 20,
+        botToken,
+        guestKey,
+      } = { ...req.params, ...req.query }
+      const response = await api.fetchMessages({
+        botToken,
+        guestKey,
+        page,
+        per_page,
+      })
+      const { messages } = response.data
+      res.send({ messages })
     })
 
     app.post('/myope/:botToken/messages', (req, res) => {

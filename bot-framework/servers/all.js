@@ -15,6 +15,7 @@ class All {
     this.servers = servers
     this.app = restify.createServer()
     this.app.use(restify.plugins.bodyParser({ mapParams: false }))
+    this.app.use(restify.plugins.queryParser())
     this.app.pre(cors.preflight)
     this.app.use(cors.actual)
     this.io = socketio.listen(this.app.server)

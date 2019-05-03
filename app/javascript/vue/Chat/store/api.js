@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export function fetchMessages ({ botToken, guestKey }) {
-  return axios.get(`/myope/${botToken}/messages`, { guestKey })
+  return axios.get(`/myope/${botToken}/messages`, { params: { guestKey } })
 }
 
 export function createMessage ({ botToken, guestKey, message }) {

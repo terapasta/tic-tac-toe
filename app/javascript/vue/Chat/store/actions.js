@@ -3,11 +3,11 @@ import * as api from './api'
 
 import {
   ADD_MESSAGES,
-  SET_MESSAGE_PAGING,
   REPLACE_MESSAGE,
   SET_IS_PROCESSING,
   SET_IS_CONNECTED,
   SET_NOTIFICATION,
+  SET_MESSAGES_NEXT_PAGE_EXISTS,
 } from './mutationTypes'
 
 const headers = {
@@ -21,18 +21,18 @@ export default {
 
   async fetchMessages ({ commit, state }, params = {}) {
     commit(SET_IS_PROCESSING, { isProcessing: true })
-    const { page } = params
-    const { botToken, guestKey, messagePage } = state
+    const { olderThanId } = params
+    const { botToken, guestKey } = state
     try {
       const res = await api.fetchMessages({
         botToken,
         guestKey,
-        page: page || messagePage,
+        olderThanId: olderThanId || 0,
         perPage: 20,
       }, { headers })
-      const { messages, paging } = res.data
+      const { messages, nextPageExists } = res.data
       commit(ADD_MESSAGES, { messages })
-      commit(SET_MESSAGE_PAGING, { paging })
+      commit(SET_MESSAGES_NEXT_PAGE_EXISTS, { nextPageExists })
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }

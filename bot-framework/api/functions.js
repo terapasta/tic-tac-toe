@@ -39,15 +39,15 @@ module.exports.createChat = ({
 module.exports.fetchMessages = ({
   botToken,
   guestKey,
-  page,
+  olderThanId,
   perPage,
 }, config = {}) => (
   axios.get(`/api/bots/${botToken}/chat_messages.json`, Object.assign({},
     config,
     {
       params: {
+        older_than_id: olderThanId || 0,
         guest_key: guestKey,
-        page,
         per_page: perPage,
       }
     }

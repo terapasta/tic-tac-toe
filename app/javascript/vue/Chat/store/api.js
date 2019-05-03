@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export function fetchMessages ({ botToken, guestKey, page, perPage }) {
-  return axios.get(`/myope/${botToken}/messages`, { params: { guestKey, page, perPage } })
+export function fetchMessages ({ botToken, guestKey, olderThanId, perPage }) {
+  return axios.get(`/myope/${botToken}/messages`, { params: { guestKey, olderThanId, perPage } })
 }
 
 export function createMessage ({ botToken, guestKey, message }) {

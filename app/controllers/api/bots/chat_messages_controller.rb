@@ -9,16 +9,36 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     token = params.require(:bot_token)
     bot = Bot.find_by!(token: token)
     chat = bot.chats.find_by!(guest_key: guest_key)
-    messages = chat.messages
+    scoped_messages = chat.messages
       .includes(:rating, chat: [:bot], question_answer: [:decision_branches, :answer_files])
       .order(created_at: :desc)
-      .page(params[:page])
-      .per(params[:per_page].presence || 50)
+    per_page = params[:per_page].presence || 50
+
+    if params[:older_than_id].present?
+      if params[:older_than_id].to_i.zero?
+        messages = scoped_messages.limit(per_page)
+      else
+        messages = scoped_messages
+          .where('id < ?', params[:older_than_id])
+          .limit(per_page)
+      end
+    else
+      messages = scoped_messages
+        .page(params[:page])
+        .per(per_page)
+    end
+
 
     respond_to do |format|
       format.json do
-        headers['X-Current-Page'] = messages.current_page
-        headers['X-Total-Pages'] = messages.total_pages
+        if params[:older_than_id].present? && messages.last.present?
+          headers['X-Next-Page-Exists'] = scoped_messages
+            .where('id < ?', messages.last.id)
+            .count > 0
+        else
+          headers['X-Current-Page'] = messages.current_page
+          headers['X-Total-Pages'] = messages.total_pages
+        end
         render json: messages, adapter: :json, include: included_associations
       end
     end

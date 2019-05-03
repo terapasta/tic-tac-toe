@@ -7,6 +7,7 @@ import {
   REPLACE_MESSAGE,
 
   SET_MESSAGE_PAGING,
+  SET_MESSAGES_NEXT_PAGE_EXISTS,
 
   SET_IS_PROCESSING,
 
@@ -51,8 +52,7 @@ export default {
     state.isConnected = isConnected
   },
 
-  [SET_MESSAGE_PAGING] (state, { paging }) {
-    state.messagePage = window.parseInt(paging.currentPage)
-    state.messageTotalPages = window.parseInt(paging.totalPages)
-  },
+  [SET_MESSAGES_NEXT_PAGE_EXISTS] (state, { nextPageExists }) {
+    state.messagesNextPageExists = nextPageExists
+  }
 }

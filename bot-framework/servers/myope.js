@@ -19,7 +19,7 @@ class MyOpeServer {
 
     app.get('/myope/:botToken/messages', async (req, res) => {
       const {
-        page = 1,
+        olderThanId = 0,
         perPage = 20,
         botToken,
         guestKey,
@@ -27,15 +27,17 @@ class MyOpeServer {
       const response = await api.fetchMessages({
         botToken,
         guestKey,
-        page,
+        olderThanId,
         perPage,
       })
       const {
-        'x-current-page': currentPage,
-        'x-total-pages': totalPages,
+        'x-next-page-exists': nextPageExists,
       } = response.headers
       const { messages } = response.data
-      res.send({ messages, paging: { currentPage, totalPages } })
+      res.send({
+        messages,
+        nextPageExists: nextPageExists === 'true'
+      })
     })
 
     app.post('/myope/:botToken/messages', (req, res) => {

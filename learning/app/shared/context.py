@@ -10,7 +10,6 @@ from app.factories.fuzzy_cosine_similarity_factory import FuzzyCosineSimilarityF
 from app.factories.strict_fuzzy_cosine_similarity_factory import StrictFuzzyCosineSimilarityFactory
 from app.factories.logistic_regression_factory import LogisticRegressionFactory
 from app.factories.two_step_cosine_similarity_factory import TwoStepCosineSimilarityFactory
-from app.factories.word2vec_wmd_factory import Word2vecWmdFactory
 from app.factories.hybrid_classification_factory import HybridClassificationFactory
 
 from app.feedback.rocchio_feedback import RocchioFeedback
@@ -61,11 +60,6 @@ class Context(BaseCls):
         elif algorithm == Constants.ALGORITHM_TWO_STEP_SIMILARITY_CLASSIFICATION:
             logger.info('algorithm: Two Steps Simmilarity Classification')
             factory_cls = TwoStepCosineSimilarityFactory
-
-        elif algorithm == Constants.ALGORITHM_WORD2VEC_WMD:
-            logger.info('algorithm: Word2vec WMD')
-            factory_cls = Word2vecWmdFactory
-            self._pass_feedback = True
 
         elif algorithm == Constants.ALGORITHM_HYBRID_CLASSIFICATION:
             logger.info('algorithm: Hybrid Classification')

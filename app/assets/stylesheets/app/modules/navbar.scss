@@ -22,6 +22,13 @@
       }
       text-indent: -99999px;
     }
+
+    a.mikata {
+      width: 120px;
+      background: {
+        image: image-url('logo--green--mikata.png');
+      }
+    }
   }
 
   .btn {

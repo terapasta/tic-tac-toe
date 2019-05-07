@@ -12,7 +12,7 @@ RUN apt-get update -qq \
                     mecab-utils \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn
 
@@ -50,13 +50,11 @@ RUN apt-get -y install python-dev libxml2-dev libxslt-dev libssl1.0-dev openssl 
     && make -j$(nproc) \
     && make install \
     && ldconfig \
-
     && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
     && /usr/local/bin/python3 get-pip.py \
         --disable-pip-version-check \
         --no-cache-dir \
         "pip==$PYTHON_PIP_VERSION" \
-
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
@@ -75,3 +73,5 @@ COPY . .
 
 WORKDIR /tmp/learning
 RUN pip install --upgrade setuptools && pip install -r requirements.txt && pip install nose
+
+WORKDIR /usr/src/app

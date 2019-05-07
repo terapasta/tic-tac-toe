@@ -130,6 +130,7 @@ Rails.application.routes.draw do
           end
           resources :bad_reasons, only: [:create]
         end
+        resources :chat_failed_messages, only: [:create]
         resources :trainings, only: [:create]
         post 'choices/:id', to: 'choices#create', as: :choices
       end

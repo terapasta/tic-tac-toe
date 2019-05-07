@@ -1,11 +1,11 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :question_answer do
     sequence(:question) { |n| "question_answers.question #{n}" }
     sequence(:answer) { |n| "question_answers.answer #{n}" }
 
     trait :with_decision_branches do
       transient do
-        branch_count 2
+        branch_count { 2 }
       end
 
       after(:build) do |qa, evaluator|

@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :export do
-    file "MyString"
+    file { "MyString" }
   end
 end

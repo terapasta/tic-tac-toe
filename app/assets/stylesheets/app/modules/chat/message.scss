@@ -272,6 +272,7 @@
       .material-icons {
         transition-duration: .1s;
         transition-property: all;
+        font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1;
       }
 
       // &:active {

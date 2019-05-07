@@ -1,6 +1,8 @@
 FROM python:3.5.2
 
-RUN apt-get -qqy update \
+RUN echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list &&\
+    echo "deb http://security.debian.org jessie/updates main" >> /etc/apt/sources.list &&\
+    apt-get -qqy update \
     && apt-get -qqy upgrade \
     && apt-get -y --no-install-recommends install \
         build-essential \

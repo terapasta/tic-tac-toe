@@ -51,7 +51,7 @@
 
     .form-group
       .card: .card-body
-        label 回答添付ファイル
+        label 回答添付ファイル（合計ファイルサイズは最大10MBまでです）
         - if policy(@question_answer).attachable_answer_file?(@bot)
           #answer-files
             = f.fields_for :answer_files, wrapper: false do |nf|
@@ -71,7 +71,7 @@
 
                 - else
                   .input-group
-                    = nf.file_field :file, class: 'form-control'
+                    = nf.file_field :file, class: 'form-control file-size-check'
                     = nf.hidden_field :question_answer_id, value: @question_answer.id
                     span.input-group-btn
                       = nf.link_to_remove 'キャンセル', class: 'btn btn-secondary'

@@ -6,7 +6,8 @@ import max from 'lodash/max'
 const Colors = {
   Danger: '#dc3545',
   Warning: '#ffc107',
-  Safe: '#28a745'
+  Safe: '#28a745',
+  Line: '#0000ff'
 }
 
 const Thresolds = {
@@ -34,6 +35,10 @@ export default {
     yAxisMax () {
       const result = max(this.columns[1].slice(1)) + 10
       return result > YAxisMax.Higher ? YAxisMax.Higher : (result < YAxisMax.Lower ? YAxisMax.Lower : result)
+    },
+    y2AxisMax () {
+      const result = max(this.columns[2].slice(1)) 
+      return result === 0 ? 100 : (result <= 100 ? 100 : result + 10)
     }
   },
 
@@ -47,8 +52,17 @@ export default {
         data: {
           x: 'x',
           columns: this.columns,
-          type: 'bar',
+          axes: {
+            'Bad評価件数': 'y2'
+          },
+          types: {
+            'Bad評価率': 'bar',
+            'Bad評価件数': 'line'
+          },
           color (color, d) {
+            if (d.id === 'Bad評価件数') {
+              return Colors.Line
+            }
             if (d === 'Bad評価率') {
               return '#fff'
             } else if (d.value <= Thresolds.Safe) {
@@ -73,6 +87,20 @@ export default {
             min: 0,
             tick: {
               format (d) { return `${d}%` }
+            },
+            label: {
+              text: 'Bad評価率',
+              position: 'outer-middle'
+            }
+          },
+          y2: {
+            show: true,
+            padding: 0,
+            max: this.y2AxisMax,
+            min: 0,
+            label: {
+              text: 'Bad評価件数',
+              position: 'outer-middle'
             }
           }
         },

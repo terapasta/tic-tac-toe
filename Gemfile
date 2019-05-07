@@ -2,13 +2,14 @@ source 'https://rubygems.org'
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.4'
+gem 'rails', '5.2.2'
 gem 'rake', '< 11'
+gem 'bootsnap', require: false
 
 # select DB for local server
 #gem 'mysql2'
 # gem 'sqlite3', :group => :development
-gem 'mysql2', '~> 0.3.20'
+gem 'mysql2', '~> 0.5.2'
 
 
 # Use SCSS for stylesheets
@@ -16,15 +17,15 @@ gem 'sass', '~> 3.5.2'
 gem 'sass-rails'
 
 # easy to write a form
-gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap', '~> 4.3.1'
 #gem 'simple_form' #代替案
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '0.12.3', platforms: :ruby
+# See https://github.com/rails/execjs#readme for more supported runtimes
+gem 'mini_racer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -78,7 +79,7 @@ gem 'rails_autolink'
 gem 'http'
 gem 'whenever', require: false
 gem 'carrierwave'
-gem 'rmagick', git: 'http://github.com/rmagick/rmagick.git', require: false
+gem 'rmagick', '2.16.0', require: false # rmagick3.0.0がImageMagick6.7.8.9に対応していないためrevert
 gem 'rails4-autocomplete'
 gem 'slim-rails'
 gem 'slack-api'
@@ -88,7 +89,7 @@ gem 'slack-notifier'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'autoprefixer-rails', '~> 6.7.7.2'
+gem 'autoprefixer-rails', '~> 9.5.1'
 gem 'draper', '>= 3.0.0.pre1'
 gem 'pundit'
 gem 'nested_form'
@@ -103,11 +104,11 @@ gem 'silencer'
 gem 'foreman'
 gem 'to_bool'
 gem 'active_link_to'
-gem 'grpc', '~> 1.12.0'
-gem 'grpc-tools', '~> 1.12.0'
+gem 'grpc', '~> 1.17.0'
+gem 'grpc-tools', '~> 1.17.0'
 gem 'google-protobuf', '3.5.1.2'
 gem 'email_validator'
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.0' # 最新版 4.0.2 で発生する問題を解消できていないので一旦ここで固定
 gem 'mini_mime'
 gem 'hashie'
 gem 'faraday', '~> 0.12.1'
@@ -145,7 +146,7 @@ group :development, :test do
 
   # rspec
   gem 'rspec-rails', '~> 3.5.0.beta'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara', '~> 2.15.4'
   gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'

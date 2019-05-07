@@ -1,12 +1,12 @@
 import os
+from time import sleep
 from injector import inject
 from pathlib import Path
 from sklearn.externals import joblib
 from app.shared.config import Config
-from app.shared.base_cls import BaseCls
+from app.shared.persistence_base_cls import PersistenceBaseCls
 
-
-class Persistence(BaseCls):
+class Persistence(PersistenceBaseCls):
     @inject
     def __init__(self):
         self.id = 0

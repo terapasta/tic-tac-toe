@@ -18,7 +18,7 @@ const getEnv = (path) => {
 const envFile = path.dirname(__dirname) + '/.env'
 const env = getEnv(envFile)
 
-module.exports = Object.assign(env, {
+module.exports = Object.assign({
   NODE_ENV: process.env.NODE_ENV || 'development',
   MYOPE_API_URL: process.env.MYOPE_API_URL || 'http://localhost:3000',
 
@@ -28,4 +28,4 @@ module.exports = Object.assign(env, {
   MicrosoftAppPassword: process.env.MicrosoftAppPassword,
 
   BOT_TOKEN: process.env.BOT_TOKEN,
-})
+}, env)

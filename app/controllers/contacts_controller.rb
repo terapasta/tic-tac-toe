@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
       user.save
     end
     ticket = ZendeskAPI::Ticket.new(client,
-      subject: "サポートフォームからのお問い合わせ<#{current_user.email}>",
+      subject: "#{params[:ticket][:subject]} <#{current_user.email}>",
       description: params[:ticket][:description],
       requester_id: user.id
     )

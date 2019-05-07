@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  app:
+    ports:
+      - 3000:3000
+  db:
+    ports:
+      - 13306:3306
+  webpack:
+    ports:
+      - 3035:3035

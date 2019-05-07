@@ -15,8 +15,8 @@
 #
 algorithm:
   base:
-    current: 8
-    competed: 7
+    current: 9
+    competed: 8
   feedback:
     current: 0
     competed: 0

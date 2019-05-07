@@ -63,7 +63,7 @@ RSpec.describe 'ConversationTree', type: :feature, js: true do
     expect(page).to_not have_content(question_answers.second.answer)
   end
 
-  scenario 'creates question with answer'  do
+  xscenario 'creates question with answer'  do
     find('#AddQuestionAnswerButton').click
     find('[name=question-question]').set('new question')
     find('[name="question_answer[answer]"]').set('new answer')

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include OrganizationMembershipable
+  after_initialize :set_notification_settings, unless: :persisted?
 
   # Include default devise modules. Others available are:
   #  :lockable, :timeoutable and :omniauthable
@@ -30,5 +31,11 @@ class User < ApplicationRecord
   private
     def generate_password
       SecureRandom.hex(10)
+    end
+
+    def set_notification_settings
+      # 通知設定のデフォルト値をセットする
+      # email 以外のキーが追加された場合、ここでデフォルト値を設定する
+      self.notification_settings = { "email": true }
     end
 end

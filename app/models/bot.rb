@@ -47,7 +47,12 @@ class Bot < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
+  validates :suggest_limit, numericality: { less_than_or_equal_to: 20 }
+
   before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
+
+  # https://www.pivotaltracker.com/n/projects/1879711/stories/164098607
+  after_create :create_tutorial
 
   def learning_parameter_attributes
     if learning_parameter.present?

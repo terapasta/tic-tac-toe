@@ -59,13 +59,21 @@ module.exports.createMessage = ({
   guestKey,
   message,
   questionAnswerId
-}, config = {}) => (
-  axios.post(`/api/bots/${botToken}/chat_messages.json`, {
-    guest_key: guestKey,
-    message,
-    question_answer_id: questionAnswerId
-  }, config)
-)
+}, config = {}) => {
+  if (questionAnswerId === -1) {
+    return axios.post(`/api/bots/${botToken}/chat_failed_messages.json`, {
+      guest_key: guestKey,
+      message
+    }, config)
+  }
+  else {
+    return axios.post(`/api/bots/${botToken}/chat_messages.json`, {
+      guest_key: guestKey,
+      message,
+      question_answer_id: questionAnswerId
+    }, config)
+  }
+}
 
 module.exports.createChoice = ({
   botToken,

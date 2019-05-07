@@ -33,7 +33,8 @@ window.jQuery(function($) {
     });
   });
 
-  $('[data-role="collapsible').on('dblclick', function(e) {
+  // Safari で Syntax エラーとなるので合わせて修正 pivotal -> #163214830
+  $('[data-role="collapsible"]').on('dblclick', function(e) {
     e.preventDefault()
     $(e.currentTarget).toggleClass('active')
   })
@@ -49,4 +50,34 @@ window.jQuery(function($) {
       })
     })
   })
-})
+
+  // 一回のサブミットで10MB以上添付すると nginx 413 に振られるのを防ぐ pivotal -> #163214830
+  $(function() {
+    $('#answer-files').on('change', 'input', function() {
+      const TEN_MB = 10*1024*1024;
+      function showErrMsg(element, errMsg) {
+        $(element).parent().parent().append('<div class="alert alert-danger mt-2 file-alert"></div>');
+        $(".file-alert").html(errMsg)
+        setTimeout(function() {
+          $(".file-alert").hide(400);
+        }, 4000);
+        $(element).replaceWith($(element).val('').clone(true));
+      }
+
+      var fileSizeSum = 0;
+      $.each($('.file-size-check'), function(i, value) {
+        // キャンセル済みファイルはカウントしない(キャンセルすると親の親ノードが display: none になる)
+        if ($(value).parent().parent().css('display') == 'none') {
+          return true;
+        }
+        // undefined のサイズを掴まないようチェック
+        if (value.files[0]) fileSizeSum += value.files[0].size;
+      })
+      // 回答添付ファイルの合計サイズチェック
+      if (fileSizeSum > TEN_MB) {
+        const errMsg = '合計ファイルサイズが10MB以上のため添付できません';
+        return showErrMsg(this, errMsg);
+      }
+    })
+  })
+}) 

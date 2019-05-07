@@ -14,19 +14,14 @@ class FuzzyTermVectorizer(BaseVectorizer):
         self.persistence = datasource.persistence
         self._dump_key = dump_key
         self.vectorizer = None
+        self._prepare_instance_if_needed()
 
     def fit(self, sentences):
-        self._prepare_instance_if_needed()
         self.vectorizer.fit(sentences)
         self.persistence.dump(self.vectorizer, self.dump_key)
 
     def transform(self, sentences):
-        self._prepare_instance_if_needed()
-        try:
-            fv = self.vectorizer.transform(sentences)
-            return fv
-        except NotFittedError as e:
-            raise NotTrainedError(e)
+        return self.vectorizer.transform(sentences)
 
     def fit_transform(self, sentences):
         self.fit(sentences)
@@ -39,11 +34,17 @@ class FuzzyTermVectorizer(BaseVectorizer):
     def dump_key(self):
         return self._dump_key
 
-    def _prepare_instance_if_needed(self):
-        # 学習済みのベクタライザがあればそれをロード
-        if self.vectorizer is None:
-            self.vectorizer = self.persistence.load(self.dump_key)
-
+    def _create_instance_if_needed(self):
         # 学習済みのものがなければ新規作成
         if self.vectorizer is None:
             self.vectorizer = TfidfVectorizer(use_idf=True, token_pattern=u'(?u)\\b\\w+\\b')
+        return self.vectorizer is not None
+
+    def _load_instance_if_needed(self, retry=5, dt=.2):
+        # 学習済みのベクタライザがあればそれをロード
+        if self.vectorizer is None:
+            self.vectorizer = self.persistence.load_with_retry(self.dump_key, retry=retry, dt=dt)
+        return self.vectorizer is not None
+
+    def _prepare_instance_if_needed(self):
+        return self._load_instance_if_needed(retry=3, dt=.1) or self._create_instance_if_needed()

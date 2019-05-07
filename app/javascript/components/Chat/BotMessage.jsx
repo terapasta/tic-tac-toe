@@ -97,7 +97,9 @@ export default class ChatBotMessage extends Component {
     // markedの時点でバックスラッシュ2つがエスケープされてしまうため置換しておく
     const replaced = autoLink(body, { target: '_blank' }).replace(/\\/g, '\\\\')
     const markdowned = marked(replaced)
-    const striped = striptags(markdowned, ['img', 'a'])
+    // [url]で別タブで開くための補完処理
+    const markdownedLink = markdowned.replace(/<a href=/gi, '<a target="_blank" href=');
+    const striped = striptags(markdownedLink, ['img', 'a'])
     const renderedBody = striped.replace(/\n/g, '<br />')
 
     return (

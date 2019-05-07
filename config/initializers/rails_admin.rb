@@ -56,6 +56,13 @@ RailsAdmin.config do |config|
         :unconfirmed_email,
         :created_at, :updated_at
     end
+
+    list do
+      include_all_fields
+      field :role do
+        searchable false
+      end
+    end
   end
 
   config.model "Bot" do
@@ -87,6 +94,11 @@ module RailsAdmin
           # @see https://github.com/sferik/rails_admin/pull/2759
           def parse_value(value)
             value.present? ? (RailsAdmin.yaml_load(value.try(:to_s)) || nil) : nil
+          end
+        end
+        class Json
+          def queryable?
+            false
           end
         end
       end

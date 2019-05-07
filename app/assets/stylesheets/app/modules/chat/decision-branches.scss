@@ -6,8 +6,8 @@
 
   &__title {
     padding: 0 0 8px;
-    font-size: 10px;
-    color: $gray-light;
+    font-size: 11px;
+    color: lighten($gray, 10%);
   }
 
   &__items {

@@ -41,7 +41,7 @@ class QuestionAnswer < ApplicationRecord
       if topic_tag_id.to_i == -1
         where('id NOT IN (SELECT DISTINCT(question_answer_id) FROM topic_taggings)')
       else
-        joins(:topic_tags).where(topic_tags: {id: topic_tag_id})
+        where('id IN (SELECT DISTINCT(question_answer_id) FROM topic_taggings WHERE topic_tag_id = ?)', topic_tag_id)
       end
     end
   }

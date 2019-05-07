@@ -29,7 +29,8 @@ const toActionData = ({ questionAnswer, decisionBranch }) => {
   if (!isEmpty(questionAnswer)) {
     return {
       type: PostbackTypes.QuestionAnswer,
-      id: questionAnswer.id
+      id: questionAnswer.id,
+      message: questionAnswer.question
     }
   } else if (!isEmpty(decisionBranch)) {
     return {
@@ -95,8 +96,8 @@ class LineBot {
       messages = messages.concat(this.messageWithAttachments(null, answerFiles))
     } else if (!isEmpty(similarQuestionAnswers) && isShowSimilarQuestionAnswers) {
       // Disaptch decisionBranches Dialog as suggestion
-      messages = messages.concat(this.messageWithAttachments(body, answerFiles))
       messages = messages.concat(this.messageWithDecisionBranches(body, similarQuestionAnswers, true))
+      messages = messages.concat(this.messageWithAttachments(null, answerFiles))
     } else {
       messages = messages.concat(this.messageWithAttachments(body, answerFiles))
     }
@@ -122,7 +123,8 @@ class LineBot {
             promise = api.createMessage({
               botToken,
               guestKey,
-              questionAnswerId: data.id
+              questionAnswerId: data.id,
+              message: data.message
             })
             break
           case PostbackTypes.DecisionBranch:
@@ -177,7 +179,7 @@ class LineBot {
   messageWithDecisionBranches (message, decisionBranches, isSuggestion = false) {
     const attrName = isSuggestion ? 'question' : 'body'
     const actionKey = isSuggestion ? 'questionAnswer' : 'decisionBranch'
-    const text = isSuggestion ? 'こちらの質問ではないですか？' : truncate(message, 160)
+    const text = message
 
     const messageObj = {
       type: 'template',

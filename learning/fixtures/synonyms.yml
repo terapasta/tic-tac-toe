@@ -102,6 +102,12 @@
 - word: 出来
   value: でき
   bot_id: null
+- word: wifi
+  value: wi-fi
+  bot_id: null
+- word: WiFi
+  value: wi-fi
+  bot_id: null
 
 # ==============================
 #    typo

@@ -6,11 +6,13 @@ default: &default
     name: donusagi_bot
     user: root
     password: ""
+    pool: 5
+    pool_name: myope_learning # 固定で良い
+    retry_interval: 500 # msec
+    max_retry: 5
   # dicdir: /usr/lib/mecab/dic/mecab-ipadic-neologd
   dicdir: /usr/local/lib/mecab/dic/ipadic
   # dicdir: /var/lib/mecab/dic/debian # for docker
-  word2vec_model_name: fasttext_model.vec
-  word2vec_model_is_binaly: False
 
 development:
   <<: *default
@@ -24,6 +26,7 @@ test:
     name: donusagi_bot_test
     user: root
     password: ""
+  dicdir: /var/lib/mecab/dic/ipadic-utf8
 
 production:
   <<: *default
@@ -33,3 +36,7 @@ production:
     name:
     user:
     password:
+    pool:
+    pool_name:
+    retry_interval:
+    max_retry:

@@ -45,9 +45,10 @@ class BadCountSummarizer < ApplicationSummarizer
   end
 
   def thirty_days_chart_data
-    get_thirty_days_data.inject([['x'], ['Bad評価率']]) { |acc, it|
+    get_thirty_days_data.inject([['x'], ['Bad評価率'], ['Bad評価件数']]) { |acc, it|
       acc[0].push(it.created_at.strftime('%Y-%m-%d'))
       acc[1].push((it.data['bad_rate'] * 100).round(2))
+      acc[2].push(it.data['bad_count'])
       acc
     }
   end

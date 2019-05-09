@@ -121,6 +121,12 @@
     job: "/usr/share/clamav/freshclam-sleep"
     cron_file: clamav-update
 
+- name: create scan log
+  file:
+    path: /var/log/clamav/clamscan.log
+    state: touch
+    mode: 644
+    
 - name: schedule scan
   cron:
     name: clamav scan

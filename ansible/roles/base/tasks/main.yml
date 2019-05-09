@@ -128,5 +128,5 @@
     minute: 0
     hour: 5
     user: root
-    job: "(echo ----------- SCAN START -----------; date -R) >> /var/log/clamav/clamscan.log; clamscan -r -l /var/log/clamav/clamscan.log -i --quiet /"
+    job: "clamscan / -r -l /var/log/clamav/clamscan.log -i --exclude-dir='/sys|/etc|/bin|/var'; echo 'Started at:' `date -R` >> /var/log/clamav/clamscan.log"
     cron_file: clamav-scan

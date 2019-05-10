@@ -58,6 +58,8 @@ class Database():
             raise(e)
 
         finally:
+            # commit しないとキャッシュを使用してしまう
+            conn.commit()
             conn.close()
 
     def _connect(self):

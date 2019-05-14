@@ -13,6 +13,10 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         self._synonyms = datasource.synonyms
         self._tagger = MeCab.Tagger("-Owakati")
 
+        # スペースだと複数単語が辞書登録された際に変換がバグる
+        # https://www.pivotaltracker.com/n/projects/1879711/stories/165465196
+        self._separator = '__'
+
     def perform(self, texts):
         # 対象の文章を一旦 tokenize する
         # https://www.pivotaltracker.com/n/projects/1879711/stories/164325275
@@ -32,7 +36,7 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         synonyms['word'] = synonyms.word.apply(self._tokenize)
         synonyms['value'] = synonyms.value.apply(self._tokenize)
 
-        return [self._trim_whitespaces(x) for x in self._normalize_word(texts, synonyms)]
+        return [self._trim_separator(x) for x in self._normalize_word(texts, synonyms)]
 
     def remove_cycle_from_synonyms(self, synonyms):
         ancestors = {}
@@ -91,10 +95,10 @@ class WordNormalizationPreprocessor(BasePreprocessor):
         # ' アイドル ' と ' ドル ' とは一致しないので、
         # 本来不可分な単語中の部分文字列が置換されるのを防ぐ
         #
-        return ' ' + self._tagger.parse(text).replace("\n", "")
+        return self._separator + self._tagger.parse(text).replace("\n", "")
 
-    def _trim_whitespaces(self, text):
-        return ''.join(text.split(' '))
+    def _trim_separator(self, text):
+        return ''.join(text.split(self._separator))
 
     def _merge_lists(self, *args):
         add = lambda a, b: a + b

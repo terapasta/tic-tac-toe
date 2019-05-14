@@ -48,7 +48,7 @@ namespace :data_summary do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
         summarizer = GuestMessagesSummarizer.new(bot)
-        # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する
+        # 毎日01:00:00に呼び出す想定なので前日に戻って計算する
         summarizer.summarize(date: 1.day.ago)
         summarizer.save!
       end
@@ -73,7 +73,7 @@ namespace :data_summary do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
         summarizer = QuestionAnswersSummarizer.new(bot)
-        # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する
+        # 毎日02:00:00に呼び出す想定なので前日に戻って計算する
         summarizer.summarize(date: 1.day.ago)
         summarizer.save!
       end

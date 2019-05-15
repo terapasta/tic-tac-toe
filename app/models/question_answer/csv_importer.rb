@@ -6,6 +6,7 @@ class QuestionAnswer::CsvImporter
   class EmptyAnswerError < StandardError; end
   class InvalidUTF8Error < StandardError; end
   class InvalidSJISError < StandardError; end
+  class DuplicateQuestionError < StandardError; end
 
   attr_reader :succeeded, :current_row, :error_message
 
@@ -23,19 +24,40 @@ class QuestionAnswer::CsvImporter
 
   def import
     csv_data = parse
+    binding.pry
     ActiveRecord::Base.transaction do
       csv_data.each do |import_param|
         topic_tag_names = import_param.delete(:topic_tag_names)
+        duplicate_question = @bot.question_answers.find_by(question: import_param[:question])
 
         # Q&Aのidでレコードが見つかったら更新
         # それ以外は作成する
         question_answer = begin
+          # binding.pry
           if import_param[:id].present? &&
             (qa = @bot.question_answers.find_by(id: import_param[:id]))
-            qa.update!(import_param)
-            qa
+            if duplicate_question.present?
+              if csv_data.detect{ |data| data[:id] == duplicate_question.id }.present?
+                qa.assign_attributes(import_param)
+                qa.save!(validate: false)
+                qa
+              else
+                fail DuplicateQuestionError.new
+              end
+            else
+              qa.update!(import_param)
+              qa
+            end
           else
-            @bot.question_answers.create!(import_param)
+            if duplicate_question.present?
+              if csv_data.detect{ |data| data[:id] == duplicate_question.id }.present?
+                @bot.question_answers.create!(import_param)
+              else
+                fail DuplicateQuestionError.new
+              end
+            else
+              @bot.question_answers.create!(import_param)
+            end
           end
         end
 
@@ -55,6 +77,8 @@ class QuestionAnswer::CsvImporter
     @error_message = '質問を入力してください'
   rescue EmptyAnswerError => e
     @error_message = '回答を入力してください'
+  rescue DuplicateQuestionError => e
+    @error_message = '質問は既に存在します'
   rescue ArgumentError => e
     if e.message.include?('UTF-8')
       raise InvalidUTF8Error.new

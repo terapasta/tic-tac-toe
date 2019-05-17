@@ -50,9 +50,11 @@ class QuestionAnswer::CsvImporter
         # questionにユニーク制約を設定したため、インポートにも処理を追加
         # 既に登録されているが、CSV内にで該当idの質問が存在する場合
         # その質問は更新されてユニークとなるはずなので、バリデーションをスキップして更新する
+        #
+        # HACK: ifの入れ子を改善したい
         question_answer = begin
           if duplicate_question.present? &&
-              !csv_data.detect{ |data| data[:id] == duplicate_question.id }.present?
+              !csv_data.any?{ |data| data[:id] == duplicate_question.id }
             fail ExistQuestionError.new
           elsif import_param[:id].present? &&
               (qa = @bot.question_answers.find_by(id: import_param[:id]))

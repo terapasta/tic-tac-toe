@@ -5,9 +5,8 @@ class SubQuestionValidator < ActiveModel::Validator
     end
 
     if SubQuestion.joins(:question_answer)
-           .where("question_answers.bot_id = ? and sub_questions.question = ?",
-               record.question_answer.bot_id,
-               record.question).present?
+           .where({question_answers: { bot_id: record.question_answer.bot_id }, sub_questions: { question: record.question } })
+           .present?
       record.errors.add(:sub_question, "と同じサブ質問が存在しています。")
     end
   end

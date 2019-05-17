@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    attributes:
+      sub_question:
+        id: ID
+        question: 質問
+      sub_questions:
+        sub_question: サブ質問

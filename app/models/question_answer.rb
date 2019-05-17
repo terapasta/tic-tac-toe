@@ -22,7 +22,7 @@ class QuestionAnswer < ApplicationRecord
 
   NO_CLASSIFIED_ID = 0
 
-  validates :question, presence: true
+  validates :question, presence: true, uniqueness: { scope: :bot_id }
 
   after_create do
     self.bot&.tutorial&.done_fifty_question_answers_if_needed!

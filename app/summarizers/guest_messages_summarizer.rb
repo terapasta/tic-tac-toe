@@ -20,20 +20,13 @@ class GuestMessagesSummarizer < ApplicationSummarizer
     }
   end
 
-  # 182日前を半年前とする
-  def get_half_year_data
-    @half_year_data ||= get_between(
-      start_time: HalfYearDays.days.ago.beginning_of_day,
-      end_time: Time.current.end_of_day
-    )
-  end
-
-  def half_year_data
-    get_half_year_data.inject([['x'], ['チャット質問数']]) { |acc, it|
-      acc[0].push(it.created_at.beginning_of_day.strftime('%Y-%m-%d'))
-      acc[1].push(it.data['guest_messages_count'])
-      acc
-    }
+  def data_between(start_time, end_time)
+    get_between(start_time: start_time, end_time: end_time)
+      .inject([['x'], ['チャット質問数']]) { |acc, it|
+        acc[0].push(it.created_at.beginning_of_day.strftime('%Y-%m-%d'))
+        acc[1].push(it.data['guest_messages_count'])
+        acc
+      }
   end
 
   def guest_messages_between(start_time:, end_time:)

@@ -13,7 +13,11 @@ class Admin::UtilizationsController < ApplicationController
     @data_list = @bots.inject({}) { |acc, bot|
       gm_summarizer = GuestMessagesSummarizer.new(bot)
       qa_summarizer = QuestionAnswersSummarizer.new(bot)
-      data = ApplicationSummarizer.aggregate_data(gm_summarizer.half_year_data, qa_summarizer.half_year_data)
+      start_time =  validate_date || 1.month.ago.beginning_of_day
+      end_time = 1.day.ago.end_of_day
+      gm_data = gm_summarizer.data_between(start_time, end_time)
+      qa_data = qa_summarizer.data_between(start_time, end_time)
+      data = ApplicationSummarizer.aggregate_data(gm_data, qa_data)
 
       # データが１件もない場合は nil になるので、その場合の max は 0 とする
       # https://www.pivotaltracker.com/n/projects/1879711/stories/161669875
@@ -49,5 +53,11 @@ class Admin::UtilizationsController < ApplicationController
   private
     def watching_bot_ids
       (cookies[CookieKey].presence || '').split(',').map(&:to_i)
+    end
+
+    def validate_date
+      return nil unless params[:start_time]
+      start_time = Date.parse(params[:start_time])
+      start_time >= HalfYearDays.days.ago ? start_time : nil
     end
 end

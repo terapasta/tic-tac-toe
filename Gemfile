@@ -108,7 +108,7 @@ gem 'grpc', '~> 1.17.0'
 gem 'grpc-tools', '~> 1.17.0'
 gem 'google-protobuf', '3.5.1.2'
 gem 'email_validator'
-gem 'webpacker', '~> 3.0' # 最新版 4.0.2 で発生する問題を解消できていないので一旦ここで固定
+gem 'webpacker', '~> 4.0'
 gem 'mini_mime'
 gem 'hashie'
 gem 'faraday', '~> 0.12.1'

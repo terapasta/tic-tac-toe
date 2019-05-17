@@ -6,10 +6,10 @@
     owner: root
     group: root
 
-- name: clamav scan log
+- name: clamav log
   template:
-      src: clamav-scan
-      dest: /etc/logrotate.d/clamav-scan
+      src: clamav
+      dest: /etc/logrotate.d/clamav
       mode: 0644
       owner: root
       group: root

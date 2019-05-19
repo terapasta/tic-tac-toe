@@ -26,6 +26,20 @@ export default {
     })
   },
 
+  data: () => ({
+    displayData: [],
+    monthlyData: []
+  }),
+
+  watch: {
+    columns: {
+      immediate: true,
+      handler(columns) {
+        this.displayData = columns
+      }
+    }
+  },
+
   computed: {
     yAxisMax () {
       if (this.yMax == null) {
@@ -33,6 +47,15 @@ export default {
         return max(all) + 10
       }
       return this.yMax + 10
+    },
+
+    weeklyData () {
+      const defaultData = [...this.columns]
+      const data = []
+      defaultData.forEach(target => {
+        data.push(target.slice(0, 8))
+      })
+      return data
     }
   },
 
@@ -45,7 +68,7 @@ export default {
         },
         data: {
           x: 'x',
-          columns: this.columns,
+          columns: this.displayData,
           type: 'line',
         },
         axis: {
@@ -68,6 +91,19 @@ export default {
           show: false
         }
       })
+    },
+
+    handleHalfYearClicked () {
+    },
+
+    handleMonthlyClicked () {
+      this.displayData = this.columns
+      this.renderChart()
+    },
+
+    handleWeeklyClicked () {
+      this.displayData = this.weeklyData
+      this.renderChart()
     }
   }
 }
@@ -75,6 +111,30 @@ export default {
 
 <template>
   <div>
+    <div class="d-flex flex-row-reverse mb-3">
+      <div class="btn-group" role="group">
+        <button
+          type="button"
+          id="halfYearButton"
+          class="btn btn-sm btn-outline-info"
+          @click="handleHalfYearClicked"
+        >半年
+        </button>
+        <button
+          type="button"
+          id="monthlyButton"
+          class="btn btn-sm btn-outline-info"
+          @click="handleMonthlyClicked"
+        >月
+        </button>
+        <button
+          type="button"
+          id="weeklyButton"
+          class="btn btn-sm btn-outline-info"
+          @click="handleWeeklyClicked"
+        >週</button>
+      </div>
+    </div>
     <div ref="chart" />
   </div>
 </template>

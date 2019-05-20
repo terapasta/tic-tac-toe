@@ -24,6 +24,8 @@ class Admin::UtilizationsController < ApplicationController
       qa_data = qa_summarizer.data_between(start_time, end_time)
       data = ApplicationSummarizer.aggregate_data(gm_data, qa_data)
 
+      break data if params[:bot_id]
+
       # データが１件もない場合は nil になるので、その場合の max は 0 とする
       # https://www.pivotaltracker.com/n/projects/1879711/stories/161669875
       max = data.drop(1).map{ |d| d.drop(1).max }.compact.max || 0
@@ -43,9 +45,11 @@ class Admin::UtilizationsController < ApplicationController
       acc
     }
 
-    [:high, :middle, :low].each{ |level|
-      Array(@data_list[level]).sort_by!{ |it| it[:max] }.reverse!
-    }
+    unless params[:bot_id]
+      [:high, :middle, :low].each{ |level|
+        Array(@data_list[level]).sort_by!{ |it| it[:max] }.reverse!
+      }
+    end
 
     render json: { data: @data_list }
   end
@@ -72,8 +76,9 @@ class Admin::UtilizationsController < ApplicationController
     end
 
     def validate_date
+      return ApplicationSummarizer::HalfYearDays.days.ago if params[:half_year]
       return nil unless params[:start_time]
       start_time = Date.parse(params[:start_time])
-      start_time >= HalfYearDays.days.ago ? start_time : nil
+      start_time >= ApplicationSummarizer::HalfYearDays.days.ago ? start_time : nil
     end
 end

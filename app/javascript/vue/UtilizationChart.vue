@@ -1,6 +1,7 @@
 <script>
 import C3 from 'c3'
 import 'c3/c3.min.css'
+import axios from 'axios'
 
 import dateFnsformatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
@@ -13,7 +14,8 @@ import sortBy from 'lodash/sortBy'
 const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 
-const today = dateFnsformatDate(new Date(), 'YYYY-MM-DD')
+const DateFormatForQueryParams = 'YYYY-MM-DD'
+const HalfYearDays = 182
 
 export default {
 
@@ -30,7 +32,8 @@ export default {
   }),
 
   props: {
-    columns: { type: Array }
+    columns: { type: Array },
+    botId: { type: Number }
   },
 
   computed: {
@@ -86,7 +89,14 @@ export default {
       })
     },
 
-    handleHalfYearClicked () {
+    handleHalfYearClicked (botId) {
+      const params = {
+        half_year: true,
+        bot_id: this.botId
+      }
+      axios.get('/admin/utilizations', { params }).then(res => {
+        console.log(res)
+      })
     },
 
     handleMonthlyClicked () {
@@ -97,6 +107,7 @@ export default {
     handleWeeklyClicked () {
       this.displayData = this.weeklyData
       this.renderChart()
+      })
     }
   }
 }

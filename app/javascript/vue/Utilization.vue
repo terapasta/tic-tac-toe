@@ -51,6 +51,7 @@ export default {
               </a>
               <utilization-chart
                 :columns="data.data"
+                :bot-id="data.bot.id"
               />
             </div>
           </div>

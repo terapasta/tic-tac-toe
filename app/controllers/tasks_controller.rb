@@ -43,4 +43,8 @@ class TasksController < ApplicationController
     def page
       (params[:page] || 1).to_i
     end
+  
+    def redirect_path_param
+      params.require(:redirect_path)
+    end
 end

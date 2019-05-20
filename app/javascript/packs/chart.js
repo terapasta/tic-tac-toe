@@ -3,7 +3,7 @@ import Vue from 'vue'
 import assign from 'lodash/assign'
 
 import BadCountChart from '../vue/BadCountChart'
-import UtilizationChart from '../vue/UtilizationChart'
+import Utilization from '../vue/Utilization'
 import getData from '../helpers/getData'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,16 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  Array.prototype.forEach.call(document.querySelectorAll('[data-component="UtilizationChart"]'), (mountNode) => {
+  Array.prototype.forEach.call(document.querySelectorAll('[data-component="Utilization"]'), (mountNode) => {
     new Vue({
       el: mountNode,
-      components: { UtilizationChart },
-      data: assign({ yMax: null }, getData(mountNode)),
+      components: { Utilization },
       template: `
-        <utilization-chart
-          :columns="columns"
-          :y-max="yMax"
-        />
+        <utilization />
       `
     })
   })

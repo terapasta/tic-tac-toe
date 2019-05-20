@@ -4,7 +4,6 @@ import 'c3/c3.min.css'
 
 import dateFnsformatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
-import addDays from 'date-fns/add_days'
 import jaLocale from 'date-fns/locale/ja'
 
 import max from 'lodash/max'
@@ -14,14 +13,13 @@ import sortBy from 'lodash/sortBy'
 const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 
+const today = dateFnsformatDate(new Date(), 'YYYY-MM-DD')
+
 export default {
-  props: {
-    columns: { type: Array, required: true },
-    yMax: { type: Number }
-  },
 
   mounted () {
-    this.$nextTick(() => {
+    this.$nextTick(async () => {
+      this.displayData = this.columns
       this.renderChart()
     })
   },
@@ -31,13 +29,8 @@ export default {
     monthlyData: []
   }),
 
-  watch: {
-    columns: {
-      immediate: true,
-      handler(columns) {
-        this.displayData = columns
-      }
-    }
+  props: {
+    columns: { type: Array }
   },
 
   computed: {
@@ -135,7 +128,7 @@ export default {
         >週</button>
       </div>
     </div>
-    <div ref="chart" />
+    <div ref="chart"/>
   </div>
 </template>
 

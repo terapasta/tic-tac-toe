@@ -13,22 +13,18 @@ module SentenceSynonymsOperatable
 
     def new_path
       resource_name = params[:controller].singularize
-      if %w[bot imported sentence synonym].include?(resource_name)
-        if @bot
-          new_polymorphic_path([ @bot, resource_name ])
-        else
-          new_polymorphic_path([ resource_name ])
-        end
+      if @bot
+        send("new_bot_#{ resource_name }_path", @bot)
+      else
+        send("new_#{ resource_name }_path")
       end
     end
 
     def index_path
-      if %w[bot imported sentence synonym].include?(params[:controller])
-        if @bot
-          polymorphic_path([ @bot, params[:controller] ])
-        else
-          polymorphic_path([ params[:controller] ])
-        end
+      if @bot
+        send("bot_#{ params[:controller] }_path", @bot)
+      else
+        send("#{ params[:controller] }_path")
       end
     end
 

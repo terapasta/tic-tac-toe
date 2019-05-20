@@ -22,7 +22,7 @@ class QuestionAnswer < ApplicationRecord
 
   NO_CLASSIFIED_ID = 0
 
-  validates :question, presence: true
+  validates :question, presence: true, uniqueness: { scope: :bot_id }
 
   after_create do
     self.bot&.tutorial&.done_fifty_question_answers_if_needed!
@@ -60,7 +60,7 @@ class QuestionAnswer < ApplicationRecord
 
   scope :keyword, -> (_keyword) {
     if _keyword.present?
-      ransack(question_or_answer_or_sub_questions_question_cont: _keyword).result
+      ransack(question_or_answer_or_sub_questions_question_cont: _keyword).result(distinct: true)
     end
   }
 

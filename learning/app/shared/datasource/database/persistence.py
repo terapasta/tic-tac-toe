@@ -50,7 +50,7 @@ class Persistence(PersistenceBaseCls):
                         WHERE bot_id = %(bot_id)s
                             AND name = %(name)s
                             AND (
-                                SELECT COUNT(id) FROM (SELECT * FROM dumps) AS all_dumps
+                                SELECT COUNT(id) FROM (SELECT id, bot_id, name FROM dumps) AS all_dumps
                                 WHERE bot_id = %(bot_id_2)s
                                 AND name = %(name_2)s
                             ) > 3

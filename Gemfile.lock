@@ -90,7 +90,6 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    brakeman (4.5.0)
     builder (3.2.3)
     bullet (5.9.0)
       activesupport (>= 3.0.0)
@@ -264,10 +263,6 @@ GEM
     formatador (0.2.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    gon (6.2.1)
-      actionpack (>= 3.0)
-      multi_json
-      request_store (>= 1.0)
     google-protobuf (3.5.1.2)
     googleapis-common-protos-types (1.0.3)
       google-protobuf (~> 3.0)
@@ -622,7 +617,6 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   bootstrap (~> 4.3.1)
-  brakeman
   bullet
   byebug
   capistrano (~> 3.6, >= 3.6.1)
@@ -653,7 +647,6 @@ DEPENDENCIES
   faraday (~> 0.12.1)
   fog-aws
   foreman
-  gon
   google-protobuf (= 3.5.1.2)
   grpc (~> 1.17.0)
   grpc-tools (~> 1.17.0)

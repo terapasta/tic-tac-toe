@@ -55,7 +55,9 @@ const handleAnswerMessage = ({ session, res }) => {
   const answerFiles = get(res, 'data.message.answerFiles', [])
   const isShowSimilarQuestionAnswers = get(res, 'data.message.isShowSimilarQuestionAnswers')
 
-  const message = appendReplier(session, body);
+  // 「\r\n」で改行を行なってくれないので、「\n\n」に置き換える
+  const replaced = body.replace(/\r\n/g, '\n\n')
+  const message = appendReplier(session, replaced);
 
   if (!isEmpty(decisionBranches) || !isEmpty(childDecisionBranches)) {
     sendMessageWithAttachments(session, message, answerFiles)

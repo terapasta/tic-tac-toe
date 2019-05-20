@@ -279,7 +279,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var MaxHeightSpace = _constants.Margin * 2 + _constants.MaxHeight + _constants.MoveButtonSize + _constants.MoveButtonMargin;
 
-var Origin = gon.env === "development" ? "http://localhost:3000" : (gon.env === 'production' ? "https://app.my-ope.net" : "https://staging.my-ope.net");
+var Origin = "production" === "development" ? "http://localhost:3000" : "https://app.my-ope.net";
 
 var Widget = function (_Component) {
   _inherits(Widget, _Component);

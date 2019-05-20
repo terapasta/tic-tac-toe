@@ -6,6 +6,9 @@ class QuestionAnswer::CsvImporter
   class EmptyAnswerError < StandardError; end
   class InvalidUTF8Error < StandardError; end
   class InvalidSJISError < StandardError; end
+  class DuplicateQuestionError < StandardError; end
+  class DuplicateSubQuestionError < StandardError; end
+  class ExistQuestionError < StandardError; end
 
   attr_reader :succeeded, :current_row, :error_message
 
@@ -26,14 +29,43 @@ class QuestionAnswer::CsvImporter
     ActiveRecord::Base.transaction do
       csv_data.each do |import_param|
         topic_tag_names = import_param.delete(:topic_tag_names)
+        duplicate_question = @bot.question_answers.find_by(question: import_param[:question])
+        duplicate_sub_question = @bot.sub_questions.find_by(question: import_param[:question])
 
-        # Q&Aのidでレコードが見つかったら更新
-        # それ以外は作成する
+        # 重複するsub_questionが存在する場合処理を行わない
+        fail DuplicateSubQuestionError.new if duplicate_sub_question
+
+        # 重複するQ&Aが存在し
+        # 該当するidがCSVデータ内に存在しない場合更新・作成を行わない
+        #
+        # Q&Aのidでレコードが見つかったら
+        # 他のレコードに重複Q&Aが存在する場合
+        # バリデーションをスキップして更新（ユニーク回避）
+        # 重複Q&Aが存在しない場合は普通に更新
+        #
+        # Q&Aのidでレコードが見つからなければ作成
+        #
+        # NOTE:
+        # https://www.pivotaltracker.com/story/show/164296332
+        # questionにユニーク制約を設定したため、インポートにも処理を追加
+        # 既に登録されているが、CSV内にで該当idの質問が存在する場合
+        # その質問は更新されてユニークとなるはずなので、バリデーションをスキップして更新する
+        #
+        # HACK: ifの入れ子を改善したい
         question_answer = begin
-          if import_param[:id].present? &&
-            (qa = @bot.question_answers.find_by(id: import_param[:id]))
-            qa.update!(import_param)
-            qa
+          if duplicate_question.present? &&
+              !csv_data.any?{ |data| data[:id] == duplicate_question.id }
+            fail ExistQuestionError.new
+          elsif import_param[:id].present? &&
+              (qa = @bot.question_answers.find_by(id: import_param[:id]))
+            if duplicate_question.present?
+              qa.assign_attributes(import_param)
+              qa.save!(validate: false)
+              qa
+            else
+              qa.update!(import_param)
+              qa
+            end
           else
             @bot.question_answers.create!(import_param)
           end
@@ -55,6 +87,12 @@ class QuestionAnswer::CsvImporter
     @error_message = '質問を入力してください'
   rescue EmptyAnswerError => e
     @error_message = '回答を入力してください'
+  rescue ExistQuestionError => e
+    @error_message = '質問は既に存在します'
+  rescue DuplicateSubQuestionError => e
+    @error_message = '重複するサブ質問が存在します'
+  rescue DuplicateQuestionError => e
+    @error_message = 'データ内で重複している質問が存在します'
   rescue ArgumentError => e
     if e.message.include?('UTF-8')
       raise InvalidUTF8Error.new
@@ -72,6 +110,7 @@ class QuestionAnswer::CsvImporter
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
     CSV.new(raw_data).drop(1).map.with_index { |row, index|
       @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
+      fail DuplicateQuestionError if raw_data.split(",").count(row[2]) > 1 # CSV内に重複QAがある場合エラー
       data = detect_or_initialize_by_row(row)
       next if data.nil?
 

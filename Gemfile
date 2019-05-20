@@ -116,7 +116,6 @@ gem 'asset_sync', '~> 2.4.0'
 gem 'acts_as_list'
 gem 'redcarpet', '~> 2.3.0'
 gem 'mixpanel_client'
-gem 'gon'
 
 group :development, :test do
 
@@ -168,10 +167,6 @@ group :development, :test do
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
   gem 'capistrano3-puma'
-end
-
-group :development do
-  gem 'brakeman'
 end
 
 group :production, :staging do

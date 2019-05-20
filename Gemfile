@@ -169,10 +169,6 @@ group :development, :test do
   gem 'capistrano3-puma'
 end
 
-group :development do
-  gem 'brakeman'
-end
-
 group :production, :staging do
   # Heroku用DB
   #gem 'pg'

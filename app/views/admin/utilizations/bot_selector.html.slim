@@ -2,7 +2,7 @@
   .row: .col-8.offset-2.mt-5.mb-4
     h4.mb-4 利用状況を確認したいボットを選んでください
     table.table: tbody
-      = form_with url: admin_utilizations_path do |f|
+      = form_with url: admin_utilizations_path(pre_index: true) do |f|
         tr: td.text-center
           = f.submit '送信', class: 'btn btn-success'
         - Bot.all.each do |bot|

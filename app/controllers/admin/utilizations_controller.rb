@@ -4,11 +4,16 @@ class Admin::UtilizationsController < ApplicationController
   helper_method :watching_bot_ids
 
   def index
-    @watching_bot_ids = watching_bot_ids
-    if @watching_bot_ids.blank? || params[:selecting].present?
-      render :bot_selector and return
+
+    if params[:pre_index]
+      return set_bots
     end
-    @bots = Bot.where(id: watching_bot_ids).order(created_at: :desc)
+      
+    if params[:bot_id]
+      @bots = Bot.where(id: params[:bot_id])
+    else
+      set_bots
+    end
 
     @data_list = @bots.inject({}) { |acc, bot|
       gm_summarizer = GuestMessagesSummarizer.new(bot)
@@ -37,9 +42,12 @@ class Admin::UtilizationsController < ApplicationController
       }
       acc
     }
+
     [:high, :middle, :low].each{ |level|
       Array(@data_list[level]).sort_by!{ |it| it[:max] }.reverse!
     }
+
+    render json: { data: @data_list }
   end
 
   def create
@@ -47,10 +55,18 @@ class Admin::UtilizationsController < ApplicationController
       value: params[:bot_ids].map(&:to_i).join(','),
       expires: 10.years.from_now
     }
-    redirect_to admin_utilizations_path
+    redirect_to admin_utilizations_path(pre_index: true)
   end
 
   private
+    def set_bots
+      @watching_bot_ids = watching_bot_ids
+      if @watching_bot_ids.blank? || params[:selecting].present?
+        render :bot_selector and return
+      end
+      @bots = Bot.where(id: watching_bot_ids).order(created_at: :desc)
+    end
+
     def watching_bot_ids
       (cookies[CookieKey].presence || '').split(',').map(&:to_i)
     end

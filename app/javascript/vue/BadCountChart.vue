@@ -12,7 +12,7 @@ const Colors = {
 
 const Thresolds = {
   Safe: 10,
-  Warining: 20
+  Warning: 20
 }
 
 const YAxisMax = {
@@ -67,7 +67,7 @@ export default {
               return '#fff'
             } else if (d.value <= Thresolds.Safe) {
               return Colors.Safe
-            } else if (d.value <= Thresolds.Warining) {
+            } else if (d.value <= Thresolds.Warning) {
               return Colors.Warning
             } else {
               return Colors.Danger
@@ -115,7 +115,7 @@ export default {
               switch (true) {
                 case value <= Thresolds.Safe:
                   return Colors.Safe
-                case value <= Thresolds.Warining:
+                case value <= Thresolds.Warning:
                   return Colors.Warning
                 default:
                   return Colors.Danger

@@ -31,12 +31,12 @@ export default {
       v-for="(level, index) in levels"
       :key="index"
     >
-      <h6 class="mt-5">{{level.toUpperCase()}}</h6>
+      <h4 class="mt-5">{{level.toUpperCase()}}</h4>
       <div class="row mb-3">
         <div
           v-for="(data, index) in rawData[level]"
           :key="index"
-          class="col-md-4"
+          class="col-md-4 mb-3"
         >
           <div class="card">
             <div class="card-body">

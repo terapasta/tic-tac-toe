@@ -172,22 +172,16 @@ export default {
     <div class="d-flex flex-row-reverse mb-3">
       <div class="btn-group" role="group">
         <button
-          type="button"
-          id="halfYearButton"
           class="btn btn-sm btn-outline-info"
           @click="handleHalfYearClicked"
         >半年
         </button>
         <button
-          type="button"
-          id="monthlyButton"
           class="btn btn-sm btn-outline-info"
           @click="handleMonthlyClicked"
         >月
         </button>
         <button
-          type="button"
-          id="weeklyButton"
           class="btn btn-sm btn-outline-info"
           @click="handleWeeklyClicked"
         >週</button>

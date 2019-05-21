@@ -104,7 +104,7 @@ export default {
         half_year: true,
         bot_id: this.botId
       }
-      axios.get('/admin/utilizations', { params })
+      axios.get('/admin/post_utilizations', { params })
       .then(res => {
         const data = get(res, 'data.data', null)
         if (!data) { return }

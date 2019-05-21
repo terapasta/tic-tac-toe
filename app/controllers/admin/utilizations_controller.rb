@@ -4,11 +4,10 @@ class Admin::UtilizationsController < ApplicationController
   helper_method :watching_bot_ids
 
   def index
+    return set_bots
+  end
 
-    if params[:pre_index]
-      return set_bots
-    end
-      
+  def post_index
     if params[:bot_id]
       @bots = Bot.where(id: params[:bot_id])
     else
@@ -59,7 +58,7 @@ class Admin::UtilizationsController < ApplicationController
       value: params[:bot_ids].map(&:to_i).join(','),
       expires: 10.years.from_now
     }
-    redirect_to admin_utilizations_path(pre_index: true)
+    redirect_to admin_utilizations_path
   end
 
   private

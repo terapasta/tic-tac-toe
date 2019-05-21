@@ -11,7 +11,7 @@ export default {
   mounted () {
     this.$nextTick(async () => {
       const config = { withCredentials: true }
-      const response = await axios.get('/admin/utilizations', config)
+      const response = await axios.get('/admin/post_utilizations', config)
       this.rawData = response.data.data
     })
   },

@@ -38,7 +38,8 @@ export default {
 
   data: () => ({
     displayData: [],
-    monthlyData: []
+    monthlyData: [],
+    halfYearData: []
   }),
 
   props: {
@@ -100,6 +101,11 @@ export default {
     },
 
     handleHalfYearClicked (botId) {
+      if (this.halfYearData.length > 0) {
+        this.displayData = this.halfYearData
+        this.renderChart()
+        return
+      }
       const params = {
         half_year: true,
         bot_id: this.botId
@@ -109,6 +115,7 @@ export default {
         const data = get(res, 'data.data', null)
         if (!data) { return }
         this.displayData = this.modifyHalfYearData(data)
+        this.halfYearData = [...this.displayData]
         this.renderChart()
       })
     },

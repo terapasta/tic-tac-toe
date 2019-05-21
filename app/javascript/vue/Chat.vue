@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from 'vuex'
-import ActionCable from 'actioncable'
+// import ActionCable from 'actioncable'
 import Cookies from 'js-cookie'
 
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'

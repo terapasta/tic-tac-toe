@@ -126,6 +126,7 @@ const FloatWrapperBase = styled.div.attrs({
   z-index: 99995000;
   height: 84px;
   text-align: center;
+  font-family: sans-serif;
 
   &:hover [data-name=FloatInner] {
     width: 165px;
@@ -217,6 +218,7 @@ const CloseButton = styled.a.attrs({
   font-size: 42px;
   line-height: 0.85;
   text-align: center;
+  text-decoration: none;
 
   &:hover {
     text-decoration: none;

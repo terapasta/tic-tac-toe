@@ -1,13 +1,13 @@
-import './embed/array-reduce-polyfill'
+import '../embed/array-reduce-polyfill'
 import ES6Promise from "es6-promise";
-import { directMountComponent } from "./modules/mount-component";
+import { directMountComponent } from "../helpers/mountComponent";
 
 import {
   Namespace
-} from "./embed/constants";
+} from "../embed/constants";
 
 
-import Widget from "./embed/widget";
+import Widget from "../embed/widget";
 
 ES6Promise.polyfill();
 

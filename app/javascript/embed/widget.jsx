@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import get from "lodash/get";
-import forEach from 'lodash/forEach';
 
 import * as PublicBotAPI from '../api/public_bot';
 

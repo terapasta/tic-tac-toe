@@ -50,7 +50,7 @@ export default {
   computed: {
     yAxisMax () {
       if (this.yMax == null) {
-        const all = flatten(this.columns.slice(1).map(it => it.slice(1)))
+        const all = flatten(this.displayData.slice(1).map(it => it.slice(1)))
         return max(all) + 10
       }
       return this.yMax + 10

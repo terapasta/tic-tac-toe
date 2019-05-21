@@ -170,21 +170,25 @@ export default {
 <template>
   <div>
     <div class="d-flex flex-row-reverse mb-3">
-      <div class="btn-group" role="group">
-        <button
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label
           class="btn btn-sm btn-outline-info"
           @click="handleHalfYearClicked"
-        >半年
-        </button>
-        <button
-          class="btn btn-sm btn-outline-info"
+        >
+          <input type="radio" autocomplete="off">半年
+        </label>
+        <label
+          class="btn btn-sm btn-outline-info active"
           @click="handleMonthlyClicked"
-        >月
-        </button>
-        <button
+        >
+          <input type="radio" autocomplete="off">月
+        </label>
+        <label
           class="btn btn-sm btn-outline-info"
           @click="handleWeeklyClicked"
-        >週</button>
+        >
+          <input type="radio" autocomplete="off">週
+        </label>
       </div>
     </div>
     <div ref="chart"/>

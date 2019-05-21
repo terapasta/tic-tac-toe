@@ -9,7 +9,7 @@ import jaLocale from 'date-fns/locale/ja'
 
 import max from 'lodash/max'
 import flatten from 'lodash/flatten'
-import sortBy from 'lodash/sortBy'
+import get from 'lodash/get'
 
 const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
@@ -19,11 +19,21 @@ const HalfYearDays = 182
 
 export default {
 
-  mounted () {
-    this.$nextTick(async () => {
+  mounted() {
+    this.$nextTick(() => {
       this.displayData = this.columns
       this.renderChart()
     })
+  },
+
+  watch: {
+    columns: {
+      immediate: true,
+      handler(columns) {
+        this.displayData = columns
+        this.renderChart()
+      }
+    }
   },
 
   data: () => ({
@@ -94,8 +104,12 @@ export default {
         half_year: true,
         bot_id: this.botId
       }
-      axios.get('/admin/utilizations', { params }).then(res => {
-        console.log(res)
+      axios.get('/admin/utilizations', { params })
+      .then(res => {
+        const data = get(res, 'data.data', null)
+        if (!data) { return }
+        this.displayData = this.modifyHalfYearData(data)
+        this.renderChart()
       })
     },
 
@@ -107,7 +121,47 @@ export default {
     handleWeeklyClicked () {
       this.displayData = this.weeklyData
       this.renderChart()
+    },
+
+    modifyHalfYearData (data) {
+      const defaultDate = [...data[0]]
+      const defaultGm = [...data[1]]
+      const defaultQa = [...data[2]]
+      const defaultUpdateQa = [...data[3]]
+
+      // set headers
+      let dates = [defaultDate.shift()]
+      let guestMessages = [defaultGm.shift()]
+      let questionAnswers = [defaultQa.shift()]
+      let updateQas = [defaultUpdateQa.shift()]
+
+      defaultDate.forEach((date, i) => {
+        const day = parseDate(date).getDay()
+        if (i === 0 && day !== 0) {
+          dates.push(date)
+          guestMessages.push(this.calcWeeklyData(defaultGm, 0, day))
+          questionAnswers.push(defaultQa[i] || 0)
+          updateQas.push(this.calcWeeklyData(defaultUpdateQa, 0, day))
+        }
+        if (day === 0) {
+          dates.push(date)
+          guestMessages.push(this.calcWeeklyData(defaultGm, i, i + 7))
+          questionAnswers.push(defaultQa[i] || 0)
+          updateQas.push(this.calcWeeklyData(defaultUpdateQa, i, i + 7))
+        }
       })
+
+      return [
+        [...dates],
+        [...guestMessages],
+        [...questionAnswers],
+        [...updateQas]
+      ]
+    },
+
+    calcWeeklyData (defaultData, start, end) {
+      if (!defaultData || !defaultData[start]) { return 0 }
+      return defaultData.slice(start, end).reduce((acc, val) => acc + val)
     }
   }
 }

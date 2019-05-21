@@ -122,11 +122,11 @@ export default {
               }
             }
 
-            var $$ = this,
-                titleFormat = defaultTitleFormat,
-                nameFormat = function (name) { return name; },
-                valueFormat = defaultValueFormat,
-                text, i, title, value, name, bgcolor;
+            const $$ = this
+            const titleFormat = defaultTitleFormat
+            const nameFormat = (name) => { return name }
+            const valueFormat = defaultValueFormat
+            let text, i, title, value, name, bgcolor
             for (i = 0; i < d.length; i++) {
               if (!(d[i] && (d[i].value || d[i].value === 0))) {
                 continue;

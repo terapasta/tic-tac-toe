@@ -109,6 +109,19 @@ export default {
         },
         tooltip: {
           contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+            const dataColor = (data) => {
+              if (!data || !data.value) { return "#fff" }
+              const { value } = data
+              switch (true) {
+                case value <= Thresolds.Safe:
+                  return Colors.Safe
+                case value <= Thresolds.Warining:
+                  return Colors.Warning
+                default:
+                  return Colors.Danger
+              }
+            }
+
             var $$ = this,
                 titleFormat = defaultTitleFormat,
                 nameFormat = function (name) { return name; },
@@ -124,7 +137,7 @@ export default {
               }
               name = nameFormat(d[i].name, d[i].ratio, d[i].id, d[i].index);
               value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
-              bgcolor = d[i].id === 'Bad評価件数' ? Colors.Line : color(d[i].id);
+              bgcolor = d[i].id === 'Bad評価件数' ? Colors.Line : dataColor(d[i]);
               text += "<tr class='" + d[i].id + "'>";
               text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
               text += "<td class='value'>" + value.toLocaleString() + "</td>";

@@ -32,11 +32,12 @@ export default {
       :key="index"
     >
       <h6 class="mt-5">{{level.toUpperCase()}}</h6>
-      <div
-        v-for="(data, index) in rawData[level]"
-        :key="index"
-      >
-        <div class="col-md-4">
+      <div class="row mb-3">
+        <div
+          v-for="(data, index) in rawData[level]"
+          :key="index"
+          class="col-md-4"
+        >
           <div class="card">
             <div class="card-body">
               <a
@@ -46,8 +47,7 @@ export default {
                 <div
                   class="circle-image-56"
                   :style="`background-image:url(${data.bot.image.thumb.url})`"
-                />
-                {{data.bot.name}}
+                />{{data.bot.name}}
               </a>
               <utilization-chart
                 :columns="data.data"

@@ -99,7 +99,7 @@ export default {
             max: this.y2AxisMax,
             min: 0,
             tick: {
-              format (d) { return `${d}%` }
+              format (d) { return `${d}件` }
             },
             label: {
               text: 'Bad評価件数',

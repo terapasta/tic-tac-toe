@@ -4,7 +4,7 @@ class Admin::UtilizationsController < ApplicationController
   helper_method :watching_bot_ids
 
   def index
-    return set_bots
+    set_bots
   end
 
   def post_index

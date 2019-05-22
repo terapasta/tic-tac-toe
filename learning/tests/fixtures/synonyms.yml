@@ -158,3 +158,15 @@
   bot_id: 1
   word: $
   value: ドル
+- id: 41
+  bot_id: 1
+  word: Note
+  value: ノート
+- id: 42
+  bot_id: 1
+  word: PC
+  value: パソコン
+- id: 43
+  bot_id: 1
+  word: laptop
+  value: ノートパソコン

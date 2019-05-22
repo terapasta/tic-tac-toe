@@ -37,6 +37,8 @@ class WordNormalizationPreprocessorTestCase(TestCase):
             {"arg": "クリムゾンビートリゾート", "want": "クリムゾンビートリゾート"},
             {"arg": "ユーザー", "want": "ユーザー"},
             {"arg": "アイドル", "want": "アイドル"},
+            {"arg": "パソコン", "want": "PC"},
+            {"arg": "ノートパソコン", "want": "laptop"},
         ]
 
         args = [x["arg"] for x in testcases]

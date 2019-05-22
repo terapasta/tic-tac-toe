@@ -15,7 +15,6 @@ const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 
 const DateFormatForQueryParams = 'YYYY-MM-DD'
-const HalfYearDays = 182
 
 export default {
 

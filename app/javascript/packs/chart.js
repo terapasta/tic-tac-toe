@@ -1,6 +1,5 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
-import assign from 'lodash/assign'
 
 import BadCountChart from '../vue/BadCountChart'
 import Utilization from '../vue/Utilization'

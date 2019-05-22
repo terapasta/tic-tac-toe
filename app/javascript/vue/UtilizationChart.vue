@@ -44,7 +44,8 @@ export default {
 
   props: {
     columns: { type: Array },
-    botId: { type: Number }
+    botId: { type: Number },
+    onlyGm: { type: Boolean, default: false }
   },
 
   computed: {
@@ -114,7 +115,10 @@ export default {
       .then(res => {
         const data = get(res, 'data.data', null)
         if (!data) { return }
-        this.displayData = this.modifyHalfYearData(data)
+        this.displayData = this.onlyGm
+        ? this.modifyHalfYearDataForGusetMessages(data)
+        : this.modifyHalfYearData(data)
+
         this.halfYearData = [...this.displayData]
         this.renderChart()
       })
@@ -166,6 +170,34 @@ export default {
         [...guestMessages],
         [...questionAnswers],
         [...updateQas]
+      ]
+    },
+
+    modifyHalfYearDataForGusetMessages (data) {
+      const defaultDate = [...data[0]]
+      const defaultGm = [...data[1]]
+
+      // set headers
+      let dates = [defaultDate.shift()]
+      let guestMessages = [defaultGm.shift()]
+
+      defaultDate.forEach((date, i) => {
+        const day = parseDate(date).getDay()
+
+        if (i === 0 && day !== Week.Sunday) {
+        // data for first week -> previous Sunday to yesterday
+          dates.push(date)
+          guestMessages.push(this.calcWeeklyData(defaultGm, 0, day))
+        }
+        else if (day === Week.Sunday) {
+          dates.push(date)
+          guestMessages.push(this.calcWeeklyData(defaultGm, i, i + 7))
+        }
+      })
+
+      return [
+        [...dates],
+        [...guestMessages]
       ]
     },
 

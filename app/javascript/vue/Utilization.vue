@@ -52,6 +52,7 @@ export default {
               <utilization-chart
                 :columns="data.data"
                 :bot-id="data.bot.id"
+                :only-gm="false"
               />
             </div>
           </div>

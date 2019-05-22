@@ -15,6 +15,7 @@ const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 
 const DateFormatForQueryParams = 'YYYY-MM-DD'
+const Week = { Sunday: 0 }
 
 export default {
 
@@ -143,13 +144,16 @@ export default {
 
       defaultDate.forEach((date, i) => {
         const day = parseDate(date).getDay()
-        if (i === 0 && day !== 0) {
+
+        if (i === 0 && day !== Week.Sunday) {
+        // for first week 
+        // --> previous Sunday to yesterday (skip if yesterday is Sunday)
           dates.push(date)
           guestMessages.push(this.calcWeeklyData(defaultGm, 0, day))
           questionAnswers.push(defaultQa[i] || 0)
           updateQas.push(this.calcWeeklyData(defaultUpdateQa, 0, day))
         }
-        if (day === 0) {
+        else if (day === Week.Sunday) {
           dates.push(date)
           guestMessages.push(this.calcWeeklyData(defaultGm, i, i + 7))
           questionAnswers.push(defaultQa[i] || 0)

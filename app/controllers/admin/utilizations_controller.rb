@@ -17,7 +17,7 @@ class Admin::UtilizationsController < ApplicationController
     @data_list = @bots.inject({}) { |acc, bot|
       gm_summarizer = GuestMessagesSummarizer.new(bot)
       qa_summarizer = QuestionAnswersSummarizer.new(bot)
-      start_time =  validate_date || 1.month.ago.beginning_of_day
+      start_time =  validated_start_time || 1.month.ago.beginning_of_day
       end_time = 1.day.ago.end_of_day
       gm_data = gm_summarizer.data_between(start_time, end_time)
       qa_data = qa_summarizer.data_between(start_time, end_time)
@@ -74,7 +74,7 @@ class Admin::UtilizationsController < ApplicationController
       (cookies[CookieKey].presence || '').split(',').map(&:to_i)
     end
 
-    def validate_date
+    def validated_start_time
       return ApplicationSummarizer::HalfYearDays.days.ago if params[:half_year]
       return nil unless params[:start_time]
       start_time = Date.parse(params[:start_time])

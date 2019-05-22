@@ -109,7 +109,7 @@ export default {
         },
         tooltip: {
           contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-            const dataColor = (data) => {
+            const dataColor = data => {
               if (!data || !data.value) { return "#fff" }
               const { value } = data
               switch (true) {
@@ -124,7 +124,7 @@ export default {
 
             const $$ = this
             const titleFormat = defaultTitleFormat
-            const nameFormat = (name) => { return name }
+            const nameFormat = name => name
             const valueFormat = defaultValueFormat
             let text, i, title, value, name, bgcolor
             for (i = 0; i < d.length; i++) {

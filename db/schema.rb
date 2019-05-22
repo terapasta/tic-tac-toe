@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_065106) do
+ActiveRecord::Schema.define(version: 2019_05_16_165740) do
 
   create_table "accuracy_test_cases", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "question_text"
@@ -213,6 +213,8 @@ ActiveRecord::Schema.define(version: 2019_04_16_065106) do
     t.string "name", null: false
     t.binary "content", limit: 4294967295
     t.datetime "created_at"
+    t.index ["bot_id"], name: "index_dumps_on_bot_id"
+    t.index ["name"], name: "index_dumps_on_name"
   end
 
   create_table "exports", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -322,6 +324,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_065106) do
     t.text "answer"
     t.bigint "zendesk_article_id"
     t.integer "messages_count", default: 0
+    t.string "question_wakati"
     t.index ["bot_id"], name: "index_question_answers_on_bot_id"
   end
 
@@ -431,6 +434,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_065106) do
     t.integer "word_mapping_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "value_wakati"
   end
 
   create_table "word_mappings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -438,6 +442,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_065106) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bot_id"
+    t.string "word_wakati"
     t.index ["bot_id"], name: "index_word_mappings_on_bot_id"
   end
 

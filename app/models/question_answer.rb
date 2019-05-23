@@ -24,6 +24,8 @@ class QuestionAnswer < ApplicationRecord
 
   validates :question, presence: true, uniqueness: { scope: :bot_id }
 
+  before_save { self.question = question.strip }
+
   after_create do
     self.bot&.tutorial&.done_fifty_question_answers_if_needed!
   end

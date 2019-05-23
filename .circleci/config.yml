@@ -20,7 +20,7 @@ jobs:
           MYSQL_DATABASE: donusagi_bot_test
           MYSQL_USER: root
 
-    working_directory: ~/repo
+    working_directory: /usr/src/app
 
     steps:
       - checkout

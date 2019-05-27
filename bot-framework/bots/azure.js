@@ -152,7 +152,10 @@ const getDecisionBranchStepHandlers = () => {
       session.userData.isSuggestion = isSuggestion
 
       const attrName = isSuggestion ? 'question' : 'body'
-      const choices = decisionBranches.map(it => it[attrName])
+      const choices = decisionBranches.reduce((acc, db) => {
+        acc[db[attrName]] = db
+        return acc
+      }, {})
       let _message = isSuggestion ? 'こちらの質問ではないですか？<br/>' : '回答を選択して下さい'
       _message = !isEmpty(message) ? `${message}<br/>` : _message
 
@@ -190,7 +193,8 @@ const getDecisionBranchStepHandlers = () => {
           createMessage({
             botToken,
             guestKey,
-            message: results.response.entity
+            message: selected.question,
+            questionAnswerId: selected.id,
           }).then((res) => {
             session.endDialog()
             handleAnswerMessage({ session, res })

@@ -7,7 +7,7 @@ environment.loaders.prepend('vue', vue)
 environment.config.set('resolve.extensions', ['.js', '.jsx'])
 
 const defaultConfig = environment.toWebpackConfig()
-const defaultEntry = { ...defaultConfig.entry }
+const defaultEntry = Object.assign({}, defaultConfig.entry)
 delete defaultEntry.embed
 
 const nonDigestConfig = {
@@ -24,6 +24,6 @@ const nonDigestConfig = {
 }
 
 module.exports = [
-  { ...defaultConfig, entry: defaultEntry },
-  { ...defaultConfig, ...nonDigestConfig }
+  Object.assign({}, defaultConfig, { entry: defaultEntry }),
+  Object.assign({}, defaultConfig, nonDigestConfig),
 ]

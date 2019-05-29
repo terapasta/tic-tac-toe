@@ -47,7 +47,8 @@ export default {
     monthlyData: [],
     halfYearData: [],
     isNeedDatepicker: false,
-    selectedDate: null,
+    dateFrom: null,
+    dateTo: null,
     flatpickrConfig: {
       dateFormat: 'm-d',
       locale: Japanese
@@ -76,6 +77,10 @@ export default {
         data.push(target.slice(0, 8))
       })
       return data
+    },
+
+    toggleTermSearchText () {
+      return this.isNeedDatepicker ? "決まった期間から選択" : "自分で期間を指定"
     }
   },
 
@@ -224,11 +229,18 @@ export default {
 <template>
   <div>
     <div class="d-flex flex-row-reverse mb-1">
-      <div v-if="isNeedDatepicker">
-        <flat-pickr
-          v-model="selectedDate"
-          :config="flatpickrConfig"
-        />
+      <div v-if="isNeedDatepicker"
+        class="d-flex justify-content-end"
+      >
+      <flat-pickr
+        v-model="dateFrom"
+        :config="flatpickrConfig"
+      />
+      <span class="align-self-center">〜</span>
+      <flat-pickr
+        v-model="dateTo"
+        :config="flatpickrConfig"
+      />
       </div>
       <div v-else
         class="btn-group btn-group-toggle"
@@ -258,7 +270,7 @@ export default {
       <button
         class="btn btn-sm btn-link text-muted"
         @click="isNeedDatepicker = !isNeedDatepicker"
-      >Toggle</button>
+      >{{toggleTermSearchText}}</button>
     </div>
     <div ref="chart"/>
   </div>

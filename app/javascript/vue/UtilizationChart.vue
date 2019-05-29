@@ -9,6 +9,8 @@ import { Japanese } from "flatpickr/dist/l10n/ja.js"
 import dateFnsformatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
 import jaLocale from 'date-fns/locale/ja'
+import addDays from 'date-fns/add_days'
+import subDays from 'date-fns/sub_days'
 
 import max from 'lodash/max'
 import flatten from 'lodash/flatten'
@@ -16,9 +18,15 @@ import get from 'lodash/get'
 
 const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
+const today = new Date()
 
 const DateFormatForQueryParams = 'YYYY-MM-DD'
 const Week = { Sunday: 0 }
+
+const flatpickrBaseConfig = {
+  dateFormat: 'y-m-d',
+  locale: Japanese
+}
 
 export default {
   components: {
@@ -48,11 +56,7 @@ export default {
     halfYearData: [],
     isNeedDatepicker: false,
     dateFrom: null,
-    dateTo: null,
-    flatpickrConfig: {
-      dateFormat: 'm-d',
-      locale: Japanese
-    }
+    dateTo: null
   }),
 
   props: {
@@ -81,6 +85,28 @@ export default {
 
     toggleTermSearchText () {
       return this.isNeedDatepicker ? "決まった期間から選択" : "自分で期間を指定"
+    },
+
+    botCreatedAt () {
+      return new Date(this.bot.created_at)
+    },
+
+    flatpickrFromConfig () {
+      return {
+        ...flatpickrBaseConfig,
+        maxDate: subDays(today, 7),
+        minDate: this.botCreatedAt
+      }
+    },
+
+    flatpickrToConfig () {
+      const dateFrom = `20${this.dateFrom}`
+      const minDate = this.dateFrom ? addDays(new Date(dateFrom), 7) : today
+      return {
+        ...flatpickrBaseConfig,
+        maxDate: today,
+        minDate
+      }
     }
   },
 
@@ -234,14 +260,14 @@ export default {
       >
       <flat-pickr
         v-model="dateFrom"
-        :config="flatpickrConfig"
-        class="col-3 mr-1 text-center form-control picker-input"
+        :config="flatpickrFromConfig"
+        class="col-3 mr-1 text-center form-control picker-input bg-white"
       />
       <span class="align-self-center">〜</span>
       <flat-pickr
         v-model="dateTo"
-        :config="flatpickrConfig"
-        class="col-3 ml-1 text-center form-control picker-input"
+        :config="flatpickrToConfig"
+        class="col-3 ml-1 text-center form-control picker-input bg-white"
       />
       </div>
       <div v-else
@@ -281,5 +307,6 @@ export default {
 <style scoped lang="scss">
 .picker-input {
   height: 2rem;
+  font-size: .8rem;
 }
 </style>

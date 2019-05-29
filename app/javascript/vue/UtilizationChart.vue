@@ -11,6 +11,7 @@ import parseDate from 'date-fns/parse'
 import jaLocale from 'date-fns/locale/ja'
 import addDays from 'date-fns/add_days'
 import subDays from 'date-fns/sub_days'
+import differenceInDays from 'date-fns/difference_in_days'
 
 import max from 'lodash/max'
 import flatten from 'lodash/flatten'
@@ -19,6 +20,7 @@ import get from 'lodash/get'
 const DateFormat = 'MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 const today = new Date()
+const HalfYearWeeks = 26
 
 const DateFormatForQueryParams = 'YYYY-MM-DD'
 const Week = { Sunday: 0 }
@@ -148,7 +150,10 @@ export default {
       if (this.halfYearData.length > 0) {
         this.displayData = [...this.halfYearData]
       } else {
-        this.displayData = await this.utilizationDataWithTerm()
+        const params = { half_year: true, bot_id: this.bot.id }
+        const res = await axios.get('/admin/post_utilizations', { params })
+        const data = get(res, 'data.data', null)
+        this.displayData = this.utilizationDataWithTerm(data)
         this.halfYearData = [...this.displayData]
       }
       this.renderChart()
@@ -164,22 +169,39 @@ export default {
       this.renderChart()
     },
 
-    async utilizationDataWithTerm () {
-      const params = { half_year: true, bot_id: this.bot.id }
-      const res = await axios.get('/admin/post_utilizations', { params })
-      const data = get(res, 'data.data', null)
+    utilizationDataWithTerm (data) {
       if (!data) { return }
 
       return this.onlyGm
-        ? this.convertDataToWeeklyForGusetMessages(data)
-        : this.convertDataToWeekly(data)
+        ? this.convertDataForGusetMessages(data)
+        : this.convertData(data)
     },
 
-    convertDataToWeekly (data) {
+    convertData (data) {
       const defaultDate = [...data[0]]
       const defaultGm = [...data[1]]
       const defaultQa = [...data[2]]
       const defaultUpdateQa = [...data[3]]
+
+      const defaultData = {
+        defaultDate,
+        defaultGm,
+        defaultQa,
+        defaultUpdateQa
+      }
+
+      /** MUST UNCOMMNET BEFORE MERGE */
+      return (defaultDate.length  /* / 7 */) > HalfYearWeeks
+        ? this.dataToMonthly(defaultData) : this.dataToWeekly(defaultData)
+    },
+
+    dataToWeekly (data) {
+      const {
+        defaultDate,
+        defaultGm,
+        defaultQa,
+        defaultUpdateQa
+      } = data
 
       // set headers
       let dates = [defaultDate.shift()]
@@ -194,15 +216,15 @@ export default {
         // for first week 
         // --> previous Sunday to yesterday (skip if yesterday is Sunday)
           dates.push(date)
-          guestMessages.push(this.calcWeeklyData(defaultGm, 0, day))
+          guestMessages.push(this.calcData(defaultGm, 0, day))
           questionAnswers.push(defaultQa[i] || 0)
-          updateQas.push(this.calcWeeklyData(defaultUpdateQa, 0, day))
+          updateQas.push(this.calcData(defaultUpdateQa, 0, day))
         }
         else if (day === Week.Sunday) {
           dates.push(date)
-          guestMessages.push(this.calcWeeklyData(defaultGm, i, i + 7))
+          guestMessages.push(this.calcData(defaultGm, i, i + 7))
           questionAnswers.push(defaultQa[i] || 0)
-          updateQas.push(this.calcWeeklyData(defaultUpdateQa, i, i + 7))
+          updateQas.push(this.calcData(defaultUpdateQa, i, i + 7))
         }
       })
 
@@ -214,7 +236,49 @@ export default {
       ]
     },
 
-    convertDataToWeeklyForGusetMessages (data) {
+
+
+    dataToMonthly (data) {
+      const {
+        defaultDate,
+        defaultGm,
+        defaultQa,
+        defaultUpdateQa
+      } = data
+
+      // set headers
+      let dates = [defaultDate.shift()]
+      let guestMessages = [defaultGm.shift()]
+      let questionAnswers = [defaultQa.shift()]
+      let updateQas = [defaultUpdateQa.shift()]
+
+      let baseDate = defaultDate.slice(0, 1)[0]
+      let currentMonth = parseDate(baseDate).getMonth()
+
+      defaultDate.forEach((date, i) => {
+        const month = parseDate(date).getMonth()
+        if (month !== currentMonth) {
+          const diffDays = differenceInDays(date, baseDate)
+
+          currentMonth = month
+          baseDate = parseDate(date)
+
+          dates.push(date)
+          guestMessages.push(this.calcData(defaultGm, 0, diffDays))
+          questionAnswers.push(defaultQa[i] || 0)
+          updateQas.push(this.calcData(defaultUpdateQa, 0, diffDays))
+        }
+      })
+
+      return [
+        [...dates],
+        [...guestMessages],
+        [...questionAnswers],
+        [...updateQas]
+      ]
+    },
+
+    convertDataForGusetMessages (data) {
       const defaultDate = [...data[0]]
       const defaultGm = [...data[1]]
 
@@ -228,11 +292,11 @@ export default {
         if (i === 0 && day !== Week.Sunday) {
         // data for first week -> previous Sunday to yesterday
           dates.push(date)
-          guestMessages.push(this.calcWeeklyData(defaultGm, 0, day))
+          guestMessages.push(this.calcData(defaultGm, 0, day))
         }
         else if (day === Week.Sunday) {
           dates.push(date)
-          guestMessages.push(this.calcWeeklyData(defaultGm, i, i + 7))
+          guestMessages.push(this.calcData(defaultGm, i, i + 7))
         }
       })
 
@@ -242,7 +306,7 @@ export default {
       ]
     },
 
-    calcWeeklyData (defaultData, start, end) {
+    calcData (defaultData, start, end) {
       if (!defaultData || !defaultData[start]) { return 0 }
       return defaultData.slice(start, end).reduce((acc, val) => acc + val)
     },
@@ -256,7 +320,6 @@ export default {
       }
       const res = await axios.get('/admin/post_utilizations', { params })
       const data = get(res, 'data.data', null)
-      
       this.displayData = this.utilizationDataWithTerm(data)
       this.renderChart()
     }

@@ -235,11 +235,13 @@ export default {
       <flat-pickr
         v-model="dateFrom"
         :config="flatpickrConfig"
+        class="col-3 mr-1 text-center form-control picker-input"
       />
       <span class="align-self-center">〜</span>
       <flat-pickr
         v-model="dateTo"
         :config="flatpickrConfig"
+        class="col-3 ml-1 text-center form-control picker-input"
       />
       </div>
       <div v-else
@@ -276,5 +278,8 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped lang="scss">
+.picker-input {
+  height: 2rem;
+}
 </style>

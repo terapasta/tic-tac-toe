@@ -11,19 +11,21 @@ import parseDate from 'date-fns/parse'
 import jaLocale from 'date-fns/locale/ja'
 import addDays from 'date-fns/add_days'
 import subDays from 'date-fns/sub_days'
-import differenceInDays from 'date-fns/difference_in_days'
 
 import max from 'lodash/max'
 import flatten from 'lodash/flatten'
 import get from 'lodash/get'
 
+import {
+  convertData,
+  convertDataForGm
+} from '../helpers/convertUtilizationData'
+
 const DateFormat = 'MM-DD'
+const DateFormatForQueryParams = 'YYYY-MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 const today = new Date()
-const HalfYearWeeks = 26
 
-const DateFormatForQueryParams = 'YYYY-MM-DD'
-const Week = { Sunday: 0 }
 
 const flatpickrBaseConfig = {
   dateFormat: 'y-m-d',
@@ -31,15 +33,14 @@ const flatpickrBaseConfig = {
 }
 
 export default {
-  components: {
-    FlatPickr
-  },
+  components: { FlatPickr },
 
   mounted() {
     this.$nextTick(() => {
       this.displayData = this.columns
       this.renderChart()
     })
+     
   },
 
   watch: {
@@ -172,192 +173,7 @@ export default {
     utilizationDataWithTerm (data) {
       if (!data) { return }
 
-      return this.onlyGm
-        ? this.convertDataForGusetMessages(data)
-        : this.convertData(data)
-    },
-
-    convertData (data) {
-      const defaultDate = [...data[0]]
-      const defaultGm = [...data[1]]
-      const defaultQa = [...data[2]]
-      const defaultUpdateQa = [...data[3]]
-
-      const defaultData = {
-        defaultDate,
-        defaultGm,
-        defaultQa,
-        defaultUpdateQa
-      }
-
-      /** MUST UNCOMMNET BEFORE MERGE */
-      return (defaultDate.length  /* / 7 */) > HalfYearWeeks
-        ? this.dataToMonthly(defaultData) : this.dataToWeekly(defaultData)
-    },
-
-    dataToWeekly (data) {
-      const {
-        defaultDate,
-        defaultGm,
-        defaultQa,
-        defaultUpdateQa
-      } = data
-
-      // set headers
-      let dates = [defaultDate.shift()]
-      let guestMessages = [defaultGm.shift()]
-      let questionAnswers = [defaultQa.shift()]
-      let updateQas = [defaultUpdateQa.shift()]
-
-      defaultDate.forEach((date, i) => {
-        const day = parseDate(date).getDay()
-
-        if (i === 0 && day !== Week.Sunday) {
-          // data for first week -> previous Sunday to yesterday
-          dates.push(date)
-          guestMessages.push(this.calcData(defaultGm, 0, day))
-          questionAnswers.push(defaultQa[i] || 0)
-          updateQas.push(this.calcData(defaultUpdateQa, 0, day))
-        }
-        else if (day === Week.Sunday) {
-          dates.push(date)
-          guestMessages.push(this.calcData(defaultGm, i, i + 7))
-          questionAnswers.push(defaultQa[i] || 0)
-          updateQas.push(this.calcData(defaultUpdateQa, i, i + 7))
-        }
-      })
-
-      return [
-        [...dates],
-        [...guestMessages],
-        [...questionAnswers],
-        [...updateQas]
-      ]
-    },
-
-
-
-    dataToMonthly (data) {
-      const {
-        defaultDate,
-        defaultGm,
-        defaultQa,
-        defaultUpdateQa
-      } = data
-
-      // set headers
-      let dates = [defaultDate.shift()]
-      let guestMessages = [defaultGm.shift()]
-      let questionAnswers = [defaultQa.shift()]
-      let updateQas = [defaultUpdateQa.shift()]
-
-      let baseDate = defaultDate.slice(0, 1)[0]
-      let currentMonth = parseDate(baseDate).getMonth()
-
-      defaultDate.forEach((date, i) => {
-        const month = parseDate(date).getMonth()
-        if (i === 0) {
-          dates.push(date)
-          guestMessages.push(defaultGm[0])
-          questionAnswers.push(defaultQa[0])
-          updateQas.push(defaultUpdateQa[0])
-        }
-        else if (month !== currentMonth) {
-          const diffDays = differenceInDays(date, baseDate)
-
-          currentMonth = month
-          baseDate = parseDate(date)
-
-          dates.push(date)
-          guestMessages.push(this.calcData(defaultGm, i, i + diffDays))
-          questionAnswers.push(defaultQa[i] || 0)
-          updateQas.push(this.calcData(defaultUpdateQa, i, i + diffDays))
-        }
-      })
-
-      return [
-        [...dates],
-        [...guestMessages],
-        [...questionAnswers],
-        [...updateQas]
-      ]
-    },
-
-    convertDataForGusetMessages (data) {
-      const defaultDate = [...data[0]]
-      const defaultGm = [...data[1]]
-
-      const defaultData = { defaultDate, defaultGm }
-
-      /** MUST UNCOMMNET BEFORE MERGE */
-      return (defaultDate.length  /* / 7 */) > HalfYearWeeks
-        ? this.dataToMonthlyForGm(defaultData) : this.dataToWeeklyFroGm(defaultData)
-    },
-
-    dataToWeeklyFroGm (data) {
-      const { defaultDate, defaultGm} = data
-
-      // set headers
-      let dates = [defaultDate.shift()]
-      let guestMessages = [defaultGm.shift()]
-
-      defaultDate.forEach((date, i) => {
-        const day = parseDate(date).getDay()
-
-        if (i === 0 && day !== Week.Sunday) {
-          // data for first week -> previous Sunday to yesterday
-          dates.push(date)
-          guestMessages.push(this.calcData(defaultGm, 0, day))
-        }
-        else if (day === Week.Sunday) {
-          dates.push(date)
-          guestMessages.push(this.calcData(defaultGm, i, i + 7))
-        }
-      })
-
-      return [
-        [...dates],
-        [...guestMessages]
-      ]
-    },
-
-    dataToMonthlyForGm (data) {
-      const { defaultDate, defaultGm } = data
-
-      // set headers
-      let dates = [defaultDate.shift()]
-      let guestMessages = [defaultGm.shift()]
-
-      let baseDate = defaultDate.slice(0, 1)[0]
-      let currentMonth = parseDate(baseDate).getMonth()
-
-      defaultDate.forEach((date, i) => {
-        const month = parseDate(date).getMonth()
-
-        if (i === 0) {
-          dates.push(date)
-          guestMessages.push(defaultGm[0])
-        }
-        else if (month !== currentMonth) {
-          const diffDays = differenceInDays(date, baseDate)
-
-          currentMonth = month
-          baseDate = parseDate(date)
-          dates.push(date)
-          guestMessages.push(this.calcData(defaultGm, i, i + diffDays))
-        }
-      })
-
-      return [
-        [...dates],
-        [...guestMessages]
-      ]
-
-    },
-
-    calcData (defaultData, start, end) {
-      if (!defaultData || !defaultData[start]) { return 0 }
-      return defaultData.slice(start, end).reduce((acc, val) => acc + val)
+      return this.onlyGm ? convertDataForGm(data) : convertData(data)
     },
 
     async utilizationDataWithFromTo () {

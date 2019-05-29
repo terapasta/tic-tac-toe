@@ -1,4 +1,5 @@
 /* eslint-disable no-new */
+import 'babel-polyfill'
 import Vue from 'vue'
 
 import BadCountChart from '../vue/BadCountChart'

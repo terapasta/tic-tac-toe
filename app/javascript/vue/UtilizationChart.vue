@@ -57,7 +57,7 @@ export default {
 
   props: {
     columns: { type: Array },
-    botId: { type: Number },
+    bot: { type: Object, required: true },
     onlyGm: { type: Boolean, default: false }
   },
 
@@ -126,7 +126,7 @@ export default {
       }
       const params = {
         half_year: true,
-        bot_id: this.botId
+        bot_id: this.bot.id
       }
       axios.get('/admin/post_utilizations', { params })
       .then(res => {

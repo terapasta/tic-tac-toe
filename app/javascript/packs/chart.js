@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       template: `
         <utilization-chart
           :columns="columns"
-          :bot-id="botId"
+          :bot="bot"
           :only-gm="true" 
         />`
     })

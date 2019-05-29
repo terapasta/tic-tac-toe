@@ -1,7 +1,9 @@
 <script>
-import C3 from 'c3'
-import 'c3/c3.min.css'
 import axios from 'axios'
+import C3 from 'c3'
+import FlatPickr from 'vue-flatpickr-component'
+import 'c3/c3.min.css'
+import 'flatpickr/dist/flatpickr.css'
 
 import dateFnsformatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
@@ -18,6 +20,9 @@ const DateFormatForQueryParams = 'YYYY-MM-DD'
 const Week = { Sunday: 0 }
 
 export default {
+  components: {
+    FlatPickr
+  },
 
   mounted() {
     this.$nextTick(() => {
@@ -39,7 +44,9 @@ export default {
   data: () => ({
     displayData: [],
     monthlyData: [],
-    halfYearData: []
+    halfYearData: [],
+    isNeedDatepicker: false,
+    selectedDate: null
   }),
 
   props: {
@@ -211,8 +218,14 @@ export default {
 
 <template>
   <div>
-    <div class="d-flex flex-row-reverse mb-3">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <div class="d-flex flex-row-reverse mb-1">
+      <div v-if="isNeedDatepicker">
+        <flat-pickr v-model="selectedDate" />
+      </div>
+      <div v-else
+        class="btn-group btn-group-toggle"
+        data-toggle="buttons"
+      >
         <label
           class="btn btn-sm btn-outline-info"
           @click="handleHalfYearClicked"
@@ -232,6 +245,12 @@ export default {
           <input type="radio" autocomplete="off">週
         </label>
       </div>
+    </div>
+    <div class="d-flex flex-row-reverse mb-3">
+      <button
+        class="btn btn-sm btn-link text-muted"
+        @click="isNeedDatepicker = !isNeedDatepicker"
+      >Toggle</button>
     </div>
     <div ref="chart"/>
   </div>

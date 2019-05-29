@@ -4,37 +4,32 @@ import parseDate from 'date-fns/parse'
 const HalfYearWeeks = 26
 const Week = { Sunday: 0 }
 
-export function convertData(data) {
-  const defaultDate = [...data[0]]
-  const defaultGm = [...data[1]]
-  const defaultQa = [...data[2]]
-  const defaultUpdateQa = [...data[3]]
+export function convertData(_data) {
 
   const defaultData = {
-    defaultDate,
-    defaultGm,
-    defaultQa,
-    defaultUpdateQa
+    defaultDate: [..._data[0]],
+    defaultGm: [..._data[1]],
+    defaultQa: [..._data[2]],
+    defaultUpdateQa: [..._data[3]]
+  }
+
+  // set headers
+  const data = {
+    dates: [defaultData.defaultDate.shift()],
+    guestMessages: [defaultData.defaultGm.shift()],
+    questionAnswers: [defaultData.defaultQa.shift()],
+    updateQas: [defaultData.defaultUpdateQa.shift()]
   }
 
   /** MUST UNCOMMNET BEFORE MERGE */
-  return (defaultDate.length  /* / 7 */) > HalfYearWeeks
-    ? dataToMonthly(defaultData) : dataToWeekly(defaultData)
+  return (defaultData.defaultDate.length  /* / 7 */) > HalfYearWeeks
+    ? dataToMonthly(defaultData, data)
+    : dataToWeekly(defaultData, data)
 }
 
-const dataToMonthly = data => {
-  const {
-    defaultDate,
-    defaultGm,
-    defaultQa,
-    defaultUpdateQa
-  } = data
-
-  // set headers
-  let dates = [defaultDate.shift()]
-  let guestMessages = [defaultGm.shift()]
-  let questionAnswers = [defaultQa.shift()]
-  let updateQas = [defaultUpdateQa.shift()]
+const dataToMonthly = (defaultData, data) => {
+  const { defaultDate, defaultGm, defaultQa, defaultUpdateQa } = defaultData
+  let { dates, guestMessages, questionAnswers, updateQas } = data
 
   let baseDate = defaultDate.slice(0, 1)[0]
   let currentMonth = parseDate(baseDate).getMonth()
@@ -68,19 +63,9 @@ const dataToMonthly = data => {
   ]
 }
 
-const dataToWeekly = data => {
-  const {
-    defaultDate,
-    defaultGm,
-    defaultQa,
-    defaultUpdateQa
-  } = data
-
-  // set headers
-  let dates = [defaultDate.shift()]
-  let guestMessages = [defaultGm.shift()]
-  let questionAnswers = [defaultQa.shift()]
-  let updateQas = [defaultUpdateQa.shift()]
+const dataToWeekly = (defaultData, data) => {
+  const { defaultDate, defaultGm, defaultQa, defaultUpdateQa } = defaultData
+  let { dates, guestMessages, questionAnswers, updateQas } = data
 
   defaultDate.forEach((date, i) => {
     const day = parseDate(date).getDay()
@@ -108,23 +93,28 @@ const dataToWeekly = data => {
   ]
 }
 
-export function convertDataForGm(data) {
-  const defaultDate = [...data[0]]
-  const defaultGm = [...data[1]]
+export function convertDataForGm(_data) {
 
-  const defaultData = { defaultDate, defaultGm }
-
-  /** MUST UNCOMMNET BEFORE MERGE */
-  return (defaultDate.length  /* / 7 */) > HalfYearWeeks
-    ? dataToMonthlyForGm(defaultData) : dataToWeeklyForGm(defaultData)
-}
-
-const dataToMonthlyForGm = data => {
-  const { defaultDate, defaultGm } = data
+  const defaultData = {
+    defaultDate: [..._data[0]],
+    defaultGm: [..._data[1]]
+  }
 
   // set headers
-  let dates = [defaultDate.shift()]
-  let guestMessages = [defaultGm.shift()]
+  const data = {
+    dates: [defaultData.defaultDate.shift()],
+    guestMessages: [defaultData.defaultGm.shift()]
+  }
+
+  /** MUST UNCOMMNET BEFORE MERGE */
+  return (defaultData.defaultDate.length  /* / 7 */) > HalfYearWeeks
+    ? dataToMonthlyForGm(defaultData, data)
+    : dataToWeeklyForGm(defaultData, data)
+}
+
+const dataToMonthlyForGm = (defaultData, data) => {
+  const { defaultDate, defaultGm } = defaultData
+  let { dates, guestMessages } = data
 
   let baseDate = defaultDate.slice(0, 1)[0]
   let currentMonth = parseDate(baseDate).getMonth()
@@ -153,12 +143,9 @@ const dataToMonthlyForGm = data => {
 
 }
 
-const dataToWeeklyForGm = data => {
-  const { defaultDate, defaultGm } = data
-
-  // set headers
-  let dates = [defaultDate.shift()]
-  let guestMessages = [defaultGm.shift()]
+const dataToWeeklyForGm = (defaultData, data) => {
+  const { defaultDate, defaultGm } = defaultData
+  let { dates, guestMessages } = data
 
   defaultDate.forEach((date, i) => {
     const day = parseDate(date).getDay()

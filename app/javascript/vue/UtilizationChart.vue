@@ -144,7 +144,7 @@ export default {
       })
     },
 
-    handleHalfYearClicked (botId) {
+    async handleHalfYearClicked (botId) {
       if (this.halfYearData.length > 0) {
         this.displayData = this.halfYearData
         this.renderChart()
@@ -154,17 +154,15 @@ export default {
         half_year: true,
         bot_id: this.bot.id
       }
-      axios.get('/admin/post_utilizations', { params })
-      .then(res => {
-        const data = get(res, 'data.data', null)
-        if (!data) { return }
-        this.displayData = this.onlyGm
-        ? this.modifyHalfYearDataForGusetMessages(data)
-        : this.modifyHalfYearData(data)
+      const res = await axios.get('/admin/post_utilizations', { params })
+      const data = get(res, 'data.data', null)
+      if (!data) { return }
+      this.displayData = this.onlyGm
+      ? this.modifyHalfYearDataForGusetMessages(data)
+      : this.modifyHalfYearData(data)
 
-        this.halfYearData = [...this.displayData]
-        this.renderChart()
-      })
+      this.halfYearData = [...this.displayData]
+      this.renderChart()
     },
 
     handleMonthlyClicked () {

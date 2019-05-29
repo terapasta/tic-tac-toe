@@ -18,7 +18,7 @@ class Admin::UtilizationsController < ApplicationController
       gm_summarizer = GuestMessagesSummarizer.new(bot)
       qa_summarizer = QuestionAnswersSummarizer.new(bot)
       start_time =  validated_start_time || 1.month.ago.beginning_of_day
-      end_time = 1.day.ago.end_of_day
+      end_time = validated_end_time || 1.day.ago.end_of_day
       gm_data = gm_summarizer.data_between(start_time, end_time)
       qa_data = qa_summarizer.data_between(start_time, end_time)
       data = ApplicationSummarizer.aggregate_data(gm_data, qa_data)
@@ -77,7 +77,13 @@ class Admin::UtilizationsController < ApplicationController
     def validated_start_time
       return ApplicationSummarizer::HalfYearDays.days.ago if params[:half_year]
       return nil unless params[:start_time]
-      start_time = Date.parse(params[:start_time])
-      start_time >= ApplicationSummarizer::HalfYearDays.days.ago ? start_time : nil
+
+      Date.parse(params[:start_time]) rescue nil
+    end
+
+    def validated_end_time
+      return nil unless params[:end_time]
+
+      Data.parse(params[:end_time]) rescue nil
     end
 end

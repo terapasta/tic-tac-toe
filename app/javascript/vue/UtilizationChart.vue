@@ -249,9 +249,16 @@ export default {
 
     async utilizationDataWithFromTo () {
       if (!this.dateFrom || !this.dateTo) { return }
+      const params = {
+        start_time: this.dateFrom,
+        end_time: this.dateTo,
+        bot_id: this.bot.id
+      }
       const res = await axios.get('/admin/post_utilizations', { params })
       const data = get(res, 'data.data', null)
       
+      this.displayData = this.utilizationDataWithTerm(data)
+      this.renderChart()
     }
   }
 }
@@ -266,12 +273,14 @@ export default {
       <flat-pickr
         v-model="dateFrom"
         :config="flatpickrFromConfig"
+        @input="utilizationDataWithFromTo"
         class="col-3 mr-1 text-center form-control picker-input bg-white"
       />
       <span class="align-self-center">〜</span>
       <flat-pickr
         v-model="dateTo"
         :config="flatpickrToConfig"
+        @input="utilizationDataWithFromTo"
         class="col-3 ml-1 text-center form-control picker-input bg-white"
       />
       </div>

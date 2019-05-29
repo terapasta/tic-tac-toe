@@ -144,24 +144,13 @@ export default {
       })
     },
 
-    async handleHalfYearClicked (botId) {
+    async handleHalfYearClicked () {
       if (this.halfYearData.length > 0) {
-        this.displayData = this.halfYearData
-        this.renderChart()
-        return
+        this.displayData = [...this.halfYearData]
+      } else {
+        this.displayData = await this.utilizationDataWithTerm()
+        this.halfYearData = [...this.displayData]
       }
-      const params = {
-        half_year: true,
-        bot_id: this.bot.id
-      }
-      const res = await axios.get('/admin/post_utilizations', { params })
-      const data = get(res, 'data.data', null)
-      if (!data) { return }
-      this.displayData = this.onlyGm
-      ? this.modifyHalfYearDataForGusetMessages(data)
-      : this.modifyHalfYearData(data)
-
-      this.halfYearData = [...this.displayData]
       this.renderChart()
     },
 
@@ -175,7 +164,18 @@ export default {
       this.renderChart()
     },
 
-    modifyHalfYearData (data) {
+    async utilizationDataWithTerm () {
+      const params = { half_year: true, bot_id: this.bot.id }
+      const res = await axios.get('/admin/post_utilizations', { params })
+      const data = get(res, 'data.data', null)
+      if (!data) { return }
+
+      return this.onlyGm
+        ? this.convertDataToWeeklyForGusetMessages(data)
+        : this.convertDataToWeekly(data)
+    },
+
+    convertDataToWeekly (data) {
       const defaultDate = [...data[0]]
       const defaultGm = [...data[1]]
       const defaultQa = [...data[2]]
@@ -214,7 +214,7 @@ export default {
       ]
     },
 
-    modifyHalfYearDataForGusetMessages (data) {
+    convertDataToWeeklyForGusetMessages (data) {
       const defaultDate = [...data[0]]
       const defaultGm = [...data[1]]
 
@@ -245,6 +245,13 @@ export default {
     calcWeeklyData (defaultData, start, end) {
       if (!defaultData || !defaultData[start]) { return 0 }
       return defaultData.slice(start, end).reduce((acc, val) => acc + val)
+    },
+
+    async utilizationDataWithFromTo () {
+      if (!this.dateFrom || !this.dateTo) { return }
+      const res = await axios.get('/admin/post_utilizations', { params })
+      const data = get(res, 'data.data', null)
+      
     }
   }
 }

@@ -52,7 +52,12 @@ class ReplyResponse
   end
 
   def confident?
-    probabilities.length > 1 ? probabilities[0] - probabilities[1] >= @bot.top_candidate_answers_threshold : true
+    highest_prob = probabilities.first
+    second_prob = probabilities.second || 0.0
+
+    # 最も高い確率と二番目の確率の差が十分大きいとき、confident であるとする
+    # @bot.top_andidate_answers_threshold は null: false, default: 0.0
+    (highest_prob - second_prob) >= @bot.top_candidate_answers_threshold
   end
 
   def similar_question_answers
@@ -64,7 +69,10 @@ class ReplyResponse
     # 「こちらの質問ではないですか？」が表示されない場合
     # 結果から最も確度の高い物を削除して回答として表示する
     # 一致度の高い質問が見つかり、上位二つの質問の確率が近い場合も同様の処理を行う
-    results.shift if (found_probable_answer? & !show_similar_question_answers?) || (show_similar_question_answers? & !confident? & (probability > 0.9))
+    is_probable =  (found_probable_answer? && !show_similar_question_answers?)
+    is_confident = (show_similar_question_answers? && !confident? && (probability > 0.9))
+
+    results.shift if is_probable || is_confident
 
     SimilarQuestionAnswersFinder.new(bot: @bot, results: results).process
   end

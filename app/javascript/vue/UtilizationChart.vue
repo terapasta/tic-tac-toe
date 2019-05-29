@@ -4,6 +4,7 @@ import C3 from 'c3'
 import FlatPickr from 'vue-flatpickr-component'
 import 'c3/c3.min.css'
 import 'flatpickr/dist/flatpickr.css'
+import { Japanese } from "flatpickr/dist/l10n/ja.js"
 
 import dateFnsformatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
@@ -46,7 +47,11 @@ export default {
     monthlyData: [],
     halfYearData: [],
     isNeedDatepicker: false,
-    selectedDate: null
+    selectedDate: null,
+    flatpickrConfig: {
+      dateFormat: 'm-d',
+      locale: Japanese
+    }
   }),
 
   props: {
@@ -220,7 +225,10 @@ export default {
   <div>
     <div class="d-flex flex-row-reverse mb-1">
       <div v-if="isNeedDatepicker">
-        <flat-pickr v-model="selectedDate" />
+        <flat-pickr
+          v-model="selectedDate"
+          :config="flatpickrConfig"
+        />
       </div>
       <div v-else
         class="btn-group btn-group-toggle"

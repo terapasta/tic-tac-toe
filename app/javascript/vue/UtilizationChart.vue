@@ -17,7 +17,8 @@ import flatten from 'lodash/flatten'
 import get from 'lodash/get'
 
 import {
-  dataForOneWeek,
+  oneWeekData,
+  oneWeekDataForGm,
   convertData,
   convertDataForGm
 } from '../helpers/convertUtilizationData'
@@ -55,6 +56,7 @@ export default {
 
   data: () => ({
     displayData: [],
+    oneWeekData: [],
     monthlyData: [],
     halfYearData: [],
     isNeedDatepicker: false,
@@ -157,7 +159,15 @@ export default {
     },
 
     handleWeeklyClicked () {
-      this.displayData = dataForOneWeek(this.columns)
+      if (this.oneWeekData.lenght > 0) {
+        this.displayData = [...this.oneWeekData]
+      } else {
+        this.displayData = this.onlyGm
+          ? oneWeekDataForGm(this.columns)
+          : oneWeekData(this.columns)
+        this.oneWeekData = [...this.displayData]
+      }
+      
       this.renderChart()
     },
 

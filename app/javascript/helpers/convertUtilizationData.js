@@ -13,7 +13,7 @@ const oneWeekAgo = subDays(today, 7)
 const HalfYearWeeks = 26
 const Week = { Sunday: 0 }
 
-export function dataForOneWeek(_data) {
+export function oneWeekData(_data) {
   const defaultDates = [..._data[0]]
   const defaultGms = [..._data[1]]
   const defaultQas = [..._data[2]]
@@ -28,6 +28,7 @@ export function dataForOneWeek(_data) {
   const lastIndex = defaultDates.length
   let startIndex = defaultDates.indexOf(formatDate(oneWeekAgo))
   if (startIndex === -1) { startIndex = lastIndex - 7 }
+
   return [
     flatten([...dates, defaultDates.slice(startIndex, lastIndex)]),
     flatten([...guestMessages, defaultGms.slice(startIndex, lastIndex)]),
@@ -36,9 +37,25 @@ export function dataForOneWeek(_data) {
   ]
 }
 
+export function oneWeekDataForGm(_data) {
+  const defaultDates = [..._data[0]]
+  const defaultGms = [..._data[1]]
+
+  // set headers
+  let dates = [defaultDates.shift()]
+  let guestMessages = [defaultGms.shift()]
+
+  const lastIndex = defaultDates.length
+  let startIndex = defaultDates.indexOf(formatDate(oneWeekAgo))
+  if (startIndex === -1) { startIndex = lastIndex - 7 }
+
+  return [
+    flatten([...dates, defaultDates.slice(startIndex, lastIndex)]),
+    flatten([...guestMessages, defaultGms.slice(startIndex, lastIndex)])
+  ]
+}
 
 export function convertData(_data) {
-
   const defaultData = {
     defaultDate: [..._data[0]],
     defaultGm: [..._data[1]],

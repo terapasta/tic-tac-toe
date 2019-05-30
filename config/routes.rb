@@ -160,7 +160,6 @@ Rails.application.routes.draw do
       end
       get :utilizations, to: 'utilizations#index'
       post :utilizations, to: 'utilizations#create'
-      get :post_utilizations, to: 'utilizations#post_index'
     end
 
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

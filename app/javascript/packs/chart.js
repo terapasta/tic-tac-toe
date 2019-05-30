@@ -1,9 +1,9 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
+import assign from 'lodash/assign'
 
 import BadCountChart from '../vue/BadCountChart'
 import UtilizationChart from '../vue/UtilizationChart'
-import Utilization from '../vue/Utilization'
 import getData from '../helpers/getData'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,22 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     new Vue({
       el: mountNode,
       components: { UtilizationChart },
-      data: getData(mountNode),
+      data: assign({ yMax: null }, getData(mountNode)),
       template: `
         <utilization-chart
           :columns="columns"
-          :bot-id="botId"
-          :only-gm="true" 
-        />`
-    })
-  })
-
-  Array.prototype.forEach.call(document.querySelectorAll('[data-component="Utilization"]'), (mountNode) => {
-    new Vue({
-      el: mountNode,
-      components: { Utilization },
-      template: `
-        <utilization />
+          :y-max="yMax"
+        />
       `
     })
   })

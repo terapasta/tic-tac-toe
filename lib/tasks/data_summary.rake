@@ -48,7 +48,7 @@ namespace :data_summary do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
         summarizer = GuestMessagesSummarizer.new(bot)
-        # 毎日 01:00:00 に呼び出す想定なので前日に戻って計算する
+        # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する
         summarizer.summarize(date: 1.day.ago)
         summarizer.save!
       end
@@ -58,8 +58,8 @@ namespace :data_summary do
   task calc_guest_messages_last_half_year: :environment do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
-        GuestMessagesSummarizer::HalfYearDays.times do |n|
-          date = (n + 1).days.ago
+        GuestMessagesSummarizer::HalfYearWeeks.times do |n|
+          date = (n + 1).weeks.ago
           summarizer = GuestMessagesSummarizer.new(bot)
           summarizer.summarize(date: date)
           pp summarizer.build
@@ -73,7 +73,7 @@ namespace :data_summary do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
         summarizer = QuestionAnswersSummarizer.new(bot)
-        # 毎日 02:00:00 に呼び出す想定なので前日に戻って計算する
+        # 月曜00:00:00に呼び出す想定なので日曜に戻って計算する
         summarizer.summarize(date: 1.day.ago)
         summarizer.save!
       end
@@ -83,8 +83,8 @@ namespace :data_summary do
   task calc_question_answers_last_half_year: :environment do
     ActiveRecord::Base.transaction do
       Bot.all.each do |bot|
-        QuestionAnswersSummarizer::HalfYearDays.times do |n|
-          date = (n + 1).days.ago
+        QuestionAnswersSummarizer::HalfYearWeeks.times do |n|
+          date = (n + 1).weeks.ago
           summarizer = QuestionAnswersSummarizer.new(bot)
           summarizer.summarize(date: date)
           pp summarizer.build

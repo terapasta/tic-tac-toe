@@ -1,8 +1,41 @@
 import differenceInDays from 'date-fns/difference_in_days'
+import dateFnsformatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
+import jaLocale from 'date-fns/locale/ja'
+import subDays from 'date-fns/sub_days'
 
+import flatten from 'lodash/flatten'
+
+const DateFormat = 'YYYY-MM-DD'
+const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
+const today = new Date()
+const oneWeekAgo = subDays(today, 7)
 const HalfYearWeeks = 26
 const Week = { Sunday: 0 }
+
+export function dataForOneWeek(_data) {
+  const defaultDates = [..._data[0]]
+  const defaultGms = [..._data[1]]
+  const defaultQas = [..._data[2]]
+  const defaultUpdateQas = [..._data[3]]
+
+  // set headers
+  let dates = [defaultDates.shift()]
+  let guestMessages = [defaultGms.shift()]
+  let questionAnswers = [defaultQas.shift()]
+  let updateQas = [defaultUpdateQas.shift()]
+
+  const lastIndex = defaultDates.length
+  let startIndex = defaultDates.indexOf(formatDate(oneWeekAgo))
+  if (startIndex === -1) { startIndex = lastIndex - 7 }
+  return [
+    flatten([...dates, defaultDates.slice(startIndex, lastIndex)]),
+    flatten([...guestMessages, defaultGms.slice(startIndex, lastIndex)]),
+    flatten([...questionAnswers, defaultQas.slice(startIndex, lastIndex)]),
+    flatten([...updateQas, defaultUpdateQas.slice(startIndex, lastIndex)])
+  ]
+}
+
 
 export function convertData(_data) {
 

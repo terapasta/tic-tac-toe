@@ -17,6 +17,7 @@ import flatten from 'lodash/flatten'
 import get from 'lodash/get'
 
 import {
+  dataForOneWeek,
   convertData,
   convertDataForGm
 } from '../helpers/convertUtilizationData'
@@ -25,7 +26,6 @@ const DateFormat = 'MM-DD'
 const DateFormatForQueryParams = 'YYYY-MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 const today = new Date()
-
 
 const flatpickrBaseConfig = {
   dateFormat: 'y-m-d',
@@ -75,15 +75,6 @@ export default {
         return max(all) + 10
       }
       return this.yMax + 10
-    },
-
-    weeklyData () {
-      const defaultData = [...this.columns]
-      const data = []
-      defaultData.forEach(target => {
-        data.push(target.slice(0, 8))
-      })
-      return data
     },
 
     toggleTermSearchText () {
@@ -166,13 +157,12 @@ export default {
     },
 
     handleWeeklyClicked () {
-      this.displayData = this.weeklyData
+      this.displayData = dataForOneWeek(this.columns)
       this.renderChart()
     },
 
     utilizationDataWithTerm (data) {
       if (!data) { return }
-
       return this.onlyGm ? convertDataForGm(data) : convertData(data)
     },
 

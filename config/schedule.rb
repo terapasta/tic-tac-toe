@@ -68,10 +68,10 @@ every 1.day, at: '3:00' do
   rake 'data_summary:calc_bad_counts'
 end
 
-every 1.day, at: '1:00' do
+every '00 00 * * mon' do
   rake 'data_summary:calc_guest_messages'
 end
 
-every 1.day, at: '2:00' do
+every '00 00 * * mon' do
   rake 'data_summary:calc_question_answers'
 end

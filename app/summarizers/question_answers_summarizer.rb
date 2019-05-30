@@ -10,8 +10,8 @@ class QuestionAnswersSummarizer < ApplicationSummarizer
 
   def summarize(date: nil)
     date = date.nil? ? Time.current : date
-    start_time = date.beginning_of_day
-    @created_at = end_time = date.end_of_day
+    start_time = date.beginning_of_week(StartingDay)
+    @created_at = end_time = date.end_of_week(StartingDay)
 
     mixpanel = MixpanelClient.new
     @update_qa_count = mixpanel.update_qa_count_at_between(
@@ -29,13 +29,19 @@ class QuestionAnswersSummarizer < ApplicationSummarizer
     }
   end
 
-  def data_between(start_time, end_time)
-    get_between(start_time: start_time, end_time: end_time)
-      .inject([['x'], ['Q&A累計登録件数'], ['Q&A更新回数']]) { |acc, it|
-        acc[0].push(it.created_at.beginning_of_day.strftime('%Y-%m-%d'))
-        acc[1].push(it.data['question_answers_count'])
-        acc[2].push(it.data['update_qa_count'])
-        acc
-      }
+  def get_half_year_data
+    @half_year_data ||= get_between(
+      start_time: HalfYearDays.days.ago.beginning_of_week(StartingDay),
+      end_time: Time.current.end_of_week(StartingDay)
+    )
+  end
+
+  def half_year_data
+    get_half_year_data.inject([['x'], ['Q&A累計登録件数'], ['Q&A更新回数']]) { |acc, it|
+      acc[0].push(it.created_at.beginning_of_week(StartingDay).strftime('%Y-%m-%d'))
+      acc[1].push(it.data['question_answers_count'])
+      acc[2].push(it.data['update_qa_count'])
+      acc
+    }
   end
 end

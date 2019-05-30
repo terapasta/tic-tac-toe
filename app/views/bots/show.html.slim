@@ -41,8 +41,7 @@
         br
         |※ チャット数は日付が変わるとリセットされます
 
-  - monthly_gm = monthly_guest_messages(@guest_messages_summarizer)
-  - if monthly_gm.present?
+  - if @guest_messages_summarizer.get_half_year_data.present?
     .card.mb-5: .card-body
       .d-flex.justify-content-between.align-items-start
         h6.mb-4
@@ -53,9 +52,7 @@
           small 最大過去半年分のチャット質問数を計算しています
       div(
         data-component="UtilizationChart"
-        data-columns=monthly_gm.to_json
-        data-bot-id=@bot.id
-        data-only-gm="true"
+        data-columns=@guest_messages_summarizer.half_year_data.to_json
       )
 
   - if @bad_count_summarizer.get_thirty_days_data.present?

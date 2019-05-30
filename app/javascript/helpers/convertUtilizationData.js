@@ -10,6 +10,7 @@ const DateFormat = 'YYYY-MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
 const today = new Date()
 const oneWeekAgo = subDays(today, 7)
+const MonthlyBreakPoint = 27
 const HalfYearDays = 182
 const Week = { Sunday: 0 }
 
@@ -71,7 +72,7 @@ export function convertData(_data) {
     updateQas: [defaultData.defaultUpdateQa.shift()]
   }
 
-  return (defaultData.defaultDate.length) > HalfYearDays
+  return shouldMonthly(defaultData.defaultDate)
     ? dataToMonthly(defaultData, data)
     : dataToWeekly(defaultData, data)
 }
@@ -154,7 +155,7 @@ export function convertDataForGm(_data) {
     guestMessages: [defaultData.defaultGm.shift()]
   }
 
-  return (defaultData.defaultDate.length) > HalfYearDays
+  return shouldMonthly(defaultData.defaultDate)
     ? dataToMonthlyForGm(defaultData, data)
     : dataToWeeklyForGm(defaultData, data)
 }
@@ -211,6 +212,13 @@ const dataToWeeklyForGm = (defaultData, data) => {
     [...dates],
     [...guestMessages]
   ]
+}
+
+const shouldMonthly = dates => {
+  const lastIndex = dates.length - 1
+  const diffDays = differenceInDays(dates[lastIndex], dates[0])
+  return diffDays > HalfYearDays && dates.length > MonthlyBreakPoint
+
 }
 
 const calcData = (defaultData, start, end) => {

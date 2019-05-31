@@ -84,6 +84,6 @@ class Admin::UtilizationsController < ApplicationController
     def validated_end_time
       return nil unless params[:end_time]
 
-      Data.parse(params[:end_time]) rescue nil
+      Date.parse(params[:end_time]) rescue nil
     end
 end

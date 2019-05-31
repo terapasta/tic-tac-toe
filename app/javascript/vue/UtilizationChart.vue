@@ -11,6 +11,7 @@ import parseDate from 'date-fns/parse'
 import jaLocale from 'date-fns/locale/ja'
 import addDays from 'date-fns/add_days'
 import subDays from 'date-fns/sub_days'
+import differenceInYears from 'date-fns/difference_in_years'
 
 import max from 'lodash/max'
 import flatten from 'lodash/flatten'
@@ -23,10 +24,12 @@ import {
   convertDataForGm
 } from '../helpers/convertUtilizationData'
 
+const today = new Date()
 const DateFormat = 'MM-DD'
+const DateFormatWithYear = 'YY-MM-DD'
 const DateFormatForQueryParams = 'YYYY-MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
-const today = new Date()
+const formatDateWithYear = date => dateFnsformatDate(date, DateFormatWithYear, { locale: jaLocale })
 
 const flatpickrBaseConfig = {
   dateFormat: 'y-m-d',
@@ -41,7 +44,6 @@ export default {
       this.displayData = this.columns
       this.renderChart()
     })
-     
   },
 
   watch: {
@@ -107,7 +109,7 @@ export default {
   },
 
   methods: {
-    renderChart() {
+    renderChart(withYear) {
       this.chart = C3.generate({
         bindto: this.$refs.chart,
         size: {
@@ -124,7 +126,7 @@ export default {
             tick: {
               format (d) {
                 const date = parseDate(d)
-                return formatDate(date)
+                return withYear ? formatDateWithYear(date) : formatDate(date)
               }
             }
           },
@@ -186,7 +188,8 @@ export default {
       const res = await axios.get('/admin/post_utilizations', { params })
       const data = get(res, 'data.data', null)
       this.displayData = this.utilizationDataWithTerm(data)
-      this.renderChart()
+      const withYear = differenceInYears(`20${this.dateTo}`, `20${this.dateFrom}`) > 0
+      this.renderChart(withYear)
     }
   }
 }

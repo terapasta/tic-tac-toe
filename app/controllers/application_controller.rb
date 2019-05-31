@@ -54,6 +54,7 @@ class ApplicationController < ActionController::Base
 
     def basic_auth_if_needed
       return if ENV['BASIC_AUTH_USER'].blank? || ENV['BASIC_AUTH_PASS'].blank?
+      return if request.path.starts_with? '/api'
       authenticate_or_request_with_http_basic do |user, pass|
         user == ENV['BASIC_AUTH_USER'] && pass == ENV['BASIC_AUTH_PASS']
       end

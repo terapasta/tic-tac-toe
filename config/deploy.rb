@@ -157,9 +157,21 @@ namespace :deploy do
     end
   end
 
+  task :move_embed_js do
+    on roles(fetch(:assets_roles)) do
+      packs_path = release_path.join('public', 'packs')
+      execute [
+        "export $(cat #{shared_path.join('.env')} | grep AWS_ | xargs)",
+        'aws s3 cp s3://$AWS_S3_BUCKET_NAME/packs/embed.js s3://$AWS_S3_BUCKET_NAME/assets/embed.js',
+        'aws s3api put-object-acl --bucket $AWS_S3_BUCKET_NAME --key assets/embed.js --acl public-read',
+      ].join(' && ')
+    end
+  end
+
   after :finished, 'deploy:restart_python'
   after :finished, 'deploy:restart_botapi'
   # after :finished, 'update_neologd'
+  after :finished, 'deploy:rename_embed_js'
 end
 
 namespace :webpacker do

@@ -18,9 +18,16 @@ import {
 } from './constants';
 const MaxHeightSpace = Margin * 2 + MaxHeight + MoveButtonSize + MoveButtonMargin
 
-
-const Origin = process.env.NODE_ENV === "development" ?
-  "http://localhost:3000" : "https://app.my-ope.net";
+const Origin = (() => {
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:3000'
+  }
+  const isStaging = !!document.querySelector('script[src^="//my-ope-assets-stg"]')
+  if (isStaging) {
+    return 'https://staging.my-ope.net'
+  }
+  return 'https://app.my-ope.net'
+})()
 
 export default class Widget extends Component {
   constructor(props) {

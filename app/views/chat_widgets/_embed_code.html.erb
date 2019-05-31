@@ -1,16 +1,12 @@
-<textarea class="form-control" rows="14" readonly onclick="this.select()" id="chat-widget-embed-code">
-<%= %Q{<script type="text/javascript">
-  (function() {
-    var head = document.querySelector("head");
-    var src = "#{embed_js_url}";
-    var isAlreadyLoaded = document.querySelector("[src='" + src + "']");
-    if (isAlreadyLoaded) { return console.warn("[My-ope office] Duplicated loading scripts"); }
-    var js = document.createElement("script");
-    js.src = src;
-    js.async = true;
-    js.id = "MyOpeEmbedScript";
-    head.appendChild(js);
-  }).call(this);
-</script>
-<div id="MyOpeChatWidget" data-token="#{@bot.token}" data-position="right"></div>} -%>
-</textarea>
+<p>
+  <textarea class="form-control" rows="14" readonly onclick="this.select()" id="<%= "chat-widget-embed-code-#{position}" %>">
+    <%= embed_js(embed_js_url, @bot.token, position) %>
+  </textarea>
+</p>
+<%= link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: "#chat-widget-embed-code-#{position}" } do %>
+  <i class="material-icons">content_copy</i>
+  <span>クリップボードにコピー</span>
+<% end %>
+<span class="btn btn-sm btn-outline-info float-right mt-2" onclick='togglePosition("<%= position %>")'>
+  初期表示を<%= position == :right ? "左" : "右" %>下にする
+</span>

@@ -50,10 +50,18 @@
           button.close type="button" data-dismiss="modal" &times;
         .modal-body
           p 以下のコードをWebサイトのソースコードに貼り付けて下さい
-          p= render 'chat_widgets/embed_code'
-          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
-            i.material-icons content_copy
-            span クリップボードにコピー
+          #widget-position-right
+            p= render partial: 'chat_widgets/embed_code', locals: { position: :right }
+          #widget-position-left style="display: none"
+            p= render partial: 'chat_widgets/embed_code', locals: { position: :left }
+            javascript:
+              function togglePosition(position) {
+                oppositePosition = position === 'right' ? 'left' : 'right'
+                var idForWidgetPosition = '#widget-position-' + position
+                var idForWidgetPositionOpposite = '#widget-position-' + oppositePosition
+                document.querySelector(idForWidgetPosition).style.display = 'none'
+                document.querySelector(idForWidgetPositionOpposite).style.display = 'block'
+              }
 
   .modal.fade#chat-embedding-desc tabindex="-1" role="dialog"
     .modal-dialog role="document"

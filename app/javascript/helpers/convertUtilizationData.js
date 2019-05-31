@@ -8,11 +8,13 @@ import flatten from 'lodash/flatten'
 
 const DateFormat = 'YYYY-MM-DD'
 const formatDate = date => dateFnsformatDate(date, DateFormat, { locale: jaLocale })
-const today = new Date()
-const oneWeekAgo = subDays(today, 7)
+
+const Week = { Sunday: 0 }
+const OneWeekAgo = subDays(new Date(), 7)
 const MonthlyBreakPoint = 27
 const HalfYearDays = 182
-const Week = { Sunday: 0 }
+
+const DataConversionBreakPoint = 31
 
 export function oneWeekData(_data) {
   const defaultDates = [..._data[0]]
@@ -27,7 +29,7 @@ export function oneWeekData(_data) {
   let updateQas = [defaultUpdateQas.shift()]
 
   const lastIndex = defaultDates.length
-  let startIndex = defaultDates.indexOf(formatDate(oneWeekAgo))
+  let startIndex = defaultDates.indexOf(formatDate(OneWeekAgo))
   if (startIndex === -1) { startIndex = lastIndex - 7 }
 
   return [
@@ -47,7 +49,7 @@ export function oneWeekDataForGm(_data) {
   let guestMessages = [defaultGms.shift()]
 
   const lastIndex = defaultDates.length
-  let startIndex = defaultDates.indexOf(formatDate(oneWeekAgo))
+  let startIndex = defaultDates.indexOf(formatDate(OneWeekAgo))
   if (startIndex === -1) { startIndex = lastIndex - 7 }
 
   return [
@@ -57,6 +59,10 @@ export function oneWeekDataForGm(_data) {
 }
 
 export function convertData(_data) {
+  if (_data[0].length <= DataConversionBreakPoint) {
+    return _data
+  }
+
   const defaultData = {
     defaultDate: [..._data[0]],
     defaultGm: [..._data[1]],
@@ -144,6 +150,10 @@ const dataToWeekly = (defaultData, data) => {
 }
 
 export function convertDataForGm(_data) {
+  if (_data[0].length <= DataConversionBreakPoint) {
+    return [_data[0], _data[1]]
+  }
+
   const defaultData = {
     defaultDate: [..._data[0]],
     defaultGm: [..._data[1]]

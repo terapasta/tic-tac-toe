@@ -5,6 +5,7 @@ const vue = require('./loaders/vue')
 environment.plugins.prepend('VueLoaderPlugin', new VueLoaderPlugin())
 environment.loaders.prepend('vue', vue)
 environment.config.set('resolve.extensions', ['.js', '.jsx'])
+environment.config.set('resolve.alias.vue$', 'vue/dist/vue.esm.js')
 
 const defaultConfig = environment.toWebpackConfig()
 const defaultEntry = Object.assign({}, defaultConfig.entry)

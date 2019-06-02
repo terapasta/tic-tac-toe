@@ -3,6 +3,6 @@ FactoryBot.define do
     name { "MyString" }
     image { "MyString" }
     description { "MyText" }
-    plan { 1 }
+    plan { :professional }
   end
 end

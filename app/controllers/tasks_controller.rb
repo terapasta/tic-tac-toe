@@ -25,7 +25,7 @@ class TasksController < ApplicationController
   def update
     @task = @bot.tasks.find(params[:id])
     if @task.update(is_done: (params[:is_done] || true).to_bool)
-      if redirect_path_param.present?
+      if params[:redirect_path].present?
         redirect_to redirect_path_param
       else
         redirect_back fallback_location: bot_tasks_path(@bot)
@@ -43,7 +43,7 @@ class TasksController < ApplicationController
     def page
       (params[:page] || 1).to_i
     end
-
+  
     def redirect_path_param
       params.require(:redirect_path)
     end

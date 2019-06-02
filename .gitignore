@@ -96,3 +96,5 @@ yarn-debug.log*
 .yarn-integrity
 
 spec/embed-test-app/vendor/bundle
+
+.node-version

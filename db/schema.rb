@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_065106) do
+ActiveRecord::Schema.define(version: 2019_05_28_080804) do
 
   create_table "accuracy_test_cases", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "question_text"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_065106) do
     t.boolean "is_guest_user_form_skippable", default: true, null: false
     t.string "password"
     t.integer "suggest_limit", default: 10, null: false
+    t.float "top_candidate_answers_threshold", default: 0.0, null: false
     t.index ["user_id"], name: "index_bots_on_user_id"
   end
 
@@ -213,6 +214,8 @@ ActiveRecord::Schema.define(version: 2019_04_16_065106) do
     t.string "name", null: false
     t.binary "content", limit: 4294967295
     t.datetime "created_at"
+    t.index ["bot_id"], name: "index_dumps_on_bot_id"
+    t.index ["name"], name: "index_dumps_on_name"
   end
 
   create_table "exports", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

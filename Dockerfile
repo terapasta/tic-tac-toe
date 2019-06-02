@@ -71,6 +71,9 @@ RUN cd /usr/local/bin \
 
 COPY . .
 
+# mecab用のカスタム辞書を読み込む
+RUN echo 'userdic = /root/repo/learning/dict/custom.dic' >> /etc/mecabrc
+
 WORKDIR /tmp/learning
 RUN pip install --upgrade setuptools && pip install -r requirements.txt && pip install nose
 

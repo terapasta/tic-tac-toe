@@ -171,7 +171,7 @@ namespace :deploy do
   after :finished, 'deploy:restart_python'
   after :finished, 'deploy:restart_botapi'
   # after :finished, 'update_neologd'
-  after :finished, 'deploy:rename_embed_js'
+  after :finished, 'deploy:move_embed_js'
 end
 
 namespace :webpacker do

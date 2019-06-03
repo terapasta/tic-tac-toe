@@ -71,7 +71,7 @@ class QuestionAnswersController < ApplicationController
 
   def update
     if @question_answer.update(question_answer_params)
-      @bot.learn_later if @question_answer.change_question?
+      @bot.learn_later if @question_answer.has_changed_question?
       respond_to do |format|
         format.html do
           redirect_to edit_bot_question_answer_path(@bot, @question_answer), notice: '更新しました。'

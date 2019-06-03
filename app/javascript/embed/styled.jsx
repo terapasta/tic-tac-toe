@@ -41,7 +41,7 @@ export const FloatWrapper = props => (
 )
 
 const ActiveSize = {
-  Width: 300,
+  Width: 350,
   Height: MaxHeight
 }
 const transition = 'transition: all 0.15s;'

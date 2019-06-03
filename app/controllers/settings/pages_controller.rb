@@ -8,7 +8,7 @@ class Settings::PagesController < ApplicationController
       @bot = bots.find(params[:bot_id])
     end
 
-    def embed_js(embed_js_url, token, position)
+    def embed_js(position)
       %Q{<script type="text/javascript">
         (function() {
           var head = document.querySelector("head");

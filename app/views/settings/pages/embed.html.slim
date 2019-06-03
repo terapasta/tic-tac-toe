@@ -50,18 +50,15 @@
           button.close type="button" data-dismiss="modal" &times;
         .modal-body
           p 以下のコードをWebサイトのソースコードに貼り付けて下さい
-          #widget-position-right
-            p= render partial: 'chat_widgets/embed_code', locals: { position: :right }
-          #widget-position-left style="display: none"
+          .w-100.btn-group.btn-group
+            .btn.btn-sm.btn-outline-info.mt-2.active.focus data-role="left-button"
+              | 初期表示を左にする
+            .btn.btn-sm.btn-outline-info.mt-2 data-role="right-button"
+              | 初期表示を右にする
+          #widget-position-left
             p= render partial: 'chat_widgets/embed_code', locals: { position: :left }
-            javascript:
-              function togglePosition(position) {
-                oppositePosition = position === 'right' ? 'left' : 'right'
-                var idForWidgetPosition = '#widget-position-' + position
-                var idForWidgetPositionOpposite = '#widget-position-' + oppositePosition
-                document.querySelector(idForWidgetPosition).style.display = 'none'
-                document.querySelector(idForWidgetPositionOpposite).style.display = 'block'
-              }
+          #widget-position-right style="display: none"
+            p= render partial: 'chat_widgets/embed_code', locals: { position: :right }
 
   .modal.fade#chat-embedding-desc tabindex="-1" role="dialog"
     .modal-dialog role="document"
@@ -74,3 +71,20 @@
             data-component="EmbedCodeGenerator"
             data-token=@bot.token
           )
+
+javascript:
+  window.onload = function () {
+    $('[data-role="left-button"]').on('click', function(e) {
+      $('#widget-position-right').hide()
+      $('#widget-position-left').show()
+      $(e.target).addClass('active focus')
+      $('[data-role="right-button"]').removeClass('active focus')
+    })
+
+    $('[data-role="right-button"]').on('click', function(e) {
+      $('#widget-position-left').hide()
+      $('#widget-position-right').show()
+      $(e.target).addClass('active focus')
+      $('[data-role="left-button"]').removeClass('active focus')
+    })
+  }

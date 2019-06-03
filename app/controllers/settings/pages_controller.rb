@@ -22,6 +22,14 @@ class Settings::PagesController < ApplicationController
           head.appendChild(js);
         }).call(this);
       </script>
-      <div id="MyOpeChatWidget" data-token="#{token}" data-position="#{position}"></div>}
+      <div id="MyOpeChatWidget" data-token="#{@bot.token}" data-position="#{position}"></div>}
+    end
+
+    def embed_js_url
+      if Rails.env.development?
+        "http://#{request.env['HTTP_HOST']}/assets/embed.js"
+      else
+        "#{ActionController::Base.asset_host}/assets/embed.js"
+      end
     end
 end

@@ -27,10 +27,11 @@ class QuestionAnswer::CsvImporter
   def import
     csv_data = parse
     ActiveRecord::Base.transaction do
-      csv_data.each do |import_param|
+      csv_data.reverse.each_with_index do |import_param, i|
         topic_tag_names = import_param.delete(:topic_tag_names)
         duplicate_question = @bot.question_answers.find_by(question: import_param[:question])
         duplicate_sub_question = @bot.sub_questions.find_by(question: import_param[:question])
+        @current_row = i + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
 
         # 重複するsub_questionが存在する場合処理を行わない
         fail DuplicateSubQuestionError.new if duplicate_sub_question
@@ -50,25 +51,22 @@ class QuestionAnswer::CsvImporter
         # questionにユニーク制約を設定したため、インポートにも処理を追加
         # 既に登録されているが、CSV内にで該当idの質問が存在する場合
         # その質問は更新されてユニークとなるはずなので、バリデーションをスキップして更新する
-        #
-        # HACK: ifの入れ子を改善したい
-        question_answer = begin
-          if duplicate_question.present? &&
-              !csv_data.any?{ |data| data[:id] == duplicate_question.id }
-            fail ExistQuestionError.new
-          elsif import_param[:id].present? &&
-              (qa = @bot.question_answers.find_by(id: import_param[:id]))
-            if duplicate_question.present?
-              qa.assign_attributes(import_param)
-              qa.save!(validate: false)
-              qa
-            else
-              qa.update!(import_param)
-              qa
-            end
+
+        if duplicate_question.present? && csv_data.none?{ |data| data[:id] == duplicate_question.id }
+          fail ExistQuestionError.new
+        end
+
+        qa = @bot.question_answers.find_by(id: import_param[:id])
+        if qa.present?
+          if duplicate_question.present?
+            qa.assign_attributes(import_param)
+            qa.save!(validate: false)
           else
-            @bot.question_answers.create!(import_param)
+            qa.update!(import_param)
           end
+          question_answer = qa
+        else
+          question_answer = @bot.question_answers.create!(import_param)
         end
 
         if topic_tag_names.present?
@@ -110,8 +108,8 @@ class QuestionAnswer::CsvImporter
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
     CSV.new(raw_data).drop(1).map.with_index { |row, index|
       @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
-      fail DuplicateQuestionError if raw_data.split(",").count(row[2]) > 1 # CSV内に重複QAがある場合エラー
       data = detect_or_initialize_by_row(row)
+      fail DuplicateQuestionError if raw_data.split(",").count(data[:question]) > 1 # CSV内に重複QAがある場合エラー
       next if data.nil?
 
       {

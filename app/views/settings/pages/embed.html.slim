@@ -50,11 +50,13 @@
           button.close type="button" data-dismiss="modal" &times;
         .modal-body
           p 以下のコードをWebサイトのソースコードに貼り付けて下さい
-          .w-100.btn-group.btn-group
-            .btn.btn-sm.btn-outline-info.mt-2.active.focus data-role="left-button"
-              | 初期表示を左にする
-            .btn.btn-sm.btn-outline-info.mt-2 data-role="right-button"
-              | 初期表示を右にする
+          .w-100.btn-group.btn-group.btn-group-toggle data-toggle="buttons"
+            label.btn.btn-sm.btn-outline-info.mt-2.active data-role="left-button"
+              input type="radio" name="left" autocomplete="off" checked="true"
+                | 初期表示を左にする
+            label.btn.btn-sm.btn-outline-info.mt-2 data-role="right-button"
+              input type="radio" name="left" autocomplete="off" checked="false"
+                | 初期表示を右にする
           #widget-position-left
             p= render partial: 'chat_widgets/embed_code', locals: { position: :left }
           #widget-position-right style="display: none"
@@ -77,14 +79,10 @@ javascript:
     $('[data-role="left-button"]').on('click', function(e) {
       $('#widget-position-right').hide()
       $('#widget-position-left').show()
-      $(e.target).addClass('active focus')
-      $('[data-role="right-button"]').removeClass('active focus')
     })
 
     $('[data-role="right-button"]').on('click', function(e) {
       $('#widget-position-left').hide()
       $('#widget-position-right').show()
-      $(e.target).addClass('active focus')
-      $('[data-role="left-button"]').removeClass('active focus')
     })
   }

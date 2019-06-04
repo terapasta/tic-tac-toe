@@ -148,7 +148,6 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       Delayed::Worker.delay_jobs = false
     end
     after do
-      #ActiveJob::Base.queue_adapter = queue_adapter_for_test
       Delayed::Worker.delay_jobs = true
     end
 

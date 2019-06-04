@@ -75,7 +75,7 @@
           )
 
 javascript:
-  window.onload = function () {
+  function toggleWidgetPosition () {
     $('[data-role="left-button"]').on('click', function(e) {
       $('#widget-position-right').hide()
       $('#widget-position-left').show()
@@ -85,4 +85,11 @@ javascript:
       $('#widget-position-left').hide()
       $('#widget-position-right').show()
     })
+  }
+
+  if (document.readyState === 'complete' ||
+      document.readyState === 'interactive') {
+    toggleWidgetPosition()
+  } else {
+    document.addEventListener('DOMContentLoaded', toggleWidgetPosition)
   }

@@ -17,8 +17,10 @@ import WordMappings from '../components/WordMappings'
 import mountComponent, { mountComponentWithRedux } from '../helpers/mountComponent'
 
 function init () {
-  Mixpanel.initialize('3c53484fb604d6e20438b4fac8d2ea56')
-  Mixpanel.listenEvents()
+  if (process.env.NODE_ENV === 'production') {
+    Mixpanel.initialize('3c53484fb604d6e20438b4fac8d2ea56')
+    Mixpanel.listenEvents()
+  }
   CopyButton.initialize()
 
   // mountComponent(AnswerTextArea)

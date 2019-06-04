@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta charset="utf-8"
-    title = content_for?(:title) ? yield(:title) : page_title
+    title = content_for?(:title) ? yield(:title) : page_title(@bot)
     meta content="width=device-width, initial-scale=1.0" name="viewport"
 
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"

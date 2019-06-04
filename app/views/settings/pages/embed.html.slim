@@ -42,7 +42,7 @@
     input.form-control readonly=true value=chats_url(@bot.token) onclick="this.select()"
 
 
-  .modal.fade#chat-widget-desc tabindex="-1" role="dialog"
+  .modal.fade#chat-widget-desc tabindex="-1" role="dialog" data-role="open-widget-code"
     .modal-dialog role="document"
       .modal-content
         .modal-header
@@ -74,6 +74,9 @@
             data-token=@bot.token
           )
 
+div style="display: none;" data-role="chat-widget-sample"
+  = embed_js(:left).html_safe
+
 javascript:
   function toggleWidgetPosition () {
     $('[data-role="left-button"]').on('click', function(e) {
@@ -87,9 +90,21 @@ javascript:
     })
   }
 
+  function showOrHideChatWidgetSample () {
+    $('[data-role="open-widget-code"]').on('show.bs.modal', function() {
+      $('[data-role="chat-widget-sample"]').show()
+    })
+
+    $('[data-role="open-widget-code"]').on('hide.bs.modal', function() {
+      $('[data-role="chat-widget-sample"]').hide()
+    })
+  }
+
   if (document.readyState === 'complete' ||
       document.readyState === 'interactive') {
     toggleWidgetPosition()
+    showOrHideChatWidgetSample()
   } else {
     document.addEventListener('DOMContentLoaded', toggleWidgetPosition)
+    document.addEventListener('DOMContentLoaded', showOrHideChatWidgetSample)
   }

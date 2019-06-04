@@ -3,8 +3,6 @@ p
   textarea.form-control rows="14" readonly="true" onclick="this.select()" id="chat-widget-embed-code-#{position}"
     = embed_js(position)
 
-.row
-  .col-8
-    = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: "#chat-widget-embed-code-#{position}" } do
-      i.material-icons content_copy
-      span クリップボードにコピー
+= link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: "#chat-widget-embed-code-#{position}" } do
+  i.material-icons content_copy
+  span クリップボードにコピー

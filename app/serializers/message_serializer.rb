@@ -14,7 +14,8 @@ class MessageSerializer < ActiveModel::Serializer
     :similar_question_answers,
     :is_show_similar_question_answers,
     :reply_log,
-    :has_initial_questions
+    :has_initial_questions,
+    :initial_selections
 
   has_one :question_answer
 
@@ -64,5 +65,11 @@ class MessageSerializer < ActiveModel::Serializer
   def is_show_similar_question_answers
     return true if object.is_show_similar_question_answers.nil?
     !!object.is_show_similar_question_answers
+  end
+
+  def initial_selections
+    (object.initial_selections || [])
+      .map{ |it| it.as_json(include: { question_answer: { only: [:question] } }) }
+      .map(&method(:deep_camelize_keys))
   end
 end

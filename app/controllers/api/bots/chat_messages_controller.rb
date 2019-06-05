@@ -7,12 +7,22 @@ class Api::Bots::ChatMessagesController < Api::BaseController
   def index
     guest_key = params.require(:guest_key)
     token = params.require(:bot_token)
-    bot = Bot.find_by!(token: token)
+    bot = Bot
+      .eager_load(initial_selections: [:question_answer])
+      .find_by!(token: token)
     chat = bot.chats.find_by!(guest_key: guest_key)
+    first_id = Message
+      .select(:id)
+      .order(created_at: :desc)
+      .where(chat_id: chat.id)
+      .first
+      &.id
+
+    per_page = params[:per_page].presence || 50
+
     scoped_messages = chat.messages
       .includes(:rating, chat: [:bot], question_answer: [:decision_branches, :answer_files])
       .order(created_at: :desc)
-    per_page = params[:per_page].presence || 50
 
     if params[:older_than_id].present?
       if params[:older_than_id].to_i.zero?
@@ -28,6 +38,11 @@ class Api::Bots::ChatMessagesController < Api::BaseController
         .per(per_page)
     end
 
+    messages.detect{ |it| it.id === first_id }.tap do |first|
+      if first.present?
+        first.initial_selections = bot.initial_selections
+      end
+    end
 
     respond_to do |format|
       format.json do

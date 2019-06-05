@@ -23,7 +23,7 @@
           .card: .card-body.p-2: dl.mb-0
             dt: small サブ質問
             - question_answer.sub_questions.each do |sq|
-              dd= nl2br(sq.question)
+              dd= highlight(nl2br(sq.question), params[:keyword])
       .col-sm-6
         dl.mb-0
           dt: small 回答

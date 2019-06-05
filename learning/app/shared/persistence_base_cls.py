@@ -14,12 +14,13 @@ class PersistenceBaseCls(BaseCls):
     # @property n = #retries [times]
     # @property dt = interval for retry [sec]
     def load_with_retry(self, key, retry=5, dt=0.2):
-        for i in range(retry):
-            data = self.load(key)
-            if data is not None:
-                return data
-
-            sleep(dt)
+        for _i in range(retry):
+            try:
+                data = self.load(key)
+                if data is not None:
+                    return data
+            except:
+                sleep(dt)
         return None
 
     def dump(self, obj, key):

@@ -109,7 +109,7 @@
     dest: /etc/freshclam.conf
     owner: root
     group: root
-    mode: 644
+    mode: 0644
 
 - name: schedule update
   cron:
@@ -121,6 +121,22 @@
     job: "/usr/share/clamav/freshclam-sleep"
     cron_file: clamav-update
 
+- name: create scan log dirctory
+  file:
+    path: /var/log/clamav
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create scan log
+  file:
+    path: /var/log/clamav/clamscan.log
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+    
 - name: schedule scan
   cron:
     name: clamav scan
@@ -128,5 +144,5 @@
     minute: 0
     hour: 5
     user: root
-    job: "(echo ----------- SCAN START -----------; date -R) >> /var/log/clamav/clamscan.log; clamscan -r -l /var/log/clamav/clamscan.log -i --quiet /"
+    job: "clamscan / -r -l /var/log/clamav/clamscan.log -i --exclude-dir='/sys|/etc|/bin|/var' --quiet; echo 'Started at:' `date -R` >> /var/log/clamav/clamscan.log"
     cron_file: clamav-scan

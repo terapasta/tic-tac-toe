@@ -27,6 +27,36 @@ const listenAll = (els, eventName, makeHandler) => {
   });
 };
 
+class MixpanelNullObject {
+  initMixpanel() {
+    console.warn('The method `Mixpanel#initMixpanel` was called but it\'s not initialized.')
+  }
+
+  setupProfile() {
+    console.warn('The method `Mixpanel#setupProfile` was called but it\'s not initialized.')
+  }
+
+  bindClickLinkEvent() {
+    console.warn('The method `Mixpanel#bindClickLinkEvent` was called but it\'s not initialized.')
+  }
+
+  bindSubmitFormEvent() {
+    console.warn('The method `Mixpanel#bindSubmitFormEvent` was called but it\'s not initialized.')
+  }
+
+  track() {
+    console.warn('The method `Mixpanel#track` was called but it\'s not initialized.')
+  }
+
+  trackForm() {
+    console.warn('The method `Mixpanel#trackForm` was called but it\'s not initialized.')
+  }
+
+  trackEvent() {
+    console.warn('The method `Mixpanel#trackEvent` was called but it\'s not initialized.')
+  }
+}
+
 export default class Mixpanel {
   static listenEvents() {
     const links = getElements('a[data-event]');
@@ -45,7 +75,14 @@ export default class Mixpanel {
   }
 
   static initialize(token) {
-    this.sharedInstance = new Mixpanel(token);
+    this.__sharedInstance = new Mixpanel(token);
+  }
+
+  static get sharedInstance () {
+    if (this.__sharedInstance) {
+      return this.__sharedInstance
+    }
+    return new MixpanelNullObject()
   }
 
   constructor(token) {

@@ -1,3 +1,4 @@
+require('console-stamp')(console, 'yyyy-mm-dd HH:MM:ss.l')
 const restify = require('restify')
 const socketio = require('socket.io')
 const corsMiddleware = require('restify-cors-middleware')

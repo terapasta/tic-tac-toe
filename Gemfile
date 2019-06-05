@@ -149,6 +149,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'capybara', '~> 2.15.4'
   gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 4.0'
   gem 'rspec_junit_formatter'
   gem 'rails-controller-testing'
 
@@ -167,6 +168,10 @@ group :development, :test do
   gem 'capistrano3-unicorn'
   gem 'capistrano3-delayed-job', '~> 1.0'
   gem 'capistrano3-puma'
+end
+
+group :development do
+  gem 'brakeman'
 end
 
 group :production, :staging do

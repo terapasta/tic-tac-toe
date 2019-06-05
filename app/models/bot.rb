@@ -10,6 +10,7 @@ class Bot < ApplicationRecord
   has_many :question_answers
   has_many :topic_tags
   has_many :decision_branches
+  has_many :sub_questions, through: :question_answers
   has_one :score, dependent: :destroy
   has_one :learning_parameter, dependent: :destroy
   has_many :sentence_synonyms, through: :question_answers

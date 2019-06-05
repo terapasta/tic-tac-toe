@@ -398,7 +398,7 @@ export default {
 
 .log-container {
   position: relative;
-  flex-grow: 2;
+  flex-shrink: 0;
 
   .popover {
     max-width: none;

@@ -10,10 +10,6 @@ import {
   SET_MESSAGES_NEXT_PAGE_EXISTS,
 } from './mutationTypes'
 
-const headers = {
-  'X-Chat-Client': 'MyOpeWebsocketChat'
-}
-
 export default {
   async initAPI ({ state }) {
     axios.defaults.baseURL = state.botServerHost
@@ -29,7 +25,7 @@ export default {
         guestKey,
         olderThanId: olderThanId || 0,
         perPage: 20,
-      }, { headers })
+      })
       const { messages, nextPageExists } = res.data
       commit(ADD_MESSAGES, { messages })
       commit(SET_MESSAGES_NEXT_PAGE_EXISTS, { nextPageExists })
@@ -46,7 +42,10 @@ export default {
         message,
         botToken,
         guestKey,
-      }, { headers })
+      })
+    } catch (err) {
+      console.error(err)
+      // TODO handle error
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }
@@ -60,7 +59,7 @@ export default {
         botToken,
         guestKey,
         choiceId: decisionBranch.id,
-      }, { headers })
+      })
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }
@@ -73,7 +72,7 @@ export default {
       guestKey,
       messageId: message.id,
       ratingLevel: 'good',
-    }, { headers })
+    })
   },
 
   async bad ({ state }, { message }) {
@@ -83,7 +82,7 @@ export default {
       guestKey,
       messageId: message.id,
       ratingLevel: 'bad',
-    }, { headers })
+    })
   },
 
   clearNotification ({ commit }) {

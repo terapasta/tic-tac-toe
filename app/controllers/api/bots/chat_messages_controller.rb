@@ -74,13 +74,13 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     end
 
     bot_messages = {}
+    guest_message = nil
     ActiveRecord::Base.transaction do
-      message = chat.messages.create!(body: message) {|m|
+      guest_message = chat.messages.create!(body: message) {|m|
         m.speaker = 'guest'
         m.user_agent = request.env['HTTP_USER_AGENT']
       }
-      ChatChannel.broadcast_to(chat, { action: :create, data: serialize(message) })
-      bot_messages = receive_and_reply!(chat, message)
+      bot_messages = receive_and_reply!(chat, guest_message)
     end
 
     TaskCreateService.new(bot_messages, bot, nil).process.each do |task, bot_message|
@@ -89,14 +89,15 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       end
     end
 
-    respond_to do |format|
-      format.json { render json: bot_messages.first, adapter: :json, include: included_associations }
+    json = if myope_client?
+      [guest_message, bot_messages.first]
+    else
+      bor_messages.first
     end
 
-    ChatChannel.broadcast_to(chat, {
-      action: :create,
-      data: serialize(bot_messages.first, include: included_associations)
-    })
+    respond_to do |format|
+      format.json { render json: json, adapter: :json, include: included_associations }
+    end
 
   rescue Ml::Engine::NotTrainedError => e
     logger.error e.message + e.backtrace.join("\n")

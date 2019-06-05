@@ -2,6 +2,10 @@ const api = require('../api')
 
 class MyOpeServer {
   mapRoute (app) {
+    const requestHeaders = {
+      'X-Chat-Client': 'MyOpeChat'
+    }
+
     app.get('/myope/healthcheck', (req, res) => {
       try {
         res.send('OK!!')
@@ -40,8 +44,32 @@ class MyOpeServer {
       })
     })
 
-    app.post('/myope/:botToken/messages', (req, res) => {
-      res.send('OK')
+    app.post('/myope/:botToken/messages', async (req, res) => {
+      try {
+        const {
+          botToken,
+          guestKey,
+          message
+        } = { ...req.params, ...req.body }
+        const response = await api.createMessage(
+          { botToken, guestKey, message },
+          { headers: requestHeaders }
+        )
+        response.data.messages.forEach(message => {
+          const payload = { action: 'create', data: { message } }
+          this.wsEmit({ botToken, guestKey, payload })
+        })
+        res.send('OK')
+      } catch (err) {
+        const { response } = err
+        if (response) {
+          res.status(response.status)
+          res.send(response.statusText)
+        } else {
+          res.status(500)
+          res.send('Something went wrong')
+        }
+      }
     })
 
     app.post('/myope/:botToken/choices', (req, res) => {

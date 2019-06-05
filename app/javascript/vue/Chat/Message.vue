@@ -1,6 +1,7 @@
 <script>
 import format from 'date-fns/format'
 import VueMarkdown from 'vue-markdown'
+import isEmpty from 'is-empty'
 
 import AnswerFiles from './AnswerFiles'
 import QuestionOptions from './QuestionOptions'
@@ -84,6 +85,16 @@ export default {
       }
       return []
     },
+
+    hasInitialSelections () {
+      return !isEmpty(this.message.initialSelections)
+    },
+
+    initialQuestions () {
+      return this.message.initialSelections
+        .map(it => it.questionAnswer)
+        .map(it => ({ ...it, body: it.question }))
+    }
   },
 
   methods: {
@@ -96,6 +107,10 @@ export default {
 
     handleSimilarQuestionAnswerSelect (similarQuestionAnswer) {
       this.$emit('select-question', similarQuestionAnswer.question)
+    },
+
+    handleInitialQuestionSelect (initialQuestion) {
+      this.$emit('select-question', initialQuestion.question)
     },
 
     handleGoodButtonClick () {
@@ -217,6 +232,7 @@ export default {
         </div>
       </div>
 
+
       <div
         class="container pt-4"
         v-if="decisionBranches.length > 0"
@@ -234,13 +250,28 @@ export default {
 
       <div
         class="container pt-4"
+        v-if="hasInitialSelections"
+      >
+        <div class="row justify-content-md-center">
+          <div class="col-md-6">
+            <question-options
+              title="こちらの質問ではありませんか？"
+              :items="initialQuestions"
+              @select="handleInitialQuestionSelect"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="container pt-4"
         v-if="similarQuestionAnswers.length > 0"
       >
         <div class="row justify-content-md-center">
           <div class="col-md-6">
             <question-options
               title="こちらの質問ではありませんか？"
-              :items="similarQuestionAnswers"
+              :items="similarQuestionAnswersOrInitialQuestions"
               @select="handleSimilarQuestionAnswerSelect"
             />
           </div>

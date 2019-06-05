@@ -33,7 +33,7 @@ RSpec.describe 'Chats Failed and Ratings', type: :feature, js: true do
       find('.chat-message__rating-button.good').click
       sleep 1
       ActionMailer::Base.deliveries.last.tap do |email|
-        expect(email.subject).to include('回答に失敗しました')
+        expect(email.subject).to include('回答不可')
         expect(email.to).to match_array(users.map(&:email))
       end
 

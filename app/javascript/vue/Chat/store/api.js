@@ -26,3 +26,5 @@ export function createGuestUser ({ name, email }) {
 export function updateGuestUser ({ guestId, name, email }) {
   return axios.put(`/myope/guest_users/${guestId}`, { name, email })
 }
+
+export function createChoice () {}

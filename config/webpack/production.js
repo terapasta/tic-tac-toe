@@ -1,26 +1,5 @@
-const webpack = require('webpack')
-const config = require('./environment')
+process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
-config.plugins = config.plugins.map(plug => {
-  if (plug instanceof webpack.optimize.UglifyJsPlugin) {
-    return new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      parallel: true,
-      mangle: false,
-      uglifyOptions: {
-        mangle: false
-      },
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      }
-    });
-  }
-  return plug;
-})
+const environment = require('./environment')
 
-config.devtool = 'eval'
-
-module.exports = config
+module.exports = environment

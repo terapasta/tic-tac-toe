@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
   get '/' => redirect('/users/sign_in')
+  get '/assets/embed.js' => redirect('/packs/embed.js')
 
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
 

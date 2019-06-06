@@ -4,17 +4,7 @@ import isEmpty from 'is-empty';
 import bindAll from 'lodash/bindAll';
 
 import WordMappingForm from './WordMappingForm';
-
-export const searchQueryParam = () => (
-  window.location.search
-    .replace(/^\?/, '')
-    .split('&')
-    .map(pair => pair.split('='))
-    .reduce((acc, pair) => {
-      acc[window.decodeURIComponent(pair[0])] = window.decodeURIComponent(pair[1]);
-      return acc;
-    }, {})['q']
-);
+import searchQueryParam from '../helpers/searchQueryParam'
 
 class WordMappings extends Component {
   constructor(props) {

@@ -60,12 +60,24 @@
       h6.mb-4
         = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'
         = space
+        span Bad評価数累計
+        = space 2
+        small １日毎に過去最大5,000件の回答のBad評価数を計算しています
+      div(
+        data-component="BadCountChart"
+        data-columns=@bad_count_summarizer.thirty_days_count_chart_data.to_json
+      )
+
+    .card.mb-5: .card-body
+      h6.mb-4
+        = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'
+        = space
         span Bad評価率
         = space 2
         small １日毎に過去最大5,000件の回答のBad評価の割合を計算しています
       div(
-        data-component="BadCountChart"
-        data-columns=@bad_count_summarizer.thirty_days_chart_data.to_json
+        data-component="BadRateChart"
+        data-columns=@bad_count_summarizer.thirty_days_rate_chart_data.to_json
       )
 
   .card.mb-4: .card-body

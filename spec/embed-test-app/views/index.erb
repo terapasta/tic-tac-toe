@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  (function() {
+    var head = document.querySelector("head");
+    var src = "http://localhost:3000/assets/embed.js";
+    var isAlreadyLoaded = document.querySelector("[src='" + src + "']");
+    if (isAlreadyLoaded) { return console.warn("[My-ope office] Duplicated loading scripts"); }
+    var js = document.createElement("script");
+    js.src = src;
+    js.async = true;
+    js.id = "MyOpeEmbedScript";
+    head.appendChild(js);
+  }).call(this);
+</script>
+<div id="MyOpeChatWidget" data-token="1f55f962003c93205fd8d3648d3117c8b0b92280b0e145a2191659d33037d8d4" data-position="right"></div>

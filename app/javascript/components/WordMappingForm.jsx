@@ -13,7 +13,7 @@ import isEmpty from 'is-empty';
 import * as WordMappingAPI from '../api/wordMappings';
 import Alert from './Alert';
 
-import { searchQueryParam } from './WordMappings';
+import searchQueryParam from '../helpers/searchQueryParam';
 
 import {
   Wrapper,

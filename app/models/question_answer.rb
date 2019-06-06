@@ -134,8 +134,10 @@ class QuestionAnswer < ApplicationRecord
     results
   end
 
-  def has_changed_question?
-    self.question_previously_changed? || self.sub_questions.map{|q| q.question_previously_changed?}.any?
+  def has_changed_sub_question?
+    self.sub_questions.any? do |q|
+      q.new_record? || q.changed? || q.marked_for_destruction?
+    end
   end
 
   def sub_question?

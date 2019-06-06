@@ -13,7 +13,7 @@ class Api::Bots::ChatMessagesController < Api::BaseController
     chat = bot.chats.find_by!(guest_key: guest_key)
     first_id = Message
       .select(:id)
-      .order(created_at: :desc)
+      .order(created_at: :asc)
       .where(chat_id: chat.id)
       .first
       &.id

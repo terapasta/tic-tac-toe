@@ -76,7 +76,9 @@ RailsAdmin.config do |config|
       field :enable_guest_user_registration
       field :is_guest_user_form_skippable
       field :is_demo
+      field :suggest_limit
       field :candidate_answers_threshold
+      field :top_candidate_answers_threshold
     end
   end
 

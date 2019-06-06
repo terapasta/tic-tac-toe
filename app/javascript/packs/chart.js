@@ -3,6 +3,7 @@ import 'babel-polyfill'
 import Vue from 'vue'
 
 import BadCountChart from '../vue/BadCountChart'
+import BadRateChart from '../vue/BadRateChart'
 import UtilizationChart from '../vue/UtilizationChart'
 import Utilization from '../vue/Utilization'
 import getData from '../helpers/getData'
@@ -14,6 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
       components: { BadCountChart },
       data: getData(mountNode),
       template: '<bad-count-chart :columns="columns" />'
+    })
+  })
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-component="BadRateChart"]'), (mountNode) => {
+    new Vue({
+      el: mountNode,
+      components: { BadRateChart },
+      data: getData(mountNode),
+      template: '<bad-rate-chart :columns="columns" />'
     })
   })
 

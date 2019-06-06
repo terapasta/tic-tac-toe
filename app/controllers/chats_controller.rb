@@ -5,7 +5,6 @@ class ChatsController < ApplicationController
     set_bot
     set_guest_key
     set_guest_user
-    set_warning_message
     @chat = @bot.chats.where(guest_key: guest_key).order(created_at: :desc).first
     if @chat.nil?
       redirect_to new_chats_path(token: params[:token], noheader: params[:noheader])
@@ -21,7 +20,6 @@ class ChatsController < ApplicationController
     set_bot
     set_guest_key
     set_guest_user
-    set_warning_message
     @chat = @bot.chats.create_by(guest_key: guest_key) do |chat|
       authorize chat
       chat.is_staff = true if current_user.try(:staff?)

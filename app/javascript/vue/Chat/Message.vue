@@ -271,7 +271,7 @@ export default {
           <div class="col-md-6">
             <question-options
               title="こちらの質問ではありませんか？"
-              :items="similarQuestionAnswersOrInitialQuestions"
+              :items="similarQuestionAnswers"
               @select="handleSimilarQuestionAnswerSelect"
             />
           </div>

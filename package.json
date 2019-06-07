@@ -48,6 +48,7 @@
     "styled-components": "^4.2.0",
     "toastr": "^2.1.4",
     "vue": "^2.6.10",
+    "vue-flatpickr-component": "^8.1.2",
     "vue-loader": "^15.7.0",
     "vue-markdown": "^2.2.4",
     "vue-multiselect": "^2.1.6",

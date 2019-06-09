@@ -184,6 +184,12 @@ Rails.application.routes.draw do
       resources :decision_branches, module: :bots do
         resource :answer_link, only: [:create, :destroy], module: :decision_branches
       end
+      resources :initial_selections, module: :bots, only: [:index, :create, :destroy] do
+        member do
+          put :move_higher
+          put :move_lower
+        end
+      end
     end
     post 'cwdb', to: 'chatwork_decision_branches#create', as: :chatwork_decision_branches
     post 'cwsqa', to: 'chatwork_similar_question_answers#create', as: :chatwork_similar_question_answers

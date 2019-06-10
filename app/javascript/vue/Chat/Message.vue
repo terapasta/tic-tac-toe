@@ -2,6 +2,8 @@
 import format from 'date-fns/format'
 import VueMarkdown from 'vue-markdown'
 import isEmpty from 'is-empty'
+import find from 'lodash/find'
+import sortBy from 'lodash/sortBy'
 
 import AnswerFiles from './AnswerFiles'
 import QuestionOptions from './QuestionOptions'
@@ -18,6 +20,7 @@ export default {
     bot: { type: Object },
     isAnimate: { type: Boolean, default: true },
     isStaff: { type: Boolean, default: false },
+    isOwner: { type: Boolean, default: false },
     message: { type: Object, required: true },
   },
 
@@ -91,9 +94,11 @@ export default {
     },
 
     initialQuestions () {
-      return this.message.initialSelections
+      const results = sortBy(this.message.initialSelections, ['position'])
         .map(it => it.questionAnswer)
         .map(it => ({ ...it, body: it.question }))
+      console.log({ results })
+      return results
     }
   },
 
@@ -130,6 +135,13 @@ export default {
       const rightEdgeX = offset.left + logButton.offsetWidth
       const width = rightEdgeX < 600 ? rightEdgeX : 600
       this.popoverStyle.width = `${width}px`
+    },
+
+    handleInitialQuestionMove (questionAnswer, direction) {
+      const selection = find(this.message.initialSelections, it => {
+        return it.questionAnswer.id === questionAnswer.id
+      })
+      this.$emit(`initial-selection-move-${direction}`, selection)
     }
   }
 }
@@ -257,7 +269,10 @@ export default {
             <question-options
               title="こちらの質問ではありませんか？"
               :items="initialQuestions"
+              :order-editable="isStaff || isOwner"
               @select="handleInitialQuestionSelect"
+              @move-higher="handleInitialQuestionMove($event, 'higher')"
+              @move-lower="handleInitialQuestionMove($event, 'lower')"
             />
           </div>
         </div>

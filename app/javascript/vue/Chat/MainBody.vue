@@ -12,6 +12,7 @@ export default {
     messages: { type: Array, required: true },
     headerHeight: { type: Number, required: true },
     isStaff: { type: Boolean, required: true, default: false },
+    isOwner: { type: Boolean, required: true, default: false },
     isShowLoadMoreButton: { type: Boolean, default: false },
     isProcessing: { type: Boolean, default: false },
   },
@@ -119,10 +120,13 @@ export default {
         :message="message"
         :is-animate="isDoneFirstRendering"
         :is-staff="isStaff"
+        :is-owner="isOwner"
         @select-decision-branch="$emit('select-decision-branch', $event)"
         @select-question="$emit('select-question', $event)"
         @good="$emit('good', $event)"
         @bad="$emit('bad', $event)"
+        @initial-selection-move-higher="$emit('initial-selection-move-higher', $event)"
+        @initial-selection-move-lower="$emit('initial-selection-move-lower', $event)"
       />
     </div>
   </div>

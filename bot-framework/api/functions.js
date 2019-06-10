@@ -141,3 +141,17 @@ module.exports.createGuestUser = ({
     }
   }, config)
 )
+
+module.exports.moveInitialSelectionHigher = ({
+  botToken,
+  id,
+}, config = {}) => (
+  axios.put(`/api/bots/${botToken}/initial_selections/${id}/move_higher`, {}, config)
+)
+
+module.exports.moveInitialSelectionLower = ({
+  botToken,
+  id,
+}, config = {}) => (
+  axios.put(`/api/bots/${botToken}/initial_selections/${id}/move_lower`, {}, config)
+)

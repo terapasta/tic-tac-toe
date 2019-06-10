@@ -44,33 +44,22 @@ class MyOpeServer {
       })
     })
 
-    app.post('/myope/:botToken/messages', async (req, res) => {
-      try {
-        const {
-          botToken,
-          guestKey,
-          message
-        } = { ...req.params, ...req.body }
-        const response = await api.createMessage(
-          { botToken, guestKey, message },
-          { headers: requestHeaders }
-        )
-        response.data.messages.forEach(message => {
-          const payload = { action: 'create', data: { message } }
-          this.wsEmit({ botToken, guestKey, payload })
-        })
-        res.send('OK')
-      } catch (err) {
-        const { response } = err
-        if (response) {
-          res.status(response.status)
-          res.send(response.statusText)
-        } else {
-          res.status(500)
-          res.send('Something went wrong')
-        }
-      }
-    })
+    app.post('/myope/:botToken/messages', this.try(async (req, res) => {
+      const {
+        botToken,
+        guestKey,
+        message
+      } = { ...req.params, ...req.body }
+      const response = await api.createMessage(
+        { botToken, guestKey, message },
+        { headers: requestHeaders }
+      )
+      response.data.messages.forEach(message => {
+        const payload = { action: 'create', data: { message } }
+        this.wsEmit({ botToken, guestKey, payload })
+      })
+      res.send('OK')
+    }))
 
     app.post('/myope/:botToken/choices', (req, res) => {
       res.send('OK')
@@ -88,11 +77,45 @@ class MyOpeServer {
     app.put('/myope/guest_users', (req, res) => {
       res.send('OK')
     })
+
+    const moveInitialSelection = direction => {
+      return this.try(async (req, res) => {
+        const { botToken, guestKey, id } = { ...req.params, ...req.body }
+        const apiMethod = `moveInitialSelection${direction}`
+        const response = await api[apiMethod]({ botToken, id })
+        const { initialSelections } = response.data
+        const payload = {
+          action: 'update_initial_selections',
+          data: { initialSelections },
+        }
+        this.wsEmit({ botToken, guestKey, payload })
+        res.send('OK')
+      })
+    }
+    app.put('/myope/:botToken/initial_selections/:id/move_higher', moveInitialSelection('Higher'))
+    app.put('/myope/:botToken/initial_selections/:id/move_lower', moveInitialSelection('Lower'))
   }
 
   wsEmit ({ botToken, guestKey, payload }) {
     const roomId = `${botToken}:${guestKey}`
     this.io.sockets.in(roomId).emit('event', payload)
+  }
+
+  try (requestProcess) {
+    return (req, res) => {
+      try {
+        requestProcess(req, res)
+      } catch (err) {
+        const { response } = err
+        if (response) {
+          res.status(response.status)
+          res.send(response.statusText)
+        } else {
+          res.status(500)
+          res.send('Something went wrong')
+        }
+      }
+    }
   }
 }
 

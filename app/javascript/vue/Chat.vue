@@ -45,6 +45,7 @@ export default {
       'isProcessing',
       'isConnected',
       'isStaff',
+      'isOwner',
       'notification',
       'botServerHost',
     ]),
@@ -60,6 +61,8 @@ export default {
       'good',
       'bad',
       'saveGuestUser',
+      'moveInitialSelectionHigher',
+      'moveInitialSelectionLower',
     ]),
 
     handleChatFormSubmit (message) {
@@ -93,7 +96,15 @@ export default {
 
     handleMessagesLoadMore () {
       this.fetchMessages({ olderThanId: this.messages[0].id })
-    }
+    },
+
+    handleInitialSelectionMoveHigher (selection) {
+      this.moveInitialSelectionHigher({ selection })
+    },
+
+    handleInitialSelectionMoveLower (selection) {
+      this.moveInitialSelectionLower({ selection })
+    },
   }
 }
 </script>
@@ -120,6 +131,7 @@ export default {
       :messages="messages"
       :header-height="40"
       :is-staff="isStaff"
+      :is-owner="isOwner"
       :is-show-load-more-button="messagesNextPageExists"
       :is-processing="isProcessing"
       @select-decision-branch="handleMainBodySelectDecisionBranch"
@@ -127,6 +139,8 @@ export default {
       @good="handleGood"
       @bad="handleBad"
       @load-more="handleMessagesLoadMore"
+      @initial-selection-move-higher="handleInitialSelectionMoveHigher"
+      @initial-selection-move-lower="handleInitialSelectionMoveLower"
     />
 
     <div class="footer">

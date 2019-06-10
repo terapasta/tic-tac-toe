@@ -69,7 +69,7 @@ class MessageSerializer < ActiveModel::Serializer
 
   def initial_selections
     (object.initial_selections || [])
-      .map{ |it| it.as_json(include: { question_answer: { only: [:question] } }) }
+      .map{ |it| it.as_json(include: { question_answer: { only: [:id, :question] } }) }
       .map(&method(:deep_camelize_keys))
   end
 end

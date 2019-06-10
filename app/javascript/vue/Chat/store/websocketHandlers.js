@@ -1,5 +1,6 @@
 import {
   ADD_MESSAGE,
+  REPLACE_INITIAL_SELECTIONS,
 } from './mutationTypes'
 
 export const createWebsocketHandlers = (store, socket) => ({
@@ -27,6 +28,9 @@ export const createWebsocketHandlers = (store, socket) => ({
         break
       case 'rating':
         store.dispatch('applyRating', payload.data)
+        break
+      case 'update_initial_selections':
+        store.commit(REPLACE_INITIAL_SELECTIONS, payload.data)
         break
       default:
         break

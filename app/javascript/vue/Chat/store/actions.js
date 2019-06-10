@@ -111,4 +111,14 @@ export default {
       return await api.updateGuestUser({ guestId, name, email })
     }
   },
+
+  async moveInitialSelectionHigher ({ commit, state }, { selection }) {
+    const { botToken, guestKey } = state
+    return api.moveInitialSelectionHigher({ botToken, guestKey, initialSelectionId: selection.id })
+  },
+
+  async moveInitialSelectionLower ({ commit, state }, { selection }) {
+    const { botToken, guestKey } = state
+    return api.moveInitialSelectionLower({ botToken, guestKey, initialSelectionId: selection.id })
+  },
 }

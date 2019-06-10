@@ -1,5 +1,6 @@
 import sortBy from 'lodash/sortBy'
 import findIndex from 'lodash/findIndex'
+import isEmpty from 'is-empty'
 
 import {
   ADD_MESSAGE,
@@ -14,6 +15,8 @@ import {
   SET_IS_CONNECTED,
 
   SET_NOTIFICATION,
+
+  REPLACE_INITIAL_SELECTIONS
 } from './mutationTypes'
 
 export default {
@@ -54,5 +57,19 @@ export default {
 
   [SET_MESSAGES_NEXT_PAGE_EXISTS] (state, { nextPageExists }) {
     state.messagesNextPageExists = nextPageExists
+  },
+
+  [REPLACE_INITIAL_SELECTIONS] (state, { initialSelections }) {
+    console.log(initialSelections)
+    const firstMessage = state.messages[0]
+    if (firstMessage == null || isEmpty(firstMessage.initialSelections)) { return }
+    const newFirstMessage = {
+      ...firstMessage,
+      initialSelections,
+    }
+    state.messages = [
+      newFirstMessage,
+      ...state.messages.slice(1),
+    ]
   }
 }

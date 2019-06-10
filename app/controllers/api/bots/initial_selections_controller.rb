@@ -22,13 +22,13 @@ class Api::Bots::InitialSelectionsController < Api::BaseController
   def move_higher
     @initial_selection = @bot.initial_selections.find(params[:id])
     @initial_selection.move_higher
-    render json: @initial_selection, adapter: :json
+    render json: @bot.reload.initial_selections, adapter: :json
   end
 
   def move_lower
     @initial_selection = @bot.initial_selections.find(params[:id])
     @initial_selection.move_lower
-    render json: @initial_selection, adapter: :json
+    render json: @bot.reload.initial_selections, adapter: :json
   end
 
   private

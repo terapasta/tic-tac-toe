@@ -92,6 +92,7 @@ RSpec.describe 'Initial Selections', type: :request do
       bot.initial_selections.last.tap do |initial_selection|
         expect{
           put "/api/bots/#{bot.token}/initial_selections/#{initial_selection.id}/move_higher"
+          expect(response_json['initialSelections'].map{ |it| it['id'] }).to eq(bot.reload.initial_selections.pluck(:id))
           initial_selection.reload
         }.to change(initial_selection, :position).to(2).from(3)
       end
@@ -103,6 +104,7 @@ RSpec.describe 'Initial Selections', type: :request do
       bot.initial_selections.first.tap do |initial_selection|
         expect{
           put "/api/bots/#{bot.token}/initial_selections/#{initial_selection.id}/move_lower"
+          expect(response_json['initialSelections'].map{ |it| it['id'] }).to eq(bot.reload.initial_selections.pluck(:id))
           initial_selection.reload
         }.to change(initial_selection, :position).to(2).from(1)
       end

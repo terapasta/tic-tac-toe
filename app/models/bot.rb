@@ -17,7 +17,6 @@ class Bot < ApplicationRecord
   has_many :allowed_hosts, dependent: :destroy
   has_many :word_mappings, dependent: :destroy
   has_many :tasks, dependent: :destroy
-  has_many :accuracy_test_cases, dependent: :destroy
   has_many :exports, dependent: :destroy
   has_many :allowed_ip_addresses, dependent: :destroy
   has_many :organization_ownerships, class_name: 'Organization::BotOwnership'

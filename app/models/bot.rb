@@ -108,6 +108,12 @@ class Bot < ApplicationRecord
     self.update!(token: generate_token, demo_finished_at: Time.current)
   end
 
+  def little_cloud_bot?
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてトークンをベタ打ち
+    token == "cbdf74a20f064e84ec1c539ccddc60808b2eba13b5dd5595527b6e017e9b4be4"
+  end
+
   private
     def set_token_if_needed
       self.token = generate_token if token.blank?

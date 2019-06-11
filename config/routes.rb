@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
   get '/' => redirect('/users/sign_in')
+  get '/assets/embed.js' => redirect('/packs/embed.js')
 
   devise_for :users, only: [:sign_in, :sign_out, :confirmation, :session, :password]
 
@@ -160,6 +161,7 @@ Rails.application.routes.draw do
       end
       get :utilizations, to: 'utilizations#index'
       post :utilizations, to: 'utilizations#create'
+      get :post_utilizations, to: 'utilizations#post_index'
     end
 
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

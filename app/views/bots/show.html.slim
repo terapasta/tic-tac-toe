@@ -41,7 +41,8 @@
         br
         |※ チャット数は日付が変わるとリセットされます
 
-  - if @guest_messages_summarizer.get_half_year_data.present?
+  - monthly_gm = monthly_guest_messages(@guest_messages_summarizer)
+  - if monthly_gm.present?
     .card.mb-5: .card-body
       .d-flex.justify-content-between.align-items-start
         h6.mb-4
@@ -52,10 +53,24 @@
           small 最大過去半年分のチャット質問数を計算しています
       div(
         data-component="UtilizationChart"
-        data-columns=@guest_messages_summarizer.half_year_data.to_json
+        data-columns=monthly_gm.to_json
+        data-bot=@bot.to_json
+        data-only-gm="true"
       )
 
   - if @bad_count_summarizer.get_thirty_days_data.present?
+    .card.mb-5: .card-body
+      h6.mb-4
+        = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'
+        = space
+        span Bad評価数累計
+        = space 2
+        small １日毎に過去最大5,000件の回答のBad評価数を計算しています
+      div(
+        data-component="BadCountChart"
+        data-columns=@bad_count_summarizer.thirty_days_count_chart_data.to_json
+      )
+
     .card.mb-5: .card-body
       h6.mb-4
         = material_icon 'insert_chart', class: 'mi-sm mi-v-sub text-muted'
@@ -64,8 +79,8 @@
         = space 2
         small １日毎に過去最大5,000件の回答のBad評価の割合を計算しています
       div(
-        data-component="BadCountChart"
-        data-columns=@bad_count_summarizer.thirty_days_chart_data.to_json
+        data-component="BadRateChart"
+        data-columns=@bad_count_summarizer.thirty_days_rate_chart_data.to_json
       )
 
   .card.mb-4: .card-body

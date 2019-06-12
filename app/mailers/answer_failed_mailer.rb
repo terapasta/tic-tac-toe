@@ -12,7 +12,7 @@ class AnswerFailedMailer < ApplicationMailer
     @guest_message = Chat.question_message(message.chat_id, message.id)
     @task = task
     unless @bot_users.length.zero?
-      mail(to: @bot_users.map(&:email), subject: '[My-ope] 回答不可の質問が実行されました')
+      mail(to: @bot_users.map(&:email), subject: '[My-ope] 回答不可の質問が行われました')
     end
   end
 end

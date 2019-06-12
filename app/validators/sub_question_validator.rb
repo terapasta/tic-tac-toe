@@ -3,13 +3,13 @@ class SubQuestionValidator < ActiveModel::Validator
     if record.question == record.question_answer.question
       record.errors.add(:sub_question, "と同じ質問が存在しています。")
     end
-    sub_questions = record.question_answer.sub_questions.map{|rec| rec.question }
 
     unless QuestionAnswer.where(["bot_id = ? and question = ?", record.question_answer.bot_id, record.question]).blank?
       record.errors.add(:sub_question, "と同じ質問が存在しています。")
     end
 
-    unless sub_questions.uniq.map{|e| [e, sub_questions.count(e)]}.select{|_, i| i > 1}.empty?
+    sub_questions = record.question_answer.sub_questions.map{|rec| rec.question }
+    if (sub_questions.count - sub_questions.uniq.count) > 0
       record.errors.add(:sub_question, "と同じサブ質問が存在しています。")
     end
 

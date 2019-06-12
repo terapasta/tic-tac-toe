@@ -8,12 +8,17 @@ import sortBy from 'lodash/sortBy'
 import AnswerFiles from './AnswerFiles'
 import QuestionOptions from './QuestionOptions'
 import getOffset from '../../helpers/getOffset'
+import Modal from '../Modal'
+import initialSelectionsInstruction from './images/initial-questions-sample.png'
+import InitialSelectionModal from './InitialSelectionModal'
 
 export default {
   components: {
     AnswerFiles,
     QuestionOptions,
     VueMarkdown,
+    Modal,
+    InitialSelectionModal,
   },
 
   props: {
@@ -28,6 +33,9 @@ export default {
     localRating: null,
     isLogOpened: false,
     popoverStyle: {},
+    shouldShowInitialSelectionModal: false,
+    shouldShowHelpInitialSelection: false,
+    initialSelectionsInstruction,
   }),
 
   computed: {
@@ -274,8 +282,34 @@ export default {
               @move-higher="handleInitialQuestionMove($event, 'higher')"
               @move-lower="handleInitialQuestionMove($event, 'lower')"
             />
+            <div v-if="isStaff || isOwner" class="d-flex align-items-center">
+              <button
+                class="btn btn-link"
+                @click.stop.prevent="shouldShowInitialSelectionModal = true"
+              >
+                初期質問リストを編集する
+              </button>
+              <a href="#" @click.stop.prevent="shouldShowHelpInitialSelection = true">
+                <i class="material-icons align-middle">help</i>
+              </a>
+            </div>
           </div>
         </div>
+
+        <modal
+          v-if="shouldShowHelpInitialSelection"
+          title="初期質問リストとは"
+          @close="shouldShowHelpInitialSelection = false"
+        >
+          <p>チャットを開始すぐの画面に、任意の質問候補を最大で５つまで表示できる機能です。</p>
+          <p><img :src="initialSelectionsInstruction" class="img-fluid" /></p>
+          <p>時期によって質問内容が予想される場合等に設定しておくと効果的です。</p>
+        </modal>
+
+        <initial-selection-modal
+          v-if="shouldShowInitialSelectionModal"
+          @close="shouldShowInitialSelectionModal = false"
+        />
       </div>
 
       <div

@@ -121,4 +121,10 @@ export default {
     const { botToken, guestKey } = state
     return api.moveInitialSelectionLower({ botToken, guestKey, initialSelectionId: selection.id })
   },
+
+  async fetchInitialSelections ({ commit, state }) {
+    const { botToken } = state
+    const res = await api.fetchInitialSelections({ botToken })
+    console.log(res)
+  },
 }

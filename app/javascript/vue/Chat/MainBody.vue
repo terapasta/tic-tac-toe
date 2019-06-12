@@ -37,7 +37,7 @@ export default {
         }
         this.doneFirstRendering()
         if (newMessages.length > oldMessages.length) {
-          this.scrollToBottom()
+          // this.scrollToBottom()
         }
       }
     }

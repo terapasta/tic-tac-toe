@@ -29,6 +29,10 @@ export function updateGuestUser ({ guestId, name, email }) {
 
 export function createChoice () {}
 
+export function fetchInitialSelections ({ botToken, guestKey }) {
+  return axios.get(`/myope/${botToken}/initial_selections`)
+}
+
 export function moveInitialSelectionHigher ({ botToken, guestKey, initialSelectionId }) {
   return axios.put(`/myope/${botToken}/initial_selections/${initialSelectionId}/move_higher`, { guestKey })
 }

@@ -78,6 +78,13 @@ class MyOpeServer {
       res.send('OK')
     })
 
+    app.get('/myope/:botToken/initial_selections', this.try(async (req, res) => {
+      const { botToken } = req.params
+      const response = await api.fetchInitialSelections({ botToken })
+      console.log(response)
+      res.send('OK')
+    }))
+
     const moveInitialSelection = direction => {
       return this.try(async (req, res) => {
         const { botToken, guestKey, id } = { ...req.params, ...req.body }
@@ -102,9 +109,9 @@ class MyOpeServer {
   }
 
   try (requestProcess) {
-    return (req, res) => {
+    return async (req, res) => {
       try {
-        requestProcess(req, res)
+        await requestProcess(req, res)
       } catch (err) {
         const { response } = err
         if (response) {

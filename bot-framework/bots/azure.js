@@ -85,7 +85,6 @@ const sendMessageWithAttachments = (session, message, answerFiles) => {
   const imageFiles = answerFiles
     .filter(it => /image/.test(it.fileType))
     .map(it => (new HeroCard(session)
-      .title(path.basename(it.file.url))
       .images([CardImage.create(session, it.file.url)])
       .buttons([CardAction.openUrl(session, it.file.url, '画像を開く')])))
 

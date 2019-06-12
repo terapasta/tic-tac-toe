@@ -48,11 +48,6 @@ every 1.day, at: '8:00' do
   rake 'organization:check_finishing_trial'
 end
 
-# 夕方18:00
-every 1.day, at: '18:00' do
-  rake 'slack:notify_accuracy'
-end
-
 # 未明5:00
 every 1.day, at: '5:00' do
   rake 'database:mysqldump_s3'

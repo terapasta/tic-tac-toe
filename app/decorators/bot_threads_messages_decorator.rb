@@ -18,7 +18,7 @@ class BotThreadsMessagesDecorator < Draper::CollectionDecorator
         message.id,
         speaker_with_profile(message),
         message.body,
-        message.answer_failed? ? '失敗' : '',
+        message.answer_failed? ? '回答不可' : '',
         level_with_reasons(message),
         message.created_at,
         message.user_agent

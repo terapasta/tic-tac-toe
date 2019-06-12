@@ -86,28 +86,22 @@ export function convertData(_data) {
 const dataToMonthly = (defaultData, data) => {
   const { defaultDate, defaultGm, defaultQa, defaultUpdateQa } = defaultData
   let { dates, guestMessages, questionAnswers, updateQas } = data
-
-  let baseDate = defaultDate.slice(0, 1)[0]
-  let currentMonth = parseDate(baseDate).getMonth()
+  let monthlyGms = 0, monthlyQas = 0, monthlyUpdateQas = 0
+  let currentMonth = parseDate(defaultDate[0]).getMonth()
 
   defaultDate.forEach((date, i) => {
+    monthlyGms += defaultGm[i]
+    monthlyQas += defaultQa[i]
+    monthlyUpdateQas += defaultUpdateQa[i]
     const month = parseDate(date).getMonth()
-    if (i === 0) {
+    if (month !== currentMonth || i === defaultDate.lenghth - 1) {
       dates.push(date)
-      guestMessages.push(defaultGm[0])
-      questionAnswers.push(defaultQa[0])
-      updateQas.push(defaultUpdateQa[0])
-    }
-    else if (month !== currentMonth) {
-      const diffDays = differenceInDays(date, baseDate)
-
+      guestMessages.push(monthlyGms)
+      questionAnswers.push(monthlyQas)
+      updateQas.push(monthlyUpdateQas)
+      
       currentMonth = month
-      baseDate = parseDate(date)
-
-      dates.push(date)
-      guestMessages.push(calcData(defaultGm, i, i + diffDays))
-      questionAnswers.push(defaultQa[i] || 0)
-      updateQas.push(calcData(defaultUpdateQa, i, i + diffDays))
+      monthlyGms = monthlyQas = monthlyUpdateQas = 0
     }
   })
 
@@ -122,22 +116,22 @@ const dataToMonthly = (defaultData, data) => {
 const dataToWeekly = (defaultData, data) => {
   const { defaultDate, defaultGm, defaultQa, defaultUpdateQa } = defaultData
   let { dates, guestMessages, questionAnswers, updateQas } = data
+  let weeklyGms = 0, weeklyQas = 0, weeklyUpdateQas = 0
 
   defaultDate.forEach((date, i) => {
-    const day = parseDate(date).getDay()
+    weeklyGms += defaultGm[i]
+    weeklyQas += defaultQa[i]
+    weeklyUpdateQas += defaultUpdateQa[i]
 
-    if (i === 0 && day !== Week.Sunday) {
-      // data for first week -> previous Sunday to yesterday
+    if (
+      parseDate(date).getDay() === Week.Sunday ||
+      i === defaultDate.length - 1
+    ) {
       dates.push(date)
-      guestMessages.push(calcData(defaultGm, 0, day))
-      questionAnswers.push(defaultQa[i] || 0)
-      updateQas.push(calcData(defaultUpdateQa, 0, day))
-    }
-    else if (day === Week.Sunday) {
-      dates.push(date)
-      guestMessages.push(calcData(defaultGm, i, i + 7))
-      questionAnswers.push(defaultQa[i] || 0)
-      updateQas.push(calcData(defaultUpdateQa, i, i + 7))
+      guestMessages.push(weeklyGms)
+      questionAnswers.push(weeklyQas)
+      questionAnswers.push(weeklyUpdateQas)
+      weeklyGms = weeklyQas = weeklyUpdateQas = 0
     }
   })
 
@@ -173,24 +167,17 @@ export function convertDataForGm(_data) {
 const dataToMonthlyForGm = (defaultData, data) => {
   const { defaultDate, defaultGm } = defaultData
   let { dates, guestMessages } = data
-
-  let baseDate = defaultDate.slice(0, 1)[0]
-  let currentMonth = parseDate(baseDate).getMonth()
+  let monthlyGms = 0
+  let currentMonth = parseDate(defaultDate[0]).getMonth()
 
   defaultDate.forEach((date, i) => {
     const month = parseDate(date).getMonth()
-
-    if (i === 0) {
+    monthlyGms += defaultGm[i]
+    if (month !== currentMonth || i === defaultDate.length - 1) {
       dates.push(date)
-      guestMessages.push(defaultGm[0])
-    }
-    else if (month !== currentMonth) {
-      const diffDays = differenceInDays(date, baseDate)
-
+      guestMessages.push(monthlyGms)
       currentMonth = month
-      baseDate = parseDate(date)
-      dates.push(date)
-      guestMessages.push(calcData(defaultGm, i, i + diffDays))
+      monthlyGms = 0
     }
   })
 
@@ -203,18 +190,17 @@ const dataToMonthlyForGm = (defaultData, data) => {
 const dataToWeeklyForGm = (defaultData, data) => {
   const { defaultDate, defaultGm } = defaultData
   let { dates, guestMessages } = data
+  let weeklyGms = 0
 
   defaultDate.forEach((date, i) => {
-    const day = parseDate(date).getDay()
-
-    if (i === 0 && day !== Week.Sunday) {
-      // data for first week -> previous Sunday to yesterday
+    weeklyGms += defaultGm[i]
+    if (
+      parseDate(date).getDay() === Week.Sunday ||
+      i === defaultDate.length -1
+    ) {
       dates.push(date)
-      guestMessages.push(calcData(defaultGm, 0, day))
-    }
-    else if (day === Week.Sunday) {
-      dates.push(date)
-      guestMessages.push(calcData(defaultGm, i, i + 7))
+      guestMessages.push(weeklyGms)
+      weeklyGms = 0
     }
   })
 
@@ -228,10 +214,4 @@ const shouldMonthly = dates => {
   const lastIndex = dates.length - 1
   const diffDays = differenceInDays(dates[lastIndex], dates[0])
   return diffDays > HalfYearDays && dates.length > MonthlyBreakPoint
-
-}
-
-const calcData = (defaultData, start, end) => {
-  if (!defaultData || !defaultData[start]) { return 0 }
-  return defaultData.slice(start, end).reduce((acc, val) => acc + val)
 }

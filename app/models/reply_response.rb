@@ -48,7 +48,7 @@ class ReplyResponse
   end
 
   def probabilities
-    effective_results.blank? ? [1] : effective_results.map { |it| it.try(:[], :probability) }
+    effective_results.blank? ? [1] : effective_results.map { |result| result.fetch(:probability, nil) }.compact
   end
 
   def confident?

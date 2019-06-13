@@ -27,11 +27,11 @@ class QuestionAnswer::CsvImporter
   def import
     csv_data = parse
     ActiveRecord::Base.transaction do
-      csv_data.reverse.each_with_index do |import_param, i|
+      csv_data.reverse.each.with_index(1) do |import_param, i|
         topic_tag_names = import_param.delete(:topic_tag_names)
         duplicate_question = @bot.question_answers.find_by(question: import_param[:question])
         duplicate_sub_question = @bot.sub_questions.find_by(question: import_param[:question])
-        @current_row = i + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
+        @current_row = i + 1  # 元データの行数を表示するため、ヘッダ分を加算する
 
         # 重複するsub_questionが存在する場合処理を行わない
         fail DuplicateSubQuestionError.new if duplicate_sub_question
@@ -106,8 +106,8 @@ class QuestionAnswer::CsvImporter
   def parse
     base_updated_at = Time.current
     raw_data = FileReader.new(file_path: @file.path, encoding: @encoding).read
-    CSV.new(raw_data).drop(1).map.with_index { |row, index|
-      @current_row = index + 2 # 元データの行数を表示するため、indexが0始まりの分と、ヘッダ分を加算する
+    CSV.new(raw_data).drop(1).map.with_index(1) { |row, index|
+      @current_row = index + 1 # 元データの行数を表示するため、ヘッダ分を加算する
       data = detect_or_initialize_by_row(row)
       fail DuplicateQuestionError if raw_data.split(",").count(data[:question]) > 1 # CSV内に重複QAがある場合エラー
       next if data.nil?

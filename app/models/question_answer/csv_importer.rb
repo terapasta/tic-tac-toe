@@ -27,7 +27,7 @@ class QuestionAnswer::CsvImporter
   def import
     csv_data = parse
     ActiveRecord::Base.transaction do
-      csv_data.reverse.each.with_index(1) do |import_param, i|
+      csv_data.reverse.each.with_index(1) do |import_param, i|  # csv_dataを上から処理する
         topic_tag_names = import_param.delete(:topic_tag_names)
         duplicate_question = @bot.question_answers.find_by(question: import_param[:question])
         duplicate_sub_question = @bot.sub_questions.find_by(question: import_param[:question])

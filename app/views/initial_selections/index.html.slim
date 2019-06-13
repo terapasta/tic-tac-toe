@@ -1,0 +1,29 @@
+= render layout: 'bots/layout' do
+  .row.mb-5
+    .col-8.offset-2
+      h5.mb-4
+        |選択済みの初期質問リスト (#{@initial_selections.length}/#{Bot::MaxInitialSelectionsCount})
+      ul.list-group
+        - @initial_selections.each do |item|
+          li.list-group-item.initial-selection-item
+            = item.question_answer.question
+            .initial-selection-item__order-buttons
+              - unless item.first?
+                = link_to move_higher_bot_initial_selection_path(@bot, item), data: { method: :put } do
+                  i.material-icons keyboard_arrow_up
+              - unless item.last?
+                = link_to move_lower_bot_initial_selection_path(@bot, item), data: { method: :put } do
+                  i.material-icons keyboard_arrow_down
+            .initial-selection-item__delete
+              = link_to bot_initial_selection_path(@bot, item), data: { method: :delete } do
+                i.material-icons close
+
+  .row.mb-5
+    .col-8.offset-2
+      h5.mb-4 質問
+      ul.list-group
+        - @question_answers.each do |item|
+          li.list-group-item.initial-selection-item
+            = item.question
+            .initial-selection-item__add
+              = link_to '追加', bot_initial_selections_path(@bot, question_answer_id: item.id), class: 'btn btn-primary btn-sm', data: { method: :post }

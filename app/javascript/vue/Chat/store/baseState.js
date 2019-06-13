@@ -7,4 +7,5 @@ export default {
   bot: {},
   isConnected: null,
   notification: '',
+  questionAnswers: [],
 }

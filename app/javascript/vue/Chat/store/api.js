@@ -1,4 +1,5 @@
 import axios from 'axios'
+import makeQueryParams from '../../../helpers/makeQueryParams'
 
 export function fetchMessages ({ botToken, guestKey, olderThanId, perPage }) {
   return axios.get(`/myope/${botToken}/messages`, { params: { guestKey, olderThanId, perPage } })
@@ -29,14 +30,7 @@ export function updateGuestUser ({ guestId, name, email }) {
 
 export function createChoice () {}
 
-export function fetchInitialSelections ({ botToken, guestKey }) {
-  return axios.get(`/myope/${botToken}/initial_selections`)
-}
-
-export function moveInitialSelectionHigher ({ botToken, guestKey, initialSelectionId }) {
-  return axios.put(`/myope/${botToken}/initial_selections/${initialSelectionId}/move_higher`, { guestKey })
-}
-
-export function moveInitialSelectionLower ({ botToken, guestKey, initialSelectionId }) {
-  return axios.put(`/myope/${botToken}/initial_selections/${initialSelectionId}/move_lower`, { guestKey })
+export function fetchQuestionAnswers ({ botToken, excludeIds }) {
+  const queryParams = makeQueryParams({ excludeIds })
+  return axios.get(`/myope/${botToken}/question_answers${queryParams}`)
 }

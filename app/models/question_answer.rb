@@ -78,6 +78,13 @@ class QuestionAnswer < ApplicationRecord
       .or(left_joins(:topic_tags).where(topic_tags: { id: nil }))
   }
 
+  scope :exclude_ids, -> (ids) {
+    if ids.present?
+      ids = ids.is_a?(String) ? ids.split(',') : ids
+      where.not(id: ids)
+    end
+  }
+
   before_destroy do
     break if self.bot.blank?
     if self.bot.selected_question_answer_ids.include?(self.id)

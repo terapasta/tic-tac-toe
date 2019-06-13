@@ -112,19 +112,9 @@ export default {
     }
   },
 
-  async moveInitialSelectionHigher ({ commit, state }, { selection }) {
-    const { botToken, guestKey } = state
-    return api.moveInitialSelectionHigher({ botToken, guestKey, initialSelectionId: selection.id })
-  },
-
-  async moveInitialSelectionLower ({ commit, state }, { selection }) {
-    const { botToken, guestKey } = state
-    return api.moveInitialSelectionLower({ botToken, guestKey, initialSelectionId: selection.id })
-  },
-
-  async fetchInitialSelections ({ commit, state }) {
+  async fetchQuestionAnswers ({ commit, state }, { excludeIds }) {
     const { botToken } = state
-    const res = await api.fetchInitialSelections({ botToken })
+    const res = await api.fetchQuestionAnswers({ botToken, excludeIds })
     console.log(res)
-  },
+  }
 }

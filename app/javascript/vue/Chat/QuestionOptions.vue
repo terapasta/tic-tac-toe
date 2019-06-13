@@ -1,7 +1,7 @@
 <template>
   <div class="question-options">
     <h6>{{title}}</h6>
-    <div class="list-group" :class="{ 'padding-right': orderEditable }">
+    <div class="list-group">
       <template v-for="(item, i) in items">
         <div
           href="#"
@@ -11,25 +11,6 @@
           <button @click="$emit('select', item, $event)">
             {{item.body}}
           </button>
-          <div
-            v-if="orderEditable"
-            class="right-buttons"
-          >
-            <button
-              v-if="i !== 0"
-              class="btn btn-link"
-              @click.stop.prevent="handleArrowUpClick(item)"
-            >
-              <i class="material-icons">keyboard_arrow_up</i>
-            </button>
-            <button
-              v-if="i !== items.length - 1"
-              class="btn btn-link"
-              @click.stop.prevent="handleArrowDownClick(item)"
-            >
-              <i class="material-icons">keyboard_arrow_down</i>
-            </button>
-          </div>
         </div>
       </template>
     </div>
@@ -41,17 +22,6 @@ export default {
   props: {
     title: { type: String, required: true },
     items: { type: Array, required: true },
-    orderEditable: { type: Boolean, default: false },
-  },
-
-  methods: {
-    handleArrowUpClick (item) {
-      this.$emit('move-higher', item)
-    },
-
-    handleArrowDownClick (item) {
-      this.$emit('move-lower', item)
-    }
   }
 }
 </script>
@@ -60,12 +30,6 @@ export default {
 h6 {
   color: #999;
   font-size: 0.8rem;
-}
-
-.list-group {
-  &.padding-right {
-    padding-right: 56px;
-  }
 }
 
 .list-group-item {

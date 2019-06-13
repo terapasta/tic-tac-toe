@@ -145,17 +145,3 @@ module.exports.createGuestUser = ({
 module.exports.fetchQuestionAnswers = ({ botToken }, config = {}) => (
   axios.get(`/api/bots/${botToken}/question_answers`, config)
 )
-
-module.exports.moveInitialSelectionHigher = ({
-  botToken,
-  id,
-}, config = {}) => (
-  axios.put(`/api/bots/${botToken}/initial_selections/${id}/move_higher`, {}, config)
-)
-
-module.exports.moveInitialSelectionLower = ({
-  botToken,
-  id,
-}, config = {}) => (
-  axios.put(`/api/bots/${botToken}/initial_selections/${id}/move_lower`, {}, config)
-)

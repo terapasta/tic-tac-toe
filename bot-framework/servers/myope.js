@@ -78,29 +78,13 @@ class MyOpeServer {
       res.send('OK')
     })
 
-    app.get('/myope/:botToken/initial_selections', this.try(async (req, res) => {
-      const { botToken } = req.params
-      const response = await api.fetchInitialSelections({ botToken })
-      console.log(response)
-      res.send('OK')
+    app.get('/myope/:botToken/question_answers', this.try(async (req, res) => {
+      const { botToken, excludeIds } = req.params
+      console.log(excludeIds)
+      const response = await api.fetchQuestionAnswers({ botToken })
+      const { questionAnswers } = response.data
+      res.send({ questionAnswers })
     }))
-
-    const moveInitialSelection = direction => {
-      return this.try(async (req, res) => {
-        const { botToken, guestKey, id } = { ...req.params, ...req.body }
-        const apiMethod = `moveInitialSelection${direction}`
-        const response = await api[apiMethod]({ botToken, id })
-        const { initialSelections } = response.data
-        const payload = {
-          action: 'update_initial_selections',
-          data: { initialSelections },
-        }
-        this.wsEmit({ botToken, guestKey, payload })
-        res.send('OK')
-      })
-    }
-    app.put('/myope/:botToken/initial_selections/:id/move_higher', moveInitialSelection('Higher'))
-    app.put('/myope/:botToken/initial_selections/:id/move_lower', moveInitialSelection('Lower'))
   }
 
   wsEmit ({ botToken, guestKey, payload }) {

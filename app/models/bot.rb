@@ -18,7 +18,6 @@ class Bot < ApplicationRecord
   has_many :allowed_hosts, dependent: :destroy
   has_many :word_mappings, dependent: :destroy
   has_many :tasks, dependent: :destroy
-  has_many :accuracy_test_cases, dependent: :destroy
   has_many :exports, dependent: :destroy
   has_many :allowed_ip_addresses, dependent: :destroy
   has_many :organization_ownerships, class_name: 'Organization::BotOwnership'
@@ -112,6 +111,12 @@ class Bot < ApplicationRecord
 
   def change_token_and_set_demo_finished_time!
     self.update!(token: generate_token, demo_finished_at: Time.current)
+  end
+
+  def little_cloud_bot?
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてトークンをベタ打ち
+    token == "cbdf74a20f064e84ec1c539ccddc60808b2eba13b5dd5595527b6e017e9b4be4"
   end
 
   private

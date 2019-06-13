@@ -5,7 +5,7 @@
   vars:
     ruby_version: 2.5.1
     python_version: 3.5.2
-    node_version: 6.9.1
+    node_version: 6.14.4
     cert_fqdn: staging.my-ope.net
     myope_api_url:
       production: https://app.my-ope.net

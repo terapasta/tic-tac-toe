@@ -29,11 +29,6 @@ module ChatOperable
       prepare_iframe(@bot)
     end
 
-    def set_warning_message
-      return false unless @bot.id == 2  # botがハナコさんのときのみデモ情報を表示する
-      flash.now[:warning] = "本デモでは以下のオペレーションに対して回答することが出来ます。\n・カードキーなくした\n・パソコンが壊れた、ログインができない\n・今週の予定どうなってますか？\n・総務の山田さんに連絡をとりたい"
-    end
-
     def set_guest_user
       @guest_user = GuestUser.find_by(guest_key: guest_key)
     end

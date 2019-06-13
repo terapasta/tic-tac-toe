@@ -142,7 +142,7 @@ RSpec.describe QuestionAnswer::CsvImporter do
       end
 
       it 'QuestionAnswerが登録されないこと' do
-        expect(bot.question_answers.count).to eq 1
+        expect { subject }.not_to change{ bot.question_answers.count }
       end
     end
   end

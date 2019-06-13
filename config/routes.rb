@@ -144,16 +144,7 @@ Rails.application.routes.draw do
   authenticated :user, ->(u) { u.staff? } do
     namespace :admin do
       resources :word_mappings
-      namespace :accuracy_test_cases do
-        resource :execution, only: [:create]
-      end
-      resources :bots, only: [] do
-        resources :accuracy_test_cases, only: [:index, :create, :edit, :update, :destroy], module: :bots do
-          collection do
-            resource :execution, only: [:create], module: :accuracy_test_cases, as: :accuracy_test_cases_execution
-          end
-        end
-      end
+
       resources :organizations
       resources :tutorials
       resources :demo_bots, only: [:index] do
@@ -161,6 +152,7 @@ Rails.application.routes.draw do
       end
       get :utilizations, to: 'utilizations#index'
       post :utilizations, to: 'utilizations#create'
+      get :post_utilizations, to: 'utilizations#post_index'
     end
 
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

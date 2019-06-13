@@ -2,11 +2,14 @@ doctype html
 html
   head
     meta charset="utf-8"
-    title = page_title(@bot)
+    title = content_for?(:title) ? yield(:title) : page_title(@bot)
     meta content="width=device-width, initial-scale=1.0" name="viewport"
 
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
     link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"
+    - if @bot&.image_url
+      link href=@bot.image_url rel="apple-touch-icon" sizes="180x180"
+      link href=@bot.image_url rel="icon" type="image/png" sizes="192x192"
     - unless content_for?(:without_app_css)
       = stylesheet_link_tag    'app', media: 'all'
     - if content_for?(:only_bootstrap_css)

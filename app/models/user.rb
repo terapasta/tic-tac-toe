@@ -28,6 +28,12 @@ class User < ApplicationRecord
     self.update!(password: new_password, password_confirmation: new_password)
   end
 
+  def little_cloud_worker?
+    # https://www.pivotaltracker.com/story/show/162403437
+    # 市民のミカタ（OEM)対応のため、暫定的な処置としてアドレスをベタ打ち
+    email == "milai-work@little-cloud.jp"
+  end
+
   private
     def generate_password
       SecureRandom.hex(10)

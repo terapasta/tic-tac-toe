@@ -5,7 +5,6 @@ class WsChatsController < ApplicationController
     set_bot
     set_guest_key
     set_guest_user
-    set_warning_message
     @chat = @bot.chats.find_or_create_by(
       guest_key: guest_key,
       is_staff: !!current_user.try(:staff?),

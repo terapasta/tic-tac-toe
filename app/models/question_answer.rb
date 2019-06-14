@@ -24,7 +24,7 @@ class QuestionAnswer < ApplicationRecord
 
   before_validation { self.question = question.strip }
   validates :question, presence: true, uniqueness: { scope: :bot_id }
-  
+
   after_create do
     self.bot&.tutorial&.done_fifty_question_answers_if_needed!
   end
@@ -132,6 +132,12 @@ class QuestionAnswer < ApplicationRecord
       index += 1
     end
     results
+  end
+
+  def has_changed_sub_question?
+    self.sub_questions.any? do |q|
+      q.new_record? || q.changed? || q.marked_for_destruction?
+    end
   end
 
   def sub_question?

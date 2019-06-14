@@ -29,7 +29,4 @@ module HasManyChatsExtension
     not_staff(true).not_normal(true).in_date_by_unique_user(date).count
   end
 
-  def count_of_guests_within(start_date, end_date)
-    not_staff(true).not_normal(true).within_date_by_unique_user(start_date, end_date).count
-  end
 end

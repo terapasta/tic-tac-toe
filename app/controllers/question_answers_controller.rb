@@ -70,8 +70,9 @@ class QuestionAnswersController < ApplicationController
   end
 
   def update
+    need_learning = should_learning?
     if @question_answer.update(question_answer_params)
-      @bot.learn_later
+      @bot.learn_later if need_learning
       respond_to do |format|
         format.html do
           redirect_to edit_bot_question_answer_path(@bot, @question_answer), notice: '更新しました。'
@@ -159,5 +160,10 @@ class QuestionAnswersController < ApplicationController
 
     def index_path_helper_name
       :bot_question_answers_path
+    end
+
+    def should_learning?
+      @question_answer.assign_attributes(question_answer_params)
+      @question_answer.question_changed? || @question_answer.has_changed_sub_question? ? true : false
     end
 end

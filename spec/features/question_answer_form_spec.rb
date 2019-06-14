@@ -140,45 +140,4 @@ RSpec.describe 'QuestionAnswerForm', type: :feature, js: true do
       end
     end
   end
-
-  feature 'QA update work with delayed_job' do
-    let(:plan) { :professional }
-    background do
-      ActiveJob::Base.queue_adapter = :delayed_job
-      Delayed::Worker.delay_jobs = false
-    end
-    after do
-      Delayed::Worker.delay_jobs = true
-    end
-
-    context 'update Question with work job', js: true do
-      subject do
-        lambda do
-          visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-            find('[name="question_answer[question]"]').set('updated question')
-          page.execute_script "window.scrollBy(0, window.innerHeight)"
-          click_button '更新する'
-          question_answer.reload
-        end
-      end
-      it { is_expected.to change(question_answer, :question).to('updated question') }
-      #HACK エンキューされたカウントがとれるならそのほうがよい
-      it { is_expected.to change(LearningTrainingMessage, :count).by(1) }
-    end
-
-    context 'update only Answer with not working job', js: true do
-      subject do
-        lambda do
-          visit "/bots/#{bot.id}/question_answers/#{question_answer.id}/edit"
-            find('[name="question_answer[answer]"]').set('updated answer')
-          page.execute_script "window.scrollBy(0, window.innerHeight)"
-          click_button '更新する'
-          question_answer.reload
-        end
-      end
-      it { is_expected.to change(question_answer, :answer).to('updated answer') }
-      #HACK エンキューされたカウントがとれるならそのほうがよい
-      it { is_expected.to change(LearningTrainingMessage, :count).by(0) }
-    end
-  end
 end

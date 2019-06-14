@@ -5,10 +5,6 @@ class SubQuestion < ApplicationRecord
 
   before_validation { self.question = question.strip }
 
-  after_destroy do
-    self.question_answer.bot.learn_later
-  end
-
   def sub_question?
     true
   end

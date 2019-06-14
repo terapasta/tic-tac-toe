@@ -26,7 +26,7 @@ export default function mountComponent(component) {
 
 export function directMountComponent(component, mountNode) {
   const props = getProps(mountNode);
-  render(createElement(component, props), mountNode);
+  return render(createElement(component, props), mountNode);
 }
 
 export function mountComponentWithRedux(component, reducers, additionalMiddlewares = []) {

@@ -82,11 +82,13 @@ javascript:
     $('[data-role="left-button"]').on('click', function(e) {
       $('#widget-position-right').hide()
       $('#widget-position-left').show()
+      window.__myopeWidget_moveToLeft()
     })
 
     $('[data-role="right-button"]').on('click', function(e) {
       $('#widget-position-left').hide()
       $('#widget-position-right').show()
+      window.__myopeWidget_moveToRight()
     })
   }
 
@@ -100,11 +102,7 @@ javascript:
     })
   }
 
-  if (document.readyState === 'complete' ||
-      document.readyState === 'interactive') {
+  jQuery(function() {
     toggleWidgetPosition()
     showOrHideChatWidgetSample()
-  } else {
-    document.addEventListener('DOMContentLoaded', toggleWidgetPosition)
-    document.addEventListener('DOMContentLoaded', showOrHideChatWidgetSample)
-  }
+  })

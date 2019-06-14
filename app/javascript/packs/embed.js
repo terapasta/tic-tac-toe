@@ -13,7 +13,9 @@ ES6Promise.polyfill();
 
 function init() {
   const mountNode = document.querySelector("#" + Namespace);
-  directMountComponent(Widget, mountNode);
+  const widget = directMountComponent(Widget, mountNode);
+  window.__myopeWidget_moveToRight = () => widget.moveToRight()
+  window.__myopeWidget_moveToLeft = () => widget.moveToLeft()
 }
 
 if (document.readyState === "complete" ||

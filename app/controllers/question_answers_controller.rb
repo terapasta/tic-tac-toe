@@ -71,7 +71,7 @@ class QuestionAnswersController < ApplicationController
 
   def update
     need_learning = should_learning?
-    if @question_answer.update(question_answer_params)
+    if @question_answer.save
       @bot.learn_later if need_learning
       respond_to do |format|
         format.html do

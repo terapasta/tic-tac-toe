@@ -4,21 +4,39 @@
   - pagination = capture do
     = render 'shared/pagination', resources: @question_answers, current_page: @current_page, per_page: @per_page
 
+  - if @bot.initial_selections.any?
+    .row
+      .col-6.mb-5.mt-3
+        h6 選択済みのQ&A（#{@bot.initial_selections.length} / #{Bot::MaxInitialSelectionsCount}）
+        ul.list-group
+          - @bot.initial_selections.each do |item|
+            li.list-group-item
+              = item.question_answer.question
+              .list-group-append
+                .d-flex.flex-column.px-2
+                  - unless item.first?
+                    = link_to move_higher_bot_question_answer_selection_path(@bot, item), data: { method: :put } do
+                      = material_icon 'keyboard_arrow_up', class: 'mi-sm'
+                  - unless item.last?
+                    = link_to move_lower_bot_question_answer_selection_path(@bot, item), data: { method: :put } do
+                      = material_icon 'keyboard_arrow_down', class: 'mi-sm'
+                = link_to bot_question_answer_selection_path(@bot, item), class: 'text-danger', data: { method: :delete } do
+                  = material_icon 'close', class: 'mi-sm'
+
   = render 'question_answers/search_form', \
     bot: @bot,  \
     search_result: @search_result, \
     keyword: @keyword, \
     sort: params.dig(:q, :s), \
-    action_url: bot_question_answers_selections_path(@bot), \
+    action_url: bot_question_answer_selections_path(@bot), \
     no_new_button: true
 
   = pagination
 
   table.table.table-hover: tbody
-    - [*@selected_question_answers, *@question_answers.to_a].each do |question_answer|
-      - is_selected = @selected_question_answers.include?(question_answer)
+    - @question_answers.each do |question_answer|
       tr
-        = render 'question_answers/selections/check_box_cell', bot: @bot, question_answer: question_answer, is_selected: is_selected
+        = render 'question_answers/selections/check_box_cell', bot: @bot, question_answer: question_answer
         td
           = render 'question_answers/summary_card', question_answer: question_answer, bot: @bot, hide_buttons: true, without_left_cap: true
 

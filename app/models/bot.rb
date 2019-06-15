@@ -50,6 +50,13 @@ class Bot < ApplicationRecord
 
   validates :suggest_limit, numericality: { less_than_or_equal_to: 20 }
 
+  validate :validate_initial_selections_length
+  def validate_initial_selections_length
+    if initial_selections.length > MaxInitialSelectionsCount
+      errors.add(:initial_selections, "を選択できるのは#{MaxInitialSelectionsCount}つまでです")
+    end
+  end
+
   before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
 
   # https://www.pivotaltracker.com/n/projects/1879711/stories/164098607

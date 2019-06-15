@@ -2,14 +2,14 @@ class QuestionAnswers::SelectionsController < ApplicationController
   include BotUsable
   include QuestionAnswersSearchable
 
-  before_action :set_question_answer, only: [:create, :destroy]
   before_action :set_bot
+  before_action :set_initial_selection, only: [:destroy, :move_higher, :move_lower]
 
   def index
     respond_to do |format|
       format.html do
         @current_page = current_page
-        @per_page = QuestionAnswer.default_per_page
+        @per_page = 10 # QuestionAnswer.default_per_page
         @topic_id = params.dig(:topic, :id)
         @q = search_question_answers(
           bot: @bot,
@@ -21,7 +21,6 @@ class QuestionAnswers::SelectionsController < ApplicationController
           without_ids: Array(@bot.selected_question_answers.map(&:id))
         )
         @question_answers = @q.result
-        @selected_question_answers = params[:page].to_i > 1 ? [] : @bot.selected_question_answers.to_a
       end
 
       format.json do
@@ -31,19 +30,15 @@ class QuestionAnswers::SelectionsController < ApplicationController
   end
 
   def create
-    @bot.initial_selections.create(question_answer_id: @question_answer.id)
-    @bot.save
-    respond_to do |format|
-      format.json { render json: @question_answer }
-    end
+    @question_answer = @bot.question_answers.find(params[:question_answer_id])
+    @bot.initial_selections.build(question_answer_id: @question_answer.id)
+    message = @bot.save ? {} : { alert: @bot.errors.full_messages.join(', ') }
+    redirect_back message.merge(fallback_location: index_path)
   end
 
   def destroy
-    @bot.initial_selections.find_by(question_answer_id: @question_answer.id)&.destroy
-    @bot.save
-    respond_to do |format|
-      format.json { render json: @question_answer }
-    end
+    @initial_selection.destroy!
+    redirect_back fallback_location: index_path
   end
 
   def update
@@ -60,17 +55,27 @@ class QuestionAnswers::SelectionsController < ApplicationController
     render json: @bot.errors.full_messages, status: :unprocessable_entity
   end
 
-  private
-    def set_question_answer
-      @question_answer = QuestionAnswer.find(params[:question_answer_id])
-    end
+  def move_higher
+    @initial_selection.move_higher
+    redirect_back fallback_location: index_path
+  end
 
+  def move_lower
+    @initial_selection.move_lower
+    redirect_back fallback_location: index_path
+  end
+
+  private
     def set_bot
       @bot = bots.find(params[:bot_id])
       authorize @bot, :show?
     end
 
-    def index_path_helper_name
-      :bot_question_answers_selections_path
+    def set_initial_selection
+      @initial_selection = @bot.initial_selections.find(params[:id])
+    end
+
+    def index_path
+      bot_question_answer_selections_path(@bot)
     end
 end

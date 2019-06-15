@@ -78,12 +78,6 @@ Rails.application.routes.draw do
       resources :allowed_ip_addresses, only: [:index, :new, :create, :edit, :update, :destroy]
       resource :zendesk_articles, only: [:update]
       resources :message_summarize, only: [:index]
-      resources :initial_selections, only: [:index, :create, :destroy] do
-        member do
-          put :move_higher
-          put :move_lower
-        end
-      end
     end
 
     resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]

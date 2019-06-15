@@ -77,10 +77,6 @@
               = material_icon 'format_list_numbered', class: 'text-gray-light mi-sm'
               = space
               span 質問数分析
-            = active_link_to bot_initial_selections_path(@bot), class: 'dropdown-item', data: { event: 'initial selections' } do
-              = material_icon 'question_answer', class: 'text-gray-light mi-sm'
-              = space
-              span 初期質問リスト
 
 .pt-4
   - if local_assigns[:full_width]

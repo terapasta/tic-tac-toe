@@ -16,10 +16,10 @@
                 .d-flex.flex-column.px-2
                   - unless item.first?
                     = link_to move_higher_bot_question_answer_selection_path(@bot, item), data: { method: :put } do
-                      = material_icon 'keyboard_arrow_up', class: 'mi-sm'
+                      = material_icon 'keyboard_arrow_up', class: 'mi-xs'
                   - unless item.last?
                     = link_to move_lower_bot_question_answer_selection_path(@bot, item), data: { method: :put } do
-                      = material_icon 'keyboard_arrow_down', class: 'mi-sm'
+                      = material_icon 'keyboard_arrow_down', class: 'mi-xs'
                 = link_to bot_question_answer_selection_path(@bot, item), class: 'text-danger', data: { method: :delete } do
                   = material_icon 'close', class: 'mi-sm'
 

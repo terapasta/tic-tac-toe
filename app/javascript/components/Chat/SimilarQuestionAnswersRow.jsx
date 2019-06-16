@@ -9,7 +9,7 @@ import ChatDecisionBranches from './DecisionBranches'
 class ChatSimilarQuestionAnswersRow extends Component {
   render() {
     const {
-      section: { similarQuestionAnswers, isDone, hasInitialQuestions },
+      section: { similarQuestionAnswers, isDone },
       onChoose,
       onInitialQuestionPositionChange,
       isManager
@@ -29,7 +29,6 @@ class ChatSimilarQuestionAnswersRow extends Component {
             items={items}
             selectAttribute="body"
             onChoose={onChoose}
-            isSortable={!!hasInitialQuestions}
             onInitialQuestionPositionChange={onInitialQuestionPositionChange}
             isManager={isManager}
           />

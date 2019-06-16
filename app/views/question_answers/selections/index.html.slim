@@ -4,24 +4,26 @@
   - pagination = capture do
     = render 'shared/pagination', resources: @question_answers, current_page: @current_page, per_page: @per_page
 
-  - if @bot.initial_selections.any?
-    .row
-      .col-6.mb-5.mt-3
-        h6 選択済みのQ&A（#{@bot.initial_selections.length} / #{Bot::MaxInitialSelectionsCount}）
-        ul.list-group
+  .row
+    .col-6.mb-5.mt-3
+      h6 選択済みのQ&A（#{@bot.initial_selections.length} / #{Bot::MaxInitialSelectionsCount}）
+      - if @bot.initial_selections.any?
+        ul.list-group.selected-list
           - @bot.initial_selections.each do |item|
             li.list-group-item
-              = item.question_answer.question
+              span.question= item.question_answer.question
               .list-group-append
                 .d-flex.flex-column.px-2
                   - unless item.first?
-                    = link_to move_higher_bot_question_answer_selection_path(@bot, item), data: { method: :put } do
+                    = link_to move_higher_bot_question_answer_selection_path(@bot, item), class: 'move-higher', data: { method: :put } do
                       = material_icon 'keyboard_arrow_up', class: 'mi-xs'
                   - unless item.last?
-                    = link_to move_lower_bot_question_answer_selection_path(@bot, item), data: { method: :put } do
+                    = link_to move_lower_bot_question_answer_selection_path(@bot, item), class: 'move-lower', data: { method: :put } do
                       = material_icon 'keyboard_arrow_down', class: 'mi-xs'
                 = link_to bot_question_answer_selection_path(@bot, item), class: 'text-danger', data: { method: :delete } do
                   = material_icon 'close', class: 'mi-sm'
+      - else
+        p.text-secondary まだ選択されているQ&Aはありません
 
   = render 'question_answers/search_form', \
     bot: @bot,  \

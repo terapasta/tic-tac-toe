@@ -72,15 +72,6 @@ class Chat < ApplicationRecord
       .distinct
   }
 
-  scope :within_date_by_unique_user, -> (start_date, end_date) {
-    joins(:messages)
-      .where(messages: {
-        speaker: :guest,
-        created_at: (start_date.beginning_of_day..end_date.end_of_day)
-      })
-      .distinct
-  }
-
   scope :get_from, -> (task) {
     find(Message.find(task.guest_message_id.presence || task.bot_message_id).chat_id)
   }

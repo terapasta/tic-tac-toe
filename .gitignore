@@ -88,5 +88,13 @@ config/environments/*.local.yml
 /.vscode
 
 docker-compose.override.yml
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+spec/embed-test-app/vendor/bundle
 
 .node-version

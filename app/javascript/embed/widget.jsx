@@ -97,11 +97,11 @@ export default class Widget extends Component {
   }
 
   handleFloatWrapperMove () {
-    switch (this.position) {
-      case Position.Right:
+    switch (this.state.position) {
+      case 'right':
         this.moveToLeft()
         break
-      case Position.Left:
+      case 'left':
         this.moveToRight()
         break
     }

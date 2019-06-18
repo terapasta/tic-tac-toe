@@ -9,7 +9,7 @@ class QuestionAnswers::SelectionsController < ApplicationController
     respond_to do |format|
       format.html do
         @current_page = current_page
-        @per_page = 10 # QuestionAnswer.default_per_page
+        @per_page = QuestionAnswer.default_per_page
         @topic_id = params.dig(:topic, :id)
         @q = search_question_answers(
           bot: @bot,

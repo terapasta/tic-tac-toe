@@ -119,6 +119,7 @@ gem 'mixpanel_client'
 gem 'jwt'
 
 group :development, :test do
+  gem 'timecop'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

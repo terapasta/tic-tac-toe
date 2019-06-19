@@ -554,6 +554,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.9)
+    timecop (0.9.1)
     to_bool (1.2.0)
     toastr-rails (1.0.3)
       railties (>= 3.1.0)
@@ -705,6 +706,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   tapp
+  timecop
   to_bool
   toastr-rails
   turbolinks

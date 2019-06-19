@@ -1,5 +1,5 @@
 <template>
-  <button class="square">{{value}}</button>
+  <button class="square" @click="squareValue = 'X'">{{squareValue}}</button>
 </template>
 
 <script>
@@ -7,6 +7,11 @@ export default {
   props: {
     value: String
   },
+  data() {
+    return {
+      squareValue: null
+    }
+  }
 }
 </script>
 

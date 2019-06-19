@@ -1,17 +1,22 @@
-<template>
-  <button class="square">{{value}}</button>
-</template>
-
-<script>
-export default {
-  props: {
-    value: String,
-  },
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
 }
-</script>
 
+ol, ul {
+  padding-left: 30px;
+}
 
-<style>
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
 .square {
   background: #fff;
   border: 1px solid #999;
@@ -34,4 +39,12 @@ export default {
 .kbd-navigation .square:focus {
   background: #ddd;
 }
-</style>
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}

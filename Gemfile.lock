@@ -298,6 +298,7 @@ GEM
       railties (>= 3.2.16)
     json (1.8.6)
     jsonapi-renderer (0.2.0)
+    jwt (2.2.1)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -659,6 +660,7 @@ DEPENDENCIES
   hashie
   http
   jquery-rails
+  jwt
   kaminari
   letter_opener
   letter_opener_web

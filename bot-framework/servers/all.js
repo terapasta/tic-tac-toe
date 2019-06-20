@@ -54,7 +54,7 @@ class All {
       const s = this.servers[key]
       s.mapRoute(this.app)
     })
-    this.app.listen(process.env.PORT || 3978, () => {
+    this.app.listen(3978, () => {
       console.log('%s listening to %s', this.app.name, this.app.url)
     })
   }

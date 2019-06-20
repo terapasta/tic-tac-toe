@@ -6,13 +6,12 @@ class Api::Bots::ChatChoicesController < Api::BaseController
 
   def create
     ActiveRecord::Base.transaction do
-      guest_user_message = @chat.messages.create!(guest_message_params)
-      ChatChannel.broadcast_to(@chat, { action: :create, data: serialize(guest_user_message) })
-      @bot_message = @chat.messages.create!(bot_message_params(guest_user_message))
-      ChatChannel.broadcast_to(@chat, { action: :create, data: serialize(@bot_message) })
+      @guest_user_message = @chat.messages.create!(guest_message_params)
+      @bot_message = @chat.messages.create!(bot_message_params(@guest_user_message))
     end
+    data = myope_client? ? [@guest_user_message, @bot_message] : @bot_message
     respond_to do |format|
-      format.json { render json: @bot_message, adapter: :json, include: 'child_decision_branches,similar_question_answers' }
+      format.json { render json: data, adapter: :json, include: 'child_decision_branches,similar_question_answers' }
     end
   end
 

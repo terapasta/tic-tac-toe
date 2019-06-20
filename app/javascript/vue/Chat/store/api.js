@@ -28,7 +28,12 @@ export function updateGuestUser ({ guestId, name, email }) {
   return axios.put(`/myope/guest_users/${guestId}`, { name, email })
 }
 
-export function createChoice () {}
+export function createChoice ({ botToken, guestKey, choiceId }) {
+  return axios.post(`/myope/${botToken}/choices`, {
+    guestKey,
+    choiceId,
+  })
+}
 
 export function fetchQuestionAnswers ({ botToken, excludeIds }) {
   const queryParams = makeQueryParams({ excludeIds })

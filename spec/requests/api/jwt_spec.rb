@@ -7,7 +7,7 @@ RSpec.describe 'JWT', type: :request do
 
   describe 'GET /api/jwt' do
     context 'when user isnt logged in' do
-      it 'returns 403 error' do
+      it 'returns 401 error' do
         get '/api/jwt'
         expect(response.status).to eq(401)
         expect(JSON.parse(response.body)['error']).to be_present

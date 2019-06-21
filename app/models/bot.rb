@@ -2,6 +2,7 @@ class Bot < ApplicationRecord
   include Bot::HasSuggestsMessage
 
   DefaultWidgetSubtitle = 'AIチャットボットがご対応します'
+  MaxInitialSelectionsCount = 5
 
   belongs_to :user, required: false
   has_many :chats, -> { extending HasManyChatsExtension }
@@ -48,6 +49,13 @@ class Bot < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   validates :suggest_limit, numericality: { less_than_or_equal_to: 20 }
+
+  validate :validate_initial_selections_length
+  def validate_initial_selections_length
+    if initial_selections.length > MaxInitialSelectionsCount
+      errors.add(:initial_selections, "を選択できるのは#{MaxInitialSelectionsCount}つまでです")
+    end
+  end
 
   before_validation :set_token_if_needed, :set_learning_status_changed_at_if_needed
 

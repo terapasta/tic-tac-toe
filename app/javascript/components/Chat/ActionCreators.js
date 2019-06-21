@@ -270,46 +270,6 @@ export const getLearningStatus = createAction("GET_LEARNING_STATUS", BotLearning
 export const fetchInitialQuestions = createAction("FETCH_INITIAL_QUESTIONS", InitialQuestionsAPI.fetchAll);
 export const setInitialQuestionsToMessages = createAction("SET_INITIAL_QUESTIONS_TO_MESSAGES");
 
-export const upPositionInitialQuestion = (botId, index) => {
-  return (dispatch, getState) => {
-    const { messages: { classifiedData } } = getState()
-    const initialQuestions = (classifiedData.filter(it => it.hasInitialQuestions)[0] || {}).similarQuestionAnswers || []
-    if (!initialQuestions[index]) { return }
-    const ids = initialQuestions.map(it => it.id)
-    const head = ids.slice(0, index - 1)
-    const before = ids[index - 1]
-    const target = ids[index]
-    const tail = ids.slice(index + 1)
-    const newIds = [...head, target, before, ...tail]
-    InitialQuestionsAPI.update(botId, newIds).then(res => {
-      dispatch(setInitialQuestionsToMessages(res.data))
-    }).catch(e => {
-      toastr.error('初期質問の順序変更でエラーが発生しました');
-      console.error(e)
-    })
-  }
-}
-
-export const downPositionInitialQuestion = (botId, index) => {
-  return (dispatch, getState) => {
-    const { messages: { classifiedData } } = getState()
-    const initialQuestions = (classifiedData.filter(it => it.hasInitialQuestions)[0] || {}).similarQuestionAnswers || []
-    if (!initialQuestions[index]) { return }
-    const ids = initialQuestions.map(it => it.id)
-    const head = ids.slice(0, index)
-    const target = ids[index]
-    const after = ids[index + 1]
-    const tail = ids.slice(index + 2)
-    const newIds = [...head, after, target, ...tail]
-    InitialQuestionsAPI.update(botId, newIds).then(res => {
-      dispatch(setInitialQuestionsToMessages(res.data))
-    }).catch(e => {
-      toastr.error('初期質問の順序変更でエラーが発生しました');
-      console.error(e)
-    })
-  }
-}
-
 export const selectNoApplicableItem = (token, message) => {
   return (dispatch, getState) => {
     const guestKey = Cookies.get('guest_key')

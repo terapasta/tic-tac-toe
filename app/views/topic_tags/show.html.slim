@@ -1,4 +1,5 @@
 = render layout: 'bots/layout' do
+  = render 'question_answers/secondary_nav'
   - if @bot.errors.any?
     .alert.alert-danger
       button.close data-dismiss="alert" &times;
@@ -7,18 +8,11 @@
           = message
           br
   .row: .col-8.offset-2
-    .mb-3
-      = link_to bot_question_answers_path(@bot), class: 'text-muted' do
-        = material_icon 'keyboard_arrow_left', class: 'mi-xs'
-        = space
-        span Q&A一覧へ戻る
-
     = nested_form_for @bot, url: bot_topic_tags_path(@bot) do |f|
       .form-group
         .card: .card-body
-          h5.mb-3
+          h5.mb-3.d-flex.justify-content-between
             strong Q&Aトピックタグ
-            = space 4
             small: a href="#" data-toggle="popover" title="サジェストに表示するとは？" data-content="チャットの回答時に「こちらの質問ではないですか？」というリストがサジェスト機能です。ここではサジェストに表示させたくない回答をまとめて指定するためにトピックタグ毎に設定ができます。例えば雑談系等にお使い下さい。" data-placement="right" サジェストに表示するとは？
           #bot-topic-tags
             = f.fields_for :topic_tags do |nf|

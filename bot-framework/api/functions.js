@@ -39,15 +39,15 @@ module.exports.createChat = ({
 module.exports.fetchMessages = ({
   botToken,
   guestKey,
-  page,
+  olderThanId,
   perPage,
 }, config = {}) => (
   axios.get(`/api/bots/${botToken}/chat_messages.json`, Object.assign({},
     config,
     {
       params: {
+        older_than_id: olderThanId || 0,
         guest_key: guestKey,
-        page,
         per_page: perPage,
       }
     }
@@ -79,11 +79,11 @@ module.exports.createChoice = ({
   botToken,
   guestKey,
   choiceId
-}) => (
+}, config = {}) => (
   axios.post(`/api/bots/${botToken}/chat_choices.json`, {
     id: choiceId,
     guest_key: guestKey
-  })
+  }, config)
 )
 
 module.exports.createChatworkDecisionBranch = ({
@@ -118,3 +118,30 @@ module.exports.createChatworkSimilarQuestionAnswer = ({
   })
 )
 
+module.exports.createRating = ({
+  botToken,
+  guestKey,
+  messageId,
+  ratingLevel,
+}, config = {}) => (
+  axios.post(`/api/bots/${botToken}/chat_messages/${messageId}/rating.json`, {
+    guest_key: guestKey,
+    rating: { level: ratingLevel },
+  }, config)
+)
+
+module.exports.createGuestUser = ({
+  name,
+  email
+}, config = {}) => (
+  axios.post('/api/guest_users.json', {
+    guest_user: {
+      name,
+      email
+    }
+  }, config)
+)
+
+module.exports.fetchQuestionAnswers = ({ botToken }, config = {}) => (
+  axios.get(`/api/bots/${botToken}/question_answers`, config)
+)

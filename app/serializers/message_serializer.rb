@@ -10,10 +10,12 @@ class MessageSerializer < ActiveModel::Serializer
     :answer_files,
     :answer_failed,
     :child_decision_branches,
+    :decision_branches,
     :similar_question_answers,
     :is_show_similar_question_answers,
     :reply_log,
-    :has_initial_questions
+    :has_initial_questions,
+    :initial_selections
 
   has_one :question_answer
 
@@ -48,6 +50,12 @@ class MessageSerializer < ActiveModel::Serializer
       .map{ |it| deep_camelize_keys(it) }
   end
 
+  def decision_branches
+    (object.question_answer&.decision_branches || [])
+      .map(&:as_json)
+      .map{ |it| deep_camelize_keys(it) }
+  end
+
   def similar_question_answers
     (object.similar_question_answers || object.similar_question_answers_log || [])
       .map{ |it| it.respond_to?(:as_json) ? it.as_json : it }
@@ -57,5 +65,11 @@ class MessageSerializer < ActiveModel::Serializer
   def is_show_similar_question_answers
     return true if object.is_show_similar_question_answers.nil?
     !!object.is_show_similar_question_answers
+  end
+
+  def initial_selections
+    (object.initial_selections || [])
+      .map{ |it| it.as_json(include: { question_answer: { only: [:id, :question] } }) }
+      .map(&method(:deep_camelize_keys))
   end
 end

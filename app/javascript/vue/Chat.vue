@@ -1,76 +1,167 @@
 <script>
 import { mapActions, mapState } from 'vuex'
-// import ActionCable from 'actioncable'
 import Cookies from 'js-cookie'
+import socketio from 'socket.io-client'
 
+import './Chat/css/bot-message-body.css'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
+import ChatForm from './Chat/ChatForm'
+import ConnectionStatus from './Chat/ConnectionStatus'
+import GuestInfo from './Chat/GuestInfo'
+import MainBody from './Chat/MainBody'
+import Notification from './Chat/Notification'
 
 export default {
+  components: {
+    ChatForm,
+    ConnectionStatus,
+    GuestInfo,
+    MainBody,
+    Notification,
+  },
+
   data: () => ({
     newMessage: '',
   }),
 
-  created () {
+  async created () {
+    await this.initAPI()
     this.fetchMessages()
 
-    const websocketHandlers = createWebsocketHandlers(this.$store)
-    const cable = ActionCable.createConsumer()
-    const channel = cable.subscriptions.create({
-      channel: 'ChatChannel',
-      bot_token: this.botToken,
-      guest_key: this.guestKey,
-    }, websocketHandlers)
-    websocketHandlers.bindError(channel)
+    const socket = socketio(this.botServerHost)
+    const websocketHandlers = createWebsocketHandlers(this.$store, socket)
+    socket.on('connect', websocketHandlers.connect)
+    socket.on('disconnect', websocketHandlers.disconnect)
+    socket.on('event', websocketHandlers.event)
   },
 
   computed: {
     ...mapState([
+      'bot',
       'botToken',
       'guestKey',
       'messages',
+      'messagesNextPageExists',
       'isProcessing',
-    ])
+      'isConnected',
+      'isStaff',
+      'isOwner',
+      'notification',
+      'botServerHost',
+    ]),
   },
 
   methods: {
     ...mapActions([
+      'initAPI',
       'fetchMessages',
       'createMessage',
+      'clearNotification',
+      'selectDecisionBranch',
+      'good',
+      'bad',
+      'saveGuestUser',
     ]),
 
-    handleSubmitButonClick () {
-      this.createMessage({ message: this.newMessage })
-      this.newMessage = ''
+    handleChatFormSubmit (message) {
+      this.createMessage({ message })
     },
 
+    handleNotificationClose () {
+      this.clearNotification()
+    },
+
+    handleMainBodySelectDecisionBranch (decisionBranch) {
+      this.selectDecisionBranch({ decisionBranch })
+    },
+
+    handleMainBodySelectQuestion (message) {
+      this.createMessage({ message })
+    },
+
+    handleGood (message) {
+      this.good({ message })
+    },
+
+    handleBad (message) {
+      this.bad({ message })
+    },
+
+    handleGuestInfoSubmit ({ name, email }) {
+      console.log('test', name, email)
+      this.saveGuestUser({ name, email })
+    },
+
+    handleMessagesLoadMore () {
+      this.fetchMessages({ olderThanId: this.messages[0].id })
+    },
   }
 }
 </script>
 
 <template>
-  <div>
-    <ul>
-      <li v-for="(message, i) in messages" :key="i">
-        [{{message.speaker}}] {{message.body}}
-      </li>
-    </ul>
-    <div>
-      <form>
-        <textarea
-          v-model="newMessage"
-          :disabled="isProcessing"
-        />
-        <button
-          :disabled="isProcessing"
-          @click.prevent.stop="handleSubmitButonClick"
-        >
-          送信
-        </button>
-      </form>
+  <div class="Chat">
+    <div class="header">
+      <connection-status
+        :is-success="isConnected === true"
+        :is-danger="isConnected === false"
+      />
+      <guest-info
+        @submit="handleGuestInfoSubmit"
+      />
+      <notification
+        v-if="notification"
+        :message="notification"
+        @close="handleNotificationClose"
+      />
+    </div>
+
+    <main-body
+      :bot="bot"
+      :messages="messages"
+      :header-height="40"
+      :is-staff="isStaff"
+      :is-owner="isOwner"
+      :is-show-load-more-button="messagesNextPageExists"
+      :is-processing="isProcessing"
+      @select-decision-branch="handleMainBodySelectDecisionBranch"
+      @select-question="handleMainBodySelectQuestion"
+      @good="handleGood"
+      @bad="handleBad"
+      @load-more="handleMessagesLoadMore"
+    />
+
+    <div class="footer">
+      <chat-form
+        :is-disabled="isProcessing"
+        @submit="handleChatFormSubmit"
+      />
     </div>
   </div>
 </template>
 
-<style>
+<style scoped lang="scss">
+.Chat {
+  height: 100%;
+  position: relative;
+  background-color: #f7f7fa;
+  display: flex;
+  flex-direction: column;
+}
 
+.header {
+  position: relative;
+  height: 40px;
+  background-color: #fff;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  height: 64px;
+  background-color: #fff;
+  flex-shrink: 0;
+}
 </style>

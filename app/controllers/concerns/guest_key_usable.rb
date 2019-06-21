@@ -3,6 +3,7 @@ module GuestKeyUsable
 
   included do
     helper_method :guest_key
+    helper_method :current_guest_user
   end
 
   private
@@ -40,5 +41,9 @@ module GuestKeyUsable
       # 2 * 64文字の 16進数
       # https://docs.ruby-lang.org/ja/latest/class/SecureRandom.html#S_HEX
       SecureRandom.hex(64)[0...255]
+    end
+
+    def current_guest_user
+      GuestUser.find_by(guest_key: guest_key)
     end
 end

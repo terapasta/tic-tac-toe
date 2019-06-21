@@ -1,33 +1,43 @@
 import {
   ADD_MESSAGE,
+  REPLACE_INITIAL_SELECTIONS,
 } from './mutationTypes'
 
-export const createWebsocketHandlers = store => ({
-  connected () {
+export const createWebsocketHandlers = (store, socket) => ({
+  connect () {
     console.log('connected')
+    const { botToken, guestKey } = store.state
+    store.dispatch('connected')
+    const roomId = `${botToken}:${guestKey}`
+    socket.emit('join', { roomId })
+
+    // DEV
+    window.socket = socket
   },
 
-  disconnected () {
+  disconnect () {
     console.log('disconnected')
+    store.dispatch('disconnected')
   },
 
-  rejected () {
-    console.log('rejected')
-  },
-
-  received (payload) {
+  event (payload) {
+    console.log('event', payload)
     switch (payload.action) {
       case 'create':
         store.commit(ADD_MESSAGE, { message: payload.data.message })
+        break
+      case 'rating':
+        store.dispatch('applyRating', payload.data)
+        break
+      case 'update_initial_selections':
+        store.commit(REPLACE_INITIAL_SELECTIONS, payload.data)
         break
       default:
         break
     }
   },
 
-  bindError (channel) {
-    channel.consumer.connection.webSocket.onerror = err => {
-      console.log('an error occurred')
-    }
+  error (...args) {
+    console.error(args)
   },
 })

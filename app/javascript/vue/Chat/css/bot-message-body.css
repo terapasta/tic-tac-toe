@@ -1,0 +1,19 @@
+.bot-message-body {
+  display: inline;
+}
+
+.bot-message-body a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.bot-message-body p:last-child {
+  margin-bottom: 0;
+}
+
+.bot-message-body img {
+  max-width: 100%;
+  width: auto;
+  height: 200px;
+  border-radius: 8px;
+}

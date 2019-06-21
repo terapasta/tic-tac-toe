@@ -1,12 +1,7 @@
 {
   "name": "donusagi-bot",
   "description": "[My-ope office](http://www.my-ope.net/)という社内問合せ特化のAIチャットBotサービスのリポジトリです。",
-  "scripts": {
-    "watch:rails-js": "webpack-dev-server --entry=\"$(pwd)/app/javascripts/all.js\" --output=\"$(pwd)/app/assets/javascripts/bundled-es2015.js\" --config config/webpack/development.js",
-    "watch:rails-embed": "webpack-dev-server --entry=\"$(pwd)/app/javascripts/embed.js\" --output=\"$(pwd)/app/assets/javascripts/embed.js\" --config config/webpack/development.js",
-    "build:rails-js": "webpack --entry=\"$(pwd)/app/javascripts/all.js\" --output=\"$(pwd)/app/assets/javascripts/bundled-es2015.js\" --config config/webpack/production.js",
-    "build:rails-embed": "webpack --entry=\"$(pwd)/app/javascripts/embed.js\" --output=\"$(pwd)/app/assets/javascripts/embed.js\" --config config/webpack/production.js"
-  },
+  "scripts": {},
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
     "@rails/webpacker": "^4.0.2",

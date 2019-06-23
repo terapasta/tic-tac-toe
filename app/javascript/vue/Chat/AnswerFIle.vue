@@ -36,6 +36,7 @@ export default {
         <a
           class="file-link"
           :href="answerFile.file.url"
+          target="_blank"
         >
           {{fileName}}
         </a>

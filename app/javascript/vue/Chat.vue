@@ -51,6 +51,8 @@ export default {
       'isOwner',
       'notification',
       'botServerHost',
+      'isGuestUserRegistrationEnabled',
+      'isGuestUserFormSkippable',
     ]),
   },
 
@@ -94,6 +96,7 @@ export default {
       try {
         await this.saveGuestUser({ name, email })
         toastr.success('ゲスト情報を保存しました')
+        this.$refs.guestInfo.close()
       } catch (err) {
         console.error(err)
         toastr.error('ゲスト情報を保存できませんでした')
@@ -115,6 +118,9 @@ export default {
         :is-danger="isConnected === false"
       />
       <guest-info
+        ref="guestInfo"
+        v-if="isGuestUserRegistrationEnabled"
+        :skippable="isGuestUserFormSkippable"
         :guest-user="guestUser"
         :disabled="isProcessing"
         @submit="handleGuestInfoSubmit"

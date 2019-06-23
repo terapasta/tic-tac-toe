@@ -15,7 +15,7 @@
           <form v-on:submit="handleSubmit">
             <div class="modal-header">
               <div class="modal-title">ゲスト情報</div>
-              <button class="close" @click="handleCloseClick">
+              <button v-if="canClose" class="close" @click="handleCloseClick">
                 <i class="material-icons">close</i>
               </button>
             </div>
@@ -68,16 +68,26 @@ export default {
   props: {
     guestUser: { type: Object },
     disabled: { type: Boolean, required: true },
+    skippable: { type: Boolean, required: true },
   },
 
   data() {
     return {
-      isShowModal: false,
+      isShowModal: this.guestUser == null,
       name: (this.guestUser || {}).name,
       email: (this.guestUser || {}).email,
       nameError: null,
     }
   }, 
+
+  computed: {
+    canClose () {
+      return (
+        (this.guestUser == null && this.skippable) ||
+        this.guestUser != null
+      )
+    }
+  },
 
   methods: {
     handleButtonClick () {
@@ -85,11 +95,15 @@ export default {
     },
 
     handleCloseClick () {
-      this.isShowModal = false
+      if (this.canClose) {
+        this.close()
+      }
     },
 
     handleModalClick () {
-      this.isShowModal = false
+      if (this.canClose) {
+        this.close()
+      }
     },
 
     handleSubmit () {
@@ -100,6 +114,10 @@ export default {
         return
       }
       this.$emit('submit', { name, email })
+    },
+
+    close () {
+      this.isShowModal = false
     }
   }
 }

@@ -10,4 +10,6 @@ export default {
   isConnected: null,
   notification: '',
   questionAnswers: [],
+  isGuestUserRegistrationEnabled: false,
+  isGuestUserFormSkippable: false,
 }

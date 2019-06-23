@@ -18,4 +18,6 @@ css:
   data-is-owner=(!!current_user&.has_membership_of?(@bot)).to_json
   data-guest-id=current_guest_user&.id.to_json
   data-bot-server-host=ENV['BOT_SERVER_HOST']
+  data-is-guest-user-registration-enabled=@bot.enable_guest_user_registration.to_json
+  data-is-guest-user-form-skippable=(!!@bot.try(:is_guest_user_form_skippable)).to_json
 )

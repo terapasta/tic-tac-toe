@@ -43,6 +43,7 @@ export default {
       'bot',
       'botToken',
       'guestKey',
+      'guestId',
       'guestUser',
       'messages',
       'messagesNextPageExists',
@@ -124,6 +125,7 @@ export default {
         ref="guestInfo"
         v-if="isGuestUserRegistrationEnabled"
         :skippable="isGuestUserFormSkippable"
+        :guest-id="guestId"
         :guest-user="guestUser"
         :disabled="isProcessing"
         @submit="handleGuestInfoSubmit"

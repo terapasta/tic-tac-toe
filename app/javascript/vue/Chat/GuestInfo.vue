@@ -66,6 +66,7 @@ import isEmpty from 'is-empty'
 
 export default {
   props: {
+    guestId: { type: Number },
     guestUser: { type: Object },
     disabled: { type: Boolean, required: true },
     skippable: { type: Boolean, required: true },
@@ -84,7 +85,8 @@ export default {
     canClose () {
       return (
         (this.guestUser == null && this.skippable) ||
-        this.guestUser != null
+        this.guestUser != null ||
+        this.guestId != null
       )
     }
   },

@@ -117,6 +117,7 @@ export default {
         :is-success="isConnected === true"
         :is-danger="isConnected === false"
       />
+      <span class="text-secondary font-weight-light">{{bot.name}}</span>
       <guest-info
         ref="guestInfo"
         v-if="isGuestUserRegistrationEnabled"

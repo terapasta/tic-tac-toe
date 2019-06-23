@@ -21,13 +21,17 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="name">お名前</label>
+                <label for="name">お名前<sup class="text-danger">*</sup></label>
                 <input
                   name="name"
                   type="text"
                   class="form-control"
                   v-model="name"
+                  :disabled="disabled"
                 />
+                <p v-if="nameError" class="text-danger">
+                  {{nameError}}
+                </p>
               </div>
               <div class="form-group">
                 <label for="email">メールアドレス</label>
@@ -37,6 +41,7 @@
                   class="form-control"
                   v-model="email"
                   placeholder="例：example@example.com"
+                  :disabled="disabled"
                 />
               </div>
             </div>
@@ -45,6 +50,7 @@
                 type="submit"
                 class="btn btn-success"
                 value="保存する"
+                :disabled="disabled"
                 @click="handleSubmit"
               />
             </div>
@@ -56,12 +62,22 @@
 </template>
 
 <script>
+import isEmpty from 'is-empty'
+
 export default {
-  data: () => ({
-    isShowModal: false,
-    name: '',
-    email: '',
-  }),
+  props: {
+    guestUser: { type: Object },
+    disabled: { type: Boolean, required: true },
+  },
+
+  data() {
+    return {
+      isShowModal: false,
+      name: (this.guestUser || {}).name,
+      email: (this.guestUser || {}).email,
+      nameError: null,
+    }
+  }, 
 
   methods: {
     handleButtonClick () {
@@ -77,8 +93,12 @@ export default {
     },
 
     handleSubmit () {
-      console.log('handleSubmit')
       const { name, email } = this
+      this.nameError = null
+      if (isEmpty(name)) {
+        this.nameError = 'お名前を入力してください'
+        return
+      }
       this.$emit('submit', { name, email })
     }
   }

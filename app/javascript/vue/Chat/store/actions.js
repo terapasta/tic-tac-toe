@@ -8,6 +8,7 @@ import {
   SET_IS_CONNECTED,
   SET_NOTIFICATION,
   SET_MESSAGES_NEXT_PAGE_EXISTS,
+  SET_GUEST_ID,
 } from './mutationTypes'
 
 export default {
@@ -104,11 +105,18 @@ export default {
   },
 
   async saveGuestUser ({ commit, state }, { name, email }) {
-    const { guestId } = state
-    if (guestId == null) {
-      return await api.createGuestUser({ name, email})
-    } else {
-      return await api.updateGuestUser({ guestId, name, email })
+    commit(SET_IS_PROCESSING, { isProcessing: true })
+    const { guestId, guestKey } = state
+    try {
+      if (guestId == null) {
+        const res = await api.createGuestUser({ name, email, guestKey })
+        const { id } = res.data.guestUser
+        commit(SET_GUEST_ID, { guestId: id })
+      } else {
+        return await api.updateGuestUser({ guestKey, name, email })
+      }
+    } finally {
+      commit(SET_IS_PROCESSING, { isProcessing: false })
     }
   },
 

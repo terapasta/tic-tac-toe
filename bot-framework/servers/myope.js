@@ -82,14 +82,25 @@ class MyOpeServer {
       res.send('OK')
     })
 
-    app.post('/myope/guest_users', (req, res) => {
-      console.log(req)
-      res.send('test')
-    })
+    app.post('/myope/guest_users', this.try(async (req, res) => {
+      const { name, email, guestKey } = req.body
+      const response = await api.createGuestUser(
+        { name, email, guestKey },
+        { headers: requestHeaders },
+      )
+      const { guestUser } = response.data
+      res.send({ guestUser })
+    }))
 
-    app.put('/myope/guest_users', (req, res) => {
-      res.send('OK')
-    })
+    app.put('/myope/guest_users/:guestKey', this.try(async (req, res) => {
+      const { name, email, guestKey } = { ...req.params, ...req.body }
+      const response = await api.updateGuestUser(
+        { name, email, guestKey },
+        { headers: requestHeaders },
+      )
+      const { guestUser } = response.data
+      res.send({ guestUser })
+    }))
 
     app.get('/myope/:botToken/question_answers', this.try(async (req, res) => {
       const { botToken, excludeIds } = req.params

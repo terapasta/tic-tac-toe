@@ -2,6 +2,8 @@
 import { mapActions, mapState } from 'vuex'
 import Cookies from 'js-cookie'
 import socketio from 'socket.io-client'
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 
 import './Chat/css/bot-message-body.css'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
@@ -40,6 +42,7 @@ export default {
       'bot',
       'botToken',
       'guestKey',
+      'guestUser',
       'messages',
       'messagesNextPageExists',
       'isProcessing',
@@ -87,9 +90,14 @@ export default {
       this.bad({ message })
     },
 
-    handleGuestInfoSubmit ({ name, email }) {
-      console.log('test', name, email)
-      this.saveGuestUser({ name, email })
+    async handleGuestInfoSubmit ({ name, email }) {
+      try {
+        await this.saveGuestUser({ name, email })
+        toastr.success('ゲスト情報を保存しました')
+      } catch (err) {
+        console.error(err)
+        toastr.error('ゲスト情報を保存できませんでした')
+      }
     },
 
     handleMessagesLoadMore () {
@@ -107,6 +115,8 @@ export default {
         :is-danger="isConnected === false"
       />
       <guest-info
+        :guest-user="guestUser"
+        :disabled="isProcessing"
         @submit="handleGuestInfoSubmit"
       />
       <notification

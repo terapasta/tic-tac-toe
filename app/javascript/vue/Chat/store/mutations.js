@@ -16,7 +16,8 @@ import {
 
   SET_NOTIFICATION,
 
-  REPLACE_INITIAL_SELECTIONS
+  REPLACE_INITIAL_SELECTIONS,
+  SET_GUEST_ID,
 } from './mutationTypes'
 
 export default {
@@ -71,5 +72,9 @@ export default {
       newFirstMessage,
       ...state.messages.slice(1),
     ]
-  }
+  },
+
+  [SET_GUEST_ID] (state, { guestId }) {
+    state.guestId = guestId
+  },
 }

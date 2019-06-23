@@ -132,12 +132,27 @@ module.exports.createRating = ({
 
 module.exports.createGuestUser = ({
   name,
-  email
+  email,
+  guestKey,
 }, config = {}) => (
   axios.post('/api/guest_users.json', {
     guest_user: {
       name,
       email
+    },
+    guest_key: guestKey,
+  }, config)
+)
+
+module.exports.updateGuestUser = ({
+  guestKey,
+  name,
+  email,
+}, config = {}) => (
+  axios.put(`/api/guest_users/${guestKey}.json`, {
+    guest_user: {
+      name,
+      email,
     }
   }, config)
 )

@@ -119,6 +119,7 @@ Rails.application.routes.draw do
         resources :answer_inline_images, only: [:create], module: :bots
       end
       resources :word_mappings, only: [:create, :update, :destroy]
+      resource :jwt, only: [:show]
     end
   end
 

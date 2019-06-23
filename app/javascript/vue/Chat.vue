@@ -81,8 +81,9 @@ export default {
       this.selectDecisionBranch({ decisionBranch })
     },
 
-    handleMainBodySelectQuestion (message) {
-      this.createMessage({ message })
+    handleMainBodySelectQuestion (message, questionAnswerId) {
+      console.log(questionAnswerId)
+      this.createMessage({ message, questionAnswerId })
     },
 
     handleGood (message) {

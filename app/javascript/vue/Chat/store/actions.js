@@ -35,7 +35,7 @@ export default {
     }
   },
 
-  async createMessage ({ commit, state }, { message }) {
+  async createMessage ({ commit, state }, { message, questionAnswerId }) {
     commit(SET_IS_PROCESSING, { isProcessing: true })
     const { botToken, guestKey } = state
     try {
@@ -43,10 +43,8 @@ export default {
         message,
         botToken,
         guestKey,
+        questionAnswerId,
       })
-    } catch (err) {
-      console.error(err)
-      // TODO handle error
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }

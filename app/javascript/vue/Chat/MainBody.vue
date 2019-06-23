@@ -82,6 +82,10 @@ export default {
       this.stayPositionId = id
       this.stayPositionY = this.$refs[`message-${id}`][0].$el.offsetTop
       this.$emit('load-more')
+    },
+
+    handleSelectQuestion (question, id) {
+      this.$emit('select-question', question, id)
     }
   }
 }
@@ -124,7 +128,8 @@ export default {
         :is-owner="isOwner"
         :suggestions-limit="suggestionsLimit"
         @select-decision-branch="$emit('select-decision-branch', $event)"
-        @select-question="$emit('select-question', $event)"
+        @select-question="handleSelectQuestion"
+        @select-no-applicable="$emit('select-no-applicable')"
         @good="$emit('good', $event)"
         @bad="$emit('bad', $event)"
         @initial-selection-move-higher="$emit('initial-selection-move-higher', $event)"

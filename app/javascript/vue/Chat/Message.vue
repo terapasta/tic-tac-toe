@@ -117,7 +117,9 @@ export default {
     },
 
     handleSimilarQuestionAnswerSelect (similarQuestionAnswer) {
-      this.$emit('select-question', similarQuestionAnswer.question)
+      const { question, id } = similarQuestionAnswer
+      const _question = id === -1 ? question : null
+      this.$emit('select-question', _question, id)
     },
 
     handleInitialQuestionSelect (initialQuestion) {

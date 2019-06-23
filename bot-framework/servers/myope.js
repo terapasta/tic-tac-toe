@@ -48,10 +48,11 @@ class MyOpeServer {
       const {
         botToken,
         guestKey,
-        message
+        message,
+        questionAnswerId,
       } = { ...req.params, ...req.body }
       const response = await api.createMessage(
-        { botToken, guestKey, message },
+        { botToken, guestKey, message, questionAnswerId },
         { headers: requestHeaders }
       )
       response.data.messages.forEach(message => {

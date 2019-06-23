@@ -5,8 +5,8 @@ export function fetchMessages ({ botToken, guestKey, olderThanId, perPage }) {
   return axios.get(`/myope/${botToken}/messages`, { params: { guestKey, olderThanId, perPage } })
 }
 
-export function createMessage ({ botToken, guestKey, message }) {
-  return axios.post(`/myope/${botToken}/messages`, { guestKey, message })
+export function createMessage ({ botToken, guestKey, message, questionAnswerId }) {
+  return axios.post(`/myope/${botToken}/messages`, { guestKey, message, questionAnswerId })
 }
 
 export function selectDecisionBranch ({ botToken, guestKey, decisionBranchId }) {

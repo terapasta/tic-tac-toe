@@ -63,7 +63,7 @@ module.exports.createMessage = ({
   if (questionAnswerId === -1) {
     return axios.post(`/api/bots/${botToken}/chat_failed_messages.json`, {
       guest_key: guestKey,
-      message
+      message,
     }, config)
   }
   else {

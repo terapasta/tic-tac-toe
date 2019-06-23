@@ -6,6 +6,7 @@ import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 
 import './Chat/css/bot-message-body.css'
+import './Chat/css/container.scss'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
 import ChatForm from './Chat/ChatForm'
 import ConnectionStatus from './Chat/ConnectionStatus'

@@ -30,6 +30,8 @@ export default {
       const { messages, nextPageExists } = res.data
       commit(ADD_MESSAGES, { messages })
       commit(SET_MESSAGES_NEXT_PAGE_EXISTS, { nextPageExists })
+    } catch (err) {
+      console.error(err)
     } finally {
       commit(SET_IS_PROCESSING, { isProcessing: false })
     }

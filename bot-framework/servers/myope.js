@@ -21,7 +21,7 @@ class MyOpeServer {
       }
     })
 
-    app.get('/myope/:botToken/messages', async (req, res) => {
+    app.get('/myope/:botToken/messages', this.try(async (req, res) => {
       const {
         olderThanId = 0,
         perPage = 20,
@@ -42,7 +42,7 @@ class MyOpeServer {
         messages,
         nextPageExists: nextPageExists === 'true'
       })
-    })
+    }))
 
     app.post('/myope/:botToken/messages', this.try(async (req, res) => {
       const {

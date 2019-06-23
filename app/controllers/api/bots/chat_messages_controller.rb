@@ -51,8 +51,8 @@ class Api::Bots::ChatMessagesController < Api::BaseController
             .where('id < ?', messages.last.id)
             .count > 0
         else
-          headers['X-Current-Page'] = messages.current_page
-          headers['X-Total-Pages'] = messages.total_pages
+          headers['X-Current-Page'] = messages.try(:current_page)
+          headers['X-Total-Pages'] = messages.try(:total_pages)
         end
         render json: messages, adapter: :json, include: included_associations
       end

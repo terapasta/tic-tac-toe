@@ -5,12 +5,16 @@ class WsChatsController < ApplicationController
     set_bot
     set_guest_key
     set_guest_user
-    @chat = @bot.chats.find_or_create_by(
-      guest_key: guest_key,
-      is_staff: !!current_user.try(:staff?),
-      is_normal: !!current_user.try(:normal?)
-    )
-    authorize @chat
+    @chat = @bot.chats.where(guest_key: guest_key).order(created_at: :desc).first
+    if @chat.nil?
+      @chat = @bot.chats.create_by(guest_key: guest_key) do |chat|
+        authorize chat
+        chat.is_staff = true if current_user.try(:staff?)
+        chat.is_normal = true if current_user.try(:normal?)
+      end
+    else
+      authorize @chat
+    end
     render_password_view if need_password_view?
   end
 

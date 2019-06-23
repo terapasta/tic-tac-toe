@@ -4,6 +4,7 @@ import VueMarkdown from 'vue-markdown'
 import isEmpty from 'is-empty'
 import find from 'lodash/find'
 import sortBy from 'lodash/sortBy'
+import get from 'lodash/get'
 
 import AnswerFiles from './AnswerFiles'
 import QuestionOptions from './QuestionOptions'
@@ -37,6 +38,10 @@ export default {
   }),
 
   computed: {
+    botId () {
+      return get(window, 'currentBot.id')
+    },
+
     isGuest () {
       return this.speaker === 'guest'
     },
@@ -103,7 +108,6 @@ export default {
       const results = sortBy(this.message.initialSelections, ['position'])
         .map(it => it.questionAnswer)
         .map(it => ({ ...it, body: it.question }))
-      console.log({ results })
       return results
     }
   },
@@ -280,7 +284,13 @@ export default {
               @select="handleInitialQuestionSelect"
             />
             <div v-if="isStaff || isOwner" class="d-flex align-items-center">
-              <a class="btn btn-link" href="#" target="_blank">初期質問リストを編集する</a>
+              <a
+                class="btn btn-link"
+                :href="`/bots/${botId}/question_answers/selections`"
+                target="_blank"
+              >
+                初期質問リストを編集する
+              </a>
               <a href="#" @click.stop.prevent="shouldShowHelpInitialSelection = true">
                 <i class="material-icons align-middle">help</i>
               </a>

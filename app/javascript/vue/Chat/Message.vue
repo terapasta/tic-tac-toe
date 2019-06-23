@@ -25,6 +25,7 @@ export default {
     isStaff: { type: Boolean, default: false },
     isOwner: { type: Boolean, default: false },
     message: { type: Object, required: true },
+    suggestionsLimit: { type: Number, default: 10 },
   },
 
   data: () => ({
@@ -80,7 +81,7 @@ export default {
       const result = this.message.similarQuestionAnswers.map(it => {
         return { ...it, body: it.question }
       })
-      return result
+      return result.slice(0, this.suggestionsLimit)
     },
 
     decisionBranches () {

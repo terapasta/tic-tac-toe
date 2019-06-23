@@ -15,6 +15,7 @@ export default {
     isOwner: { type: Boolean, required: true, default: false },
     isShowLoadMoreButton: { type: Boolean, default: false },
     isProcessing: { type: Boolean, default: false },
+    suggestionsLimit: { type: Number, default: 10 },
   },
 
   data: () => ({
@@ -121,6 +122,7 @@ export default {
         :is-animate="isDoneFirstRendering"
         :is-staff="isStaff"
         :is-owner="isOwner"
+        :suggestions-limit="suggestionsLimit"
         @select-decision-branch="$emit('select-decision-branch', $event)"
         @select-question="$emit('select-question', $event)"
         @good="$emit('good', $event)"

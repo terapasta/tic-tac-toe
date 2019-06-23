@@ -142,6 +142,7 @@ export default {
       :is-owner="isOwner"
       :is-show-load-more-button="messagesNextPageExists"
       :is-processing="isProcessing"
+      :suggestions-limit="bot.suggestLimit"
       @select-decision-branch="handleMainBodySelectDecisionBranch"
       @select-question="handleMainBodySelectQuestion"
       @good="handleGood"

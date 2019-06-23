@@ -147,6 +147,10 @@ class QuestionAnswer < ApplicationRecord
     end
   end
 
+  def should_learning?
+    self.question_changed? || self.has_changed_sub_question?
+  end
+
   def sub_question?
     false
   end

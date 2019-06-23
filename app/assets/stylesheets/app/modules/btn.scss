@@ -19,6 +19,10 @@
     @include button-outline-variant(#999);
   }
 
+  &-outline-secondary {
+    border-color: #ced4da;
+  }
+
   &-text-sm {
     font-size: 13px;
   }

@@ -7,7 +7,7 @@
     .col-8
       h5.mb-3 チャットウィジェット
       p
-        |ウィンドウの右下に常にくっついている形でご利用いただけます。
+        |ウィンドウ下部に常にくっついている形でご利用いただけます。
         br
         |初期状態では閉じているので質問をしたい時だけ開くことができます。
         br
@@ -42,7 +42,7 @@
     input.form-control readonly=true value=chats_url(@bot.token) onclick="this.select()"
 
 
-  .modal.fade#chat-widget-desc tabindex="-1" role="dialog"
+  .modal.fade#chat-widget-desc tabindex="-1" role="dialog" data-role="open-widget-code"
     .modal-dialog role="document"
       .modal-content
         .modal-header
@@ -50,10 +50,17 @@
           button.close type="button" data-dismiss="modal" &times;
         .modal-body
           p 以下のコードをWebサイトのソースコードに貼り付けて下さい
-          p= render 'chat_widgets/embed_code'
-          = link_to '#', class: 'btn btn-secondary', data: { role: 'copy-button', target: '#chat-widget-embed-code' } do
-            i.material-icons content_copy
-            span クリップボードにコピー
+          .w-100.btn-group.btn-group.btn-group-toggle data-toggle="buttons"
+            label.btn.btn-sm.btn-outline-info.mt-2.active data-role="left-button"
+              input type="radio" name="left" autocomplete="off" checked="true"
+                | 初期表示を左にする
+            label.btn.btn-sm.btn-outline-info.mt-2 data-role="right-button"
+              input type="radio" name="left" autocomplete="off" checked="false"
+                | 初期表示を右にする
+          #widget-position-left
+            p= render partial: 'chat_widgets/embed_code', locals: { position: :left }
+          #widget-position-right style="display: none"
+            p= render partial: 'chat_widgets/embed_code', locals: { position: :right }
 
   .modal.fade#chat-embedding-desc tabindex="-1" role="dialog"
     .modal-dialog role="document"
@@ -66,3 +73,40 @@
             data-component="EmbedCodeGenerator"
             data-token=@bot.token
           )
+
+div style="display: none;" data-role="chat-widget-sample"
+  = embed_js(:left).html_safe
+
+javascript:
+  function toggleWidgetPosition () {
+    $('[data-role="left-button"]').on('click', function(e) {
+      $('#widget-position-right').hide()
+      $('#widget-position-left').show()
+      window.__myopeWidget_moveToLeft()
+    })
+
+    $('[data-role="right-button"]').on('click', function(e) {
+      $('#widget-position-left').hide()
+      $('#widget-position-right').show()
+      window.__myopeWidget_moveToRight()
+    })
+  }
+
+  function showOrHideChatWidgetSample () {
+    $('[data-role="open-widget-code"]').on('show.bs.modal', function() {
+      $('[data-role="chat-widget-sample"]').show()
+    })
+
+    $('[data-role="open-widget-code"]').on('hide.bs.modal', function() {
+      $('[data-role="chat-widget-sample"]').hide()
+    })
+  }
+
+  if (document.readyState === 'complete' ||
+    document.readyState === 'interactive') {
+    toggleWidgetPosition()
+    showOrHideChatWidgetSample()
+  } else {
+    document.addEventListener('DOMContentLoaded', toggleWidgetPosition)
+    document.addEventListener('DOMContentLoaded', showOrHideChatWidgetSample)
+  }

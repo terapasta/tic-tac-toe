@@ -43,6 +43,7 @@ export default class Widget extends Component {
 
     this.fetchPulicBot(props.token);
     this.onLoadIframe = this.onLoadIframe.bind(this)
+    this.handleFloatWrapperMove = this.handleFloatWrapperMove.bind(this)
   }
 
   fetchPulicBot(token) {
@@ -87,6 +88,25 @@ export default class Widget extends Component {
     }
   }
 
+  moveToRight() {
+    this.setState({ position: Position.Right })
+  }
+
+  moveToLeft() {
+    this.setState({ position: Position.Left })
+  }
+
+  handleFloatWrapperMove () {
+    switch (this.state.position) {
+      case 'right':
+        this.moveToLeft()
+        break
+      case 'left':
+        this.moveToRight()
+        break
+    }
+  }
+
   render() {
     const {
       token,
@@ -118,7 +138,7 @@ export default class Widget extends Component {
           position={position}
           onOpen={() => this.setState({ isActive: true, isLoadingIframe: true })}
           onClose={() => this.setState({ isActive: false })}
-          onMove={() => this.setState({ position: this.state.position === Position.Left ? Position.Right : Position.Left })}
+          onMove={this.handleFloatWrapperMove}
           innerRef={node => this.wrapper = node}
           height={height}
         >

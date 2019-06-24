@@ -1,7 +1,10 @@
-.card.card-left-capped.qa-summury-card class=(@is_modal ? '' : 'mb-4')
-  .card-left-cap
-    .card-left-cap__checkbox data-role="deleteable-item"
-      = check_box 'question_answer[should_delete]', question_answer.id, {}, true, false
+- mb_4 = @is_modal ? '' : 'mb-4'
+- left_capped = local_assigns[:without_left_cap] ? '' : 'card-left-capped'
+.card.qa-summury-card class=[mb_4, left_capped].join(' ')
+  - unless local_assigns[:without_left_cap]
+    .card-left-cap
+      .card-left-cap__checkbox data-role="deleteable-item"
+        = check_box 'question_answer[should_delete]', question_answer.id, {}, true, false
   .card-body
     - if question_answer.try(:zendesk_article_id).present? && current_user.staff?
       .card.border-success.mb-3: .card-body.p-2.d-flex.justify-content-between.align-items-center
@@ -46,7 +49,7 @@
                       = link_to answer_file.read_attribute(:file), answer_file.file_url, target: '_blank'
   .card-footer
     .row
-      .col-sm-8
+      .col-sm-8.d-flex.align-items-center
         small.text-muted ID：#{question_answer.id}
         = space 10
         small.text-muted 作成日時：#{l question_answer.created_at, format: :short}
@@ -63,3 +66,4 @@
             = material_icon 'delete', class: 'mi-xs'
             = space
             span 削除
+        = yield

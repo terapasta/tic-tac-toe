@@ -34,7 +34,6 @@ export default class ChatBotMessageRow extends Component {
       initialQuestions: PropTypes.array.isRequired,
       onChangeRatingTo: PropTypes.func.isRequired,
       onChangeLearning: PropTypes.func.isRequired,
-      onChangeInitialQuestions: PropTypes.func.isRequired,
     }
   }
 
@@ -50,7 +49,6 @@ export default class ChatBotMessageRow extends Component {
       initialQuestions,
       onChangeRatingTo,
       onChangeLearning,
-      onChangeInitialQuestions,
     } = this.props
 
     if (answer == null) { return null }
@@ -78,7 +76,6 @@ export default class ChatBotMessageRow extends Component {
           isFirst={isFirst}
           isLastPage={isLastPage}
           initialQuestions={initialQuestions}
-          onChange={onChangeInitialQuestions}
         />
       </ChatRow>
     )

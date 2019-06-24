@@ -27,7 +27,7 @@ export default {
 </script>
 
 <template>
-  <figure class="item">
+  <figure class="item" :class="{ image: isImage }">
     <a v-if="isImage" :href="fileUrl" target="_blank">
       <img :src="fileUrl" />
     </a>
@@ -36,6 +36,7 @@ export default {
         <a
           class="file-link"
           :href="answerFile.file.url"
+          target="_blank"
         >
           {{fileName}}
         </a>
@@ -63,6 +64,10 @@ export default {
   white-space: normal;
   vertical-align: top;
   -webkit-overflow-scrolling: touch;
+
+  &.image {
+    padding: 0;
+  }
 
   img {
     max-height: 100%;

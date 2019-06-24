@@ -1,5 +1,5 @@
 class PublicBotSerializer < ActiveModel::Serializer
-  attributes :name, :image, :widget_subtitle, :classify_failed_message
+  attributes :name, :image, :classify_failed_message, :suggest_limit
 
   def widget_subtitle
     object.widget_subtitle.presence || Bot::DefaultWidgetSubtitle

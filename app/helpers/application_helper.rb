@@ -3,14 +3,6 @@ module ApplicationHelper
     ('&nbsp;' * length).html_safe
   end
 
-  def embed_js_url
-    if Rails.env.development?
-      "http://#{request.env['HTTP_HOST']}/assets/embed.js"
-    else
-      "#{ActionController::Base.asset_host}/assets/embed.js"
-    end
-  end
-
   def material_icon(name, options = {})
     klass = options.delete(:class)
     options.merge!(class: "material-icons #{klass}")

@@ -128,7 +128,7 @@ const FloatWrapperBase = styled.div.attrs({
   text-align: center;
   font-family: sans-serif;
 
-  &:hover [data-name=FloatInner] {
+  [data-name=FloatInner] {
     width: 165px;
   }
   &:hover [data-name=MoveButton] {

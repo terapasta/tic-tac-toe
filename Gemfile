@@ -116,8 +116,10 @@ gem 'asset_sync', '~> 2.4.0'
 gem 'acts_as_list'
 gem 'redcarpet', '~> 2.3.0'
 gem 'mixpanel_client'
+gem 'jwt'
 
 group :development, :test do
+  gem 'timecop'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

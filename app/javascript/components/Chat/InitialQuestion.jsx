@@ -14,7 +14,6 @@ export default class ChatInitialQuestion extends Component {
       isFirst: PropTypes.bool,
       isLastPage: PropTypes.bool,
       initialQuestions: PropTypes.array.isRequired,
-      onChange: PropTypes.func.isRequired,
     }
   }
 
@@ -25,12 +24,7 @@ export default class ChatInitialQuestion extends Component {
       isAppearSelector: false,
     }
 
-    this.basePath = `/bots/${window.currentBot.id}/question_answers/selections`
-    this.iframePath = `${this.basePath}?headless=true&hide_page_header=true`
-
     this.openDesc = this.openDesc.bind(this)
-    this.openSelector = this.openSelector.bind(this)
-    this.closeSelector = this.closeSelector.bind(this)
   }
 
   render() {
@@ -46,7 +40,6 @@ export default class ChatInitialQuestion extends Component {
           <div style={{marginTop:"32px"}}>
             {this.renderEmptyMessage()}
             {this.renderDesc()}
-            {this.renderSelector()}
           </div>
         )}
       </ChatContainer>
@@ -66,12 +59,11 @@ export default class ChatInitialQuestion extends Component {
           </span>
         )}
         <p>
-          <button className="btn btn-secondary"
-            onClick={this.openSelector}>
+          <a href={`/bots/${window.currentBot.id}/question_answers/selections`} target="_blank" className="btn btn-secondary">
             <i className="material-icons">playlist_add_check</i>
             {" "}
             <span>初期質問リストを選択する</span>
-          </button>
+          </a>
         </p>
         <p>
           <a href="#" onClick={this.openDesc}>
@@ -116,24 +108,11 @@ export default class ChatInitialQuestion extends Component {
     )
   }
 
-  openSelector() {
-    this.setState({ isAppearSelector: true })
-    Mixpanel.sharedInstance.trackEvent("selection screen of first question", {
-      bot_id: get(window, "currentBot.id"),
-      bot_name: get(window, "currentBot.name"),
-    })
-  }
-
   openDesc() {
     this.setState({ isAppearDesc: true })
     Mixpanel.sharedInstance.trackEvent("description of first question", {
       bot_id: get(window, "currentBot.id"),
       bot_name: get(window, "currentBot.name"),
     })
-  }
-
-  closeSelector() {
-    this.setState({ isAppearSelector: false })
-    this.props.onChange()
   }
 }

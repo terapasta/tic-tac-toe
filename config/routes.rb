@@ -45,11 +45,16 @@ Rails.application.routes.draw do
       resources :sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :imported_sentence_synonyms, only: [:index, :new, :create, :destroy]
       resources :question_answers do
-        resource :selections, only: [:create, :destroy], module: :question_answers
         resource :answer, only: [:show], module: :question_answers
         collection do
-          resources :selections, only: [:index], module: :question_answers, as: :question_answers_selections
-          put '/selections', to: 'question_answers/selections#update'
+          # resources :selections, only: [:index], module: :question_answers, as: :question_answers_selections
+          # put '/selections', to: 'question_answers/selections#update'
+          resources :selections, only: [:index, :create, :destroy], module: :question_answers, as: :question_answer_selections do
+            member do
+              put :move_higher
+              put :move_lower
+            end
+          end
           delete '/bulk_delete', to: 'question_answers#bulk_delete'
         end
       end
@@ -114,6 +119,7 @@ Rails.application.routes.draw do
         resources :answer_inline_images, only: [:create], module: :bots
       end
       resources :word_mappings, only: [:create, :update, :destroy]
+      resource :jwt, only: [:show]
     end
   end
 

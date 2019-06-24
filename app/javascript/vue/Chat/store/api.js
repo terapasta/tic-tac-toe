@@ -5,8 +5,8 @@ export function fetchMessages ({ botToken, guestKey, olderThanId, perPage }) {
   return axios.get(`/myope/${botToken}/messages`, { params: { guestKey, olderThanId, perPage } })
 }
 
-export function createMessage ({ botToken, guestKey, message }) {
-  return axios.post(`/myope/${botToken}/messages`, { guestKey, message })
+export function createMessage ({ botToken, guestKey, message, questionAnswerId }) {
+  return axios.post(`/myope/${botToken}/messages`, { guestKey, message, questionAnswerId })
 }
 
 export function selectDecisionBranch ({ botToken, guestKey, decisionBranchId }) {
@@ -20,12 +20,12 @@ export function createRating ({ botToken, guestKey, messageId, ratingLevel }) {
   })
 }
 
-export function createGuestUser ({ name, email }) {
-  return axios.post('/myope/guest_users', { name, email })
+export function createGuestUser ({ name, email, guestKey }) {
+  return axios.post('/myope/guest_users', { name, email, guestKey })
 }
 
-export function updateGuestUser ({ guestId, name, email }) {
-  return axios.put(`/myope/guest_users/${guestId}`, { name, email })
+export function updateGuestUser ({ guestKey, name, email }) {
+  return axios.put(`/myope/guest_users/${guestKey}`, { name, email })
 }
 
 export function createChoice ({ botToken, guestKey, choiceId }) {

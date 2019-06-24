@@ -13,6 +13,8 @@ class Api::GuestUsersController < Api::BaseController
     if @guest_user.save
       render json: @guest_user, adapter: :json, status: :created
     else
+      logger.debug '--->'
+      logger.debug @guest_user.errors.to_json
       render_unprocessable_entity_error_json(@guest_user)
     end
   end

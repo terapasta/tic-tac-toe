@@ -13,8 +13,11 @@ css:
   data-bot-token=@bot.token
   data-bot=DeepCamelizeKeys.deep_camelize_keys(PublicBotSerializer.new(@bot).as_json).to_json
   data-guest-key=guest_key
+  data-guest-user=@guest_user.to_json(only: [:name, :email])
   data-is-staff=(!!current_user&.staff?).to_json
   data-is-owner=(!!current_user&.has_membership_of?(@bot)).to_json
   data-guest-id=current_guest_user&.id.to_json
   data-bot-server-host=ENV['BOT_SERVER_HOST']
+  data-is-guest-user-registration-enabled=@bot.enable_guest_user_registration.to_json
+  data-is-guest-user-form-skippable=(!!@bot.try(:is_guest_user_form_skippable)).to_json
 )

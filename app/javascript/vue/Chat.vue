@@ -2,8 +2,11 @@
 import { mapActions, mapState } from 'vuex'
 import Cookies from 'js-cookie'
 import socketio from 'socket.io-client'
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 
 import './Chat/css/bot-message-body.css'
+import './Chat/css/container.scss'
 import { createWebsocketHandlers } from './Chat/store/websocketHandlers'
 import ChatForm from './Chat/ChatForm'
 import ConnectionStatus from './Chat/ConnectionStatus'
@@ -40,6 +43,8 @@ export default {
       'bot',
       'botToken',
       'guestKey',
+      'guestId',
+      'guestUser',
       'messages',
       'messagesNextPageExists',
       'isProcessing',
@@ -48,6 +53,8 @@ export default {
       'isOwner',
       'notification',
       'botServerHost',
+      'isGuestUserRegistrationEnabled',
+      'isGuestUserFormSkippable',
     ]),
   },
 
@@ -75,8 +82,9 @@ export default {
       this.selectDecisionBranch({ decisionBranch })
     },
 
-    handleMainBodySelectQuestion (message) {
-      this.createMessage({ message })
+    handleMainBodySelectQuestion (message, questionAnswerId) {
+      console.log(questionAnswerId)
+      this.createMessage({ message, questionAnswerId })
     },
 
     handleGood (message) {
@@ -87,9 +95,15 @@ export default {
       this.bad({ message })
     },
 
-    handleGuestInfoSubmit ({ name, email }) {
-      console.log('test', name, email)
-      this.saveGuestUser({ name, email })
+    async handleGuestInfoSubmit ({ name, email }) {
+      try {
+        await this.saveGuestUser({ name, email })
+        toastr.success('ゲスト情報を保存しました')
+        this.$refs.guestInfo.close()
+      } catch (err) {
+        console.error(err)
+        toastr.error('ゲスト情報を保存できませんでした')
+      }
     },
 
     handleMessagesLoadMore () {
@@ -106,7 +120,14 @@ export default {
         :is-success="isConnected === true"
         :is-danger="isConnected === false"
       />
+      <span class="text-secondary font-weight-light">{{bot.name}}</span>
       <guest-info
+        ref="guestInfo"
+        v-if="isGuestUserRegistrationEnabled"
+        :skippable="isGuestUserFormSkippable"
+        :guest-id="guestId"
+        :guest-user="guestUser"
+        :disabled="isProcessing"
         @submit="handleGuestInfoSubmit"
       />
       <notification
@@ -124,6 +145,7 @@ export default {
       :is-owner="isOwner"
       :is-show-load-more-button="messagesNextPageExists"
       :is-processing="isProcessing"
+      :suggestions-limit="bot.suggestLimit"
       @select-decision-branch="handleMainBodySelectDecisionBranch"
       @select-question="handleMainBodySelectQuestion"
       @good="handleGood"

@@ -17,9 +17,8 @@ class Api::Bots::ChatMessages::RatingsController < Api::BaseController
       message.bad!
     end
 
-    ChatChannel.broadcast_to(chat, {
-      action: :rating,
-      data: serialize(message.rating)
-    })
+    respond_to do |format|
+      format.json { render json: message.rating, adapter: :json }
+    end
   end
 end

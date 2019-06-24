@@ -7,6 +7,7 @@ const cors = corsMiddleware({
   origins: [
     'http://localhost:3000',
     'https://app.my-ope.net',
+    'https://stage.my-ope.net',
   ],
   allowHeaders: ['*']
 })

@@ -79,9 +79,21 @@ class MyOpeServer {
       res.send('OK')
     }))
 
-    app.post('/myope/:botToken/messages/:messageId/rating', (req, res) => {
+    app.post('/myope/:botToken/messages/:messageId/rating', this.try(async (req, res) => {
+      const {
+        botToken,
+        guestKey,
+        messageId,
+        ratingLevel,
+      } = { ...req.params, ...req.body }
+      const response = await api.createRating(
+        { botToken, guestKey, messageId, ratingLevel },
+      )
+      const rating = response.data.rating
+      const payload = { action: 'rating', data: { rating } }
+      this.wsEmit({ botToken, guestKey, payload })
       res.send('OK')
-    })
+    }))
 
     app.post('/myope/guest_users', this.try(async (req, res) => {
       const { name, email, guestKey } = req.body

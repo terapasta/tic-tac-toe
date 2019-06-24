@@ -130,6 +130,7 @@ export default {
         :disabled="isProcessing"
         @submit="handleGuestInfoSubmit"
       />
+      <span v-else>&nbsp;</span>
       <notification
         v-if="notification"
         :message="notification"

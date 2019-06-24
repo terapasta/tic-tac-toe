@@ -6,3 +6,4 @@ web-servers
 
 [all:vars]
 stage=staging
+bot_server_host=https://chat-staging.my-ope.net

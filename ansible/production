@@ -10,3 +10,4 @@ web-servers
 [all:vars]
 stage=production
 ansible_ssh_user=ec2-user
+bot_server_host=https://chat.my-ope.net

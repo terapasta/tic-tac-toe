@@ -1,0 +1,5 @@
+#!/bin/sh
+$(aws ecr get-login --no-include-email --region ap-northeast-1 --profile mofmof)
+docker build -t bot-framework-stg .
+docker tag bot-framework-stg:latest 017826181293.dkr.ecr.ap-northeast-1.amazonaws.com/bot-framework-stg:latest
+docker push 017826181293.dkr.ecr.ap-northeast-1.amazonaws.com/bot-framework-stg:latest

@@ -39,3 +39,7 @@ export function fetchQuestionAnswers ({ botToken, excludeIds }) {
   const queryParams = makeQueryParams({ excludeIds })
   return axios.get(`/myope/${botToken}/question_answers${queryParams}`)
 }
+
+export function fetchJwt () {
+  return axios({ url: '/api/jwt', baseURL: window.location.origin })
+}

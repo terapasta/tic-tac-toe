@@ -30,6 +30,7 @@ export default {
   async created () {
     await this.initAPI()
     this.fetchMessages()
+    this.fetchJwt()
 
     const socket = socketio(this.botServerHost)
     const websocketHandlers = createWebsocketHandlers(this.$store, socket)
@@ -68,6 +69,7 @@ export default {
       'good',
       'bad',
       'saveGuestUser',
+      'fetchJwt',
     ]),
 
     handleChatFormSubmit (message) {

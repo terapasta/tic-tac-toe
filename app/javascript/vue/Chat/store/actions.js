@@ -9,7 +9,9 @@ import {
   SET_NOTIFICATION,
   SET_MESSAGES_NEXT_PAGE_EXISTS,
   SET_GUEST_ID,
+  SET_JWT,
 } from './mutationTypes'
+import { async } from 'q';
 
 export default {
   async initAPI ({ state }) {
@@ -124,5 +126,14 @@ export default {
     const { botToken } = state
     const res = await api.fetchQuestionAnswers({ botToken, excludeIds })
     console.log(res)
-  }
+  },
+
+  async fetchJwt ({ commit, state }) {
+    if (localStorage.jwt || state.isStaff || state.isOwner) {
+      const res = await api.fetchJwt()
+      const token = res.data.token
+      commit(SET_JWT, { jwt: token })
+      localStorage.jwt = token
+    }
+  },
 }

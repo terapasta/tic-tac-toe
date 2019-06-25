@@ -18,6 +18,8 @@ import {
 
   REPLACE_INITIAL_SELECTIONS,
   SET_GUEST_ID,
+
+  SET_JWT,
 } from './mutationTypes'
 
 export default {
@@ -76,5 +78,9 @@ export default {
 
   [SET_GUEST_ID] (state, { guestId }) {
     state.guestId = guestId
+  },
+
+  [SET_JWT] (state, { jwt }) {
+    state.jwt = jwt
   },
 }

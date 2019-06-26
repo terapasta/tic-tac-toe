@@ -35,6 +35,10 @@ class BotPolicy < ApplicationPolicy
     update?
   end
 
+  def member?
+    record.organizations.map { |o| o.users.ids }.flatten.include?(user.id)
+  end
+
   def exceeded_chats_count?
     record.chats.today_count_of_guests >= record.chats_limit_per_day
   end

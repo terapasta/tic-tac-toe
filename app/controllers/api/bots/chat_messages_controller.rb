@@ -44,6 +44,18 @@ class Api::Bots::ChatMessagesController < Api::BaseController
       end
     end
 
+    serializer = MessageSerializer
+    if request.headers['X-MyOpeChatToken'].present?
+      begin
+        parsed = Jwt.parse(request.headers['X-MyOpeChatToken'])
+        if BotPolicy.new(parsed['user'], bot).member?
+          serializer = MemberMessageSerializer
+        end
+      rescue Jwt::InvalidTokenError => e
+        return render json: { message: e.message }, status: 'Unauthorized'
+      end
+    end
+
     respond_to do |format|
       format.json do
         if params[:older_than_id].present? && messages.last.present?
@@ -54,7 +66,8 @@ class Api::Bots::ChatMessagesController < Api::BaseController
           headers['X-Current-Page'] = messages.try(:current_page)
           headers['X-Total-Pages'] = messages.try(:total_pages)
         end
-        render json: messages, adapter: :json, include: included_associations
+
+        render json: messages, adapter: :json, include: included_associations, each_serializer: serializer
       end
     end
   end

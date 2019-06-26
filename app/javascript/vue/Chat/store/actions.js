@@ -21,11 +21,12 @@ export default {
   async fetchMessages ({ commit, state }, params = {}) {
     commit(SET_IS_PROCESSING, { isProcessing: true })
     const { olderThanId } = params
-    const { botToken, guestKey } = state
+    const { botToken, guestKey, jwt = '' } = state
     try {
       const res = await api.fetchMessages({
         botToken,
         guestKey,
+        jwt,
         olderThanId: olderThanId || 0,
         perPage: 20,
       })
@@ -129,11 +130,11 @@ export default {
   },
 
   async fetchJwt ({ commit, state }) {
-    if (localStorage.jwt || state.isStaff || state.isOwner) {
+    if (window.localStorage.getItem('jwt') || state.isStaff || state.isOwner) {
       const res = await api.fetchJwt()
       const token = res.data.token
       commit(SET_JWT, { jwt: token })
-      localStorage.jwt = token
+      window.localStorage.setItem('jwt', token)
     }
   },
 }

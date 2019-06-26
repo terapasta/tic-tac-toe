@@ -1,8 +1,11 @@
 import axios from 'axios'
 import makeQueryParams from '../../../helpers/makeQueryParams'
 
-export function fetchMessages ({ botToken, guestKey, olderThanId, perPage }) {
-  return axios.get(`/myope/${botToken}/messages`, { params: { guestKey, olderThanId, perPage } })
+export function fetchMessages ({ botToken, guestKey, jwt, olderThanId, perPage }) {
+  return axios.get(`/myope/${botToken}/messages`, {
+    params: { guestKey, olderThanId, perPage },
+    headers: { "X-MyOpeChatToken": jwt }
+  })
 }
 
 export function createMessage ({ botToken, guestKey, message, questionAnswerId }) {

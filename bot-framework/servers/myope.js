@@ -27,12 +27,14 @@ class MyOpeServer {
         perPage = 20,
         botToken,
         guestKey,
+        xMyOpeChatToken = req.headers['x-myopechattoken'],
       } = { ...req.params, ...req.query }
       const response = await api.fetchMessages({
         botToken,
         guestKey,
         olderThanId,
         perPage,
+        xMyOpeChatToken,
       })
       const {
         'x-next-page-exists': nextPageExists,

@@ -41,6 +41,7 @@ module.exports.fetchMessages = ({
   guestKey,
   olderThanId,
   perPage,
+  xMyOpeChatToken,
 }, config = {}) => (
   axios.get(`/api/bots/${botToken}/chat_messages.json`, Object.assign({},
     config,
@@ -49,9 +50,10 @@ module.exports.fetchMessages = ({
         older_than_id: olderThanId || 0,
         guest_key: guestKey,
         per_page: perPage,
-      }
-    }
-  )
+      },
+      headers: { "X-MyOpeChatToken": xMyOpeChatToken }
+    },
+  ),
 ))
 
 module.exports.createMessage = ({

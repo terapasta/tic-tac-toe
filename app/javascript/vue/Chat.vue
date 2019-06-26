@@ -29,8 +29,8 @@ export default {
 
   async created () {
     await this.initAPI()
+    await this.fetchJwt()
     this.fetchMessages()
-    this.fetchJwt()
 
     const socket = socketio(this.botServerHost)
     const websocketHandlers = createWebsocketHandlers(this.$store, socket)

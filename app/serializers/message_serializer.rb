@@ -67,6 +67,10 @@ class MessageSerializer < ActiveModel::Serializer
     !!object.is_show_similar_question_answers
   end
 
+  def reply_log
+    nil
+  end
+
   def initial_selections
     (object.initial_selections || [])
       .map{ |it| it.as_json(include: { question_answer: { only: [:id, :question] } }) }

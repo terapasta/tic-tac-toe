@@ -26,6 +26,11 @@ class Jwt
       if it['iss'] != Rails.env
         fail InvalidTokenError.new("The iss '#{it['iss']}' does not match with '#{Rails.env}'")
       end
+      if user = User.find_by(id: it['user_id'])
+        it['user'] = user
+      else
+        fail InvalidTokenError.new("The user_id '#{it['user_id']}' does not exist")
+      end
     end
   end
 end
